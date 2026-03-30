@@ -13,20 +13,23 @@ from pydantic import BaseModel
 
 from .rotas_vila import obter_simulacao
 from ..engine.rede_social import RedeSocial
+from ..engine.gatilhos import MotorGatilhos
 
 
 # ============================================================
-# ESTADO
+# ESTADO (usa instância da simulação para compartilhar estado)
 # ============================================================
-
-rede: Optional[RedeSocial] = None
-
 
 def obter_rede() -> RedeSocial:
-    global rede
-    if rede is None:
-        rede = RedeSocial()
-    return rede
+    """Retorna a rede social da simulação ativa."""
+    sim = obter_simulacao()
+    return sim.rede_social
+
+
+def obter_motor_gatilhos() -> MotorGatilhos:
+    """Retorna o motor de gatilhos da simulação ativa."""
+    sim = obter_simulacao()
+    return sim.motor_gatilhos
 
 
 # ============================================================
@@ -116,26 +119,32 @@ async def stats_rede():
 @router.post("/tema")
 async def publicar_tema(req: PostTemaRequest):
     """
-    Usuário publica um tema para os consultores discutirem.
-    Automaticamente distribui para consultores reagirem.
-    """
-    r = obter_rede()
-    sim = obter_simulacao()
+    Gatilho 1 — Usuário injeta tema (prioridade máxima).
 
-    post = r.publicar_tema_usuario(
+    Publica o tema e gera 3-4 comentários IA imediatos dos
+    consultores mais relevantes. Restantes entram na fila de waves
+    (10min, 30min, 1h+) para criar sensação de feed vivo.
+    """
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    # Motor de Gatilhos cuida de tudo: post + comentários IA imediatos + waves
+    post = motor.injetar_tema(
         titulo=req.titulo,
         conteudo=req.conteudo or req.titulo,
         tags=req.tags or None,
-        hora_atual=sim.hora_atual,
+        personas=sim.personas,
+        step=sim.step,
     )
-
-    # Processar reações imediatas dos consultores
-    interacoes = r.processar_reacoes(sim.personas, sim.hora_atual, max_reacoes_por_step=10)
 
     return {
         "post": post.to_dict(),
-        "interacoes_imediatas": interacoes,
-        "mensagem": f"Tema publicado! {len(interacoes)} consultores reagiram.",
+        "interacoes_imediatas": len(post.comentarios),
+        "waves_pendentes": len(motor.fila_waves),
+        "mensagem": (
+            f"Tema publicado! {len(post.comentarios)} consultores reagiram "
+            f"imediatamente. Mais comentários chegarão nas próximas waves."
+        ),
     }
 
 
@@ -234,3 +243,168 @@ async def alternar_destaque(post_id: str):
         raise HTTPException(404, "Post não encontrado")
     post.destaque = not post.destaque
     return {"destaque": post.destaque}
+
+
+# ============================================================
+# ENDPOINTS DO MOTOR DE GATILHOS
+# ============================================================
+
+class DebateRequest(BaseModel):
+    """Força debate entre dois consultores específicos."""
+    agente_a: str | None = None  # Se None, seleciona par rival aleatório
+    agente_b: str | None = None
+    tema: str = ""
+
+
+@router.post("/debate")
+async def forcar_debate(req: DebateRequest):
+    """
+    Gatilho 5 — Força debate entre par rival.
+
+    Se agente_a e agente_b forem fornecidos, debate entre eles.
+    Se não, seleciona par rival aleatório (Musk vs Zuckerberg, Jesus vs Diabob, etc).
+    """
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    from ..engine.gatilhos import MotorDebate
+
+    if req.agente_a and req.agente_b:
+        persona_a = sim.personas.get(req.agente_a)
+        persona_b = sim.personas.get(req.agente_b)
+        if not persona_a or not persona_b:
+            raise HTTPException(404, "Agente não encontrado")
+        tema_contexto = req.tema or "debate livre"
+    else:
+        par = MotorDebate.selecionar_par(sim.personas)
+        if not par:
+            raise HTTPException(400, "Nenhum par rival disponível")
+        persona_a, persona_b, tema_contexto, _ = par
+
+    debate = MotorDebate.executar_debate_ia(
+        persona_a, persona_b, tema_contexto, n_turnos=8
+    )
+
+    if not debate:
+        raise HTTPException(500, "Falha ao gerar debate")
+
+    # Publicar no feed
+    from ..engine.rede_social import Postagem
+    post = Postagem(
+        tipo="debate",
+        autor_id=persona_a.id,
+        autor_nome=f"{persona_a.nome_exibicao} vs {persona_b.nome_exibicao}",
+        autor_titulo="Debate Lendário",
+        autor_categoria="debate",
+        titulo=debate["titulo"],
+        conteudo=debate["conteudo"],
+        tags=debate["tags"],
+        destaque=True,
+    )
+    r = obter_rede()
+    r._adicionar_post(post)
+
+    return {
+        "post": post.to_dict(),
+        "participantes": [persona_a.nome_exibicao, persona_b.nome_exibicao],
+        "tema": tema_contexto,
+    }
+
+
+@router.post("/provocar")
+async def forcar_provocacao():
+    """
+    Gatilho 6 — Diabob provoca o feed.
+
+    Diabob analisa os últimos posts e lança uma provocação devastadora.
+    Se Jesus estiver ativo, responde automaticamente com serenidade.
+    """
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    resultado = motor._gatilho_diabob(sim.step, sim.personas)
+    if not resultado:
+        raise HTTPException(400, "Diabob não está disponível ou falha na geração")
+
+    r = obter_rede()
+    post = r._indice_por_id.get(resultado["post_id"])
+
+    return {
+        "post": post.to_dict() if post else None,
+        "evento": resultado,
+    }
+
+
+@router.post("/parabola")
+async def forcar_parabola():
+    """
+    Gatilho 6 — Jesus Cristo posta uma parábola.
+
+    Gera parábola inspirada no contexto atual do feed.
+    """
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    resultado = motor._gatilho_jesus(sim.step)
+    if not resultado:
+        raise HTTPException(400, "Jesus não está disponível ou falha na geração")
+
+    r = obter_rede()
+    post = r._indice_por_id.get(resultado["post_id"])
+
+    return {
+        "post": post.to_dict() if post else None,
+        "evento": resultado,
+    }
+
+
+@router.post("/helena-sintese")
+async def forcar_sintese():
+    """
+    Helena gera síntese dos debates mais relevantes.
+
+    Analisa os posts mais engajados e extrai padrões, insights e pontos cegos.
+    """
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    resultado = motor._gatilho_helena_sintese(sim.step)
+    if not resultado:
+        raise HTTPException(400, "Helena não disponível ou poucos posts para sintetizar")
+
+    r = obter_rede()
+    post = r._indice_por_id.get(resultado["post_id"])
+
+    return {
+        "post": post.to_dict() if post else None,
+        "evento": resultado,
+    }
+
+
+@router.get("/gatilhos/status")
+async def status_gatilhos():
+    """Status do Motor de Gatilhos — cadência e contadores."""
+    sim = obter_simulacao()
+    motor = obter_motor_gatilhos()
+
+    return {
+        "step_atual": sim.step,
+        "hora_simulacao": sim.hora_atual.strftime("%Y-%m-%d %H:%M"),
+        "posts_hoje": motor.posts_hoje,
+        "waves_pendentes": len(motor.fila_waves),
+        "cadencia": {
+            "ultimo_debate": motor.ultimo_debate_step,
+            "proximo_debate": motor.ultimo_debate_step + 20,
+            "ultimo_diabob": motor.ultimo_diabob_step,
+            "proximo_diabob": motor.ultimo_diabob_step + 15,
+            "ultimo_jesus": motor.ultimo_jesus_step,
+            "ultimo_helena": motor.ultimo_helena_step,
+            "ultima_sintese": motor.ultimo_sintese_step,
+        },
+        "personagens_especiais": {
+            "diabob": motor._diabob.nome_exibicao if motor._diabob else "não encontrado",
+            "jesus": motor._jesus.nome_exibicao if motor._jesus else "não encontrado",
+            "helena": motor._helena.nome_exibicao if motor._helena else "não encontrado",
+            "sun_tzu": motor._sun_tzu.nome_exibicao if motor._sun_tzu else "não encontrado",
+        },
+    }

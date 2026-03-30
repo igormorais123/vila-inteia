@@ -16,6 +16,8 @@ from typing import Optional
 from .persona import Persona, carregar_todas_personas
 from .campus import LOCAIS, obter_local
 from .cognitivo.sintetizar import sintetizar
+from .rede_social import RedeSocial
+from .gatilhos import MotorGatilhos
 from ..config import config
 
 
@@ -45,6 +47,10 @@ class SimulacaoVila:
         self.hora_atual: datetime = datetime.now()
         self.rodando: bool = False
         self.pausada: bool = False
+
+        # Rede Social e Motor de Gatilhos
+        self.rede_social = RedeSocial()
+        self.motor_gatilhos = MotorGatilhos(self.rede_social)
 
         # Logs e eventos
         self.log_eventos: list[dict] = []
@@ -179,6 +185,30 @@ class SimulacaoVila:
         # Manter conversas recentes limitadas
         self.conversas_recentes = self.conversas_recentes[-50:]
 
+        # ========== MOTOR DE GATILHOS ==========
+        # Executa todos os 6 gatilhos: debates rivais, Diabob, Jesus,
+        # Helena moderadora, posts espontâneos, waves de comentários
+        eventos_gatilhos = self.motor_gatilhos.executar_step(
+            step=self.step,
+            hora_atual=self.hora_atual,
+            personas=self.personas,
+        )
+        for evento in eventos_gatilhos:
+            resumo_step["acoes"].append({
+                "agente_id": "sistema",
+                "agente_nome": "Motor de Gatilhos",
+                "tipo": evento["tipo"],
+                "local": "campus",
+                "acao": evento["descricao"],
+                "emoji": "⚡",
+            })
+        # Processar reações pendentes na rede social
+        interacoes_rede = self.rede_social.processar_reacoes(
+            self.personas, self.hora_atual, max_reacoes_por_step=15
+        )
+        self.stats["total_conversas"] += len(interacoes_rede)
+        # ========================================
+
         # Avançar tempo
         self.hora_atual += timedelta(seconds=config.segundos_por_step)
 
@@ -258,13 +288,21 @@ class SimulacaoVila:
         """
         Injeta um tópico no campus para os agentes discutirem.
 
-        O tópico é registrado como evento em todos os locais públicos,
-        e adicionado à lista de tópicos ativos para síntese.
+        Gatilho 1 (prioridade máxima): publica na rede social com
+        comentários imediatos dos consultores mais relevantes,
+        E registra como evento nos locais públicos do campus.
         """
         if topico not in config.topicos_ativos:
             config.topicos_ativos.append(topico)
 
-        # Anunciar nos locais públicos
+        # Publicar na rede social via Motor de Gatilhos (gera comentários IA)
+        self.motor_gatilhos.injetar_tema(
+            titulo=topico,
+            personas=self.personas,
+            step=self.step,
+        )
+
+        # Anunciar nos locais públicos (para pipeline cognitivo)
         for local_id, local in LOCAIS.items():
             if local.tipo in ("publico", "trabalho"):
                 for persona in self.personas.values():
@@ -354,6 +392,14 @@ class SimulacaoVila:
             "conversas_recentes": self.conversas_recentes[-10:],
             "topicos_ativos": config.topicos_ativos,
             "stats": self.stats,
+            "rede_social": {
+                "total_posts": self.rede_social.total_posts,
+                "total_comentarios": self.rede_social.total_comentarios,
+                "total_reacoes": self.rede_social.total_reacoes,
+                "trending": self.rede_social.trending_tags(5),
+                "posts_hoje": self.motor_gatilhos.posts_hoje,
+                "waves_pendentes": len(self.motor_gatilhos.fila_waves),
+            },
         }
 
     def mapa_calor(self) -> dict[str, int]:
@@ -398,6 +444,9 @@ class SimulacaoVila:
                 os.path.join(self.dir_dados, "sinteses.json"), "w", encoding="utf-8"
             ) as f:
                 json.dump(self.sinteses, f, ensure_ascii=False, indent=2)
+
+        # Salvar rede social
+        self.rede_social.salvar(os.path.join(self.dir_dados, "rede_social.json"))
 
         self.log(f"Simulação salva em {self.dir_dados}")
 

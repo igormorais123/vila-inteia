@@ -5,7 +5,7 @@
 **Versao:** 1.0
 **Data:** 2026-02-24
 **Autor:** Igor Morais + Claude Code
-**Status:** Design (nao implementado)
+**Status:** Parcialmente implementado (Motor de Gatilhos em engine/gatilhos.py)
 
 ---
 
