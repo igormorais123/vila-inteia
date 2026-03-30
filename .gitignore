@@ -30,3 +30,4 @@ vila-inteia/data/
 
 # Logs
 *.log
+.claude/settings.local.json

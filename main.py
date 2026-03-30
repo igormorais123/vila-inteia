@@ -15,10 +15,10 @@ import os
 import time
 
 # Adicionar raiz do projeto ao path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from vila_inteia.engine.simulacao import SimulacaoVila
-from vila_inteia.config import config
+from engine.simulacao import SimulacaoVila
+from config import config
 
 
 def banner():
@@ -109,16 +109,17 @@ def modo_serve(args):
         from fastapi import FastAPI
         from fastapi.middleware.cors import CORSMiddleware
         from fastapi.staticfiles import StaticFiles
-        from vila_inteia.api.rotas_vila import router
+        from api.rotas_vila import router
+        from api.rotas_rede_social import router as rede_router
     except ImportError as e:
         print(f"Erro: {e}")
-        print("Instale as dependências: pip install fastapi uvicorn")
+        print("Instale as dependencias: pip install -r requirements.txt")
         sys.exit(1)
 
     app = FastAPI(
         title="Vila INTEIA - Think Tank Vivo",
-        description="Simulação de 144 consultores lendários",
-        version="1.0.0",
+        description="Simulação de 151 consultores lendários",
+        version="1.1.0",
     )
 
     app.add_middleware(
@@ -129,17 +130,21 @@ def modo_serve(args):
     )
 
     app.include_router(router)
+    app.include_router(rede_router)
 
-    # Servir frontend estático
+    # Servir frontend estatico
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
     if os.path.exists(frontend_dir):
         app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
 
-    print(f"Servidor Vila INTEIA em http://localhost:{args.port}")
-    print(f"  API docs: http://localhost:{args.port}/docs")
-    print(f"  Frontend: http://localhost:{args.port}/")
+    # PORT do ambiente (Render) sobrescreve argumento
+    port = int(os.environ.get("PORT", args.port))
 
-    uvicorn.run(app, host="0.0.0.0", port=args.port)
+    print(f"Servidor Vila INTEIA em http://localhost:{port}")
+    print(f"  API docs: http://localhost:{port}/docs")
+    print(f"  Frontend: http://localhost:{port}/")
+
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 
 def modo_demo(args):
