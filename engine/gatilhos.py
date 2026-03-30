@@ -28,6 +28,7 @@ from typing import Any, Optional
 from .persona import Persona
 from .rede_social import RedeSocial, Postagem
 from .ia_client import chamar_llm_conversa, MODELO_RAPIDO, MODELO_ANALISE, MODELO_SINTESE
+from .arquetipos import gerar_prompt_profundo, REGRAS_ESPECIAIS
 
 logger = logging.getLogger("vila-inteia.gatilhos")
 
@@ -37,18 +38,28 @@ logger = logging.getLogger("vila-inteia.gatilhos")
 # ============================================================
 
 PARES_RIVAIS = [
-    ("Elon Musk", "Mark Zuckerberg", "disrupção vs escala", ["tecnologia", "negocios"]),
-    ("Sun Tzu", "Carl von Clausewitz", "estratégia oriental vs ocidental", ["estrategia", "guerra"]),
+    # Clássicos do imaginário popular
     ("Jesus Cristo", "Diabob", "luz vs trevas", ["filosofia", "valores"]),
-    ("Warren Buffett", "Elon Musk", "valor vs crescimento", ["investimentos", "risco"]),
-    ("Platão", "Nicolau Maquiavel", "idealismo vs pragmatismo", ["politica", "filosofia"]),
+    ("Elon Musk", "Mark Zuckerberg", "disrupção vs escala", ["tecnologia", "negocios"]),
     ("Steve Jobs", "Bill Gates", "design vs engenharia", ["tecnologia", "lideranca"]),
-    ("Nikola Tesla", "Thomas Edison", "gênio vs empreendedor", ["inovacao", "tecnologia"]),
-    ("Sócrates", "Nietzsche", "virtude vs vontade de poder", ["filosofia"]),
-    ("Gandhi", "Genghis Khan", "não-violência vs conquista", ["poder", "lideranca"]),
-    ("Ayn Rand", "Karl Marx", "individualismo vs coletivismo", ["economia", "politica"]),
-    ("Napoleon Bonaparte", "Sun Tzu", "força bruta vs astúcia", ["estrategia"]),
-    ("Marco Aurélio", "Diabob", "estoicismo vs caos", ["filosofia", "resiliencia"]),
+    ("Warren Buffett", "Elon Musk", "valor vs crescimento", ["investimentos", "risco"]),
+    ("Nikola Tesla", "Albert Einstein", "invenção vs teoria", ["ciencia", "genio"]),
+    ("Sun Tzu", "Nicolau Maquiavel", "arte da guerra vs arte do poder", ["estrategia", "poder"]),
+    # Novos — inconsciente coletivo
+    ("Sócrates", "Donald Trump", "verdade vs narrativa", ["filosofia", "politica"]),
+    ("Rui Barbosa", "Nicolau Maquiavel", "lei vs poder real", ["juridico", "politica"]),
+    ("Carl Jung", "Sigmund Freud", "inconsciente coletivo vs individual", ["psicologia"]),
+    ("Marco Aurélio", "Nietzsche", "estoicismo vs vontade de poder", ["filosofia", "resiliencia"]),
+    ("Marco Aurélio", "Diabob", "disciplina vs caos", ["filosofia", "resiliencia"]),
+    ("Sócrates", "Aristóteles", "pergunta vs sistema", ["filosofia", "logica"]),
+    ("Cleópatra", "Nicolau Maquiavel", "sedução vs força", ["poder", "estrategia"]),
+    ("Steve Jobs", "Leonardo da Vinci", "design moderno vs renascentista", ["arte", "inovacao"]),
+    ("Mahatma Gandhi", "Donald Trump", "não-violência vs poder bruto", ["politica", "lideranca"]),
+    ("Isaac Asimov", "Albert Einstein", "ficção vs física", ["ciencia", "futuro"]),
+    ("Milton H. Erickson", "Carl Jung", "hipnose vs arquétipos", ["psicologia", "inconsciente"]),
+    ("Winston Churchill", "Mahatma Gandhi", "guerra justa vs resistência pacífica", ["poder", "etica"]),
+    ("Aristóteles", "Albert Einstein", "lógica clássica vs relatividade", ["ciencia", "filosofia"]),
+    ("Rui Barbosa", "Donald Trump", "eloquência vs showmanship", ["politica", "comunicacao"]),
 ]
 
 # Temas para debates entre rivais (baseados nas interseções de expertise)
@@ -118,21 +129,8 @@ class DiabobController:
         comentarios = alvo.get("comentarios", [])
         ha_consenso = len(comentarios) >= 3
 
-        system = """Você é Diabob, O Provocador Universal da Vila INTEIA.
-
-PERSONALIDADE: Sarcástico, irônico, brilhante. Você NUNCA concorda com ninguém.
-Encontra o ponto fraco de QUALQUER argumento. Quando todos concordam, você discorda.
-Quando todos discordam, você defende a posição impopular.
-
-TOM: Agressivo mas intelectual. Cortante mas espirituoso. Nunca vulgar, sempre afiado.
-FRASE: "Se todos estão pensando igual, alguém não está pensando."
-
-REGRAS:
-- Máximo 3-5 frases
-- Provoque de forma inteligente, não infantil
-- Cite especificamente O QUE está errado no argumento
-- Use ironia como bisturi, não como marreta
-- Português do Brasil"""
+        # Prompt profundo baseado nos 100+ atributos do Diabob
+        system = gerar_prompt_profundo(diabob.dados_consultor)
 
         contexto_consenso = ""
         if ha_consenso:
@@ -193,20 +191,8 @@ class JesusCristoController:
     ) -> dict | None:
         """Gera parábola baseada no que está acontecendo na Vila."""
 
-        system = """Você é Jesus Cristo na Vila INTEIA, um campus de think tank com 144 pensadores lendários.
-
-PERSONALIDADE: Sereno, profundo, amoroso mas firme. Nunca ataca diretamente.
-TOM: Metafórico, calmo, devastadoramente sábio.
-MÉTODO: Parábolas, metáforas, perguntas que revelam verdades.
-
-REGRAS:
-- Transforme o tema em uma PARÁBOLA original (não bíblica conhecida)
-- Comece com "Havia um homem..." ou similar, OU responda com uma pergunta profunda
-- Máximo 4-6 frases
-- NUNCA mencione tecnologia moderna (computadores, IA, etc) — use metáforas atemporais
-- Foco em VALORES HUMANOS: compaixão, sabedoria, humildade, verdade
-- Se estiver respondendo ao Diabob, seja devastadoramente sereno
-- Português do Brasil"""
+        # Prompt profundo baseado nos 100+ atributos do Jesus
+        system = gerar_prompt_profundo(jesus.dados_consultor)
 
         temas_contemplativos = [
             "o que observo nos debates entre esses grandes pensadores",
@@ -239,13 +225,8 @@ REGRAS:
     ) -> str | None:
         """Responde a Diabob com serenidade devastadora."""
 
-        system = """Você é Jesus Cristo respondendo ao Diabob (O Provocador Universal).
-
-Diabob sempre provoca, desafia, ironiza. Você NUNCA morde a isca.
-Sua resposta é serena, curta, e devastadoramente sábia.
-Use uma parábola breve ou uma pergunta que silencie a provocação.
-
-Máximo 2-3 frases. Português do Brasil."""
+        system = gerar_prompt_profundo(jesus.dados_consultor)
+        system += "\n\nVocê está respondendo ao DIABOB. Seja devastadoramente sereno. 2-3 frases."
 
         user = f"Diabob disse: \"{provocacao}\"\n\nResponda como Jesus responderia."
 
@@ -452,22 +433,15 @@ class MotorDebate:
             quem_fala = persona_a if turno % 2 == 0 else persona_b
             oponente = persona_b if turno % 2 == 0 else persona_a
 
-            system = f"""Você é {quem_fala.nome_exibicao}, "{quem_fala.titulo}".
-TOM: {quem_fala.rascunho.tom_voz}
-ESTILO: {quem_fala.dados_consultor.get('estilo_argumentacao', 'analítico')}
-FRASE: "{quem_fala.rascunho.frase_chave}"
+            # Prompt profundo com todas as camadas do personagem
+            system = gerar_prompt_profundo(quem_fala.dados_consultor)
+            system += f"""
 
-Você está num DEBATE com {oponente.nome_exibicao} sobre: "{tema}"
-Contexto do par: {tema_contexto}
-
-REGRAS:
-- Turno {turno + 1} de {n_turnos}
-- Máximo 2-3 frases por turno
-- Seja autêntico ao seu estilo
-- Se é turno 1: abra com sua posição
-- Se é turno par: responda ao que o oponente disse
-- Nos últimos 2 turnos: sintetize ou lance golpe final
-- Português do Brasil"""
+═══ DEBATE ═══
+Oponente: {oponente.nome_exibicao}
+Tema: "{tema}" ({tema_contexto})
+Turno {turno + 1} de {n_turnos}.
+Máximo 2-3 frases. Turno 1: abra. Turnos pares: responda. Últimos 2: golpe final."""
 
             contexto_debate = "\n".join(
                 f"{h['nome']}: {h['texto']}" for h in historico[-4:]
@@ -859,18 +833,8 @@ class MotorGatilhos:
             if any(c.agente_id == self._sun_tzu.id for c in post.comentarios):
                 continue
 
-            system = """Você é Sun Tzu, autor de A Arte da Guerra.
-
-PERSONALIDADE: Ultra-estratégico. Observa muito, fala pouco. Cada palavra é calculada.
-TOM: Lacônico, profundo, devastador. Fala como quem já venceu a guerra antes de começar.
-MÉTODO: Uma frase curta que muda toda a perspectiva do debate.
-
-REGRAS:
-- MÁXIMO 2 frases. Preferencialmente 1.
-- Cite A Arte da Guerra se encaixar naturalmente
-- Não explique. Não justifique. Apenas declare.
-- Sua fala deve ser o tipo de coisa que silencia a sala
-- Português do Brasil"""
+            system = gerar_prompt_profundo(self._sun_tzu.dados_consultor)
+            system += "\n\nINTERVENÇÃO CIRÚRGICA: máximo 1-2 frases. Silencie a sala."
 
             resumo = "\n".join(
                 f"- {c.agente_nome}: {c.conteudo[:80]}"

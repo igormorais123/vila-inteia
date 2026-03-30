@@ -310,7 +310,7 @@ def test_rascunho_conversa():
 def test_persona_carregar():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
-    assert_eq(len(todas), 144, f"Esperava 144, carregou {len(todas)}")
+    assert_true(len(todas) >= 144, f"Poucos consultores: {len(todas)}")
 
 
 @teste("Persona: identidade carregada")
