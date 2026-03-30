@@ -13,8 +13,12 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
-from ..engine.simulacao import SimulacaoVila
-from ..config import config
+try:
+    from ..engine.simulacao import SimulacaoVila
+    from ..config import config
+except (ImportError, ValueError):
+    from engine.simulacao import SimulacaoVila
+    from config import config
 
 
 # ============================================================

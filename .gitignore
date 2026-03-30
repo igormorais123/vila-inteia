@@ -23,9 +23,10 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Data (pode conter dados de sessão)
-data/*.json
-data/*.log
+# Data de simulacao (sessoes salvas)
+data/*/
+vila-inteia/data/
+!data/banco-consultores-lendarios.json
 
 # Logs
 *.log

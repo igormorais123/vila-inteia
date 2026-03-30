@@ -12,8 +12,13 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
 from .rotas_vila import obter_simulacao
-from ..engine.rede_social import RedeSocial
-from ..engine.gatilhos import MotorGatilhos
+
+try:
+    from ..engine.rede_social import RedeSocial
+    from ..engine.gatilhos import MotorGatilhos
+except (ImportError, ValueError):
+    from engine.rede_social import RedeSocial
+    from engine.gatilhos import MotorGatilhos
 
 
 # ============================================================

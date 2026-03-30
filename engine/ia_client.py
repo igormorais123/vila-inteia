@@ -78,8 +78,10 @@ def _detectar_provider():
             pass
 
     if not _client and not _client_fallback:
-        logger.warning("Vila IA: nenhum provider disponível — rodará com heurística")
-        _provider = None
+        if not getattr(_detectar_provider, '_warned', False):
+            logger.warning("Vila IA: nenhum provider disponivel — rodara com heuristica")
+            _detectar_provider._warned = True
+        _provider = "nenhum"
 
 
 def _ensure_client():

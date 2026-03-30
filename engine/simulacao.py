@@ -18,7 +18,12 @@ from .campus import LOCAIS, obter_local
 from .cognitivo.sintetizar import sintetizar
 from .rede_social import RedeSocial
 from .gatilhos import MotorGatilhos
-from ..config import config
+
+# Import config: relativo (package mode) ou direto (standalone)
+try:
+    from ..config import config
+except (ImportError, ValueError):
+    from config import config
 
 
 class SimulacaoVila:
@@ -36,7 +41,7 @@ class SimulacaoVila:
     def __init__(
         self,
         nome: str = "simulacao_padrao",
-        caminho_consultores: str = "frontend/public/data/banco-consultores-lendarios.json",
+        caminho_consultores: str = "data/banco-consultores-lendarios.json",
     ):
         self.nome = nome
         self.caminho_consultores = caminho_consultores
@@ -74,12 +79,18 @@ class SimulacaoVila:
         """
         Carrega consultores e inicializa todas as personas.
         """
-        # Resolver caminho relativo
+        # Resolver caminho relativo — tenta múltiplas raízes
         caminho = self.caminho_consultores
         if not os.path.isabs(caminho):
-            # Tentar a partir do diretório do projeto
-            for base in [".", "C:/Agentes", os.getcwd()]:
-                tentativa = os.path.join(base, caminho)
+            dir_projeto = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            candidatos = [
+                os.path.join(dir_projeto, caminho),
+                os.path.join(dir_projeto, "data", "banco-consultores-lendarios.json"),
+                os.path.join(dir_projeto, "frontend", "public", "data", "banco-consultores-lendarios.json"),
+                os.path.join(".", caminho),
+                os.path.join(os.getcwd(), caminho),
+            ]
+            for tentativa in candidatos:
                 if os.path.exists(tentativa):
                     caminho = tentativa
                     break
@@ -92,7 +103,23 @@ class SimulacaoVila:
         # Carregar personas
         todas = carregar_todas_personas(caminho)
 
-        if max_agentes:
+        if max_agentes and max_agentes < len(todas):
+            # Sempre incluir personagens especiais mesmo com limite
+            NOMES_ESPECIAIS = {
+                "diabob", "jesus cristo", "helena montenegro",
+                "sun tzu", "nikola tesla",
+            }
+            primeiros = todas[:max_agentes]
+            ids_incluidos = {p.id for p in primeiros}
+
+            especiais_extras = [
+                p for p in todas
+                if p.id not in ids_incluidos
+                and p.nome_exibicao.lower() in NOMES_ESPECIAIS
+            ]
+
+            todas = primeiros + especiais_extras
+        elif max_agentes:
             todas = todas[:max_agentes]
 
         for persona in todas:

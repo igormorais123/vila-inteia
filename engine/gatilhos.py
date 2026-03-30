@@ -558,13 +558,13 @@ class MotorGatilhos:
     def __init__(self, rede: RedeSocial):
         self.rede = rede
 
-        # Rastreamento de cadência
-        self.ultimo_evento_step: int = 0       # Gatilho 2
-        self.ultimo_helena_step: int = 0       # Gatilho 3
-        self.ultimo_diabob_step: int = 0       # Gatilho 6
-        self.ultimo_jesus_step: int = 0        # Gatilho 6
-        self.ultimo_debate_step: int = 0       # Gatilho 5
-        self.ultimo_sintese_step: int = 0      # Helena síntese
+        # Rastreamento de cadência (iniciar negativo para permitir primeiro uso)
+        self.ultimo_evento_step: int = -10     # Gatilho 2
+        self.ultimo_helena_step: int = -10     # Gatilho 3
+        self.ultimo_diabob_step: int = -20     # Gatilho 6
+        self.ultimo_jesus_step: int = -40      # Gatilho 6
+        self.ultimo_debate_step: int = -30     # Gatilho 5
+        self.ultimo_sintese_step: int = -100   # Helena síntese
 
         # Fila de waves (posts aguardando comentários graduais)
         self.fila_waves: list[PostAgendado] = []
@@ -636,6 +636,12 @@ class MotorGatilhos:
         # --- GATILHO 3: Helena intervém em posts ativos ---
         if self._helena and (step - self.ultimo_helena_step) >= 5:
             resultado = self._gatilho_helena(step, personas)
+            if resultado:
+                eventos.append(resultado)
+
+        # --- Sun Tzu: intervenção cirúrgica rara (a cada 50 steps, nos debates) ---
+        if self._sun_tzu and step % 50 == 0:
+            resultado = self._gatilho_sun_tzu(step)
             if resultado:
                 eventos.append(resultado)
 
@@ -843,6 +849,58 @@ class MotorGatilhos:
 
         return None
 
+    def _gatilho_sun_tzu(self, step: int) -> dict | None:
+        """Sun Tzu: observa muito, fala pouco. Cada fala é cirúrgica."""
+        # Encontrar o debate mais engajado que ele ainda não comentou
+        for post_dict in self.rede.feed(limite=5, ordenar_por="engajamento"):
+            post = self.rede._indice_por_id.get(post_dict["id"])
+            if not post or post.total_comentarios < 3:
+                continue
+            if any(c.agente_id == self._sun_tzu.id for c in post.comentarios):
+                continue
+
+            system = """Você é Sun Tzu, autor de A Arte da Guerra.
+
+PERSONALIDADE: Ultra-estratégico. Observa muito, fala pouco. Cada palavra é calculada.
+TOM: Lacônico, profundo, devastador. Fala como quem já venceu a guerra antes de começar.
+MÉTODO: Uma frase curta que muda toda a perspectiva do debate.
+
+REGRAS:
+- MÁXIMO 2 frases. Preferencialmente 1.
+- Cite A Arte da Guerra se encaixar naturalmente
+- Não explique. Não justifique. Apenas declare.
+- Sua fala deve ser o tipo de coisa que silencia a sala
+- Português do Brasil"""
+
+            resumo = "\n".join(
+                f"- {c.agente_nome}: {c.conteudo[:80]}"
+                for c in post.comentarios[-4:]
+            )
+
+            user = f"""Debate: "{post.titulo}"
+{resumo}
+
+Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
+
+            texto = chamar_llm_conversa(system, user, modelo=MODELO_RAPIDO, max_tokens=80)
+            if not texto:
+                texto = (
+                    "Quem conhece o inimigo e a si mesmo não precisa temer "
+                    "o resultado de cem batalhas. Vocês conhecem a si mesmos?"
+                )
+
+            self.rede.comentar(post.id, self._sun_tzu, texto)
+
+            logger.info(f"Sun Tzu interveio em: {post.titulo[:40]}")
+
+            return {
+                "tipo": "sun_tzu",
+                "descricao": f"Sun Tzu interveio cirurgicamente em '{post.titulo[:30]}'",
+                "post_id": post.id,
+            }
+
+        return None
+
     def _gatilho_helena_sintese(self, step: int) -> dict | None:
         """Helena gera síntese do dia às 22h."""
         sintese = HelenaController.gerar_sintese_diaria(self._helena, self.rede)
@@ -898,11 +956,14 @@ class MotorGatilhos:
                 )
 
                 for persona in reagentes:
+                    from .rede_social import (
+                        _gerar_comentario_ia, _gerar_comentario_heuristico,
+                    )
+                    conteudo = None
                     if wave.usa_ia:
-                        from .rede_social import _gerar_comentario_ia
                         conteudo = _gerar_comentario_ia(persona, post)
-                    else:
-                        from .rede_social import _gerar_comentario_heuristico
+                    # Fallback: se IA falhou ou wave não usa IA
+                    if not conteudo:
                         conteudo = _gerar_comentario_heuristico(persona, post)
 
                     if conteudo:
@@ -920,6 +981,39 @@ class MotorGatilhos:
 
                 agendado.wave_atual = i + 1
                 processou_algo = True
+
+            # Helena auto-intervém em posts com 5+ comentários
+            if self._helena and post.total_comentarios >= 5:
+                helena_ja = any(
+                    c.agente_id == self._helena.id for c in post.comentarios
+                )
+                if not helena_ja:
+                    tipo_int = HelenaController.deve_intervir(post, step)
+                    if tipo_int:
+                        todas_cats = {
+                            p.categoria for p in personas.values() if p.ativo
+                        } if personas else set()
+                        texto = HelenaController.gerar_intervencao_ia(
+                            self._helena, post, tipo_int, todas_cats
+                        )
+                        if not texto:
+                            # Fallback: síntese genérica
+                            nomes = [c.agente_nome for c in post.comentarios[:5]]
+                            texto = (
+                                f"Observando as perspectivas de {', '.join(nomes[:3])} "
+                                f"e outros, noto um padrão interessante. "
+                                f"Mas a pergunta que ninguém fez: qual premissa "
+                                f"todos estão aceitando sem questionar?"
+                            )
+                        self.rede.comentar(post.id, self._helena, texto)
+                        eventos.append({
+                            "tipo": "helena_auto",
+                            "descricao": (
+                                f"Helena interviu em '{post.titulo[:30]}' "
+                                f"({tipo_int})"
+                            ),
+                            "post_id": post.id,
+                        })
 
             # Manter na fila se ainda tem waves pendentes
             if agendado.wave_atual < len(WAVES):
