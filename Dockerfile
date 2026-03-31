@@ -7,9 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8100
+EXPOSE 10000
 
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8100/api/v1/vila/estado')" || exit 1
+ENV PORT=10000
 
-CMD ["python", "main.py", "serve", "--port", "8100"]
+CMD python main.py serve --port ${PORT}
