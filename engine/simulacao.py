@@ -113,7 +113,7 @@ class SimulacaoVila:
             ids_incluidos = {p.id for p in primeiros}
 
             especiais_extras = [
-                p for p in todas
+                p for p in todas[max_agentes:]
                 if p.id not in ids_incluidos
                 and p.nome_exibicao.lower() in NOMES_ESPECIAIS
             ]

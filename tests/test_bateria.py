@@ -49,7 +49,7 @@ total_falha = 0
 falhas = []
 
 
-def teste(nome: str):
+def registrar_teste(nome: str):
     """Decorator para registrar testes."""
     def decorator(func):
         def wrapper():
@@ -98,7 +98,7 @@ class AssertionError(Exception):
 # 1. TESTES DE CONFIGURACAO
 # ============================================================
 
-@teste("Config: valores padrao")
+@registrar_teste("Config: valores padrao")
 def test_config_defaults():
     c = ConfigSimulacao()
     assert_eq(c.segundos_por_step, 600)
@@ -108,7 +108,7 @@ def test_config_defaults():
     assert_eq(c.raio_percepcao, 2)
 
 
-@teste("Config: singleton global")
+@registrar_teste("Config: singleton global")
 def test_config_singleton():
     assert_true(config is not None)
     assert_true(isinstance(config, ConfigSimulacao))
@@ -118,38 +118,38 @@ def test_config_singleton():
 # 2. TESTES DE CAMPUS
 # ============================================================
 
-@teste("Campus: 19 locais definidos")
+@registrar_teste("Campus: 19 locais definidos")
 def test_campus_locais():
     assert_eq(len(LOCAIS), 19, f"Esperava 19 locais, tem {len(LOCAIS)}")
 
 
-@teste("Campus: tipos de locais")
+@registrar_teste("Campus: tipos de locais")
 def test_campus_tipos():
     tipos = {l.tipo for l in LOCAIS.values()}
     for t in ("publico", "trabalho", "residencia", "lazer", "especial"):
         assert_in(t, tipos)
 
 
-@teste("Campus: obter_local valido")
+@registrar_teste("Campus: obter_local valido")
 def test_campus_obter():
     local = obter_local("agora")
     assert_true(local is not None, "agora nao encontrada")
     assert_true("gora" in local.nome)
 
 
-@teste("Campus: obter_local invalido retorna None")
+@registrar_teste("Campus: obter_local invalido retorna None")
 def test_campus_obter_invalido():
     local = obter_local("local_inexistente")
     assert_true(local is None)
 
 
-@teste("Campus: conexoes existem")
+@registrar_teste("Campus: conexoes existem")
 def test_campus_conexoes():
     conns = obter_conexoes("agora")
     assert_true(len(conns) > 0, "agora sem conexoes")
 
 
-@teste("Campus: distancia BFS")
+@registrar_teste("Campus: distancia BFS")
 def test_campus_distancia():
     dist = calcular_distancia("agora", "agora")
     assert_eq(dist, 0)
@@ -158,7 +158,7 @@ def test_campus_distancia():
     assert_true(dist2 >= 0, f"Distancia invalida: {dist2}")
 
 
-@teste("Campus: residencia por categoria")
+@registrar_teste("Campus: residencia por categoria")
 def test_campus_residencia():
     for cat in ("estrategia", "tech", "jurista_lendario", "mindset"):
         r = residencia_para_categoria(cat)
@@ -166,7 +166,7 @@ def test_campus_residencia():
         assert_in(r, LOCAIS)
 
 
-@teste("Campus: locais abertos por hora")
+@registrar_teste("Campus: locais abertos por hora")
 def test_campus_horario():
     abertos_6h = locais_abertos(6)
     abertos_3h = locais_abertos(3)
@@ -175,7 +175,7 @@ def test_campus_horario():
                 f"6h={len(abertos_6h)}, 3h={len(abertos_3h)}")
 
 
-@teste("Campus: posicoes x,y definidas")
+@registrar_teste("Campus: posicoes x,y definidas")
 def test_campus_posicoes():
     for lid, local in LOCAIS.items():
         assert_true(hasattr(local, 'posicao_x'), f"{lid} sem posicao_x")
@@ -186,7 +186,7 @@ def test_campus_posicoes():
 # 3. TESTES DE MEMORIA
 # ============================================================
 
-@teste("Memoria Fluxo: criar e adicionar")
+@registrar_teste("Memoria Fluxo: criar e adicionar")
 def test_memoria_fluxo_basico():
     m = FluxoMemoria()
     m.adicionar_evento(
@@ -201,7 +201,7 @@ def test_memoria_fluxo_basico():
     assert_eq(m.eventos[0].descricao, "Teste de evento")
 
 
-@teste("Memoria Fluxo: recuperar por relevancia")
+@registrar_teste("Memoria Fluxo: recuperar por relevancia")
 def test_memoria_fluxo_recuperar():
     m = FluxoMemoria()
     for i in range(10):
@@ -216,7 +216,7 @@ def test_memoria_fluxo_recuperar():
     assert_eq(len(resultados), 3)
 
 
-@teste("Memoria Fluxo: deve_refletir")
+@registrar_teste("Memoria Fluxo: deve_refletir")
 def test_memoria_reflexao():
     m = FluxoMemoria()
     assert_true(not m.deve_refletir())
@@ -230,7 +230,7 @@ def test_memoria_reflexao():
     assert_true(m.deve_refletir(limiar=100))
 
 
-@teste("Memoria Fluxo: ultimas")
+@registrar_teste("Memoria Fluxo: ultimas")
 def test_memoria_ultimas():
     m = FluxoMemoria()
     for i in range(5):
@@ -242,7 +242,7 @@ def test_memoria_ultimas():
     assert_eq(len(ultimas), 3)
 
 
-@teste("Memoria Fluxo: pontos focais")
+@registrar_teste("Memoria Fluxo: pontos focais")
 def test_memoria_pontos_focais():
     m = FluxoMemoria()
     for _ in range(5):
@@ -261,7 +261,7 @@ def test_memoria_pontos_focais():
     assert_true(len(focais) > 0)
 
 
-@teste("Memoria Espacial: registrar visita")
+@registrar_teste("Memoria Espacial: registrar visita")
 def test_memoria_espacial():
     me = MemoriaEspacial()
     agora = datetime.now()
@@ -274,7 +274,7 @@ def test_memoria_espacial():
     assert_eq(favs[0], "agora")  # Mais visitado
 
 
-@teste("Memoria Espacial: presencas")
+@registrar_teste("Memoria Espacial: presencas")
 def test_memoria_presencas():
     me = MemoriaEspacial()
     me.registrar_presenca("agente_1", "Elon Musk", "laboratorio")
@@ -283,7 +283,7 @@ def test_memoria_presencas():
     assert_in("agente_1", [a.agente_id for a in agentes])
 
 
-@teste("Rascunho: estado inicial")
+@registrar_teste("Rascunho: estado inicial")
 def test_rascunho():
     r = Rascunho()
     assert_true(not r.esta_conversando)
@@ -291,7 +291,7 @@ def test_rascunho():
     assert_eq(r.energia, 100)
 
 
-@teste("Rascunho: conversa ativa")
+@registrar_teste("Rascunho: conversa ativa")
 def test_rascunho_conversa():
     r = Rascunho()
     r.iniciar_conversa("parceiro_1", "Elon", "laboratorio", "tecnologia")
@@ -306,14 +306,14 @@ def test_rascunho_conversa():
 # 4. TESTES DE PERSONA
 # ============================================================
 
-@teste("Persona: carregar todas do JSON")
+@registrar_teste("Persona: carregar todas do JSON")
 def test_persona_carregar():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
     assert_true(len(todas) >= 144, f"Poucos consultores: {len(todas)}")
 
 
-@teste("Persona: identidade carregada")
+@registrar_teste("Persona: identidade carregada")
 def test_persona_identidade():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -324,7 +324,7 @@ def test_persona_identidade():
     assert_true(len(p.rascunho.local_atual) > 0, "Local vazio")
 
 
-@teste("Persona: prompt sistema nao vazio")
+@registrar_teste("Persona: prompt sistema nao vazio")
 def test_persona_prompt():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -333,7 +333,7 @@ def test_persona_prompt():
     assert_in("Vila INTEIA", prompt)
 
 
-@teste("Persona: decidir_interacao retorna float")
+@registrar_teste("Persona: decidir_interacao retorna float")
 def test_persona_interacao():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -343,7 +343,7 @@ def test_persona_interacao():
     assert_true(0 <= prob <= 1.0, f"Probabilidade fora de [0,1]: {prob}")
 
 
-@teste("Persona: categorias distintas")
+@registrar_teste("Persona: categorias distintas")
 def test_persona_categorias():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -351,7 +351,7 @@ def test_persona_categorias():
     assert_true(len(categorias) >= 10, f"Poucas categorias: {len(categorias)}")
 
 
-@teste("Persona: tiers validos")
+@registrar_teste("Persona: tiers validos")
 def test_persona_tiers():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -360,7 +360,7 @@ def test_persona_tiers():
         assert_in(t, ("S", "A", "B", "C", "legado", "especial"), f"Tier invalido: {t}")
 
 
-@teste("Persona: hiperparametros cognitivos 1-10")
+@registrar_teste("Persona: hiperparametros cognitivos 1-10")
 def test_persona_hiperparametros():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -375,7 +375,7 @@ def test_persona_hiperparametros():
 # 5. TESTES DE REDE SOCIAL
 # ============================================================
 
-@teste("Rede Social: publicar tema usuario")
+@registrar_teste("Rede Social: publicar tema usuario")
 def test_rede_tema():
     r = RedeSocial()
     post = r.publicar_tema_usuario("IA vai substituir advogados?")
@@ -384,7 +384,7 @@ def test_rede_tema():
     assert_eq(r.total_posts, 1)
 
 
-@teste("Rede Social: publicar opiniao consultor")
+@registrar_teste("Rede Social: publicar opiniao consultor")
 def test_rede_opiniao():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -398,7 +398,7 @@ def test_rede_opiniao():
     assert_eq(post.autor_nome, todas[0].nome_exibicao)
 
 
-@teste("Rede Social: comentar em post")
+@registrar_teste("Rede Social: comentar em post")
 def test_rede_comentar():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -409,7 +409,7 @@ def test_rede_comentar():
     assert_eq(post.total_comentarios, 2)
 
 
-@teste("Rede Social: reacoes")
+@registrar_teste("Rede Social: reacoes")
 def test_rede_reacoes():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -422,7 +422,7 @@ def test_rede_reacoes():
     assert_eq(post.total_reacoes, 2)
 
 
-@teste("Rede Social: feed ordenado")
+@registrar_teste("Rede Social: feed ordenado")
 def test_rede_feed():
     r = RedeSocial()
     r.publicar_tema_usuario("Post 1")
@@ -434,7 +434,7 @@ def test_rede_feed():
     assert_eq(feed[0]["tipo"], "tema")
 
 
-@teste("Rede Social: trending tags")
+@registrar_teste("Rede Social: trending tags")
 def test_rede_trending():
     r = RedeSocial()
     r.publicar_tema_usuario("IA e o futuro da tecnologia", tags=["ia", "futuro"])
@@ -446,7 +446,7 @@ def test_rede_trending():
     assert_in("futuro", tags)
 
 
-@teste("Rede Social: engajamento scoring")
+@registrar_teste("Rede Social: engajamento scoring")
 def test_rede_engajamento():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -458,7 +458,7 @@ def test_rede_engajamento():
     assert_true(post.engajamento > 0)
 
 
-@teste("Rede Social: selecionar reagentes")
+@registrar_teste("Rede Social: selecionar reagentes")
 def test_rede_selecionar_reagentes():
     from engine.rede_social import _selecionar_reagentes
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
@@ -477,7 +477,7 @@ def test_rede_selecionar_reagentes():
     assert_true(len(categorias) >= 2, f"Pouca diversidade: {categorias}")
 
 
-@teste("Rede Social: gerar comentario heuristico")
+@registrar_teste("Rede Social: gerar comentario heuristico")
 def test_rede_comentario_heuristico():
     from engine.rede_social import _gerar_comentario_heuristico
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
@@ -489,7 +489,7 @@ def test_rede_comentario_heuristico():
     assert_true(len(comentario) > 10, f"Comentario muito curto: '{comentario}'")
 
 
-@teste("Rede Social: gerar post autonomo heuristico")
+@registrar_teste("Rede Social: gerar post autonomo heuristico")
 def test_rede_post_autonomo():
     from engine.rede_social import _gerar_post_autonomo
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
@@ -505,7 +505,7 @@ def test_rede_post_autonomo():
     assert_true(gerados > 0, "Nenhum post autonomo gerado")
 
 
-@teste("Rede Social: salvar e formato JSON")
+@registrar_teste("Rede Social: salvar e formato JSON")
 def test_rede_salvar():
     r = RedeSocial()
     r.publicar_tema_usuario("Teste salvar", tags=["teste"])
@@ -524,7 +524,7 @@ def test_rede_salvar():
 # 6. TESTES DO MOTOR DE GATILHOS
 # ============================================================
 
-@teste("Gatilhos: criar motor")
+@registrar_teste("Gatilhos: criar motor")
 def test_gatilhos_criar():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -533,7 +533,7 @@ def test_gatilhos_criar():
     assert_true(m.rede is r)
 
 
-@teste("Gatilhos: pares rivais definidos")
+@registrar_teste("Gatilhos: pares rivais definidos")
 def test_gatilhos_pares():
     assert_true(len(PARES_RIVAIS) >= 10, f"Poucos pares: {len(PARES_RIVAIS)}")
     for nome_a, nome_b, tema, tags in PARES_RIVAIS:
@@ -543,7 +543,7 @@ def test_gatilhos_pares():
         assert_true(len(tags) > 0)
 
 
-@teste("Gatilhos: encontrar_por_nome")
+@registrar_teste("Gatilhos: encontrar_por_nome")
 def test_gatilhos_encontrar():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -562,14 +562,14 @@ def test_gatilhos_encontrar():
         print(f"    (Diabob encontrado: {diabob.nome_exibicao})")
 
 
-@teste("Gatilhos: DiabobController cadencia")
+@registrar_teste("Gatilhos: DiabobController cadencia")
 def test_diabob_cadencia():
     assert_true(DiabobController.deve_provocar(20, 0))
     assert_true(not DiabobController.deve_provocar(10, 0))
     assert_true(DiabobController.deve_provocar(30, 15))
 
 
-@teste("Gatilhos: JesusCristoController cadencia")
+@registrar_teste("Gatilhos: JesusCristoController cadencia")
 def test_jesus_cadencia():
     # Deve precisar de 30+ steps desde ultimo post
     hora_manha = datetime(2026, 3, 1, 9, 0)
@@ -577,7 +577,7 @@ def test_jesus_cadencia():
     assert_true(not JesusCristoController.deve_postar(5, 0, hora_manha))
 
 
-@teste("Gatilhos: HelenaController detectar intervencao")
+@registrar_teste("Gatilhos: HelenaController detectar intervencao")
 def test_helena_detectar():
     r = RedeSocial()
     post = r.publicar_tema_usuario("Debate")
@@ -586,7 +586,7 @@ def test_helena_detectar():
     assert_true(tipo is None, f"Intervencao indevida: {tipo}")
 
 
-@teste("Gatilhos: HelenaController consenso falso")
+@registrar_teste("Gatilhos: HelenaController consenso falso")
 def test_helena_consenso():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -603,7 +603,7 @@ def test_helena_consenso():
     assert_true(tipo in ("sintese", "consenso_falso"), f"Tipo: {tipo}")
 
 
-@teste("Gatilhos: MotorDebate selecionar par")
+@registrar_teste("Gatilhos: MotorDebate selecionar par")
 def test_motor_debate_selecionar():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -617,7 +617,7 @@ def test_motor_debate_selecionar():
         print("    (Nenhum par rival encontrado no JSON)")
 
 
-@teste("Gatilhos: injetar tema usuario")
+@registrar_teste("Gatilhos: injetar tema usuario")
 def test_gatilhos_injetar_tema():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -638,7 +638,7 @@ def test_gatilhos_injetar_tema():
     assert_eq(m.posts_hoje, 1)
 
 
-@teste("Gatilhos: injetar evento com cadencia")
+@registrar_teste("Gatilhos: injetar evento com cadencia")
 def test_gatilhos_injetar_evento():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -652,7 +652,7 @@ def test_gatilhos_injetar_evento():
     assert_true(p3 is not None)
 
 
-@teste("Gatilhos: chance espontaneo varia por horario")
+@registrar_teste("Gatilhos: chance espontaneo varia por horario")
 def test_gatilhos_chance_horario():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -663,7 +663,7 @@ def test_gatilhos_chance_horario():
                 f"Tarde ({chance_tarde}) deveria > madrugada ({chance_madru})")
 
 
-@teste("Gatilhos: encontrar especiais com JSON real")
+@registrar_teste("Gatilhos: encontrar especiais com JSON real")
 def test_gatilhos_especiais():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -689,7 +689,7 @@ def test_gatilhos_especiais():
         print("    (Nenhum personagem especial encontrado no JSON)")
 
 
-@teste("Gatilhos: wave config valida")
+@registrar_teste("Gatilhos: wave config valida")
 def test_gatilhos_waves():
     from engine.gatilhos import WAVES
     assert_eq(len(WAVES), 4)
@@ -704,7 +704,7 @@ def test_gatilhos_waves():
 # 7. TESTES DE SIMULACAO (INTEGRACAO)
 # ============================================================
 
-@teste("Simulacao: inicializar com 10 agentes")
+@registrar_teste("Simulacao: inicializar com 10 agentes")
 def test_simulacao_init():
     sim = SimulacaoVila(nome="teste_init")
     sim.inicializar(max_agentes=10)
@@ -715,7 +715,7 @@ def test_simulacao_init():
     assert_true(sim.motor_gatilhos.rede is sim.rede_social)
 
 
-@teste("Simulacao: executar 1 step")
+@registrar_teste("Simulacao: executar 1 step")
 def test_simulacao_step():
     sim = SimulacaoVila(nome="teste_step")
     sim.inicializar(max_agentes=5)
@@ -726,7 +726,7 @@ def test_simulacao_step():
     assert_true(len(resumo["acoes"]) > 0)
 
 
-@teste("Simulacao: executar 5 steps")
+@registrar_teste("Simulacao: executar 5 steps")
 def test_simulacao_multi_steps():
     sim = SimulacaoVila(nome="teste_multi")
     sim.inicializar(max_agentes=5)
@@ -735,7 +735,7 @@ def test_simulacao_multi_steps():
     assert_eq(sim.step, 5)
 
 
-@teste("Simulacao: injetar topico integrado")
+@registrar_teste("Simulacao: injetar topico integrado")
 def test_simulacao_topico():
     sim = SimulacaoVila(nome="teste_topico")
     sim.inicializar(max_agentes=10)
@@ -745,7 +745,7 @@ def test_simulacao_topico():
     assert_true(sim.rede_social.total_posts > 0, "Nenhum post na rede social")
 
 
-@teste("Simulacao: estado_mundo completo")
+@registrar_teste("Simulacao: estado_mundo completo")
 def test_simulacao_estado():
     sim = SimulacaoVila(nome="teste_estado")
     sim.inicializar(max_agentes=5)
@@ -758,7 +758,7 @@ def test_simulacao_estado():
     assert_in("waves_pendentes", estado["rede_social"])
 
 
-@teste("Simulacao: mapa de calor")
+@registrar_teste("Simulacao: mapa de calor")
 def test_simulacao_mapa_calor():
     sim = SimulacaoVila(nome="teste_mapa")
     sim.inicializar(max_agentes=10)
@@ -768,7 +768,7 @@ def test_simulacao_mapa_calor():
     assert_true(total >= 10, f"Mapa de calor soma {total}, esperava >= 10")
 
 
-@teste("Simulacao: salvar estado")
+@registrar_teste("Simulacao: salvar estado")
 def test_simulacao_salvar():
     sim = SimulacaoVila(nome="teste_salvar")
     sim.inicializar(max_agentes=3)
@@ -783,7 +783,7 @@ def test_simulacao_salvar():
     )
 
 
-@teste("Simulacao: consultar agente")
+@registrar_teste("Simulacao: consultar agente")
 def test_simulacao_consultar():
     sim = SimulacaoVila(nome="teste_consultar")
     sim.inicializar(max_agentes=5)
@@ -799,7 +799,7 @@ def test_simulacao_consultar():
 # 8. TESTES DE IA CLIENT
 # ============================================================
 
-@teste("IA Client: constantes definidas")
+@registrar_teste("IA Client: constantes definidas")
 def test_ia_constantes():
     assert_eq(MODELO_RAPIDO, "rapido")
     from engine.ia_client import MODELO_ANALISE, MODELO_SINTESE
@@ -807,7 +807,7 @@ def test_ia_constantes():
     assert_eq(MODELO_SINTESE, "sintese")
 
 
-@teste("IA Client: chamar_llm sem provider retorna None")
+@registrar_teste("IA Client: chamar_llm sem provider retorna None")
 def test_ia_sem_provider():
     # Sem OMNIROUTE_URL nem CLAUDE_API_KEY, deve retornar None gracefully
     resultado = chamar_llm(
@@ -823,14 +823,14 @@ def test_ia_sem_provider():
 # 9. TESTES DE EDGE CASES E ROBUSTEZ
 # ============================================================
 
-@teste("Edge: post sem tags")
+@registrar_teste("Edge: post sem tags")
 def test_edge_sem_tags():
     r = RedeSocial()
     post = r.publicar_tema_usuario("Sem tags nenhuma")
     assert_true(isinstance(post.tags, list))
 
 
-@teste("Edge: comentar em post inexistente")
+@registrar_teste("Edge: comentar em post inexistente")
 def test_edge_comentar_inexistente():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -839,7 +839,7 @@ def test_edge_comentar_inexistente():
     assert_true(resultado is None)
 
 
-@teste("Edge: reagir em post inexistente")
+@registrar_teste("Edge: reagir em post inexistente")
 def test_edge_reagir_inexistente():
     caminho = os.path.join(DIR_PROJETO, "data", "banco-consultores-lendarios.json")
     todas = carregar_todas_personas(caminho)
@@ -848,14 +848,14 @@ def test_edge_reagir_inexistente():
     assert_true(not resultado)
 
 
-@teste("Edge: feed vazio")
+@registrar_teste("Edge: feed vazio")
 def test_edge_feed_vazio():
     r = RedeSocial()
     feed = r.feed()
     assert_eq(len(feed), 0)
 
 
-@teste("Edge: motor gatilhos sem personas especiais")
+@registrar_teste("Edge: motor gatilhos sem personas especiais")
 def test_edge_sem_especiais():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -868,7 +868,7 @@ def test_edge_sem_especiais():
     assert_true(isinstance(eventos, list))
 
 
-@teste("Edge: cap de 75 posts por dia")
+@registrar_teste("Edge: cap de 75 posts por dia")
 def test_edge_cap_diario():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -883,7 +883,7 @@ def test_edge_cap_diario():
     assert_eq(len(eventos), 0, f"Gerou {len(eventos)} eventos apos cap")
 
 
-@teste("Edge: reset diario de posts")
+@registrar_teste("Edge: reset diario de posts")
 def test_edge_reset_diario():
     r = RedeSocial()
     m = MotorGatilhos(r)
@@ -899,7 +899,7 @@ def test_edge_reset_diario():
     assert_eq(m.dia_atual, 2)
 
 
-@teste("Edge: processar waves com fila vazia")
+@registrar_teste("Edge: processar waves com fila vazia")
 def test_edge_waves_vazia():
     r = RedeSocial()
     m = MotorGatilhos(r)

@@ -52,12 +52,13 @@ def refletir(
 
     for ponto in pontos_focais:
         # 2. Recuperar memórias sobre este ponto
-        memorias, _ = zip(*persona.memoria.recuperar(
+        resultados = persona.memoria.recuperar(
             consulta=ponto,
             n=10,
             peso_importancia=1.5,
             agora=hora_atual,
-        )) if persona.memoria.recuperar(consulta=ponto, n=10, agora=hora_atual) else ([], [])
+        )
+        memorias = [m for m, _ in resultados] if resultados else []
 
         if not memorias:
             continue

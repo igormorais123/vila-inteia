@@ -138,7 +138,10 @@ def modo_serve(args):
         app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
 
     # PORT do ambiente (Render) sobrescreve argumento
-    port = int(os.environ.get("PORT", args.port))
+    try:
+        port = int(os.environ.get("PORT", args.port))
+    except (ValueError, TypeError):
+        port = args.port
 
     print(f"Servidor Vila INTEIA em http://localhost:{port}")
     print(f"  API docs: http://localhost:{port}/docs")

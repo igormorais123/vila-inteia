@@ -25,15 +25,20 @@ except (ImportError, ValueError):
 # ESTADO GLOBAL DA SIMULAÇÃO
 # ============================================================
 
+import threading
+
 simulacao: Optional[SimulacaoVila] = None
+_sim_lock = threading.Lock()
 
 
 def obter_simulacao() -> SimulacaoVila:
     """Retorna a simulação ativa ou cria uma nova."""
     global simulacao
     if simulacao is None:
-        simulacao = SimulacaoVila(nome="vila_inteia_default")
-        simulacao.inicializar()
+        with _sim_lock:
+            if simulacao is None:
+                simulacao = SimulacaoVila(nome="vila_inteia_default")
+                simulacao.inicializar()
     return simulacao
 
 

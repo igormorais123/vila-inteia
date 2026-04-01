@@ -148,7 +148,7 @@ def test_prompts_profundos():
         print("\nFalhas:")
         for f in falhas:
             print(f"  x {f}")
-    return ok == total
+    assert ok == total, f"{total - ok} falhas de {total}"
 
 
 def test_prompts_debates():
@@ -186,7 +186,7 @@ def test_prompts_debates():
         print(f"     Prompt A: {len(prompt_a):5d} chars | Prompt B: {len(prompt_b):5d} chars")
 
     print(f"\nResultado: {ok}/{total} OK")
-    return ok == total
+    assert ok == total, f"{total - ok} falhas de {total}"
 
 
 def test_prompt_reacao():

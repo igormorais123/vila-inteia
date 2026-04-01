@@ -199,7 +199,7 @@ def _escolher_topico(
 
     # Adicionar reflexões recentes como tópico
     reflexoes = contexto.get("reflexoes_recentes", [])
-    if reflexoes:
+    if reflexoes and hasattr(reflexoes[-1], "descricao"):
         topicos.append(reflexoes[-1].descricao[:50])
 
     return random.choice(topicos)
