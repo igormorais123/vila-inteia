@@ -32,3 +32,4 @@ vila-inteia/data/
 *.log
 .claude/settings.local.json
 .gstack/
+resultado_10_materias.json
