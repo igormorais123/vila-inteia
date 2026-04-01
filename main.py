@@ -190,6 +190,114 @@ def modo_demo(args):
     print(f"\n📊 Stats: {sim.stats}")
 
 
+def modo_live(args):
+    """Vila INTEIA 24/7 — servidor + simulação contínua em background."""
+    banner()
+
+    import threading
+
+    try:
+        import uvicorn
+        from fastapi import FastAPI
+        from fastapi.middleware.cors import CORSMiddleware
+        from fastapi.staticfiles import StaticFiles
+        from api.rotas_vila import router, obter_simulacao
+        from api.rotas_rede_social import router as rede_router
+    except ImportError as e:
+        print(f"Erro: {e}")
+        sys.exit(1)
+
+    app = FastAPI(
+        title="Vila INTEIA - Think Tank Vivo 24/7",
+        version="2.0.0",
+    )
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    app.include_router(router)
+    app.include_router(rede_router)
+
+    frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
+    if os.path.exists(frontend_dir):
+        app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
+
+    # Inicializar simulação
+    sim = obter_simulacao()
+    if args.topico:
+        sim.injetar_topico(args.topico)
+        config.topicos_ativos.append(args.topico)
+
+    # Thread de simulação contínua
+    def loop_continuo():
+        intervalo = args.intervalo  # segundos entre steps
+        print(f"\n  Vila 24/7 ATIVA — 1 step a cada {intervalo}s")
+        print(f"  {len(sim.personas)} agentes vivendo no Campus INTEIA")
+        print(f"  Autoresearch a cada 100 steps")
+        print(f"  Previsibilidade a cada 50 steps\n")
+
+        while True:
+            if sim.pausada:
+                time.sleep(1)
+                continue
+
+            try:
+                resumo = sim.executar_step()
+
+                # Log compacto
+                n_conv = len(resumo.get("conversas", []))
+                n_ins = len(resumo.get("insights", []))
+                extras = []
+                if resumo.get("autoresearch"):
+                    extras.append("PESQUISA")
+                if resumo.get("briefing_preditivo"):
+                    extras.append("PREVISAO")
+                if n_conv > 0 or n_ins > 0 or extras:
+                    ex = f" [{', '.join(extras)}]" if extras else ""
+                    print(
+                        f"  Step {sim.step} "
+                        f"({sim.hora_atual.strftime('%d/%m %H:%M')}) "
+                        f"| {n_conv} conv | {n_ins} ins{ex}"
+                    )
+
+            except Exception as e:
+                print(f"  ERRO step {sim.step}: {e}")
+
+            time.sleep(intervalo)
+
+    thread_sim = threading.Thread(target=loop_continuo, daemon=True)
+    thread_sim.start()
+
+    # Endpoint para consultar estado live
+    @app.get("/api/v1/vila/live")
+    async def estado_live():
+        return {
+            "modo": "24/7",
+            "step": sim.step,
+            "hora_simulacao": sim.hora_atual.strftime("%Y-%m-%d %H:%M"),
+            "agentes_ativos": sum(1 for p in sim.personas.values() if p.ativo),
+            "conversas_total": sim.stats["total_conversas"],
+            "pesquisas_total": sim.stats.get("total_pesquisas", 0),
+            "tendencias": sim.motor_previsibilidade.to_dict(),
+            "autoresearch": sim.motor_autoresearch.to_dict(),
+            "topicos_ativos": config.topicos_ativos,
+            "rede_social": sim.rede_social.stats() if hasattr(sim.rede_social, 'stats') else {},
+        }
+
+    try:
+        port = int(os.environ.get("PORT", args.port))
+    except (ValueError, TypeError):
+        port = args.port
+
+    print(f"  Servidor: http://localhost:{port}")
+    print(f"  API docs: http://localhost:{port}/docs")
+    print(f"  Live: http://localhost:{port}/api/v1/vila/live")
+
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Vila INTEIA - Think Tank Vivo"
@@ -208,6 +316,12 @@ def main():
     serve_parser = subparsers.add_parser("serve", help="Iniciar servidor API + Frontend")
     serve_parser.add_argument("--port", type=int, default=8100, help="Porta do servidor")
 
+    # Comando: live (24/7)
+    live_parser = subparsers.add_parser("live", help="Vila 24/7: servidor + simulação contínua")
+    live_parser.add_argument("--port", type=int, default=8100, help="Porta do servidor")
+    live_parser.add_argument("--intervalo", type=int, default=30, help="Segundos entre steps (default: 30)")
+    live_parser.add_argument("--topico", help="Tópico inicial para discussão")
+
     # Comando: demo
     subparsers.add_parser("demo", help="Demo rápido com 10 agentes")
 
@@ -217,6 +331,8 @@ def main():
         modo_cli(args)
     elif args.comando == "serve":
         modo_serve(args)
+    elif args.comando == "live":
+        modo_live(args)
     elif args.comando == "demo":
         modo_demo(args)
     else:
@@ -225,6 +341,7 @@ def main():
         print("  python -m vila_inteia.main demo")
         print("  python -m vila_inteia.main run --steps 100 --topico 'eleições 2026'")
         print("  python -m vila_inteia.main serve --port 8100")
+        print("  python -m vila_inteia.main live --intervalo 30 --topico 'IA no Brasil'")
 
 
 if __name__ == "__main__":

@@ -18,6 +18,8 @@ from .campus import LOCAIS, obter_local
 from .cognitivo.sintetizar import sintetizar
 from .rede_social import RedeSocial
 from .gatilhos import MotorGatilhos
+from .previsibilidade import MotorPrevisibilidade
+from .autoresearch import MotorAutoresearch
 
 # Import config: relativo (package mode) ou direto (standalone)
 try:
@@ -57,6 +59,12 @@ class SimulacaoVila:
         self.rede_social = RedeSocial()
         self.motor_gatilhos = MotorGatilhos(self.rede_social)
 
+        # Motores de inteligencia
+        self.motor_previsibilidade = MotorPrevisibilidade()
+        self.motor_autoresearch = MotorAutoresearch(
+            intervalo_steps=100, max_ciclos=3,
+        )
+
         # Logs e eventos
         self.log_eventos: list[dict] = []
         self.conversas_recentes: list[dict] = []
@@ -70,6 +78,7 @@ class SimulacaoVila:
             "total_reflexoes": 0,
             "total_movimentos": 0,
             "total_sinteses": 0,
+            "total_pesquisas": 0,
         }
 
         # Diretório de dados
@@ -249,6 +258,63 @@ class SimulacaoVila:
                     self.sinteses.append(sintese)
                     resumo_step["insights"].append(sintese)
                     self.stats["total_sinteses"] += 1
+
+        # ========== PREVISIBILIDADE ==========
+        self.motor_previsibilidade.registrar_step(
+            resumo_step, self.rede_social,
+        )
+        if self.step % 50 == 0:
+            tendencias = self.motor_previsibilidade.analisar_tendencias()
+            if tendencias:
+                briefing = self.motor_previsibilidade.gerar_briefing_helena()
+                resumo_step["briefing_preditivo"] = briefing
+
+                # Sugerir novo topico se os atuais saturaram
+                sugestao = self.motor_previsibilidade.sugerir_proximo_topico(
+                    config.topicos_ativos,
+                )
+                if sugestao:
+                    resumo_step.setdefault("sugestoes", []).append(sugestao)
+        # ========================================
+
+        # ========== AUTORESEARCH EVOLUTIVO ==========
+        if self.motor_autoresearch.deve_pesquisar(self.step):
+            tema = self.motor_autoresearch.selecionar_tema(
+                tendencias=self.motor_previsibilidade.tendencias,
+                topicos_ativos=config.topicos_ativos,
+            )
+            if tema:
+                pesquisa = self.motor_autoresearch.executar_pesquisa(
+                    tema, self.personas, self.step,
+                )
+                if pesquisa:
+                    self.stats["total_pesquisas"] += 1
+                    resumo_step["autoresearch"] = pesquisa.to_dict()
+
+                    # Injetar topicos gerados na simulacao
+                    for topico in pesquisa.topicos_gerados[:2]:
+                        if topico not in config.topicos_ativos:
+                            config.topicos_ativos.append(topico)
+                            self.log(f"[AUTORESEARCH] Novo topico injetado: '{topico}'")
+
+                    # Publicar descoberta no feed
+                    if pesquisa.descoberta_principal:
+                        helena = self.personas.get("CL085")
+                        if helena:
+                            from .rede_social import Postagem
+                            post = Postagem(
+                                tipo="insight",
+                                autor_id=helena.id,
+                                autor_nome=helena.nome_exibicao,
+                                autor_titulo="Cientista-Chefe INTEIA",
+                                autor_categoria="inteia",
+                                titulo=f"Pesquisa Evolutiva: {tema[:50]}",
+                                conteudo=pesquisa.descoberta_principal,
+                                tags=["autoresearch", "helena", "descoberta"],
+                                destaque=True,
+                            )
+                            self.rede_social._adicionar_post(post)
+        # ========================================
 
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:
