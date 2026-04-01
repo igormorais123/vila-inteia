@@ -1224,11 +1224,75 @@ var center=document.querySelector('.center');
 var autoDiv=document.createElement('div');autoDiv.id='autoView';autoDiv.className='feed-scroll';autoDiv.style.display='none';autoDiv.style.padding='24px';center.appendChild(autoDiv);
 };
 
+// ============================================================
+// LIVE STATUS — Painel de Inteligencia da Vila
+// ============================================================
+var _liveInterval=null;
+async function loadLiveStatus(){
+var ctrl=new AbortController();setTimeout(function(){ctrl.abort();},8000);
+try{
+  var r=await fetch(BACKEND_API+'/live',{signal:ctrl.signal});
+  if(!r.ok)return;
+  var data=await r.json();
+  var el=document.getElementById('livePanel');
+  if(!el)return;
+  var h='<div style="font-size:11px;color:var(--txm);margin-bottom:8px">VILA LIVE</div>';
+  h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">';
+  h+='<span class="sb-badge" style="background:var(--amber)">Step '+data.step+'</span>';
+  h+='<span class="sb-badge" style="background:#22c55e">'+data.agentes_ativos+' ativos</span>';
+  if(data.stats)h+='<span class="sb-badge" style="background:#3b82f6">'+data.stats.total_conversas+' conv</span>';
+  if(data.stats&&data.stats.total_pesquisas)h+='<span class="sb-badge" style="background:#8b5cf6">'+data.stats.total_pesquisas+' pesq</span>';
+  h+='</div>';
+  if(data.hora_simulacao)h+='<div style="font-size:10px;color:var(--txm)">'+data.hora_simulacao+'</div>';
+  // Tendencias
+  var tend=data.previsibilidade&&data.previsibilidade.tendencias||[];
+  if(tend.length>0){
+    h+='<div style="margin-top:10px;font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px">Tendencias</div>';
+    tend.slice(0,5).forEach(function(t){
+      var cor=t.direcao==='emergente'?'#22c55e':t.direcao==='crescendo'?'#eab308':t.direcao==='saturando'?'#ef4444':'var(--txm)';
+      h+='<div style="display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px"><span style="width:6px;height:6px;border-radius:50%;background:'+cor+';flex-shrink:0"></span><span style="color:var(--tx2)">'+esc(t.topico)+'</span><span style="color:'+cor+';font-size:9px;margin-left:auto">'+t.direcao+'</span></div>';
+    });
+  }
+  // Autoresearch recentes
+  var ar=data.autoresearch;
+  if(ar&&ar.descobertas&&ar.descobertas.length>0){
+    h+='<div style="margin-top:10px;font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:1px">Descobertas</div>';
+    ar.descobertas.slice(-3).forEach(function(d){
+      h+='<div style="margin-top:4px;font-size:11px;color:var(--amber-l);border-left:2px solid var(--amber);padding-left:6px">'+esc(d.substring(0,80))+'</div>';
+    });
+  }
+  el.innerHTML=h;
+}catch(e){if(e.name!=='AbortError')console.warn('[LIVE]',e);}
+}
+
+function startLivePolling(){
+  loadLiveStatus();
+  _liveInterval=setInterval(loadLiveStatus,30000);
+}
+
 window.addEventListener('beforeunload',function(){
 if(npcPostInterval)clearInterval(npcPostInterval);
 if(_autoSaveInterval)clearInterval(_autoSaveInterval);
 if(_newsInterval)clearInterval(_newsInterval);
+if(_liveInterval)clearInterval(_liveInterval);
 });
+
+// Extender init para adicionar Live Panel na sidebar
+var _origInit2=init;
+init=async function(){
+await _origInit2();
+// Adicionar painel live na sidebar
+var sbNav=document.querySelector('.sb-nav');
+if(sbNav){
+  var liveDiv=document.createElement('div');
+  liveDiv.id='livePanel';
+  liveDiv.style.cssText='padding:12px;border-top:1px solid var(--brd);margin-top:8px';
+  liveDiv.innerHTML='<div style="font-size:11px;color:var(--txm)">Conectando...</div>';
+  sbNav.appendChild(liveDiv);
+  startLivePolling();
+}
+};
+
 init().catch(showFatalInitError);
 </script>
 </body>

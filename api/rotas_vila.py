@@ -275,3 +275,71 @@ async def salvar():
     sim = obter_simulacao()
     sim.salvar()
     return {"status": "salvo", "diretorio": sim.dir_dados}
+
+
+# ============================================================
+# ENDPOINTS DE INTELIGÊNCIA (Previsibilidade + Autoresearch)
+# ============================================================
+
+@router.get("/previsibilidade")
+async def previsibilidade():
+    """Retorna tendências e previsões da vila."""
+    sim = obter_simulacao()
+    tendencias = sim.motor_previsibilidade.analisar_tendencias()
+    return {
+        "tendencias": [t.to_dict() for t in tendencias],
+        "briefing": sim.motor_previsibilidade.gerar_briefing_helena(),
+        "total_steps_analisados": len(sim.motor_previsibilidade.palavras_por_step),
+    }
+
+
+@router.get("/previsibilidade/saturacao/{topico}")
+async def saturacao_topico(topico: str):
+    """Retorna nível de saturação de um tópico."""
+    sim = obter_simulacao()
+    return {
+        "topico": topico,
+        "saturacao": sim.motor_previsibilidade.prever_saturacao(topico),
+        "engajamento_previsto": sim.motor_previsibilidade.prever_engajamento(topico),
+    }
+
+
+@router.get("/autoresearch")
+async def autoresearch_status():
+    """Retorna estado do motor de autoresearch."""
+    sim = obter_simulacao()
+    return sim.motor_autoresearch.to_dict()
+
+
+@router.post("/autoresearch/executar")
+async def executar_autoresearch(req: TopicoRequest):
+    """Força execução de autoresearch sobre um tema."""
+    sim = obter_simulacao()
+    pesquisa = sim.motor_autoresearch.executar_pesquisa(
+        req.topico, sim.personas, sim.step,
+    )
+    if not pesquisa:
+        raise HTTPException(400, "Pesquisa falhou (poucos respondentes)")
+    return pesquisa.to_dict()
+
+
+@router.get("/live")
+async def estado_live():
+    """Estado completo da vila em tempo real."""
+    sim = obter_simulacao()
+    return {
+        "step": sim.step,
+        "hora_simulacao": sim.hora_atual.strftime("%Y-%m-%d %H:%M"),
+        "agentes_ativos": sum(1 for p in sim.personas.values() if p.ativo),
+        "stats": sim.stats,
+        "topicos_ativos": config.topicos_ativos,
+        "conversas_recentes": sim.conversas_recentes[-10:],
+        "sinteses_recentes": sim.sinteses[-5:],
+        "previsibilidade": sim.motor_previsibilidade.to_dict(),
+        "autoresearch": sim.motor_autoresearch.to_dict(),
+        "rede_social": {
+            "total_posts": sim.rede_social.total_posts,
+            "total_comentarios": sim.rede_social.total_comentarios,
+            "total_reacoes": sim.rede_social.total_reacoes,
+        },
+    }
