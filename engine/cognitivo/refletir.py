@@ -116,12 +116,12 @@ def _gerar_insight_heuristico(
             tipos_eventos[m.tipo] += 1
 
     # Frameworks mentais do consultor
-    frameworks = d.get("frameworks_mentais", "")
+    frameworks = d.get("frameworks_mentais") or ""
     if isinstance(frameworks, list):
-        frameworks = ", ".join(frameworks)
+        frameworks = ", ".join(str(f) for f in frameworks if f)
 
-    estilo_pensamento = d.get("estilo_pensamento", "analítico")
-    visao_futuro = d.get("visao_futuro", "")
+    estilo_pensamento = d.get("estilo_pensamento") or "analítico"
+    visao_futuro = d.get("visao_futuro") or ""
 
     # Gerar insight baseado no padrão predominante
     evidencia_ids = [m.id for m in memorias[:5]]

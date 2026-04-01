@@ -205,10 +205,11 @@ class MotorAutoresearch:
             d = persona.dados_consultor
 
             # Expertise match (peso forte)
-            expertise = " ".join(d.get("areas_expertise", [])).lower()
-            tags = " ".join(d.get("tags", [])).lower()
-            consultor_para = d.get("consultor_para", "").lower()
-            bio = d.get("biografia_resumida", "").lower()
+            expertise = " ".join(d.get("areas_expertise") or []).lower()
+            tags = " ".join(d.get("tags") or []).lower()
+            _cp = d.get("consultor_para") or ""
+            consultor_para = (" ".join(_cp) if isinstance(_cp, list) else str(_cp)).lower()
+            bio = (d.get("biografia_resumida") or "").lower()
 
             for p in palavras:
                 if p in expertise:
