@@ -375,9 +375,10 @@ MOTIVO: [1 frase curta]"""
             return None
 
         try:
-            certeza = int(re.sub(r"[^0-9]", "", certeza_str or "5"))
+            match = re.search(r"\d+", certeza_str or "5")
+            certeza = int(match.group()) if match else 5
             certeza = max(1, min(10, certeza))
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, AttributeError):
             certeza = 5
 
         return ResultadoEleitor(

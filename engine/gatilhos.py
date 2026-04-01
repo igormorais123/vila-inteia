@@ -898,6 +898,9 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
         """Processa waves de comentários graduais nos posts agendados."""
         eventos = []
         fila_atualizada = []
+        todas_cats = {
+            p.categoria for p in personas.values() if p.ativo
+        } if personas else set()
 
         for agendado in self.fila_waves:
             post = self.rede._indice_por_id.get(agendado.post_id)
@@ -919,10 +922,10 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
                     post, personas, wave.n
                 )
 
+                from .rede_social import (
+                    _gerar_comentario_ia, _gerar_comentario_heuristico,
+                )
                 for persona in reagentes:
-                    from .rede_social import (
-                        _gerar_comentario_ia, _gerar_comentario_heuristico,
-                    )
                     conteudo = None
                     if wave.usa_ia:
                         conteudo = _gerar_comentario_ia(persona, post)
@@ -954,9 +957,6 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
                 if not helena_ja:
                     tipo_int = HelenaController.deve_intervir(post, step)
                     if tipo_int:
-                        todas_cats = {
-                            p.categoria for p in personas.values() if p.ativo
-                        } if personas else set()
                         texto = HelenaController.gerar_intervencao_ia(
                             self._helena, post, tipo_int, todas_cats
                         )

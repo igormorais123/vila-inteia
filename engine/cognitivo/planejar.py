@@ -185,7 +185,7 @@ def gerar_plano_diario(persona: Persona, hora_atual: datetime) -> list[PlanoItem
             prioridade=5,
         ))
 
-        hora += max(duracao // 60, 1)
+        hora += max((duracao + 59) // 60, 1)
 
     # Dormir
     plano.append(PlanoItem(
@@ -231,8 +231,13 @@ def planejar(
 
     # Encontrar item do plano para hora atual
     for item in persona.rascunho.plano_diario:
-        hora_item = int(item.hora_inicio.split(":")[0])
-        fim_item = hora_item + max(item.duracao_minutos // 60, 1)
+        try:
+            hora_item = int(item.hora_inicio.split(":")[0])
+        except (ValueError, IndexError):
+            continue
+        if not (0 <= hora_item < 24):
+            continue
+        fim_item = hora_item + max((item.duracao_minutos + 59) // 60, 1)
         if hora_item <= hora < fim_item and not item.concluido:
             resultado["acao"] = item.descricao
             resultado["local_id"] = item.local_id

@@ -614,7 +614,8 @@ def residencia_para_categoria(categoria: str) -> str:
 
     for local in obter_locais_por_tipo("residencia"):
         if categoria in local.categorias_afinidade:
-            score = 1.0
+            idx = local.categorias_afinidade.index(categoria)
+            score = len(local.categorias_afinidade) - idx
             if score > melhor_score:
                 melhor_score = score
                 melhor_local = local.id
