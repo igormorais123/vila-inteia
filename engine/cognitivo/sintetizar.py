@@ -98,16 +98,20 @@ def sintetizar(
     if not recomendacoes:
         recomendacoes = _gerar_recomendacoes(topico, perspectivas, convergencias)
 
-    # 6. Calcular nível de confiança
+    # 6. Calcular nível de confiança (penaliza echo)
     n_perspectivas = len(perspectivas)
     media_importancia = sum(p["importancia"] for p in perspectivas) / n_perspectivas
     diversidade_categorias = len(set(p["categoria"] for p in perspectivas))
+    tem_echo = any("ECHO" in d for d in divergencias)
+    penalidade_echo = 0.3 if tem_echo else 0.0
     confianca = min(
         (n_perspectivas / 10 * 0.3 +
          media_importancia / 10 * 0.4 +
-         diversidade_categorias / 5 * 0.3),
+         diversidade_categorias / 5 * 0.3)
+        - penalidade_echo,
         1.0
     )
+    confianca = max(confianca, 0.05)
 
     resultado = {
         "topico": topico,
@@ -135,7 +139,7 @@ def sintetizar(
 
 
 def _analisar_consenso(perspectivas: list[dict]) -> tuple[list[str], list[str]]:
-    """Identifica pontos de convergência e divergência."""
+    """Identifica convergências, divergências e detecta echo/groupthink."""
     convergencias = []
     divergencias = []
 
@@ -147,11 +151,42 @@ def _analisar_consenso(perspectivas: list[dict]) -> tuple[list[str], list[str]]:
             por_estilo[estilo] = []
         por_estilo[estilo].append(p)
 
-    if len(por_estilo) >= 2:
-        estilos = list(por_estilo.keys())
-        convergencias.append(
-            f"Pensadores de estilos {', '.join(estilos[:3])} contribuíram perspectivas"
-        )
+    # DETECÇÃO DE ECHO: estilo dominante > 60%
+    if por_estilo:
+        maior_grupo = max(por_estilo.values(), key=len)
+        if len(maior_grupo) / len(perspectivas) > 0.6:
+            divergencias.append(
+                f"ALERTA ECHO: {len(maior_grupo)}/{len(perspectivas)} consultores "
+                f"do mesmo estilo ({maior_grupo[0]['estilo']}). Possível groupthink."
+            )
+        elif len(por_estilo) >= 2:
+            estilos = list(por_estilo.keys())
+            convergencias.append(
+                f"Diversidade real: estilos {', '.join(estilos[:3])} contribuíram"
+            )
+
+    # DETECÇÃO DE ECHO: palavras-chave repetidas demais
+    todas_palavras = []
+    for p in perspectivas:
+        palavras = set(p["descricao"].lower().split())
+        todas_palavras.append(palavras)
+    if len(todas_palavras) >= 3:
+        # Jaccard similarity média entre pares
+        pares_sim = []
+        for i in range(len(todas_palavras)):
+            for j in range(i + 1, len(todas_palavras)):
+                a, b = todas_palavras[i], todas_palavras[j]
+                uniao = a | b
+                if uniao:
+                    sim = len(a & b) / len(uniao)
+                    pares_sim.append(sim)
+        if pares_sim:
+            media_sim = sum(pares_sim) / len(pares_sim)
+            if media_sim > 0.5:
+                divergencias.append(
+                    f"ALERTA ECHO: similaridade semantica alta ({media_sim:.0%}) "
+                    f"entre consultores — estao repetindo as mesmas ideias"
+                )
 
     # Verificar se tiers altos concordam
     tier_s = [p for p in perspectivas if p["tier"] == "S"]

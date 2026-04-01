@@ -259,6 +259,35 @@ class SimulacaoVila:
                     resumo_step["insights"].append(sintese)
                     self.stats["total_sinteses"] += 1
 
+                    # HELENA FEEDBACK: Publicar sintese no feed
+                    helena = self.personas.get("CL085")
+                    if helena and sintese.get("sintese"):
+                        from .rede_social import Postagem
+                        post_sintese = Postagem(
+                            tipo="insight",
+                            autor_id=helena.id,
+                            autor_nome=helena.nome_exibicao,
+                            autor_titulo="Cientista-Chefe INTEIA",
+                            autor_categoria="inteia",
+                            titulo=f"Sintese: {topico[:40]}",
+                            conteudo=sintese["sintese"][:500],
+                            tags=["sintese", "helena"],
+                            destaque=True,
+                        )
+                        self.rede_social._adicionar_post(post_sintese)
+
+                    # HELENA FEEDBACK: Registrar na memoria dos participantes
+                    texto_sintese = sintese.get("sintese", "")[:150]
+                    if texto_sintese:
+                        for pid in sintese.get("participantes", [])[:5]:
+                            p = self.personas.get(pid)
+                            if p:
+                                p.memoria.adicionar_pensamento(
+                                    descricao=texto_sintese,
+                                    importancia=8,
+                                    palavras_chave=set(topico.lower().split()),
+                                )
+
         # ========== PREVISIBILIDADE ==========
         self.motor_previsibilidade.registrar_step(
             resumo_step, self.rede_social,
@@ -269,12 +298,30 @@ class SimulacaoVila:
                 briefing = self.motor_previsibilidade.gerar_briefing_helena()
                 resumo_step["briefing_preditivo"] = briefing
 
-                # Sugerir novo topico se os atuais saturaram
+                # AÇÃO 1: Sugestão vira tópico ativo
                 sugestao = self.motor_previsibilidade.sugerir_proximo_topico(
                     config.topicos_ativos,
                 )
-                if sugestao:
-                    resumo_step.setdefault("sugestoes", []).append(sugestao)
+                if sugestao and sugestao not in config.topicos_ativos:
+                    self.injetar_topico(sugestao, importancia=7)
+                    self.log(f"[BRIEFING] Topico sugerido ativado: {sugestao}")
+
+                # AÇÃO 2: Temas saturando ganham novo ângulo
+                for t in briefing.get("saturando", [])[:1]:
+                    nome = t.get("topico", "")
+                    if nome and nome in config.topicos_ativos:
+                        config.topicos_ativos.remove(nome)
+                        novo = f"futuro de {nome} sob perspectiva inedita"
+                        self.injetar_topico(novo, importancia=9)
+                        self.log(f"[BRIEFING] Tema saturado renovado: {nome} → {novo}")
+
+                # AÇÃO 3: Tema emergente prioriza autoresearch
+                emergentes = briefing.get("emergentes", [])
+                if emergentes:
+                    self.motor_autoresearch.ultimo_research_step = max(
+                        0, self.step - self.motor_autoresearch.intervalo_steps
+                    )
+                    self.log(f"[BRIEFING] Autoresearch priorizado para: {emergentes[0].get('topico','?')}")
         # ========================================
 
         # ========== AUTORESEARCH EVOLUTIVO ==========

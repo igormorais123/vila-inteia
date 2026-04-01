@@ -193,39 +193,47 @@ class MotorAutoresearch:
         return pesquisa
 
     def _selecionar_respondentes(self, tema: str, personas: dict, n: int = 5) -> list:
-        """Seleciona consultores mais relevantes para o tema."""
-        palavras = set(tema.lower().split())
+        """Seleciona consultores por expertise real, nao aleatoriedade."""
+        palavras = set(w for w in tema.lower().split() if len(w) > 3)
         scored = []
 
         for pid, persona in personas.items():
             if not persona.ativo or pid == "IGOR001":
                 continue
 
-            score = random.random() * 0.5  # base aleatoriedade
+            score = 0.0
             d = persona.dados_consultor
 
-            # Expertise match
+            # Expertise match (peso forte)
             expertise = " ".join(d.get("areas_expertise", [])).lower()
             tags = " ".join(d.get("tags", [])).lower()
-            bio = (d.get("biografia_resumida", "") + " " + d.get("consultor_para", "")).lower()
-            texto = f"{expertise} {tags} {bio}"
+            consultor_para = d.get("consultor_para", "").lower()
+            bio = d.get("biografia_resumida", "").lower()
 
             for p in palavras:
-                if p in texto:
+                if p in expertise:
+                    score += 3.0
+                elif p in tags:
                     score += 2.0
+                elif p in consultor_para:
+                    score += 2.5
+                elif p in bio:
+                    score += 1.0
 
             # Tier bonus
             tier = d.get("tier", "C")
-            score += {"S": 1.5, "A": 0.8, "B": 0.3}.get(tier, 0)
+            score += {"S": 2.0, "A": 1.2, "B": 0.5}.get(tier, 0.2)
+
+            # Filtrar irrelevantes
+            if score < 0.5:
+                continue
 
             scored.append((persona, score))
 
         scored.sort(key=lambda x: x[1], reverse=True)
 
-        # Top N com alguma aleatoriedade
-        top = scored[:n * 2]
-        random.shuffle(top)
-        return [p for p, _ in top[:n]]
+        # Top N sem shuffle — expertise determina
+        return [p for p, _ in scored[:n]]
 
     def _executar_ciclo(
         self,
