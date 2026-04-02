@@ -237,13 +237,27 @@ def modo_live(args):
         print(f"  Autoresearch a cada 100 steps")
         print(f"  Previsibilidade a cada 50 steps\n")
 
+        erros_consecutivos = 0
+
         while True:
             if sim.pausada:
                 time.sleep(1)
                 continue
 
             try:
-                resumo = sim.executar_step()
+                # Timeout de segurança via thread auxiliar
+                import concurrent.futures
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                    future = executor.submit(sim.executar_step)
+                    try:
+                        resumo = future.result(timeout=max(intervalo * 3, 180))
+                    except concurrent.futures.TimeoutError:
+                        print(f"  TIMEOUT step {sim.step} — pulando")
+                        erros_consecutivos += 1
+                        time.sleep(intervalo)
+                        continue
+
+                erros_consecutivos = 0
 
                 # Log compacto
                 n_conv = len(resumo.get("conversas", []))
@@ -262,7 +276,12 @@ def modo_live(args):
                     )
 
             except Exception as e:
+                erros_consecutivos += 1
                 print(f"  ERRO step {sim.step}: {e}")
+                if erros_consecutivos >= 5:
+                    print(f"  5 erros seguidos — pausa de 5min")
+                    time.sleep(300)
+                    erros_consecutivos = 0
 
             time.sleep(intervalo)
 

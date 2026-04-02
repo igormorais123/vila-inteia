@@ -155,6 +155,8 @@ class RedeSocial:
     - Gerar sínteses de debates
     """
 
+    _MAX_POSTAGENS = 2000
+
     def __init__(self):
         self.postagens: list[Postagem] = []
         self.fila_processamento: list[dict] = []  # Posts aguardando reações
@@ -496,6 +498,10 @@ class RedeSocial:
         self.postagens.append(post)
         self._indice_por_id[post.id] = post
         self.total_posts += 1
+        # Evitar memory leak em modo 24/7
+        if len(self.postagens) > self._MAX_POSTAGENS:
+            removido = self.postagens.pop(0)
+            self._indice_por_id.pop(removido.id, None)
 
     def salvar(self, caminho: str):
         """Persiste feed em JSON."""

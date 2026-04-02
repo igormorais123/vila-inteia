@@ -45,6 +45,12 @@ _provider = None  # "omniroute", "anthropic"
 _client = None
 _client_fallback = None  # Anthropic como fallback
 
+# Circuit breaker: se OmniRoute falhar N vezes seguidas, parar de tentar por X segundos
+_circuit_falhas = 0
+_circuit_aberto_ate = 0.0
+_CIRCUIT_THRESHOLD = 5  # falhas antes de abrir circuito
+_CIRCUIT_COOLDOWN = 120  # segundos com circuito aberto
+
 
 def _detectar_provider():
     """OmniRoute PRIMEIRO (custo zero). Anthropic só como fallback."""
@@ -145,13 +151,21 @@ def chamar_llm(
 
     modelo_real = _modelo(modelo)
 
-    # Tentativa 1: OmniRoute
-    if c and _provider == "omniroute":
+    # Tentativa 1: OmniRoute (com circuit breaker)
+    global _circuit_falhas, _circuit_aberto_ate
+    circuito_ok = time.time() > _circuit_aberto_ate
+
+    if c and _provider == "omniroute" and circuito_ok:
         resultado = _chamar_openai(c, modelo_real, msgs_user, system_prompt, max_tokens, temperatura)
         if resultado:
-            _throttle.registrar()  # Conta APENAS chamadas bem-sucedidas
+            _throttle.registrar()
+            _circuit_falhas = 0  # Reset
             return resultado
-        logger.debug(f"OmniRoute falhou ({modelo_real}), tentando fallback...")
+        _circuit_falhas += 1
+        if _circuit_falhas >= _CIRCUIT_THRESHOLD:
+            _circuit_aberto_ate = time.time() + _CIRCUIT_COOLDOWN
+            logger.warning(f"Circuit breaker ABERTO — OmniRoute falhou {_circuit_falhas}x, pausa de {_CIRCUIT_COOLDOWN}s")
+            _circuit_falhas = 0
 
     # Tentativa 2: Anthropic fallback
     if _client_fallback:

@@ -48,6 +48,10 @@ class SimulacaoVila:
         self.nome = nome
         self.caminho_consultores = caminho_consultores
 
+        # Lock para acesso thread-safe (API lê enquanto loop escreve)
+        import threading
+        self._step_lock = threading.RLock()
+
         # Estado da simulação
         self.personas: dict[str, Persona] = {}
         self.step: int = 0
@@ -65,11 +69,14 @@ class SimulacaoVila:
             intervalo_steps=100, max_ciclos=3,
         )
 
-        # Logs e eventos
+        # Logs e eventos (com limites para evitar memory leak em 24/7)
         self.log_eventos: list[dict] = []
         self.conversas_recentes: list[dict] = []
         self.insights_coletivos: list[dict] = []
         self.sinteses: list[dict] = []
+        self._MAX_LOG = 5000
+        self._MAX_SINTESES = 500
+        self._MAX_INSIGHTS = 200
 
         # Estatísticas
         self.stats = {
@@ -171,6 +178,11 @@ class SimulacaoVila:
             "movimentos": int,
         }
         """
+        with self._step_lock:
+            return self._executar_step_interno()
+
+    def _executar_step_interno(self) -> dict:
+        """Execução real do step (protegida por lock)."""
         self.step += 1
         resumo_step = {
             "step": self.step,
@@ -256,6 +268,8 @@ class SimulacaoVila:
                 )
                 if sintese:
                     self.sinteses.append(sintese)
+                    if len(self.sinteses) > self._MAX_SINTESES:
+                        self.sinteses = self.sinteses[-self._MAX_SINTESES:]
                     resumo_step["insights"].append(sintese)
                     self.stats["total_sinteses"] += 1
 
@@ -487,6 +501,11 @@ class SimulacaoVila:
 
     def estado_mundo(self) -> dict:
         """Retorna snapshot do estado atual de toda a simulação."""
+        with self._step_lock:
+            return self._estado_mundo_interno()
+
+    def _estado_mundo_interno(self) -> dict:
+        """Snapshot real (protegido por lock)."""
         # Contar agentes por local
         agentes_por_local: dict[str, list[dict]] = {}
         for persona in self.personas.values():
@@ -619,6 +638,8 @@ class SimulacaoVila:
             "mensagem": mensagem,
         }
         self.log_eventos.append(evento)
+        if len(self.log_eventos) > self._MAX_LOG:
+            self.log_eventos = self.log_eventos[-self._MAX_LOG:]
 
         if config.modo_debug:
             print(f"[Vila INTEIA Step {self.step}] {mensagem}")
