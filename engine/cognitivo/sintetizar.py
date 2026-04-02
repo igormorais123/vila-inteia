@@ -104,14 +104,13 @@ def sintetizar(
     diversidade_categorias = len(set(p["categoria"] for p in perspectivas))
     tem_echo = any("ECHO" in d for d in divergencias)
     penalidade_echo = 0.3 if tem_echo else 0.0
-    confianca = min(
-        (n_perspectivas / 10 * 0.3 +
-         media_importancia / 10 * 0.4 +
-         diversidade_categorias / 5 * 0.3)
-        - penalidade_echo,
+    confianca_bruta = min(
+        n_perspectivas / 10 * 0.3 +
+        media_importancia / 10 * 0.4 +
+        diversidade_categorias / 5 * 0.3,
         1.0
     )
-    confianca = max(confianca, 0.05)
+    confianca = max(confianca_bruta - penalidade_echo, 0.05)
 
     resultado = {
         "topico": topico,
