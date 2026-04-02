@@ -140,40 +140,53 @@ class MotorPrevisibilidade:
         # Detectar topicos emergentes (crescendo) e saturando (declinando)
         todas_palavras = set(freq_recente.keys()) | set(freq_antigo.keys())
 
+        # Filtrar stopwords e palavras vazias
+        _STOPWORDS = {
+            "algo", "pessoas", "primeiro", "forma", "tudo", "construir",
+            "conheca", "design", "sobre", "como", "para", "mais", "pode",
+            "deve", "esta", "esse", "essa", "muito", "cada", "mesmo",
+            "ainda", "quando", "onde", "fazer", "sendo", "entre", "desde",
+            "antes", "depois", "aqui", "numa", "outro", "outra", "apenas",
+            "tambem", "sempre", "nunca", "coisa", "parte", "mundo", "hoje",
+            "futuro", "grande", "nova", "novo", "melhor", "pior", "precisa",
+        }
+
         for palavra in todas_palavras:
+            if palavra in _STOPWORDS or len(palavra) < 5:
+                continue
+
             taxa_recente = freq_recente[palavra] / n_recente
             taxa_antigo = freq_antigo[palavra] / n_antigo
 
             if taxa_antigo == 0 and taxa_recente > 0.3:
                 tendencias.append(Tendencia(
-                    topico=palavra,
+                    topico=f"Tema '{palavra}' emergindo",
                     direcao="emergente",
                     forca=min(taxa_recente, 1.0),
                     confianca=min(taxa_recente * 2, 0.9),
-                    evidencias=[f"Apareceu {freq_recente[palavra]}x nos ultimos {n_recente} steps"],
-                    previsao=f"Topico '{palavra}' deve dominar debates em breve",
+                    evidencias=[f"Apareceu {freq_recente[palavra]}x nos ultimos {n_recente} steps (novo)"],
+                    previsao=f"'{palavra}' deve gerar novos debates nos proximos 20 steps",
                 ))
             elif taxa_antigo > 0 and taxa_recente > taxa_antigo * 1.5:
                 forca = min((taxa_recente - taxa_antigo) / max(taxa_antigo, 0.1), 1.0)
                 tendencias.append(Tendencia(
-                    topico=palavra,
+                    topico=f"'{palavra}' em aceleracao",
                     direcao="crescendo",
                     forca=forca,
                     confianca=min(forca * 0.8, 0.85),
                     evidencias=[
-                        f"Taxa recente: {taxa_recente:.2f}/step",
-                        f"Taxa anterior: {taxa_antigo:.2f}/step",
+                        f"Cresceu {(taxa_recente/max(taxa_antigo,0.01)-1)*100:.0f}% vs periodo anterior",
                     ],
-                    previsao=f"Engajamento em '{palavra}' deve aumentar ~{forca*50:.0f}%",
+                    previsao=f"Engajamento em '{palavra}' deve aumentar ~{forca*50:.0f}% — monitorar",
                 ))
             elif taxa_antigo > 0.3 and taxa_recente < taxa_antigo * 0.5:
                 tendencias.append(Tendencia(
-                    topico=palavra,
+                    topico=f"'{palavra}' esgotando",
                     direcao="saturando",
                     forca=1.0 - min(taxa_recente / max(taxa_antigo, 0.1), 1.0),
                     confianca=0.7,
-                    evidencias=[f"Caiu de {taxa_antigo:.2f} para {taxa_recente:.2f}/step"],
-                    previsao=f"Tema '{palavra}' esta esgotando. Consultores buscam novos angulos.",
+                    evidencias=[f"Caiu {(1-taxa_recente/max(taxa_antigo,0.01))*100:.0f}% vs periodo anterior"],
+                    previsao=f"Tema '{palavra}' precisa de novo angulo ou sera abandonado",
                 ))
 
         # Ordenar por forca

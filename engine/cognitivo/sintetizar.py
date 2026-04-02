@@ -223,32 +223,53 @@ def _gerar_sintese(
     convergencias: list[str],
     divergencias: list[str],
 ) -> str:
-    """Gera texto de síntese."""
+    """Gera síntese ACIONÁVEL com conclusão clara, divergências e expertise."""
     n = len(perspectivas)
-    nomes = ", ".join(p["agente_nome"] for p in perspectivas[:5])
     categorias = set(p["categoria"] for p in perspectivas)
-
-    sintese = (
-        f"Síntese sobre '{topico}': {n} consultores lendários "
-        f"({nomes}{', e outros' if n > 5 else ''}) "
-        f"de {len(categorias)} áreas distintas "
-        f"contribuíram suas perspectivas. "
-    )
-
-    if convergencias:
-        sintese += f"Convergências: {convergencias[0]}. "
-
-    if divergencias:
-        sintese += f"Tensões identificadas: {divergencias[0]}. "
-
-    # Destaque do consultor mais relevante
     top = perspectivas[0]
-    sintese += (
-        f"A perspectiva mais relevante veio de {top['agente_nome']} "
-        f"({top['titulo']}): \"{top['descricao'][:100]}...\""
-    )
 
-    return sintese
+    # 1. CONCLUSÃO CENTRAL
+    convergencias_reais = [c for c in convergencias if "ECHO" not in c]
+    divergencias_reais = [d for d in divergencias if "ALERTA" not in d and "Sem divergências" not in d]
+
+    taxa_consenso = len(convergencias_reais) / max(len(convergencias_reais) + len(divergencias_reais), 1)
+
+    if taxa_consenso >= 0.7:
+        conclusao = (
+            f"CONCLUSÃO ({taxa_consenso:.0%} consenso): "
+            f"{convergencias_reais[0] if convergencias_reais else f'{n} consultores concordam sobre {topico}'}."
+        )
+    else:
+        conclusao = (
+            f"CONCLUSÃO (debate aberto): Não há consenso sobre '{topico}'. "
+            f"Linha de fratura: {divergencias_reais[0] if divergencias_reais else 'múltiplas visões'}."
+        )
+
+    # 2. DIVERGÊNCIAS EXPLÍCITAS (quem vs quem)
+    div_texto = ""
+    if divergencias_reais:
+        div_texto = "\nDIVERGÊNCIAS: " + " | ".join(divergencias_reais[:2])
+
+    # 3. ALERTAS (echo/groupthink)
+    alertas = [d for d in divergencias if "ALERTA" in d]
+    alerta_texto = ""
+    if alertas:
+        alerta_texto = f"\n⚠ {alertas[0]}"
+
+    # 4. EXPERTISE: quem trouxe o quê
+    expertise_items = []
+    for p in perspectivas[:3]:
+        expertise_list = p.get("expertise", [])
+        if expertise_list:
+            expertise_items.append(f"{p['agente_nome']} ({expertise_list[0]})")
+        else:
+            expertise_items.append(f"{p['agente_nome']} ({p['categoria']})")
+    expertise_texto = "\nEXPERTISE: " + " | ".join(expertise_items) if expertise_items else ""
+
+    # 5. INSIGHT PRINCIPAL (do consultor mais relevante)
+    insight = f"\nINSIGHT ({top['agente_nome']}): \"{top['descricao'][:120]}\""
+
+    return f"{conclusao}{div_texto}{alerta_texto}{expertise_texto}{insight}"
 
 
 def _gerar_sintese_ia(
@@ -314,31 +335,43 @@ def _gerar_recomendacoes(
     perspectivas: list[dict],
     convergencias: list[str],
 ) -> list[str]:
-    """Gera recomendações acionáveis."""
+    """Gera recomendações ACIONÁVEIS e contextualizadas."""
     recs = []
 
-    # Recomendação baseada na expertise coletiva
-    todas_expertises = []
-    for p in perspectivas[:5]:
-        todas_expertises.extend(p.get("expertise", []))
-
-    if todas_expertises:
-        top_expertise = max(set(todas_expertises), key=todas_expertises.count)
-        recs.append(
-            f"Aprofundar análise de '{topico}' com foco em {top_expertise}"
-        )
-
-    # Recomendação de debate
+    # REC 1: Se categorias diferentes → debate produtivo específico
     if len(perspectivas) >= 2:
+        top1, top2 = perspectivas[0], perspectivas[1]
+        if top1["categoria"] != top2["categoria"]:
+            recs.append(
+                f"DEBATE: {top1['agente_nome']} (visão {top1['categoria']}) "
+                f"vs {top2['agente_nome']} (visão {top2['categoria']}) "
+                f"— resolver divergência sobre '{topico}'"
+            )
+
+    # REC 2: Se tier S concorda → executar
+    tiers_s = [p for p in perspectivas if p.get("tier") == "S"]
+    if len(tiers_s) >= 2:
+        nomes_s = ", ".join(p["agente_nome"] for p in tiers_s[:3])
         recs.append(
-            f"Organizar debate entre {perspectivas[0]['agente_nome']} "
-            f"e {perspectivas[1]['agente_nome']} para aprofundar divergências"
+            f"EXECUTAR: {nomes_s} (Tier S) convergem — "
+            f"conclusão tem alta confiabilidade para ação imediata"
         )
 
-    # Recomendação de síntese
-    recs.append(
-        f"Documentar as {len(perspectivas)} perspectivas sobre '{topico}' "
-        f"para relatório de inteligência INTEIA"
-    )
+    # REC 3: Gap de expertise → trazer categoria faltante
+    cats_presentes = {p["categoria"] for p in perspectivas}
+    cats_importantes = {"tech", "estrategia", "politica_brasileira", "investidor", "mindset"}
+    cats_faltantes = cats_importantes - cats_presentes
+    if cats_faltantes:
+        recs.append(
+            f"GAP: Falta perspectiva de {', '.join(list(cats_faltantes)[:2])} "
+            f"— incluir na próxima rodada para análise completa"
+        )
 
-    return recs
+    # REC 4: Desdobramento
+    if not recs:
+        recs.append(
+            f"APROFUNDAR: Desdobrar '{topico}' em 3 ângulos — "
+            f"implementação tática, riscos, e impacto de longo prazo"
+        )
+
+    return recs[:3]

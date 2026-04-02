@@ -46,7 +46,7 @@ def test_analisar_tendencias_saturando(motor):
 
     tendencias = motor.analisar_tendencias()
     saturando = [t for t in tendencias if t.direcao == "saturando"]
-    assert any(t.topico == "eleicoes" for t in saturando)
+    assert any("eleicoes" in t.topico for t in saturando)
 
 
 def test_prever_engajamento_sem_dados(motor):

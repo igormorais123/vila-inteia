@@ -343,3 +343,22 @@ async def estado_live():
             "total_reacoes": sim.rede_social.total_reacoes,
         },
     }
+
+
+@router.get("/relatorio")
+async def relatorio_executivo():
+    """Relatório executivo consolidado — CONCLUSÕES, não dados brutos."""
+    from engine.relatorio import gerar_relatorio
+    sim = obter_simulacao()
+    rel = gerar_relatorio(sim)
+    return rel.to_dict()
+
+
+@router.get("/relatorio/markdown")
+async def relatorio_markdown():
+    """Relatório em Markdown para leitura humana."""
+    from engine.relatorio import gerar_relatorio
+    from fastapi.responses import PlainTextResponse
+    sim = obter_simulacao()
+    rel = gerar_relatorio(sim)
+    return PlainTextResponse(rel.to_markdown(), media_type="text/markdown")

@@ -318,13 +318,39 @@ class MotorAutoresearch:
         return ciclo
 
     def _extrair_descoberta(self, pesquisa: PesquisaCompleta) -> str:
-        """Extrai descoberta principal de toda a pesquisa."""
-        if pesquisa.ciclos and pesquisa.ciclos[-1].sintese:
-            # Primeira frase da ultima sintese
-            sintese = pesquisa.ciclos[-1].sintese
-            frases = sintese.split(".")
-            return frases[0].strip() + "." if frases else sintese[:100]
-        return f"Pesquisa sobre '{pesquisa.tema_original}' inconclusiva"
+        """Extrai descoberta ESTRUTURADA com achado, impacto e próximo passo."""
+        tema = pesquisa.tema_original
+
+        if not pesquisa.ciclos or not any(c.respostas for c in pesquisa.ciclos):
+            return f"Pesquisa sobre '{tema}' inconclusiva — sem respostas dos consultores"
+
+        # Coletar dados dos ciclos
+        n_ciclos = len(pesquisa.ciclos)
+        n_respostas = sum(len(c.respostas) for c in pesquisa.ciclos)
+        consultores = list({r["consultor"] for c in pesquisa.ciclos for r in c.respostas})
+
+        # Achado principal: última síntese ou resumo
+        ultima_sintese = ""
+        for ciclo in reversed(pesquisa.ciclos):
+            if ciclo.sintese:
+                ultima_sintese = ciclo.sintese[:200]
+                break
+
+        if not ultima_sintese:
+            ultima_sintese = pesquisa.ciclos[-1].respostas[0]["texto"][:200] if pesquisa.ciclos[-1].respostas else "sem dados"
+
+        # Perguntas geradas (indicam onde aprofundar)
+        perguntas = []
+        for ciclo in pesquisa.ciclos:
+            perguntas.extend(ciclo.perguntas_geradas[:1])
+
+        descoberta = (
+            f"DESCOBERTA: {ultima_sintese}\n"
+            f"MÉTODO: {n_ciclos} ciclos, {n_respostas} respostas de {', '.join(consultores[:4])}"
+            f"{f' e +{len(consultores)-4}' if len(consultores) > 4 else ''}.\n"
+            f"PRÓXIMO PASSO: {perguntas[0] if perguntas else 'Aprofundar com especialistas de categoria faltante'}"
+        )
+        return descoberta
 
     def _gerar_recomendacoes(self, pesquisa: PesquisaCompleta) -> list[str]:
         """Extrai recomendacoes da pesquisa."""
