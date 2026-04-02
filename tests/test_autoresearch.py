@@ -98,6 +98,7 @@ def test_executar_pesquisa_sem_ia(motor):
         p.id = f"CL{i:03d}"
         p.ativo = True
         p.nome_exibicao = f"Consultor {i}"
+        p.titulo = "Consultor"
         p.categoria = "tech"
         p.dados_consultor = {
             "areas_expertise": ["tecnologia"],
@@ -108,6 +109,17 @@ def test_executar_pesquisa_sem_ia(motor):
             "titulo": "Consultor",
             "personalidade_resumo": "Analitico",
         }
+        # rascunho mock para gerar_prompt_pesquisa
+        p.rascunho.personalidade_resumo = "Analítico"
+        p.rascunho.tom_voz = "direto"
+        p.rascunho.estilo_comunicacao = "objetivo"
+        p.rascunho.frase_chave = "Dados falam"
+        p.rascunho.areas_expertise = ["tecnologia"]
+        p.memoria = None
+        # gerar_prompt_pesquisa retorna (system, user)
+        p.gerar_prompt_pesquisa = lambda tema, tipo="pesquisa", _p=p: (
+            f"Você é {_p.nome_exibicao}. Responda como consultor.", f"Pesquisa: {tema}"
+        )
         personas[p.id] = p
 
     # Mock chamar_llm para retornar None (sem IA)

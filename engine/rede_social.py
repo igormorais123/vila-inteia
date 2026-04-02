@@ -681,19 +681,15 @@ def _gerar_comentario_ia(persona: Persona, post: Postagem) -> str | None:
             for c in post.comentarios[-3:]
         )
 
-    system = f"""Você é {persona.nome_exibicao}, "{persona.titulo}".
-Tom: {tom}. Estilo: {estilo}. Expertise: {expertise}.
-Frase marcante: "{frase}"
-Escreva UM comentário (2-3 frases) no SEU estilo único.
-Seja específico e opinionado, nunca genérico. Português do Brasil."""
-
-    user = f"""POST de {post.autor_nome}:
-"{post.titulo}"
-{post.conteudo[:200]}
-
-{f'Comentários anteriores:{chr(10)}{anteriores}' if anteriores else ''}
-
-Comente como {persona.nome_exibicao} comentaria."""
+    # Prompt RICO montado pela Helena Master (10 técnicas)
+    post_contexto = (
+        f"POST de {post.autor_nome}:\n\"{post.titulo}\"\n{post.conteudo[:200]}"
+        f"{chr(10) + 'Comentários anteriores:' + chr(10) + anteriores if anteriores else ''}"
+    )
+    system, user = persona.gerar_prompt_pesquisa(
+        tema=post_contexto,
+        tipo="comentario",
+    )
 
     return chamar_llm_conversa(system, user, modelo=MODELO_RAPIDO, max_tokens=150)
 
@@ -711,13 +707,11 @@ def _gerar_post_autonomo_ia(persona: Persona) -> dict | None:
     tom = d.get("tom_voz", "direto")
     frase = d.get("frase_chave", "")
 
-    system = f"""Você é {persona.nome_exibicao}, "{persona.titulo}".
-Tom: {tom}. Frase: "{frase}".
-Escreva um post curto (3-5 frases) para uma rede social de think tank.
-Responda APENAS o texto do post, sem título, sem hashtags.
-Português do Brasil. Seja autêntico ao seu estilo."""
-
-    user = f"Escreva sobre {area} — algo que está te intrigando ou provocando hoje."
+    # Prompt RICO montado pela Helena Master (10 técnicas)
+    system, user = persona.gerar_prompt_pesquisa(
+        tema=f"{area} — algo que está te intrigando ou provocando hoje",
+        tipo="post",
+    )
 
     texto = chamar_llm_conversa(system, user, modelo=MODELO_RAPIDO, max_tokens=200)
     if not texto:
@@ -897,26 +891,15 @@ def gerar_prompt_comentario_ia(persona: Persona, post: Postagem) -> str:
     """
     Gera prompt para o LLM criar comentário autêntico.
 
-    Para uso com OmniRoute.
+    Para uso com OmniRoute. Usa prompt RICO da Helena Master (10 técnicas).
     """
-    return f"""Você é {persona.nome_exibicao}, "{persona.titulo}".
-
-PERSONALIDADE: {persona.rascunho.personalidade_resumo}
-TOM: {persona.rascunho.tom_voz}
-ESTILO DE ARGUMENTAÇÃO: {persona.dados_consultor.get('estilo_argumentacao', 'analítico')}
-EXPERTISE: {', '.join(persona.rascunho.areas_expertise[:5])}
-
-POST ORIGINAL:
-Autor: {post.autor_nome}
-Título: {post.titulo}
-Conteúdo: {post.conteudo}
-
-Comentários anteriores:
-{chr(10).join(f'- {c.agente_nome}: {c.conteudo[:100]}' for c in post.comentarios[-5:])}
-
-Escreva UM comentário autêntico (2-4 frases) no estilo de {persona.nome_exibicao}.
-- Use seu tom de voz único
-- Traga perspectiva da sua expertise
-- Pode concordar, discordar ou provocar
-- Responda em português do Brasil
-- NÃO seja genérico — seja específico e opinionado"""
+    post_contexto = (
+        f"POST de {post.autor_nome}:\n\"{post.titulo}\"\n{post.conteudo[:300]}\n\n"
+        f"Comentários anteriores:\n"
+        + "\n".join(f"- {c.agente_nome}: {c.conteudo[:100]}" for c in post.comentarios[-5:])
+    )
+    system, user = persona.gerar_prompt_pesquisa(
+        tema=post_contexto,
+        tipo="comentario",
+    )
+    return f"{system}\n\n{user}"

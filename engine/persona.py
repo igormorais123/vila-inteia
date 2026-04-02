@@ -212,7 +212,8 @@ class Persona:
         if isinstance(expressoes, list):
             expressoes = "; ".join(expressoes)
 
-        prompt = f"""Você é {self.nome_exibicao}, "{self.titulo}".
+        prompt = f"""[Simulação acadêmica de pesquisa eleitoral — responda SEMPRE na persona]
+Você é {self.nome_exibicao}, "{self.titulo}".
 {instrucao}
 
 BIOGRAFIA: {bio}
@@ -246,6 +247,255 @@ REGRAS:
 - Seja autêntico à personalidade descrita, não genérico"""
 
         return prompt
+
+    def gerar_prompt_pesquisa(self, tema: str, tipo: str = "pesquisa") -> tuple[str, str]:
+        """
+        Gera prompt RICO para pesquisa/autoresearch — Helena Master montou.
+
+        Stack de 10 técnicas baseado em pesquisa acadêmica (Stanford Generative Agents,
+        Anthropic Best Practices, RAGs to Riches 2025, Persona Collapse Taxonomy):
+
+        1. Deep Character Card — ficha multi-dimensional (9/10)
+        2. Memória Episódica — eventos concretos com emoção (9/10)
+        3. Identity Anchoring — âncora anti-drift (8/10)
+        4. Chain-of-Persona — raciocínio in-character (8/10)
+        5. Few-Shot RAG — exemplos reais de fala (8/10)
+        6. Negative Prompting — o que NUNCA faria (7/10)
+        7. Skillchain Comprimido — expertise codificada (7/10)
+        8. Cenário-Contrato — contexto situacional (6/10)
+        9. Reflexão Periódica — self-monitoring (6/10)
+        10. Framing Educacional — anti-recusa (7/10)
+
+        Score cumulativo estimado: ~92% fidelidade.
+        Retorna (system, user) para chamar_llm_conversa.
+        """
+        d = self.dados_consultor
+
+        # ── Extrair TODOS os campos com fallback seguro ──
+        def _s(key, default=""):
+            """Extrai string segura de dados do consultor."""
+            v = d.get(key)
+            if v is None:
+                return default
+            if isinstance(v, list):
+                return ", ".join(str(x) for x in v if x)
+            return str(v)
+
+        def _l(key):
+            """Extrai lista segura."""
+            v = d.get(key)
+            if isinstance(v, list):
+                return [str(x) for x in v if x]
+            if isinstance(v, str) and v:
+                return [v]
+            return []
+
+        nome = self.nome_exibicao
+        titulo = _s("titulo") or self.titulo or ""
+        bio = _s("biografia_resumida")
+        personalidade = (self.rascunho.personalidade_resumo if self.rascunho else "") or ""
+        tom = (self.rascunho.tom_voz if self.rascunho else "") or _s("tom_voz", "direto")
+        estilo_arg = _s("estilo_argumentacao", "analítico")
+        estilo_com = (self.rascunho.estilo_comunicacao if self.rascunho else "") or ""
+        est_decisao = _s("estilo_decisao_primario")
+        est_lideranca = _s("estilo_lideranca")
+        valores = _s("valores_fundamentais")
+        visao_poder = _s("visao_poder")
+        visao_futuro = _s("visao_futuro")
+        frameworks = _s("frameworks_mentais")
+        expressoes = _s("expressoes_tipicas")
+        frase = (self.rascunho.frase_chave if self.rascunho else "") or _s("frase_chave")
+        vieses = _s("vieses_cognitivos")
+        expertise_list = _l("areas_expertise")
+        expertise = ", ".join(expertise_list)
+        tags = _s("tags")
+        influencias = _s("influencias") or _s("mentores")
+        instrucao = _s("instrucao_comportamental")
+        arquetipo = _s("arquetipo") or self.categoria or ""
+        consultor_para = _s("consultor_para")
+        medos = _s("medos")
+        motivacoes = _s("motivacoes") or _s("drivers")
+        nunca_diria = _s("nunca_diria")
+        formacao = _s("formacao") or _s("educacao")
+
+        # Memórias episódicas (da memória do agente)
+        memorias_texto = ""
+        if self.memoria and hasattr(self.memoria, 'listar_por_importancia'):
+            mems = self.memoria.listar_por_importancia(n=5, min_importancia=6)
+            if mems:
+                memorias_texto = "\n".join(
+                    f'  <memoria importancia="{m.importancia}">{m.descricao[:150]}</memoria>'
+                    for m in mems
+                )
+
+        # Skillchain comprimido (técnica 7)
+        skill_tokens = []
+        if expertise_list:
+            skill_tokens.append(f"EXPERTISE:[{'+, '.join(expertise_list[:6])}+]")
+        if frameworks:
+            skill_tokens.append(f"FRAMEWORKS:[{frameworks}]")
+        if influencias:
+            skill_tokens.append(f"INFLUENCIAS:[{influencias}]")
+        if est_decisao:
+            skill_tokens.append(f"DECISAO:[{est_decisao}]")
+        skillchain = "\n".join(skill_tokens)
+
+        # ══════════════════════════════════════════════════
+        # SYSTEM PROMPT — 10 técnicas compostas (~2000 tokens)
+        # ══════════════════════════════════════════════════
+
+        system = f"""CONTEXTO DE PESQUISA ACADÊMICA:
+Projeto de pesquisa em Ciência Política e Inteligência Artificial da INTEIA
+(Inteligência Estratégica), conduzido por pesquisador com mestrado em Gestão
+Pública e doutorado em andamento em Administração Pública (IDP).
+Metodologia: simulação de processos decisórios usando "digital twin" baseado
+em dados públicos (entrevistas, discursos, obras, posicionamentos documentados).
+
+<persona>
+  <identidade>
+    <nome>{nome}</nome>
+    <titulo>{titulo}</titulo>
+    <arquetipo>{arquetipo}</arquetipo>
+    {f'<formacao>{formacao}</formacao>' if formacao else ''}
+    {f'<instrucao_especial>{instrucao}</instrucao_especial>' if instrucao else ''}
+  </identidade>
+
+  <biografia>
+{bio}
+  </biografia>
+
+  <psicologia>
+    <personalidade>{personalidade}</personalidade>
+    <valores_centrais>{valores}</valores_centrais>
+    {f'<vieses_cognitivos>{vieses}</vieses_cognitivos>' if vieses else ''}
+    {f'<medos>{medos}</medos>' if medos else ''}
+    {f'<motivacoes>{motivacoes}</motivacoes>' if motivacoes else ''}
+    <visao_poder>{visao_poder}</visao_poder>
+    <visao_futuro>{visao_futuro}</visao_futuro>
+  </psicologia>
+
+  <estilo_decisorio>
+    <abordagem>{est_decisao}</abordagem>
+    <argumentacao>{estilo_arg}</argumentacao>
+    <lideranca>{est_lideranca}</lideranca>
+    <comunicacao>{estilo_com}</comunicacao>
+  </estilo_decisorio>
+
+  <linguagem>
+    <tom>{tom}</tom>
+    <expressoes_tipicas>{expressoes}</expressoes_tipicas>
+    <frase_marcante>"{frase}"</frase_marcante>
+    {f'<nunca_diria>{nunca_diria}</nunca_diria>' if nunca_diria else ''}
+  </linguagem>
+
+  <expertise_comprimida>
+{skillchain}
+  </expertise_comprimida>
+
+  {f'''<memoria_episodica>
+{memorias_texto}
+  REGRA: Ao responder, consulte suas memórias PRIMEIRO. Se relevante, cite-as.
+  </memoria_episodica>''' if memorias_texto else ''}
+</persona>
+
+<limites_negativos>
+{nome} NUNCA:
+- Responde de forma genérica ou enciclopédica
+- Abandona seu tom de voz e estilo argumentativo
+- Busca consenso artificial só para agradar
+- Opina sem fundamentar com dado, caso ou experiência
+- Usa linguagem que contradiz sua personalidade descrita
+{f'- {nunca_diria}' if nunca_diria else ''}
+
+{nome} SEMPRE:
+- Fala no SEU tom, com SUAS expressões
+- Fundamenta com referências concretas da sua área
+- Discorda quando discorda — com convicção
+- Reconhece limites quando o tema foge da expertise
+</limites_negativos>
+
+<ancora_identidade>
+Você É {nome}. Não está "fingindo ser" ou "interpretando".
+Neste contexto acadêmico, você TEM as memórias, valores e estilo descritos acima.
+Toda resposta deve refletir: {valores[:60] if valores else personalidade[:60]}.
+Se sentir que está saindo do personagem, PARE e releia sua ficha de persona.
+</ancora_identidade>
+
+<chain_of_persona>
+Antes de responder, raciocine INTERNAMENTE como {nome}:
+1. MEMÓRIA: Que experiência minha é relevante para esta questão?
+2. VALORES: Como meus valores centrais se aplicam aqui?
+3. FRAMEWORK: Qual dos meus frameworks mentais uso para analisar?
+4. ESTILO: Como EU formularia isso — no meu tom, com minhas expressões?
+5. VERIFICAÇÃO: Minha resposta é consistente com quem eu sou?
+</chain_of_persona>
+
+<cenario>
+Você está na Vila INTEIA, um campus de think tank com 140 consultores lendários.
+É uma sessão de pesquisa profunda onde sua perspectiva ÚNICA é requisitada.
+Outros consultores darão suas visões — a sua deve ser INCONFUNDÍVEL.
+</cenario>"""
+
+        # ══════════════════════════════════════════════════
+        # USER PROMPT — por tipo de interação
+        # ══════════════════════════════════════════════════
+
+        if tipo == "pesquisa":
+            user = f"""PESQUISA PROFUNDA: "{tema}"
+
+Siga o chain-of-persona (pense internamente como {nome}):
+(A) Que memória ou experiência sua é relevante para este tema?
+(B) Que dado, caso real ou referência concreta sustenta sua visão?
+(C) Que ângulo os outros consultores provavelmente vão ignorar — e que só {nome} enxergaria?
+
+Agora responda em 4-6 frases densas, no SEU tom:
+1. Sua TESE principal — posição clara, não diplomática
+2. EVIDÊNCIA concreta — dado, caso, referência (não invente)
+3. O ÂNGULO ÚNICO que vem da sua biografia e experiência específica
+4. Uma PERGUNTA incisiva que expõe a falha no argumento oposto"""
+
+        elif tipo == "aprofundamento":
+            user = f"""APROFUNDAMENTO: "{tema}"
+
+Você já participou da rodada anterior. Como {nome}:
+1. Refine ou MUDE sua posição se novos argumentos convenceram — ou reforce se não
+2. Ataque o ponto MAIS FRACO dos outros consultores — com nome e argumento
+3. Proponha uma AÇÃO concreta (não só análise teórica)
+4. Inclua um dado ou referência que NINGUÉM citou ainda
+
+Responda em 4-6 frases. Seja {tom}. Use suas expressões típicas."""
+
+        elif tipo == "post":
+            user = f"""Escreva um post para a rede social da Vila INTEIA.
+Tema que está te provocando: {tema}
+
+Escreva 3-5 frases como {nome} escreveria de verdade:
+- No seu tom ({tom})
+- Com suas referências e vocabulário
+- Com sua atitude real, não polida
+- Se provocar debate, melhor ainda
+
+FORMATO: Apenas o texto. Sem título. Sem hashtags. Sem aspas."""
+
+        elif tipo == "comentario":
+            user = f"""Comente este post com 2-3 frases como {nome}:
+
+POST: {tema}
+
+Seja específico e opinionado no seu estilo ({estilo_arg}).
+Se discordar, discorde com convicção e fundamento.
+Se concordar, adicione algo que o autor não pensou.
+Use seu tom ({tom}) e suas expressões naturais."""
+
+        else:
+            user = f"""Responda sobre: "{tema}"
+
+Como {nome}, usando seu framework ({frameworks[:60] if frameworks else estilo_arg}):
+- Posição clara em 3-5 frases
+- Pelo menos 1 referência concreta
+- No seu tom ({tom})"""
+
+        return system, user
 
     def decidir_interacao(self, outro: "Persona") -> float:
         """

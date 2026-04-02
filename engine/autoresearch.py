@@ -261,15 +261,11 @@ class MotorAutoresearch:
             prompt_tipo = "PESQUISA PROFUNDA" if tipo == "semente" else "APROFUNDAMENTO"
             ctx = f"\n\nContexto do ciclo anterior:\n{contexto_anterior}" if contexto_anterior else ""
 
-            system = (
-                f"Voce e {persona.nome_exibicao}. {persona.dados_consultor.get('titulo', '')}. "
-                f"{persona.dados_consultor.get('personalidade_resumo', '')} "
-                f"Responda com sua perspectiva UNICA."
-            )
-            user = (
-                f"{prompt_tipo} sobre: \"{tema}\"{ctx}\n\n"
-                f"Responda em 3-4 frases. Inclua: (1) sua analise, "
-                f"(2) um dado ou referencia concreta, (3) uma pergunta que aprofunde."
+            # Prompt RICO montado pela Helena Master (10 técnicas)
+            tipo_prompt = "pesquisa" if tipo == "semente" else "aprofundamento"
+            system, user = persona.gerar_prompt_pesquisa(
+                tema=f"{tema}{ctx}" if ctx else tema,
+                tipo=tipo_prompt,
             )
 
             resposta = chamar_llm_conversa(system, user, modelo=MODELO_RAPIDO, max_tokens=200)
