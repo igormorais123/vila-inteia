@@ -559,6 +559,7 @@ function togLike(btn){btn.classList.toggle('liked');var s=btn.querySelector('spa
 const OMNI_URL='https://api.inteia.com.br/api/v1/vila-inteia/chat';
 const OMNI_MODEL='BestFREE';
 const BACKEND_API='https://api.inteia.com.br/api/v1/vila-inteia';
+const VILA_API='https://vila-inteia.onrender.com';
 
 function buildPersona(c){
 var p='Voce e '+(c.nome_exibicao||c.nome)+'. '+(c.titulo||'')+'. ';
@@ -1231,7 +1232,7 @@ var _liveInterval=null;
 async function loadLiveStatus(){
 var ctrl=new AbortController();setTimeout(function(){ctrl.abort();},8000);
 try{
-  var r=await fetch(BACKEND_API+'/live',{signal:ctrl.signal});
+  var r=await fetch(VILA_API+'/live',{signal:ctrl.signal});
   if(!r.ok)return;
   var data=await r.json();
   var el=document.getElementById('livePanel');

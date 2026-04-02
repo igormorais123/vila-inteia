@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: starter
     buildCommand: pip install -r requirements.txt
-    startCommand: python main.py serve --port $PORT
+    startCommand: python main.py live --port $PORT --intervalo 60 --topico "futuro da inteligencia artificial no Brasil"
     healthCheckPath: /docs
     envVars:
       - key: PYTHON_VERSION
