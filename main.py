@@ -228,7 +228,6 @@ def modo_live(args):
     sim = obter_simulacao()
     if args.topico:
         sim.injetar_topico(args.topico)
-        config.topicos_ativos.append(args.topico)
 
     # Thread de simulação contínua
     def loop_continuo():
@@ -270,21 +269,7 @@ def modo_live(args):
     thread_sim = threading.Thread(target=loop_continuo, daemon=True)
     thread_sim.start()
 
-    # Endpoint para consultar estado live
-    @app.get("/api/v1/vila/live")
-    async def estado_live():
-        return {
-            "modo": "24/7",
-            "step": sim.step,
-            "hora_simulacao": sim.hora_atual.strftime("%Y-%m-%d %H:%M"),
-            "agentes_ativos": sum(1 for p in sim.personas.values() if p.ativo),
-            "conversas_total": sim.stats["total_conversas"],
-            "pesquisas_total": sim.stats.get("total_pesquisas", 0),
-            "tendencias": sim.motor_previsibilidade.to_dict(),
-            "autoresearch": sim.motor_autoresearch.to_dict(),
-            "topicos_ativos": config.topicos_ativos,
-            "rede_social": sim.rede_social.stats() if hasattr(sim.rede_social, 'stats') else {},
-        }
+    # Endpoint /api/v1/vila/live já está em rotas_vila.py (sem duplicação)
 
     try:
         port = int(os.environ.get("PORT", args.port))
