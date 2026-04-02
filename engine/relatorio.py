@@ -106,7 +106,7 @@ def gerar_relatorio(simulacao) -> RelatorioExecutivo:
 
     # Descobertas do autoresearch
     descobertas = []
-    for desc in simulacao.motor_autoresearch.descobertas[-5:]:
+    for desc in simulacao.motor_autoresearch.descobertas_acumuladas[-5:]:
         if desc and "inconclusiva" not in desc.lower():
             descobertas.append(desc[:200])
 
@@ -119,9 +119,12 @@ def gerar_relatorio(simulacao) -> RelatorioExecutivo:
 
     # Próximos passos
     proximos = []
-    sugestao = simulacao.motor_previsibilidade.sugerir_proximo_topico(
-        getattr(simulacao, '_config_topicos', [])
-    )
+    try:
+        sugestao = simulacao.motor_previsibilidade.sugerir_proximo_topico(
+            getattr(simulacao, '_config_topicos', [])
+        )
+    except Exception:
+        sugestao = None
     if sugestao:
         proximos.append(f"Injetar tópico sugerido: '{sugestao}'")
     if not descobertas:
