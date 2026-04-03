@@ -42,8 +42,15 @@ from engine.persona import carregar_todas_personas
 
 MATERIAS = [
     "IA vai substituir advogados no Brasil ate 2030",
+    "Reforma tributaria e o impacto nas startups brasileiras",
+    "Elon Musk deveria ser regulado como monopolio global",
+    "Educacao publica brasileira precisa de revolucao tecnologica",
+    "Criptomoedas vao substituir o Real em 10 anos",
     "Democracia direta digital e viavel para o Brasil",
+    "Aquecimento global vai transformar o Nordeste em deserto",
+    "China ja superou os EUA em inteligencia artificial",
     "Saude mental e a maior crise do seculo 21",
+    "Brasil pode ser potencia militar com drones autonomos",
 ]
 
 
