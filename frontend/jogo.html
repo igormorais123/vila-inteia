@@ -514,6 +514,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
         <button class="tab-btn active" onclick="switchTab('constitution',this)">Constituição</button>
         <button class="tab-btn" onclick="switchTab('economy',this)">Regras Econômicas</button>
         <button class="tab-btn" onclick="switchTab('helena',this)">Helena</button>
+        <button class="tab-btn" onclick="switchTab('desafio',this)" style="color:#22c55e">Desafio</button>
         <button class="tab-btn" onclick="switchTab('inteligencia',this)" style="color:var(--amber)">Inteligência</button>
       </div>
       <div class="tabs-body">
@@ -566,6 +567,62 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
           </div>
           <div id="helenaInsights">
             <p class="helena-empty">Helena está observando a assembleia. Insights aparecerão aqui após 10 rodadas.</p>
+          </div>
+        </div>
+
+        <!-- TAB: DESAFIO COLETIVO -->
+        <div class="tab-content" id="tabDesafio">
+          <div style="padding:12px">
+            <!-- Header do desafio -->
+            <div id="desafioHeader" style="margin-bottom:16px">
+              <div style="text-align:center;padding:20px;color:var(--txm);font-size:12px;line-height:1.6">
+                Nenhum desafio ativo.<br>
+                <button onclick="listarDesafios()" style="margin-top:8px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:8px 16px;border-radius:var(--r-sm);cursor:pointer;font-size:12px;font-weight:600">Iniciar Desafio</button>
+              </div>
+            </div>
+
+            <!-- Progresso -->
+            <div id="desafioProgresso" style="display:none;margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <span style="font-size:11px;color:var(--txm)">Progresso Geral</span>
+                <span id="desafioProgressoPct" style="font-size:13px;font-weight:700;color:#22c55e">0%</span>
+              </div>
+              <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden">
+                <div id="desafioProgressoBar" style="height:100%;background:linear-gradient(90deg,#22c55e,var(--amber));width:0%;transition:width 0.5s"></div>
+              </div>
+            </div>
+
+            <!-- Fases -->
+            <div id="desafioFases" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px"></div>
+
+            <!-- Contribuições recentes -->
+            <div id="desafioContribs" style="margin-bottom:16px">
+              <h4 style="font-size:12px;color:var(--tx2);margin-bottom:8px;font-weight:600">Contribuições Recentes</h4>
+              <div id="desafioContribsList" style="display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto"></div>
+            </div>
+
+            <!-- Métricas -->
+            <div id="desafioMetricas" style="display:none;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:var(--bg3);padding:8px;border-radius:var(--r-sm);text-align:center">
+                <div id="desafioTotalContribs" style="font-size:18px;font-weight:700;color:#22c55e">0</div>
+                <div style="font-size:10px;color:var(--txm)">Contribuições</div>
+              </div>
+              <div style="background:var(--bg3);padding:8px;border-radius:var(--r-sm);text-align:center">
+                <div id="desafioParticipantes" style="font-size:18px;font-weight:700;color:var(--amber)">0</div>
+                <div style="font-size:10px;color:var(--txm)">Participantes</div>
+              </div>
+              <div style="background:var(--bg3);padding:8px;border-radius:var(--r-sm);text-align:center">
+                <div id="desafioVotos" style="font-size:18px;font-weight:700;color:#3b82f6">0</div>
+                <div style="font-size:10px;color:var(--txm)">Votos</div>
+              </div>
+              <div style="background:var(--bg3);padding:8px;border-radius:var(--r-sm);text-align:center">
+                <div id="desafioDebates" style="font-size:18px;font-weight:700;color:#ef4444">0</div>
+                <div style="font-size:10px;color:var(--txm)">Debates</div>
+              </div>
+            </div>
+
+            <!-- Catálogo (modal inline) -->
+            <div id="desafioCatalogo" style="display:none"></div>
           </div>
         </div>
 
@@ -1861,12 +1918,14 @@ function switchTab(tabId, btn) {
     'constitution': 'tabConstitution',
     'economy': 'tabEconomy',
     'helena': 'tabHelena',
+    'desafio': 'tabDesafio',
     'inteligencia': 'tabInteligencia'
   };
   const el = document.getElementById(tabMap[tabId]);
   if (el) el.classList.add('active');
   btn.classList.add('active');
   if (tabId === 'inteligencia') carregarRelatorio();
+  if (tabId === 'desafio') carregarDesafio();
 }
 
 const VILA_BACKEND = 'https://vila-inteia.onrender.com/api/v1/vila';
@@ -2600,7 +2659,174 @@ function resetSession() {
 /* ============================================================
    INIT
    ============================================================ */
-init().then(function() { startRelatorioPolling(); carregarRelatorio(); }).catch(showFatalInitError);
+/* ============================================================
+   DESAFIO COLETIVO
+   ============================================================ */
+const VILA_API = _IS_RENDER ? location.origin + '/api/v1/vila' : 'https://vila-inteia.onrender.com/api/v1/vila';
+
+let _desafioCache = null;
+
+async function carregarDesafio() {
+  try {
+    const resp = await fetch(VILA_API + '/desafio');
+    const data = await resp.json();
+    _desafioCache = data;
+    renderDesafio(data);
+  } catch(e) {
+    console.warn('Desafio indisponível:', e);
+  }
+}
+
+function renderDesafio(data) {
+  const header = document.getElementById('desafioHeader');
+  const prog = document.getElementById('desafioProgresso');
+  const fases = document.getElementById('desafioFases');
+  const contribs = document.getElementById('desafioContribsList');
+  const metricas = document.getElementById('desafioMetricas');
+
+  if (!data || data.status === 'inativo') {
+    header.innerHTML = `
+      <div style="text-align:center;padding:20px;color:var(--txm);font-size:12px;line-height:1.6">
+        Nenhum desafio ativo.<br>
+        <button onclick="listarDesafios()" style="margin-top:8px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:8px 16px;border-radius:var(--r-sm);cursor:pointer;font-size:12px;font-weight:600">Escolher Desafio</button>
+      </div>`;
+    prog.style.display = 'none';
+    fases.innerHTML = '';
+    contribs.innerHTML = '';
+    metricas.style.display = 'none';
+    return;
+  }
+
+  // Header ativo
+  const pct = Math.round((data.progresso_total || 0) * 100);
+  header.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:28px">${escapeHtml(data.icone || '🎯')}</span>
+      <div>
+        <div style="font-weight:700;font-size:14px;color:var(--tx1)">${escapeHtml(data.nome)}</div>
+        <div style="font-size:11px;color:var(--txm)">${escapeHtml(data.descricao || '').slice(0,120)}...</div>
+      </div>
+    </div>`;
+
+  // Progresso
+  prog.style.display = 'block';
+  document.getElementById('desafioProgressoPct').textContent = pct + '%';
+  document.getElementById('desafioProgressoBar').style.width = pct + '%';
+
+  // Fases
+  if (data.fases && data.fases.length) {
+    fases.innerHTML = data.fases.map((f, i) => {
+      const isCurrent = i === data.fase_atual_idx;
+      const isDone = f.status === 'concluida';
+      const fpct = Math.round((f.progresso || 0) * 100);
+      const bg = isDone ? 'rgba(34,197,94,0.15)' : isCurrent ? 'rgba(201,149,42,0.15)' : 'var(--bg3)';
+      const border = isDone ? '1px solid rgba(34,197,94,0.3)' : isCurrent ? '1px solid rgba(201,149,42,0.3)' : '1px solid var(--brd)';
+      const icon = isDone ? '✅' : isCurrent ? '▶' : '○';
+      return `<div style="background:${bg};border:${border};padding:8px 10px;border-radius:var(--r-sm);display:flex;align-items:center;gap:8px">
+        <span style="font-size:12px">${icon}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:600;color:var(--tx1)">${escapeHtml(f.nome)}</div>
+          <div style="font-size:10px;color:var(--txm)">${escapeHtml(f.descricao)}</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:${isDone?'#22c55e':isCurrent?'var(--amber)':'var(--txm)'}">${fpct}%</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Contribuições recentes
+  const recentes = data.contribuicoes_recentes || [];
+  if (recentes.length) {
+    contribs.innerHTML = recentes.slice(-8).reverse().map(c => `
+      <div style="background:var(--bg3);padding:6px 8px;border-radius:var(--r-sm);font-size:11px;border-left:3px solid ${c.tipo==='proposta'?'#22c55e':c.tipo==='emenda'?'#3b82f6':'var(--amber)'}">
+        <strong style="color:var(--tx1)">${escapeHtml(c.agente_nome)}</strong>
+        <span style="color:var(--txm);margin-left:4px">${escapeHtml(c.conteudo).slice(0,120)}</span>
+      </div>
+    `).join('');
+  } else {
+    contribs.innerHTML = '<div style="text-align:center;padding:8px;color:var(--txm);font-size:11px">Aguardando contribuições...</div>';
+  }
+
+  // Métricas
+  const m = data.metricas || {};
+  metricas.style.display = 'grid';
+  document.getElementById('desafioTotalContribs').textContent = m.total_contribuicoes || 0;
+  document.getElementById('desafioParticipantes').textContent = m.agentes_participantes || 0;
+  document.getElementById('desafioVotos').textContent = m.total_votos || 0;
+  document.getElementById('desafioDebates').textContent = m.total_debates || 0;
+}
+
+async function listarDesafios() {
+  const catalogo = document.getElementById('desafioCatalogo');
+  catalogo.style.display = 'block';
+  catalogo.innerHTML = '<div style="text-align:center;padding:12px;color:var(--txm)">Carregando catálogo...</div>';
+
+  try {
+    const resp = await fetch(VILA_API + '/desafios');
+    const data = await resp.json();
+    const desafios = data.desafios || [];
+
+    catalogo.innerHTML = `
+      <h4 style="font-size:13px;font-weight:700;color:var(--tx1);margin-bottom:10px">Escolha um Desafio</h4>
+      ${desafios.map(d => `
+        <div onclick="iniciarDesafio('${d.id}')" style="background:var(--bg3);border:1px solid var(--brd);padding:12px;border-radius:var(--r-sm);cursor:pointer;margin-bottom:8px;transition:border-color 0.2s" onmouseover="this.style.borderColor='#22c55e'" onmouseout="this.style.borderColor='var(--brd)'">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span style="font-size:20px">${d.icone || '🎯'}</span>
+            <span style="font-weight:700;font-size:13px;color:var(--tx1)">${escapeHtml(d.nome)}</span>
+            <span style="font-size:10px;color:var(--txm);margin-left:auto">${d.total_fases} fases</span>
+          </div>
+          <div style="font-size:11px;color:var(--txm);line-height:1.4">${escapeHtml(d.descricao).slice(0,150)}...</div>
+        </div>
+      `).join('')}
+    `;
+  } catch(e) {
+    catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">Erro ao carregar catálogo. Backend indisponível.</div>';
+  }
+}
+
+async function iniciarDesafio(desafioId) {
+  const catalogo = document.getElementById('desafioCatalogo');
+  catalogo.innerHTML = '<div style="text-align:center;padding:12px;color:var(--amber)">Iniciando desafio...</div>';
+
+  try {
+    const resp = await fetch(VILA_API + '/desafio/iniciar', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({desafio_id: desafioId}),
+    });
+    const data = await resp.json();
+    catalogo.style.display = 'none';
+
+    if (data.desafio) {
+      renderDesafio(data.desafio);
+      // Adicionar mensagem no feed
+      addSystemMessage(`🎯 DESAFIO INICIADO: ${data.desafio.nome} — ${data.desafio.fases[0]?.nome || 'Fase 1'}`);
+    }
+  } catch(e) {
+    catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">Erro ao iniciar desafio.</div>';
+  }
+}
+
+function addSystemMessage(texto) {
+  const el = document.getElementById('feed');
+  if (!el) return;
+  const div = document.createElement('div');
+  div.className = 'msg tipo-sistema';
+  div.innerHTML = `<div class="msg-body"><p style="font-style:italic;color:var(--amber);font-size:12px">${escapeHtml(texto)}</p></div>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+// Polling do desafio a cada 30s quando aba ativa
+let _desafioPolling = null;
+function startDesafioPolling() {
+  if (_desafioPolling) return;
+  _desafioPolling = setInterval(() => {
+    const tab = document.getElementById('tabDesafio');
+    if (tab && tab.classList.contains('active')) carregarDesafio();
+  }, 30000);
+}
+
+init().then(function() { startRelatorioPolling(); carregarRelatorio(); startDesafioPolling(); }).catch(showFatalInitError);
 </script>
 </body>
 </html>
