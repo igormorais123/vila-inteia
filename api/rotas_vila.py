@@ -584,6 +584,72 @@ async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str):
 
 
 # ============================================================
+# PUBLICAÇÃO MIRANTE NEWS
+# ============================================================
+
+class PublicarMiranteRequest(BaseModel):
+    titulo: str
+    corpo: str
+    categoria: str = "Pesquisa IA"
+    tags: list[str] = []
+    agente_id: str = ""
+    agente_nome: str = "Vila INTEIA"
+    auto_push: bool = False
+
+
+@router.post("/mirante/publicar")
+async def publicar_mirante(req: PublicarMiranteRequest):
+    """Publica artigo no Mirante News (mirantenews.com.br)."""
+    from engine.publicar_mirante import ArtigoMirante, publicar_no_mirante
+
+    artigo = ArtigoMirante(
+        titulo=req.titulo,
+        corpo=req.corpo,
+        categoria=req.categoria,
+        tags=req.tags or ["vila-inteia"],
+        autor_id=req.agente_id,
+        autor_nome=req.agente_nome,
+    )
+    resultado = publicar_no_mirante(artigo, auto_push=req.auto_push)
+    return resultado
+
+
+@router.post("/mirante/publicar-do-workspace")
+async def publicar_workspace_mirante(
+    titulo: str = Query(...),
+    agente_id: str = Query(...),
+    auto_push: bool = Query(False),
+):
+    """Compila artefatos de um agente no workspace e publica no Mirante."""
+    from engine.publicar_mirante import criar_artigo_de_workspace, publicar_no_mirante
+
+    sim = obter_simulacao()
+    desafio_id = sim.desafio.id if sim.desafio.ativo else ""
+    if not desafio_id:
+        raise HTTPException(400, "Nenhum desafio ativo")
+
+    persona = sim.personas.get(agente_id)
+    if not persona:
+        raise HTTPException(404, f"Agente {agente_id} não encontrado")
+
+    artigo = criar_artigo_de_workspace(
+        workspace=sim.workspace,
+        desafio_id=desafio_id,
+        agente_id=agente_id,
+        agente_nome=persona.nome_exibicao,
+        agente_categoria=persona.categoria,
+        titulo=titulo,
+        desafio_nome=sim.desafio.nome,
+        fase_nome=sim.desafio.fase_atual.nome if sim.desafio.fase_atual else "",
+    )
+
+    if not artigo:
+        raise HTTPException(404, "Nenhum artefato do agente no workspace")
+
+    return publicar_no_mirante(artigo, auto_push=auto_push)
+
+
+# ============================================================
 # PROXY — Chat e Persistência (resolve CORS do jogo.html)
 # ============================================================
 

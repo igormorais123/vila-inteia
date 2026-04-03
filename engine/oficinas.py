@@ -1055,6 +1055,59 @@ _reg(Oficina(
 
 
 # ============================================================
+# REDAÇÃO MIRANTE NEWS — Publicação real no jornal
+# ============================================================
+
+_reg(Oficina(
+    local_id="redacao_mirante",
+    nome_oficina="Redação Mirante News",
+    descricao=(
+        "Redação do jornal mirantenews.com.br. Agentes redigem artigos, "
+        "Helena revisa, e o texto é publicado de verdade no site. "
+        "Formato MDX com frontmatter validado."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="artigo_mirante", nome="Redigir Artigo para Publicação",
+            descricao=(
+                "Artigo completo para o Mirante News: título, lead, corpo, "
+                "tags, categoria. Formato MDX publicável."
+            ),
+            tipo="escrita", custo_coins=15,
+            tipo_artefato="mdx",
+        ),
+        Ferramenta(
+            id="analise_mirante", nome="Análise para Publicação",
+            descricao=(
+                "Artigo analítico baseado em dados e descobertas do desafio. "
+                "Tipo: Pesquisa IA, Dados, Política, Economia."
+            ),
+            tipo="escrita", custo_coins=10,
+            tipo_artefato="mdx",
+        ),
+        Ferramenta(
+            id="opiniao_mirante", nome="Artigo de Opinião",
+            descricao=(
+                "Coluna de opinião assinada pelo consultor. "
+                "Perspectiva única baseada na expertise do agente."
+            ),
+            tipo="escrita", custo_coins=8,
+            tipo_artefato="mdx",
+        ),
+        Ferramenta(
+            id="revisao_editorial", nome="Revisão Editorial (Helena)",
+            descricao=(
+                "Helena revisa artigo: verifica fatos, qualidade, "
+                "adequação editorial, e aprova para publicação."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+
+# ============================================================
 # API — consultar oficinas e ferramentas
 # ============================================================
 

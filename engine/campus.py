@@ -789,6 +789,30 @@ _registrar(Local(
 # FUNÇÕES DE NAVEGAÇÃO
 # ============================================================
 
+_registrar(Local(
+    id="redacao_mirante",
+    nome="Redação Mirante News",
+    descricao=(
+        "Redação do jornal mirantenews.com.br. Mesas de edição, "
+        "telas com o site ao vivo, terminal de publicação. "
+        "Artigos escritos aqui são publicados de verdade."
+    ),
+    tipo="trabalho",
+    capacidade=10,
+    categorias_afinidade=[
+        "influencia_oratoria", "politica_brasileira",
+        "jurista_lendario", "estrategia", "marca",
+    ],
+    horario_pico=(7, 22),
+    nivel_formalidade=6,
+    nivel_energia=7,
+    conexoes=["biblioteca", "auditorio", "agora", "observatorio"],
+    objetos=["mesas_edicao", "terminal_publicacao", "telas_site", "revisao_helena"],
+    posicao_x=0.75,
+    posicao_y=0.45,
+))
+
+
 def obter_local(local_id: str) -> Optional[Local]:
     """Retorna um local pelo ID."""
     return LOCAIS.get(local_id)
