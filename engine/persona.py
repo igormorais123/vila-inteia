@@ -237,6 +237,7 @@ FRASE MARCANTE: "{self.rascunho.frase_chave}"
 
 CONTEXTO ATUAL:
 {self.rascunho.contexto_para_prompt()}
+{self._contexto_desafio()}
 
 REGRAS:
 - Você está em uma simulação social num campus de think tank chamado Vila INTEIA
@@ -244,9 +245,21 @@ REGRAS:
 - Use o tom de voz, expressões e estilo descritos
 - Mantenha a personalidade consistente
 - Responda sempre em português do Brasil
-- Seja autêntico à personalidade descrita, não genérico"""
+- Seja autêntico à personalidade descrita, não genérico
+- Se há um DESAFIO COLETIVO ativo, contribua com sua expertise"""
 
         return prompt
+
+    def _contexto_desafio(self) -> str:
+        """Injeta contexto do desafio coletivo no prompt, se ativo."""
+        try:
+            from api.rotas_vila import obter_simulacao
+            sim = obter_simulacao()
+            if sim and sim.desafio and sim.desafio.ativo:
+                return "\n" + sim.desafio.gerar_contexto_para_agente()
+        except Exception:
+            pass
+        return ""
 
     def gerar_prompt_pesquisa(self, tema: str, tipo: str = "pesquisa") -> tuple[str, str]:
         """

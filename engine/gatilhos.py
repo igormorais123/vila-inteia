@@ -539,6 +539,7 @@ class MotorGatilhos:
         self.ultimo_jesus_step: int = -40      # Gatilho 6
         self.ultimo_debate_step: int = -30     # Gatilho 5
         self.ultimo_sintese_step: int = -100   # Helena síntese
+        self._ultimo_desafio_step: int = -20   # Gatilho 7: desafio coletivo
 
         # Fila de waves (posts aguardando comentários graduais)
         self.fila_waves: list[PostAgendado] = []
@@ -643,6 +644,12 @@ class MotorGatilhos:
         # --- GATILHO 3: Helena síntese diária (22h) ---
         if self._helena and hora_atual.hour == 22 and (step - self.ultimo_sintese_step) >= 60:
             resultado = self._gatilho_helena_sintese(step)
+            if resultado:
+                eventos.append(resultado)
+
+        # --- GATILHO 7: Contribuição ao Desafio Coletivo (a cada 15 steps) ---
+        if (step - self._ultimo_desafio_step) >= 15:
+            resultado = self._gatilho_desafio(step, personas, hora_atual)
             if resultado:
                 eventos.append(resultado)
 
@@ -886,6 +893,128 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
         return {
             "tipo": "helena_sintese",
             "descricao": "📊 Helena: Síntese do Dia",
+            "post_id": post.id,
+        }
+
+    def _gatilho_desafio(
+        self, step: int, personas: dict[str, Persona], hora_atual: datetime
+    ) -> dict | None:
+        """
+        Gatilho 7: Contribuição ao Desafio Coletivo.
+
+        Seleciona 2-3 agentes relevantes e gera contribuição real via LLM
+        sobre a fase atual do desafio. Publica no feed e registra no desafio.
+        """
+        # Importar desafio do mundo (passado pela simulação)
+        # O desafio é acessado via referência indireta — verificar se existe
+        try:
+            from .simulacao import simulacao as _sim_ref
+        except ImportError:
+            _sim_ref = None
+
+        # Fallback: buscar via api/rotas_vila
+        try:
+            from api.rotas_vila import obter_simulacao
+            sim = obter_simulacao()
+            desafio = sim.desafio
+        except Exception:
+            return None
+
+        if not desafio or not desafio.ativo or not desafio.fase_atual:
+            return None
+
+        fase = desafio.fase_atual
+        self._ultimo_desafio_step = step
+
+        # Selecionar 2-3 agentes com expertise relevante
+        agentes_lista = [p for p in personas.values() if p.ativo]
+        if not agentes_lista:
+            return None
+
+        # Priorizar agentes com expertise relacionada ao desafio
+        desc_lower = (fase.descricao + " " + desafio.nome).lower()
+        pontuados = []
+        for p in agentes_lista:
+            score = sum(1 for e in p.rascunho.areas_expertise if e.lower() in desc_lower)
+            score += random.random() * 2  # Aleatoriedade
+            pontuados.append((score, p))
+        pontuados.sort(key=lambda x: x[0], reverse=True)
+
+        selecionados = [p for _, p in pontuados[:3]]
+
+        # Gerar contribuição via LLM para o primeiro agente
+        contribuidor = selecionados[0]
+        system = gerar_prompt_profundo(contribuidor.dados_consultor)
+        system += f"""
+
+DESAFIO COLETIVO DA VILA: {desafio.icone} {desafio.nome}
+FASE ATUAL: {fase.nome} — {fase.descricao}
+Progresso: {desafio.progresso_total:.0%}
+
+Você deve contribuir com sua expertise para este desafio.
+Máximo 3-4 frases com proposta CONCRETA e acionável."""
+
+        user = f"Contribua para a fase '{fase.nome}' do desafio '{desafio.nome}'. O que você propõe?"
+
+        texto = chamar_llm_conversa(system, user, modelo=MODELO_RAPIDO, max_tokens=200)
+        if not texto:
+            texto = (
+                f"Considerando minha experiência em {', '.join(contribuidor.rascunho.areas_expertise[:2])}, "
+                f"proponho que priorizemos {fase.descricao.lower()} com foco em resultados mensuráveis."
+            )
+
+        # Registrar no desafio
+        from .desafio import Contribuicao
+        contrib = Contribuicao(
+            agente_id=contribuidor.id,
+            agente_nome=contribuidor.nome_exibicao,
+            conteudo=texto,
+            tipo="proposta",
+        )
+        desafio.registrar_contribuicao(contrib, step)
+
+        # Recompensar via incentivos
+        try:
+            sim.incentivos.recompensar(
+                contribuidor.id, "proposta_nova", step,
+                f"Contribuiu na fase '{fase.nome}'"
+            )
+            sim.incentivos.registrar_atividade(contribuidor.id, step)
+        except Exception:
+            pass
+
+        # Publicar no feed
+        post = Postagem(
+            tipo="proposta",
+            autor_id=contribuidor.id,
+            autor_nome=contribuidor.nome_exibicao,
+            autor_titulo=contribuidor.titulo,
+            autor_categoria=contribuidor.categoria,
+            autor_tier=contribuidor.tier,
+            titulo=f"🎯 {desafio.icone} [{fase.nome}] {contribuidor.nome_exibicao}",
+            conteudo=texto,
+            tags=["desafio", fase.id, desafio.id],
+            destaque=True,
+        )
+        self.rede._adicionar_post(post)
+        self.posts_hoje += 1
+
+        # Agendar waves de comentários dos outros selecionados
+        self.fila_waves.append(PostAgendado(
+            post_id=post.id,
+            step_criacao=step,
+        ))
+
+        logger.info(
+            f"🎯 Desafio [{fase.nome}]: {contribuidor.nome_exibicao} contribuiu"
+        )
+
+        return {
+            "tipo": "desafio_contribuicao",
+            "descricao": (
+                f"🎯 {contribuidor.nome_exibicao} contribuiu para "
+                f"'{fase.nome}' ({desafio.nome})"
+            ),
             "post_id": post.id,
         }
 
