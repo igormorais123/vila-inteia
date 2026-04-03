@@ -438,6 +438,11 @@ body{
    Frontend completo com modo demo (dados mock)
    =================================================================== */
 
+// ---- CONFIG ----
+window._VILA_API = location.hostname.includes('onrender.com')
+  ? location.origin + '/api/v1/vila'
+  : '/api/v1/vila';
+
 // ---- DATA ----
 const LOCATIONS = [
   {id:'agora',name:'Agora Central',icon:'\u{1F3DB}',desc:'Praca publica para debates abertos entre todos os consultores.',x:.5,y:.48,connections:['cafe','arena','auditorio','refeitorio','terraco']},
@@ -724,8 +729,92 @@ function openPanel(locId){
     h+=`</div>`;
   }
 
+  // Oficina — ferramentas reais do local
+  h+=`<div class="panel-section" id="panelOficina_${locId}">`;
+  h+=`<div class="panel-section-title">\u{1F6E0} Oficina</div>`;
+  h+=`<p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Carregando ferramentas...</p>`;
+  h+=`</div>`;
+
+  // Artefatos produzidos neste local
+  h+=`<div class="panel-section" id="panelArtefatos_${locId}">`;
+  h+=`<div class="panel-section-title">\u{1F4C4} Artefatos Produzidos</div>`;
+  h+=`<p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Carregando...</p>`;
+  h+=`</div>`;
+
   content.innerHTML=h;
   panel.classList.add('open');
+
+  // Carregar oficina do backend
+  carregarOficina(locId);
+}
+
+async function carregarOficina(locId) {
+  const API = window._VILA_API || 'https://vila-inteia.onrender.com/api/v1/vila';
+  try {
+    const resp = await fetch(API + '/oficinas/' + locId);
+    const data = await resp.json();
+    const el = document.getElementById('panelOficina_' + locId);
+    if (!el || data.erro) {
+      if (el) el.innerHTML = `<div class="panel-section-title">\u{1F6E0} Oficina</div><p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Local sem oficina de produção.</p>`;
+      return;
+    }
+
+    let h = `<div class="panel-section-title">\u{1F6E0} ${data.nome || 'Oficina'}</div>`;
+    h += `<p style="font-size:11px;color:var(--text-muted);padding:2px 8px;margin-bottom:6px">${data.descricao || ''}</p>`;
+
+    if (data.ferramentas && data.ferramentas.length) {
+      data.ferramentas.forEach(f => {
+        const icons = {codigo:'\u{1F4BB}', pesquisa:'\u{1F50D}', escrita:'\u{270F}', analise:'\u{1F4CA}', visual:'\u{1F3A8}', votacao:'\u{1F5F3}', comunicacao:'\u{1F4E2}'};
+        const ic = icons[f.tipo] || '\u{2699}';
+        h += `<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.05)">`;
+        h += `<span>${ic}</span>`;
+        h += `<div style="flex:1"><strong style="color:var(--text-primary)">${f.nome}</strong>`;
+        h += `<div style="color:var(--text-muted);font-size:10px">${f.descricao || ''}</div></div>`;
+        if (f.custo > 0) h += `<span style="color:var(--amber);font-size:10px">\u039E${f.custo}</span>`;
+        h += `</div>`;
+      });
+    }
+
+    if (data.artefatos_produzidos > 0) {
+      h += `<div style="padding:6px 8px;font-size:11px;color:var(--amber)">\u{2705} ${data.artefatos_produzidos} artefatos produzidos</div>`;
+    }
+
+    el.innerHTML = h;
+  } catch(e) {
+    console.warn('Oficina indisponível:', e);
+  }
+
+  // Carregar artefatos do workspace
+  try {
+    const resp2 = await fetch(API + '/workspace');
+    const wdata = await resp2.json();
+    const el2 = document.getElementById('panelArtefatos_' + locId);
+    if (!el2) return;
+
+    const arquivos = (wdata.arquivos || []).filter(a => {
+      // Filtrar artefatos que foram produzidos neste local (pelo nome da ferramenta)
+      return true; // Mostrar todos por enquanto
+    });
+
+    if (arquivos.length === 0) {
+      el2.innerHTML = `<div class="panel-section-title">\u{1F4C4} Artefatos Produzidos</div><p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Nenhum artefato ainda. Inicie um desafio!</p>`;
+      return;
+    }
+
+    let h2 = `<div class="panel-section-title">\u{1F4C4} Artefatos (${arquivos.length})</div>`;
+    arquivos.slice(-8).forEach(a => {
+      const ext = (a.arquivo || '').split('.').pop();
+      const extIcons = {py:'\u{1F40D}', md:'\u{1F4DD}', json:'\u{1F4CA}', html:'\u{1F310}', csv:'\u{1F4C8}'};
+      const ei = extIcons[ext] || '\u{1F4C4}';
+      h2 += `<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer" title="${a.arquivo}">`;
+      h2 += `<span>${ei}</span>`;
+      h2 += `<div style="flex:1"><strong style="color:var(--text-primary)">${a.arquivo}</strong>`;
+      h2 += `<div style="color:var(--text-muted);font-size:10px">${a.agente_nome || '?'} &mdash; ${a.tipo || ''}</div></div>`;
+      h2 += `<span style="font-size:10px;color:var(--text-muted)">${a.tamanho || 0}ch</span>`;
+      h2 += `</div>`;
+    });
+    el2.innerHTML = h2;
+  } catch(e) { /* silencioso */ }
 }
 
 function closePanel(){
