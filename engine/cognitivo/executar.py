@@ -5,10 +5,13 @@ Traduz o plano do agente em ação concreta:
 - Move para o local planejado
 - Atualiza estado (energia, humor)
 - Registra a ação na memória
+- USA FERRAMENTA REAL da oficina do local (se desafio ativo)
+- PRODUZ ARTEFATO no workspace
 """
 
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 from typing import TYPE_CHECKING
 
@@ -16,6 +19,8 @@ if TYPE_CHECKING:
     from ..persona import Persona
 
 from ..campus import obter_local, calcular_distancia
+
+logger = logging.getLogger("vila-inteia.executar")
 
 
 def executar(
@@ -115,4 +120,156 @@ def executar(
         palavras_chave=set(desc_lower.split()[:4]),
     )
 
+    # ================================================================
+    # PRODUÇÃO REAL — Usar ferramenta da oficina do local
+    # ================================================================
+    # Se há desafio ativo e o local tem oficina, produzir artefato real.
+    # Probabilidade: 20% por step (não toda vez — agente às vezes só observa).
+    import random
+    if random.random() < 0.20:
+        artefato = _tentar_produzir(persona, resultado["local_id"], hora_atual)
+        if artefato:
+            resultado["artefato"] = artefato
+
     return resultado
+
+
+def _tentar_produzir(persona: Persona, local_id: str, hora_atual: datetime) -> dict | None:
+    """
+    Tenta produzir artefato real usando a oficina do local.
+
+    Retorna dict com info do artefato ou None se não produziu.
+    """
+    try:
+        from ..oficinas import oficina_do_local, Workspace
+        from ..desafio import Contribuicao
+    except ImportError:
+        return None
+
+    oficina = oficina_do_local(local_id)
+    if not oficina or not oficina.ferramentas:
+        return None
+
+    # Verificar se há desafio ativo
+    try:
+        from api.rotas_vila import obter_simulacao
+        sim = obter_simulacao()
+        if not sim or not sim.desafio or not sim.desafio.ativo:
+            return None
+        desafio = sim.desafio
+        fase = desafio.fase_atual
+        if not fase:
+            return None
+    except Exception:
+        return None
+
+    # Escolher ferramenta mais relevante para a fase
+    ferramenta = oficina.ferramentas[0]  # default: primeira
+    desc_fase = fase.descricao.lower()
+    for f in oficina.ferramentas:
+        if f.tipo == "codigo" and any(w in desc_fase for w in ("prototip", "modelo", "calcul")):
+            ferramenta = f
+            break
+        if f.tipo == "pesquisa" and any(w in desc_fase for w in ("pesquis", "mapear", "diagnostic")):
+            ferramenta = f
+            break
+        if f.tipo == "escrita" and any(w in desc_fase for w in ("redigir", "propor", "apresent")):
+            ferramenta = f
+            break
+        if f.tipo == "analise" and any(w in desc_fase for w in ("analis", "simul", "cenario")):
+            ferramenta = f
+            break
+        if f.tipo == "votacao" and any(w in desc_fase for w in ("votar", "deliber", "julg")):
+            ferramenta = f
+            break
+
+    # Verificar saldo
+    custo = ferramenta.custo_coins
+    saldo = sim.incentivos.saldo(persona.id)
+    if custo > saldo:
+        return None
+
+    # PRODUZIR ARTEFATO via LLM
+    from ..ia_client import chamar_llm_conversa, MODELO_RAPIDO
+    from ..arquetipos import gerar_prompt_profundo
+
+    system = gerar_prompt_profundo(persona.dados_consultor)
+    system += f"""
+
+CONTEXTO DE PRODUÇÃO:
+Você está no(a) {oficina.nome_oficina} da Vila INTEIA.
+Ferramenta disponível: {ferramenta.nome} — {ferramenta.descricao}
+Desafio: {desafio.nome}
+Fase: {fase.nome} — {fase.descricao}
+
+TAREFA: Produza um artefato CONCRETO usando a ferramenta '{ferramenta.nome}'.
+Formato: {ferramenta.tipo_artefato.upper()}
+Seja ESPECÍFICO, ACIONÁVEL e use sua EXPERTISE real.
+Máximo 500 palavras. Vá direto ao conteúdo — sem introdução."""
+
+    user_msg = (
+        f"Usando a ferramenta '{ferramenta.nome}', produza uma entrega concreta "
+        f"para a fase '{fase.nome}' do desafio '{desafio.nome}'. "
+        f"Sua expertise: {', '.join(persona.rascunho.areas_expertise[:3])}."
+    )
+
+    conteudo = chamar_llm_conversa(system, user_msg, modelo=MODELO_RAPIDO, max_tokens=600)
+    if not conteudo:
+        return None
+
+    # Salvar artefato no workspace
+    workspace = Workspace(base_dir=os.path.join(sim.dir_dados, "entregas"))
+    ext = ferramenta.tipo_artefato or "md"
+    slug = persona.id.lower()
+    nome_arquivo = f"{fase.id}_{slug}_{ferramenta.id}.{ext}"
+
+    meta = workspace.escrever(
+        desafio_id=desafio.id,
+        agente_id=persona.id,
+        agente_nome=persona.nome_exibicao,
+        nome_arquivo=nome_arquivo,
+        conteudo=conteudo,
+        tipo=ferramenta.tipo,
+    )
+
+    # Cobrar e recompensar
+    sim.incentivos.cobrar_recurso(persona.id, custo, ferramenta.nome, sim.step)
+    sim.incentivos.recompensar(persona.id, "proposta_nova", sim.step,
+                                f"Produziu {nome_arquivo}")
+    sim.incentivos.registrar_atividade(persona.id, sim.step)
+
+    # Registrar como contribuição do desafio
+    contrib = Contribuicao(
+        agente_id=persona.id,
+        agente_nome=persona.nome_exibicao,
+        conteudo=f"[{ferramenta.nome}] {conteudo[:150]}",
+        tipo="proposta",
+    )
+    desafio.registrar_contribuicao(contrib, sim.step)
+
+    # Registrar na memória do agente
+    persona.memoria.adicionar_pensamento(
+        descricao=f"Produzi '{nome_arquivo}' usando {ferramenta.nome} no(a) {oficina.nome_oficina}",
+        importancia=7,
+        palavras_chave={ferramenta.id, fase.id, "producao"},
+    )
+
+    oficina.artefatos_produzidos += 1
+
+    logger.info(
+        f"ARTEFATO: {persona.nome_exibicao} produziu {nome_arquivo} "
+        f"no(a) {oficina.nome_oficina} ({ferramenta.nome})"
+    )
+
+    return {
+        "arquivo": nome_arquivo,
+        "ferramenta": ferramenta.nome,
+        "oficina": oficina.nome_oficina,
+        "agente": persona.nome_exibicao,
+        "tipo": ferramenta.tipo,
+        "tamanho": len(conteudo),
+    }
+
+
+# Import necessário para Workspace
+import os

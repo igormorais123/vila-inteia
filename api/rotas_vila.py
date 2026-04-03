@@ -491,6 +491,63 @@ async def ranking_economia(top: int = Query(20, ge=1, le=100)):
 
 
 # ============================================================
+# ENDPOINTS DE OFICINAS E WORKSPACE
+# ============================================================
+
+@router.get("/oficinas")
+async def listar_oficinas():
+    """Lista todas as oficinas (ferramentas reais por local)."""
+    from engine.oficinas import todas_oficinas
+    return {"oficinas": todas_oficinas()}
+
+
+@router.get("/oficinas/{local_id}")
+async def detalhe_oficina(local_id: str):
+    """Detalhe de uma oficina: ferramentas, artefatos produzidos."""
+    from engine.oficinas import oficina_do_local
+    oficina = oficina_do_local(local_id)
+    if not oficina:
+        return {"erro": f"Sem oficina no local '{local_id}'"}
+    return oficina.to_dict()
+
+
+@router.get("/workspace")
+async def workspace_listar():
+    """Lista artefatos produzidos no workspace do desafio ativo."""
+    sim = obter_simulacao()
+    desafio_id = sim.desafio.id if sim.desafio.ativo else ""
+    if not desafio_id:
+        return {"total_arquivos": 0, "arquivos": []}
+    return sim.workspace.to_dict(desafio_id)
+
+
+@router.get("/workspace/{desafio_id}")
+async def workspace_desafio(desafio_id: str):
+    """Lista artefatos de um desafio específico."""
+    sim = obter_simulacao()
+    return sim.workspace.to_dict(desafio_id)
+
+
+@router.get("/workspace/{desafio_id}/{nome_arquivo}")
+async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str):
+    """Lê conteúdo de um artefato."""
+    sim = obter_simulacao()
+    conteudo = sim.workspace.ler(desafio_id, nome_arquivo)
+    if not conteudo:
+        raise HTTPException(404, f"Arquivo '{nome_arquivo}' não encontrado")
+    return {"arquivo": nome_arquivo, "conteudo": conteudo}
+
+
+@router.get("/workspace/{desafio_id}/compilar")
+async def workspace_compilar(desafio_id: str):
+    """Compila todas as entregas em documento único."""
+    from fastapi.responses import PlainTextResponse
+    sim = obter_simulacao()
+    compilado = sim.workspace.compilar(desafio_id)
+    return PlainTextResponse(compilado, media_type="text/markdown")
+
+
+# ============================================================
 # PROXY — Chat e Persistência (resolve CORS do jogo.html)
 # ============================================================
 

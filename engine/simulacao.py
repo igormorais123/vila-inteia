@@ -23,6 +23,7 @@ from .autoresearch import MotorAutoresearch
 from .desafio import DesafioColetivo, criar_desafio, desafio_aleatorio, Contribuicao, listar_desafios
 from .ferramentas_agente import ToolkitAgente, ferramentas_disponiveis_no_local, custo_uso_local
 from .incentivos import MotorIncentivos
+from .oficinas import Workspace, OFICINAS, todas_oficinas
 
 # Import config: relativo (package mode) ou direto (standalone)
 try:
@@ -72,10 +73,13 @@ class SimulacaoVila:
             intervalo_steps=100, max_ciclos=3,
         )
 
-        # Harness: Desafio Coletivo + Ferramentas + Incentivos
+        # Harness: Desafio Coletivo + Ferramentas + Incentivos + Workspace
         self.desafio: DesafioColetivo = DesafioColetivo()
         self.toolkit = ToolkitAgente()
         self.incentivos = MotorIncentivos()
+        self.workspace = Workspace(
+            base_dir=os.path.join(self.dir_dados, "entregas")
+        )
 
         # Logs e eventos (com limites para evitar memory leak em 24/7)
         self.log_eventos: list[dict] = []
@@ -686,6 +690,10 @@ class SimulacaoVila:
             "desafio": self.desafio.to_dict() if self.desafio.ativo else None,
             "economia": self.incentivos.to_dict(),
             "ferramentas": self.toolkit.to_dict(),
+            "oficinas": todas_oficinas(),
+            "workspace": self.workspace.to_dict(
+                self.desafio.id if self.desafio.ativo else ""
+            ),
         }
 
     def mapa_calor(self) -> dict[str, int]:
