@@ -249,6 +249,40 @@ def planejar(
             if memorias_relevantes:
                 resultado["duracao"] = int(resultado["duracao"] * 1.2)
 
+            # Priorizar locais com recursos para o desafio ativo
+            try:
+                from api.rotas_vila import obter_simulacao
+                sim = obter_simulacao()
+                if sim and sim.desafio and sim.desafio.ativo and sim.desafio.fase_atual:
+                    fase = sim.desafio.fase_atual
+                    # Se fase precisa de pesquisa → biblioteca/observatório
+                    # Se fase precisa de debate → arena/tribunal
+                    # Se fase precisa de código → laboratório/sala_guerra
+                    desc_l = fase.descricao.lower()
+                    if any(w in desc_l for w in ("pesquis", "mapear", "diagnostico", "investigar")):
+                        if item.local_id not in ("biblioteca", "observatorio"):
+                            for loc_pref in ("biblioteca", "observatorio"):
+                                if loc_pref in {l.id for l in locais_abertos(hora)}:
+                                    resultado["local_id"] = loc_pref
+                                    resultado["acao"] = f"pesquisando para '{fase.nome}'"
+                                    break
+                    elif any(w in desc_l for w in ("debate", "delibera", "vota", "julg")):
+                        if item.local_id not in ("arena_debates", "tribunal"):
+                            for loc_pref in ("arena_debates", "tribunal"):
+                                if loc_pref in {l.id for l in locais_abertos(hora)}:
+                                    resultado["local_id"] = loc_pref
+                                    resultado["acao"] = f"debatendo sobre '{fase.nome}'"
+                                    break
+                    elif any(w in desc_l for w in ("prototip", "projeta", "constru", "modelo")):
+                        if item.local_id not in ("laboratorio", "atelie", "sala_guerra"):
+                            for loc_pref in ("laboratorio", "atelie"):
+                                if loc_pref in {l.id for l in locais_abertos(hora)}:
+                                    resultado["local_id"] = loc_pref
+                                    resultado["acao"] = f"prototipando para '{fase.nome}'"
+                                    break
+            except Exception:
+                pass
+
             break
     else:
         # Sem plano para essa hora → atividade genérica
