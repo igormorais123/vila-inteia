@@ -551,15 +551,14 @@ class SimulacaoVila:
     # DESAFIO COLETIVO
     # ================================================================
 
-    def iniciar_desafio(self, desafio_id: str = "") -> dict:
-        """Inicia um desafio coletivo. Se sem id, escolhe aleatório."""
-        if desafio_id:
-            desafio = criar_desafio(desafio_id)
-        else:
-            desafio = desafio_aleatorio()
+    def iniciar_desafio(self, desafio_id: str = "", descricao: str = "",
+                        documento: str = "", steps_por_fase: int = 100) -> dict:
+        """Inicia um desafio coletivo a partir do tema do usuário."""
+        tema = desafio_id  # o "id" agora é o tema livre
+        if not tema:
+            return {"erro": "Informe o tema do desafio"}
 
-        if not desafio:
-            return {"erro": f"Desafio '{desafio_id}' não encontrado"}
+        desafio = criar_desafio(tema, descricao, documento)
 
         self.desafio = desafio
         self.desafio.iniciar(self.step)

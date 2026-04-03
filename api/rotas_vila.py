@@ -369,6 +369,11 @@ async def relatorio_markdown():
 # ============================================================
 
 class DesafioRequest(BaseModel):
+    tema: str = ""
+    descricao: str = ""
+    documento: str = ""  # Conteúdo de arquivo anexado (texto)
+    steps_por_fase: int = 100
+    # Compat: aceita desafio_id antigo como alias de tema
     desafio_id: str = ""
 
 
@@ -391,16 +396,24 @@ class PythonRequest(BaseModel):
 
 @router.get("/desafios")
 async def listar_desafios_disponiveis():
-    """Lista desafios disponíveis no catálogo."""
+    """Retorna instruções — o tema é definido pelo usuário."""
     from engine.desafio import listar_desafios
     return {"desafios": listar_desafios()}
 
 
 @router.post("/desafio/iniciar")
 async def iniciar_desafio(req: DesafioRequest):
-    """Inicia um desafio coletivo."""
+    """Inicia um desafio coletivo a partir do tema do usuário."""
     sim = obter_simulacao()
-    return sim.iniciar_desafio(req.desafio_id)
+    tema = req.tema or req.desafio_id  # compat
+    if not tema:
+        raise HTTPException(400, "Informe o tema do desafio")
+    return sim.iniciar_desafio(
+        desafio_id=tema,
+        descricao=req.descricao,
+        documento=req.documento,
+        steps_por_fase=req.steps_por_fase,
+    )
 
 
 @router.get("/desafio")

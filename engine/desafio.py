@@ -1,17 +1,10 @@
 """
 Motor de Desafios Coletivos — O propósito da Vila INTEIA.
 
-Cada simulação tem um DESAFIO CENTRAL: um objetivo concreto
-que todos os agentes trabalham para construir coletivamente.
+O USUÁRIO define o tema. Digita texto livre, cola documento, anexa arquivo.
+A Vila cria fases automaticamente e os agentes trabalham no que foi pedido.
 
-Os debates, trabalhos e gestão passam a orbitar o desafio.
-Agentes contribuem com propostas, votam, debatem, refinam.
-
-Exemplo de desafio:
-    "Construir a Constituição Digital do Brasil"
-    - Fases: Diagnóstico → Propostas → Debate → Síntese → Votação
-    - Entregas: Artigos constitucionais aprovados por consenso
-    - Progresso: % de artigos aprovados, nível de consenso
+SEM catálogo fixo. SEM temas clichê. O input é do fundador.
 
 Arquitetura:
     DesafioColetivo (meta + fases + progresso)
@@ -25,116 +18,23 @@ from __future__ import annotations
 import json
 import os
 import random
+import re
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 
 
 # ============================================================
-# CATÁLOGO DE DESAFIOS
+# FASES PADRÃO — geradas dinamicamente a partir do tema
 # ============================================================
 
-CATALOGO_DESAFIOS = [
-    {
-        "id": "constituicao_digital",
-        "nome": "Constituição Digital do Brasil",
-        "descricao": (
-            "144 mentes lendárias devem redigir, debater e aprovar uma "
-            "Constituição Digital para o Brasil do século XXI. Cada artigo "
-            "precisa de consenso mínimo de 60% dos participantes ativos."
-        ),
-        "icone": "📜",
-        "fases": [
-            {"id": "diagnostico", "nome": "Diagnóstico", "descricao": "Mapear os problemas digitais do Brasil", "peso": 0.15},
-            {"id": "propostas", "nome": "Propostas", "descricao": "Cada agente propõe artigos constitucionais", "peso": 0.25},
-            {"id": "debate", "nome": "Debate", "descricao": "Debates entre facções sobre cada artigo", "peso": 0.30},
-            {"id": "sintese", "nome": "Síntese", "descricao": "Helena sintetiza consensos e divergências", "peso": 0.15},
-            {"id": "votacao", "nome": "Votação", "descricao": "Votação final por artigo (mínimo 60%)", "peso": 0.15},
-        ],
-        "entregas_esperadas": ["artigos_aprovados", "principios_fundamentais", "mecanismos_governanca"],
-        "steps_por_fase": 100,
-        "consenso_minimo": 0.6,
-    },
-    {
-        "id": "cidade_futuro",
-        "nome": "Projetar a Cidade do Futuro",
-        "descricao": (
-            "Os consultores devem projetar coletivamente uma cidade ideal "
-            "para 2050: infraestrutura, governança, tecnologia, cultura, "
-            "sustentabilidade. Cada dimensão é um eixo de trabalho."
-        ),
-        "icone": "🏙️",
-        "fases": [
-            {"id": "visao", "nome": "Visão", "descricao": "Definir princípios e valores da cidade", "peso": 0.15},
-            {"id": "eixos", "nome": "Eixos Temáticos", "descricao": "Grupos trabalham em cada dimensão", "peso": 0.25},
-            {"id": "integrar", "nome": "Integração", "descricao": "Resolver conflitos entre eixos", "peso": 0.25},
-            {"id": "prototipo", "nome": "Protótipo", "descricao": "Compilar o projeto final", "peso": 0.20},
-            {"id": "apresentacao", "nome": "Apresentação", "descricao": "Defesa pública do projeto", "peso": 0.15},
-        ],
-        "entregas_esperadas": ["plano_urbanistico", "modelo_governanca", "pilares_tecnologicos"],
-        "steps_por_fase": 80,
-        "consenso_minimo": 0.5,
-    },
-    {
-        "id": "educacao_universal",
-        "nome": "Plano de Educação Universal 2050",
-        "descricao": (
-            "Criar um modelo educacional que funcione para qualquer pessoa "
-            "em qualquer lugar do mundo. Combinar IA, pedagogia clássica, "
-            "neurociência e cultura local."
-        ),
-        "icone": "🎓",
-        "fases": [
-            {"id": "diagnostico", "nome": "Diagnóstico", "descricao": "O que falha na educação atual?", "peso": 0.15},
-            {"id": "principios", "nome": "Princípios", "descricao": "Pilares inegociáveis do modelo", "peso": 0.20},
-            {"id": "curriculo", "nome": "Currículo", "descricao": "O que ensinar e como", "peso": 0.25},
-            {"id": "tecnologia", "nome": "Tecnologia", "descricao": "IA, plataformas, acesso", "peso": 0.20},
-            {"id": "piloto", "nome": "Piloto", "descricao": "Plano de implementação para 1 país", "peso": 0.20},
-        ],
-        "entregas_esperadas": ["modelo_pedagogico", "stack_tecnologico", "plano_piloto"],
-        "steps_por_fase": 80,
-        "consenso_minimo": 0.5,
-    },
-    {
-        "id": "tribunal_ia",
-        "nome": "Tribunal da Inteligência Artificial",
-        "descricao": (
-            "Julgar coletivamente se a IA deve ter direitos, deveres e limites. "
-            "Formato: tribunal com acusação, defesa, jurados e veredito. "
-            "Cada rodada julga um aspecto diferente."
-        ),
-        "icone": "⚖️",
-        "fases": [
-            {"id": "acusacao", "nome": "Acusação", "descricao": "Riscos e danos potenciais da IA", "peso": 0.20},
-            {"id": "defesa", "nome": "Defesa", "descricao": "Benefícios e potencial transformador", "peso": 0.20},
-            {"id": "testemunhas", "nome": "Testemunhas", "descricao": "Depoimentos de especialistas", "peso": 0.20},
-            {"id": "deliberacao", "nome": "Deliberação", "descricao": "Jurados debatem entre si", "peso": 0.25},
-            {"id": "veredito", "nome": "Veredito", "descricao": "Votação final e sentença coletiva", "peso": 0.15},
-        ],
-        "entregas_esperadas": ["vereditos", "jurisprudencia_ia", "marco_regulatorio"],
-        "steps_por_fase": 60,
-        "consenso_minimo": 0.55,
-    },
-    {
-        "id": "empresa_perfeita",
-        "nome": "A Empresa Perfeita",
-        "descricao": (
-            "Projetar a empresa ideal do século XXI: modelo de negócio, "
-            "cultura, estrutura, tecnologia, impacto social. "
-            "De Jobs a Buffett, cada mente contribui sua visão."
-        ),
-        "icone": "🏢",
-        "fases": [
-            {"id": "missao", "nome": "Missão & Visão", "descricao": "Por que essa empresa existe?", "peso": 0.15},
-            {"id": "modelo", "nome": "Modelo de Negócio", "descricao": "Como gera valor e receita", "peso": 0.25},
-            {"id": "cultura", "nome": "Cultura & Pessoas", "descricao": "Como trabalham e decidem", "peso": 0.20},
-            {"id": "tecnologia", "nome": "Stack & Operações", "descricao": "Infraestrutura e processos", "peso": 0.20},
-            {"id": "impacto", "nome": "Impacto & Legado", "descricao": "Marca no mundo", "peso": 0.20},
-        ],
-        "entregas_esperadas": ["business_plan", "manifesto_cultural", "stack_operacional"],
-        "steps_por_fase": 80,
-        "consenso_minimo": 0.5,
-    },
+# Pipeline universal: funciona para qualquer tema
+FASES_PADRAO = [
+    {"id": "pesquisa", "nome": "Pesquisa", "descricao_template": "Pesquisar e mapear tudo sobre: {tema}", "peso": 0.15},
+    {"id": "analise", "nome": "Análise", "descricao_template": "Analisar dados, argumentos e perspectivas sobre: {tema}", "peso": 0.20},
+    {"id": "propostas", "nome": "Propostas", "descricao_template": "Cada agente propõe soluções concretas para: {tema}", "peso": 0.25},
+    {"id": "debate", "nome": "Debate", "descricao_template": "Debater e refinar as melhores propostas sobre: {tema}", "peso": 0.25},
+    {"id": "entrega", "nome": "Entrega Final", "descricao_template": "Compilar resultado final sobre: {tema}", "peso": 0.15},
 ]
 
 
@@ -478,49 +378,84 @@ class DesafioColetivo:
 
 
 # ============================================================
-# FACTORY
+# FACTORY — Criação a partir do input do USUÁRIO
 # ============================================================
 
-def criar_desafio(desafio_id: str) -> Optional[DesafioColetivo]:
-    """Cria um desafio a partir do catálogo."""
-    for catalogo in CATALOGO_DESAFIOS:
-        if catalogo["id"] == desafio_id:
-            desafio = DesafioColetivo(
-                id=catalogo["id"],
-                nome=catalogo["nome"],
-                descricao=catalogo["descricao"],
-                icone=catalogo.get("icone", "🎯"),
-                consenso_minimo=catalogo.get("consenso_minimo", 0.6),
-                steps_por_fase=catalogo.get("steps_por_fase", 100),
-                entregas_esperadas=catalogo.get("entregas_esperadas", []),
-            )
-            for fd in catalogo["fases"]:
-                fase = FaseDesafio(
-                    id=fd["id"],
-                    nome=fd["nome"],
-                    descricao=fd["descricao"],
-                    peso=fd.get("peso", 0.2),
-                )
-                desafio.fases.append(fase)
-            return desafio
-    return None
+def _gerar_id(nome: str) -> str:
+    """Gera ID slug a partir do nome."""
+    slug = re.sub(r'[^a-z0-9]+', '_', nome.lower().strip())
+    return slug[:50].strip('_') or f"desafio_{random.randint(1000,9999)}"
+
+
+def criar_desafio_livre(
+    tema: str,
+    descricao: str = "",
+    documento: str = "",
+    steps_por_fase: int = 100,
+    consenso_minimo: float = 0.6,
+) -> DesafioColetivo:
+    """
+    Cria desafio a partir de input do usuário.
+
+    Args:
+        tema: Texto livre do usuário (ex: "Analisar eleições 2026 no DF")
+        descricao: Contexto adicional (opcional)
+        documento: Conteúdo de arquivo anexado (texto extraído)
+        steps_por_fase: Duração de cada fase
+        consenso_minimo: % mínimo para aprovar entrega
+    """
+    nome = tema[:100]
+    desc_completa = descricao or tema
+
+    # Se tem documento anexado, incluir no contexto
+    if documento:
+        # Truncar documento longo para ficar manejável
+        doc_resumo = documento[:5000]
+        desc_completa = f"{desc_completa}\n\nDOCUMENTO ANEXADO:\n{doc_resumo}"
+
+    desafio = DesafioColetivo(
+        id=_gerar_id(nome),
+        nome=nome,
+        descricao=desc_completa,
+        icone="🎯",
+        consenso_minimo=consenso_minimo,
+        steps_por_fase=steps_por_fase,
+    )
+
+    # Gerar fases dinâmicas a partir do pipeline padrão
+    for fp in FASES_PADRAO:
+        fase = FaseDesafio(
+            id=fp["id"],
+            nome=fp["nome"],
+            descricao=fp["descricao_template"].format(tema=nome),
+            peso=fp.get("peso", 0.2),
+        )
+        desafio.fases.append(fase)
+
+    return desafio
+
+
+def criar_desafio(tema_ou_id: str, descricao: str = "", documento: str = "") -> DesafioColetivo:
+    """
+    Cria desafio a partir de qualquer input.
+    Compatível com chamadas antigas (aceita ID ou texto livre).
+    """
+    return criar_desafio_livre(tema_ou_id, descricao, documento)
 
 
 def desafio_aleatorio() -> DesafioColetivo:
-    """Cria um desafio aleatório do catálogo."""
-    escolha = random.choice(CATALOGO_DESAFIOS)
-    return criar_desafio(escolha["id"])
+    """Cria desafio placeholder — o usuário deve definir o tema."""
+    return criar_desafio_livre("Tema a ser definido pelo usuário")
 
 
 def listar_desafios() -> list[dict]:
-    """Lista desafios disponíveis no catálogo."""
+    """Não há catálogo fixo. Retorna instruções."""
     return [
         {
-            "id": d["id"],
-            "nome": d["nome"],
-            "descricao": d["descricao"],
-            "icone": d.get("icone", "🎯"),
-            "total_fases": len(d["fases"]),
+            "id": "livre",
+            "nome": "Desafio Livre",
+            "descricao": "Digite o tema, cole texto ou anexe documento. A Vila trabalha no que VOCÊ definir.",
+            "icone": "🎯",
+            "total_fases": len(FASES_PADRAO),
         }
-        for d in CATALOGO_DESAFIOS
     ]

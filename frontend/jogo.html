@@ -2755,54 +2755,68 @@ function renderDesafio(data) {
   document.getElementById('desafioDebates').textContent = m.total_debates || 0;
 }
 
-async function listarDesafios() {
+function listarDesafios() {
   const catalogo = document.getElementById('desafioCatalogo');
   catalogo.style.display = 'block';
-  catalogo.innerHTML = '<div style="text-align:center;padding:12px;color:var(--txm)">Carregando catálogo...</div>';
-
-  try {
-    const resp = await fetch(VILA_API + '/desafios');
-    const data = await resp.json();
-    const desafios = data.desafios || [];
-
-    catalogo.innerHTML = `
-      <h4 style="font-size:13px;font-weight:700;color:var(--tx1);margin-bottom:10px">Escolha um Desafio</h4>
-      ${desafios.map(d => `
-        <div onclick="iniciarDesafio('${d.id}')" style="background:var(--bg3);border:1px solid var(--brd);padding:12px;border-radius:var(--r-sm);cursor:pointer;margin-bottom:8px;transition:border-color 0.2s" onmouseover="this.style.borderColor='#22c55e'" onmouseout="this.style.borderColor='var(--brd)'">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-            <span style="font-size:20px">${d.icone || '🎯'}</span>
-            <span style="font-weight:700;font-size:13px;color:var(--tx1)">${escapeHtml(d.nome)}</span>
-            <span style="font-size:10px;color:var(--txm);margin-left:auto">${d.total_fases} fases</span>
-          </div>
-          <div style="font-size:11px;color:var(--txm);line-height:1.4">${escapeHtml(d.descricao).slice(0,150)}...</div>
-        </div>
-      `).join('')}
-    `;
-  } catch(e) {
-    catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">Erro ao carregar catálogo. Backend indisponível.</div>';
-  }
+  catalogo.innerHTML = `
+    <h4 style="font-size:13px;font-weight:700;color:var(--tx1);margin-bottom:10px">Definir Tema do Desafio</h4>
+    <textarea id="desafioTemaInput" placeholder="Digite o tema... Ex: Analisar cenário eleitoral DF 2026, Criar plano de negócios para fintech, Investigar impacto da IA no direito brasileiro..." style="width:100%;height:80px;background:var(--bg3);border:1px solid var(--brd);color:var(--tx1);padding:8px;border-radius:var(--r-sm);font-size:12px;resize:vertical;font-family:inherit"></textarea>
+    <div style="margin-top:8px">
+      <label style="font-size:11px;color:var(--txm);cursor:pointer;display:flex;align-items:center;gap:6px">
+        <span>📎 Anexar documento (txt, md, json):</span>
+        <input type="file" id="desafioDocInput" accept=".txt,.md,.json,.csv,.html" style="font-size:11px" onchange="carregarDocDesafio(this)">
+      </label>
+      <div id="desafioDocPreview" style="display:none;margin-top:6px;padding:6px;background:var(--bg3);border-radius:var(--r-sm);font-size:10px;color:var(--txm);max-height:60px;overflow:hidden"></div>
+    </div>
+    <button onclick="iniciarDesafioLivre()" style="margin-top:10px;width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:10px;border-radius:var(--r-sm);cursor:pointer;font-size:13px;font-weight:700">Iniciar Desafio</button>
+  `;
 }
 
-async function iniciarDesafio(desafioId) {
+let _docAnexado = '';
+
+function carregarDocDesafio(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    _docAnexado = e.target.result;
+    const preview = document.getElementById('desafioDocPreview');
+    preview.style.display = 'block';
+    preview.textContent = file.name + ' (' + (file.size/1024).toFixed(1) + 'KB) — ' + _docAnexado.slice(0, 200) + '...';
+  };
+  reader.readAsText(file);
+}
+
+async function iniciarDesafioLivre() {
+  const tema = document.getElementById('desafioTemaInput')?.value?.trim();
+  if (!tema) { alert('Digite o tema do desafio'); return; }
+
   const catalogo = document.getElementById('desafioCatalogo');
-  catalogo.innerHTML = '<div style="text-align:center;padding:12px;color:var(--amber)">Iniciando desafio...</div>';
+  catalogo.innerHTML = '<div style="text-align:center;padding:12px;color:var(--amber)">Criando desafio...</div>';
 
   try {
     const resp = await fetch(VILA_API + '/desafio/iniciar', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({desafio_id: desafioId}),
+      body: JSON.stringify({
+        tema: tema,
+        documento: _docAnexado || '',
+      }),
     });
     const data = await resp.json();
     catalogo.style.display = 'none';
+    _docAnexado = '';
 
     if (data.desafio) {
       renderDesafio(data.desafio);
-      // Adicionar mensagem no feed
-      addSystemMessage(`🎯 DESAFIO INICIADO: ${data.desafio.nome} — ${data.desafio.fases[0]?.nome || 'Fase 1'}`);
+      addSystemMessage('🎯 DESAFIO INICIADO: ' + data.desafio.nome);
+    } else if (data.erro) {
+      catalogo.style.display = 'block';
+      catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">' + escapeHtml(data.erro) + '</div>';
     }
   } catch(e) {
-    catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">Erro ao iniciar desafio.</div>';
+    catalogo.style.display = 'block';
+    catalogo.innerHTML = '<div style="color:#ef4444;padding:12px;font-size:12px">Erro ao criar desafio. Backend indisponível.</div>';
   }
 }
 
