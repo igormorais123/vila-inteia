@@ -91,13 +91,17 @@ def gerar_relatorio(simulacao) -> RelatorioExecutivo:
     divergencias = []
     recomendacoes_coletadas = []
 
+    _conclusoes_vistas = set()
+    _divergencias_vistas = set()
+
     for s in simulacao.sinteses[-20:]:
         sint_texto = s.get("sintese", "")
-        # Extrair linhas que começam com CONCLUSÃO
         for linha in sint_texto.split("\n"):
-            if linha.startswith("CONCLUSÃO"):
+            if linha.startswith("CONCLUSÃO") and linha not in _conclusoes_vistas:
+                _conclusoes_vistas.add(linha)
                 conclusoes.append(linha)
-            elif "DIVERGÊNCIA" in linha or "ALERTA" in linha:
+            elif ("DIVERGÊNCIA" in linha or "ALERTA" in linha) and linha not in _divergencias_vistas:
+                _divergencias_vistas.add(linha)
                 divergencias.append(linha.replace("DIVERGÊNCIAS: ", ""))
 
         for r in s.get("recomendacoes", []):
