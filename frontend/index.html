@@ -357,6 +357,8 @@ body{
     <li class="nav-item active" data-view="map"><span class="nav-icon">&#127758;</span><span class="nav-text">Mapa</span></li>
     <li class="nav-item" data-view="agents"><span class="nav-icon">&#129333;</span><span class="nav-text">Agentes</span></li>
     <li class="nav-item" data-view="convos"><span class="nav-icon">&#128172;</span><span class="nav-text">Conversas</span></li>
+    <li class="nav-item" data-view="desafio"><span class="nav-icon" style="color:#22c55e">&#127919;</span><span class="nav-text" style="color:#22c55e">Desafio</span></li>
+    <li class="nav-item" data-view="workspace"><span class="nav-icon">&#128196;</span><span class="nav-text">Produtos</span></li>
     <li class="nav-item" data-view="synth"><span class="nav-icon">&#128161;</span><span class="nav-text">Sinteses</span></li>
     <li class="nav-item" data-view="stats"><span class="nav-icon">&#128202;</span><span class="nav-text">Stats</span></li>
   </ul>
@@ -1004,6 +1006,8 @@ function setView(view){
   if(view==='agents') searchBar.classList.add('visible');
   if(view==='convos') showConvosView();
   if(view==='synth') showSynthView();
+  if(view==='desafio') showDesafioView();
+  if(view==='workspace') showWorkspaceView();
 }
 document.querySelectorAll('.nav-item').forEach(n=>{
   n.addEventListener('click',()=>setView(n.dataset.view));
@@ -1137,6 +1141,202 @@ function showSynthView(){
   });
   ov.innerHTML=h;
   ov.classList.add('visible');
+}
+
+// ---- DESAFIO VIEW (interativo) ----
+async function showDesafioView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API||'/api/v1/vila';
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F3AF} Desafio Coletivo</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  try{
+    const resp=await fetch(API+'/desafio');
+    const data=await resp.json();
+    if(!data||data.status==='inativo'){
+      h+=`<div style="text-align:center;padding:30px">`;
+      h+=`<p style="color:var(--text-muted);margin-bottom:16px">Nenhum desafio ativo.</p>`;
+      h+=`<textarea id="vilaDesafioInput" placeholder="Digite o tema do desafio..." style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:10px;border-radius:var(--radius-sm);font-size:13px;resize:vertical;font-family:inherit;margin-bottom:12px"></textarea>`;
+      h+=`<button onclick="iniciarDesafioMapa()" style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:12px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;font-weight:700">Iniciar Desafio</button>`;
+      h+=`</div>`;
+    }else{
+      const pct=Math.round((data.progresso_total||0)*100);
+      h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">`;
+      h+=`<span style="font-size:32px">${data.icone||'\u{1F3AF}'}</span>`;
+      h+=`<div><div style="font-weight:700;font-size:16px">${data.nome}</div>`;
+      h+=`<div style="font-size:12px;color:var(--text-muted)">${(data.descricao||'').slice(0,150)}</div></div>`;
+      h+=`</div>`;
+      h+=`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px">Progresso</span><span style="font-weight:700;color:#22c55e">${pct}%</span></div>`;
+      h+=`<div style="height:10px;background:var(--bg-secondary);border-radius:5px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#22c55e,var(--amber));width:${pct}%"></div></div></div>`;
+      // Fases
+      if(data.fases){
+        data.fases.forEach((f,i)=>{
+          const cur=i===data.fase_atual_idx;
+          const done=f.status==='concluida';
+          const fp=Math.round((f.progresso||0)*100);
+          const bg=done?'rgba(34,197,94,0.15)':cur?'rgba(201,149,42,0.15)':'var(--bg-secondary)';
+          const ic=done?'\u2705':cur?'\u25B6':'\u25CB';
+          h+=`<div style="background:${bg};padding:10px;border-radius:var(--radius-sm);margin-bottom:6px;display:flex;align-items:center;gap:8px">`;
+          h+=`<span>${ic}</span><div style="flex:1"><strong>${f.nome}</strong><div style="font-size:11px;color:var(--text-muted)">${f.descricao||''}</div></div>`;
+          h+=`<span style="font-weight:700;font-size:12px">${fp}%</span></div>`;
+        });
+      }
+      // Metricas
+      const m=data.metricas||{};
+      h+=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:16px">`;
+      [{v:m.total_contribuicoes||0,l:'Contribuições',c:'#22c55e'},{v:m.agentes_participantes||0,l:'Participantes',c:'var(--amber)'},{v:m.total_votos||0,l:'Votos',c:'#3b82f6'},{v:m.total_debates||0,l:'Debates',c:'#ef4444'}].forEach(x=>{
+        h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:20px;font-weight:700;color:${x.c}">${x.v}</div><div style="font-size:10px;color:var(--text-muted)">${x.l}</div></div>`;
+      });
+      h+=`</div>`;
+      // Contribuicoes recentes
+      const recentes=data.contribuicoes_recentes||[];
+      if(recentes.length){
+        h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">Contribuições Recentes</h3>`;
+        recentes.slice(-6).reverse().forEach(c=>{
+          h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);margin-bottom:4px;font-size:12px;border-left:3px solid #22c55e">`;
+          h+=`<strong>${c.agente_nome}</strong> <span style="color:var(--text-muted)">${(c.conteudo||'').slice(0,120)}</span></div>`;
+        });
+      }
+    }
+  }catch(e){h+=`<p style="color:#ef4444">Erro ao carregar desafio: ${e.message}</p>`;}
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function iniciarDesafioMapa(){
+  const tema=document.getElementById('vilaDesafioInput')?.value?.trim();
+  if(!tema){alert('Digite o tema');return;}
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    await fetch(API+'/desafio/iniciar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tema:tema})});
+    showDesafioView();
+  }catch(e){alert('Erro: '+e.message);}
+}
+
+// ---- WORKSPACE / PRODUTOS VIEW (interativo) ----
+async function showWorkspaceView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API||'/api/v1/vila';
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4C4} Produtos Gerados</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  try{
+    // Oficinas
+    const ofResp=await fetch(API+'/oficinas');
+    const ofData=await ofResp.json();
+    const oficinas=ofData.oficinas||[];
+
+    h+=`<h3 style="font-size:14px;margin-bottom:8px">\u{2699} Oficinas (${oficinas.length})</h3>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">`;
+    oficinas.forEach(o=>{
+      const nf=o.ferramentas?o.ferramentas.length:0;
+      h+=`<div onclick="showOficinaDetail('${o.local_id}')" style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border);transition:border-color .2s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--border)'">`;
+      h+=`<div style="font-weight:600;font-size:12px">${o.nome}</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted)">${nf} ferramentas | ${o.artefatos_produzidos||0} produzidos</div>`;
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+
+    // Workspace
+    const wsResp=await fetch(API+'/workspace');
+    const wsData=await wsResp.json();
+    const arquivos=wsData.arquivos||[];
+
+    h+=`<h3 style="font-size:14px;margin-bottom:8px">\u{1F4C2} Artefatos no Workspace (${arquivos.length})</h3>`;
+    if(arquivos.length===0){
+      h+=`<p style="color:var(--text-muted);font-size:12px;padding:16px;text-align:center">Nenhum artefato ainda. Inicie um desafio e rode a simulação!</p>`;
+    }else{
+      const extIcons={py:'\u{1F40D}',md:'\u{1F4DD}',json:'\u{1F4CA}',html:'\u{1F310}',csv:'\u{1F4C8}',mdx:'\u{1F4F0}'};
+      arquivos.slice(-20).reverse().forEach(a=>{
+        const ext=(a.arquivo||'').split('.').pop();
+        const ic=extIcons[ext]||'\u{1F4C4}';
+        h+=`<div onclick="showArtefato('${a.arquivo}')" style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:4px;cursor:pointer;border:1px solid transparent;transition:border-color .2s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='transparent'">`;
+        h+=`<span style="font-size:16px">${ic}</span>`;
+        h+=`<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.arquivo}</div>`;
+        h+=`<div style="font-size:10px;color:var(--text-muted)">${a.agente_nome||'?'} &mdash; ${a.tipo||''} &mdash; ${a.tamanho||0} chars</div></div>`;
+        h+=`</div>`;
+      });
+    }
+
+    // Economia
+    const ecResp=await fetch(API+'/economia');
+    const ecData=await ecResp.json();
+    h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">\u{1F4B0} Economia</h3>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700;color:var(--amber)">\u039E${ecData.supply_total||0}</div><div style="font-size:10px;color:var(--text-muted)">Supply Total</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700">${ecData.total_carteiras||0}</div><div style="font-size:10px;color:var(--text-muted)">Carteiras</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700">${ecData.gini||0}</div><div style="font-size:10px;color:var(--text-muted)">Gini</div></div>`;
+    h+=`</div>`;
+
+    // Top agentes
+    const top=ecData.top_10||[];
+    if(top.length){
+      h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">\u{1F3C6} Top Agentes</h3>`;
+      top.slice(0,5).forEach((t,i)=>{
+        h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px;font-size:12px">`;
+        h+=`<span style="font-weight:700;color:var(--amber)">#${i+1}</span>`;
+        h+=`<span style="flex:1">${t.agente_id}</span>`;
+        h+=`<span>\u039E${t.saldo}</span>`;
+        h+=`<span style="color:var(--text-muted)">rep:${t.reputacao}</span>`;
+        h+=`</div>`;
+      });
+    }
+
+  }catch(e){h+=`<p style="color:#ef4444">Erro: ${e.message}</p>`;}
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function showOficinaDetail(localId){
+  const API=window._VILA_API||'/api/v1/vila';
+  const backendId=_LOC_ID_MAP[localId]||localId;
+  try{
+    const resp=await fetch(API+'/oficinas/'+backendId);
+    const data=await resp.json();
+    if(data.erro)return;
+    const ov=document.getElementById('statsOverlay');
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:18px;font-weight:700">\u{2699} ${data.nome}</h2>`;
+    h+=`<button onclick="showWorkspaceView()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">\u{2190} Voltar</button>`;
+    h+=`</div>`;
+    h+=`<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">${data.descricao}</p>`;
+    const icons={codigo:'\u{1F4BB}',pesquisa:'\u{1F50D}',escrita:'\u{270F}',analise:'\u{1F4CA}',visual:'\u{1F3A8}',votacao:'\u{1F5F3}',comunicacao:'\u{1F4E2}'};
+    (data.ferramentas||[]).forEach(f=>{
+      h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:var(--radius-sm);margin-bottom:8px;border-left:3px solid var(--amber)">`;
+      h+=`<div style="display:flex;align-items:center;gap:6px"><span>${icons[f.tipo]||'\u{2699}'}</span><strong style="font-size:13px">${f.nome}</strong>`;
+      if(f.custo>0)h+=`<span style="margin-left:auto;color:var(--amber);font-size:12px">\u039E${f.custo}</span>`;
+      h+=`</div>`;
+      h+=`<div style="font-size:12px;color:var(--text-muted);margin-top:4px">${f.descricao||''}</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">Produz: .${f.artefato||'md'}</div>`;
+      h+=`</div>`;
+    });
+    if(data.artefatos_produzidos>0)h+=`<div style="margin-top:12px;padding:8px;background:rgba(34,197,94,0.1);border-radius:var(--radius-sm);font-size:12px;color:#22c55e">\u{2705} ${data.artefatos_produzidos} artefatos produzidos nesta oficina</div>`;
+    ov.innerHTML=h;
+  }catch(e){}
+}
+
+async function showArtefato(nomeArquivo){
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    // Pegar desafio ativo para saber o ID
+    const dResp=await fetch(API+'/desafio');
+    const dData=await dResp.json();
+    const desafioId=dData.id||'';
+    if(!desafioId){alert('Nenhum desafio ativo');return;}
+    const resp=await fetch(API+'/workspace/'+desafioId+'/arquivo/'+encodeURIComponent(nomeArquivo));
+    const data=await resp.json();
+    const ov=document.getElementById('statsOverlay');
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:16px;font-weight:700">\u{1F4C4} ${nomeArquivo}</h2>`;
+    h+=`<button onclick="showWorkspaceView()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">\u{2190} Voltar</button>`;
+    h+=`</div>`;
+    h+=`<pre style="background:var(--bg-secondary);padding:16px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;overflow:auto;max-height:70vh;white-space:pre-wrap;word-break:break-word;color:var(--text-primary)">${(data.conteudo||'Vazio').replace(/</g,'&lt;')}</pre>`;
+    ov.innerHTML=h;
+  }catch(e){alert('Erro ao ler artefato: '+e.message);}
 }
 
 // ---- SEARCH / FILTER ----
