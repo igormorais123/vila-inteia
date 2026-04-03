@@ -202,14 +202,17 @@ class MotorIncentivos:
         self._ultimo_step_atividade[agente_id] = step
 
     def penalizar(self, agente_id: str, tipo: str, step: int = 0, descricao: str = ""):
-        """Penaliza agente."""
+        """Penaliza agente (saldo nunca fica negativo)."""
         valor = PENALIDADES.get(tipo, 0)
         if valor >= 0:
             return
 
         carteira = self.obter_carteira(agente_id)
-        carteira.creditar(valor, tipo, step, descricao)  # valor já é negativo
-        carteira.ajustar_reputacao(valor / 10)  # -3 rep por -30 coins
+        # Limitar penalidade ao saldo disponível (nunca negativo)
+        penalidade_real = max(valor, -carteira.saldo)
+        if penalidade_real < 0:
+            carteira.creditar(penalidade_real, tipo, step, descricao)
+            carteira.ajustar_reputacao(penalidade_real / 10)
 
     def cobrar_recurso(self, agente_id: str, custo: int, descricao: str, step: int = 0) -> bool:
         """Cobra uso de recurso do local. Retorna False se sem saldo."""
@@ -230,16 +233,23 @@ class MotorIncentivos:
     # ── Verificações periódicas ──
 
     def verificar_inatividade(self, agentes_ids: list[str], step: int):
-        """Penaliza agentes inativos."""
+        """Penaliza agentes inativos (aplica uma vez por threshold, não repetidamente)."""
         for agente_id in agentes_ids:
             ultimo = self._ultimo_step_atividade.get(agente_id, 0)
             inativo = step - ultimo
-            if inativo >= 50:
+            # Chave para evitar penalidade repetida no mesmo intervalo
+            chave = f"_pen_{agente_id}"
+            ultimo_pen = getattr(self, '_penalidades_aplicadas', {}).get(chave, 0)
+            if not hasattr(self, '_penalidades_aplicadas'):
+                self._penalidades_aplicadas = {}
+            if inativo >= 50 and ultimo_pen < 50:
                 self.penalizar(agente_id, "inatividade_50_steps", step,
                                f"Sem atividade por {inativo} steps")
-            elif inativo >= 10:
+                self._penalidades_aplicadas[chave] = 50
+            elif inativo >= 10 and ultimo_pen < 10:
                 self.penalizar(agente_id, "inatividade_10_steps", step,
                                f"Sem atividade por {inativo} steps")
+                self._penalidades_aplicadas[chave] = 10
 
     def registrar_atividade(self, agente_id: str, step: int):
         """Marca agente como ativo."""

@@ -250,15 +250,14 @@ REGRAS:
 
         return prompt
 
+    # Referência à simulação (setada pelo loop principal, evita circular import)
+    _sim_ref = None
+
     def _contexto_desafio(self) -> str:
         """Injeta contexto do desafio coletivo no prompt, se ativo."""
-        try:
-            from api.rotas_vila import obter_simulacao
-            sim = obter_simulacao()
-            if sim and sim.desafio and sim.desafio.ativo:
-                return "\n" + sim.desafio.gerar_contexto_para_agente()
-        except Exception:
-            pass
+        sim = Persona._sim_ref
+        if sim and hasattr(sim, 'desafio') and sim.desafio and sim.desafio.ativo:
+            return "\n" + sim.desafio.gerar_contexto_para_agente()
         return ""
 
     def gerar_prompt_pesquisa(self, tema: str, tipo: str = "pesquisa") -> tuple[str, str]:

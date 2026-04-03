@@ -528,16 +528,6 @@ async def workspace_desafio(desafio_id: str):
     return sim.workspace.to_dict(desafio_id)
 
 
-@router.get("/workspace/{desafio_id}/{nome_arquivo}")
-async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str):
-    """Lê conteúdo de um artefato."""
-    sim = obter_simulacao()
-    conteudo = sim.workspace.ler(desafio_id, nome_arquivo)
-    if not conteudo:
-        raise HTTPException(404, f"Arquivo '{nome_arquivo}' não encontrado")
-    return {"arquivo": nome_arquivo, "conteudo": conteudo}
-
-
 @router.get("/workspace/{desafio_id}/compilar")
 async def workspace_compilar(desafio_id: str):
     """Compila todas as entregas em documento único."""
@@ -545,6 +535,16 @@ async def workspace_compilar(desafio_id: str):
     sim = obter_simulacao()
     compilado = sim.workspace.compilar(desafio_id)
     return PlainTextResponse(compilado, media_type="text/markdown")
+
+
+@router.get("/workspace/{desafio_id}/arquivo/{nome_arquivo:path}")
+async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str):
+    """Lê conteúdo de um artefato."""
+    sim = obter_simulacao()
+    conteudo = sim.workspace.ler(desafio_id, nome_arquivo)
+    if not conteudo:
+        raise HTTPException(404, f"Arquivo '{nome_arquivo}' não encontrado")
+    return {"arquivo": nome_arquivo, "conteudo": conteudo}
 
 
 # ============================================================

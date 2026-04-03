@@ -77,9 +77,7 @@ class SimulacaoVila:
         self.desafio: DesafioColetivo = DesafioColetivo()
         self.toolkit = ToolkitAgente()
         self.incentivos = MotorIncentivos()
-        self.workspace = Workspace(
-            base_dir=os.path.join(self.dir_dados, "entregas")
-        )
+        self._workspace: Optional[Workspace] = None
 
         # Logs e eventos (com limites para evitar memory leak em 24/7)
         self.log_eventos: list[dict] = []
@@ -102,6 +100,15 @@ class SimulacaoVila:
 
         # Diretório de dados
         self.dir_dados = os.path.join(config.diretorio_dados, nome)
+
+    @property
+    def workspace(self) -> Workspace:
+        """Workspace lazy — só cria quando dir_dados já existe."""
+        if self._workspace is None:
+            self._workspace = Workspace(
+                base_dir=os.path.join(self.dir_dados, "entregas")
+            )
+        return self._workspace
 
     def inicializar(self, max_agentes: int | None = None):
         """
@@ -205,6 +212,9 @@ class SimulacaoVila:
             "movimentos": 0,
         }
 
+        # Setar referência da simulação nas personas (evita circular import)
+        Persona._sim_ref = self
+
         # Processar cada agente
         agentes_lista = list(self.personas.values())
         random.shuffle(agentes_lista)  # Ordem aleatória por step
@@ -246,8 +256,9 @@ class SimulacaoVila:
         self.conversas_recentes = self.conversas_recentes[-50:]
 
         # ========== MOTOR DE GATILHOS ==========
-        # Executa todos os 6 gatilhos: debates rivais, Diabob, Jesus,
-        # Helena moderadora, posts espontâneos, waves de comentários
+        # Executa todos os 7 gatilhos: debates rivais, Diabob, Jesus,
+        # Helena moderadora, posts espontâneos, waves, desafio
+        self.motor_gatilhos._sim_ref = self  # Referência direta (sem circular import)
         eventos_gatilhos = self.motor_gatilhos.executar_step(
             step=self.step,
             hora_atual=self.hora_atual,

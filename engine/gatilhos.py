@@ -540,6 +540,7 @@ class MotorGatilhos:
         self.ultimo_debate_step: int = -30     # Gatilho 5
         self.ultimo_sintese_step: int = -100   # Helena síntese
         self._ultimo_desafio_step: int = -20   # Gatilho 7: desafio coletivo
+        self._sim_ref = None  # Referência à simulação (evita circular import)
 
         # Fila de waves (posts aguardando comentários graduais)
         self.fila_waves: list[PostAgendado] = []
@@ -905,20 +906,12 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
         Seleciona 2-3 agentes relevantes e gera contribuição real via LLM
         sobre a fase atual do desafio. Publica no feed e registra no desafio.
         """
-        # Importar desafio do mundo (passado pela simulação)
-        # O desafio é acessado via referência indireta — verificar se existe
-        try:
-            from .simulacao import simulacao as _sim_ref
-        except ImportError:
-            _sim_ref = None
-
-        # Fallback: buscar via api/rotas_vila
-        try:
-            from api.rotas_vila import obter_simulacao
-            sim = obter_simulacao()
-            desafio = sim.desafio
-        except Exception:
+        # Acessar desafio via referência direta (passada pelo motor)
+        # Evita circular import: usa self._sim_ref setada por executar_step
+        sim = self._sim_ref
+        if not sim:
             return None
+        desafio = sim.desafio
 
         if not desafio or not desafio.ativo or not desafio.fase_atual:
             return None
@@ -974,14 +967,12 @@ Máximo 3-4 frases com proposta CONCRETA e acionável."""
         desafio.registrar_contribuicao(contrib, step)
 
         # Recompensar via incentivos
-        try:
+        if hasattr(sim, 'incentivos'):
             sim.incentivos.recompensar(
                 contribuidor.id, "proposta_nova", step,
                 f"Contribuiu na fase '{fase.nome}'"
             )
             sim.incentivos.registrar_atividade(contribuidor.id, step)
-        except Exception:
-            pass
 
         # Publicar no feed
         post = Postagem(

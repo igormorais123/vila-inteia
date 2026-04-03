@@ -156,6 +156,15 @@ def executar_python(codigo: str, timeout_s: float = 5.0) -> ResultadoExecucao:
                 resultado.tempo_ms = (time.monotonic() - inicio) * 1000
                 return resultado
 
+    # Bloquear acesso a __subclasses__ e outros escapes do object graph
+    _ESCAPE_PATTERNS = ["__subclasses__", "__bases__", "__mro__", "__globals__",
+                        "__code__", "__builtins__", "getattr(", "type("]
+    for pat in _ESCAPE_PATTERNS:
+        if pat in codigo:
+            resultado.erro = f"Padrão proibido no sandbox: '{pat}'"
+            resultado.tempo_ms = (time.monotonic() - inicio) * 1000
+            return resultado
+
     # Capturar stdout
     old_stdout = sys.stdout
     sys.stdout = buffer = io.StringIO()
@@ -164,17 +173,35 @@ def executar_python(codigo: str, timeout_s: float = 5.0) -> ResultadoExecucao:
         sandbox_globals = _criar_sandbox_globals()
         sandbox_globals["_resultado"] = {}
 
-        # Adicionar captura de resultado
-        codigo_exec = codigo + "\n"
+        # Timeout real via threading
+        import threading
+        exec_error = [None]
+        def _run_code():
+            try:
+                exec(codigo + "\n", sandbox_globals)
+            except Exception as e:
+                exec_error[0] = e
 
-        exec(codigo_exec, sandbox_globals)
+        thread = threading.Thread(target=_run_code, daemon=True)
+        thread.start()
+        thread.join(timeout=timeout_s)
+
+        if thread.is_alive():
+            resultado.erro = f"Timeout: execução excedeu {timeout_s}s"
+            resultado.tempo_ms = (time.monotonic() - inicio) * 1000
+            sys.stdout = old_stdout
+            return resultado
+
+        if exec_error[0]:
+            raise exec_error[0]
 
         resultado.saida = buffer.getvalue()
         resultado.sucesso = True
 
         # Capturar variáveis definidas pelo agente
+        _base_keys = set(_criar_sandbox_globals().keys()) | {"_resultado"}
         for k, v in sandbox_globals.items():
-            if not k.startswith("_") and k not in _criar_sandbox_globals():
+            if not k.startswith("_") and k not in _base_keys:
                 try:
                     resultado.variaveis_retornadas[k] = v
                 except Exception:
@@ -211,26 +238,45 @@ class ResultadoPesquisa:
         }
 
 
-async def pesquisar_web(query: str, max_resultados: int = 5) -> ResultadoPesquisa:
+def pesquisar_web(query: str, max_resultados: int = 5) -> ResultadoPesquisa:
     """
-    Pesquisa na web usando OmniRoute/autoresearch.
+    Pesquisa na web.
 
-    Fallback: gera resposta baseada no conhecimento do agente.
+    Tentativas em ordem:
+    1. inference.sh CLI (Tavily/Exa) — pesquisa REAL
+    2. LLM como fallback (NÃO é pesquisa real, marcado como tal)
     """
     resultado = ResultadoPesquisa(query=query)
 
+    # Tentativa 1: inference.sh Tavily (pesquisa REAL)
+    try:
+        import subprocess
+        proc = subprocess.run(
+            ["npx", "-y", "@anthropic-ai/inference-sh", "run",
+             "tavily/search", "--query", query, "--max-results", str(max_resultados)],
+            capture_output=True, text=True, timeout=30,
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            resultado.resumo = proc.stdout.strip()[:2000]
+            resultado.sucesso = True
+            resultado.resultados = [{"fonte": "tavily_real", "conteudo": resultado.resumo}]
+            return resultado
+    except (FileNotFoundError, subprocess.TimeoutExpired, Exception) as e:
+        logger.debug(f"inference.sh indisponível: {e}")
+
+    # Tentativa 2: LLM como fallback (MARCADO como não-real)
     try:
         from .ia_client import chamar_llm_conversa, MODELO_RAPIDO
-        resposta = await chamar_llm_conversa(
-            system=f"Você é um assistente de pesquisa. Responda de forma factual e concisa.",
-            messages=[{"role": "user", "content": f"Pesquise e resuma: {query}"}],
-            model=MODELO_RAPIDO,
+        resposta = chamar_llm_conversa(
+            "Você é um assistente de pesquisa. Responda de forma factual e concisa.",
+            f"Pesquise e resuma: {query}",
+            modelo=MODELO_RAPIDO,
             max_tokens=500,
         )
         if resposta:
             resultado.resumo = resposta
             resultado.sucesso = True
-            resultado.resultados = [{"fonte": "LLM", "conteudo": resposta}]
+            resultado.resultados = [{"fonte": "llm_fallback_NAO_REAL", "conteudo": resposta}]
     except Exception as e:
         resultado.resumo = f"Pesquisa indisponível: {e}"
         logger.warning(f"Pesquisa web falhou: {e}")

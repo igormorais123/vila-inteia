@@ -141,7 +141,7 @@ def _tentar_produzir(persona: Persona, local_id: str, hora_atual: datetime) -> d
     Retorna dict com info do artefato ou None se não produziu.
     """
     try:
-        from ..oficinas import oficina_do_local, Workspace
+        from ..oficinas import oficina_do_local
         from ..desafio import Contribuicao
     except ImportError:
         return None
@@ -150,17 +150,26 @@ def _tentar_produzir(persona: Persona, local_id: str, hora_atual: datetime) -> d
     if not oficina or not oficina.ferramentas:
         return None
 
-    # Verificar se há desafio ativo
+    # Verificar se há desafio ativo — buscar simulação sem circular import
+    sim = None
     try:
-        from api.rotas_vila import obter_simulacao
-        sim = obter_simulacao()
-        if not sim or not sim.desafio or not sim.desafio.ativo:
-            return None
-        desafio = sim.desafio
-        fase = desafio.fase_atual
-        if not fase:
-            return None
+        # Caminho 1: via referência global da rotas_vila (se API rodando)
+        from api.rotas_vila import simulacao as _sim_global
+        if _sim_global is not None:
+            sim = _sim_global
     except Exception:
+        pass
+    if sim is None:
+        try:
+            from api.rotas_vila import obter_simulacao
+            sim = obter_simulacao()
+        except Exception:
+            return None
+    if not sim or not sim.desafio or not sim.desafio.ativo:
+        return None
+    desafio = sim.desafio
+    fase = desafio.fase_atual
+    if not fase:
         return None
 
     # Escolher ferramenta mais relevante para a fase
@@ -217,8 +226,8 @@ Máximo 500 palavras. Vá direto ao conteúdo — sem introdução."""
     if not conteudo:
         return None
 
-    # Salvar artefato no workspace
-    workspace = Workspace(base_dir=os.path.join(sim.dir_dados, "entregas"))
+    # Salvar artefato no workspace (usar instância da simulação, não criar nova)
+    workspace = sim.workspace
     ext = ferramenta.tipo_artefato or "md"
     slug = persona.id.lower()
     nome_arquivo = f"{fase.id}_{slug}_{ferramenta.id}.{ext}"
@@ -269,7 +278,3 @@ Máximo 500 palavras. Vá direto ao conteúdo — sem introdução."""
         "tipo": ferramenta.tipo,
         "tamanho": len(conteudo),
     }
-
-
-# Import necessário para Workspace
-import os

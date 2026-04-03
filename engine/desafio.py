@@ -177,6 +177,8 @@ class Entrega:
     status: str = "aberta"  # aberta | em_debate | votando | aprovada | rejeitada
     consenso: float = 0.0  # 0-1
     conteudo_final: str = ""
+    votos_favor: int = 0
+    votos_contra: int = 0
 
     def to_dict(self) -> dict:
         return {
@@ -188,6 +190,8 @@ class Entrega:
             "status": self.status,
             "consenso": self.consenso,
             "conteudo_final": self.conteudo_final,
+            "votos_favor": self.votos_favor,
+            "votos_contra": self.votos_contra,
         }
 
 
@@ -297,18 +301,26 @@ class DesafioColetivo:
             self._contribuicoes_recentes = self._contribuicoes_recentes[-100:]
 
     def registrar_voto(self, agente_id: str, entrega_id: str, favor: bool):
-        """Registra voto em uma entrega."""
+        """Registra voto em uma entrega e atualiza status se atingir consenso."""
         for fase in self.fases:
             for entrega in fase.entregas:
                 if entrega.id == entrega_id:
                     if favor:
-                        entrega.votos_favor = getattr(entrega, 'votos_favor', 0) + 1
+                        entrega.votos_favor += 1
                     else:
-                        entrega.votos_contra = getattr(entrega, 'votos_contra', 0) + 1
-                    total = getattr(entrega, 'votos_favor', 0) + getattr(entrega, 'votos_contra', 0)
+                        entrega.votos_contra += 1
+                    total = entrega.votos_favor + entrega.votos_contra
                     if total > 0:
-                        entrega.consenso = getattr(entrega, 'votos_favor', 0) / total
+                        entrega.consenso = entrega.votos_favor / total
                     self.total_votos += 1
+                    # Aprovar/rejeitar com base no consenso mínimo (quórum: 5+ votos)
+                    if total >= 5:
+                        if entrega.consenso >= self.consenso_minimo:
+                            entrega.status = "aprovada"
+                        elif entrega.consenso < (1 - self.consenso_minimo):
+                            entrega.status = "rejeitada"
+                        else:
+                            entrega.status = "em_debate"
                     return
 
     def atualizar_progresso(self, step: int):
