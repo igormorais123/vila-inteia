@@ -19,6 +19,7 @@ Penalidades:
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -320,3 +321,25 @@ class MotorIncentivos:
         }
         with open(caminho, "w", encoding="utf-8") as f:
             json.dump(dados, f, ensure_ascii=False, indent=2)
+
+    def carregar(self, caminho: str) -> bool:
+        """Carrega estado de JSON. Retorna True se carregou."""
+        import json
+        if not os.path.exists(caminho):
+            return False
+        try:
+            with open(caminho, "r", encoding="utf-8") as f:
+                dados = json.load(f)
+            self._ultimo_step_atividade = dados.get("ultimo_atividade", {})
+            for aid, cdata in dados.get("carteiras", {}).items():
+                c = self.obter_carteira(aid)
+                c.saldo = cdata.get("saldo", 1000)
+                c.reputacao = cdata.get("reputacao", 50.0)
+                c.contribuicoes_total = cdata.get("contribuicoes_total", 0)
+                c.debates_total = cdata.get("debates_total", 0)
+                c.votos_total = cdata.get("votos_total", 0)
+                c.cargo_atual = cdata.get("cargo_atual", "")
+            return True
+        except Exception as e:
+            logger.warning(f"Erro ao carregar incentivos: {e}")
+            return False

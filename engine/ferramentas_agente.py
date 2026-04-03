@@ -240,15 +240,42 @@ class ResultadoPesquisa:
 
 def pesquisar_web(query: str, max_resultados: int = 5) -> ResultadoPesquisa:
     """
-    Pesquisa na web.
+    Pesquisa na web — 3 tentativas em cascata.
 
-    Tentativas em ordem:
-    1. inference.sh CLI (Tavily/Exa) — pesquisa REAL
-    2. LLM como fallback (NÃO é pesquisa real, marcado como tal)
+    1. Playwright headless (pesquisa REAL via Google)
+    2. inference.sh Tavily/Exa (pesquisa REAL via API)
+    3. LLM como fallback (MARCADO como não-real)
     """
     resultado = ResultadoPesquisa(query=query)
 
-    # Tentativa 1: inference.sh Tavily (pesquisa REAL)
+    # Tentativa 1: Playwright headless — pesquisa REAL no Google
+    try:
+        import subprocess
+        # Usa gstack browse (CLI) se disponível
+        import os
+        browse_bin = os.path.expanduser("~/.claude/skills/gstack/browse/dist/browse")
+        if os.path.exists(browse_bin):
+            proc = subprocess.run(
+                [browse_bin, "goto", f"https://www.google.com/search?q={query.replace(' ', '+')}&num={max_resultados}"],
+                capture_output=True, text=True, timeout=20,
+            )
+            if proc.returncode == 0:
+                # Extrair texto da página
+                proc2 = subprocess.run(
+                    [browse_bin, "text"],
+                    capture_output=True, text=True, timeout=10,
+                )
+                if proc2.returncode == 0 and proc2.stdout.strip():
+                    texto = proc2.stdout.strip()[:3000]
+                    resultado.resumo = texto
+                    resultado.sucesso = True
+                    resultado.resultados = [{"fonte": "google_playwright_real", "conteudo": texto}]
+                    logger.info(f"Pesquisa REAL via Playwright: '{query}' ({len(texto)} chars)")
+                    return resultado
+    except (FileNotFoundError, subprocess.TimeoutExpired, Exception) as e:
+        logger.debug(f"Playwright browse indisponível: {e}")
+
+    # Tentativa 2: inference.sh Tavily (pesquisa REAL via API)
     try:
         import subprocess
         proc = subprocess.run(
@@ -264,7 +291,7 @@ def pesquisar_web(query: str, max_resultados: int = 5) -> ResultadoPesquisa:
     except (FileNotFoundError, subprocess.TimeoutExpired, Exception) as e:
         logger.debug(f"inference.sh indisponível: {e}")
 
-    # Tentativa 2: LLM como fallback (MARCADO como não-real)
+    # Tentativa 3: LLM como fallback (MARCADO como não-real)
     try:
         from .ia_client import chamar_llm_conversa, MODELO_RAPIDO
         resposta = chamar_llm_conversa(

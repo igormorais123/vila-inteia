@@ -24,6 +24,7 @@ from .desafio import DesafioColetivo, criar_desafio, desafio_aleatorio, Contribu
 from .ferramentas_agente import ToolkitAgente, ferramentas_disponiveis_no_local, custo_uso_local
 from .incentivos import MotorIncentivos
 from .oficinas import Workspace, OFICINAS, todas_oficinas
+from .helena_ceo import distribuir_tarefas, gerar_cobranca, avaliar_workspace
 
 # Import config: relativo (package mode) ou direto (standalone)
 try:
@@ -443,6 +444,50 @@ class SimulacaoVila:
                 ids = list(self.personas.keys())
                 self.incentivos.verificar_inatividade(ids, self.step)
 
+            # Helena CEO: distribuir tarefas no início de cada fase (a cada 20 steps)
+            if self.step % 20 == 0:
+                # Distribuir tarefas
+                atribuicoes = distribuir_tarefas(self.desafio, self.personas, self.step)
+                if atribuicoes:
+                    helena = self.personas.get("CL085")
+                    if helena:
+                        nomes = ", ".join(a["agente_nome"] for a in atribuicoes[:5])
+                        from .rede_social import Postagem
+                        post = Postagem(
+                            tipo="sistema",
+                            autor_id=helena.id,
+                            autor_nome=helena.nome_exibicao,
+                            autor_titulo="Cientista-Chefe | CEO do Desafio",
+                            autor_categoria="inteia",
+                            titulo=f"Distribuição de tarefas: {self.desafio.fase_atual.nome}",
+                            conteudo=(
+                                f"Fase '{self.desafio.fase_atual.nome}': "
+                                f"convocados {nomes} e outros. "
+                                f"Progresso: {self.desafio.progresso_total:.0%}"
+                            ),
+                            tags=["helena", "gestao", "desafio"],
+                        )
+                        self.rede_social._adicionar_post(post)
+
+                # Cobrança se necessário
+                cobranca = gerar_cobranca(self.desafio, self.step)
+                if cobranca:
+                    helena = self.personas.get("CL085")
+                    if helena:
+                        from .rede_social import Postagem
+                        post_cob = Postagem(
+                            tipo="sistema",
+                            autor_id=helena.id,
+                            autor_nome=helena.nome_exibicao,
+                            autor_titulo="Cientista-Chefe | CEO do Desafio",
+                            autor_categoria="inteia",
+                            titulo="Cobrança de Progresso",
+                            conteudo=cobranca,
+                            tags=["helena", "cobranca", "urgente"],
+                            destaque=True,
+                        )
+                        self.rede_social._adicionar_post(post_cob)
+
             # Info no resumo
             resumo_step["desafio"] = {
                 "nome": self.desafio.nome,
@@ -760,7 +805,7 @@ class SimulacaoVila:
         self.log(f"Simulação salva em {self.dir_dados}")
 
     def carregar(self) -> bool:
-        """Carrega estado salvo da simulação."""
+        """Carrega estado completo: meta + desafio + incentivos."""
         meta_path = os.path.join(self.dir_dados, "meta.json")
         if not os.path.exists(meta_path):
             return False
@@ -772,6 +817,17 @@ class SimulacaoVila:
         self.hora_atual = datetime.fromisoformat(meta["hora_atual"])
         self.stats = meta.get("stats", self.stats)
         config.topicos_ativos = meta.get("topicos_ativos", [])
+
+        # Carregar desafio
+        desafio_path = os.path.join(self.dir_dados, "desafio.json")
+        desafio_carregado = DesafioColetivo.carregar(desafio_path)
+        if desafio_carregado:
+            self.desafio = desafio_carregado
+            self.log(f"Desafio carregado: {self.desafio.nome} (fase {self.desafio.fase_atual_idx})")
+
+        # Carregar incentivos
+        incentivos_path = os.path.join(self.dir_dados, "incentivos.json")
+        self.incentivos.carregar(incentivos_path)
 
         self.log(f"Simulação carregada: step {self.step}")
         return True

@@ -271,10 +271,25 @@ async def forcar_sintese(topico: str):
 
 @router.post("/salvar")
 async def salvar():
-    """Salva o estado atual da simulação."""
+    """Salva o estado atual da simulação (desafio + incentivos + personas)."""
     sim = obter_simulacao()
     sim.salvar()
     return {"status": "salvo", "diretorio": sim.dir_dados}
+
+
+@router.post("/carregar")
+async def carregar():
+    """Carrega estado salvo (desafio + incentivos + meta)."""
+    sim = obter_simulacao()
+    ok = sim.carregar()
+    if not ok:
+        return {"status": "sem_dados", "mensagem": "Nenhum estado salvo encontrado"}
+    return {
+        "status": "carregado",
+        "step": sim.step,
+        "desafio": sim.desafio.nome if sim.desafio.ativo else None,
+        "agentes": len(sim.personas),
+    }
 
 
 # ============================================================
@@ -539,6 +554,14 @@ async def workspace_desafio(desafio_id: str):
     """Lista artefatos de um desafio específico."""
     sim = obter_simulacao()
     return sim.workspace.to_dict(desafio_id)
+
+
+@router.get("/workspace/{desafio_id}/avaliar")
+async def workspace_avaliar(desafio_id: str):
+    """Helena avalia as entregas do workspace."""
+    from engine.helena_ceo import avaliar_workspace
+    sim = obter_simulacao()
+    return avaliar_workspace(sim.workspace, desafio_id)
 
 
 @router.get("/workspace/{desafio_id}/compilar")
