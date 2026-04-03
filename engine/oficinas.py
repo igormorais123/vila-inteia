@@ -519,6 +519,542 @@ _reg(Oficina(
 
 
 # ============================================================
+# DESIGN SPRINT — 5 oficinas do processo GV Sprint
+# ============================================================
+# Baseado no Google Ventures Design Sprint (Jake Knapp):
+# Segunda: Entender → Terça: Divergir → Quarta: Decidir →
+# Quinta: Prototipar → Sexta: Testar
+#
+# Cada dia do sprint é um LOCAL REAL no campus com ferramentas reais.
+
+# ── SALA DE ENTENDIMENTO (Sprint Dia 1) ──
+# Mapear o problema, ouvir especialistas, definir alvo
+_reg(Oficina(
+    local_id="sprint_entender",
+    nome_oficina="Sala de Entendimento do Problema",
+    descricao=(
+        "Sprint Dia 1: Mapear o problema de ponta a ponta. "
+        "Entrevistas com especialistas, mapa do usuário, perguntas-chave, "
+        "How Might We, definição do alvo do sprint."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="mapa_problema", nome="Mapa do Problema",
+            descricao=(
+                "Diagrama end-to-end: ator → ações → resultado. "
+                "Identifica onde está a dor, o gargalo, a oportunidade."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="entrevista_especialista", nome="Entrevista com Especialista",
+            descricao=(
+                "Perguntas estruturadas para extrair conhecimento profundo. "
+                "Formato: contexto → problema → tentativas → insight."
+            ),
+            tipo="pesquisa", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="how_might_we", nome="How Might We (HMW)",
+            descricao=(
+                "Reformular problemas como oportunidades. "
+                "Cada agente gera 5+ notas HMW sobre o tema."
+            ),
+            tipo="escrita", custo_coins=0,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="alvo_sprint", nome="Definição do Alvo",
+            descricao=(
+                "Escolher O que resolver neste sprint. "
+                "Pergunta-alvo + métrica de sucesso + persona-alvo."
+            ),
+            tipo="escrita", custo_coins=2,
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+# ── SALA DE IDEAÇÃO (Sprint Dia 2) ──
+# Divergir: cada agente gera soluções individualmente
+_reg(Oficina(
+    local_id="sprint_idear",
+    nome_oficina="Sala de Ideação e Divergência",
+    descricao=(
+        "Sprint Dia 2: Divergir. Cada agente trabalha SOZINHO gerando soluções. "
+        "Crazy 8s, Lightning Demos, Sketch de 3 painéis. "
+        "Quantidade acima de qualidade — sem julgamento."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="crazy_8s", nome="Crazy 8s",
+            descricao=(
+                "8 variações de solução em 8 minutos (simulado). "
+                "Esboços rápidos, sem autocensura, quantidade máxima."
+            ),
+            tipo="escrita", custo_coins=0,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="lightning_demo", nome="Lightning Demo",
+            descricao=(
+                "Pesquisar 3 referências de como outros resolveram "
+                "problemas similares. Capturar padrões reutilizáveis."
+            ),
+            tipo="pesquisa", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="sketch_solucao", nome="Sketch de Solução (3 Painéis)",
+            descricao=(
+                "Solução detalhada em 3 quadros: antes → interação → depois. "
+                "Narrativa visual da experiência do usuário."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="mapa_ideias", nome="Mapa de Ideias",
+            descricao=(
+                "Agrupar e conectar ideias por tema. "
+                "Clusters visuais: quick wins, moonshots, incrementais."
+            ),
+            tipo="visual", custo_coins=2,
+            tipo_artefato="md",
+        ),
+    ],
+))
+
+# ── SALA DE DECISÃO (Sprint Dia 3) ──
+# Convergir: votar, decidir, criar storyboard
+_reg(Oficina(
+    local_id="sprint_decidir",
+    nome_oficina="Sala de Decisão e Convergência",
+    descricao=(
+        "Sprint Dia 3: Convergir. Votação silenciosa, Supervoto do decisor, "
+        "escolha da solução vencedora, storyboard da experiência."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="votacao_dot", nome="Votação por Pontos (Dot Voting)",
+            descricao=(
+                "Cada agente distribui 3 votos nas melhores ideias. "
+                "Sem debate — votação silenciosa baseada em critérios."
+            ),
+            tipo="votacao", custo_coins=0,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="supervoto", nome="Supervoto do Decisor",
+            descricao=(
+                "Helena (CEO) dá o voto final. "
+                "Resolve empates. Escolhe a direção do protótipo."
+            ),
+            tipo="votacao", custo_coins=0,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="storyboard", nome="Storyboard da Experiência",
+            descricao=(
+                "Sequência de 8-12 quadros mostrando a jornada completa "
+                "do usuário com a solução escolhida. Narrativa passo a passo."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="criterios_sucesso", nome="Critérios de Sucesso",
+            descricao=(
+                "Definir: o que precisa ser verdade para o protótipo "
+                "ser considerado um sucesso no teste?"
+            ),
+            tipo="escrita", custo_coins=2,
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+# ── LABORATÓRIO DE PROTOTIPAGEM (Sprint Dia 4) ──
+# Construir: protótipo realista em 1 dia
+_reg(Oficina(
+    local_id="sprint_prototipar",
+    nome_oficina="Laboratório de Prototipagem Rápida",
+    descricao=(
+        "Sprint Dia 4: Prototipar. Criar fachada realista da solução. "
+        "Não precisa funcionar — precisa PARECER real para testar. "
+        "Código funcional, mockups, documentos, simulações."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="prototipo_codigo", nome="Protótipo em Código",
+            descricao=(
+                "Código Python funcional que demonstra a lógica central "
+                "da solução. Executável no sandbox."
+            ),
+            tipo="codigo", custo_coins=10,
+            modulos_sandbox=["math", "statistics", "random", "json",
+                             "re", "collections", "datetime", "csv"],
+            tipo_artefato="py",
+        ),
+        Ferramenta(
+            id="prototipo_doc", nome="Protótipo Documental",
+            descricao=(
+                "Documento que simula o produto final: relatório, contrato, "
+                "plano, manual — como se já existisse."
+            ),
+            tipo="escrita", custo_coins=8,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="prototipo_fluxo", nome="Protótipo de Fluxo",
+            descricao=(
+                "Sequência de telas/etapas da solução em formato texto. "
+                "Cada tela: título, conteúdo, ações possíveis, próxima tela."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="dados_teste", nome="Dados de Teste",
+            descricao=(
+                "Dataset simulado para alimentar o protótipo. "
+                "JSON/CSV com dados realistas para demonstração."
+            ),
+            tipo="codigo", custo_coins=5,
+            modulos_sandbox=["math", "random", "json", "csv", "datetime"],
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+# ── SALA DE TESTES (Sprint Dia 5) ──
+# Testar: colocar o protótipo na frente de usuários simulados
+_reg(Oficina(
+    local_id="sprint_testar",
+    nome_oficina="Sala de Testes com Usuários",
+    descricao=(
+        "Sprint Dia 5: Testar. 5 entrevistas com usuários simulados. "
+        "Observar reações, coletar feedback, identificar padrões. "
+        "Decidir: funciona, ajustar ou pivotar."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="roteiro_teste", nome="Roteiro de Teste",
+            descricao=(
+                "Script de entrevista: introdução, tarefas para o usuário, "
+                "perguntas de acompanhamento, encerramento."
+            ),
+            tipo="escrita", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="teste_usuario", nome="Teste com Usuário Simulado",
+            descricao=(
+                "Simular reação de uma persona-alvo ao protótipo. "
+                "O agente assume o papel do usuário e reage honestamente."
+            ),
+            tipo="analise", custo_coins=8,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="mapa_feedback", nome="Mapa de Feedback",
+            descricao=(
+                "Compilar padrões: o que funcionou (+), o que confundiu (?), "
+                "o que falhou (-). Grid de 5 usuários × N observações."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="decisao_sprint", nome="Decisão Final do Sprint",
+            descricao=(
+                "Veredito: a) Funciona — implementar, b) Ajustar — iterar, "
+                "c) Pivotar — nova direção. Baseado nos testes."
+            ),
+            tipo="votacao", custo_coins=0,
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+
+# ============================================================
+# PROBLEM SOLVING — Frameworks simultâneos
+# ============================================================
+
+# ── SALA DE ÁRVORE DE PROBLEMAS ──
+# Issue Tree, MECE, root cause analysis
+_reg(Oficina(
+    local_id="arvore_problemas",
+    nome_oficina="Sala de Decomposição de Problemas",
+    descricao=(
+        "Frameworks analíticos: Issue Tree (McKinsey), MECE, 5 Porquês, "
+        "Fishbone/Ishikawa, First Principles. Decompor antes de resolver."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="issue_tree", nome="Issue Tree (McKinsey)",
+            descricao=(
+                "Decompor problema em sub-problemas MECE "
+                "(Mutuamente Exclusivos, Coletivamente Exaustivos). "
+                "Árvore de 3-4 níveis com hipóteses testáveis."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="cinco_porques", nome="5 Porquês (Root Cause)",
+            descricao=(
+                "Perguntar 'por quê?' 5 vezes até chegar na causa raiz. "
+                "Cada nível revela uma camada mais profunda do problema."
+            ),
+            tipo="analise", custo_coins=0,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="fishbone", nome="Diagrama Fishbone (Ishikawa)",
+            descricao=(
+                "Mapear causas por categoria: Pessoas, Processos, "
+                "Tecnologia, Ambiente, Métodos, Materiais."
+            ),
+            tipo="visual", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="first_principles", nome="Raciocínio First Principles",
+            descricao=(
+                "Desconstruir até axiomas fundamentais. "
+                "O que é VERDADE INEGÁVEL? Reconstruir de baixo para cima."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="md",
+        ),
+    ],
+))
+
+# ── SALA DE FRAMEWORKS ESTRATÉGICOS ──
+# Porter, Blue Ocean, Jobs-to-be-Done, teoria dos jogos
+_reg(Oficina(
+    local_id="frameworks_estrategicos",
+    nome_oficina="Sala de Frameworks Estratégicos",
+    descricao=(
+        "Porter 5 Forças, Blue Ocean Canvas, Jobs-to-be-Done, "
+        "Business Model Canvas, teoria dos jogos, matriz de decisão."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="porter_5", nome="5 Forças de Porter",
+            descricao=(
+                "Analisar: rivalidade, novos entrantes, substitutos, "
+                "poder dos fornecedores, poder dos compradores."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="blue_ocean", nome="Blue Ocean Canvas",
+            descricao=(
+                "Curva de valor: quais fatores eliminar, reduzir, "
+                "elevar e criar vs. concorrência."
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="jtbd", nome="Jobs-to-be-Done",
+            descricao=(
+                "Qual JOB o cliente está contratando este produto para fazer? "
+                "Contexto → Motivação → Resultado esperado."
+            ),
+            tipo="pesquisa", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="bmc", nome="Business Model Canvas",
+            descricao=(
+                "9 blocos: proposta de valor, segmentos, canais, "
+                "relacionamento, receita, recursos, atividades, parceiros, custos."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="matriz_decisao", nome="Matriz de Decisão Ponderada",
+            descricao=(
+                "Critérios × Opções com pesos. "
+                "Cada agente pontua, média ponderada decide."
+            ),
+            tipo="analise", custo_coins=3,
+            modulos_sandbox=["math", "statistics", "json"],
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="teoria_jogos", nome="Análise de Teoria dos Jogos",
+            descricao=(
+                "Modelar interações estratégicas: payoff matrix, "
+                "equilíbrio de Nash, dilema do prisioneiro aplicado."
+            ),
+            tipo="analise", custo_coins=8,
+            modulos_sandbox=["math", "statistics", "random", "json"],
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+# ── SALA DE DESIGN THINKING ──
+# Empatia, definição, ideação, prototipagem, teste (IDEO/Stanford d.school)
+_reg(Oficina(
+    local_id="design_thinking",
+    nome_oficina="Sala de Design Thinking (d.school)",
+    descricao=(
+        "Processo IDEO/Stanford: Empatizar → Definir → Idear → "
+        "Prototipar → Testar. Foco no humano, não na tecnologia."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="mapa_empatia", nome="Mapa de Empatia",
+            descricao=(
+                "O que o usuário PENSA, SENTE, VÊ, OUVE, FALA, FAZ? "
+                "Dores e ganhos. Entrar na cabeça do usuário."
+            ),
+            tipo="pesquisa", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="persona_usuario", nome="Criação de Persona",
+            descricao=(
+                "Persona fictícia mas realista: nome, idade, contexto, "
+                "motivações, frustrações, quote representativa."
+            ),
+            tipo="escrita", custo_coins=3,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="jornada_usuario", nome="Mapa de Jornada do Usuário",
+            descricao=(
+                "Fases da experiência: descoberta → consideração → uso → "
+                "retenção. Emoções, touchpoints, oportunidades em cada fase."
+            ),
+            tipo="visual", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="pov_statement", nome="Point of View Statement",
+            descricao=(
+                "[USUÁRIO] precisa de [NECESSIDADE] porque [INSIGHT]. "
+                "A definição do problema que guia a ideação."
+            ),
+            tipo="escrita", custo_coins=0,
+            tipo_artefato="md",
+        ),
+    ],
+))
+
+# ── SALA DE PESQUISA CIENTÍFICA ──
+# Método científico, hipóteses, experimentos, papers
+_reg(Oficina(
+    local_id="pesquisa_cientifica",
+    nome_oficina="Laboratório de Pesquisa Científica",
+    descricao=(
+        "Método científico rigoroso: hipótese → experimento → dados → conclusão. "
+        "Revisão de literatura, análise estatística, refutação."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="hipotese", nome="Formulação de Hipótese",
+            descricao=(
+                "H0 (nula) vs H1 (alternativa). "
+                "Variáveis independentes, dependentes, controle. "
+                "Critério de refutação definido a priori."
+            ),
+            tipo="analise", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="revisao_literatura", nome="Revisão de Literatura",
+            descricao=(
+                "Buscar e sintetizar o que já se sabe sobre o tema. "
+                "Estado da arte, lacunas, oportunidades de pesquisa."
+            ),
+            tipo="pesquisa", custo_coins=5,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="experimento_estatistico", nome="Experimento Estatístico",
+            descricao=(
+                "Desenho experimental + análise: t-test, chi-quadrado, "
+                "correlação, regressão. Código Python executável."
+            ),
+            tipo="codigo", custo_coins=10,
+            modulos_sandbox=["math", "statistics", "random", "json", "csv"],
+            tipo_artefato="py",
+        ),
+        Ferramenta(
+            id="paper_academico", nome="Paper Acadêmico (Estrutura)",
+            descricao=(
+                "Abstract, Introdução, Metodologia, Resultados, "
+                "Discussão, Conclusão, Referências. Formato ABNT/APA."
+            ),
+            tipo="escrita", custo_coins=8,
+            tipo_artefato="md",
+        ),
+    ],
+))
+
+# ── SALA DE LEAN / AGILE ──
+# MVP, Lean Canvas, Kanban, retrospectivas
+_reg(Oficina(
+    local_id="lean_agile",
+    nome_oficina="Sala Lean Startup & Agile",
+    descricao=(
+        "Build-Measure-Learn. Lean Canvas, MVP definition, "
+        "Kanban, retrospectivas, pivotar vs perseverar."
+    ),
+    ferramentas=[
+        Ferramenta(
+            id="lean_canvas", nome="Lean Canvas",
+            descricao=(
+                "1 página: problema, solução, métricas-chave, "
+                "proposta de valor única, vantagem injusta, canais, "
+                "segmentos, estrutura de custos, fontes de receita."
+            ),
+            tipo="escrita", custo_coins=5,
+            tipo_artefato="json",
+        ),
+        Ferramenta(
+            id="mvp_definition", nome="Definição de MVP",
+            descricao=(
+                "O menor produto viável que testa a hipótese central. "
+                "O que incluir, o que cortar, como medir sucesso."
+            ),
+            tipo="escrita", custo_coins=3,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="retrospectiva", nome="Retrospectiva",
+            descricao=(
+                "O que funcionou? O que não funcionou? "
+                "O que fazer diferente? Ações concretas para próximo ciclo."
+            ),
+            tipo="escrita", custo_coins=0,
+            tipo_artefato="md",
+        ),
+        Ferramenta(
+            id="pivotar_perseverar", nome="Pivotar ou Perseverar",
+            descricao=(
+                "Análise baseada em dados: os indicadores justificam "
+                "continuar ou mudar de direção?"
+            ),
+            tipo="analise", custo_coins=5,
+            tipo_artefato="json",
+        ),
+    ],
+))
+
+
+# ============================================================
 # API — consultar oficinas e ferramentas
 # ============================================================
 

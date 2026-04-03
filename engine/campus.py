@@ -562,6 +562,233 @@ _registrar(Local(
 # FUNÇÕES DE NAVEGAÇÃO
 # ============================================================
 
+# --- DESIGN SPRINT & PROBLEM SOLVING ---
+
+_registrar(Local(
+    id="sprint_entender",
+    nome="Sala de Entendimento",
+    descricao=(
+        "Sprint Dia 1: Sala ampla com post-its infinitos, quadros brancos "
+        "e telas de pesquisa. Onde o problema é mapeado de ponta a ponta."
+    ),
+    tipo="trabalho",
+    capacidade=20,
+    categorias_afinidade=[
+        "estrategia", "qi_extremo", "mindset",
+        "influencia_oratoria", "jurista_lendario",
+    ],
+    horario_pico=(8, 20),
+    nivel_formalidade=5,
+    nivel_energia=7,
+    conexoes=["sprint_idear", "arvore_problemas", "biblioteca", "agora"],
+    objetos=["post_its", "quadro_branco", "mapa_problema", "timer_sprint"],
+    posicao_x=0.15,
+    posicao_y=0.15,
+))
+
+_registrar(Local(
+    id="sprint_idear",
+    nome="Sala de Ideação",
+    descricao=(
+        "Sprint Dia 2: Cada agente trabalha sozinho em sua bancada. "
+        "Silêncio criativo. Crazy 8s, sketches, referências visuais."
+    ),
+    tipo="trabalho",
+    capacidade=25,
+    categorias_afinidade=[
+        "visionario", "tech", "ia_futuro",
+        "marca", "mkt_digital",
+    ],
+    horario_pico=(8, 20),
+    nivel_formalidade=2,
+    nivel_energia=6,
+    conexoes=["sprint_entender", "sprint_decidir", "atelie", "cafe_filosofos"],
+    objetos=["bancadas_individuais", "timer_8min", "materiais_sketch", "referencias_visuais"],
+    posicao_x=0.25,
+    posicao_y=0.15,
+))
+
+_registrar(Local(
+    id="sprint_decidir",
+    nome="Sala de Decisão",
+    descricao=(
+        "Sprint Dia 3: Mesa central com todas as soluções expostas. "
+        "Votação silenciosa, supervoto do decisor, storyboard final."
+    ),
+    tipo="trabalho",
+    capacidade=15,
+    categorias_afinidade=[
+        "estrategia", "negociacao", "investidor",
+        "politica_brasileira", "influencia_oratoria",
+    ],
+    horario_pico=(9, 18),
+    nivel_formalidade=7,
+    nivel_energia=8,
+    conexoes=["sprint_idear", "sprint_prototipar", "tribunal", "torre_estrategia"],
+    objetos=["mesa_exposicao", "dots_votacao", "storyboard_grande", "cronometro"],
+    posicao_x=0.35,
+    posicao_y=0.15,
+))
+
+_registrar(Local(
+    id="sprint_prototipar",
+    nome="Lab de Prototipagem",
+    descricao=(
+        "Sprint Dia 4: Laboratório equipado para criar protótipos realistas "
+        "em horas. Código, documentos, mockups — o que for preciso."
+    ),
+    tipo="trabalho",
+    capacidade=12,
+    categorias_afinidade=[
+        "tech", "ia_futuro", "visionario",
+        "qi_extremo", "marca",
+    ],
+    horario_pico=(8, 22),
+    nivel_formalidade=3,
+    nivel_energia=9,
+    conexoes=["sprint_decidir", "sprint_testar", "laboratorio"],
+    objetos=["computadores_rapidos", "impressora_3d", "materiais_mockup", "cameras"],
+    posicao_x=0.45,
+    posicao_y=0.15,
+))
+
+_registrar(Local(
+    id="sprint_testar",
+    nome="Sala de Testes",
+    descricao=(
+        "Sprint Dia 5: Sala de observação com espelho unidirecional (simulado). "
+        "5 entrevistas com usuários. Observar, anotar, decidir."
+    ),
+    tipo="trabalho",
+    capacidade=10,
+    categorias_afinidade=[
+        "mindset", "resiliencia", "influencia_oratoria",
+        "omega", "estrategia",
+    ],
+    horario_pico=(9, 18),
+    nivel_formalidade=6,
+    nivel_energia=5,
+    conexoes=["sprint_prototipar", "agora", "auditorio"],
+    objetos=["espelho_observacao", "cameras_gravacao", "roteiro_teste", "quadro_feedback"],
+    posicao_x=0.55,
+    posicao_y=0.15,
+))
+
+_registrar(Local(
+    id="arvore_problemas",
+    nome="Sala de Decomposição",
+    descricao=(
+        "Paredes cobertas de árvores de problemas, diagramas fishbone "
+        "e fluxos de causa-efeito. Onde problemas complexos são fatiados."
+    ),
+    tipo="trabalho",
+    capacidade=15,
+    categorias_afinidade=[
+        "qi_extremo", "estrategia", "jurista_lendario",
+        "ia_futuro", "investidor",
+    ],
+    horario_pico=(8, 20),
+    nivel_formalidade=6,
+    nivel_energia=6,
+    conexoes=["sprint_entender", "torre_estrategia", "biblioteca"],
+    objetos=["arvores_parede", "diagramas_fishbone", "markers_coloridos", "logica_board"],
+    posicao_x=0.1,
+    posicao_y=0.25,
+))
+
+_registrar(Local(
+    id="frameworks_estrategicos",
+    nome="Sala de Estratégia",
+    descricao=(
+        "Canvas na parede: Porter, Blue Ocean, BMC, Lean. "
+        "Onde modelos mentais são aplicados a problemas reais."
+    ),
+    tipo="trabalho",
+    capacidade=15,
+    categorias_afinidade=[
+        "estrategia", "investidor", "br_business",
+        "negociacao", "marca",
+    ],
+    horario_pico=(9, 19),
+    nivel_formalidade=7,
+    nivel_energia=7,
+    conexoes=["torre_estrategia", "arvore_problemas", "sala_guerra"],
+    objetos=["canvas_parede", "templates_porter", "quadro_bmc", "calculadora_roi"],
+    posicao_x=0.15,
+    posicao_y=0.35,
+))
+
+_registrar(Local(
+    id="design_thinking",
+    nome="Studio Design Thinking",
+    descricao=(
+        "Espaço colorido da d.school: mapas de empatia nas paredes, "
+        "personas em cartazes, jornadas do usuário em fitas no chão."
+    ),
+    tipo="trabalho",
+    capacidade=20,
+    categorias_afinidade=[
+        "marca", "mindset", "mkt_digital",
+        "visionario", "resiliencia",
+    ],
+    horario_pico=(8, 20),
+    nivel_formalidade=2,
+    nivel_energia=7,
+    conexoes=["sprint_entender", "atelie", "cafe_filosofos", "sprint_idear"],
+    objetos=["mapas_empatia", "personas_cartaz", "fitas_coloridas", "materiais_prototipo"],
+    posicao_x=0.2,
+    posicao_y=0.2,
+))
+
+_registrar(Local(
+    id="pesquisa_cientifica",
+    nome="Lab de Pesquisa Científica",
+    descricao=(
+        "Laboratório com terminais de dados, whiteboards de equações, "
+        "e acesso a bases acadêmicas. Rigor metodológico acima de tudo."
+    ),
+    tipo="trabalho",
+    capacidade=12,
+    categorias_afinidade=[
+        "qi_extremo", "ia_futuro", "tech",
+        "visionario", "mindset",
+    ],
+    horario_pico=(7, 23),
+    nivel_formalidade=8,
+    nivel_energia=4,
+    conexoes=["biblioteca", "laboratorio", "observatorio"],
+    objetos=["terminais_dados", "whiteboards_equacoes", "microscoscopio_digital", "servidor_calculo"],
+    posicao_x=0.65,
+    posicao_y=0.2,
+))
+
+_registrar(Local(
+    id="lean_agile",
+    nome="War Room Lean/Agile",
+    descricao=(
+        "Kanban board gigante, métricas de sprint na tela, "
+        "post-its de hipóteses. Build-Measure-Learn em ciclos rápidos."
+    ),
+    tipo="trabalho",
+    capacidade=15,
+    categorias_afinidade=[
+        "tech", "visionario", "br_business",
+        "mkt_digital", "investidor",
+    ],
+    horario_pico=(8, 20),
+    nivel_formalidade=4,
+    nivel_energia=8,
+    conexoes=["sprint_prototipar", "laboratorio", "torre_estrategia"],
+    objetos=["kanban_gigante", "metricas_sprint", "post_its_hipoteses", "timer_pomodoro"],
+    posicao_x=0.4,
+    posicao_y=0.25,
+))
+
+
+# ============================================================
+# FUNÇÕES DE NAVEGAÇÃO
+# ============================================================
+
 def obter_local(local_id: str) -> Optional[Local]:
     """Retorna um local pelo ID."""
     return LOCAIS.get(local_id)
