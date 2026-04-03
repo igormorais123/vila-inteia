@@ -748,10 +748,35 @@ function openPanel(locId){
   carregarOficina(locId);
 }
 
+// Mapeamento IDs frontend → IDs backend (campus.py)
+const _LOC_ID_MAP = {
+  'lab': 'laboratorio',
+  'torre': 'torre_estrategia',
+  'cafe': 'cafe_filosofos',
+  'arena': 'arena_debates',
+  'jardim': 'jardim_visionarios',
+  'sala_guerra': 'sala_guerra',
+  'galeria': 'galeria',
+  'res_n': 'residencias_norte',
+  'res_s': 'residencias_sul',
+  'res_e': 'residencias_leste',
+  'res_w': 'residencias_oeste',
+  'terraco': 'terraco',
+  // IDs iguais
+  'agora': 'agora',
+  'biblioteca': 'biblioteca',
+  'tribunal': 'tribunal',
+  'auditorio': 'auditorio',
+  'atelie': 'atelie',
+  'observatorio': 'observatorio',
+  'refeitorio': 'refeitorio',
+};
+
 async function carregarOficina(locId) {
+  const backendLocId = _LOC_ID_MAP[locId] || locId;
   const API = window._VILA_API || 'https://vila-inteia.onrender.com/api/v1/vila';
   try {
-    const resp = await fetch(API + '/oficinas/' + locId);
+    const resp = await fetch(API + '/oficinas/' + backendLocId);
     const data = await resp.json();
     const el = document.getElementById('panelOficina_' + locId);
     if (!el || data.erro) {
