@@ -20,6 +20,9 @@ from .rede_social import RedeSocial
 from .gatilhos import MotorGatilhos
 from .previsibilidade import MotorPrevisibilidade
 from .autoresearch import MotorAutoresearch
+from .desafio import DesafioColetivo, criar_desafio, desafio_aleatorio, Contribuicao, listar_desafios
+from .ferramentas_agente import ToolkitAgente, ferramentas_disponiveis_no_local, custo_uso_local
+from .incentivos import MotorIncentivos
 
 # Import config: relativo (package mode) ou direto (standalone)
 try:
@@ -68,6 +71,11 @@ class SimulacaoVila:
         self.motor_autoresearch = MotorAutoresearch(
             intervalo_steps=100, max_ciclos=3,
         )
+
+        # Harness: Desafio Coletivo + Ferramentas + Incentivos
+        self.desafio: DesafioColetivo = DesafioColetivo()
+        self.toolkit = ToolkitAgente()
+        self.incentivos = MotorIncentivos()
 
         # Logs e eventos (com limites para evitar memory leak em 24/7)
         self.log_eventos: list[dict] = []
@@ -377,6 +385,57 @@ class SimulacaoVila:
                             self.rede_social._adicionar_post(post)
         # ========================================
 
+        # ========== DESAFIO COLETIVO ==========
+        if self.desafio.ativo:
+            # Atualizar progresso do desafio
+            self.desafio.atualizar_progresso(self.step)
+
+            # A cada 5 steps: injetar tópicos do desafio como temas ativos
+            if self.step % 5 == 0:
+                topicos_desafio = self.desafio.gerar_topicos_fase()
+                for t in topicos_desafio[:1]:
+                    if t and t not in config.topicos_ativos:
+                        config.topicos_ativos.append(t)
+
+            # A cada 10 steps: gerar contribuições automáticas dos agentes
+            if self.step % 10 == 0 and self.desafio.fase_atual:
+                fase = self.desafio.fase_atual
+                # Selecionar 3-5 agentes relevantes para contribuir
+                agentes_sample = random.sample(
+                    list(self.personas.values()),
+                    min(5, len(self.personas)),
+                )
+                for persona in agentes_sample:
+                    if not persona.ativo:
+                        continue
+                    # Contribuição baseada na expertise do agente
+                    expertise = ", ".join(persona.rascunho.areas_expertise[:3])
+                    contrib = Contribuicao(
+                        agente_id=persona.id,
+                        agente_nome=persona.nome_exibicao,
+                        conteudo=f"[{persona.titulo}] Perspectiva sobre '{fase.descricao}' com base em {expertise}",
+                        tipo="proposta",
+                    )
+                    self.desafio.registrar_contribuicao(contrib, self.step)
+                    self.incentivos.recompensar(
+                        persona.id, "proposta_nova", self.step,
+                        f"Contribuiu na fase '{fase.nome}'"
+                    )
+                    self.incentivos.registrar_atividade(persona.id, self.step)
+
+            # Verificar inatividade a cada 25 steps
+            if self.step % 25 == 0:
+                ids = list(self.personas.keys())
+                self.incentivos.verificar_inatividade(ids, self.step)
+
+            # Info no resumo
+            resumo_step["desafio"] = {
+                "nome": self.desafio.nome,
+                "fase": self.desafio.fase_atual.nome if self.desafio.fase_atual else "",
+                "progresso": round(self.desafio.progresso_total, 3),
+            }
+        # ========================================
+
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:
             self.salvar()
@@ -473,6 +532,71 @@ class SimulacaoVila:
 
         self.log(f"Tópico injetado: '{topico}' (importância: {importancia})")
 
+    # ================================================================
+    # DESAFIO COLETIVO
+    # ================================================================
+
+    def iniciar_desafio(self, desafio_id: str = "") -> dict:
+        """Inicia um desafio coletivo. Se sem id, escolhe aleatório."""
+        if desafio_id:
+            desafio = criar_desafio(desafio_id)
+        else:
+            desafio = desafio_aleatorio()
+
+        if not desafio:
+            return {"erro": f"Desafio '{desafio_id}' não encontrado"}
+
+        self.desafio = desafio
+        self.desafio.iniciar(self.step)
+
+        # Inicializar carteiras para todos os agentes
+        for pid in self.personas:
+            self.incentivos.obter_carteira(pid)
+
+        # Injetar primeiro tópico do desafio
+        topicos = self.desafio.gerar_topicos_fase()
+        if topicos:
+            self.injetar_topico(topicos[0], importancia=10)
+
+        self.log(f"Desafio iniciado: {desafio.icone} {desafio.nome}")
+
+        return {
+            "status": "ok",
+            "desafio": self.desafio.to_dict(),
+            "mensagem": f"Desafio '{desafio.nome}' iniciado na fase '{desafio.fases[0].nome}'",
+        }
+
+    def contribuir_desafio(self, agente_id: str, conteudo: str, tipo: str = "proposta") -> dict:
+        """Registra contribuição manual de um agente ao desafio."""
+        if not self.desafio.ativo:
+            return {"erro": "Nenhum desafio ativo"}
+
+        persona = self.personas.get(agente_id)
+        nome = persona.nome_exibicao if persona else agente_id
+
+        contrib = Contribuicao(
+            agente_id=agente_id,
+            agente_nome=nome,
+            conteudo=conteudo,
+            tipo=tipo,
+        )
+        self.desafio.registrar_contribuicao(contrib, self.step)
+        self.incentivos.recompensar(agente_id, "proposta_nova", self.step, conteudo[:100])
+        self.incentivos.registrar_atividade(agente_id, self.step)
+
+        return {"status": "ok", "contribuicao": contrib.to_dict()}
+
+    def votar_desafio(self, agente_id: str, entrega_id: str, favor: bool) -> dict:
+        """Registra voto de um agente em uma entrega."""
+        if not self.desafio.ativo:
+            return {"erro": "Nenhum desafio ativo"}
+
+        self.desafio.registrar_voto(agente_id, entrega_id, favor)
+        self.incentivos.recompensar(agente_id, "voto_registrado", self.step)
+        self.incentivos.registrar_atividade(agente_id, self.step)
+
+        return {"status": "ok", "voto": "favor" if favor else "contra"}
+
     def consultar_agente(self, agente_id: str) -> dict | None:
         """Retorna estado detalhado de um agente."""
         persona = self.personas.get(agente_id)
@@ -559,6 +683,9 @@ class SimulacaoVila:
                 "posts_hoje": self.motor_gatilhos.posts_hoje,
                 "waves_pendentes": len(self.motor_gatilhos.fila_waves),
             },
+            "desafio": self.desafio.to_dict() if self.desafio.ativo else None,
+            "economia": self.incentivos.to_dict(),
+            "ferramentas": self.toolkit.to_dict(),
         }
 
     def mapa_calor(self) -> dict[str, int]:
@@ -606,6 +733,11 @@ class SimulacaoVila:
 
         # Salvar rede social
         self.rede_social.salvar(os.path.join(self.dir_dados, "rede_social.json"))
+
+        # Salvar desafio e incentivos
+        if self.desafio.ativo or self.desafio.status == "concluido":
+            self.desafio.salvar(os.path.join(self.dir_dados, "desafio.json"))
+        self.incentivos.salvar(os.path.join(self.dir_dados, "incentivos.json"))
 
         self.log(f"Simulação salva em {self.dir_dados}")
 

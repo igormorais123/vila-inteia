@@ -365,6 +365,132 @@ async def relatorio_markdown():
 
 
 # ============================================================
+# ENDPOINTS DE DESAFIO COLETIVO
+# ============================================================
+
+class DesafioRequest(BaseModel):
+    desafio_id: str = ""
+
+
+class ContribuicaoRequest(BaseModel):
+    agente_id: str
+    conteudo: str
+    tipo: str = "proposta"
+
+
+class VotoRequest(BaseModel):
+    agente_id: str
+    entrega_id: str
+    favor: bool = True
+
+
+class PythonRequest(BaseModel):
+    agente_id: str
+    codigo: str
+
+
+@router.get("/desafios")
+async def listar_desafios_disponiveis():
+    """Lista desafios disponíveis no catálogo."""
+    from engine.desafio import listar_desafios
+    return {"desafios": listar_desafios()}
+
+
+@router.post("/desafio/iniciar")
+async def iniciar_desafio(req: DesafioRequest):
+    """Inicia um desafio coletivo."""
+    sim = obter_simulacao()
+    return sim.iniciar_desafio(req.desafio_id)
+
+
+@router.get("/desafio")
+async def estado_desafio():
+    """Retorna estado atual do desafio."""
+    sim = obter_simulacao()
+    if not sim.desafio.ativo and sim.desafio.status != "concluido":
+        return {"status": "inativo", "catalogo": "/api/v1/vila/desafios"}
+    return sim.desafio.to_dict()
+
+
+@router.post("/desafio/contribuir")
+async def contribuir_desafio(req: ContribuicaoRequest):
+    """Registra contribuição ao desafio."""
+    sim = obter_simulacao()
+    return sim.contribuir_desafio(req.agente_id, req.conteudo, req.tipo)
+
+
+@router.post("/desafio/votar")
+async def votar_desafio(req: VotoRequest):
+    """Registra voto em uma entrega."""
+    sim = obter_simulacao()
+    return sim.votar_desafio(req.agente_id, req.entrega_id, req.favor)
+
+
+# ============================================================
+# ENDPOINTS DE FERRAMENTAS
+# ============================================================
+
+@router.post("/ferramentas/python")
+async def executar_python_sandbox(req: PythonRequest):
+    """Executa Python no sandbox de um agente."""
+    sim = obter_simulacao()
+    persona = sim.personas.get(req.agente_id)
+    if not persona:
+        raise HTTPException(404, f"Agente {req.agente_id} não encontrado")
+
+    local = persona.rascunho.local_atual
+    saldo = sim.incentivos.saldo(req.agente_id)
+
+    resultado = sim.toolkit.executar_python(
+        req.agente_id, req.codigo, local, saldo, sim.step
+    )
+
+    # Cobrar recurso e recompensar se sucesso
+    from engine.ferramentas_agente import custo_uso_local
+    custo = custo_uso_local(local)
+    if resultado.sucesso:
+        sim.incentivos.cobrar_recurso(req.agente_id, custo, "Python sandbox", sim.step)
+        sim.incentivos.recompensar(req.agente_id, "codigo_executado", sim.step)
+
+    return resultado.to_dict()
+
+
+@router.get("/ferramentas/recursos/{local_id}")
+async def recursos_local(local_id: str):
+    """Retorna recursos disponíveis em um local."""
+    from engine.ferramentas_agente import RECURSOS_POR_LOCAL
+    recurso = RECURSOS_POR_LOCAL.get(local_id)
+    if not recurso:
+        return {"ferramentas": [], "custo": 0}
+    return recurso
+
+
+# ============================================================
+# ENDPOINTS DE ECONOMIA / INCENTIVOS
+# ============================================================
+
+@router.get("/economia")
+async def economia():
+    """Retorna estado da economia da vila."""
+    sim = obter_simulacao()
+    return sim.incentivos.to_dict()
+
+
+@router.get("/economia/carteira/{agente_id}")
+async def carteira_agente(agente_id: str):
+    """Retorna carteira de um agente."""
+    sim = obter_simulacao()
+    return sim.incentivos.obter_carteira(agente_id).to_dict()
+
+
+@router.get("/economia/ranking")
+async def ranking_economia(top: int = Query(20, ge=1, le=100)):
+    """Ranking de agentes por reputação."""
+    sim = obter_simulacao()
+    return {"ranking": sim.incentivos.top_agentes(top)}
+
+
+# ============================================================
 # PROXY — Chat e Persistência (resolve CORS do jogo.html)
 # ============================================================
 
