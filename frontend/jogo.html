@@ -595,12 +595,20 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 /* ============================================================
    CONFIGURACAO
    ============================================================ */
-const BACKEND_URL = 'https://api.inteia.com.br';
-const OMNI_URL = 'https://api.inteia.com.br/api/v1/vila-inteia/chat';
+// Auto-detectar backend: se no Render, usar proxy local (resolve CORS)
+const _IS_RENDER = location.hostname.includes('onrender.com');
+const BACKEND_URL = _IS_RENDER ? location.origin : 'https://api.inteia.com.br';
+const OMNI_URL = _IS_RENDER
+  ? location.origin + '/api/v1/vila/chat'
+  : 'https://api.inteia.com.br/api/v1/vila-inteia/chat';
 const OMNI_MODEL = 'BestFREE';
 const DATA_URL = '../data/banco-consultores-lendarios.json';
-const BACKEND_API = 'https://api.inteia.com.br/api/v1/vila-inteia';
-const CONSULTORS_API_URL = `${BACKEND_URL}/api/v1/consultores-lendarios?por_pagina=200`;
+const BACKEND_API = _IS_RENDER
+  ? location.origin + '/api/v1/vila'
+  : 'https://api.inteia.com.br/api/v1/vila-inteia';
+const CONSULTORS_API_URL = _IS_RENDER
+  ? ''
+  : `${BACKEND_URL}/api/v1/consultores-lendarios?por_pagina=200`;
 
 /* ============================================================
    ESTADO GLOBAL

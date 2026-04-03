@@ -362,3 +362,109 @@ async def relatorio_markdown():
     sim = obter_simulacao()
     rel = gerar_relatorio(sim)
     return PlainTextResponse(rel.to_markdown(), media_type="text/markdown")
+
+
+# ============================================================
+# PROXY — Chat e Persistência (resolve CORS do jogo.html)
+# ============================================================
+
+import httpx
+
+_BACKEND_PRINCIPAL = "https://api.inteia.com.br"
+_proxy_client = None
+
+
+def _get_proxy_client():
+    global _proxy_client
+    if _proxy_client is None:
+        _proxy_client = httpx.AsyncClient(timeout=60.0)
+    return _proxy_client
+
+
+@router.post("/chat")
+async def proxy_chat(body: dict):
+    """Proxy para OmniRoute/chat — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.post(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/chat",
+            json=body,
+            timeout=60.0,
+        )
+        return resp.json()
+    except Exception as e:
+        raise HTTPException(502, f"Proxy chat falhou: {e}")
+
+
+@router.post("/mensagens/salvar")
+async def proxy_mensagens_salvar(body: dict):
+    """Proxy para salvar mensagens — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.post(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/mensagens/salvar",
+            json=body,
+            timeout=15.0,
+        )
+        return resp.json()
+    except Exception:
+        return {"status": "salvo_local"}
+
+
+@router.get("/mensagens/carregar/{tipo}")
+async def proxy_mensagens_carregar(tipo: str, sessao_id: str = "", limit: int = 200):
+    """Proxy para carregar mensagens — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.get(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/mensagens/carregar/{tipo}",
+            params={"sessao_id": sessao_id, "limit": limit},
+            timeout=15.0,
+        )
+        return resp.json()
+    except Exception:
+        return []
+
+
+@router.post("/estado/salvar")
+async def proxy_estado_salvar(body: dict):
+    """Proxy para salvar estado — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.post(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/estado/salvar",
+            json=body,
+            timeout=15.0,
+        )
+        return resp.json()
+    except Exception:
+        return {"status": "salvo_local"}
+
+
+@router.get("/estado/carregar/{tipo}")
+async def proxy_estado_carregar(tipo: str, sessao_id: str = ""):
+    """Proxy para carregar estado — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.get(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/estado/carregar/{tipo}",
+            params={"sessao_id": sessao_id},
+            timeout=15.0,
+        )
+        return resp.json()
+    except Exception:
+        return {}
+
+
+@router.get("/constituicao/artigos")
+async def proxy_constituicao():
+    """Proxy para constituição — resolve CORS."""
+    client = _get_proxy_client()
+    try:
+        resp = await client.get(
+            f"{_BACKEND_PRINCIPAL}/api/v1/vila-inteia/constituicao/artigos",
+            timeout=15.0,
+        )
+        return resp.json()
+    except Exception:
+        return []
