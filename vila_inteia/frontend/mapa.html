@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vila INTEIA - Think Tank Vivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#d69e2e;--amber-light:#f6e05e;--amber-dark:#b7791f;
+  --gold:#d69e2e;--silver:#94a3b8;--bronze:#c2884a;
+  --success:#22c55e;--warning:#eab308;--danger:#ef4444;--info:#3b82f6;
+  --radius-sm:6px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;
+  --transition:0.3s ease;
+  --sidebar-w:260px;--panel-w:340px;--bottombar-h:160px;
+}
+[data-theme="dark"]{
+  --bg-root:#0a0e1a;--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-tertiary:#283548;
+  --bg-card:rgba(30,41,59,.7);--bg-glass:rgba(15,23,42,.75);
+  --text-primary:#f8fafc;--text-secondary:#cbd5e1;--text-muted:#64748b;
+  --border:rgba(100,116,139,.25);--border-active:rgba(214,158,46,.4);
+  --glow:rgba(214,158,46,.15);--shadow:rgba(0,0,0,.4);
+}
+[data-theme="light"]{
+  --bg-root:#f1f5f9;--bg-primary:#ffffff;--bg-secondary:#f8fafc;--bg-tertiary:#e2e8f0;
+  --bg-card:rgba(255,255,255,.85);--bg-glass:rgba(255,255,255,.8);
+  --text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;
+  --border:rgba(148,163,184,.3);--border-active:rgba(214,158,46,.5);
+  --glow:rgba(214,158,46,.1);--shadow:rgba(0,0,0,.1);
+}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg-root);color:var(--text-primary);
+  display:flex;flex-direction:column;
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;flex:1;overflow:hidden;position:relative}
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;
+  background:var(--bg-primary);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:20;transition:var(--transition);
+  overflow-y:auto;
+}
+.sidebar.collapsed{min-width:60px;width:60px}
+.sidebar.collapsed .sidebar-label,.sidebar.collapsed .nav-text,
+.sidebar.collapsed .sim-controls-body,.sidebar.collapsed .topic-section,
+.sidebar.collapsed .sidebar-footer-text{display:none}
+.sidebar.collapsed .logo-name,.sidebar.collapsed .logo-tagline{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0}
+
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.map-container{flex:1;position:relative;overflow:hidden}
+.right-panel{
+  width:0;overflow:hidden;border-left:1px solid var(--border);
+  background:var(--bg-primary);transition:width .3s ease;z-index:10;
+}
+.right-panel.open{width:var(--panel-w);min-width:var(--panel-w)}
+.right-panel-inner{width:var(--panel-w);height:100%;overflow-y:auto;padding:20px}
+.bottom-bar{
+  height:var(--bottombar-h);border-top:1px solid var(--border);
+  background:var(--bg-primary);overflow:hidden;display:flex;flex-direction:column;
+}
+
+/* ===== SIDEBAR ===== */
+.logo-section{padding:20px 16px;border-bottom:1px solid var(--border)}
+.logo-row{display:flex;align-items:center;gap:10px}
+.logo-box{
+  width:36px;height:36px;background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;color:#fff;flex-shrink:0;
+}
+.logo-name{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.logo-name .hl{color:var(--amber)}
+.logo-tagline{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+.sidebar-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-muted);padding:16px 16px 6px;
+}
+.nav-list{list-style:none}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;
+  transition:var(--transition);border-left:3px solid transparent;font-size:13px;
+  color:var(--text-secondary);
+}
+.nav-item:hover{background:var(--glow);color:var(--text-primary)}
+.nav-item.active{border-left-color:var(--amber);color:var(--amber);background:var(--glow)}
+.nav-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+
+.sim-controls{border-top:1px solid var(--border);margin-top:auto}
+.sim-controls-header{padding:12px 16px 6px;display:flex;align-items:center;justify-content:space-between}
+.sim-controls-header span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted)}
+.sim-time{font-size:12px;font-weight:600;color:var(--amber);font-variant-numeric:tabular-nums}
+.sim-controls-body{padding:4px 16px 12px}
+.sim-btns{display:flex;gap:6px;margin-bottom:10px}
+.sim-btn{
+  flex:1;padding:7px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);cursor:pointer;
+  font-size:13px;transition:var(--transition);display:flex;align-items:center;
+  justify-content:center;gap:4px;font-family:inherit;
+}
+.sim-btn:hover{border-color:var(--amber);background:var(--glow)}
+.sim-btn.active{border-color:var(--amber);background:rgba(214,158,46,.2);color:var(--amber)}
+.topic-section{margin-top:6px}
+.topic-input{
+  width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;resize:none;outline:none;transition:var(--transition);
+}
+.topic-input:focus{border-color:var(--amber)}
+.topic-send{
+  width:100%;margin-top:6px;padding:7px;border:none;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));color:#fff;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--transition);
+}
+.topic-send:hover{filter:brightness(1.1)}
+
+.sidebar-footer{
+  padding:12px 16px;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.theme-toggle{
+  width:32px;height:32px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--amber)}
+.sidebar-footer-text{font-size:10px;color:var(--text-muted)}
+.collapse-btn{
+  margin-left:auto;width:28px;height:28px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);background:var(--bg-secondary);color:var(--text-muted);
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.collapse-btn:hover{color:var(--amber);border-color:var(--amber)}
+
+/* ===== MAP ===== */
+.map-svg{width:100%;height:100%;display:block}
+.map-edge{stroke:var(--border);stroke-width:1.5;fill:none;opacity:.5}
+.map-node{cursor:pointer;transition:transform .2s ease;transform-box:fill-box;transform-origin:center}
+.map-node:hover{transform:scale(1.05)}
+.node-bg{
+  fill:var(--bg-card);stroke:var(--border);stroke-width:1.5;
+  rx:12;ry:12;transition:all .3s ease;
+}
+.map-node.active .node-bg{stroke:var(--amber);stroke-width:2;filter:drop-shadow(0 0 12px rgba(214,158,46,.35))}
+.map-node.has-convo .node-bg{stroke:var(--amber-dark);stroke-width:1.5}
+.node-icon{font-size:20px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.node-label{
+  fill:var(--text-primary);font-size:10px;font-weight:600;text-anchor:middle;
+  pointer-events:none;font-family:'Inter',sans-serif;
+}
+.node-badge{
+  font-size:9px;font-weight:700;text-anchor:middle;dominant-baseline:central;
+  pointer-events:none;font-family:'Inter',sans-serif;
+}
+.badge-bg{rx:8;ry:8}
+.pulse-ring{
+  fill:none;stroke:var(--amber);stroke-width:1;opacity:0;
+  animation:pulse-anim 2s ease-out infinite;
+}
+@keyframes pulse-anim{
+  0%{r:35;opacity:.6}100%{r:55;opacity:0}
+}
+.agent-dot{
+  r:3;fill:var(--amber);opacity:.8;
+  transition:cx .8s ease, cy .8s ease;
+}
+
+/* ===== RIGHT PANEL ===== */
+.panel-close{
+  position:absolute;top:12px;right:12px;width:28px;height:28px;
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-muted);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;z-index:5;
+}
+.panel-close:hover{color:var(--danger);border-color:var(--danger)}
+.panel-header{margin-bottom:16px;position:relative;padding-right:36px}
+.panel-icon{font-size:28px;margin-bottom:6px}
+.panel-title{font-size:16px;font-weight:700;margin-bottom:2px}
+.panel-desc{font-size:12px;color:var(--text-muted);line-height:1.5}
+.panel-section{margin-bottom:16px}
+.panel-section-title{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;
+}
+.agent-row{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);
+  border:1px solid transparent;
+}
+.agent-row:hover{background:var(--glow);border-color:var(--border)}
+.agent-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber-dark),var(--amber));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.agent-name{font-size:12px;font-weight:600;line-height:1.2}
+.agent-role{font-size:10px;color:var(--text-muted)}
+.agent-action{font-size:14px;margin-left:auto;flex-shrink:0}
+.tier-badge{
+  display:inline-block;padding:1px 6px;border-radius:10px;font-size:9px;
+  font-weight:700;margin-left:4px;vertical-align:middle;
+}
+.tier-S{background:linear-gradient(135deg,#d69e2e,#f6e05e);color:#1a1a2e}
+.tier-A{background:linear-gradient(135deg,#64748b,#94a3b8);color:#fff}
+.tier-B{background:linear-gradient(135deg,#92400e,#c2884a);color:#fff}
+.convo-card{
+  padding:10px;border-radius:var(--radius-md);background:var(--bg-secondary);
+  border:1px solid var(--border);margin-bottom:8px;
+}
+.convo-topic{font-size:12px;font-weight:600;margin-bottom:4px}
+.convo-participants{font-size:10px;color:var(--text-muted)}
+.convo-snippet{font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.4;font-style:italic}
+
+/* ===== BOTTOM BAR ===== */
+.bottom-header{
+  padding:8px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.bottom-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.bottom-scroll{flex:1;overflow-y:auto;padding:8px 16px}
+.feed-item{
+  display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:12px;
+}
+.feed-item:last-child{border-bottom:none}
+.feed-emoji{font-size:14px;flex-shrink:0;margin-top:1px}
+.feed-text{color:var(--text-secondary);line-height:1.4}
+.feed-text strong{color:var(--text-primary);font-weight:600}
+.feed-text .loc{color:var(--amber);font-weight:500}
+.feed-time{font-size:10px;color:var(--text-muted);margin-left:auto;flex-shrink:0;white-space:nowrap}
+
+/* ===== AGENT POPUP ===== */
+.agent-popup{
+  position:fixed;z-index:100;width:300px;
+  background:var(--bg-primary);border:1px solid var(--border-active);
+  border-radius:var(--radius-xl);padding:20px;
+  box-shadow:0 20px 60px var(--shadow),0 0 30px var(--glow);
+  backdrop-filter:blur(20px);
+  animation:popIn .2s ease;
+}
+@keyframes popIn{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
+.popup-close{
+  position:absolute;top:10px;right:10px;width:24px;height:24px;
+  border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:14px;
+}
+.popup-close:hover{color:var(--danger)}
+.popup-avatar{
+  width:48px;height:48px;border-radius:50%;margin:0 auto 10px;
+  background:linear-gradient(135deg,var(--amber-dark),var(--amber-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;
+}
+.popup-name{font-size:15px;font-weight:700;text-align:center;margin-bottom:2px}
+.popup-title{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:8px}
+.popup-meta{display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.popup-tag{
+  padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;
+  background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);
+}
+.popup-action{
+  text-align:center;padding:8px;border-radius:var(--radius-sm);
+  background:var(--bg-secondary);font-size:11px;color:var(--text-secondary);
+}
+
+/* ===== STATS VIEW ===== */
+.stats-overlay{
+  position:absolute;inset:0;background:var(--bg-glass);backdrop-filter:blur(8px);
+  z-index:15;overflow-y:auto;padding:30px;display:none;
+}
+.stats-overlay.visible{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{
+  padding:20px;border-radius:var(--radius-lg);background:var(--bg-card);
+  border:1px solid var(--border);backdrop-filter:blur(10px);
+}
+.stat-value{font-size:28px;font-weight:800;color:var(--amber);margin-bottom:2px}
+.stat-label{font-size:11px;color:var(--text-muted);font-weight:500}
+.chart-section{margin-bottom:24px}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:12px}
+.bar-chart{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:flex;align-items:center;gap:8px}
+.bar-label{font-size:10px;color:var(--text-secondary);width:140px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:18px;background:var(--bg-secondary);border-radius:9px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:9px;transition:width .6s ease;background:linear-gradient(90deg,var(--amber-dark),var(--amber))}
+.bar-val{font-size:10px;font-weight:600;color:var(--text-muted);width:24px;flex-shrink:0}
+.donut-wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.donut-svg{width:160px;height:160px}
+.donut-legend{display:flex;flex-direction:column;gap:4px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ===== SEARCH / FILTER ===== */
+.search-bar{
+  padding:8px 16px;border-bottom:1px solid var(--border);display:none;
+}
+.search-bar.visible{display:flex;gap:8px;align-items:center}
+.search-input{
+  flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;outline:none;
+}
+.search-input:focus{border-color:var(--amber)}
+.filter-select{
+  padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;outline:none;cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .sidebar{position:fixed;left:-260px;z-index:50;height:100vh}
+  .sidebar.mobile-open{left:0}
+  .right-panel.open{position:fixed;right:0;top:0;bottom:0;z-index:40;width:100%;max-width:340px}
+  .mobile-toggle{display:flex !important}
+  .bottom-bar{height:120px}
+}
+.mobile-toggle{
+  display:none;position:fixed;top:12px;left:12px;z-index:55;
+  width:36px;height:36px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-primary);color:var(--text-primary);cursor:pointer;
+  align-items:center;justify-content:center;font-size:16px;
+}
+
+/* ===== UTILITIES ===== */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+
+<div class="app">
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-section">
+    <div class="logo-row">
+      <div class="logo-box">IA</div>
+      <div>
+        <div class="logo-name">INTE<span class="hl">IA</span></div>
+        <div class="logo-tagline">Vila INTEIA &mdash; Think Tank Vivo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-label">Navegacao</div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item active" data-view="map"><span class="nav-icon">&#127758;</span><span class="nav-text">Mapa</span></li>
+    <li class="nav-item" data-view="agents"><span class="nav-icon">&#129333;</span><span class="nav-text">Agentes</span></li>
+    <li class="nav-item" data-view="convos"><span class="nav-icon">&#128172;</span><span class="nav-text">Conversas</span></li>
+    <li class="nav-item" data-view="synth"><span class="nav-icon">&#128161;</span><span class="nav-text">Sinteses</span></li>
+    <li class="nav-item" data-view="stats"><span class="nav-icon">&#128202;</span><span class="nav-text">Stats</span></li>
+  </ul>
+
+  <div class="sim-controls">
+    <div class="sim-controls-header">
+      <span>Simulacao</span>
+      <span class="sim-time" id="simTime">08:00</span>
+    </div>
+    <div class="sim-controls-body">
+      <div class="sim-btns">
+        <button class="sim-btn" id="btnPlay" onclick="togglePlay()" title="Space">&#9654; Play</button>
+        <button class="sim-btn" id="btnStep" onclick="doStep()" title="&#8594;">&#9654;&#124; Step</button>
+      </div>
+      <div class="topic-section">
+        <textarea class="topic-input" id="topicInput" rows="2" placeholder="Injetar topico na Vila..."></textarea>
+        <button class="topic-send" onclick="injectTopic()">Injetar Topico</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
+    <span class="sidebar-footer-text">Powered by INTEIA</span>
+    <button class="collapse-btn" onclick="collapseSidebar()" aria-label="Recolher menu">&#171;</button>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main-area">
+  <div class="search-bar" id="searchBar">
+    <input class="search-input" id="searchInput" placeholder="Buscar agente..." oninput="filterAgents()">
+    <select class="filter-select" id="filterCat" onchange="filterAgents()">
+      <option value="">Todas categorias</option>
+      <option value="visionario">Visionario</option>
+      <option value="estrategia">Estrategia</option>
+      <option value="filosofo">Filosofo</option>
+      <option value="psicologo">Psicologo</option>
+      <option value="investidor">Investidor</option>
+      <option value="jurista">Jurista</option>
+      <option value="marca">Marca</option>
+      <option value="lado_negro">Lado Negro</option>
+      <option value="lider">Lider</option>
+      <option value="mindset">Mindset</option>
+      <option value="qi_extremo">QI Extremo</option>
+      <option value="tech">Tech</option>
+      <option value="influencia">Influencia</option>
+      <option value="politica">Politica</option>
+    </select>
+  </div>
+
+  <div class="map-container" id="mapContainer">
+    <svg class="map-svg" id="mapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <!-- Stats overlay -->
+    <div class="stats-overlay" id="statsOverlay"></div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-header">
+      <span class="bottom-title">&#9889; Feed de Atividades</span>
+      <span style="font-size:10px;color:var(--text-muted)" id="feedCount">0 eventos</span>
+    </div>
+    <div class="bottom-scroll" id="feedScroll"></div>
+  </div>
+</div>
+
+<!-- ===== RIGHT PANEL ===== -->
+<div class="right-panel" id="rightPanel">
+  <div class="right-panel-inner" id="panelContent"></div>
+</div>
+</div>
+
+<!-- ===== AGENT POPUP ===== -->
+<div class="agent-popup" id="agentPopup" style="display:none"></div>
+
+<script>
+/* ===================================================================
+   Vila INTEIA - Think Tank Vivo
+   Frontend completo com modo demo (dados mock)
+   =================================================================== */
+
+// ---- DATA ----
+const LOCATIONS = [
+  {id:'agora',name:'Agora Central',icon:'\u{1F3DB}',desc:'Praca publica para debates abertos entre todos os consultores.',x:.5,y:.48,connections:['cafe','arena','auditorio','refeitorio','terraco']},
+  {id:'torre',name:'Torre de Estrategia',icon:'\u{1F3F0}',desc:'Sala reservada para planejamento estrategico de alto nivel.',x:.18,y:.18,connections:['agora','sala_guerra','lab','cafe']},
+  {id:'biblioteca',name:'Biblioteca Infinita',icon:'\u{1F4DA}',desc:'Acervo ilimitado de conhecimento para pesquisa profunda.',x:.78,y:.15,connections:['agora','observatorio','lab','galeria']},
+  {id:'cafe',name:'Cafe dos Filosofos',icon:'\u2615',desc:'Espaco informal para conversas espontaneas e insights inesperados.',x:.42,y:.25,connections:['agora','torre','lab','arena']},
+  {id:'arena',name:'Arena de Debates',icon:'\u2694\uFE0F',desc:'Debates estruturados com regras formais e moderacao.',x:.22,y:.62,connections:['agora','tribunal','cafe','sala_guerra']},
+  {id:'jardim',name:'Jardim dos Visionarios',icon:'\u{1F33F}',desc:'Espaco ao ar livre para reflexao criativa e meditacao.',x:.82,y:.52,connections:['agora','terraco','galeria','observatorio']},
+  {id:'tribunal',name:'Tribunal da Razao',icon:'\u2696\uFE0F',desc:'Analise juridica, etica e argumentacao rigorosa.',x:.15,y:.78,connections:['arena','sala_guerra','res_s']},
+  {id:'lab',name:'Laboratorio de Ideias',icon:'\u{1F52C}',desc:'Prototipagem rapida e experimentacao de conceitos.',x:.5,y:.12,connections:['torre','biblioteca','cafe','observatorio']},
+  {id:'galeria',name:'Galeria dos Legados',icon:'\u{1F5BC}',desc:'Memorial dos grandes feitos e licoes historicas.',x:.88,y:.35,connections:['biblioteca','jardim','terraco']},
+  {id:'sala_guerra',name:'Sala de Guerra',icon:'\u{1F6E1}',desc:'Centro de comando para gestao de crises e cenarios adversos.',x:.1,y:.45,connections:['torre','arena','tribunal']},
+  {id:'auditorio',name:'Auditorio INTEIA',icon:'\u{1F3A4}',desc:'Apresentacoes formais, keynotes e lancamentos.',x:.35,y:.6,connections:['agora','refeitorio','arena']},
+  {id:'atelie',name:'Atelie dos Artesaos',icon:'\u{1F3A8}',desc:'Criacao artistica, storytelling e design de narrativas.',x:.9,y:.68,connections:['jardim','galeria','terraco']},
+  {id:'observatorio',name:'Observatorio do Futuro',icon:'\u{1F52D}',desc:'Monitoramento de tendencias e sinais fracos.',x:.7,y:.08,connections:['biblioteca','lab','jardim']},
+  {id:'res_n',name:'Residencia Norte',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala norte.',x:.5,y:.02,connections:['lab']},
+  {id:'res_s',name:'Residencia Sul',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala sul.',x:.5,y:.92,connections:['refeitorio','tribunal']},
+  {id:'res_e',name:'Residencia Leste',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala leste.',x:.96,y:.5,connections:['atelie','jardim']},
+  {id:'res_w',name:'Residencia Oeste',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala oeste.',x:.04,y:.5,connections:['sala_guerra']},
+  {id:'refeitorio',name:'Refeitorio Central',icon:'\u{1F37D}',desc:'Area de alimentacao e convivio informal.',x:.42,y:.78,connections:['agora','auditorio','res_s']},
+  {id:'terraco',name:'Terraco Panoramico',icon:'\u{1F305}',desc:'Vista panoramica, networking e reflexao ao por-do-sol.',x:.68,y:.62,connections:['agora','jardim','atelie','galeria']}
+];
+const LOC_MAP={};LOCATIONS.forEach(l=>LOC_MAP[l.id]=l);
+
+const AGENTS = [
+  {id:1,name:'Elon Musk',cat:'visionario',tier:'S',title:'Inovador Visionario',location:'lab',action:'\u{1F680}',status:'prototipando'},
+  {id:2,name:'Warren Buffett',cat:'investidor',tier:'S',title:'Oraculo dos Investimentos',location:'torre',action:'\u{1F4B0}',status:'analisando'},
+  {id:3,name:'Sun Tzu',cat:'estrategia',tier:'S',title:'Mestre da Arte da Guerra',location:'sala_guerra',action:'\u2694\uFE0F',status:'planejando'},
+  {id:4,name:'Socrates',cat:'filosofo',tier:'S',title:'Pai da Filosofia Ocidental',location:'cafe',action:'\u{1F914}',status:'questionando'},
+  {id:5,name:'Carl Jung',cat:'psicologo',tier:'S',title:'Explorador do Inconsciente',location:'jardim',action:'\u{1F9E0}',status:'refletindo'},
+  {id:6,name:'Rui Barbosa',cat:'jurista',tier:'A',title:'Aguia de Haia',location:'tribunal',action:'\u2696\uFE0F',status:'argumentando'},
+  {id:7,name:'Steve Jobs',cat:'marca',tier:'S',title:'Genio do Design e Marca',location:'auditorio',action:'\u{1F3A4}',status:'apresentando'},
+  {id:8,name:'Machiavelli',cat:'lado_negro',tier:'A',title:'O Principe do Poder',location:'torre',action:'\u{1F3AD}',status:'maquinando'},
+  {id:9,name:'Napoleon',cat:'estrategia',tier:'A',title:'Imperador Estrategista',location:'arena',action:'\u{1F451}',status:'debatendo'},
+  {id:10,name:'Elizabeth II',cat:'lider',tier:'A',title:'Lideranca Eterna',location:'agora',action:'\u{1F451}',status:'observando'},
+  {id:11,name:'Gandhi',cat:'mindset',tier:'S',title:'Alma da Nao-Violencia',location:'jardim',action:'\u{1F54A}\uFE0F',status:'meditando'},
+  {id:12,name:'Nikola Tesla',cat:'qi_extremo',tier:'S',title:'Genio Incompreendido',location:'lab',action:'\u26A1',status:'inventando'},
+  {id:13,name:'Cleopatra',cat:'influencia',tier:'A',title:'Rainha da Diplomacia',location:'terraco',action:'\u{1F48E}',status:'negociando'},
+  {id:14,name:'Jeff Bezos',cat:'visionario',tier:'A',title:'Arquiteto de Escala',location:'biblioteca',action:'\u{1F4CA}',status:'pesquisando'},
+  {id:15,name:'Marie Curie',cat:'qi_extremo',tier:'S',title:'Pioneira da Ciencia',location:'observatorio',action:'\u{1F52C}',status:'observando'},
+  {id:16,name:'Ada Lovelace',cat:'tech',tier:'A',title:'Mae da Computacao',location:'lab',action:'\u{1F4BB}',status:'programando'},
+  {id:17,name:'Marcus Aurelius',cat:'mindset',tier:'S',title:'Imperador Estoico',location:'biblioteca',action:'\u{1F4D6}',status:'estudando'},
+  {id:18,name:'Angela Merkel',cat:'politica',tier:'A',title:'Chanceler de Ferro',location:'torre',action:'\u{1F4CB}',status:'planejando'},
+  {id:19,name:'Sigmund Freud',cat:'psicologo',tier:'A',title:'Pai da Psicanalise',location:'cafe',action:'\u{1F6CB}\uFE0F',status:'analisando'},
+  {id:20,name:'Aristoteles',cat:'filosofo',tier:'A',title:'O Polimata',location:'arena',action:'\u{1F4DD}',status:'debatendo'}
+];
+
+const CONVERSATIONS = [
+  {
+    id:1,location:'cafe',topic:'A natureza da consciencia artificial',
+    participants:[4,19],
+    snippet:'Socrates questiona se uma IA pode realmente "conhecer a si mesma", enquanto Freud argumenta que o inconsciente nao requer substrato biologico.',
+    time:'08:23'
+  },
+  {
+    id:2,location:'torre',topic:'Estrategia de poder no seculo XXI',
+    participants:[8,18,2],
+    snippet:'Machiavelli defende que dados sao o novo territorio, Merkel pondera sobre regulamentacao e Buffett calcula o valor de mercado da confianca.',
+    time:'08:15'
+  },
+  {
+    id:3,location:'lab',topic:'O proximo paradigma tecnologico',
+    participants:[1,12,16],
+    snippet:'Tesla propoe energia sem fio para data centers, Lovelace modela algoritmos de compressao e Musk conecta tudo ao plano de colonizacao de Marte.',
+    time:'08:30'
+  }
+];
+
+const FEED_ENTRIES = [
+  {emoji:'\u{1F4A1}',text:'<strong>Nikola Tesla</strong> teve um insight sobre <em>transmissao de energia quanrica</em> no <span class="loc">Laboratorio de Ideias</span>',time:'08:32'},
+  {emoji:'\u{1F91D}',text:'<strong>Cleopatra</strong> iniciou negociacao com <strong>Elizabeth II</strong> no <span class="loc">Terraco Panoramico</span>',time:'08:30'},
+  {emoji:'\u{1F52C}',text:'<strong>Marie Curie</strong> publicou observacao sobre <em>padroes eleitorais emergentes</em> no <span class="loc">Observatorio do Futuro</span>',time:'08:28'},
+  {emoji:'\u{1F3A4}',text:'<strong>Steve Jobs</strong> iniciou keynote: "Design como estrategia politica" no <span class="loc">Auditorio INTEIA</span>',time:'08:25'},
+  {emoji:'\u2615',text:'<strong>Socrates</strong> e <strong>Freud</strong> debatem consciencia no <span class="loc">Cafe dos Filosofos</span>',time:'08:23'},
+  {emoji:'\u{1F3F0}',text:'<strong>Angela Merkel</strong> convocou reuniao estrategica na <span class="loc">Torre de Estrategia</span>',time:'08:20'},
+  {emoji:'\u2694\uFE0F',text:'<strong>Napoleon</strong> desafiou <strong>Aristoteles</strong> para debate formal na <span class="loc">Arena de Debates</span>',time:'08:18'},
+  {emoji:'\u{1F6E1}',text:'<strong>Sun Tzu</strong> mapeou 3 cenarios de crise na <span class="loc">Sala de Guerra</span>',time:'08:15'},
+  {emoji:'\u{1F33F}',text:'<strong>Gandhi</strong> e <strong>Carl Jung</strong> meditam juntos no <span class="loc">Jardim dos Visionarios</span>',time:'08:12'},
+  {emoji:'\u{1F4DA}',text:'<strong>Marcus Aurelius</strong> anotou reflexao estoica na <span class="loc">Biblioteca Infinita</span>',time:'08:10'},
+  {emoji:'\u{1F680}',text:'<strong>Elon Musk</strong> apresentou prototipo de interface IA no <span class="loc">Laboratorio de Ideias</span>',time:'08:05'},
+  {emoji:'\u{1F3DB}',text:'Vila INTEIA iniciou novo ciclo de simulacao. <strong>20 agentes</strong> ativos.',time:'08:00'}
+];
+
+const CAT_COLORS = {
+  visionario:'#8b5cf6',estrategia:'#ef4444',filosofo:'#3b82f6',psicologo:'#ec4899',
+  investidor:'#22c55e',jurista:'#64748b',marca:'#f97316',lado_negro:'#6b21a8',
+  lider:'#d69e2e',mindset:'#14b8a6',qi_extremo:'#06b6d4',tech:'#a855f7',
+  influencia:'#f43f5e',politica:'#0ea5e9'
+};
+
+// ---- STATE ----
+let state = {
+  selectedLocation: null,
+  playing: false,
+  playInterval: null,
+  simMinutes: 480, // 08:00
+  currentView: 'map',
+  agents: JSON.parse(JSON.stringify(AGENTS)),
+  conversations: JSON.parse(JSON.stringify(CONVERSATIONS)),
+  feed: [...FEED_ENTRIES],
+  agentPopup: null,
+  dragNode: null,
+  dragOffset: {x:0,y:0},
+  nodePositions: {}
+};
+
+// Copy node positions
+LOCATIONS.forEach(l => { state.nodePositions[l.id] = {x:l.x, y:l.y}; });
+
+// ---- UTILITIES ----
+function formatTime(mins){
+  const h=Math.floor(mins/60)%24, m=mins%60;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function agentsAt(locId){return state.agents.filter(a=>a.location===locId);}
+function convosAt(locId){return state.conversations.filter(c=>c.location===locId);}
+
+// ---- RENDER MAP ----
+function renderMap(){
+  const svg=document.getElementById('mapSvg');
+  const rect=svg.getBoundingClientRect();
+  const W=rect.width||1000, H=rect.height||600;
+  const pad=50;
+
+  function px(loc){
+    const p=state.nodePositions[loc.id];
+    return {x:pad+p.x*(W-2*pad), y:pad+p.y*(H-2*pad)};
+  }
+
+  let html='';
+  // Edges
+  const drawnEdges=new Set();
+  LOCATIONS.forEach(loc=>{
+    const p1=px(loc);
+    (loc.connections||[]).forEach(cid=>{
+      const key=[loc.id,cid].sort().join('-');
+      if(drawnEdges.has(key))return;
+      drawnEdges.add(key);
+      const other=LOC_MAP[cid];
+      if(!other)return;
+      const p2=px(other);
+      html+=`<line class="map-edge" x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"/>`;
+    });
+  });
+
+  // Nodes
+  LOCATIONS.forEach(loc=>{
+    const p=px(loc);
+    const agents=agentsAt(loc.id);
+    const convos=convosAt(loc.id);
+    const isActive=state.selectedLocation===loc.id;
+    const hasConvo=convos.length>0;
+    const count=agents.length;
+    const badgeColor=count===0?'var(--text-muted)':count<3?'var(--success)':count<5?'var(--warning)':'var(--danger)';
+    const cls=`map-node${isActive?' active':''}${hasConvo?' has-convo':''}`;
+    const nw=120,nh=60;
+
+    html+=`<g class="${cls}" data-loc="${loc.id}" transform="translate(${p.x},${p.y})">`;
+    if(hasConvo) html+=`<circle class="pulse-ring" cx="0" cy="0" r="40"/>`;
+    html+=`<rect class="node-bg" x="${-nw/2}" y="${-nh/2}" width="${nw}" height="${nh}"/>`;
+    html+=`<text class="node-icon" x="0" y="-8">${loc.icon}</text>`;
+    html+=`<text class="node-label" x="0" y="14">${loc.name.length>16?loc.name.slice(0,15)+'...':loc.name}</text>`;
+    // Badge
+    if(count>0){
+      html+=`<rect class="badge-bg" x="38" y="${-nh/2-4}" width="20" height="16" fill="${badgeColor}"/>`;
+      html+=`<text class="node-badge" x="48" y="${-nh/2+5}" fill="#fff">${count}</text>`;
+    }
+    // Agent dots
+    agents.forEach((a,i)=>{
+      const angle=(2*Math.PI*i)/Math.max(agents.length,1);
+      const r=28+Math.random()*4;
+      const dx=Math.cos(angle)*r, dy=Math.sin(angle)*r;
+      html+=`<circle class="agent-dot" cx="${dx}" cy="${dy}" data-agent="${a.id}" style="fill:${CAT_COLORS[a.cat]||'var(--amber)'}"/>`;
+    });
+    html+=`</g>`;
+  });
+
+  svg.innerHTML=html;
+
+  // Event listeners
+  svg.querySelectorAll('.map-node').forEach(g=>{
+    g.addEventListener('click',e=>{
+      e.stopPropagation();
+      const locId=g.dataset.loc;
+      selectLocation(locId);
+    });
+    // Drag
+    g.addEventListener('mousedown',e=>{
+      if(e.button!==0)return;
+      const locId=g.dataset.loc;
+      const svgPt=svgPoint(svg,e.clientX,e.clientY);
+      const p=px(LOC_MAP[locId]);
+      state.dragNode=locId;
+      state.dragOffset={x:svgPt.x-p.x, y:svgPt.y-p.y};
+      e.preventDefault();
+    });
+  });
+
+  svg.querySelectorAll('.agent-dot').forEach(c=>{
+    c.addEventListener('click',e=>{
+      e.stopPropagation();
+      const aId=parseInt(c.dataset.agent);
+      showAgentPopup(aId,e.clientX,e.clientY);
+    });
+  });
+
+  svg.addEventListener('click',()=>{
+    closePanel();
+    closeAgentPopup();
+  });
+}
+
+function svgPoint(svg,cx,cy){
+  const pt=svg.createSVGPoint();
+  pt.x=cx;pt.y=cy;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+// Drag handlers
+document.addEventListener('mousemove',e=>{
+  if(!state.dragNode)return;
+  const svg=document.getElementById('mapSvg');
+  const rect=svg.getBoundingClientRect();
+  const W=rect.width,H=rect.height,pad=50;
+  const pt=svgPoint(svg,e.clientX,e.clientY);
+  let nx=(pt.x-state.dragOffset.x-pad)/(W-2*pad);
+  let ny=(pt.y-state.dragOffset.y-pad)/(H-2*pad);
+  nx=Math.max(0,Math.min(1,nx));
+  ny=Math.max(0,Math.min(1,ny));
+  state.nodePositions[state.dragNode]={x:nx,y:ny};
+  renderMap();
+});
+document.addEventListener('mouseup',()=>{state.dragNode=null;});
+
+// ---- PANELS ----
+function selectLocation(locId){
+  state.selectedLocation=locId;
+  renderMap();
+  openPanel(locId);
+}
+
+function openPanel(locId){
+  const loc=LOC_MAP[locId];
+  if(!loc)return;
+  const agents=agentsAt(locId);
+  const convos=convosAt(locId);
+  const panel=document.getElementById('rightPanel');
+  const content=document.getElementById('panelContent');
+
+  let h=`<button class="panel-close" onclick="closePanel()">&times;</button>`;
+  h+=`<div class="panel-header">`;
+  h+=`<div class="panel-icon">${loc.icon}</div>`;
+  h+=`<div class="panel-title">${loc.name}</div>`;
+  h+=`<div class="panel-desc">${loc.desc}</div>`;
+  h+=`</div>`;
+
+  // Agents
+  h+=`<div class="panel-section">`;
+  h+=`<div class="panel-section-title">\u{1F465} Agentes presentes (${agents.length})</div>`;
+  if(agents.length===0) h+=`<p style="font-size:12px;color:var(--text-muted);padding:8px">Nenhum agente neste local.</p>`;
+  agents.forEach(a=>{
+    h+=`<div class="agent-row" onclick="showAgentPopup(${a.id},event.clientX,event.clientY)">`;
+    h+=`<div class="agent-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+    h+=`<div><div class="agent-name">${a.name}<span class="tier-badge tier-${a.tier}">${a.tier}</span></div>`;
+    h+=`<div class="agent-role">${a.title}</div></div>`;
+    h+=`<div class="agent-action" title="${a.status}">${a.action}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+
+  // Conversations
+  if(convos.length>0){
+    h+=`<div class="panel-section">`;
+    h+=`<div class="panel-section-title">\u{1F4AC} Conversas ativas</div>`;
+    convos.forEach(c=>{
+      const parts=c.participants.map(pid=>{const a=state.agents.find(x=>x.id===pid);return a?a.name:'?';}).join(', ');
+      h+=`<div class="convo-card">`;
+      h+=`<div class="convo-topic">${c.topic}</div>`;
+      h+=`<div class="convo-participants">${parts} &mdash; ${c.time}</div>`;
+      h+=`<div class="convo-snippet">"${c.snippet}"</div>`;
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+
+  content.innerHTML=h;
+  panel.classList.add('open');
+}
+
+function closePanel(){
+  document.getElementById('rightPanel').classList.remove('open');
+  state.selectedLocation=null;
+  renderMap();
+}
+
+// ---- AGENT POPUP ----
+function showAgentPopup(agentId,cx,cy){
+  const a=state.agents.find(x=>x.id===agentId);
+  if(!a)return;
+  const popup=document.getElementById('agentPopup');
+  const locName=LOC_MAP[a.location]?.name||'';
+  let h=`<button class="popup-close" onclick="closeAgentPopup()">&times;</button>`;
+  h+=`<div class="popup-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+  h+=`<div class="popup-name">${a.name}</div>`;
+  h+=`<div class="popup-title">${a.title}</div>`;
+  h+=`<div class="popup-meta">`;
+  h+=`<span class="popup-tag">${a.cat}</span>`;
+  h+=`<span class="tier-badge tier-${a.tier}" style="font-size:11px">${a.tier}</span>`;
+  h+=`</div>`;
+  h+=`<div class="popup-action">${a.action} ${a.status} em <strong>${locName}</strong></div>`;
+  popup.innerHTML=h;
+  // Position
+  const vw=window.innerWidth,vh=window.innerHeight;
+  let left=cx+12,top=cy-60;
+  if(left+310>vw) left=cx-310;
+  if(top+200>vh) top=vh-210;
+  if(top<10) top=10;
+  popup.style.left=left+'px';
+  popup.style.top=top+'px';
+  popup.style.display='block';
+}
+function closeAgentPopup(){document.getElementById('agentPopup').style.display='none';}
+
+// ---- FEED ----
+function renderFeed(){
+  const el=document.getElementById('feedScroll');
+  let h='';
+  state.feed.forEach(f=>{
+    h+=`<div class="feed-item">`;
+    h+=`<span class="feed-emoji">${f.emoji}</span>`;
+    h+=`<span class="feed-text">${f.text}</span>`;
+    h+=`<span class="feed-time">${f.time}</span>`;
+    h+=`</div>`;
+  });
+  el.innerHTML=h;
+  document.getElementById('feedCount').textContent=state.feed.length+' eventos';
+}
+
+// ---- SIMULATION ----
+function togglePlay(){
+  state.playing=!state.playing;
+  const btn=document.getElementById('btnPlay');
+  if(state.playing){
+    btn.classList.add('active');
+    btn.innerHTML='\u23F8 Pausar';
+    state.playInterval=setInterval(()=>doStep(),3000);
+  }else{
+    btn.classList.remove('active');
+    btn.innerHTML='\u25B6 Play';
+    clearInterval(state.playInterval);
+  }
+}
+
+function doStep(){
+  state.simMinutes+=15;
+  document.getElementById('simTime').textContent=formatTime(state.simMinutes);
+
+  // Move 1-3 random agents
+  const numMoves=1+Math.floor(Math.random()*3);
+  for(let i=0;i<numMoves;i++){
+    const a=state.agents[Math.floor(Math.random()*state.agents.length)];
+    const loc=LOC_MAP[a.location];
+    if(!loc||!loc.connections||loc.connections.length===0) continue;
+    const newLoc=loc.connections[Math.floor(Math.random()*loc.connections.length)];
+    const oldLoc=a.location;
+    a.location=newLoc;
+    const actions=['\u{1F4AC}','\u{1F914}','\u{1F4DD}','\u{1F50D}','\u2615','\u{1F4A1}','\u{1F4CA}'];
+    const statuses=['conversando','refletindo','anotando','pesquisando','descansando','idealizando','analisando'];
+    const ri=Math.floor(Math.random()*actions.length);
+    a.action=actions[ri];
+    a.status=statuses[ri];
+
+    state.feed.unshift({
+      emoji:'\u{1F6B6}',
+      text:`<strong>${a.name}</strong> moveu-se de <span class="loc">${LOC_MAP[oldLoc]?.name||oldLoc}</span> para <span class="loc">${LOC_MAP[newLoc]?.name||newLoc}</span>`,
+      time:formatTime(state.simMinutes)
+    });
+  }
+
+  // Maybe start/end a conversation
+  if(Math.random()>.6){
+    // Start new convo between agents in same location
+    const locs=LOCATIONS.map(l=>({loc:l,agents:agentsAt(l.id)})).filter(x=>x.agents.length>=2);
+    if(locs.length>0){
+      const pick=locs[Math.floor(Math.random()*locs.length)];
+      const a1=pick.agents[Math.floor(Math.random()*pick.agents.length)];
+      let a2=a1;
+      while(a2.id===a1.id) a2=pick.agents[Math.floor(Math.random()*pick.agents.length)];
+      const topics=['futuro da democracia digital','impacto da IA generativa','lideranca em tempos de crise','etica e poder','inovacao disruptiva','psicologia das massas','economia de dados','arte como ferramenta politica'];
+      const t=topics[Math.floor(Math.random()*topics.length)];
+      state.feed.unshift({
+        emoji:'\u{1F4AC}',
+        text:`<strong>${a1.name}</strong> e <strong>${a2.name}</strong> iniciaram conversa sobre <em>${t}</em> no <span class="loc">${pick.loc.name}</span>`,
+        time:formatTime(state.simMinutes)
+      });
+    }
+  }
+
+  // Trim feed
+  if(state.feed.length>50) state.feed=state.feed.slice(0,50);
+
+  renderMap();
+  renderFeed();
+  if(state.selectedLocation) openPanel(state.selectedLocation);
+}
+
+function injectTopic(){
+  const input=document.getElementById('topicInput');
+  const topic=input.value.trim();
+  if(!topic) return;
+  state.feed.unshift({
+    emoji:'\u{1F4E3}',
+    text:`<strong>INTEIA</strong> injetou topico: <em>"${topic}"</em> &mdash; agentes reagindo...`,
+    time:formatTime(state.simMinutes)
+  });
+  // Move some agents toward agora
+  state.agents.slice(0,5).forEach(a=>{
+    if(Math.random()>.4) a.location='agora';
+  });
+  input.value='';
+  renderMap();
+  renderFeed();
+  if(state.selectedLocation) openPanel(state.selectedLocation);
+}
+
+// ---- NAVIGATION ----
+function setView(view){
+  state.currentView=view;
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.classList.toggle('active',n.dataset.view===view);
+  });
+  const statsOv=document.getElementById('statsOverlay');
+  const searchBar=document.getElementById('searchBar');
+  statsOv.classList.remove('visible');
+  searchBar.classList.remove('visible');
+
+  if(view==='stats') renderStats();
+  if(view==='agents') searchBar.classList.add('visible');
+  if(view==='convos') showConvosView();
+  if(view==='synth') showSynthView();
+}
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click',()=>setView(n.dataset.view));
+});
+
+// ---- STATS VIEW ----
+function renderStats(){
+  const ov=document.getElementById('statsOverlay');
+  const totalAgents=state.agents.length;
+  const activeConvos=state.conversations.length;
+  const totalMoves=state.feed.filter(f=>f.emoji==='\u{1F6B6}').length;
+  const insights=state.feed.filter(f=>f.emoji==='\u{1F4A1}').length;
+
+  // Occupancy
+  const occData=LOCATIONS.map(l=>({name:l.name,count:agentsAt(l.id).length})).sort((a,b)=>b.count-a.count);
+  const maxOcc=Math.max(...occData.map(d=>d.count),1);
+
+  // Category distribution
+  const catCount={};
+  state.agents.forEach(a=>{catCount[a.cat]=(catCount[a.cat]||0)+1;});
+  const catEntries=Object.entries(catCount).sort((a,b)=>b[1]-a[1]);
+  const totalCats=catEntries.reduce((s,e)=>s+e[1],0);
+
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4CA} Dashboard de Estatisticas</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  // KPIs
+  h+=`<div class="stats-grid">`;
+  h+=statCard('\u{1F465}',totalAgents,'Agentes ativos');
+  h+=statCard('\u{1F4AC}',activeConvos,'Conversas ativas');
+  h+=statCard('\u{1F4A1}',insights,'Insights gerados');
+  h+=statCard('\u{1F6B6}',totalMoves,'Movimentacoes');
+  h+=`</div>`;
+
+  // Occupancy chart
+  h+=`<div class="chart-section"><div class="chart-title">Ocupacao por Local</div><div class="bar-chart">`;
+  occData.forEach(d=>{
+    const pct=maxOcc>0?Math.round(d.count/maxOcc*100):0;
+    h+=`<div class="bar-row">`;
+    h+=`<div class="bar-label" title="${d.name}">${d.name}</div>`;
+    h+=`<div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>`;
+    h+=`<div class="bar-val">${d.count}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+
+  // Donut (CSS-based)
+  h+=`<div class="chart-section"><div class="chart-title">Distribuicao por Categoria</div>`;
+  h+=`<div class="donut-wrap">`;
+  h+=buildDonut(catEntries,totalCats);
+  h+=`<div class="donut-legend">`;
+  catEntries.forEach(([cat,cnt])=>{
+    h+=`<div class="legend-item"><div class="legend-dot" style="background:${CAT_COLORS[cat]||'#888'}"></div>${cat} (${cnt})</div>`;
+  });
+  h+=`</div></div></div>`;
+
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+function statCard(emoji,value,label){
+  return `<div class="stat-card"><div class="stat-value">${emoji} ${value}</div><div class="stat-label">${label}</div></div>`;
+}
+
+function buildDonut(entries,total){
+  const size=160,cx=80,cy=80,r=55,r2=35;
+  let h=`<svg class="donut-svg" viewBox="0 0 ${size} ${size}">`;
+  let cumAngle=-Math.PI/2;
+  entries.forEach(([cat,cnt])=>{
+    const angle=(cnt/total)*2*Math.PI;
+    const x1=cx+r*Math.cos(cumAngle), y1=cy+r*Math.sin(cumAngle);
+    const x1i=cx+r2*Math.cos(cumAngle), y1i=cy+r2*Math.sin(cumAngle);
+    cumAngle+=angle;
+    const x2=cx+r*Math.cos(cumAngle), y2=cy+r*Math.sin(cumAngle);
+    const x2i=cx+r2*Math.cos(cumAngle), y2i=cy+r2*Math.sin(cumAngle);
+    const large=angle>Math.PI?1:0;
+    h+=`<path d="M${x1i},${y1i} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} L${x2i},${y2i} A${r2},${r2} 0 ${large},0 ${x1i},${y1i}" fill="${CAT_COLORS[cat]||'#888'}" opacity="0.85"/>`;
+  });
+  h+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" fill="var(--text-primary)" font-size="16" font-weight="700">${total}</text>`;
+  h+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" fill="var(--text-muted)" font-size="8">agentes</text>`;
+  h+=`</svg>`;
+  return h;
+}
+
+// ---- CONVOS VIEW ----
+function showConvosView(){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4AC} Conversas Ativas</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  if(state.conversations.length===0){
+    h+=`<p style="color:var(--text-muted)">Nenhuma conversa ativa no momento.</p>`;
+  }
+  state.conversations.forEach(c=>{
+    const locName=LOC_MAP[c.location]?.name||c.location;
+    const parts=c.participants.map(pid=>{const a=state.agents.find(x=>x.id===pid);return a?a.name:'?';}).join(', ');
+    h+=`<div class="convo-card" style="margin-bottom:12px">`;
+    h+=`<div style="display:flex;justify-content:space-between;align-items:flex-start">`;
+    h+=`<div class="convo-topic" style="font-size:14px">${c.topic}</div>`;
+    h+=`<span style="font-size:10px;color:var(--text-muted)">${c.time}</span>`;
+    h+=`</div>`;
+    h+=`<div class="convo-participants" style="margin-bottom:4px">\u{1F4CD} ${locName} &mdash; ${parts}</div>`;
+    h+=`<div class="convo-snippet">"${c.snippet}"</div>`;
+    h+=`</div>`;
+  });
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- SYNTH VIEW ----
+function showSynthView(){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4A1} Sinteses e Insights</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  const insights = [
+    {title:'Convergencia sobre IA e Democracia',agents:'Socrates, Aristoteles, Angela Merkel',text:'Tres pensadores convergem: a IA pode ampliar a participacao democratica, mas requer guardrails eticos para evitar manipulacao. Socrates questiona se o "voto informado" e possivel quando algoritmos filtram a informacao.'},
+    {title:'Tensao Estrategia vs. Etica',agents:'Sun Tzu, Machiavelli, Gandhi',text:'O debate revela uma dicotomia fundamental: eficacia tatica (Sun Tzu/Machiavelli) vs. integridade de principios (Gandhi). A sintese sugere que estrategias sustentaveis requerem base etica.'},
+    {title:'Inovacao Disruptiva: Novo Paradigma',agents:'Elon Musk, Nikola Tesla, Ada Lovelace',text:'O laboratorio produziu 3 prototipos conceituais. Tesla trouxe a base energetica, Lovelace o framework algoritmico e Musk a visao de escala. Proximo passo: validacao com Warren Buffett.'}
+  ];
+  insights.forEach(ins=>{
+    h+=`<div class="convo-card" style="margin-bottom:12px">`;
+    h+=`<div class="convo-topic" style="font-size:14px">\u{1F4A1} ${ins.title}</div>`;
+    h+=`<div class="convo-participants" style="margin-bottom:6px">\u{1F465} ${ins.agents}</div>`;
+    h+=`<div style="font-size:12px;color:var(--text-secondary);line-height:1.5">${ins.text}</div>`;
+    h+=`</div>`;
+  });
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- SEARCH / FILTER ----
+function filterAgents(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const cat=document.getElementById('filterCat').value;
+  const filtered=state.agents.filter(a=>{
+    const matchName=!q||a.name.toLowerCase().includes(q);
+    const matchCat=!cat||a.cat===cat;
+    return matchName&&matchCat;
+  });
+  showFilteredAgents(filtered);
+}
+
+function showFilteredAgents(agents){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="margin-bottom:16px">`;
+  h+=`<h2 style="font-size:16px;font-weight:700">\u{1F465} ${agents.length} agente(s) encontrado(s)</h2>`;
+  h+=`</div>`;
+  agents.forEach(a=>{
+    const locName=LOC_MAP[a.location]?.name||'';
+    h+=`<div class="agent-row" style="margin-bottom:4px;border:1px solid var(--border);border-radius:var(--radius-md);padding:10px" onclick="showAgentPopup(${a.id},event.clientX,event.clientY)">`;
+    h+=`<div class="agent-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+    h+=`<div style="flex:1"><div class="agent-name">${a.name}<span class="tier-badge tier-${a.tier}">${a.tier}</span></div>`;
+    h+=`<div class="agent-role">${a.title}</div>`;
+    h+=`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">\u{1F4CD} ${locName} &mdash; ${a.action} ${a.status}</div>`;
+    h+=`</div></div>`;
+  });
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- THEME ----
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme');
+  html.setAttribute('data-theme',current==='dark'?'light':'dark');
+  const btn=document.querySelector('.theme-toggle');
+  btn.innerHTML=current==='dark'?'\u2600\uFE0F':'\u{1F319}';
+  renderMap();
+}
+
+// ---- SIDEBAR ----
+function collapseSidebar(){
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+
+// ---- KEYBOARD ----
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.code==='Space'){e.preventDefault();togglePlay();}
+  if(e.code==='ArrowRight'){e.preventDefault();doStep();}
+  if(e.code==='Escape'){closePanel();closeAgentPopup();document.getElementById('statsOverlay').classList.remove('visible');}
+});
+
+// ---- RESIZE ----
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>renderMap(),100);
+});
+
+// ---- API MODE (try to connect) ----
+async function tryApiConnect(){
+  try{
+    const r=await fetch('/api/v1/vila/estado',{signal:AbortSignal.timeout(2000)});
+    if(r.ok){
+      const data=await r.json();
+      console.log('Vila INTEIA: Conectado a API');
+      // Could update state from API data here
+    }
+  }catch(e){
+    console.log('Vila INTEIA: Modo demo (API indisponivel)');
+  }
+}
+
+// ---- INIT ----
+function init(){
+  renderMap();
+  renderFeed();
+  tryApiConnect();
+}
+
+init();
+</script>
+</body>
+</html>

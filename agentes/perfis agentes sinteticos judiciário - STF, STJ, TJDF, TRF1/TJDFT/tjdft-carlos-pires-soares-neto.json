@@ -1,0 +1,70 @@
+{
+  "id": "tjdft-carlos-pires-soares-neto",
+  "nome": "Des. Carlos Pires Soares Neto",
+  "nome_completo": "Carlos Pires Soares Neto",
+  "orgao": "TJDFT",
+  "cargo": "Desembargador",
+  "situacao": "titular",
+  "dados_publicos": {
+    "assessor": "Shirley Aparecida Lemos da Silva",
+    "telefones_gabinete": "(61)3103-4253",
+    "biografia_tjdft_url": "https://www.tjdft.jus.br/institucional/gestao-do-conhecimento/gestao-da-memoria/biografias/des-carlos-pires-soares-neto-2.pdf",
+    "biografia_tjdft_texto": "138 \n \n \nBIOGRAFIA \nDESEMBARGADOR \nCARLOS PIRES \n \nDADOS PESSOAIS \nNOME: Carlos Pires Soares Neto \nDATA DE NASCIMENTO: 18/7/1963 \nLOCAL DE NASCIMENTO: Pariquera-Açu/SP \nNACIONALIDADE: Brasileira \n \n \n \n \n \n \n \n \n \n \nESCOLARIDADE \n \nCurso Superior: Graduado em Direito pela Universidade Mackenzie de São Paulo/SP, em 1988. \n \nEMPREGOS E CARGOS OCUPADOS \n \n» Juiz de Direito Substituto do Tribunal de Justiça do Distrito Federal e dos Territórios em 15/4/1994. \n» Juiz de Direito deste TJDFT em 3/12/1996, tendo sido lotado no Tribunal do Júri de Taguatinga. Em \n14.2.2002 foi removido para a 4ª Vara de Entorpecentes e Contravenções Penais do DF, e, posteriormente, \nem 17.12.2009, para a 4ª Vara Criminal de Brasília. \n» Removido pelo critério de antiguidade ao cargo de Juiz de Direito Substituto de Segundo Grau, conforme \nPortaria GPR 1.540 de 25/5/2016, com posse em 9/9/2016. \n» Designado pela Presidência do TJDFT para atuar como Juiz de Direito Substituto de Segundo Grau na 1ª \nTurma Criminal e Câmara Criminal. \n» Juiz Eleitoral. \n» Juiz de Turma Recursal. \n» Promovido, pelo critério de merecimento, ao cargo de Desembargador do TJDFT, conforme Portaria \nGPR 1.011, de 7/6/2022, com posse em 8/7/2022. \n \nTÍTULOS E HONRARIAS \n \n» Outorgado com a comenda da Ordem do Mérito Judiciário do Distrito Federal e dos Territórios, constante \ndo Quadro Ordinário, Grau Grão-Colar, em 30/11/2021. \n \nPROGRAMA HISTÓRIA ORAL \n \n»YouTube/Playlist/HistóriaOral/CarlosPiresSoaresNeto",
+    "biografia_tjdft_resumo": "138 \n \n \nBIOGRAFIA \nDESEMBARGADOR \nCARLOS PIRES \n \nDADOS PESSOAIS \nNOME: Carlos Pires Soares Neto \nDATA DE NASCIMENTO: 18/7/1963 \nLOCAL DE NASCIMENTO: Pariquera-Açu/SP \nNACIONALIDADE: Brasileira \n \n \n \n \n \n \n \n \n \n \nESCOLARIDADE \n \nCurso Superior: Graduado em Direito pela Universidade Mackenzie de São Paulo/SP, em 1988. \n \nEMPREGOS E CARGOS OCUPADOS \n \n» Juiz de Direito Substituto do Tribunal de Justiça do Distrito Federal e dos Territórios em 15/4/1994. \n» Juiz de Direito deste TJDFT em 3/12/1996, tendo sido lotado no Tribunal do Júri de Taguatinga. Em \n14.2.2002 foi removido para a 4ª Vara de Entorpecentes e Contravenções Penais do DF, e, posteriormente, \nem 17.12.2009, para a 4ª Vara Criminal de Brasília. \n» Removido pelo critério de antiguidade ao cargo de Juiz de Direito Substituto de Segundo Grau, conforme \nPortaria GPR 1.540 de 25/5/2016, com posse em 9/9/2016. \n» Designado pela P...",
+    "dados_dossie": {
+      "perfil_ideologico": "Modernizador. Jovem, ascensão meteórica. Focado em inovação e eficiência.",
+      "analise_comportamental": "Modernizador. Jovem, ascensão meteórica. Focado em inovação e eficiência.",
+      "nascimento": {
+        "cidade": "Pariquera-Acu/SP"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": "Pretende ficar ate a compulsoria (75 anos).",
+      "turma": "Turma Criminal/Civel",
+      "formacao": "Formado em Direito pela Universidade Mackenzie (SP).",
+      "carreira_previa": "Juiz Substituto desde 15/04/1994. Titular no Tribunal do Juri de Taguatinga por 4 anos.",
+      "especialidade": "Direito Penal, Tribunal do Juri",
+      "curiosidades": "Desembargador desde 08/07/2022 por merecimento."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Civil": "Aplica o Codigo Civil com enfase na boa-fe objetiva e na funcao social do contrato. Decisoes fundamentadas e atentas ao contexto socioeconomico das partes.",
+    "Direito do Consumidor": "Posicao intermediaria em litígios de consumo, protegendo o consumidor vulneravel mas exigindo comprovacao adequada dos danos alegados. Atento a jurisprudencia do STJ em materia consumerista.",
+    "Direito de Familia": "Posicao equilibrada em Direito de Familia, com atencao as peculiaridades de cada caso. Valoriza a fundamentacao em laudos periciais e estudos psicossociais.",
+    "Direito Penal": "Vasta experiencia em materia penal, com dominio da dosimetria da pena e das circunstancias judiciais. Postura firme na repressao criminal, com atencao ao principio da individualizacao da pena.",
+    "Execucao/Cumprimento de Sentenca": "Busca a satisfacao do credito de forma eficiente, utilizando o arsenal de medidas executivas disponiveis. Pondera entre celeridade e garantias processuais do executado."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Modernizador. Jovem, ascensão meteórica. Focado em inovação e eficiência.",
+      "Analise comportamental: Modernizador. Jovem, ascensão meteórica. Focado em inovação e eficiência."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+      "tipo": "site-oficial",
+      "observacao": "Ordem alfabetica (2a instancia)"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TJDFT",
+    "descricao": "Desembargador do TJDFT com atuação jurídica"
+  }
+}

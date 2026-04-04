@@ -1,0 +1,54 @@
+{
+  "id": "trf1-katia-balbino-de-carvalho-ferreira",
+  "nome": "Des. Kátia Balbino de Carvalho Ferreira",
+  "nome_completo": "Kátia Balbino de Carvalho Ferreira",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "dados_dossie": {
+      "perfil_ideologico": "Mestrado internacional em Acesso a Justica (Montreal, Canada). Foco em gestao judicial e eficiencia.",
+      "analise_comportamental": "Mestrado internacional em Acesso a Justica (Montreal, Canada). Foco em gestao judicial e eficiencia.",
+      "nascimento": "Natural de Salvador/BA. Casada com Jose Ricardo Botelho de Queiroz (presidente da ANAC).",
+      "formacao": "Graduacao pela UnB (1985); Pos-graduacao em Processo Civil (IBDP, 1989); Mestrado em Acesso a Justica pela Universidade de Montreal, Canada (2015).",
+      "carreira_previa": "Procuradora Federal da UnB. Juiza Federal em GO, BA e DF. Juiza auxiliar da COJEF (2008-2010). Diretora do Foro SJDF (2016-2018). Desembargadora Federal desde 10/05/2023 (merecimento).",
+      "curiosidades": "Casada com Jose Ricardo Botelho de Queiroz (presidente da ANAC)."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Procuradora Federal da UnB"
+  },
+  "padroes_decisao": {},
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Mestrado internacional em Acesso a Justica (Montreal, Canada). Foco em gestao judicial e eficiencia."
+    ],
+    "confianca_global": 5
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-02-01",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": "trf1-eduardo-filipe-alves-martins",
+  "nome": "Des. Eduardo Filipe Alves Martins",
+  "nome_completo": "Eduardo Filipe Alves Martins",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "dados_dossie": {
+      "perfil_ideologico": "Mais jovem do tribunal. Origem na advocacia tributaria. Controversias: alvo da Operacao E$quema S (Lava Jato/RJ, setembro/2020), citado na delacao de Orlando Diniz (Fecomercio-RJ). 2a Turma do STF anulou investigacoes (ago/2021). Transparencia Internacional criticou nomeacao.",
+      "analise_comportamental": "Mais jovem do tribunal. Origem na advocacia tributaria. Controversias: alvo da Operacao E$quema S (Lava Jato/RJ, setembro/2020), citado na delacao de Orlando Diniz (Fecomercio-RJ). 2a Turma do STF anulou investigacoes (ago/2021). Transparencia Internacional criticou nomeacao.",
+      "nascimento": "Natural de Maceio/AL (~38-39 anos).",
+      "formacao": "Graduacao pelo CESMAC (2006); Especializacao em Direito Tributario pelo IDP (2018); Mestrando em Gestao Publica pela Universidade de Lisboa.",
+      "carreira_previa": "Inscrito na OAB-DF desde 2007. Socio do Escritorio de Advocacia Martins (Brasilia, Maceio, Rio de Janeiro). Faturamento reportado: R$ 70 milhoes em 3 anos. Desembargador Federal desde 19/03/2024 (Quinto OAB).",
+      "curiosidades": "Filho do Ministro Humberto Martins (ex-presidente do STJ). Amigo do Senador Flavio Bolsonaro. Apoio de Arthur Lira e Cristiano Zanin. Alvo da Operacao Lava Jato (E$quema S), investigacoes anuladas pelo STF."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Inscrito na OAB-DF desde 2007"
+  },
+  "padroes_decisao": {},
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Mais jovem do tribunal. Origem na advocacia tributaria. Controversias: alvo da Operacao E$quema S (Lava Jato/RJ, setembro/2020), citado na delacao de Orlando Diniz (Fecomercio-RJ). 2a Turma do STF anulou investigacoes (ago/2021). Transparencia Internacional criticou nomeacao."
+    ],
+    "confianca_global": 4
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-02-01",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

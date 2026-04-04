@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "perfis-magistrados.schema.v1",
+  "title": "PerfilMagistradoV1",
+  "type": "object",
+  "required": [
+    "id",
+    "nome",
+    "orgao",
+    "cargo",
+    "situacao",
+    "fontes",
+    "atualizado_em"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Identificador estavel (slug)"
+    },
+    "nome": {
+      "type": "string",
+      "description": "Nome pelo qual e mais conhecido publicamente"
+    },
+    "nome_completo": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "orgao": {
+      "type": "string",
+      "enum": ["STF", "STJ", "TJDFT", "TRF1"],
+      "description": "Orgao de atuacao (dataset atual)"
+    },
+    "cargo": {
+      "type": "string",
+      "description": "Ex: Ministro, Desembargador, Desembargador Federal"
+    },
+    "situacao": {
+      "type": "string",
+      "enum": ["titular", "substituto", "convocado", "nao_identificado"],
+      "description": "Status no orgao (quando aplicavel)"
+    },
+    "dados_publicos": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Dados biograficos/publicos estruturados (somente informacoes publicas)"
+    },
+    "atuacao_profissional": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Trajetoria, cargos, areas, experiencias, producao"
+    },
+    "padroes_decisao": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Pistas empiricas: temas, teses, estilo de voto, deferencia, etc."
+    },
+    "hipoteses_para_simulacao": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Inferencias operacionais para simulacao (nao tratar como fato)"
+    },
+    "riscos_e_cuidados": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": []
+    },
+    "fontes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "tipo"],
+        "properties": {
+          "url": {"type": "string"},
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "site-oficial",
+              "biografia",
+              "curriculo",
+              "entrevista",
+              "artigo",
+              "livro",
+              "jurisprudencia",
+              "noticia",
+              "wikipedia",
+              "outro"
+            ]
+          },
+          "observacao": {"type": ["string", "null"], "default": null}
+        },
+        "additionalProperties": false
+      }
+    },
+    "atualizado_em": {
+      "type": "string",
+      "description": "Data ISO (YYYY-MM-DD)"
+    }
+  },
+  "additionalProperties": false
+}

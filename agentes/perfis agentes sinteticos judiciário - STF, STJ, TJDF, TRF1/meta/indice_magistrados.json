@@ -1,0 +1,1082 @@
+[
+  {
+    "id": "stf-alexandre-de-moraes",
+    "nome": "Alexandre de Moraes",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Alexandre de Moraes"
+  },
+  {
+    "id": "stf-andre-mendonca",
+    "nome": "Andre Mendonca",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "André Mendonça"
+  },
+  {
+    "id": "stf-carmen-lucia",
+    "nome": "Carmen Lucia",
+    "orgao": "STF",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Cármen Lúcia"
+  },
+  {
+    "id": "stf-cristiano-zanin",
+    "nome": "Cristiano Zanin",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Cristiano Zanin"
+  },
+  {
+    "id": "stf-dias-toffoli",
+    "nome": "Dias Toffoli",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Dias Toffoli"
+  },
+  {
+    "id": "stf-edson-fachin",
+    "nome": "Edson Fachin",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Edson Fachin"
+  },
+  {
+    "id": "stf-flavio-dino",
+    "nome": "Flavio Dino",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Flávio Dino"
+  },
+  {
+    "id": "stf-gilmar-mendes",
+    "nome": "Gilmar Mendes",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Gilmar Mendes"
+  },
+  {
+    "id": "stf-luis-roberto-barroso",
+    "nome": "Luis Roberto Barroso",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Luís Roberto Barroso"
+  },
+  {
+    "id": "stf-luiz-fux",
+    "nome": "Luiz Fux",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Luiz Fux"
+  },
+  {
+    "id": "stf-nunes-marques",
+    "nome": "Nunes Marques",
+    "orgao": "STF",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Nunes Marques"
+  },
+  {
+    "id": "stj-afranio-vilela",
+    "nome": "Afrânio Vilela",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-antonio-carlos-ferreira",
+    "nome": "Antonio Carlos Ferreira",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Antonio Carlos Ferreira"
+  },
+  {
+    "id": "stj-antonio-saldanha-palheiro",
+    "nome": "Antonio Saldanha Palheiro",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Antonio Saldanha Palheiro"
+  },
+  {
+    "id": "stj-benedito-goncalves",
+    "nome": "Benedito Gonçalves",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-carlos-pires-brandao",
+    "nome": "Carlos Pires Brandão",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-daniela-teixeira",
+    "nome": "Daniela Teixeira",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Daniela Teixeira"
+  },
+  {
+    "id": "stj-francisco-falcao",
+    "nome": "Francisco Falcão",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-gurgel-de-faria",
+    "nome": "Gurgel de Faria",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Gurgel de Faria"
+  },
+  {
+    "id": "stj-herman-benjamin",
+    "nome": "Herman Benjamin",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Herman Benjamin"
+  },
+  {
+    "id": "stj-humberto-martins",
+    "nome": "Humberto Martins",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Humberto Martins (magistrado)"
+  },
+  {
+    "id": "stj-isabel-gallotti",
+    "nome": "Isabel Gallotti",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Isabel Gallotti"
+  },
+  {
+    "id": "stj-joao-otavio-de-noronha",
+    "nome": "João Otávio de Noronha",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-joel-ilan-paciornik",
+    "nome": "Joel Ilan Paciornik",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Joel Ilan Paciornik"
+  },
+  {
+    "id": "stj-luis-felipe-salomao",
+    "nome": "Luis Felipe Salomão",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-marco-aurelio-bellizze",
+    "nome": "Marco Aurélio Bellizze",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-marco-buzzi",
+    "nome": "Marco Buzzi",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Marco Buzzi"
+  },
+  {
+    "id": "stj-maria-thereza-de-assis-moura",
+    "nome": "Maria Thereza de Assis Moura",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Maria Thereza de Assis Moura"
+  },
+  {
+    "id": "stj-marluce-caldas",
+    "nome": "Marluce Caldas",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Marluce Caldas"
+  },
+  {
+    "id": "stj-mauro-campbell-marques",
+    "nome": "Mauro Campbell Marques",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Mauro Campbell Marques"
+  },
+  {
+    "id": "stj-messod-azulay",
+    "nome": "Messod Azulay",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Messod Azulay"
+  },
+  {
+    "id": "stj-moura-ribeiro",
+    "nome": "Moura Ribeiro",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Moura Ribeiro"
+  },
+  {
+    "id": "stj-nancy-andrighi",
+    "nome": "Nancy Andrighi",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Nancy Andrighi"
+  },
+  {
+    "id": "stj-og-fernandes",
+    "nome": "Og Fernandes",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Og Fernandes"
+  },
+  {
+    "id": "stj-paulo-sergio-domingues",
+    "nome": "Paulo Sérgio Domingues",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-raul-araujo",
+    "nome": "Raul Araújo",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-regina-helena-costa",
+    "nome": "Regina Helena Costa",
+    "orgao": "STJ",
+    "cargo": "Ministra",
+    "situacao": "titular",
+    "fonte_principal": "Regina Helena Costa"
+  },
+  {
+    "id": "stj-reynaldo-soares-da-fonseca",
+    "nome": "Reynaldo Soares da Fonseca",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Reynaldo Soares da Fonseca"
+  },
+  {
+    "id": "stj-ribeiro-dantas",
+    "nome": "Ribeiro Dantas",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Ribeiro Dantas (magistrado)"
+  },
+  {
+    "id": "stj-rogerio-schietti-cruz",
+    "nome": "Rogerio Schietti Cruz",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Rogerio Schietti Cruz"
+  },
+  {
+    "id": "stj-sebastiao-reis-junior",
+    "nome": "Sebastião Reis Júnior",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-sergio-kukina",
+    "nome": "Sérgio Kukina",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "stj-teodoro-silva-santos",
+    "nome": "Teodoro Silva Santos",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": "Teodoro Silva Santos"
+  },
+  {
+    "id": "stj-villas-boas-cueva",
+    "nome": "Villas Bôas Cueva",
+    "orgao": "STJ",
+    "cargo": "Ministro",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-alfeu-gonzaga-machado",
+    "nome": "Des. Alfeu Gonzaga Machado",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-alvaro-luis-de-araujo-sales-ciarlini",
+    "nome": "Des. Alvaro Luis De Araujo Sales Ciarlini",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-ana-maria-cantarino",
+    "nome": "Desa. Ana Maria Cantarino",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-angelo-canducci-passareli",
+    "nome": "Des. Angelo Canducci Passareli",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-arnoldo-camanho-de-assis",
+    "nome": "Des. Arnoldo Camanho de Assis",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-arquibaldo-carneiro-portela",
+    "nome": "Des. Arquibaldo Carneiro Portela",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-carlos-pires-soares-neto",
+    "nome": "Des. Carlos Pires Soares Neto",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-carmen-nicea-nogueira-bittencourt",
+    "nome": "Desa. Carmen Nícea Nogueira Bittencourt",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-diaulas-costa-ribeiro",
+    "nome": "Des. Diaulas Costa Ribeiro",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-diva-lucy-de-faria-pereira",
+    "nome": "Desa. Diva Lucy de Faria Pereira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-esdras-neves-almeida",
+    "nome": "Des. Esdras Neves Almeida",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-fabio-eduardo-marques",
+    "nome": "Des. Fábio Eduardo Marques",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-fabricio-fontoura-bezerra",
+    "nome": "Des. Fabrício Fontoura Bezerra",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-fernando-antonio-habibe-pereira",
+    "nome": "Des. Fernando Antonio Habibe Pereira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-gislene-pinheiro-de-oliveira",
+    "nome": "Desa. Gislene Pinheiro de Oliveira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-hector-valverde-santanna",
+    "nome": "Des. Hector Valverde Santanna",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-jair-oliveira-soares",
+    "nome": "Des. Jair Oliveira Soares",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-james-eduardo-da-cruz-de-moraes-oliveira",
+    "nome": "Des. James Eduardo da Cruz de Moraes Oliveira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-jesuino-aparecido-rissato",
+    "nome": "Des. Jesuíno Aparecido Rissato",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-joao-egmont-leoncio-lopes",
+    "nome": "Des. João Egmont Leoncio Lopes",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-josapha-francisco-dos-santos",
+    "nome": "Des. Josaphá Francisco Dos Santos",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-jose-cruz-macedo",
+    "nome": "Des. José Cruz Macedo",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-jose-firmo-reis-soub",
+    "nome": "Des. JOSE FIRMO REIS SOUB",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-leila-cristina-garbin-arlanch",
+    "nome": "Desa. Leila Cristina Garbin Arlanch",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-leonardo-roscoe-bessa",
+    "nome": "Des. Leonardo Roscoe Bessa",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-lucimeire-maria-da-silva",
+    "nome": "Desa. Lucimeire Maria da Silva",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-luis-gustavo-barbosa-de-oliveira",
+    "nome": "Des. Luís Gustavo Barbosa De Oliveira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-maria-de-fatima-rafael-de-aguiar",
+    "nome": "Desa. Maria de Fátima Rafael de Aguiar",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-maria-de-lourdes-abreu",
+    "nome": "Desa. Maria de Lourdes Abreu",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-maria-ivatonia-barbosa-dos-santos",
+    "nome": "Desa. Maria Ivatônia Barbosa dos Santos",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-mario-zam-belmiro-rosa",
+    "nome": "Des. Mário-Zam Belmiro Rosa",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-nilsoni-de-freitas-custodio",
+    "nome": "Desa. Nilsoni de Freitas Custodio",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-renato-rodovalho-scussel",
+    "nome": "Des. Renato Rodovalho Scussel",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-roberto-freitas-filho",
+    "nome": "Des. Roberto Freitas Filho",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-roberval-casemiro-belinati",
+    "nome": "Des. Roberval Casemiro Belinati",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-robson-barbosa-de-azevedo",
+    "nome": "Des. Robson Barbosa de Azevedo",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-robson-vieira-teixeira-de-freitas",
+    "nome": "Des. Robson Vieira Teixeira de Freitas",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-romulo-de-araujo-mendes",
+    "nome": "Des. Rômulo de Araújo Mendes",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-sandoval-gomes-de-oliveira",
+    "nome": "Des. Sandoval Gomes de Oliveira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-sandra-reves-vasques-tonussi",
+    "nome": "Desa. Sandra Reves Vasques Tonussi",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-sergio-xavier-de-souza-rocha",
+    "nome": "Des. Sérgio Xavier de Souza Rocha",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-silvanio-barbosa-dos-santos",
+    "nome": "Des. Silvanio Barbosa dos Santos",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-simone-costa-lucindo-ferreira",
+    "nome": "Desa. Simone Costa Lucindo Ferreira",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-soniria-rocha-campos-d-assuncao",
+    "nome": "Desa. Soníria Rocha Campos D'Assunção",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-teofilo-rodrigues-caetano-neto",
+    "nome": "Des. Teófilo Rodrigues Caetano Neto",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-vera-lucia-andrighi",
+    "nome": "Desa. Vera Lucia Andrighi",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "tjdft-waldir-leoncio-cordeiro-lopes-junior",
+    "nome": "Des. Waldir Leôncio Cordeiro Lopes Júnior",
+    "orgao": "TJDFT",
+    "cargo": "Desembargador",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-alexandre-laranjeira",
+    "nome": "Alexandre Laranjeira",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-alexandre-vasconcelos",
+    "nome": "Alexandre Vasconcelos",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-ana-carolina-roman",
+    "nome": "Ana Carolina Roman",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-antonio-scarpa",
+    "nome": "Antonio Scarpa",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-candice-lavocat-galvao-jobim",
+    "nome": "Candice Lavocat Galvão Jobim",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-carlos-augusto-pires-brandao",
+    "nome": "Des. Carlos Augusto Pires Brandão",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "promovido_stj",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-carlos-eduardo-moreira-alves",
+    "nome": "Carlos Eduardo Moreira Alves",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-cesar-jatahy",
+    "nome": "César Jatahy",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-daniele-maranhao",
+    "nome": "Daniele Maranhão",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-eduardo-martins",
+    "nome": "Eduardo Martins",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-euler-de-almeida",
+    "nome": "Euler de Almeida",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-flavio-jardim",
+    "nome": "Flávio Jardim",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-gilda-sigmaringa-seixas",
+    "nome": "Gilda Sigmaringa Seixas",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-gustavo-soares-amorim",
+    "nome": "Gustavo Soares Amorim",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-hercules-fajoses",
+    "nome": "Hercules Fajoses",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-i-talo-mendes",
+    "nome": "I'talo Mendes",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-jamil-de-jesus-oliveira",
+    "nome": "Jamil de Jesus Oliveira",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-joao-batista-moreira",
+    "nome": "João Batista Moreira",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-joao-carlos-mayer-soares",
+    "nome": "Des. João Carlos Mayer Soares",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-joao-luiz-de-sousa",
+    "nome": "João Luiz de Sousa",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-jose-amilcar-machado",
+    "nome": "José Amilcar Machado",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-katia-balbino",
+    "nome": "Kátia Balbino",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-leao-alves",
+    "nome": "Leão Alves",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-marcelo-albernaz",
+    "nome": "Marcelo Albernaz",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-marcos-augusto-de-sousa",
+    "nome": "Marcos Augusto de Sousa",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-marcus-bastos",
+    "nome": "Marcus Bastos",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-maria-do-carmo-cardoso",
+    "nome": "Maria do Carmo Cardoso",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-maura-moraes-tayer",
+    "nome": "Maura Moraes Tayer",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-morais-da-rocha",
+    "nome": "Morais da Rocha",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-neviton-guedes",
+    "nome": "Néviton Guedes",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-newton-ramos",
+    "nome": "Newton Ramos",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-ney-bello",
+    "nome": "Ney Bello",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-nilza-maria-costa-dos-reis",
+    "nome": "Des. Nilza Maria Costa dos Reis",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "aposentado",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-novely-vilanova",
+    "nome": "Novély Vilanova",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-pablo-zuniga",
+    "nome": "Pablo Zuniga",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-pedro-braga-filho",
+    "nome": "Pedro Braga Filho",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-rafael-paulo",
+    "nome": "Rafael Paulo",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-roberto-carvalho-veloso",
+    "nome": "Roberto Carvalho Veloso",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-rosana-noya-alves-weibel-kaufmann",
+    "nome": "Rosana Noya Alves Weibel Kaufmann",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-rosimayre-goncalves-de-carvalho",
+    "nome": "Rosimayre Gonçalves de Carvalho",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-rui-goncalves",
+    "nome": "Rui Gonçalves",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-solange-salgado-da-silva",
+    "nome": "Solange Salgado da Silva",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-urbano-leal-berquo-neto",
+    "nome": "Urbano Leal Berquó Neto",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  },
+  {
+    "id": "trf1-wilson-alves-de-souza",
+    "nome": "Wilson Alves de Souza",
+    "orgao": "TRF1",
+    "cargo": "Desembargador Federal",
+    "situacao": "titular",
+    "fonte_principal": ""
+  }
+]

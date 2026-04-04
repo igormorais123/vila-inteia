@@ -1,0 +1,60 @@
+{
+  "id": "tjdft-robson-vieira-teixeira-de-freitas",
+  "nome": "Des. Robson Vieira Teixeira de Freitas",
+  "nome_completo": "Robson Vieira Teixeira de Freitas",
+  "orgao": "TJDFT",
+  "cargo": "Desembargador",
+  "situacao": "titular",
+  "dados_publicos": {
+    "assessor": "Éric Do Amaral Almeida Madruga",
+    "telefones_gabinete": "(61)3103-7625, (61)3103-7626",
+    "dados_dossie": {
+      "perfil_ideologico": "Técnico",
+      "analise_comportamental": "Técnico.",
+      "nascimento": "Aproximadamente 1970 (49 anos a epoca da posse em outubro de 2019). Natural de Brasilia/DF.",
+      "formacao": "Graduado em Direito pela Universidade Federal de Mato Grosso - UFMT (1999), com Laurea Universitaria por destaque academico.",
+      "carreira_previa": "Servidor de carreira da Justica do Trabalho: Secretario da Corregedoria Regional e Diretor-Geral do TRT 23a Regiao, Assessor de Desembargador do TRT 10a Regiao. Delegado de Policia Federal (2002). Procurador do Distrito Federal (2005). Procurador-Geral Adjunto do DF. Integrou o Conselho Superior da PGDF em 4 bienios. Nomeado Desembargador do TJDFT pelo Presidente Jair Bolsonaro, pelo Quinto Constitucional da OAB, posse em 29/10/2019."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Civil": "Aplica o Codigo Civil com enfase na boa-fe objetiva e na funcao social do contrato. Decisoes fundamentadas e atentas ao contexto socioeconomico das partes.",
+    "Direito do Consumidor": "Experiencia previa no Ministerio Publico confere sensibilidade para a tutela coletiva de direitos do consumidor. Postura rigorosa contra praticas abusivas de fornecedores, com decisoes que valorizam a efetividade do CDC.",
+    "Direito de Familia": "Posicao equilibrada em Direito de Familia, com atencao as peculiaridades de cada caso. Valoriza a fundamentacao em laudos periciais e estudos psicossociais.",
+    "Direito Penal": "Background no Ministerio Publico confere postura mais rigorosa em materia penal. Tende a validar a acusacao quando ha prova robusta, mas respeita garantias fundamentais do acusado.",
+    "Execucao/Cumprimento de Sentenca": "Experiencia no Ministerio Publico se reflete em postura ativa na fase de cumprimento, zelando pela efetividade das decisoes judiciais. Aplica medidas executivas atipicas quando necessario para a satisfacao do direito reconhecido."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Técnico",
+      "Analise comportamental: Técnico."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+      "tipo": "site-oficial",
+      "observacao": "Ordem alfabetica (2a instancia)"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TJDFT",
+    "descricao": "Desembargador do TJDFT com atuação jurídica"
+  }
+}

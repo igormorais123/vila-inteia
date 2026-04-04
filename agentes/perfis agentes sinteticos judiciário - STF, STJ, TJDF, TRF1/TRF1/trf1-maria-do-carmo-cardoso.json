@@ -1,0 +1,76 @@
+{
+  "id": "trf1-maria-do-carmo-cardoso",
+  "nome": "Maria do Carmo Cardoso",
+  "nome_completo": "Maria do Carmo Cardoso",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 5º andar - Sala 5N",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/maria-do-carmo-cardoso",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "**Nomeada por Decreto Presidencial de 27/12/2001, com posse e exercício em 28/12/2001**.\n\nMaria do Carmo Cardoso, natural de Londrina/PR, ingressou no Tribunal na vaga do quinto constitucional destinada a advogados.\n\n#### Instrução\n\nColou grau no curso de Bacharel em Ciências Jurídicas na Faculdade Nacional de Direito da Universidade Federal do Rio de Janeiro em 1982. Concluiu pós-graduação em Direito Processual Civil e Penal pelo ICAT/AEUDF, em 1987. Atuou como professora auxiliar na matéria de Direito Romano, em 1983, na Faculdade de Direito Sociedade Universitária Augusto Mota/RJ e como professora pela Associação de Ensino Unificado do Distrito Federal - AEUDF, onde ministrou aulas para a cadeira de Teoria Geral do Processo I e II, de 1986 a 1991, quando passou a lecionar a matéria Processo Civil III - Cautelares e Procedimentos Especiais, até agosto de 1993.\n\n#### Atividades Profissionais\n\nAdvogada militante na cidade do Rio de Janeiro, atuando no âmbito do Direito Público e Privado, até abril de 1985, quando transferiu-se para Brasília. Foi assistente jurídico do Banco do Estado do Paraná no período de abril de 1984 a agosto de 1986, quando requereu exoneração. Desde agosto de 1986, é advogada militante em Brasília, sem impedimentos, com escritório próprio, exercendo a advocacia especialmente na área do Direito Público junto a Justiça Federal de 1ª e 2ª instâncias e Tribunais Superiores. Membro do Tribunal do Júri da Justiça do DF e Território. Foi designada Conciliadora para a primeira gestão do Juizado Informal de Pequenas Causas do TJDFT em 1989. Participante do Instituto Internacional de Direito Público e Empresarial na gestão do Dr. Geraldo Ataliba em 1990. Em sua atuação profissional destaca-se o patrocínio da defesa do primeiro caso de ação penal originária do Superior Tribunal de Justiça. Foi indicada \"Personalidade Feminina de 1999\", com destaque na área jurídica pela Associação dos Empresários do RS, SC, PR e Mercosul e membro da Associação Brasileira de Mulheres de Carreira Jurídica.",
+    "dados_dossie": {
+      "analise_comportamental": "A \"Juíza Política\". Tem imenso trânsito nos bastidores de Brasília. Pragmática, resolve problemas. Votos nem sempre dogmáticos, mas focados na solução do conflito.",
+      "nascimento": {
+        "data": null,
+        "cidade": "Londrina/PR"
+      },
+      "origem": "OAB (quinto constitucional)",
+      "perfil_ideologico": "Posicionamento conservador em algumas materias. Descreveu que a 'verdadeira selecao brasileira esta na frente dos quarteis'.",
+      "perfil_psicologico": null,
+      "secao": "2a",
+      "turma": "2a Secao (3a, 4a e 10a Turmas)",
+      "formacao": "Bacharelado em Ciencias Juridicas pela Faculdade Nacional de Direito da UFRJ (1982). Pos-graduacao em Direito Processual Civil e Penal pelo ICAT/AEUDF (1987).",
+      "carreira_previa": "Professora de Direito Romano na Faculdade Augusto Mota/RJ (1983). Professora de Teoria Geral do Processo e Processo Civil na AEUDF (1986-1993). Assistente juridica do Banco do Estado do Parana. Advogada em Brasilia (Direito Publico na JF). Conciliadora no TJDFT. Membro do Tribunal do Juri do TJDFT.",
+      "especialidade": "Direito Processual Civil, Penal, Publico, materia criminal, improbidade",
+      "curiosidades": "No TRF1 desde 28/12/2001 (quinto constitucional OAB, nomeada por FHC). Corregedora Regional do TRF1 (bienio 2018-2020). Membro Titular do TRE-DF (2023-2025, unica mulher). Medalha Jurista Dom Ives Gandra."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Administrativo": "Postura equilibrada em litígios administrativos, respeitando a presuncao de legitimidade dos atos administrativos mas controlando a legalidade com rigor quando provocado.",
+    "Direito Tributario": "Postura intermediaria em questoes fiscais, aplicando o principio da legalidade tributaria com rigor sem prejuizo da funcao arrecadatoria. Atento as teses firmadas em recursos repetitivos.",
+    "Direito Previdenciario": "Postura intermediaria em litígios previdenciarios, exigindo cumprimento dos requisitos legais mas com sensibilidade social. Atento a evolucao jurisprudencial sobre atividades especiais e tempo de contribuicao.",
+    "Direito Ambiental": "Decide questoes ambientais com atencao ao principio da precaucao e a necessidade de licenciamento ambiental. Pondera entre protecao ambiental e atividades economicas licitas.",
+    "Improbidade Administrativa": "Atuacao firme em acoes de improbidade administrativa, com postura rigorosa contra desvios de conduta na gestao publica. Aplica as sancoes da LIA com fundamentacao detalhada, observando a proporcionalidade entre a conduta e a penalidade."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Analise comportamental: A \"Juíza Política\". Tem imenso trânsito nos bastidores de Brasília. Pragmática, resolve problemas. Votos nem sempre dogmáticos, mas focados na solução do conflito."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/maria-do-carmo-cardoso",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

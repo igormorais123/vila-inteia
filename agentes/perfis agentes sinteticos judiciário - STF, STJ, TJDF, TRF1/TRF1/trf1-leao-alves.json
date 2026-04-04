@@ -1,0 +1,81 @@
+{
+  "id": "trf1-leao-alves",
+  "nome": "Leão Alves",
+  "nome_completo": "Leão Aparecido Alves",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede III - 2º andar - Sala 218",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/leao-alves-",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "* * *\n\n2180 visualizações\n\n**Informativos**\n\n[Avisos](https://www.trf1.jus.br/trf1/informativos/avisos)\n\n[Infojef](https://www.trf1.jus.br/trf1/informativos/infojef)\n\n[Notícias](https://www.trf1.jus.br/trf1/noticias)\n\n[Matérias Especiais](https://www.trf1.jus.br/trf1/noticias/?palavra=&categoria=Mat%C3%A9rias+Especiais)\n\n**[LGPD](https://www.trf1.jus.br/trf1/lgpd/lgpd)**\n\n**Magistrado**\n\n[Organização e Composição](https://www.trf1.jus.br/trf1/magistrado/organizacao-e-composicao)\n\n[Desembargadoras e Desembargadores Federais](https://www.trf1.jus.br/trf1/magistrado/desembargadoras-e-desembargadores-federais)\n\n[Juízes Federais](https://www.trf1.jus.br/trf1/magistrado/juizes-federais)\n\n[Sistemas](https://www.trf1.jus.br/trf1/magistrado/sistemas)\n\n**[Memória](https://www.trf1.jus.br/trf1/exposicoes/nasce-um-tribunal)**\n\n**Servidor**\n\n[Contracheque/DIRF](https://portal.trf1.jus.br/Consulta/ContraCheque/ContraCheque.php)\n\n[Imposto de Renda](https://portal.trf1.jus.br/Consulta/ContraCheque/ContraCheque.php)\n\n[Ambientação](https://www.trf1.jus.br/trf1/servidor/ambientacao)\n\n[Educação Corporativa](https://www.trf1.jus.br/trf1/servidor/educacao-corporativa)\n\n[Avaliação de Desempenho](https://sca.trf1.jus.br/auth/realms/JF1/protocol/openid-connect/auth?client_id=educador-judiciario&redirect_uri=https%3A%2F%2Fsistemas.trf1.jus.br%2Feducajud%2F&state=e225ff63-0490-4fdf-9f33-7cffd7774372&nonce=f6eca0a0-cc8a-4b2f-8c7f-ad4a513d1ecf&response_mode=fragment&response_type=code&scope=openid)\n\n[Sistema Integrado de Avaliação de Desempenho Funcional - Siades](https://www.trf1.jus.br/trf1/servidor/sistema-integrado-de-avaliacao-de-desempenho-funcional---siades)\n\n[Contatos](https://www.trf1.jus.br/trf1/servidor/contatos)\n\n**[Informativos](https://www.trf1.jus.br/trf1/informativos)**\n\n**[LGPD](https://www.trf1.jus.br/trf1/servicos/lgpd)**\n\n**[Magistrado](https://www.trf1.jus.br/trf1/magistrado)**\n\n**[Memória](https://www.trf1.jus.br/trf1/memoria-institucional/nasce-um-tribunal)**\n\n**[Servidor](https://www.trf1.jus.br/trf1/servidor)**",
+    "dados_dossie": {
+      "origem": "Magistratura federal (SJGO). Promovido por merecimento em maio/2023. Reconhecido como gestor que zela pelo bom clima organizacional.",
+      "perfil_ideologico": "Garantista. Mantém linha das prerrogativas constitucionais da presunção de inocência e amplo direito de defesa. Experiência como juiz instrutor no STJ (gabinete Min. Isabel Gallotti).",
+      "perfil_psicologico": "Gestor humanizado, reconhecido por servidores pelo bom clima organizacional. Garantista convicto. Versátil (convocado em 9 gabinetes diferentes no TRF1 e no STJ).",
+      "estilo_decisorio": "Garantista e processualista penal. Atuação na 2ª Seção: matéria penal, improbidade administrativa, desapropriação.",
+      "secao": "2ª Seção",
+      "turma": "2ª Seção (3ª, 4ª e 10ª Turmas)",
+      "formacao": "Direito (AEUDF, 1990), pós-graduação Penal e Processo Penal (Anhanguera Uniderp, 2013)",
+      "carreira_previa": "Juiz federal SJGO (1994-1999), juiz TRE-GO (2009-2015), convocado TRF1 (9 gabinetes, 2003-2020), juiz instrutor STJ/Min. Gallotti (2021)",
+      "nascimento": "Natural de Goias.",
+      "especialidade": "Materia penal em geral, improbidade administrativa, desapropriacao direta e indireta",
+      "curiosidades": "Empossado em 10/05/2023 pelo criterio de merecimento. Vagas da Lei 14.253/2021 (ampliacao de 27 para 43). Apoiado pelo Sinjufego. Longa trajetoria como juiz convocado em diversas instancias.",
+      "analise_comportamental": "Garantista. Mantem 'linha garantista das prerrogativas constitucionais da presuncao de inocencia e do amplo direito de defesa'. Reconhecido como 'exemplo de gestor que zela pelo bom clima organizacional'."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Juiz Federal desde 1994 (SJGO)"
+  },
+  "padroes_decisao": {
+    "Direito Administrativo": "Especializacao em Direito Administrativo com profundo conhecimento da jurisprudencia federal sobre servidores publicos, licitacoes e contratos. Decisoes tecnicamente fundamentadas que influenciam a orientacao do tribunal em materia administrativa.",
+    "Direito Tributario": "Posicao garantista em materia tributaria, com interpretacao restritiva do poder de tributar do Estado. Aplica rigorosamente os principios da legalidade, anterioridade e capacidade contributiva em favor do contribuinte.",
+    "Direito Previdenciario": "Postura protetiva em materia previdenciaria, com interpretacao favoravel ao segurado em casos de duvida. Aplica o principio pro misero e reconhece atividades especiais com base em jurisprudencia consolidada.",
+    "Direito Ambiental": "Postura protetiva do meio ambiente, com aplicacao rigorosa do principio da precaucao. Interpreta ampliativamente as obrigacoes ambientais e restritivamente as permissoes de degradacao.",
+    "Improbidade Administrativa": "Atuacao firme em acoes de improbidade administrativa, com postura rigorosa contra desvios de conduta na gestao publica. Aplica as sancoes da LIA com fundamentacao detalhada, observando a proporcionalidade entre a conduta e a penalidade."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Garantista. Mantem 'linha garantista das prerrogativas constitucionais da presuncao de inocencia e do amplo direito de defesa'. Reconhecido como 'exemplo de gestor que zela pelo bom clima organizacional'."
+    ],
+    "confianca_global": 6
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/leao-alves-",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

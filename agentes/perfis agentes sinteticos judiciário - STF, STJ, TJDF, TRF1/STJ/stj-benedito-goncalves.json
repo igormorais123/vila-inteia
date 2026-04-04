@@ -1,0 +1,86 @@
+{
+  "id": "stj-benedito-goncalves",
+  "nome": "Benedito Gonçalves",
+  "nome_completo": "Benedito Gonçalves",
+  "orgao": "STJ",
+  "cargo": "Ministro",
+  "situacao": "titular",
+  "dados_publicos": {
+    "posse_texto": "02008-09-17 17 de setembro de 2008",
+    "origem_texto": "TRF-2",
+    "biografia_stj_url": "https://www.stj.jus.br/web/verCurriculoMinistro?parametro=1&cod_matriculamin=0001196",
+    "biografia_stj_texto": "Ministros em Atividade\n\n**Benedito Gonçalves**\n\n---\n\nDados Pessoais\n\n**Mini Currículo**\n\n**Benedito Gonçalves**\n, Ministro do Superior Tribunal de Justiça, Bacharelou-se em Ciência Jurídicas e Sociais pela faculdade de Direito da UFRJ. Especializou-se em Direito Processual Civil pela UNB. Mestre em Direito. Antes do ingresso na magistratura, exerceu o cargo público de Papiloscopista Policial Federal, do Departamento de Polícia Federal, por concurso público, no período de 09/01/1977 a 22/09/1982. Foi Delegado de Polícia da Polícia Civil do Distrito Federal, por concurso público, no período de 22/9/1982 a 26/2/1988. Ingressou na Magistratura Federal em 1988, por concurso de provas e títulos, no cargo de Juiz Federal, tendo posteriormente integrado o Tribunal Regional Federal da 2ª Região, no cargo de Desembargador Federal, promovido por merecimento, em 1998. Foi indicado em lista tríplice para o cargo de Ministro do Superior Tribunal de Justiça, tendo sido escolhido e empossado em 17/9/2008. É Doutor Honoris Causa pela Universidade Federal do Rio de Janeiro e autor e coautor de diversas obras jurídicas. Foi Ministro efetivo do TSE no biênio 9/11/2021 a 9/11/2023 e exerceu o cargo de Corregedor-Geral na Justiça Eleitoral, CGE, nas eleições gerais de 2022. Atualmente, integra a Corte Especial, a Primeira Seção e a Primeira Turma, do STJ e exerce, cumulativamente, o cargo de Diretor-Geral da Escola Nacional de Formação e Aperfeiçoamento de Magistrados - ENFAM.\n\n---\n\nFormação Acadêmica\n\n---\n\n---",
+    "biografia_stj_nome_completo": "Benedito Gonçalves- Diretor-Geral da ENFAM",
+    "biografia_stj_secoes": {
+      "dados_pessoais": "**Mini Currículo**\n\n**Benedito Gonçalves**\n, Ministro do Superior Tribunal de Justiça, Bacharelou-se em Ciência Jurídicas e Sociais pela faculdade de Direito da UFRJ. Especializou-se em Direito Processual Civil pela UNB. Mestre em Direito. Antes do ingresso na magistratura, exerceu o cargo público de Papiloscopista Policial Federal, do Departamento de Polícia Federal, por concurso público, no período de 09/01/1977 a 22/09/1982. Foi Delegado de Polícia da Polícia Civil do Distrito Federal, por concurso público, no período de 22/9/1982 a 26/2/1988. Ingressou na Magistratura Federal em 1988, por concurso de provas e títulos, no cargo de Juiz Federal, tendo posteriormente integrado o Tribunal Regional Federal da 2ª Região, no cargo de Desembargador Federal, promovido por merecimento, em 1998. Foi indicado em lista tríplice para o cargo de Ministro do Superior Tribunal de Justiça, tendo sido escolhido e empossado em 17/9/2008. É Doutor Honoris Causa pela Universidade Federal do Rio de Janeiro e autor e coautor de diversas obras jurídicas. Foi Ministro efetivo do TSE no biênio 9/11/2021 a 9/11/2023 e exerceu o cargo de Corregedor-Geral na Justiça Eleitoral, CGE, nas eleições gerais de 2022. Atualmente, integra a Corte Especial, a Primeira Seção e a Primeira Turma, do STJ e exerce, cumulativamente, o cargo de Diretor-Geral da Escola Nacional de Formação e Aperfeiçoamento de Magistrados - ENFAM.\n\n---",
+      "formacao_academica": "Formação Acadêmica"
+    },
+    "dados_dossie": {
+      "origem": "TRF-2",
+      "perfil_ideologico": "Pragmático/Político",
+      "analise_comportamental": "Possui um perfil decisório flexível, sensível ao \"clima\" político e institucional. Sua passagem pelo TSE (onde relatou a inelegibilidade de Bolsonaro) revelou um juiz capaz de decisões duras quando respaldado institucionalmente. No STJ, busca soluções que conciliem interesses do Estado com a legalidade.",
+      "secao": "1a Secao (Direito Publico)",
+      "turma": "1ª Turma",
+      "indicado_por": "Presidente Dilma",
+      "nascimento": {
+        "data": "30/01/1954",
+        "cidade": "Rio de Janeiro, RJ"
+      },
+      "perfil_psicologico": "Combativo e engajado em causas sociais. Unico ministro negro do STJ. Liderou iniciativas de combate ao racismo institucional. Presidiu comissao de juristas da Camara dos Deputados para mudancas na legislacao antirracismo.",
+      "formacao": "Direito pela UFRJ (1978). Especialista em Direito Processual Civil pela UnB/CJF. Mestre em Direito pela Universidade Estacio de Sa.",
+      "carreira_previa": "Juiz Federal titular da Vara Unica de Santa Maria/RS (1988). Juiz do TRF2 (1998). Desembargador Federal do TRF2. Diretor da Escola da Magistratura Federal do TRF2.",
+      "especialidade": "Direito Publico, Direito Tributario, Direito Eleitoral",
+      "curiosidades": "Unico ministro negro do STJ. Diretor-Geral da ENFAM. Ministro e Corregedor do TSE. Presidiu comissao de combate ao racismo na Camara dos Deputados (2021)."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "TRF-2"
+  },
+  "padroes_decisao": {
+    "Direito Tributario": "Perfil decisorio flexivel, sensivel ao contexto politico e institucional. Tende a buscar solucoes de compromisso entre fisco e contribuinte, evitando posicoes extremadas que gerem instabilidade na arrecadacao.",
+    "Direito Administrativo": "Passagem pelo TSE e experiencia com improbidade administrativa conferem sofisticacao na analise de atos do poder publico. Tende a validar politicas publicas com deferencia moderada ao gestor.",
+    "Direito Eleitoral": "Experiencia como relator de caso paradigmatico no TSE (inelegibilidade Bolsonaro) demonstra disposicao para enfrentar questoes politicamente sensiveis com fundamento tecnico.",
+    "Direito Previdenciario": "Aplica jurisprudencia consolidada com pragmatismo, buscando equilibrio entre protecao do segurado e sustentabilidade do sistema previdenciario.",
+    "Direito Regulatorio": "Postura de deferencia moderada as agencias reguladoras, intervindo apenas quando identificada ilegalidade manifesta ou desvio de finalidade."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Pragmático/Político",
+      "Analise comportamental: Possui um perfil decisório flexível, sensível ao \"clima\" político e institucional. Sua passagem pelo TSE (onde relatou a inelegibilidade de Bolsonaro) revelou um juiz capaz de decisões duras quando re"
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://pt.wikipedia.org/wiki/Benedito_Gon%C3%A7alves",
+      "tipo": "wikipedia",
+      "observacao": "Pagina do ministro (link) ou lista"
+    },
+    {
+      "url": "https://www.stj.jus.br/web/verCurriculoMinistro?parametro=1&cod_matriculamin=0001196",
+      "tipo": "portal_stj",
+      "observacao": "Curriculo oficial do portal do STJ"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "biografia": "**Mini Currículo**\n\n**Benedito Gonçalves**\n, Ministro do Superior Tribunal de Justiça, Bacharelou-se em Ciência Jurídicas e Sociais pela faculdade de Direito da UFRJ. Especializou-se em Direito Processual Civil pela UNB. Mestre em Direito. Antes do ingresso na magistratura, exerceu o cargo público de Papiloscopista Policial Federal, do Departamento de Polícia Federal, por concurso público, no período de 09/01/1977 a 22/09/1982. Foi Delegado de Polícia da Polícia Civil do Distrito Federal, por concurso público, no período de 22/9/1982 a 26/2/1988. Ingressou na Magistratura Federal em 1988, por concurso de provas e títulos, no cargo de Juiz Federal, tendo posteriormente integrado o Tribunal Regional Federal da 2ª Região, no cargo de Desembargador Federal, promovido por merecimento, em 1998. Foi indicado em lista tríplice para o cargo de Ministro do Superior Tribunal de Justiça, tendo sido escolhido e empossado em 17/9/2008. É Doutor Honoris Causa pela Universidade Federal do Rio de Janeiro e autor e coautor de diversas obras jurídicas. Foi Ministro efetivo do TSE no biênio 9/11/2021 a 9/11/2023 e exerceu o cargo de Corregedor-Geral na Justiça Eleitoral, CGE, nas eleições gerais de 2022. Atualmente, integra a Corte Especial, a Primeira Seção e a Primeira Turma, do STJ e exerce, cumulativamente, o cargo de Diretor-Geral da Escola Nacional de Formação e Aperfeiçoamento de Magistrados - ENFAM.\n\n---\n\nFormação Acadêmica",
+  "formacao_academica": "Formação Acadêmica",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do STJ",
+    "descricao": "Ministro do STJ com atuação jurídica"
+  }
+}

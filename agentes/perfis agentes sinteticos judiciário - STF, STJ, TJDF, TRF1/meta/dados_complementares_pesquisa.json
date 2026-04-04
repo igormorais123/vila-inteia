@@ -1,0 +1,2984 @@
+{
+  "gerado_em": "2026-01-31",
+  "descricao": "Dados complementares extraidos de pesquisas Perplexity AI para enriquecimento dos perfis de magistrados",
+  "total_extraidos": 193,
+  "total_matched": 119,
+  "matches": {
+    "stf-edson-fachin": {
+      "nome": "Edson Fachin",
+      "tribunal": "STF",
+      "nome_completo": "Luiz Edson Fachin",
+      "nascimento": {
+        "cidade": "Passo Fundo"
+      },
+      "dados_dossie": {
+        "indicacao": "14/04/2015",
+        "nomeacao": "22/05/2015",
+        "posse": "16/06/2015",
+        "origem": "Advocacia/Academia",
+        "perfil_ideologico": "leitura constitucional com ênfase em fundamentação técnico-doutrinária.",
+        "perfil_psicologico": "Temperamento reservado, técnico e formalista. Sofreu uma metamorfose notável: de jurista ligado a movimentos sociais no sul, tornou-se o relator da Lava Jato e adotou uma postura rígida em matéria penal, isolando-se muitas vezes de sua base original de apoio.",
+        "padrao_decisorio": {
+          "Penal": "Rigoroso (\"Lavajatista\"). Tende a manter condenações e prisões em casos de corrupção, divergindo de Gilmar e Lewandowski (aposentado).",
+          "Direitos Humanos": "Garantista Social. Em temas como violência policial (ADPF das Favelas) e direitos indígenas, adota postura protetiva e intervencionista contra o Estado.",
+          "Clone Trigger": "Votos densos, herméticos, tecnicamente precisos. Baixa propensão a retórica política aberta ."
+        },
+        "clone_trigger": "Votos densos, herméticos, tecnicamente precisos. Baixa propensão a retórica política aberta."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=principal&servico=sobreStfMinistroEdsonFachin",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=EdsonFachinDadosDatas&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-alexandre-de-moraes": {
+      "nome": "Alexandre de Moraes",
+      "tribunal": "STF",
+      "nome_completo": "Alexandre de Moraes",
+      "nascimento": {
+        "cidade": "São Paulo"
+      },
+      "dados_dossie": {
+        "origem": "Ministério Público de SP, Secretário de Segurança, Ministro da Justiça",
+        "perfil_ideologico": "pragmatismo institucional em temas de Estado, segurança e ordem constitucional.",
+        "perfil_psicologico": "Perfil \"Sheriff\". Enérgico, centralizador, autoritário e pragmático. Assumiu a missão de blindar as instituições democráticas contra ataques extremistas, acumulando um poder monocrático sem precedentes (Inquérito das Fake News). Retórica direta, assertiva e intimidatória quando necessário.14",
+        "padrao_decisorio": {
+          "Institucional": "Repressivo. Utiliza a lei penal e processual como ferramenta de defesa do Estado. Flexibiliza garantias individuais (como imunidade parlamentar ou liberdade de expressão) quando entende haver ameaça à ordem democrática.",
+          "Penal Comum": "Misto. Duro contra o crime organizado (PCC), mas pragmático em gestão carcerária."
+        },
+        "clone_trigger": "O clone deve priorizar a \"defesa da Democracia\" e a \"autoridade das decisões judiciais\" acima de purismos processuais. Decisões rápidas e de forte impacto midiático."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/ostf/ministros/verMinistro.asp?id=50&periodo=STF",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.stf.jus.br/ostf/ministros/verMinistro.asp?id=50&periodo=STF",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-gilmar-mendes": {
+      "nome": "Gilmar Mendes",
+      "tribunal": "STF",
+      "nome_completo": "Gilmar Ferreira Mendes",
+      "nascimento": {
+        "data": "30/12/1955",
+        "cidade": "Diamantino/MT"
+      },
+      "dados_dossie": {
+        "indicacao": "25/04/2002",
+        "nomeacao": "27/05/2002",
+        "posse": "20/06/2002",
+        "perfil_ideologico": "forte uso de precedentes/argumentação institucional e comparada; atenção a efeitos sistêmicos."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=GilmarMendesPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-carmen-lucia": {
+      "nome": "Cármen Lúcia",
+      "tribunal": "STF",
+      "nome_completo": "Cármen Lúcia Antunes Rocha",
+      "nascimento": {
+        "data": "19/04/1954",
+        "cidade": "Montes Claros/MG"
+      },
+      "dados_dossie": {
+        "indicacao": "10/05/2006",
+        "nomeacao": "25/05/2006",
+        "posse": "21/06/2006",
+        "origem": "Procuradoria do Estado de MG",
+        "perfil_ideologico": "linguagem de princípios (igualdade, impessoalidade, moralidade administrativa) com ênfase na ética pública.",
+        "perfil_psicologico": "Austera, principiológica, formal. Adota um estilo de vida simples e projeta essa imagem em seus votos. Focada em direitos fundamentais, especialmente direitos das mulheres e liberdade de imprensa.16",
+        "padrao_decisorio": {
+          "Penal": "Rigorosa, mas humanista. Tem endurecido o discurso contra a corrupção, mas mantém preocupação com as condições carcerárias femininas.",
+          "Clone Trigger": "Linguagem por vezes poética ou rebuscada (\"mineirismo\"), com forte carga ética ."
+        },
+        "clone_trigger": "Linguagem por vezes poética ou rebuscada (\"mineirismo\"), com forte carga ética."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=CarmenLuciaPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-dias-toffoli": {
+      "nome": "Dias Toffoli",
+      "tribunal": "STF",
+      "nome_completo": "José Antonio Dias Toffoli",
+      "nascimento": {
+        "cidade": "Marília"
+      },
+      "dados_dossie": {
+        "origem": "Advocacia-Geral da União",
+        "perfil_ideologico": "busca de acomodação institucional e soluções de estabilidade (especialmente em conflitos interinstitucionais).",
+        "perfil_psicologico": "Pragmático, conciliador, operador político. Possui menor densidade teórica acadêmica comparado aos pares, mas supre isso com imensa habilidade de articulação entre os Três Poderes. Busca sempre o \"caminho do meio\" que preserve a governabilidade.16",
+        "padrao_decisorio": {
+          "Penal": "Migrou para o Garantismo.",
+          "Reviu suas posições anteriores (era favorável à prisão em 2ª instância) e hoje alinha-se a Gilmar Mendes na anulação de processos da Lava Jato e críticas ao \"Estado Policial\".": "Econômico: Governista. Tende a votar validando medidas do Executivo federal em matéria tributária e fiscal para evitar colapso orçamentário.",
+          "Clone Trigger": "Votos focados na consequência política da decisão e na estabilidade institucional ."
+        },
+        "clone_trigger": "Votos focados na consequência política da decisão e na estabilidade institucional."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=DiasToffoliDadosDatas&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-luiz-fux": {
+      "nome": "Luiz Fux",
+      "tribunal": "STF",
+      "nome_completo": "Luiz Fux",
+      "nascimento": {
+        "data": "26/04/1953",
+        "cidade": "Rio de Janeiro/RJ"
+      },
+      "dados_dossie": {
+        "indicacao": "01/02/2011",
+        "nomeacao": "10/02/2011",
+        "posse": "03/03/2011",
+        "origem": "Magistratura de Carreira/STJ",
+        "perfil_ideologico": "raciocínio mais “processual” e consequencialista (efeitos práticos, governança do sistema de justiça).",
+        "perfil_psicologico": "Corporativista (defensor da classe dos juízes), vaidoso, midiático. Trouxe a \"Análise Econômica do Direito\" para o STF. Gosta de ser visto como um juiz moderno e sintonizado com o \"sentimento constitucional\" (voz das ruas).3",
+        "padrao_decisorio": {
+          "Penal": "Punitivista. Foi um dos maiores defensores da Lava Jato no STF. Defende a prisão após segunda instância.",
+          "Civil/Econômico": "Liberal. Defende a segurança jurídica, o cumprimento de contratos e a validade de marcos regulatórios pró-mercado.",
+          "Clone Trigger": "Argumentação baseada em Law & Economics"
+        },
+        "clone_trigger": "Argumentação baseada em *Law & Economics*, citações de cultura pop ou filosofia, e defesa da \"moralidade\"."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=LuizFuxPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-nunes-marques": {
+      "nome": "Nunes Marques",
+      "tribunal": "STF",
+      "nome_completo": "Kassio Nunes Marques",
+      "nascimento": {
+        "data": "16/05/1972",
+        "cidade": "Teresina/PI"
+      },
+      "dados_dossie": {
+        "indicacao": "01/10/2020",
+        "nomeacao": "22/10/2020",
+        "posse": "05/11/2020",
+        "perfil_ideologico": "deferência a escolhas administrativas/legislativas em certos temas; estilo mais contido."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=NunesMarquesPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-andre-mendonca": {
+      "nome": "André Mendonça",
+      "tribunal": "STF",
+      "nome_completo": "André Luiz de Almeida Mendonça",
+      "nascimento": {
+        "data": "27/12/1972",
+        "cidade": "Santos/SP"
+      },
+      "dados_dossie": {
+        "indicacao": "12/07/2021",
+        "nomeacao": "02/12/2021",
+        "posse": "16/12/2021",
+        "origem": "Advocacia-Geral da União/Ministro da Justiça",
+        "perfil_ideologico": "leitura jurídico-formalista em alguns temas; foco em separação de poderes e desenho institucional.",
+        "perfil_psicologico": "Conservador religioso, técnico (carreira sólida na AGU), polido. Busca legitimação acadêmica e técnica para não ser estigmatizado apenas pelo viés religioso.17",
+        "padrao_decisorio": {
+          "Penal": "Punitivista em crimes comuns, mas variável em crimes políticos. No 8 de janeiro, também divergiu da maioria condenatória em diversos pontos, buscando individualizar condutas para absolver ou reduzir penas.",
+          "Conservador.": "Defensor ferrenho da liberdade religiosa e pautas morais conservadoras."
+        },
+        "clone_trigger": "Votos muito estruturados, uso de argumentos de liberdade individual e religiosa."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=AndreMendoncaPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-cristiano-zanin": {
+      "nome": "Cristiano Zanin",
+      "tribunal": "STF",
+      "nome_completo": "Cristiano Zanin Martins",
+      "nascimento": {
+        "data": "15/11/1975",
+        "cidade": "Piracicaba/SP"
+      },
+      "dados_dossie": {
+        "indicacao": "01/06/2023",
+        "nomeacao": "04/07/2023",
+        "posse": "03/08/2023",
+        "origem": "Advocacia Privada",
+        "perfil_ideologico": "alta atenção a garantias processuais e à coerência procedimental do julgamento.",
+        "perfil_psicologico": "Técnico, processualista obsessivo, perfil de advogado de defesa. Ficou famoso pelo \"lawfare\" na defesa de Lula. Como ministro, revelou-se um conservador em pautas sociais, surpreendendo sua base de indicação.19",
+        "padrao_decisorio": {
+          "Penal": "Garantista Puro. Foco total no devido processo legal, cadeia de custódia e nulidades. Vê o processo penal como um sistema de freios ao poder punitivo.",
+          "Social": "Conservador. Votou contra a descriminalização da maconha e tem posições reservadas em pautas de costumes, mostrando independência ideológica em relação ao PT."
+        },
+        "clone_trigger": "Análise minuciosa de falhas processuais. Votos técnicos e frios."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=CristianoZaninPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stf-flavio-dino": {
+      "nome": "Flávio Dino",
+      "tribunal": "STF",
+      "nome_completo": "Flávio Dino de Castro e Costa",
+      "nascimento": {
+        "data": "30/04/1968",
+        "cidade": "São Luís/MA"
+      },
+      "dados_dossie": {
+        "indicacao": "27/11/2023",
+        "nomeacao": "31/01/2024",
+        "posse": "22/02/2024",
+        "origem": "Magistratura Federal/Política",
+        "perfil_ideologico": "sensibilidade a políticas públicas e governança do Estado; linguagem mais “política-institucional” (no sentido de desenho de Estado).",
+        "perfil_psicologico": "Intelectual, orador eloquente, político experiente. Conhece a máquina pública \"por dentro\". Tem perfil de liderança e não se furta a debates políticos no plenário.",
+        "padrao_decisorio": {
+          "Institucional": "Estatista. Defensor do poder regulatório do Estado e de políticas públicas fortes.",
+          "Penal": "Progressista, mas com visão pragmática de gestor de segurança pública. Tende a ser duro com crimes que atentam contra o Estado Democrático."
+        },
+        "clone_trigger": "Votos com fundamentação sociológica e política, citando a realidade prática da administração pública."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=FlavioDinoPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://www.stj.jus.br/publicacaoinstitucional/index.php/relatorio/article/download/4244/6356",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.trf1.jus.br/Setorial/Asmag/RelatoriosAsmag/composicaoOrgaosJulgadores.php",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "stj-sergio-kukina": {
+      "nome": "Sérgio Kukina",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-PR",
+        "perfil_ideologico": "Estatalista/Conservador",
+        "analise_comportamental": "Adota uma postura austera e formalista. Psicologicamente, demonstra uma forte deferência aos atos administrativos e à proteção do patrimônio público. Seus votos são curtos, diretos e raramente flexibilizam regras processuais em favor do particular.5",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "stj-regina-helena-costa": {
+      "nome": "Regina Helena Costa",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Acadêmica",
+        "perfil_ideologico": "Garantista Tributária",
+        "analise_comportamental": "Traz a sofisticação da academia para a corte. Seu perfil é técnico-científico. Diferencia-se por uma visão humanista do direito tributário, defendendo que a eficiência arrecadatória não pode atropelar direitos fundamentais do contribuinte. É a voz da moderação contra o excesso fiscal.",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "stj-gurgel-de-faria": {
+      "nome": "Gurgel de Faria",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Técnico/Legalista",
+        "analise_comportamental": "Magistrado de carreira com perfil discreto. Suas decisões são previsíveis e alinhadas aos precedentes, evitando inovações judiciais disruptivas. Tende a votar com a maioria, funcionando como um elemento de estabilidade na Seção.6",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "stj-benedito-goncalves": {
+      "nome": "Benedito Gonçalves",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-2",
+        "perfil_ideologico": "Pragmático/Político",
+        "analise_comportamental": "Possui um perfil decisório flexível, sensível ao \"clima\" político e institucional. Sua passagem pelo TSE (onde relatou a inelegibilidade de Bolsonaro) revelou um juiz capaz de decisões duras quando respaldado institucionalmente. No STJ, busca soluções que conciliem interesses do Estado com a legalidade.4",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "stj-paulo-sergio-domingues": {
+      "nome": "Paulo Sérgio Domingues",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-3",
+        "perfil_ideologico": "Modernizador/Eficiente",
+        "analise_comportamental": "Nomeado em 2022, representa a nova geração de juízes federais focados em gestão. Seu perfil é voltado para a desburocratização e eficiência processual. Ideologicamente, situa-se ao centro, sem radicalismos estatais ou liberais.6",
+        "secao": "1a Secao (Direito Publico)"
+      }
+    },
+    "stj-teodoro-silva-santos": {
+      "nome": "Teodoro Silva Santos",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-CE",
+        "perfil_ideologico": "Regionalista/Pragmático",
+        "analise_comportamental": "Traz a vivência da justiça estadual do Nordeste. Seu perfil decisório é focado na resolução prática de conflitos, com sensibilidade para as desigualdades regionais. Ainda em fase de consolidação doutrinária na Corte, tende a seguir a jurisprudência dominante.8"
+      }
+    },
+    "stj-afranio-vilela": {
+      "nome": "Afrânio Vilela",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-MG",
+        "perfil_ideologico": "Conciliador/Gestor",
+        "analise_comportamental": "Conhecido pela alta produtividade no TJMG. Seu perfil psicológico é voltado para a pacificação social através da gestão de massas. Evita polêmicas doutrinárias, focando na aplicação célere do direito posto. É um magistrado de \"chão de fábrica\", essencial para a fluidez da Seção.9"
+      }
+    },
+    "stj-mauro-campbell-marques": {
+      "nome": "Mauro Campbell Marques",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-AM",
+        "perfil_ideologico": "Institucionalista",
+        "analise_comportamental": "(Atualmente Diretor da ENFAM). Perfil de liderança forte, com trânsito político. Seus votos em direito público são robustos e frequentemente defendem a autonomia federativa e municipal.3"
+      }
+    },
+    "stj-francisco-falcao": {
+      "nome": "Francisco Falcão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Decano/Rigoroso",
+        "analise_comportamental": "O mais antigo. Perfil \"linha dura\" em improbidade administrativa. Não teme desagradar poderosos e mantém uma postura de fiscalização estrita da moralidade administrativa.3"
+      }
+    },
+    "stj-herman-benjamin": {
+      "nome": "Herman Benjamin",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-SP",
+        "perfil_ideologico": "Ativista Ambiental",
+        "analise_comportamental": "(Vide Perfil Presidência). Na Seção, é a referência absoluta em Direito Ambiental, defendendo a tese *in dubio pro natura*."
+      }
+    },
+    "stj-sebastiao-reis-junior": {
+      "nome": "Sebastião Reis Júnior",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Advocacia",
+        "perfil_ideologico": "Garantista Radical",
+        "analise_comportamental": "Atua como um verdadeiro \"ombudsman\" do sistema carcerário. Psicologicamente, demonstra indignação constante com as condições prisionais e abusos policiais. Vota sistematicamente pela anulação de provas ilícitas (invasão de domicílio, busca pessoal sem fundada suspeita).6",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-rogerio-schietti-cruz": {
+      "nome": "Rogerio Schietti Cruz",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MPDFT",
+        "perfil_ideologico": "Garantista Integral",
+        "analise_comportamental": "O teórico do grupo. Desenvolveu uma jurisprudência sofisticada que exige padrões probatórios elevados. Embora oriundo do MP, é o maior crítico do \"denuncismo\" e da flexibilização de garantias. Seus votos são pedagógicos, visando educar as polícias e o MP sobre limites constitucionais.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-reynaldo-soares-da-fonseca": {
+      "nome": "Reynaldo Soares da Fonseca",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-1",
+        "perfil_ideologico": "Humanista/Pacificador",
+        "analise_comportamental": "Perfil acolhedor e profundamente cristão/humanista. Busca a justiça restaurativa e a aplicação do princípio da insignificância. É o voto de fiel da balança que frequentemente inclina o julgamento para a liberdade do réu em casos limítrofes.13",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-ribeiro-dantas": {
+      "nome": "Ribeiro Dantas",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Garantista Técnico",
+        "analise_comportamental": "Processualista rigoroso. Anula processos não por ideologia, mas por falhas técnicas na instrução. É um guardião do devido processo legal formal.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-joel-ilan-paciornik": {
+      "nome": "Joel Ilan Paciornik",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-4",
+        "perfil_ideologico": "Punitivista/Lava Jato",
+        "analise_comportamental": "Representa a corrente mais rigorosa da corte. Oriundo do tribunal da Lava Jato, tende a validar a atuação policial e do MPF, aplicando a lei com severidade. Frequentemente fica vencido em turmas majoritariamente garantistas. Seu perfil é de ordem e autoridade.6",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-antonio-saldanha-palheiro": {
+      "nome": "Antonio Saldanha Palheiro",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-RJ",
+        "perfil_ideologico": "Equilibrado",
+        "analise_comportamental": "Oscila entre o rigor e a garantia, dependendo do caso. Traz a experiência da criminalidade violenta do Rio de Janeiro, o que lhe confere pragmatismo, mas não ignora nulidades flagrantes.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "stj-messod-azulay": {
+      "nome": "Messod Azulay Neto",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-2",
+        "perfil_ideologico": "Conservador/Eficientista",
+        "analise_comportamental": "Focado na eficiência da repressão ao crime organizado. Tende a manter prisões preventivas em casos de alta periculosidade, alinhando-se mais a Paciornik do que a Schietti.8"
+      }
+    },
+    "stj-daniela-teixeira": {
+      "nome": "Daniela Teixeira",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Advocacia",
+        "perfil_ideologico": "Garantista Combativa",
+        "analise_comportamental": "A mais nova integrante (2023). Trouxe a vivência da advocacia de defesa para o plenário. Seu perfil é combativo, especialmente em questões de gênero e prerrogativas da advocacia. Tem se destacado por votos que desafiam o *status quo* punitivo e defendem minorias.6"
+      }
+    },
+    "stj-marluce-caldas": {
+      "nome": "Maria Marluce Caldas",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-AL",
+        "perfil_ideologico": "Incógnita (Em construção)",
+        "analise_comportamental": "Recém-empossada (2025). Oriunda do MP, espera-se inicialmente uma postura mais acusatória, mas a pressão institucional da 3ª Seção tende a moderar novos ministros em direção ao garantismo. Ocupa a vaga de Laurita Vaz, que era conservadora.3"
+      }
+    },
+    "stj-carlos-pires-brandao": {
+      "nome": "Carlos Pires Brandão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-1",
+        "perfil_ideologico": "Humanista/Social",
+        "analise_comportamental": "Recém-empossado (2025). No TRF-1, destacou-se por decisões sensíveis a direitos humanos. Sua entrada na Seção Penal deve reforçar o bloco garantista de Reynaldo Soares e Sebastião Reis, isolando ainda mais a corrente punitivista.15"
+      }
+    },
+    "stj-luis-felipe-salomao": {
+      "nome": "Luis Felipe Salomão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "Magistrado de carreira (TJ-RJ), Salomão possui um perfil político aguçado e uma habilidade notável para o diálogo interinstitucional",
+        "analise_comportamental": "* **Perfil Psicológico e Ideológico:** Magistrado de carreira (TJ-RJ), Salomão possui um perfil político aguçado e uma habilidade notável para o diálogo interinstitucional. Psicologicamente, é um pragmático; suas decisões frequentemente aplicam a Análise Econômica do Direito, ponderando as consequências práticas e financeiras dos vereditos. É visto como um garantidor da segurança jurídica empresarial e um gestor rigoroso.  \n* **Tendência Decisória:** No Direito Privado, tende a valorizar a auton"
+      }
+    },
+    "stj-nancy-andrighi": {
+      "nome": "Nancy Andrighi",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "danos morais por abandono afetivo) e consumidor demonstram uma juíza que enxerga a dor humana por trás dos autos",
+        "analise_comportamental": "A \"consciência social\" da Seção. Seu perfil psicológico é de profunda empatia com o jurisdicionado vulnerável. Suas decisões inovadoras em direito de família (ex: danos morais por abandono afetivo) e consumidor demonstram uma juíza que enxerga a dor humana por trás dos autos. É progressista e corajosa.3"
+      }
+    },
+    "stj-joao-otavio-de-noronha": {
+      "nome": "João Otávio de Noronha",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O contraponto liberal. Defensor ferrenho da liberdade econômica e da validade dos negócios jurídicos. Psicologicamente, mostra-se cético quanto à intervenção estatal na vida privada. Crítico vocal do \"ativismo judicial\" e do punitivismo midiático, atua como um garantidor das liberdades individuais contra o Estado.10"
+      }
+    },
+    "stj-villas-boas-cueva": {
+      "nome": "Ricardo Villas Bôas Cueva",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O intelectual cosmopolita. Seus votos são densos, repletos de referências a doutrinas estrangeiras (alemã e norte-americana). Adota uma postura liberal-progressista: liberal na economia, mas atento à proteção de direitos da personalidade e liberdade de expressão na era digital.11"
+      }
+    },
+    "stj-marco-buzzi": {
+      "nome": "Marco Buzzi",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Especialista em Direito do Consumidor. Perfil protecionista, alinhado à defesa do hipossuficiente. Seus votos são técnicos, mas sempre orientados pela principiologia do Código de Defesa do Consumidor.12"
+      }
+    },
+    "stj-marco-aurelio-bellizze": {
+      "nome": "Marco Aurélio Bellizze",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Pragmático e resolutivo. Foca na efetividade da execução e na satisfação do crédito. É um juiz \"hands-on\", que busca desenrolar processos complexos de recuperação judicial.9"
+      }
+    },
+    "stj-moura-ribeiro": {
+      "nome": "Moura Ribeiro",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Garantista civil. Traz uma visão humanista para o direito privado, enfatizando a dignidade da pessoa humana nas relações obrigacionais. Perfil sereno e conciliador.12"
+      }
+    },
+    "stj-isabel-gallotti": {
+      "nome": "Maria Isabel Gallotti",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Conservadora e técnica. Filha e neta de ministros do STF, possui uma formação jurídica clássica. Seus votos são restritivos na concessão de indenizações por dano moral, buscando evitar a \"indústria do dano moral\". É a voz da prudência e da contenção.3"
+      }
+    },
+    "stj-antonio-carlos-ferreira": {
+      "nome": "Antonio Carlos Ferreira",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O técnico dos contratos. Oriundo da carreira jurídica da Caixa Econômica Federal, possui expertise ímpar em direito bancário e contratos de massa. Perfil discreto, avesso a holofotes, focado na segurança jurídica do sistema financeiro. Lidera discussões sobre IA no judiciário.9"
+      }
+    },
+    "stj-humberto-martins": {
+      "nome": "Humberto Martins",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Político e articulado. Ex-Presidente da Corte. Seus votos buscam o meio-termo e a estabilidade institucional. Tende a ser deferente às decisões das instâncias ordinárias.3"
+      }
+    },
+    "stj-raul-araujo": {
+      "nome": "Raul Araújo",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Conservador clássico. Recentemente em evidência por decisões no TSE, no STJ mantém uma linha de defesa da propriedade privada e da família tradicional. Votos técnicos, mas ideologicamente marcados pelo conservadorismo.3"
+      }
+    },
+    "trf1-marcus-bastos": {
+      "nome": "Marcus Vinícius Reis Bastos (Antiguidade)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do",
+        "analise_comportamental": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do MPF consideradas abusivas. É técnico, corajoso e independente.18  \n2."
+      }
+    },
+    "trf1-flavio-jardim": {
+      "nome": "Flávio Jardim (Quinto Constitucional \\- OAB)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado ",
+        "analise_comportamental": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado à jurisprudência do STF.20  \n6."
+      }
+    },
+    "trf1-rui-goncalves": {
+      "nome": "Rui Costa Gonçalves",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30",
+        "analise_comportamental": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30"
+      }
+    },
+    "tjdft-jair-oliveira-soares": {
+      "nome": "Jair Oliveira Soares (Decano)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo.  \n2.",
+        "analise_comportamental": "O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo.  \n2."
+      }
+    },
+    "tjdft-sergio-xavier-de-souza-rocha": {
+      "nome": "Sérgio Xavier de Souza Rocha",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista com viés **garantista moderado**, uma exceção na corte. Tende a seguir os precedentes do STJ em matéria de nulidades.  \n4.",
+        "analise_comportamental": "Penalista com viés **garantista moderado**, uma exceção na corte. Tende a seguir os precedentes do STJ em matéria de nulidades.  \n4."
+      }
+    },
+    "tjdft-fernando-antonio-habibe-pereira": {
+      "nome": "Fernando Antônio Habibe Pereira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Intelectual e filósofo do direito. Seus votos discutem a",
+        "analise_comportamental": "Intelectual e filósofo do direito. Seus votos discutem a"
+      }
+    },
+    "tjdft-gislene-pinheiro-de-oliveira": {
+      "nome": "João Timóteo de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Punitivista \"Linha Dura\"**. Em matéria penal, é rigoroso, defendendo a segurança pública acima de filigranas processuais. Votos duros contra tráfico e corrupção.  \n7.",
+        "analise_comportamental": "Punitivista \"Linha Dura\"**. Em matéria penal, é rigoroso, defendendo a segurança pública acima de filigranas processuais. Votos duros contra tráfico e corrupção.  \n7."
+      }
+    },
+    "tjdft-simone-costa-lucindo-ferreira": {
+      "nome": "Simone Costa Lucindo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9.",
+        "analise_comportamental": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9."
+      }
+    },
+    "tjdft-teofilo-rodrigues-caetano-neto": {
+      "nome": "Teófilo Rodrigues Caetano Neto",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Discreto e institucional. Segue a maioria, evitando polêmicas.31  \n11.",
+        "analise_comportamental": "Discreto e institucional. Segue a maioria, evitando polêmicas.31  \n11."
+      }
+    },
+    "tjdft-silvanio-barbosa-dos-santos": {
+      "nome": "Silvânio Barbosa dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Conservador e legalista.  \n13.",
+        "analise_comportamental": "Conservador e legalista.  \n13."
+      }
+    },
+    "trf1-rosimayre-goncalves-de-carvalho": {
+      "nome": "José Jacinto Costa Carvalho",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Tradicionalista.  \n15.",
+        "analise_comportamental": "Tradicionalista.  \n15."
+      }
+    },
+    "tjdft-diaulas-costa-ribeiro": {
+      "nome": "Diaulas Costa Ribeiro",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "O Provocador Intelectual**. Ex-Promotor, bioeticista de renome mundial. Seus votos são disruptivos, citando literatura, filosofia e ciência. Desafia o senso comum jurídico. Ideologicamente, é um conse",
+        "analise_comportamental": "O Provocador Intelectual**. Ex-Promotor, bioeticista de renome mundial. Seus votos são disruptivos, citando literatura, filosofia e ciência. Desafia o senso comum jurídico. Ideologicamente, é um conservador ilustrado que valoriza a vida e a ética médica.25  \n17."
+      }
+    },
+    "tjdft-esdras-neves-almeida": {
+      "nome": "Esdras Neves Almeida",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista seguro, foco em contratos.  \n19.",
+        "analise_comportamental": "Civilista seguro, foco em contratos.  \n19."
+      }
+    },
+    "tjdft-alfeu-gonzaga-machado": {
+      "nome": "Alfeu Gonzaga Machado",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista e processualista.25  \n21.",
+        "analise_comportamental": "Civilista e processualista.25  \n21."
+      }
+    },
+    "tjdft-hector-valverde-santanna": {
+      "nome": "Hector Valverde Santanna",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Acadêmico Consumerista**. Doutrinador respeitado em Direito do Consumidor. Seus votos equilibram a proteção do consumidor com a análise econômica para não inviabilizar o mercado. É um \"farol\" doutriná",
+        "analise_comportamental": "Acadêmico Consumerista**. Doutrinador respeitado em Direito do Consumidor. Seus votos equilibram a proteção do consumidor com a análise econômica para não inviabilizar o mercado. É um \"farol\" doutrinário na corte.33  \n25."
+      }
+    },
+    "tjdft-fabio-eduardo-marques": {
+      "nome": "Fábio Eduardo Marques",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Juiz de Carreira**. Promovido por merecimento. Conhece a \"máquina\" do judiciário como poucos. Perfil de alta produtividade e tecnicismo processual.35  \n27.",
+        "analise_comportamental": "Juiz de Carreira**. Promovido por merecimento. Conhece a \"máquina\" do judiciário como poucos. Perfil de alta produtividade e tecnicismo processual.35  \n27."
+      }
+    },
+    "tjdft-alvaro-luis-de-araujo-sales-ciarlini": {
+      "nome": "Alvaro Luis de Araujo Sales Ciarlini",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Formalista Culto**. Seus votos são longos, fundamentados em teoria geral do direito. Exige rigor técnico absoluto das partes.37  \n29.",
+        "analise_comportamental": "Formalista Culto**. Seus votos são longos, fundamentados em teoria geral do direito. Exige rigor técnico absoluto das partes.37  \n29."
+      }
+    },
+    "tjdft-carlos-pires-soares-neto": {
+      "nome": "Carlos Pires Soares Neto",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Modernizador**. Jovem, ascensão meteórica. Focado em inovação e eficiência.39  \n31.",
+        "analise_comportamental": "Modernizador**. Jovem, ascensão meteórica. Focado em inovação e eficiência.39  \n31."
+      }
+    },
+    "tjdft-maria-ivatonia-barbosa-dos-santos": {
+      "nome": "Maria Ivatônia Barbosa dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Representatividade e Direitos Humanos**. Primeira mulher negra desembargadora do TJDFT (MP). Atuação marcante em questões raciais e sociais. Garantista em direitos fundamentais.40  \n33.",
+        "analise_comportamental": "Representatividade e Direitos Humanos**. Primeira mulher negra desembargadora do TJDFT (MP). Atuação marcante em questões raciais e sociais. Garantista em direitos fundamentais.40  \n33."
+      }
+    },
+    "tjdft-josapha-francisco-dos-santos": {
+      "nome": "Josaphá Francisco dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Conservador em costumes, técnico em direito privado.  \n35.",
+        "analise_comportamental": "Conservador em costumes, técnico em direito privado.  \n35."
+      }
+    },
+    "tjdft-leonardo-roscoe-bessa": {
+      "nome": "Leonardo Roscoe Bessa",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Especialista em Consumidor (MP)**. Assim como Valverde, é autoridade em direito do consumidor, mas com o viés de tutela coletiva do MP. Rigoroso com empresas que lesam a coletividade.41  \n37.",
+        "analise_comportamental": "Especialista em Consumidor (MP)**. Assim como Valverde, é autoridade em direito do consumidor, mas com o viés de tutela coletiva do MP. Rigoroso com empresas que lesam a coletividade.41  \n37."
+      }
+    },
+    "tjdft-lucimeire-maria-da-silva": {
+      "nome": "Lucimeire Maria da Silva",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Foco em Infância e Juventude. Protetiva e sensível a causas sociais.25  \n39.",
+        "analise_comportamental": "Foco em Infância e Juventude. Protetiva e sensível a causas sociais.25  \n39."
+      }
+    },
+    "tjdft-roberval-casemiro-belinati": {
+      "nome": "Roberval Casemiro Belinati",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Político, extremamente popular, comunicativo",
+        "analise_comportamental": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30 * **2ª Vice-Presidente:** Des. **Angelo Canducci Passareli**. Perfil discreto, técnico e conciliador. * **Corregedor:** Des. **Mario-Zam Belmiro Rosa**. *Perfil:* Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27 **Desembargadores (Ordem de Antiguidade/Relevância):**"
+      }
+    },
+    "tjdft-vera-lucia-andrighi": {
+      "nome": "Vera Lúcia Andrighi",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Humanista",
+        "analise_comportamental": "Humanista. Pioneira em justiça conciliatória e mediação. Seus votos buscam a paz social mais do que a imposição fria da sanção."
+      }
+    },
+    "tjdft-arnoldo-camanho-de-assis": {
+      "nome": "Arnoldo Camanho de Assis",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista clássico, erudito",
+        "analise_comportamental": "Civilista clássico, erudito. Seus votos são doutrinários. Conservador em responsabilidade civil."
+      }
+    },
+    "tjdft-jesuino-aparecido-rissato": {
+      "nome": "Jesuíno Aparecido Rissato",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico-Punitivista**",
+        "analise_comportamental": "**Técnico-Punitivista**. Frequentemente convocado ao STJ, onde reforça a ala conservadora. No TJDFT, é uma referência de rigor penal e eficiência processual.25"
+      }
+    },
+    "tjdft-joao-egmont-leoncio-lopes": {
+      "nome": "João Egmont Leôncio Lopes",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Pragmático",
+        "analise_comportamental": "Pragmático. Focado em Direito Empresarial. Busca soluções que destravem a economia."
+      }
+    },
+    "tjdft-nilsoni-de-freitas-custodio": {
+      "nome": "Nilsoni de Freitas Custódio",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista de Gênero**",
+        "analise_comportamental": "**Penalista de Gênero**. Atuação rigorosa em crimes contra a mulher e violência doméstica. Técnica, mas sensível a questões sociais."
+      }
+    },
+    "tjdft-jose-cruz-macedo": {
+      "nome": "José Cruz Macedo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Gestor",
+        "analise_comportamental": "Gestor. Sua presidência focou em modernização. Julgador equilibrado e previsível."
+      }
+    },
+    "tjdft-ana-maria-cantarino": {
+      "nome": "Ana Maria Cantarino",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Humanista**",
+        "analise_comportamental": "**Humanista**. Especialista em Direito de Família. Votos sensíveis à proteção de menores e incapazes.25"
+      }
+    },
+    "tjdft-sandoval-gomes-de-oliveira": {
+      "nome": "Sandoval Gomes de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico e célere",
+        "analise_comportamental": "Técnico e célere."
+      }
+    },
+    "tjdft-robson-barbosa-de-azevedo": {
+      "nome": "Robson Barbosa de Azevedo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Discreto",
+        "analise_comportamental": "Discreto.25"
+      }
+    },
+    "tjdft-romulo-de-araujo-mendes": {
+      "nome": "Rômulo de Araújo Mendes",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Jovem e dinâmico",
+        "analise_comportamental": "Jovem e dinâmico. Traz agilidade aos julgamentos cíveis."
+      }
+    },
+    "tjdft-sandra-reves-vasques-tonussi": {
+      "nome": "Sandra Reves Vasques Tonussi",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica, oriunda da magistratura de carreira",
+        "analise_comportamental": "Técnica, oriunda da magistratura de carreira. Votos precisos em direito civil."
+      }
+    },
+    "tjdft-roberto-freitas-filho": {
+      "nome": "Roberto Freitas Filho",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Constitucionalista (Quinto OAB)**",
+        "analise_comportamental": "**Constitucionalista (Quinto OAB)**. Doutor, traz a visão da advocacia e da academia. Seus votos oxigenam o tribunal com teses constitucionais contemporâneas. Garantista e inovador.36"
+      }
+    },
+    "tjdft-luis-gustavo-barbosa-de-oliveira": {
+      "nome": "Luís Gustavo Barbosa de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico e discreto",
+        "analise_comportamental": "Técnico e discreto.38"
+      }
+    },
+    "tjdft-leila-cristina-garbin-arlanch": {
+      "nome": "Leila Cristina Garbin Arlanch",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica",
+        "analise_comportamental": "Técnica."
+      }
+    },
+    "tjdft-fabricio-fontoura-bezerra": {
+      "nome": "Fabrício Fontoura Bezerra",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Promovido em 2025\\",
+        "analise_comportamental": "Promovido em 2025\\. Traz a experiência recente da primeira instância. Perfil operacional.40"
+      }
+    },
+    "tjdft-robson-vieira-teixeira-de-freitas": {
+      "nome": "Robson Vieira Teixeira de Freitas",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico",
+        "analise_comportamental": "Técnico."
+      }
+    },
+    "tjdft-arquibaldo-carneiro-portela": {
+      "nome": "Arquibaldo Carneiro Portela",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista equilibrado",
+        "analise_comportamental": "Penalista equilibrado. Busca o meio termo entre o punitivismo e o garantismo.42"
+      }
+    },
+    "tjdft-renato-rodovalho-scussel": {
+      "nome": "Renato Rodovalho Scussel",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Especialista em Infância e Juventude",
+        "analise_comportamental": "Especialista em Infância e Juventude. Conservador, defensor da família tradicional e da proteção integral da criança."
+      }
+    },
+    "tjdft-soniria-rocha-campos-d-assuncao": {
+      "nome": "Soníria Rocha Campos D'Assunção",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica, ascensão recente",
+        "analise_comportamental": "Técnica, ascensão recente."
+      }
+    },
+    "tjdft-waldir-leoncio-cordeiro-lopes-junior": {
+      "nome": "Waldir Leôncio Lopes Júnior",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil gestor, focado em tecnologia e metas. Penalista de origem, mas com visão administrativa moderna."
+      }
+    },
+    "tjdft-angelo-canducci-passareli": {
+      "nome": "Angelo Canducci Passareli",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil discreto, técnico e conciliador."
+      }
+    },
+    "tjdft-mario-zam-belmiro-rosa": {
+      "nome": "Mario-Zam Belmiro Rosa",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27",
+        "analise_comportamental": "*Perfil:* Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27 **Desembargadores (Ordem de Antiguidade/Relevância):** 1. **Jair Oliveira Soares (Decano):** *Perfil:* O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo. 2. **Vera Lúcia Andrighi:** *Perfil:* Humanista. Pioneira em justiça conciliatória e mediação. Seus votos buscam a paz social mais do que a imposição fria da sanção. 3. **S"
+      }
+    },
+    "trf1-katia-balbino": {
+      "nome": "Kátia Balbino",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Progressista/Direitos Humanos**. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justi",
+        "analise_comportamental": "Progressista/Direitos Humanos**. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justiça. É uma gestora inovadora.19"
+      }
+    },
+    "trf1-gustavo-soares-amorim": {
+      "nome": "Gustavo Amorim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende ",
+        "analise_comportamental": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende a ser um voto moderado, mas com forte influência nos bastidores.13"
+      }
+    },
+    "trf1-eduardo-martins": {
+      "nome": "Eduardo Martins",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Pragmático/Dynasty**. Filho do Ministro Humberto Martins (STJ). Sua nomeação reforça os laços entre o STJ e o TRF-1. Atua com foco nas prerrogativas da advocacia e na celeridade processual. Tende ao c",
+        "analise_comportamental": "Pragmático/Dynasty**. Filho do Ministro Humberto Martins (STJ). Sua nomeação reforça os laços entre o STJ e o TRF-1. Atua com foco nas prerrogativas da advocacia e na celeridade processual. Tende ao conservadorismo em temas morais, mas é garantista em processos disciplinares e penais.20"
+      }
+    },
+    "trf1-solange-salgado-da-silva": {
+      "nome": "Solange Salgado da Silva",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "18",
+        "analise_comportamental": "** Processualista, perfil de produtividade.18"
+      }
+    },
+    "trf1-urbano-leal-berquo-neto": {
+      "nome": "Urbano Leal Berquó Neto",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Traz a representatividade feminina e a experiência da magistratura baiana.18"
+      }
+    },
+    "trf1-euler-de-almeida": {
+      "nome": "Euler de Almeida Silva Júnior",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Gestor eficiente, focado em metas.22"
+      }
+    },
+    "trf1-jose-amilcar-machado": {
+      "nome": "José Amilcar Machado",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Focou na interiorização."
+      }
+    },
+    "trf1-joao-batista-moreira": {
+      "nome": "João Batista Moreira",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "burocrático e eficiente",
+        "analise_comportamental": "Perfil técnico e acadêmico."
+      }
+    },
+    "trf1-i-talo-mendes": {
+      "nome": "I'talo Fioravanti Sabo Mendes",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Ex-Presidente. Conservador, ligado a valores tradicionais e defesa da propriedade."
+      }
+    },
+    "trf1-gilda-sigmaringa-seixas": {
+      "nome": "Gilda Sigmaringa Seixas",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil conciliador, com foco em direito previdenciário."
+      }
+    },
+    "trf1-neviton-guedes": {
+      "nome": "Néviton Guedes",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Constitucionalista de renome, garantista e acadêmico (doutor pela Alemanha). Seus votos são referências teóricas."
+      }
+    },
+    "trf1-ney-bello": {
+      "nome": "Ney Bello",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "É uma liderança intelectual na corte, com forte interlocução em Brasília",
+        "analise_comportamental": "(Frequentemente cotado para o STJ). Perfil garantista, culto e literato. É uma liderança intelectual na corte, com forte interlocução em Brasília."
+      }
+    },
+    "trf1-maria-do-carmo-cardoso": {
+      "nome": "Maria do Carmo Cardoso",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "A \"Juíza Política\". Tem imenso trânsito nos bastidores de Brasília. Pragmática, resolve problemas. Votos nem sempre dogmáticos, mas focados na solução do conflito."
+      }
+    },
+    "trf1-hercules-fajoses": {
+      "nome": "Hercules Fajoses",
+      "tribunal": "TRF1"
+    },
+    "trf1-daniele-maranhao": {
+      "nome": "Daniele Maranhão Costa",
+      "tribunal": "TRF1"
+    },
+    "trf1-wilson-alves-de-souza": {
+      "nome": "Wilson Alves de Souza",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Origem MPF. Tende a ser mais rigoroso em improbidade administrativa."
+      }
+    },
+    "trf1-maura-moraes-tayer": {
+      "nome": "Maura Moraes Tayer",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Cível. Discreta, votos padronizados."
+      }
+    },
+    "trf1-rafael-paulo": {
+      "nome": "Rafael Paulo Soares Pinto",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Cível. Discreta, votos padronizados."
+      }
+    },
+    "trf1-cesar-jatahy": {
+      "nome": "César Jatahy",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Origem MPF. Tende a ser mais rigoroso em improbidade administrativa."
+      }
+    },
+    "trf1-morais-da-rocha": {
+      "nome": "Morais da Rocha",
+      "tribunal": "TRF1"
+    },
+    "trf1-alexandre-vasconcelos": {
+      "nome": "Prado de Vasconcelos",
+      "tribunal": "TRF1"
+    },
+    "stf-luis-roberto-barroso": {
+      "nome": "Luís Roberto Barroso",
+      "tribunal": "STF",
+      "nascimento": {
+        "cidade": "Vassouras"
+      },
+      "dados_dossie": {
+        "origem": "Advocacia Privada e Procuradoria do Estado do RJ",
+        "perfil_psicologico": "Perfil \"Iluminista\". Acredita no papel do Judiciário como vanguarda iluminista que empurra a história. Estilo didático, professoral, estruturado em tópicos e princípios. Valoriza a moralidade administrativa e a eficiência. Frequentemente entra em choque retórico com Gilmar Mendes.10",
+        "padrao_decisorio": {
+          "Penal": "Punitivista Moderado / Eficientista. Defensor da execução da pena após segunda instância (posição vencida) e duro no combate à corrupção. Contudo, é",
+          "Progressista": "na política de drogas, tendo liderado o voto pela descriminalização do porte de maconha para uso pessoal.",
+          "Clone Trigger": "O clone deve utilizar argumentos baseados em \"dignidade humana\", \"mínimo existencial\" e dados empíricos/científicos ."
+        },
+        "clone_trigger": "O clone deve utilizar argumentos baseados em \"dignidade humana\", \"mínimo existencial\" e dados empíricos/científicos."
+      }
+    },
+    "stj-maria-thereza-de-assis-moura": {
+      "nome": "Maria Thereza de Assis Moura",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "equilibrado, origem no jornalismo",
+        "analise_comportamental": "** Perfil equilibrado, origem no jornalismo. Transita bem entre as alas, mas tende a manter condenações bem fundamentadas.23"
+      }
+    },
+    "trf1-antonio-scarpa": {
+      "nome": "Antônio Souza Prudente",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Previdenciário. Votos favoráveis aos segurados (pro-misero)."
+      }
+    },
+    "trf1-marcos-augusto-de-sousa": {
+      "nome": "Marcos Augusto de Sousa",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Constitucionalista (Doutorado na Alemanha). Garantista, alinhado doutrinariamente com o grupo de Gilmar Mendes/Ney Bello. Votos eruditos.31"
+      }
+    },
+    "trf1-marcelo-albernaz": {
+      "nome": "Marcelo Albernaz",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "garantista em direitos sociais e saúde",
+        "analise_comportamental": "** Juíza de carreira (DF). Perfil garantista em direitos sociais e saúde."
+      }
+    },
+    "trf1-newton-ramos": {
+      "nome": "Newton Ramos",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Juiz de carreira."
+      }
+    },
+    "trf1-candice-lavocat-galvao-jobim": {
+      "nome": "Candice Lavocat Galvão Jobim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Juíza de carreira (Posse recente). Foco em previdenciário/social.33"
+      }
+    },
+    "trf1-ana-carolina-roman": {
+      "nome": "Ana Carolina Roman",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Recém empossado (2024). Origem Bahia.37"
+      }
+    },
+    "trf1-pablo-zuniga": {
+      "nome": "Pablo Zuniga Dourado",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "técnico",
+        "analise_comportamental": "** Juiz de carreira. Perfil técnico.34 ## --- **"
+      }
+    },
+    "trf1-carlos-eduardo-moreira-alves": {
+      "nome": "Carlos Moreira Alves",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Conservador tradicional. Filho de ex-ministro do STF. Votos curtos e legalistas."
+      }
+    },
+    "trf1-roberto-carvalho-veloso": {
+      "nome": "Roberto Veloso",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juiz de carreira (MA). Ex-presidente da Ajufe. Perfil corporativo (defesa da magistratura) e político. Conhece profundamente o sistema."
+      }
+    },
+    "trf1-pedro-braga-filho": {
+      "nome": "Pedro Braga Filho",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Recém empossado (2024). Origem Bahia.37"
+      }
+    }
+  },
+  "dados_extraidos": {
+    "edson fachin": {
+      "nome": "Edson Fachin",
+      "tribunal": "STF",
+      "nome_completo": "Luiz Edson Fachin",
+      "nascimento": {
+        "cidade": "Passo Fundo"
+      },
+      "dados_dossie": {
+        "indicacao": "14/04/2015",
+        "nomeacao": "22/05/2015",
+        "posse": "16/06/2015",
+        "origem": "Advocacia/Academia",
+        "perfil_ideologico": "leitura constitucional com ênfase em fundamentação técnico-doutrinária.",
+        "perfil_psicologico": "Temperamento reservado, técnico e formalista. Sofreu uma metamorfose notável: de jurista ligado a movimentos sociais no sul, tornou-se o relator da Lava Jato e adotou uma postura rígida em matéria penal, isolando-se muitas vezes de sua base original de apoio.",
+        "padrao_decisorio": {
+          "Penal": "Rigoroso (\"Lavajatista\"). Tende a manter condenações e prisões em casos de corrupção, divergindo de Gilmar e Lewandowski (aposentado).",
+          "Direitos Humanos": "Garantista Social. Em temas como violência policial (ADPF das Favelas) e direitos indígenas, adota postura protetiva e intervencionista contra o Estado.",
+          "Clone Trigger": "Votos densos, herméticos, tecnicamente precisos. Baixa propensão a retórica política aberta ."
+        },
+        "clone_trigger": "Votos densos, herméticos, tecnicamente precisos. Baixa propensão a retórica política aberta."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=principal&servico=sobreStfMinistroEdsonFachin",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=EdsonFachinDadosDatas&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "alexandre de moraes": {
+      "nome": "Alexandre de Moraes",
+      "tribunal": "STF",
+      "nome_completo": "Alexandre de Moraes",
+      "nascimento": {
+        "cidade": "São Paulo"
+      },
+      "dados_dossie": {
+        "origem": "Ministério Público de SP, Secretário de Segurança, Ministro da Justiça",
+        "perfil_ideologico": "pragmatismo institucional em temas de Estado, segurança e ordem constitucional.",
+        "perfil_psicologico": "Perfil \"Sheriff\". Enérgico, centralizador, autoritário e pragmático. Assumiu a missão de blindar as instituições democráticas contra ataques extremistas, acumulando um poder monocrático sem precedentes (Inquérito das Fake News). Retórica direta, assertiva e intimidatória quando necessário.14",
+        "padrao_decisorio": {
+          "Institucional": "Repressivo. Utiliza a lei penal e processual como ferramenta de defesa do Estado. Flexibiliza garantias individuais (como imunidade parlamentar ou liberdade de expressão) quando entende haver ameaça à ordem democrática.",
+          "Penal Comum": "Misto. Duro contra o crime organizado (PCC), mas pragmático em gestão carcerária."
+        },
+        "clone_trigger": "O clone deve priorizar a \"defesa da Democracia\" e a \"autoridade das decisões judiciais\" acima de purismos processuais. Decisões rápidas e de forte impacto midiático."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/ostf/ministros/verMinistro.asp?id=50&periodo=STF",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.stf.jus.br/ostf/ministros/verMinistro.asp?id=50&periodo=STF",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "gilmar mendes": {
+      "nome": "Gilmar Mendes",
+      "tribunal": "STF",
+      "nome_completo": "Gilmar Ferreira Mendes",
+      "nascimento": {
+        "data": "30/12/1955",
+        "cidade": "Diamantino/MT"
+      },
+      "dados_dossie": {
+        "indicacao": "25/04/2002",
+        "nomeacao": "27/05/2002",
+        "posse": "20/06/2002",
+        "perfil_ideologico": "forte uso de precedentes/argumentação institucional e comparada; atenção a efeitos sistêmicos."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=GilmarMendesPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "carmen lucia": {
+      "nome": "Cármen Lúcia",
+      "tribunal": "STF",
+      "nome_completo": "Cármen Lúcia Antunes Rocha",
+      "nascimento": {
+        "data": "19/04/1954",
+        "cidade": "Montes Claros/MG"
+      },
+      "dados_dossie": {
+        "indicacao": "10/05/2006",
+        "nomeacao": "25/05/2006",
+        "posse": "21/06/2006",
+        "origem": "Procuradoria do Estado de MG",
+        "perfil_ideologico": "linguagem de princípios (igualdade, impessoalidade, moralidade administrativa) com ênfase na ética pública.",
+        "perfil_psicologico": "Austera, principiológica, formal. Adota um estilo de vida simples e projeta essa imagem em seus votos. Focada em direitos fundamentais, especialmente direitos das mulheres e liberdade de imprensa.16",
+        "padrao_decisorio": {
+          "Penal": "Rigorosa, mas humanista. Tem endurecido o discurso contra a corrupção, mas mantém preocupação com as condições carcerárias femininas.",
+          "Clone Trigger": "Linguagem por vezes poética ou rebuscada (\"mineirismo\"), com forte carga ética ."
+        },
+        "clone_trigger": "Linguagem por vezes poética ou rebuscada (\"mineirismo\"), com forte carga ética."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=CarmenLuciaPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "dias toffoli": {
+      "nome": "Dias Toffoli",
+      "tribunal": "STF",
+      "nome_completo": "José Antonio Dias Toffoli",
+      "nascimento": {
+        "cidade": "Marília"
+      },
+      "dados_dossie": {
+        "origem": "Advocacia-Geral da União",
+        "perfil_ideologico": "busca de acomodação institucional e soluções de estabilidade (especialmente em conflitos interinstitucionais).",
+        "perfil_psicologico": "Pragmático, conciliador, operador político. Possui menor densidade teórica acadêmica comparado aos pares, mas supre isso com imensa habilidade de articulação entre os Três Poderes. Busca sempre o \"caminho do meio\" que preserve a governabilidade.16",
+        "padrao_decisorio": {
+          "Penal": "Migrou para o Garantismo.",
+          "Reviu suas posições anteriores (era favorável à prisão em 2ª instância) e hoje alinha-se a Gilmar Mendes na anulação de processos da Lava Jato e críticas ao \"Estado Policial\".": "Econômico: Governista. Tende a votar validando medidas do Executivo federal em matéria tributária e fiscal para evitar colapso orçamentário.",
+          "Clone Trigger": "Votos focados na consequência política da decisão e na estabilidade institucional ."
+        },
+        "clone_trigger": "Votos focados na consequência política da decisão e na estabilidade institucional."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=DiasToffoliDadosDatas&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "luiz fux": {
+      "nome": "Luiz Fux",
+      "tribunal": "STF",
+      "nome_completo": "Luiz Fux",
+      "nascimento": {
+        "data": "26/04/1953",
+        "cidade": "Rio de Janeiro/RJ"
+      },
+      "dados_dossie": {
+        "indicacao": "01/02/2011",
+        "nomeacao": "10/02/2011",
+        "posse": "03/03/2011",
+        "origem": "Magistratura de Carreira/STJ",
+        "perfil_ideologico": "raciocínio mais “processual” e consequencialista (efeitos práticos, governança do sistema de justiça).",
+        "perfil_psicologico": "Corporativista (defensor da classe dos juízes), vaidoso, midiático. Trouxe a \"Análise Econômica do Direito\" para o STF. Gosta de ser visto como um juiz moderno e sintonizado com o \"sentimento constitucional\" (voz das ruas).3",
+        "padrao_decisorio": {
+          "Penal": "Punitivista. Foi um dos maiores defensores da Lava Jato no STF. Defende a prisão após segunda instância.",
+          "Civil/Econômico": "Liberal. Defende a segurança jurídica, o cumprimento de contratos e a validade de marcos regulatórios pró-mercado.",
+          "Clone Trigger": "Argumentação baseada em Law & Economics"
+        },
+        "clone_trigger": "Argumentação baseada em *Law & Economics*, citações de cultura pop ou filosofia, e defesa da \"moralidade\"."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=LuizFuxPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "nunes marques": {
+      "nome": "Nunes Marques",
+      "tribunal": "STF",
+      "nome_completo": "Kassio Nunes Marques",
+      "nascimento": {
+        "data": "16/05/1972",
+        "cidade": "Teresina/PI"
+      },
+      "dados_dossie": {
+        "indicacao": "01/10/2020",
+        "nomeacao": "22/10/2020",
+        "posse": "05/11/2020",
+        "perfil_ideologico": "deferência a escolhas administrativas/legislativas em certos temas; estilo mais contido."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=NunesMarquesPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "andre mendonca": {
+      "nome": "André Mendonça",
+      "tribunal": "STF",
+      "nome_completo": "André Luiz de Almeida Mendonça",
+      "nascimento": {
+        "data": "27/12/1972",
+        "cidade": "Santos/SP"
+      },
+      "dados_dossie": {
+        "indicacao": "12/07/2021",
+        "nomeacao": "02/12/2021",
+        "posse": "16/12/2021",
+        "origem": "Advocacia-Geral da União/Ministro da Justiça",
+        "perfil_ideologico": "leitura jurídico-formalista em alguns temas; foco em separação de poderes e desenho institucional.",
+        "perfil_psicologico": "Conservador religioso, técnico (carreira sólida na AGU), polido. Busca legitimação acadêmica e técnica para não ser estigmatizado apenas pelo viés religioso.17",
+        "padrao_decisorio": {
+          "Penal": "Punitivista em crimes comuns, mas variável em crimes políticos. No 8 de janeiro, também divergiu da maioria condenatória em diversos pontos, buscando individualizar condutas para absolver ou reduzir penas.",
+          "Conservador.": "Defensor ferrenho da liberdade religiosa e pautas morais conservadoras."
+        },
+        "clone_trigger": "Votos muito estruturados, uso de argumentos de liberdade individual e religiosa."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=AndreMendoncaPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "cristiano zanin": {
+      "nome": "Cristiano Zanin",
+      "tribunal": "STF",
+      "nome_completo": "Cristiano Zanin Martins",
+      "nascimento": {
+        "data": "15/11/1975",
+        "cidade": "Piracicaba/SP"
+      },
+      "dados_dossie": {
+        "indicacao": "01/06/2023",
+        "nomeacao": "04/07/2023",
+        "posse": "03/08/2023",
+        "origem": "Advocacia Privada",
+        "perfil_ideologico": "alta atenção a garantias processuais e à coerência procedimental do julgamento.",
+        "perfil_psicologico": "Técnico, processualista obsessivo, perfil de advogado de defesa. Ficou famoso pelo \"lawfare\" na defesa de Lula. Como ministro, revelou-se um conservador em pautas sociais, surpreendendo sua base de indicação.19",
+        "padrao_decisorio": {
+          "Penal": "Garantista Puro. Foco total no devido processo legal, cadeia de custódia e nulidades. Vê o processo penal como um sistema de freios ao poder punitivo.",
+          "Social": "Conservador. Votou contra a descriminalização da maconha e tem posições reservadas em pautas de costumes, mostrando independência ideológica em relação ao PT."
+        },
+        "clone_trigger": "Análise minuciosa de falhas processuais. Votos técnicos e frios."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=CristianoZaninPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "flavio dino": {
+      "nome": "Flávio Dino",
+      "tribunal": "STF",
+      "nome_completo": "Flávio Dino de Castro e Costa",
+      "nascimento": {
+        "data": "30/04/1968",
+        "cidade": "São Luís/MA"
+      },
+      "dados_dossie": {
+        "indicacao": "27/11/2023",
+        "nomeacao": "31/01/2024",
+        "posse": "22/02/2024",
+        "origem": "Magistratura Federal/Política",
+        "perfil_ideologico": "sensibilidade a políticas públicas e governança do Estado; linguagem mais “política-institucional” (no sentido de desenho de Estado).",
+        "perfil_psicologico": "Intelectual, orador eloquente, político experiente. Conhece a máquina pública \"por dentro\". Tem perfil de liderança e não se furta a debates políticos no plenário.",
+        "padrao_decisorio": {
+          "Institucional": "Estatista. Defensor do poder regulatório do Estado e de políticas públicas fortes.",
+          "Penal": "Progressista, mas com visão pragmática de gestor de segurança pública. Tende a ser duro com crimes que atentam contra o Estado Democrático."
+        },
+        "clone_trigger": "Votos com fundamentação sociológica e política, citando a realidade prática da administração pública."
+      },
+      "fontes_pesquisa": [
+        {
+          "url": "https://portal.stf.jus.br/textos/verTexto.asp?pagina=FlavioDinoPrincipal&servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://www.stj.jus.br/publicacaoinstitucional/index.php/relatorio/article/download/4244/6356",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        },
+        {
+          "url": "https://portal.trf1.jus.br/Setorial/Asmag/RelatoriosAsmag/composicaoOrgaosJulgadores.php",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "dossies_magistrados_base_v1.md"
+        }
+      ]
+    },
+    "sergio kukina": {
+      "nome": "Sérgio Kukina",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-PR",
+        "perfil_ideologico": "Estatalista/Conservador",
+        "analise_comportamental": "Adota uma postura austera e formalista. Psicologicamente, demonstra uma forte deferência aos atos administrativos e à proteção do patrimônio público. Seus votos são curtos, diretos e raramente flexibilizam regras processuais em favor do particular.5",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "regina helena costa": {
+      "nome": "Regina Helena Costa",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Acadêmica",
+        "perfil_ideologico": "Garantista Tributária",
+        "analise_comportamental": "Traz a sofisticação da academia para a corte. Seu perfil é técnico-científico. Diferencia-se por uma visão humanista do direito tributário, defendendo que a eficiência arrecadatória não pode atropelar direitos fundamentais do contribuinte. É a voz da moderação contra o excesso fiscal.",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "gurgel de faria": {
+      "nome": "Gurgel de Faria",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Técnico/Legalista",
+        "analise_comportamental": "Magistrado de carreira com perfil discreto. Suas decisões são previsíveis e alinhadas aos precedentes, evitando inovações judiciais disruptivas. Tende a votar com a maioria, funcionando como um elemento de estabilidade na Seção.6",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "benedito goncalves": {
+      "nome": "Benedito Gonçalves",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-2",
+        "perfil_ideologico": "Pragmático/Político",
+        "analise_comportamental": "Possui um perfil decisório flexível, sensível ao \"clima\" político e institucional. Sua passagem pelo TSE (onde relatou a inelegibilidade de Bolsonaro) revelou um juiz capaz de decisões duras quando respaldado institucionalmente. No STJ, busca soluções que conciliem interesses do Estado com a legalidade.4",
+        "secao": "2a Secao (Direito Privado)"
+      }
+    },
+    "paulo sergio domingues": {
+      "nome": "Paulo Sérgio Domingues",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-3",
+        "perfil_ideologico": "Modernizador/Eficiente",
+        "analise_comportamental": "Nomeado em 2022, representa a nova geração de juízes federais focados em gestão. Seu perfil é voltado para a desburocratização e eficiência processual. Ideologicamente, situa-se ao centro, sem radicalismos estatais ou liberais.6",
+        "secao": "1a Secao (Direito Publico)"
+      }
+    },
+    "teodoro silva santos": {
+      "nome": "Teodoro Silva Santos",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-CE",
+        "perfil_ideologico": "Regionalista/Pragmático",
+        "analise_comportamental": "Traz a vivência da justiça estadual do Nordeste. Seu perfil decisório é focado na resolução prática de conflitos, com sensibilidade para as desigualdades regionais. Ainda em fase de consolidação doutrinária na Corte, tende a seguir a jurisprudência dominante.8"
+      }
+    },
+    "afranio vilela": {
+      "nome": "Afrânio Vilela",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-MG",
+        "perfil_ideologico": "Conciliador/Gestor",
+        "analise_comportamental": "Conhecido pela alta produtividade no TJMG. Seu perfil psicológico é voltado para a pacificação social através da gestão de massas. Evita polêmicas doutrinárias, focando na aplicação célere do direito posto. É um magistrado de \"chão de fábrica\", essencial para a fluidez da Seção.9"
+      }
+    },
+    "mauro campbell marques": {
+      "nome": "Mauro Campbell Marques",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-AM",
+        "perfil_ideologico": "Institucionalista",
+        "analise_comportamental": "(Atualmente Diretor da ENFAM). Perfil de liderança forte, com trânsito político. Seus votos em direito público são robustos e frequentemente defendem a autonomia federativa e municipal.3"
+      }
+    },
+    "francisco falcao": {
+      "nome": "Francisco Falcão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Decano/Rigoroso",
+        "analise_comportamental": "O mais antigo. Perfil \"linha dura\" em improbidade administrativa. Não teme desagradar poderosos e mantém uma postura de fiscalização estrita da moralidade administrativa.3"
+      }
+    },
+    "herman benjamin": {
+      "nome": "Herman Benjamin",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-SP",
+        "perfil_ideologico": "Ativista Ambiental",
+        "analise_comportamental": "(Vide Perfil Presidência). Na Seção, é a referência absoluta em Direito Ambiental, defendendo a tese *in dubio pro natura*."
+      }
+    },
+    "sebastiao reis junior": {
+      "nome": "Sebastião Reis Júnior",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Advocacia",
+        "perfil_ideologico": "Garantista Radical",
+        "analise_comportamental": "Atua como um verdadeiro \"ombudsman\" do sistema carcerário. Psicologicamente, demonstra indignação constante com as condições prisionais e abusos policiais. Vota sistematicamente pela anulação de provas ilícitas (invasão de domicílio, busca pessoal sem fundada suspeita).6",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "rogerio schietti cruz": {
+      "nome": "Rogerio Schietti Cruz",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MPDFT",
+        "perfil_ideologico": "Garantista Integral",
+        "analise_comportamental": "O teórico do grupo. Desenvolveu uma jurisprudência sofisticada que exige padrões probatórios elevados. Embora oriundo do MP, é o maior crítico do \"denuncismo\" e da flexibilização de garantias. Seus votos são pedagógicos, visando educar as polícias e o MP sobre limites constitucionais.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "reynaldo soares da fonseca": {
+      "nome": "Reynaldo Soares da Fonseca",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-1",
+        "perfil_ideologico": "Humanista/Pacificador",
+        "analise_comportamental": "Perfil acolhedor e profundamente cristão/humanista. Busca a justiça restaurativa e a aplicação do princípio da insignificância. É o voto de fiel da balança que frequentemente inclina o julgamento para a liberdade do réu em casos limítrofes.13",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "ribeiro dantas": {
+      "nome": "Ribeiro Dantas",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-5",
+        "perfil_ideologico": "Garantista Técnico",
+        "analise_comportamental": "Processualista rigoroso. Anula processos não por ideologia, mas por falhas técnicas na instrução. É um guardião do devido processo legal formal.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "joel ilan paciornik": {
+      "nome": "Joel Ilan Paciornik",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-4",
+        "perfil_ideologico": "Punitivista/Lava Jato",
+        "analise_comportamental": "Representa a corrente mais rigorosa da corte. Oriundo do tribunal da Lava Jato, tende a validar a atuação policial e do MPF, aplicando a lei com severidade. Frequentemente fica vencido em turmas majoritariamente garantistas. Seu perfil é de ordem e autoridade.6",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "antonio saldanha palheiro": {
+      "nome": "Antonio Saldanha Palheiro",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TJ-RJ",
+        "perfil_ideologico": "Equilibrado",
+        "analise_comportamental": "Oscila entre o rigor e a garantia, dependendo do caso. Traz a experiência da criminalidade violenta do Rio de Janeiro, o que lhe confere pragmatismo, mas não ignora nulidades flagrantes.9",
+        "secao": "3a Secao (Direito Penal)"
+      }
+    },
+    "messod azulay neto": {
+      "nome": "Messod Azulay Neto",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-2",
+        "perfil_ideologico": "Conservador/Eficientista",
+        "analise_comportamental": "Focado na eficiência da repressão ao crime organizado. Tende a manter prisões preventivas em casos de alta periculosidade, alinhando-se mais a Paciornik do que a Schietti.8"
+      }
+    },
+    "daniela teixeira": {
+      "nome": "Daniela Teixeira",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "Advocacia",
+        "perfil_ideologico": "Garantista Combativa",
+        "analise_comportamental": "A mais nova integrante (2023). Trouxe a vivência da advocacia de defesa para o plenário. Seu perfil é combativo, especialmente em questões de gênero e prerrogativas da advocacia. Tem se destacado por votos que desafiam o *status quo* punitivo e defendem minorias.6"
+      }
+    },
+    "maria marluce caldas": {
+      "nome": "Maria Marluce Caldas",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "MP-AL",
+        "perfil_ideologico": "Incógnita (Em construção)",
+        "analise_comportamental": "Recém-empossada (2025). Oriunda do MP, espera-se inicialmente uma postura mais acusatória, mas a pressão institucional da 3ª Seção tende a moderar novos ministros em direção ao garantismo. Ocupa a vaga de Laurita Vaz, que era conservadora.3"
+      }
+    },
+    "carlos pires brandao": {
+      "nome": "Carlos Pires Brandão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "origem": "TRF-1",
+        "perfil_ideologico": "Humanista/Social",
+        "analise_comportamental": "Recém-empossado (2025). No TRF-1, destacou-se por decisões sensíveis a direitos humanos. Sua entrada na Seção Penal deve reforçar o bloco garantista de Reynaldo Soares e Sebastião Reis, isolando ainda mais a corrente punitivista.15"
+      }
+    },
+    "antonio herman de vasconcellos e benjamin": {
+      "nome": "Antonio Herman de Vasconcellos e Benjamin",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "Oriundo do Ministério Público de São Paulo, Herman Benjamin é a personificação do \"juiz cidadão\"",
+        "analise_comportamental": "* **Perfil Psicológico e Ideológico:** Oriundo do Ministério Público de São Paulo, Herman Benjamin é a personificação do \"juiz cidadão\". Seu perfil psicológico é marcado por um idealismo pragmático; ele acredita no Judiciário como agente de transformação social, especialmente nas áreas de Direito Ambiental e do Consumidor. Não é um juiz de gabinete isolado; é um acadêmico conectado globalmente, que utiliza o direito comparado para modernizar a jurisprudência brasileira.  \n* **Tendência Decisória"
+      }
+    },
+    "luis felipe salomao": {
+      "nome": "Luis Felipe Salomão",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "Magistrado de carreira (TJ-RJ), Salomão possui um perfil político aguçado e uma habilidade notável para o diálogo interinstitucional",
+        "analise_comportamental": "* **Perfil Psicológico e Ideológico:** Magistrado de carreira (TJ-RJ), Salomão possui um perfil político aguçado e uma habilidade notável para o diálogo interinstitucional. Psicologicamente, é um pragmático; suas decisões frequentemente aplicam a Análise Econômica do Direito, ponderando as consequências práticas e financeiras dos vereditos. É visto como um garantidor da segurança jurídica empresarial e um gestor rigoroso.  \n* **Tendência Decisória:** No Direito Privado, tende a valorizar a auton"
+      }
+    },
+    "nancy andrighi": {
+      "nome": "Nancy Andrighi",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "danos morais por abandono afetivo) e consumidor demonstram uma juíza que enxerga a dor humana por trás dos autos",
+        "analise_comportamental": "A \"consciência social\" da Seção. Seu perfil psicológico é de profunda empatia com o jurisdicionado vulnerável. Suas decisões inovadoras em direito de família (ex: danos morais por abandono afetivo) e consumidor demonstram uma juíza que enxerga a dor humana por trás dos autos. É progressista e corajosa.3"
+      }
+    },
+    "joao otavio de noronha": {
+      "nome": "João Otávio de Noronha",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O contraponto liberal. Defensor ferrenho da liberdade econômica e da validade dos negócios jurídicos. Psicologicamente, mostra-se cético quanto à intervenção estatal na vida privada. Crítico vocal do \"ativismo judicial\" e do punitivismo midiático, atua como um garantidor das liberdades individuais contra o Estado.10"
+      }
+    },
+    "ricardo villas boas cueva": {
+      "nome": "Ricardo Villas Bôas Cueva",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O intelectual cosmopolita. Seus votos são densos, repletos de referências a doutrinas estrangeiras (alemã e norte-americana). Adota uma postura liberal-progressista: liberal na economia, mas atento à proteção de direitos da personalidade e liberdade de expressão na era digital.11"
+      }
+    },
+    "marco buzzi": {
+      "nome": "Marco Buzzi",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Especialista em Direito do Consumidor. Perfil protecionista, alinhado à defesa do hipossuficiente. Seus votos são técnicos, mas sempre orientados pela principiologia do Código de Defesa do Consumidor.12"
+      }
+    },
+    "marco aurelio bellizze": {
+      "nome": "Marco Aurélio Bellizze",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Pragmático e resolutivo. Foca na efetividade da execução e na satisfação do crédito. É um juiz \"hands-on\", que busca desenrolar processos complexos de recuperação judicial.9"
+      }
+    },
+    "moura ribeiro": {
+      "nome": "Moura Ribeiro",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Garantista civil. Traz uma visão humanista para o direito privado, enfatizando a dignidade da pessoa humana nas relações obrigacionais. Perfil sereno e conciliador.12"
+      }
+    },
+    "maria isabel gallotti": {
+      "nome": "Maria Isabel Gallotti",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Conservadora e técnica. Filha e neta de ministros do STF, possui uma formação jurídica clássica. Seus votos são restritivos na concessão de indenizações por dano moral, buscando evitar a \"indústria do dano moral\". É a voz da prudência e da contenção.3"
+      }
+    },
+    "antonio carlos ferreira": {
+      "nome": "Antonio Carlos Ferreira",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "O técnico dos contratos. Oriundo da carreira jurídica da Caixa Econômica Federal, possui expertise ímpar em direito bancário e contratos de massa. Perfil discreto, avesso a holofotes, focado na segurança jurídica do sistema financeiro. Lidera discussões sobre IA no judiciário.9"
+      }
+    },
+    "humberto martins": {
+      "nome": "Humberto Martins",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Político e articulado. Ex-Presidente da Corte. Seus votos buscam o meio-termo e a estabilidade institucional. Tende a ser deferente às decisões das instâncias ordinárias.3"
+      }
+    },
+    "raul araujo": {
+      "nome": "Raul Araújo",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "analise_comportamental": "Conservador clássico. Recentemente em evidência por decisões no TSE, no STJ mantém uma linha de defesa da propriedade privada e da família tradicional. Votos técnicos, mas ideologicamente marcados pelo conservadorismo.3"
+      }
+    },
+    "marcus vinicius reis bastos (antiguidade)": {
+      "nome": "Marcus Vinícius Reis Bastos (Antiguidade)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do",
+        "analise_comportamental": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do MPF consideradas abusivas. É técnico, corajoso e independente.18  \n2."
+      }
+    },
+    "gustavo amorim (quinto constitucional \\ oab)": {
+      "nome": "Gustavo Amorim (Quinto Constitucional \\- OAB)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende ",
+        "analise_comportamental": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende a ser um voto moderado, mas com forte influência nos bastidores.13  \n4."
+      }
+    },
+    "flavio jardim (quinto constitucional \\ oab)": {
+      "nome": "Flávio Jardim (Quinto Constitucional \\- OAB)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado ",
+        "analise_comportamental": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado à jurisprudência do STF.20  \n6."
+      }
+    },
+    "rui costa goncalves": {
+      "nome": "Rui Costa Gonçalves",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30",
+        "analise_comportamental": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30"
+      }
+    },
+    "jair oliveira soares (decano)": {
+      "nome": "Jair Oliveira Soares (Decano)",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo.  \n2.",
+        "analise_comportamental": "O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo.  \n2."
+      }
+    },
+    "sergio xavier de souza rocha": {
+      "nome": "Sérgio Xavier de Souza Rocha",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista com viés **garantista moderado**, uma exceção na corte. Tende a seguir os precedentes do STJ em matéria de nulidades.  \n4.",
+        "analise_comportamental": "Penalista com viés **garantista moderado**, uma exceção na corte. Tende a seguir os precedentes do STJ em matéria de nulidades.  \n4."
+      }
+    },
+    "fernando antonio habibe pereira": {
+      "nome": "Fernando Antônio Habibe Pereira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Intelectual e filósofo do direito. Seus votos discutem a",
+        "analise_comportamental": "Intelectual e filósofo do direito. Seus votos discutem a"
+      }
+    },
+    "joao timoteo de oliveira": {
+      "nome": "João Timóteo de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Punitivista \"Linha Dura\"**. Em matéria penal, é rigoroso, defendendo a segurança pública acima de filigranas processuais. Votos duros contra tráfico e corrupção.  \n7.",
+        "analise_comportamental": "Punitivista \"Linha Dura\"**. Em matéria penal, é rigoroso, defendendo a segurança pública acima de filigranas processuais. Votos duros contra tráfico e corrupção.  \n7."
+      }
+    },
+    "simone costa lucindo": {
+      "nome": "Simone Costa Lucindo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9.",
+        "analise_comportamental": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9."
+      }
+    },
+    "teofilo rodrigues caetano neto": {
+      "nome": "Teófilo Rodrigues Caetano Neto",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Discreto e institucional. Segue a maioria, evitando polêmicas.31  \n11.",
+        "analise_comportamental": "Discreto e institucional. Segue a maioria, evitando polêmicas.31  \n11."
+      }
+    },
+    "silvanio barbosa dos santos": {
+      "nome": "Silvânio Barbosa dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Conservador e legalista.  \n13.",
+        "analise_comportamental": "Conservador e legalista.  \n13."
+      }
+    },
+    "jose jacinto costa carvalho": {
+      "nome": "José Jacinto Costa Carvalho",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Tradicionalista.  \n15.",
+        "analise_comportamental": "Tradicionalista.  \n15."
+      }
+    },
+    "diaulas costa ribeiro": {
+      "nome": "Diaulas Costa Ribeiro",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "O Provocador Intelectual**. Ex-Promotor, bioeticista de renome mundial. Seus votos são disruptivos, citando literatura, filosofia e ciência. Desafia o senso comum jurídico. Ideologicamente, é um conse",
+        "analise_comportamental": "O Provocador Intelectual**. Ex-Promotor, bioeticista de renome mundial. Seus votos são disruptivos, citando literatura, filosofia e ciência. Desafia o senso comum jurídico. Ideologicamente, é um conservador ilustrado que valoriza a vida e a ética médica.25  \n17."
+      }
+    },
+    "esdras neves almeida": {
+      "nome": "Esdras Neves Almeida",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista seguro, foco em contratos.  \n19.",
+        "analise_comportamental": "Civilista seguro, foco em contratos.  \n19."
+      }
+    },
+    "alfeu gonzaga machado": {
+      "nome": "Alfeu Gonzaga Machado",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista e processualista.25  \n21.",
+        "analise_comportamental": "Civilista e processualista.25  \n21."
+      }
+    },
+    "cesar laboissiere loyola": {
+      "nome": "César Laboissiere Loyola",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista técnico. Mantém o rigor habitual da corte.  \n23.",
+        "analise_comportamental": "Penalista técnico. Mantém o rigor habitual da corte.  \n23."
+      }
+    },
+    "hector valverde santanna": {
+      "nome": "Hector Valverde Santanna",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Acadêmico Consumerista**. Doutrinador respeitado em Direito do Consumidor. Seus votos equilibram a proteção do consumidor com a análise econômica para não inviabilizar o mercado. É um \"farol\" doutriná",
+        "analise_comportamental": "Acadêmico Consumerista**. Doutrinador respeitado em Direito do Consumidor. Seus votos equilibram a proteção do consumidor com a análise econômica para não inviabilizar o mercado. É um \"farol\" doutrinário na corte.33  \n25."
+      }
+    },
+    "fabio eduardo marques": {
+      "nome": "Fábio Eduardo Marques",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Juiz de Carreira**. Promovido por merecimento. Conhece a \"máquina\" do judiciário como poucos. Perfil de alta produtividade e tecnicismo processual.35  \n27.",
+        "analise_comportamental": "Juiz de Carreira**. Promovido por merecimento. Conhece a \"máquina\" do judiciário como poucos. Perfil de alta produtividade e tecnicismo processual.35  \n27."
+      }
+    },
+    "alvaro luis de araujo sales ciarlini": {
+      "nome": "Alvaro Luis de Araujo Sales Ciarlini",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Formalista Culto**. Seus votos são longos, fundamentados em teoria geral do direito. Exige rigor técnico absoluto das partes.37  \n29.",
+        "analise_comportamental": "Formalista Culto**. Seus votos são longos, fundamentados em teoria geral do direito. Exige rigor técnico absoluto das partes.37  \n29."
+      }
+    },
+    "carlos pires soares neto": {
+      "nome": "Carlos Pires Soares Neto",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Modernizador**. Jovem, ascensão meteórica. Focado em inovação e eficiência.39  \n31.",
+        "analise_comportamental": "Modernizador**. Jovem, ascensão meteórica. Focado em inovação e eficiência.39  \n31."
+      }
+    },
+    "maria ivatonia barbosa dos santos": {
+      "nome": "Maria Ivatônia Barbosa dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Representatividade e Direitos Humanos**. Primeira mulher negra desembargadora do TJDFT (MP). Atuação marcante em questões raciais e sociais. Garantista em direitos fundamentais.40  \n33.",
+        "analise_comportamental": "Representatividade e Direitos Humanos**. Primeira mulher negra desembargadora do TJDFT (MP). Atuação marcante em questões raciais e sociais. Garantista em direitos fundamentais.40  \n33."
+      }
+    },
+    "josapha francisco dos santos": {
+      "nome": "Josaphá Francisco dos Santos",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Conservador em costumes, técnico em direito privado.  \n35.",
+        "analise_comportamental": "Conservador em costumes, técnico em direito privado.  \n35."
+      }
+    },
+    "leonardo roscoe bessa": {
+      "nome": "Leonardo Roscoe Bessa",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Especialista em Consumidor (MP)**. Assim como Valverde, é autoridade em direito do consumidor, mas com o viés de tutela coletiva do MP. Rigoroso com empresas que lesam a coletividade.41  \n37.",
+        "analise_comportamental": "Especialista em Consumidor (MP)**. Assim como Valverde, é autoridade em direito do consumidor, mas com o viés de tutela coletiva do MP. Rigoroso com empresas que lesam a coletividade.41  \n37."
+      }
+    },
+    "lucimeire maria da silva": {
+      "nome": "Lucimeire Maria da Silva",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Foco em Infância e Juventude. Protetiva e sensível a causas sociais.25  \n39.",
+        "analise_comportamental": "Foco em Infância e Juventude. Protetiva e sensível a causas sociais.25  \n39."
+      }
+    },
+    "mauricio silva miranda": {
+      "nome": "Maurício Silva Miranda",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Especialista em Infância e Juventude. Conservador, defensor da família tradicional e da proteção integral da criança.  \n42.",
+        "analise_comportamental": "Especialista em Infância e Juventude. Conservador, defensor da família tradicional e da proteção integral da criança.  \n42."
+      }
+    },
+    "roberval casemiro belinati": {
+      "nome": "Roberval Casemiro Belinati",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Político, extremamente popular, comunicativo",
+        "analise_comportamental": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.30 * **2ª Vice-Presidente:** Des. **Angelo Canducci Passareli**. Perfil discreto, técnico e conciliador. * **Corregedor:** Des. **Mario-Zam Belmiro Rosa**. *Perfil:* Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27 **Desembargadores (Ordem de Antiguidade/Relevância):**"
+      }
+    },
+    "jair oliveira soares": {
+      "nome": "Jair Oliveira Soares",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "O \"guardião da jurisprudência\"",
+        "analise_comportamental": "O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo."
+      }
+    },
+    "vera lucia andrighi": {
+      "nome": "Vera Lúcia Andrighi",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Humanista",
+        "analise_comportamental": "Humanista. Pioneira em justiça conciliatória e mediação. Seus votos buscam a paz social mais do que a imposição fria da sanção."
+      }
+    },
+    "arnoldo camanho de assis": {
+      "nome": "Arnoldo Camanho de Assis",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Civilista clássico, erudito",
+        "analise_comportamental": "Civilista clássico, erudito. Seus votos são doutrinários. Conservador em responsabilidade civil."
+      }
+    },
+    "jesuino aparecido rissato": {
+      "nome": "Jesuíno Aparecido Rissato",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico-Punitivista**",
+        "analise_comportamental": "**Técnico-Punitivista**. Frequentemente convocado ao STJ, onde reforça a ala conservadora. No TJDFT, é uma referência de rigor penal e eficiência processual.25"
+      }
+    },
+    "joao egmont leoncio lopes": {
+      "nome": "João Egmont Leôncio Lopes",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Pragmático",
+        "analise_comportamental": "Pragmático. Focado em Direito Empresarial. Busca soluções que destravem a economia."
+      }
+    },
+    "nilsoni de freitas custodio": {
+      "nome": "Nilsoni de Freitas Custódio",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista de Gênero**",
+        "analise_comportamental": "**Penalista de Gênero**. Atuação rigorosa em crimes contra a mulher e violência doméstica. Técnica, mas sensível a questões sociais."
+      }
+    },
+    "jose cruz macedo": {
+      "nome": "José Cruz Macedo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Gestor",
+        "analise_comportamental": "Gestor. Sua presidência focou em modernização. Julgador equilibrado e previsível."
+      }
+    },
+    "ana maria cantarino": {
+      "nome": "Ana Maria Cantarino",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Humanista**",
+        "analise_comportamental": "**Humanista**. Especialista em Direito de Família. Votos sensíveis à proteção de menores e incapazes.25"
+      }
+    },
+    "sandoval gomes de oliveira": {
+      "nome": "Sandoval Gomes de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico e célere",
+        "analise_comportamental": "Técnico e célere."
+      }
+    },
+    "gislene pinheiro de oliveira": {
+      "nome": "Gislene Pinheiro de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Focada em **Gestão e Violência Doméstica**",
+        "analise_comportamental": "Focada em **Gestão e Violência Doméstica**. Liderou projetos importantes de proteção à mulher.32"
+      }
+    },
+    "robson barbosa de azevedo": {
+      "nome": "Robson Barbosa de Azevedo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Discreto",
+        "analise_comportamental": "Discreto.25"
+      }
+    },
+    "romulo de araujo mendes": {
+      "nome": "Rômulo de Araújo Mendes",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Jovem e dinâmico",
+        "analise_comportamental": "Jovem e dinâmico. Traz agilidade aos julgamentos cíveis."
+      }
+    },
+    "sandra reves vasques tonussi": {
+      "nome": "Sandra Reves Vasques Tonussi",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica, oriunda da magistratura de carreira",
+        "analise_comportamental": "Técnica, oriunda da magistratura de carreira. Votos precisos em direito civil."
+      }
+    },
+    "roberto freitas filho": {
+      "nome": "Roberto Freitas Filho",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Constitucionalista (Quinto OAB)**",
+        "analise_comportamental": "**Constitucionalista (Quinto OAB)**. Doutor, traz a visão da advocacia e da academia. Seus votos oxigenam o tribunal com teses constitucionais contemporâneas. Garantista e inovador.36"
+      }
+    },
+    "luis gustavo barbosa de oliveira": {
+      "nome": "Luís Gustavo Barbosa de Oliveira",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico e discreto",
+        "analise_comportamental": "Técnico e discreto.38"
+      }
+    },
+    "leila cristina garbin arlanch": {
+      "nome": "Leila Cristina Garbin Arlanch",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica",
+        "analise_comportamental": "Técnica."
+      }
+    },
+    "fabricio fontoura bezerra": {
+      "nome": "Fabrício Fontoura Bezerra",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Promovido em 2025\\",
+        "analise_comportamental": "Promovido em 2025\\. Traz a experiência recente da primeira instância. Perfil operacional.40"
+      }
+    },
+    "robson vieira teixeira de freitas": {
+      "nome": "Robson Vieira Teixeira de Freitas",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnico",
+        "analise_comportamental": "Técnico."
+      }
+    },
+    "arquibaldo carneiro portela": {
+      "nome": "Arquibaldo Carneiro Portela",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Penalista equilibrado",
+        "analise_comportamental": "Penalista equilibrado. Busca o meio termo entre o punitivismo e o garantismo.42"
+      }
+    },
+    "maria leonor leiko aguena": {
+      "nome": "Maria Leonor Leiko Aguena",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica e discreta",
+        "analise_comportamental": "Técnica e discreta."
+      }
+    },
+    "renato rodovalho scussel": {
+      "nome": "Renato Rodovalho Scussel",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Especialista em Infância e Juventude",
+        "analise_comportamental": "Especialista em Infância e Juventude. Conservador, defensor da família tradicional e da proteção integral da criança."
+      }
+    },
+    "soniria rocha campos dassuncao": {
+      "nome": "Soníria Rocha Campos D'Assunção",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Técnica, ascensão recente",
+        "analise_comportamental": "Técnica, ascensão recente."
+      }
+    },
+    "waldir leoncio lopes junior": {
+      "nome": "Waldir Leôncio Lopes Júnior",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil gestor, focado em tecnologia e metas. Penalista de origem, mas com visão administrativa moderna."
+      }
+    },
+    "angelo canducci passareli": {
+      "nome": "Angelo Canducci Passareli",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil discreto, técnico e conciliador."
+      }
+    },
+    "mario zam belmiro rosa": {
+      "nome": "Mario-Zam Belmiro Rosa",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "perfil_ideologico": "Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27",
+        "analise_comportamental": "*Perfil:* Rigoroso, disciplinador. Focado na produtividade dos juízes de base.27 **Desembargadores (Ordem de Antiguidade/Relevância):** 1. **Jair Oliveira Soares (Decano):** *Perfil:* O \"guardião da jurisprudência\". Conservador, votos curtos e objetivos. Avesso a teorias mirabolantes, foca na letra da lei. Célere e produtivo. 2. **Vera Lúcia Andrighi:** *Perfil:* Humanista. Pioneira em justiça conciliatória e mediação. Seus votos buscam a paz social mais do que a imposição fria da sanção. 3. **S"
+      }
+    },
+    "marcus vinicius reis bastos": {
+      "nome": "Marcus Vinícius Reis Bastos",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do",
+        "analise_comportamental": "Garantista Histórico**. Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do MPF consideradas abusivas. É técnico, corajoso e independente.18"
+      }
+    },
+    "katia balbino": {
+      "nome": "Kátia Balbino",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Progressista/Direitos Humanos**. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justi",
+        "analise_comportamental": "Progressista/Direitos Humanos**. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justiça. É uma gestora inovadora.19"
+      }
+    },
+    "gustavo amorim": {
+      "nome": "Gustavo Amorim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende ",
+        "analise_comportamental": "Político/Institucional**. Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende a ser um voto moderado, mas com forte influência nos bastidores.13"
+      }
+    },
+    "eduardo martins": {
+      "nome": "Eduardo Martins",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Pragmático/Dynasty**. Filho do Ministro Humberto Martins (STJ). Sua nomeação reforça os laços entre o STJ e o TRF-1. Atua com foco nas prerrogativas da advocacia e na celeridade processual. Tende ao c",
+        "analise_comportamental": "Pragmático/Dynasty**. Filho do Ministro Humberto Martins (STJ). Sua nomeação reforça os laços entre o STJ e o TRF-1. Atua com foco nas prerrogativas da advocacia e na celeridade processual. Tende ao conservadorismo em temas morais, mas é garantista em processos disciplinares e penais.20"
+      }
+    },
+    "flavio jardim": {
+      "nome": "Flávio Jardim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado ",
+        "analise_comportamental": "Intelectual/Constitucionalista**. Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado à jurisprudência do STF.20"
+      }
+    },
+    "solange salgado da silva": {
+      "nome": "Solange Salgado da Silva",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "18",
+        "analise_comportamental": "** Processualista, perfil de produtividade.18"
+      }
+    },
+    "urbano leal berquo neto": {
+      "nome": "Urbano Leal Berquó Neto",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Traz a representatividade feminina e a experiência da magistratura baiana.18"
+      }
+    },
+    "euler de almeida silva junior": {
+      "nome": "Euler de Almeida Silva Júnior",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Gestor eficiente, focado em metas.22"
+      }
+    },
+    "garantista historico": {
+      "nome": "Garantista Histórico",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": ". Ficou famoso por absolver réus da Lava Jato e Zelotes, criticando abertamente a \"criminalização da política\". Sua ascensão ao TRF-1 cria uma barreira sólida contra operações do MPF consideradas abusivas. É técnico, corajoso e independente.18 2. **Kátia Balbino (Merecimento):** * *Perfil:"
+      }
+    },
+    "progressista/direitos humanos": {
+      "nome": "Progressista/Direitos Humanos",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": ". Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justiça. É uma gestora inovadora.19 3. **Gustavo Amorim (Quinto Constitucional \\- OAB):** * *Perfil:"
+      }
+    },
+    "politico/institucional": {
+      "nome": "Político/Institucional",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Tende a ser um voto moderado, mas com forte influência nos bastidores",
+        "analise_comportamental": ". Sobrinho do Ministro Reynaldo Soares da Fonseca (STJ). Jovem (37 anos), possui trânsito livre nas cortes superiores. Seu perfil é de diálogo e construção de consensos. Tende a ser um voto moderado, mas com forte influência nos bastidores.13 4. **Eduardo Martins (Quinto Constitucional \\- OAB):** * *Perfil:"
+      }
+    },
+    "pragmatico/dynasty": {
+      "nome": "Pragmático/Dynasty",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": ". Filho do Ministro Humberto Martins (STJ). Sua nomeação reforça os laços entre o STJ e o TRF-1. Atua com foco nas prerrogativas da advocacia e na celeridade processual. Tende ao conservadorismo em temas morais, mas é garantista em processos disciplinares e penais.20 5. **Flávio Jardim (Quinto Constitucional \\- OAB):** * *Perfil:"
+      }
+    },
+    "intelectual/constitucionalista": {
+      "nome": "Intelectual/Constitucionalista",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "Seus votos prometem ser densos e fundamentados em teoria constitucional",
+        "analise_comportamental": ". Ex-Procurador do DF. Possui perfil acadêmico refinado. Seus votos prometem ser densos e fundamentados em teoria constitucional. É um garantista sofisticado, alinhado à jurisprudência do STF.20 6. **Solange Salgado da Silva:** Técnica e discreta, focada em direito administrativo.18 7. **Rui Costa Gonçalves:** Processualista, perfil de produtividade.18 8. **Urbano Leal Berquó Neto:** Conservador moderado, oriundo de Goiás.18 9. **Nilza Maria Costa dos Reis:** Traz a representatividade feminina e"
+      }
+    },
+    "jose amilcar machado": {
+      "nome": "José Amilcar Machado",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Focou na interiorização."
+      }
+    },
+    "joao batista moreira": {
+      "nome": "João Batista Moreira",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "burocrático e eficiente",
+        "analise_comportamental": "Perfil técnico e acadêmico."
+      }
+    },
+    "italo fioravanti sabo mendes": {
+      "nome": "I'talo Fioravanti Sabo Mendes",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Ex-Presidente. Conservador, ligado a valores tradicionais e defesa da propriedade."
+      }
+    },
+    "gilda sigmaringa seixas": {
+      "nome": "Gilda Sigmaringa Seixas",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil conciliador, com foco em direito previdenciário."
+      }
+    },
+    "neviton guedes": {
+      "nome": "Néviton Guedes",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Constitucionalista de renome, garantista e acadêmico (doutor pela Alemanha). Seus votos são referências teóricas."
+      }
+    },
+    "ney bello": {
+      "nome": "Ney Bello",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "É uma liderança intelectual na corte, com forte interlocução em Brasília",
+        "analise_comportamental": "(Frequentemente cotado para o STJ). Perfil garantista, culto e literato. É uma liderança intelectual na corte, com forte interlocução em Brasília."
+      }
+    },
+    "ambientalismo": {
+      "nome": "Ambientalismo",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "A corte move-se do \"desenvolvimentismo a qualquer custo\" para um \"desenvolvimento sustentável\", pressionada pela agenda climática global. Novos juízes tendem a ser mais rigorosos com crimes ambientais na Amazônia."
+      }
+    },
+    "direito indigena": {
+      "nome": "Direito Indígena",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Há uma abertura maior para o reconhecimento de direitos originários, contrastando com a jurisprudência antiga mais restritiva (marco temporal)."
+      }
+    },
+    "administrativo": {
+      "nome": "Administrativo",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "O tribunal continua sendo o principal revisor de atos do Governo Federal. Com a entrada de nomes independentes como Marcus Vinícius, espera-se um controle de legalidade rigoroso, sem subserviência ao Executivo. ## ---"
+      }
+    },
+    "nilza maria costa dos reis": {
+      "nome": "Nilza Maria Costa dos Reis",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Traz a representatividade feminina e a experiência da magistratura baiana.18"
+      }
+    },
+    "maria do carmo cardoso": {
+      "nome": "Maria do Carmo Cardoso",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "A \"Juíza Política\". Tem imenso trânsito nos bastidores de Brasília. Pragmática, resolve problemas. Votos nem sempre dogmáticos, mas focados na solução do conflito."
+      }
+    },
+    "hercules fajoses": {
+      "nome": "Hercules Fajoses",
+      "tribunal": "TRF1"
+    },
+    "carlos augusto pires brandao": {
+      "nome": "Carlos Augusto Pires Brandão",
+      "tribunal": "TRF1"
+    },
+    "daniele maranhao costa": {
+      "nome": "Daniele Maranhão Costa",
+      "tribunal": "TRF1"
+    },
+    "wilson alves de souza": {
+      "nome": "Wilson Alves de Souza",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Origem MPF. Tende a ser mais rigoroso em improbidade administrativa."
+      }
+    },
+    "maura moraes tayer": {
+      "nome": "Maura Moraes Tayer",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Cível. Discreta, votos padronizados."
+      }
+    },
+    "rafael paulo soares pinto": {
+      "nome": "Rafael Paulo Soares Pinto",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Cível. Discreta, votos padronizados."
+      }
+    },
+    "cesar jatahy": {
+      "nome": "César Jatahy",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Origem MPF. Tende a ser mais rigoroso em improbidade administrativa."
+      }
+    },
+    "john silas": {
+      "nome": "John Silas",
+      "tribunal": "TRF1"
+    },
+    "morais da rocha": {
+      "nome": "Morais da Rocha",
+      "tribunal": "TRF1"
+    },
+    "pedro felipe santos": {
+      "nome": "Pedro Felipe Santos",
+      "tribunal": "TRF1"
+    },
+    "prado de vasconcelos": {
+      "nome": "Prado de Vasconcelos",
+      "tribunal": "TRF1"
+    },
+    "rollo d": {
+      "nome": "Rollo D",
+      "tribunal": "TRF1"
+    },
+    "simone s lemos": {
+      "nome": "Simone S Lemos",
+      "tribunal": "TRF1"
+    },
+    "miguel angelo": {
+      "nome": "Miguel Angelo",
+      "tribunal": "TRF1"
+    },
+    "monica sifuentes": {
+      "nome": "Mônica Sifuentes",
+      "tribunal": "TRF1"
+    },
+    "ricardo de souza cruz": {
+      "nome": "Ricardo de Souza Cruz",
+      "tribunal": "TRF1"
+    },
+    "boson gambogi": {
+      "nome": "Boson Gambogi",
+      "tribunal": "TRF1"
+    },
+    "derivaldo de figueiredo filho": {
+      "nome": "Derivaldo de Figueiredo Filho",
+      "tribunal": "TRF1"
+    },
+    "dolzany da costa": {
+      "nome": "Dolzany da Costa",
+      "tribunal": "TRF1"
+    },
+    "gilmar ferreira mendes": {
+      "nome": "Gilmar Ferreira Mendes",
+      "tribunal": "STF",
+      "nascimento": {
+        "cidade": "Diamantino"
+      },
+      "dados_dossie": {
+        "origem": "Ministério Público/Advocacia-Geral da União",
+        "perfil_psicologico": "Personalidade dominante, combativa e intelectualmente sofisticada. Atua como um \"animal político\", articulando bastidores e não temendo o desgaste da opinião pública. Seu estilo de voto é longo, doutrinário, recheado de referências ao Direito Constitucional Alemão e críticas ácidas aos seus pares ou a órgãos de controle (como o MPF).5",
+        "padrao_decisorio": {
+          "Penal": "Hiper-Garantista. É o principal arquiteto da desconstrução da \"Lava Jato\". Vota sistematicamente contra prisões preventivas alongadas, a favor da anulação de provas obtidas ilegalmente e contra a execução antecipada da pena. O clone deve apresentar alta probabilidade de conceder",
+          "Administrativo/Político": "Ativista. Utiliza o tribunal para arbitrar crises federativas. Em pautas econômicas, tende a ser pragmático e reformista."
+        },
+        "analise_comportamental": "Líder de bancada. Influencia decisivamente os votos de ministros mais jovens ou alinhados doutrinariamente (como Dias Toffoli e Cristiano Zanin)."
+      }
+    },
+    "luis roberto barroso": {
+      "nome": "Luís Roberto Barroso",
+      "tribunal": "STF",
+      "nascimento": {
+        "cidade": "Vassouras"
+      },
+      "dados_dossie": {
+        "origem": "Advocacia Privada e Procuradoria do Estado do RJ",
+        "perfil_psicologico": "Perfil \"Iluminista\". Acredita no papel do Judiciário como vanguarda iluminista que empurra a história. Estilo didático, professoral, estruturado em tópicos e princípios. Valoriza a moralidade administrativa e a eficiência. Frequentemente entra em choque retórico com Gilmar Mendes.10",
+        "padrao_decisorio": {
+          "Penal": "Punitivista Moderado / Eficientista. Defensor da execução da pena após segunda instância (posição vencida) e duro no combate à corrupção. Contudo, é",
+          "Progressista": "na política de drogas, tendo liderado o voto pela descriminalização do porte de maconha para uso pessoal.",
+          "Clone Trigger": "O clone deve utilizar argumentos baseados em \"dignidade humana\", \"mínimo existencial\" e dados empíricos/científicos ."
+        },
+        "clone_trigger": "O clone deve utilizar argumentos baseados em \"dignidade humana\", \"mínimo existencial\" e dados empíricos/científicos."
+      }
+    },
+    "kassio nunes marques": {
+      "nome": "Kassio Nunes Marques",
+      "tribunal": "STF",
+      "nascimento": {
+        "cidade": "Teresina"
+      },
+      "dados_dossie": {
+        "origem": "Advocacia/TRF-1",
+        "perfil_psicologico": "Discreto, contido, \"Garantista do Centrão\". Foi escolhido para ser uma ponte com a política tradicional e evitar excessos punitivistas. Raramente entra em embates acalorados em plenário.",
+        "padrao_decisorio": {
+          "Penal": "Garantista. Vota frequentemente a favor de réus (incluindo políticos e criminosos comuns) em questões de nulidade e dosimetria, alinhando-se curiosamente a Gilmar Mendes, apesar da origem ideológica oposta.",
+          "Político/Costumes": "Conservador/Bolsonarista. Vota a favor de pautas de interesse do ex-presidente (armas, cultos na pandemia, questões indígenas \\- Marco Temporal). No julgamento do 8 de janeiro, votou pela absolvição de réus ou penas mínimas, divergindo de Moraes.17",
+          "Clone Trigger": "Votos baseados em \"textualismo\" e \"contenção judicial\" (evitar interferir nos outros poderes) ."
+        },
+        "clone_trigger": "Votos baseados em \"textualismo\" e \"contenção judicial\" (evitar interferir nos outros poderes)."
+      }
+    },
+    "maria thereza de assis moura": {
+      "nome": "Maria Thereza de Assis Moura",
+      "tribunal": "STJ",
+      "dados_dossie": {
+        "perfil_ideologico": "equilibrado, origem no jornalismo",
+        "analise_comportamental": "** Perfil equilibrado, origem no jornalismo. Transita bem entre as alas, mas tende a manter condenações bem fundamentadas.23"
+      }
+    },
+    "antonio souza prudente": {
+      "nome": "Antônio Souza Prudente",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Previdenciário. Votos favoráveis aos segurados (pro-misero)."
+      }
+    },
+    "marcos augusto de sousa": {
+      "nome": "Marcos Augusto de Sousa",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Constitucionalista (Doutorado na Alemanha). Garantista, alinhado doutrinariamente com o grupo de Gilmar Mendes/Ney Bello. Votos eruditos.31"
+      }
+    },
+    "gustavo soares amorim": {
+      "nome": "Gustavo Soares Amorim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Esta leva de juízes de carreira (promovidos por merecimento/antiguidade) e quintos constitucionais recentes trouxe um perfil mais \"gerencial\" e menos \"baronial\" para a corte."
+      }
+    },
+    "marcelo albernaz": {
+      "nome": "Marcelo Albernaz",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "garantista em direitos sociais e saúde",
+        "analise_comportamental": "** Juíza de carreira (DF). Perfil garantista em direitos sociais e saúde."
+      }
+    },
+    "rui goncalves": {
+      "nome": "Rui Gonçalves",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "corporativo (defesa da magistratura) e político",
+        "analise_comportamental": "** Juiz de carreira (MA). Ex-presidente da Ajufe. Perfil corporativo (defesa da magistratura) e político. Conhece profundamente o sistema."
+      }
+    },
+    "urbano leal": {
+      "nome": "Urbano Leal",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Juíza de carreira."
+      }
+    },
+    "newton ramos": {
+      "nome": "Newton Ramos",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Juiz de carreira."
+      }
+    },
+    "candice lavocat galvao jobim": {
+      "nome": "Candice Lavocat Galvão Jobim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Juíza de carreira (Posse recente). Foco em previdenciário/social.33"
+      }
+    },
+    "flavio jaime de moraes jardim": {
+      "nome": "Flávio Jaime de Moraes Jardim",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "político, conciliador e pragmático",
+        "analise_comportamental": "** Origem Advocacia (Filho de Humberto Martins). Perfil político, conciliador e pragmático.35"
+      }
+    },
+    "ana carolina roman": {
+      "nome": "Ana Carolina Roman",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "** Recém empossado (2024). Origem Bahia.37"
+      }
+    },
+    "pablo zuniga dourado": {
+      "nome": "Pablo Zuniga Dourado",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "perfil_ideologico": "técnico",
+        "analise_comportamental": "** Juiz de carreira. Perfil técnico.34 ## --- **"
+      }
+    },
+    "carlos moreira alves": {
+      "nome": "Carlos Moreira Alves",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Conservador tradicional. Filho de ex-ministro do STF. Votos curtos e legalistas."
+      }
+    },
+    "solange salgado": {
+      "nome": "Solange Salgado",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juíza de carreira (DF). Perfil garantista em direitos sociais e saúde."
+      }
+    },
+    "roberto veloso": {
+      "nome": "Roberto Veloso",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juiz de carreira (MA). Ex-presidente da Ajufe. Perfil corporativo (defesa da magistratura) e político. Conhece profundamente o sistema."
+      }
+    },
+    "nilza reis": {
+      "nome": "Nilza Reis",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juíza de carreira."
+      }
+    },
+    "euler de almeida": {
+      "nome": "Euler de Almeida",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juiz de carreira."
+      }
+    },
+    "rosimayre goncalves de carvalho": {
+      "nome": "Rosimayre Gonçalves de Carvalho",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Juíza de carreira (Posse recente). Foco em previdenciário/social.33"
+      }
+    },
+    "pedro braga filho": {
+      "nome": "Pedro Braga Filho",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Recém empossado (2024). Origem Bahia.37"
+      }
+    },
+    "o ativista ambiental.": {
+      "nome": "O Ativista Ambiental.",
+      "tribunal": "TRF1",
+      "dados_dossie": {
+        "analise_comportamental": "Conhecido mundialmente por decisões que paralisam grandes obras (Belo Monte, hidrovias) em defesa de indígenas e meio ambiente. O clone deve ter viés \"verde\" absoluto em sua relatoria.31 8. **Ângela Catão:** Previdenciário. Votos favoráveis aos segurados (pro-misero)."
+      }
+    },
+    "soniria campos dassuncao": {
+      "nome": "Soníria Campos D'Assunção",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "39 ## ---"
+      }
+    },
+    "presidente": {
+      "nome": "Presidente",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Waldir Leôncio Ferreira Júnior. Penalista e Processualista. Perfil acadêmico e gestor."
+      }
+    },
+    "1º vice": {
+      "nome": "1º Vice",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Roberval Casemiro Belinati. Criminalista rigoroso, detalhista na análise probatória."
+      }
+    },
+    "2º vice": {
+      "nome": "2º Vice",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Ângelo Canducci Passareli. Civilista experiente."
+      }
+    },
+    "corregedor": {
+      "nome": "Corregedor",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Mario-Zam Belmiro Rosa. Civilista/Consumidor."
+      }
+    },
+    "hector valverde": {
+      "nome": "Héctor Valverde",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "O maior especialista em Direito do Consumidor da corte. Voto certo a favor do consumidor em qualquer dúvida."
+      }
+    },
+    "sandra de santis": {
+      "nome": "Sandra De Santis",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "(Decana informal do crime). A \"dama de ferro\". Presidiu júris históricos. Rigorosa, técnica, não alivia em crimes de sangue."
+      }
+    },
+    "humberto adjuto ulhoa": {
+      "nome": "Humberto Adjuto Ulhôa",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Criminalista rigoroso."
+      }
+    },
+    "romeu gonzaga neiva": {
+      "nome": "Romeu Gonzaga Neiva",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Decano. Experiência vasta, votos seguros e tradicionais."
+      }
+    },
+    "simone lucindo": {
+      "nome": "Simone Lucindo",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Perfil moderno, atualizado com novas teses de direito civil."
+      }
+    },
+    "carlos rodrigues": {
+      "nome": "Carlos Rodrigues",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Direito Público. Rigoroso com a administração."
+      }
+    },
+    "esdras neves": {
+      "nome": "Esdras Neves",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Misto Cível/Criminal."
+      }
+    },
+    "alvaro ciarlini": {
+      "nome": "Álvaro Ciarlini",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Constitucionalista. Votos muito fundamentados."
+      }
+    },
+    "renato scussel": {
+      "nome": "Renato Scussel",
+      "tribunal": "TJDFT",
+      "dados_dossie": {
+        "analise_comportamental": "Especialista em Infância e Juventude. Voto de referência nacional nesta área."
+      }
+    },
+    "(474 linhas) ": {
+      "nome": "(474 linhas)\n    -",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "parametros para construir \"clones digitais\"": {
+      "nome": "Parâmetros para construir \"clones digitais\"",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "psicologia": {
+      "nome": "Psicologia",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "para seus clones digitais": {
+      "nome": "PARA SEUS CLONES DIGITAIS",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "exemplo herman benjamin": {
+      "nome": "Exemplo - Herman Benjamin",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "voce pode expandir isso para 80+ campos": {
+      "nome": "Você pode expandir isso para 80+ campos",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "usando dados que forneci 2.": {
+      "nome": "usando dados que forneci\n2.",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "expandir com analise jurisprudencial": {
+      "nome": "Expandir com análise jurisprudencial",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "inferencias psicologicas": {
+      "nome": "Inferências psicológicas",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "dados completos em 2 semanas": {
+      "nome": "Dados completos em 2 semanas",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "ok faça o qeu tem e o que conseguir tenho outras i (1).md"
+        }
+      ]
+    },
+    "(lgbt, drogas, aborto) com prognosticos ✅": {
+      "nome": "(LGBT, drogas, aborto) com prognósticos\n- ✅",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "(como cada um decide) ✅": {
+      "nome": "(como cada um decide)\n- ✅",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "25 parametros numericos": {
+      "nome": "25 parâmetros numéricos",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "jurisprudencia": {
+      "nome": "Jurisprudência",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        },
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "agora consolide tudo qeu vc fe todas informações e.md"
+        }
+      ]
+    },
+    "algoritmo": {
+      "nome": "Algoritmo",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "clone: herman benjamin": {
+      "nome": "Clone: Herman Benjamin",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "clone: nancy andrighi": {
+      "nome": "Clone: Nancy Andrighi",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "agora": {
+      "nome": "Agora",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "aprofunde mais.md"
+        }
+      ]
+    },
+    "tabelas": {
+      "nome": "tabelas",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "agora consolide tudo qeu vc fe todas informações e.md"
+        }
+      ]
+    },
+    "perfis psicologicos": {
+      "nome": "perfis psicológicos",
+      "tribunal": null,
+      "fontes_pesquisa": [
+        {
+          "url": "",
+          "tipo": "pesquisa_perplexity",
+          "arquivo": "agora consolide tudo qeu vc fe todas informações e.md"
+        }
+      ]
+    }
+  }
+}

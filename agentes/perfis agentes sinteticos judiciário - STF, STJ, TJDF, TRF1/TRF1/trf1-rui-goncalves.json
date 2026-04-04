@@ -1,0 +1,90 @@
+{
+  "id": "trf1-rui-goncalves",
+  "nome": "Rui Gonçalves",
+  "nome_completo": "Rui Costa Goncalves",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 3° andar - 3N",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/rui-goncalves-",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "Nomeado por Decreto Presidencial de 27/04/2023, com posse e exercício em 10/05/2023.\n\nDesembargador Federal RUI COSTA GONÇALVES,nascido em Manaus (AM), no dia 05 de dezembro de 1962, tomou posse no cargo de Juiz Federal em 09 de novembro de 1992 e no cargo de Desembargador Federal em 10 de maio de 2023 no Tribunal Regional Federal da 1ª Região.\n\nInstrução Graduação em Ciências Econômicas, pela Fundação Universidade do Amazonas, em 1983; Graduação em Direito pela Fundação Universidade do Amazonas, em 1989.\n\nAtividade Profissional Desembargador Federal do TRF1. Exerceu as funções de Promotor de Justiça do Estado do Amazonas, de Juiz Federal no Estado do Pará, Piauí e Distrito Federal, de Juiz do Tribunal Regional Eleitoral do Pará, Amapá, Piauí e Amazonas. Foi Juiz Federal Presidente e Relator da Turma Recursal Única da Seção Judiciária do Piauí. Foi Coordenador eventual dos Juizados Especiais Federais da Seção Judiciária do Distrito Federal. Foi Presidente e Coordenador da Turma Recursal Única dos Juizados Especiais Federais da Seção Judiciária do Distrito Federal. Foi Membro da Turma Nacional de Uniformização de Jurisprudência dos Juizados Especiais Federais no Conselho da Justiça Federal, representante da Justiça Federal na 1ª Região. Foi representante da 1ª Região na Reunião sobre Estruturação das Turmas Recursais dos Juizados Especiais Federais no Conselho da Justiça Federal. Exerceu o cargo de Diretor do Foro da Seção Judiciária do Piauí e de Diretor do Foro da Seção Judiciária do Distrito Federal, Tem atuação na área de Direito Tributário, Previdenciário e Eleitoral. É autor de vários artigos científicos publicados em periódicos conceituados.",
+    "dados_dossie": {
+      "perfil_ideologico": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.",
+      "analise_comportamental": "Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.",
+      "nascimento": {
+        "data": "05/12/1962",
+        "cidade": "Manaus/AM"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": null,
+      "secao": "1a",
+      "turma": "1a Secao (1a, 2a e 9a Turmas)",
+      "formacao": "dados nao localizados na pesquisa",
+      "carreira_previa": "Juiz federal desde 09/11/1992. Diretor do foro SJDF. Membro efetivo da TNU (Turma Nacional de Uniformizacao).",
+      "especialidade": "Servidores publicos, previdenciario",
+      "curiosidades": "Posse em 10/05/2023 por antiguidade. Lei 14.253/2021. 1o amazonense a integrar a Corte do TRF1."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Oficial de Justica Avaliador na SJAM (carreira inicial)"
+  },
+  "padroes_decisao": {
+    "Direito Administrativo": "Especializacao em Direito Administrativo com profundo conhecimento da jurisprudencia federal sobre servidores publicos, licitacoes e contratos. Decisoes tecnicamente fundamentadas que influenciam a orientacao do tribunal em materia administrativa.",
+    "Direito Tributario": "Decide materia tributaria com equilibrio, respeitando o poder de tributar mas exigindo estrita legalidade. Aplica a jurisprudencia consolidada do STJ em temas como creditamento, decadencia e prescricao.",
+    "Direito Previdenciario": "Especializacao em materia previdenciaria com profundo conhecimento da legislacao do RGPS e do RPPS. Posicao consolidada sobre temas como aposentadoria especial, atividades concomitantes e revisao de beneficios.",
+    "Direito Ambiental": "Aplica a legislacao ambiental com equilibrio, reconhecendo a responsabilidade objetiva em dano ambiental. Atento a jurisprudencia do STJ sobre areas de preservacao permanente, reserva legal e responsabilidade por dano ambiental.",
+    "Improbidade Administrativa": "Decide acoes de improbidade com equilibrio, exigindo prova de dolo conforme exigencia da Lei 14.230/2021. Aplica sancoes proporcionais a gravidade da conduta e ao dano ao erario."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.",
+      "Analise comportamental: Político, extremamente popular, comunicativo. Suas decisões são pragmáticas e ele atua como o \"rosto humano\" da corte, com grande trânsito social.",
+      "Perfil ideologico: Primeiro amazonense a integrar o TRF-1. Dupla formacao (Economia e Direito)."
+    ],
+    "confianca_global": 4
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/rui-goncalves-",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    },
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "id": "trf1-urbano-leal-berquo-neto",
+  "nome": "Urbano Leal Berquó Neto",
+  "nome_completo": "Urbano Leal Berquo Neto",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede III - 2º andar - Sala 207",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/urbano-leal-berquo-neto",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "**Urbano Leal Berquó Neto**, natural de Goiânia / GO, é bacharel em Direito, Pós-Graduado em Direito Processual Civil, em Direito Civil e em Direito Processual Penal pela Universidade Federal de Goiás.\n\nÉ magistrado federal desde 1993, quando tomou posse no cargo de Juiz Federal Substituto do TRF -1ª Região.\n\nFoi Juiz membro do TRE de Goiás no biênio 2005 – 2007, atuou como professor de Direito Processual Civil na Universidade Federal de Goiás, além de participar, como membro, de banca de Direito Constitucional do processo seletivo para ingresso na carreira do Ministério Público do Estado de Goiás (por três vezes) e para ingresso na carreira de Procurador do Estado de Goiás.\n\nTomou posse como Desembargador Federal do TRF – 1ª Região no dia 10/05/2023, atualmente integrando a 1ª Seção e presidindo a 9ª Turma.\n\nAprovado nos concursos públicos para Juiz de Direito do Estado do Tocantins, Promotor de Justiça do Estado de Goiás, Procurador do Estado de Goiás e Promotor de Justiça do Distrito Federal e Territórios, além de professor de Direito Civil junto à Universidade Federal de Goiás.\n\nAntes de ingressar na magistratura federal, exerceu a advocacia, foi Juiz de Direito do Estado de Goiás e Procurador da República.",
+    "dados_dossie": {
+      "analise_comportamental": " Traz a representatividade feminina e a experiência da magistratura baiana.",
+      "nascimento": {
+        "data": null,
+        "cidade": "Goiania/GO"
+      },
+      "origem": "magistratura",
+      "perfil_ideologico": "Técnico com carreira multifacetada (Promotor, Procurador, Juiz estadual e federal). Goiano com base em direito processual civil. Participou da instalação da Turma Recursal dos JEFs em Goiás. Promovido por antiguidade em 2023.",
+      "perfil_psicologico": "Carreira extremamente diversificada (juiz estadual, promotor, procurador de estado, procurador da republica, juiz federal)",
+      "secao": "1a",
+      "turma": "1a Secao (1a, 2a e 9a Turmas)",
+      "formacao": "Graduacao em Direito pela UFG. Pos-graduacao em Direito Processual Civil, Processual Penal e Direito Civil pela UFG.",
+      "carreira_previa": "Juiz de Direito do TO e GO. Promotor de Justica de GO e MPDFT. Procurador do Estado de GO. Procurador da Republica. Juiz federal da SJGO. Professor de Direito Civil e Processo Civil na UFG. Diretor do Foro SJGO (instalou Turma Recursal dos JEFs de GO).",
+      "especialidade": "Direito Civil, Processual Civil, Processual Penal, servidores publicos, previdenciario",
+      "curiosidades": "Posse em 10/05/2023 por antiguidade. Lei 14.253/2021. Promovido junto com Euler de Almeida Silva Junior (ambos da SJGO). Vasta experiencia em multiplas carreiras juridicas."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Administrativo": "Especializacao em Direito Administrativo com profundo conhecimento da jurisprudencia federal sobre servidores publicos, licitacoes e contratos. Decisoes tecnicamente fundamentadas que influenciam a orientacao do tribunal em materia administrativa.",
+    "Direito Tributario": "Aplica o Direito Tributario com fundamentacao tecnica, observando os principios constitucionais tributarios e a jurisprudencia do STF e STJ. Pondera entre protecao do contribuinte e interesse arrecadatorio.",
+    "Direito Previdenciario": "Especializacao em materia previdenciaria com profundo conhecimento da legislacao do RGPS e do RPPS. Posicao consolidada sobre temas como aposentadoria especial, atividades concomitantes e revisao de beneficios.",
+    "Direito Ambiental": "Postura de protecao ambiental sem radicalismos, aplicando os instrumentos da legislacao ambiental federal (Codigo Florestal, SNUC, PNMA) com proporcionalidade.",
+    "Improbidade Administrativa": "Atuacao firme em acoes de improbidade administrativa, com postura rigorosa contra desvios de conduta na gestao publica. Aplica as sancoes da LIA com fundamentacao detalhada, observando a proporcionalidade entre a conduta e a penalidade."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Analise comportamental:  Traz a representatividade feminina e a experiência da magistratura baiana."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/urbano-leal-berquo-neto",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

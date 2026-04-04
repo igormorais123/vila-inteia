@@ -1,0 +1,74 @@
+{
+  "id": "trf1-solange-salgado-da-silva",
+  "nome": "Solange Salgado da Silva",
+  "nome_completo": "Solange Salgado da Silva",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 8º andar - 8S",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/solange-salgado-da-silva",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "Solange Salgado da Silva, nascida em 08/04/1961 na cidade do Rio de Janeiro/RJ. Graduou-se em Direito no ano de 1985 pela Faculdade de Direito Cândido Mendes no Rio de Janeiro. Mestrado na Concentração Direito Penal pela Universidade Gama Filho. Pós-Graduação pela Associação de Ensino Unificado do Distrito Federal e pela Universidade de Brasília. Inúmeros Cursos Relevantes na Área Jurídica.\n\nAtuou como advogada no Escritório de Advocacia Silva e Maffra (RJ), no período de 1986/1987. Ingressou por Concurso Público no cargo de Promotora de Justiça no Ministério Público do Estado de Minas Gerais, atuando no período de 18/08/1987 a 08/05/1989, quando pediu exoneração.\n\nIngressou por Concurso Público no cargo de Defensora Pública na Procuradoria Geral da Defensoria Pública do Estado do Rio de Janeiro, atuando no período de 09/05/1989 a 16/08/1989 quando pediu exoneração e regressou para o cargo de Promotora de Justiça do Ministério Público do Estado de Minas Gerais, em razão de desistência do pedido de exoneração, permanecendo no MP/MG no período de 17/08/1989 a 29/04/1992, quando pediu exoneração.\n\nIngressou por Concurso Público no cargo de Juíza de Direito no Tribunal de Justiça do Estado de Minas Gerais, atuando no período de 30/04/1992 a 09/08/1992, quando pediu exoneração. Ingressou no cargo de Juíza Federal no Tribunal Regional Federal da 1ª Região, atuando desde 10/08/1992, com lotação originária na Seção Judiciária de São Luís-MA no período de 11/08/1992 a 14/09/1993, integrando o Tribunal Regional Eleitoral do Maranhão, sendo removida a pedido para a Seção Judiciária do Distrito Federal, onde permanece desde 15/09/1993, tendo exercido a Diretoria do Foro e convocações ao TRF1.\n\nLecionou no Centro de Ensino Unificado do Maranhão-CEUMA; no Centro de Estudos Jurídicos do Maranhão-CEJUMA; na Associação de Ensino Unificado do Distrito Federal; e no Centro Universitário de Brasília-UNICEUB. Inúmeras participações na condição de expositora em seminários na área de Direito Processual Civil, bem como publicações de reflexões sobre temas jurídicos.",
+    "dados_dossie": {
+      "perfil_ideologico": "Perfil complexo. Carreira diversificada (MP-MG, defensoria, magistratura estadual e federal). Decisão controversa no caso Banco Master (2025) — primeiro manteve prisão, depois revogou para medidas cautelares. Ex-presidente da Ajufer. Absolvida em inquérito sobre Ajufer por falta de provas. Atuação em direito penal federal.",
+      "analise_comportamental": null,
+      "nascimento": {
+        "data": "08/04/1961",
+        "cidade": "Rio de Janeiro/RJ"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": null,
+      "secao": "4a",
+      "turma": "4a Secao (7a, 8a e 13a Turmas)",
+      "formacao": "Graduacao em Direito pela Faculdade Candido Mendes/RJ (1985). Mestrado em Direito Penal pela Universidade Gama Filho. Pos-graduacoes pela AEUDF e UnB.",
+      "carreira_previa": "Promotora no MP/MG (1987-1989). Defensora publica no RJ (breve periodo). Retornou ao MP/MG ate 1992. Juiza de Direito TJ-MG (3 meses, 1992). Juiza federal desde 1992 na SJMA. Juiza do TRE/MA. Removida para DF (1993). Diretora do Foro. Professora em diversas instituicoes (CEUMA, CEJ/MA, AEUDF, UniCEUB).",
+      "especialidade": "Direito Penal, materia criminal",
+      "curiosidades": "Posse em 10/05/2023 por antiguidade. Lei 14.253/2021. Presidente da Comissao TRF1 Mulheres. Esteve envolvida em controversia sobre emprestimos na Ajufer (2000-2009), absolvida por falta de provas (Corte Especial). CNJ anulou pena disciplinar por ausencia de quorum. Caso Banco Master: mandou soltar Daniel Vorcaro (2025)."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Administrativo": "Aplica os principios da Administracao Publica com pragmatismo, buscando solucoes que harmonizem interesse publico e direitos individuais. Favorece a motivacao detalhada dos atos.",
+    "Direito Tributario": "Aplica o Direito Tributario com fundamentacao tecnica, observando os principios constitucionais tributarios e a jurisprudencia do STF e STJ. Pondera entre protecao do contribuinte e interesse arrecadatorio.",
+    "Direito Previdenciario": "Decide questoes previdenciarias com atencao ao carater alimentar dos beneficios, sem descuidar da comprovacao dos requisitos legais. Favorece a producao de prova pericial quando necessario.",
+    "Direito Ambiental": "Postura de protecao ambiental sem radicalismos, aplicando os instrumentos da legislacao ambiental federal (Codigo Florestal, SNUC, PNMA) com proporcionalidade.",
+    "Improbidade Administrativa": "Atuacao firme em acoes de improbidade administrativa, com postura rigorosa contra desvios de conduta na gestao publica. Aplica as sancoes da LIA com fundamentacao detalhada, observando a proporcionalidade entre a conduta e a penalidade."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/solange-salgado-da-silva",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

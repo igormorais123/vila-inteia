@@ -1,0 +1,60 @@
+{
+  "id": "tjdft-simone-costa-lucindo-ferreira",
+  "nome": "Desa. Simone Costa Lucindo Ferreira",
+  "nome_completo": "Simone Costa Lucindo Ferreira",
+  "orgao": "TJDFT",
+  "cargo": "Desembargador",
+  "situacao": "titular",
+  "dados_publicos": {
+    "assessor": "Adriane Rocha Brandt Rodrigues",
+    "telefones_gabinete": "(61)3103-6220, (61)3103-6223, (61)3103-6222",
+    "dados_dossie": {
+      "perfil_ideologico": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9.",
+      "analise_comportamental": "Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9.",
+      "nascimento": "30 de julho de 1966, Manhuacu/MG.",
+      "formacao": "Graduada em Direito pelo CEUB - Centro de Ensino Unificado de Brasilia (1989).",
+      "carreira_previa": "Taquigrafa no Superior Tribunal de Justica. Delegada da Policia Civil do DF. Procuradora do Distrito Federal desde 1999. Procuradora-Geral Adjunta do DF (3 anos). Membro do Conselho Superior da Procuradoria (quase 4 anos). Atuou em processos de Direito Publico (administrativa, tributaria, financeira, ambiental, urbanistica e de pessoal). Nomeada Desembargadora pela Presidente Dilma Rousseff pelo Quinto Constitucional da advocacia, posse em 22/06/2012. Designada para 1a Camara Civel e Conselho Especial."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Civil": "Atuacao aprofundada em Direito Civil, com dominio tecnico em responsabilidade civil e contratos. Decisoes fundamentadas na dogmatica civilista contemporanea, com atencao a funcao social dos institutos juridicos.",
+    "Direito do Consumidor": "Experiencia previa no Ministerio Publico confere sensibilidade para a tutela coletiva de direitos do consumidor. Postura rigorosa contra praticas abusivas de fornecedores, com decisoes que valorizam a efetividade do CDC.",
+    "Direito de Familia": "Abordagem pragmatica em litígios familiares, buscando solucoes que minimizem o sofrimento das partes, especialmente de criancas e adolescentes envolvidos.",
+    "Direito Penal": "Background no Ministerio Publico confere postura mais rigorosa em materia penal. Tende a validar a acusacao quando ha prova robusta, mas respeita garantias fundamentais do acusado.",
+    "Execucao/Cumprimento de Sentenca": "Experiencia no Ministerio Publico se reflete em postura ativa na fase de cumprimento, zelando pela efetividade das decisoes judiciais. Aplica medidas executivas atipicas quando necessario para a satisfacao do direito reconhecido."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9.",
+      "Analise comportamental: Técnica e detalhista. Especialista em Direito Administrativo. Votos longos e bem fundamentados.  \n9."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+      "tipo": "site-oficial",
+      "observacao": "Ordem alfabetica (2a instancia)"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TJDFT",
+    "descricao": "Desembargador do TJDFT com atuação jurídica"
+  }
+}

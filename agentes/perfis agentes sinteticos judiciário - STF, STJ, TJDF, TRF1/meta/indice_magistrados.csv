@@ -1,0 +1,133 @@
+id,nome,orgao,cargo,situacao,fonte_principal
+stf-alexandre-de-moraes,Alexandre de Moraes,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Alexandre_de_Moraes
+stf-andre-mendonca,Andre Mendonca,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Andr%C3%A9_Mendon%C3%A7a
+stf-carmen-lucia,Carmen Lucia,STF,Ministro,titular,https://pt.wikipedia.org/wiki/C%C3%A1rmen_L%C3%BAcia
+stf-cristiano-zanin,Cristiano Zanin,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Cristiano_Zanin
+stf-dias-toffoli,Dias Toffoli,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Dias_Toffoli
+stf-edson-fachin,Edson Fachin,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Edson_Fachin
+stf-flavio-dino,Flavio Dino,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Fl%C3%A1vio_Dino
+stf-gilmar-mendes,Gilmar Mendes,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Gilmar_Mendes
+stf-luis-roberto-barroso,Luis Roberto Barroso,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Lu%C3%ADs_Roberto_Barroso
+stf-luiz-fux,Luiz Fux,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Luiz_Fux
+stf-nunes-marques,Nunes Marques,STF,Ministro,titular,https://pt.wikipedia.org/wiki/Nunes_Marques
+stj-afranio-vilela,Afrânio Vilela,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Afr%C3%A2nio_Vilela
+stj-antonio-carlos-ferreira,Antonio Carlos Ferreira,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Antonio_Carlos_Ferreira
+stj-antonio-saldanha-palheiro,Antonio Saldanha Palheiro,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Antonio_Saldanha_Palheiro
+stj-benedito-goncalves,Benedito Gonçalves,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Benedito_Gon%C3%A7alves
+stj-carlos-pires-brandao,Carlos Pires Brandão,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Carlos_Pires_Brand%C3%A3o
+stj-daniela-teixeira,Daniela Teixeira,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Daniela_Teixeira
+stj-francisco-falcao,Francisco Falcão,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Francisco_Falc%C3%A3o
+stj-gurgel-de-faria,Gurgel de Faria,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Gurgel_de_Faria
+stj-herman-benjamin,Herman Benjamin,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Herman_Benjamin
+stj-humberto-martins,Humberto Martins,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Humberto_Martins_(magistrado)
+stj-isabel-gallotti,Isabel Gallotti,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Isabel_Gallotti
+stj-joao-otavio-de-noronha,João Otávio de Noronha,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Jo%C3%A3o_Ot%C3%A1vio_de_Noronha
+stj-joel-ilan-paciornik,Joel Ilan Paciornik,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Joel_Ilan_Paciornik
+stj-luis-felipe-salomao,Luis Felipe Salomão,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Luis_Felipe_Salom%C3%A3o
+stj-marco-aurelio-bellizze,Marco Aurélio Bellizze,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Marco_Aur%C3%A9lio_Bellizze
+stj-marco-buzzi,Marco Buzzi,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Marco_Buzzi
+stj-maria-thereza-de-assis-moura,Maria Thereza de Assis Moura,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Maria_Thereza_de_Assis_Moura
+stj-marluce-caldas,Marluce Caldas,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Marluce_Caldas
+stj-mauro-campbell-marques,Mauro Campbell Marques,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Mauro_Campbell_Marques
+stj-messod-azulay,Messod Azulay,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Messod_Azulay
+stj-moura-ribeiro,Moura Ribeiro,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Moura_Ribeiro
+stj-nancy-andrighi,Nancy Andrighi,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Nancy_Andrighi
+stj-og-fernandes,Og Fernandes,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Og_Fernandes
+stj-paulo-sergio-domingues,Paulo Sérgio Domingues,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Paulo_S%C3%A9rgio_Domingues
+stj-raul-araujo,Raul Araújo,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Raul_Ara%C3%BAjo
+stj-regina-helena-costa,Regina Helena Costa,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Regina_Helena_Costa
+stj-reynaldo-soares-da-fonseca,Reynaldo Soares da Fonseca,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Reynaldo_Soares_da_Fonseca
+stj-ribeiro-dantas,Ribeiro Dantas,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Marcelo_Navarro_Ribeiro_Dantas
+stj-rogerio-schietti-cruz,Rogerio Schietti Cruz,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Rogerio_Schietti_Cruz
+stj-sebastiao-reis-junior,Sebastião Reis Júnior,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Sebasti%C3%A3o_Reis_J%C3%BAnior
+stj-sergio-kukina,Sérgio Kukina,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/S%C3%A9rgio_Kukina
+stj-teodoro-silva-santos,Teodoro Silva Santos,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Teodoro_Silva_Santos
+stj-villas-boas-cueva,Villas Bôas Cueva,STJ,Ministro,titular,https://pt.wikipedia.org/wiki/Villas_B%C3%B4as_Cueva
+tjdft-alfeu-gonzaga-machado,Des. Alfeu Gonzaga Machado,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-alvaro-luis-de-araujo-sales-ciarlini,Des. Alvaro Luis De Araujo Sales Ciarlini,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-ana-maria-cantarino,Desa. Ana Maria Cantarino,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-angelo-canducci-passareli,Des. Angelo Canducci Passareli,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-arnoldo-camanho-de-assis,Des. Arnoldo Camanho de Assis,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-arquibaldo-carneiro-portela,Des. Arquibaldo Carneiro Portela,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-carlos-pires-soares-neto,Des. Carlos Pires Soares Neto,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-carmen-nicea-nogueira-bittencourt,Desa. Carmen Nícea Nogueira Bittencourt,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-diaulas-costa-ribeiro,Des. Diaulas Costa Ribeiro,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-diva-lucy-de-faria-pereira,Desa. Diva Lucy de Faria Pereira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-esdras-neves-almeida,Des. Esdras Neves Almeida,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-fabio-eduardo-marques,Des. Fábio Eduardo Marques,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-fabricio-fontoura-bezerra,Des. Fabrício Fontoura Bezerra,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-fernando-antonio-habibe-pereira,Des. Fernando Antonio Habibe Pereira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-gislene-pinheiro-de-oliveira,Desa. Gislene Pinheiro de Oliveira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-hector-valverde-santanna,Des. Hector Valverde Santanna,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-jair-oliveira-soares,Des. Jair Oliveira Soares,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-james-eduardo-da-cruz-de-moraes-oliveira,Des. James Eduardo da Cruz de Moraes Oliveira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-jesuino-aparecido-rissato,Des. Jesuíno Aparecido Rissato,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-joao-egmont-leoncio-lopes,Des. João Egmont Leoncio Lopes,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-josapha-francisco-dos-santos,Des. Josaphá Francisco Dos Santos,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-jose-cruz-macedo,Des. José Cruz Macedo,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-jose-firmo-reis-soub,Des. JOSE FIRMO REIS SOUB,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-leila-cristina-garbin-arlanch,Desa. Leila Cristina Garbin Arlanch,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-leonardo-roscoe-bessa,Des. Leonardo Roscoe Bessa,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-lucimeire-maria-da-silva,Desa. Lucimeire Maria da Silva,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-luis-gustavo-barbosa-de-oliveira,Des. Luís Gustavo Barbosa De Oliveira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-maria-de-fatima-rafael-de-aguiar,Desa. Maria de Fátima Rafael de Aguiar,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-maria-de-lourdes-abreu,Desa. Maria de Lourdes Abreu,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-maria-ivatonia-barbosa-dos-santos,Desa. Maria Ivatônia Barbosa dos Santos,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-mario-zam-belmiro-rosa,Des. Mário-Zam Belmiro Rosa,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-nilsoni-de-freitas-custodio,Desa. Nilsoni de Freitas Custodio,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-renato-rodovalho-scussel,Des. Renato Rodovalho Scussel,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-roberto-freitas-filho,Des. Roberto Freitas Filho,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-roberval-casemiro-belinati,Des. Roberval Casemiro Belinati,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-robson-barbosa-de-azevedo,Des. Robson Barbosa de Azevedo,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-robson-vieira-teixeira-de-freitas,Des. Robson Vieira Teixeira de Freitas,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-romulo-de-araujo-mendes,Des. Rômulo de Araújo Mendes,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-sandoval-gomes-de-oliveira,Des. Sandoval Gomes de Oliveira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-sandra-reves-vasques-tonussi,Desa. Sandra Reves Vasques Tonussi,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-sergio-xavier-de-souza-rocha,Des. Sérgio Xavier de Souza Rocha,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-silvanio-barbosa-dos-santos,Des. Silvanio Barbosa dos Santos,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-simone-costa-lucindo-ferreira,Desa. Simone Costa Lucindo Ferreira,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-soniria-rocha-campos-d-assuncao,Desa. Soníria Rocha Campos D'Assunção,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-teofilo-rodrigues-caetano-neto,Des. Teófilo Rodrigues Caetano Neto,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-vera-lucia-andrighi,Desa. Vera Lucia Andrighi,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+tjdft-waldir-leoncio-cordeiro-lopes-junior,Des. Waldir Leôncio Cordeiro Lopes Júnior,TJDFT,Desembargador,titular,https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica
+trf1-alexandre-laranjeira,Alexandre Laranjeira,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-alexandre-vasconcelos,Alexandre Vasconcelos,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-ana-carolina-roman,Ana Carolina Roman,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-antonio-scarpa,Antonio Scarpa,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-candice-lavocat-galvao-jobim,Candice Lavocat Galvão Jobim,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-carlos-eduardo-moreira-alves,Carlos Eduardo Moreira Alves,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-cesar-jatahy,César Jatahy,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-daniele-maranhao,Daniele Maranhão,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-eduardo-martins,Eduardo Martins,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-euler-de-almeida,Euler de Almeida,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-flavio-jardim,Flávio Jardim,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-gilda-sigmaringa-seixas,Gilda Sigmaringa Seixas,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-gustavo-soares-amorim,Gustavo Soares Amorim,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-hercules-fajoses,Hercules Fajoses,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-i-talo-mendes,I'talo Mendes,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-jamil-de-jesus-oliveira,Jamil de Jesus Oliveira,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-joao-batista-moreira,João Batista Moreira,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-joao-luiz-de-sousa,João Luiz de Sousa,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-jose-amilcar-machado,José Amilcar Machado,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-katia-balbino,Kátia Balbino,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-leao-alves,Leão Alves,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-marcelo-albernaz,Marcelo Albernaz,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-marcos-augusto-de-sousa,Marcos Augusto de Sousa,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-marcus-bastos,Marcus Bastos,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-maria-do-carmo-cardoso,Maria do Carmo Cardoso,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-maura-moraes-tayer,Maura Moraes Tayer,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-morais-da-rocha,Morais da Rocha,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-neviton-guedes,Néviton Guedes,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-newton-ramos,Newton Ramos,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-ney-bello,Ney Bello,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-novely-vilanova,Novély Vilanova,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-pablo-zuniga,Pablo Zuniga,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-pedro-braga-filho,Pedro Braga Filho,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-rafael-paulo,Rafael Paulo,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-roberto-carvalho-veloso,Roberto Carvalho Veloso,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-rosana-noya-alves-weibel-kaufmann,Rosana Noya Alves Weibel Kaufmann,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-rosimayre-goncalves-de-carvalho,Rosimayre Gonçalves de Carvalho,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-rui-goncalves,Rui Gonçalves,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-solange-salgado-da-silva,Solange Salgado da Silva,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-urbano-leal-berquo-neto,Urbano Leal Berquó Neto,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade
+trf1-wilson-alves-de-souza,Wilson Alves de Souza,TRF1,Desembargador Federal,titular,https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade

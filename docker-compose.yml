@@ -1,0 +1,26 @@
+services:
+  vila:
+    build: .
+    container_name: vila-inteia
+    ports:
+      - "8090:8090"
+    environment:
+      - OMNIROUTE_URL=http://localhost:20128
+      - OMNIROUTE_API_KEY=YOUR_LLM_API_KEY_HERE
+      - OSA_URL=http://localhost:8089
+      - OSA_HABILITADO=true
+      - PYTHONPATH=/app
+    volumes:
+      - vila_data:/app/state
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8090/health')"]
+      interval: 30s
+      timeout: 30s
+      start_period: 30s
+      retries: 3
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  vila_data:

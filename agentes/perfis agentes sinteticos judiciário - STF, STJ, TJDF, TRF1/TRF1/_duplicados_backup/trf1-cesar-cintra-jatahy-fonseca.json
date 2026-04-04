@@ -1,0 +1,58 @@
+{
+  "id": "trf1-cesar-cintra-jatahy-fonseca",
+  "nome": "Des. César Cintra Jatahy Fonseca",
+  "nome_completo": "César Cintra Jatahy Fonseca",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "dados_dossie": {
+      "perfil_ideologico": "Moderado-tecnico. Reconhece prisao preventiva como 'medida excepcional'. Expertise em responsabilidade penal da pessoa juridica e crimes ambientais.",
+      "analise_comportamental": "Moderado-tecnico. Reconhece prisao preventiva como 'medida excepcional'. Expertise em responsabilidade penal da pessoa juridica e crimes ambientais.",
+      "nascimento": "04/09/1970 em Salvador/BA. Pai: Desembargador Edmilson Jatahy Fonseca (TJBA, falecido 2017). Irmao: Desembargador Jatahy Junior (TJBA).",
+      "formacao": "Graduacao pela UFBA (1993); Mestrado em Direito Publico pela UFBA (2007) - dissertacao: 'Responsabilidade Penal da Pessoa Juridica'.",
+      "carreira_previa": "Auxiliar judiciario do TRE-BA (1989-1993, aprovado aos 18 anos). Promotor de Justica/BA (1993-1998). Juiz Federal Substituto desde 1998 (SJBA). Juiz auxiliar da Presidencia e Corregedoria do TRF-1. Desembargador Federal desde 28/08/2020 (merecimento - 3 vezes em lista).",
+      "docencia": "Professor Substituto de Direito Penal na UFBA (1998-2000).",
+      "curiosidades": "Pai e irmao tambem desembargadores (TJBA). Familia de juristas."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Auxiliar judiciario do TRE-BA (1989-1993, aprovado aos 18 anos)"
+  },
+  "padroes_decisao": {
+    "Criminal": "Moderado-tecnico. Prisao preventiva como medida excepcional, observadas balizas legais.",
+    "Ambiental": "Expertise em responsabilidade penal da pessoa juridica e crimes ambientais."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Moderado-tecnico. Reconhece prisao preventiva como 'medida excepcional'. Expertise em responsabilidade penal da pessoa juridica e crimes ambientais."
+    ],
+    "confianca_global": 6
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-02-01",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

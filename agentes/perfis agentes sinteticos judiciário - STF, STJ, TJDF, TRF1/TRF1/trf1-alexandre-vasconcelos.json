@@ -1,0 +1,88 @@
+{
+  "id": "trf1-alexandre-vasconcelos",
+  "nome": "Alexandre Vasconcelos",
+  "nome_completo": "Alexandre Machado Vasconcelos",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 7º andar",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/alexandre-vasconcelos",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "* * *\n\n7224 visualizações\n\n**Informativos**\n\n[Avisos](https://www.trf1.jus.br/trf1/informativos/avisos)\n\n[Infojef](https://www.trf1.jus.br/trf1/informativos/infojef)\n\n[Notícias](https://www.trf1.jus.br/trf1/noticias)\n\n[Matérias Especiais](https://www.trf1.jus.br/trf1/noticias/?palavra=&categoria=Mat%C3%A9rias+Especiais)\n\n**[LGPD](https://www.trf1.jus.br/trf1/lgpd/lgpd)**\n\n**Magistrado**\n\n[Organização e Composição](https://www.trf1.jus.br/trf1/magistrado/organizacao-e-composicao)\n\n[Desembargadoras e Desembargadores Federais](https://www.trf1.jus.br/trf1/magistrado/desembargadoras-e-desembargadores-federais)\n\n[Juízes Federais](https://www.trf1.jus.br/trf1/magistrado/juizes-federais)\n\n[Sistemas](https://www.trf1.jus.br/trf1/magistrado/sistemas)\n\n**[Memória](https://www.trf1.jus.br/trf1/exposicoes/nasce-um-tribunal)**\n\n**Servidor**\n\n[Contracheque/DIRF](https://portal.trf1.jus.br/Consulta/ContraCheque/ContraCheque.php)\n\n[Imposto de Renda](https://portal.trf1.jus.br/Consulta/ContraCheque/ContraCheque.php)\n\n[Ambientação](https://www.trf1.jus.br/trf1/servidor/ambientacao)\n\n[Educação Corporativa](https://www.trf1.jus.br/trf1/servidor/educacao-corporativa)\n\n[Avaliação de Desempenho](https://sca.trf1.jus.br/auth/realms/JF1/protocol/openid-connect/auth?client_id=educador-judiciario&redirect_uri=https%3A%2F%2Fsistemas.trf1.jus.br%2Feducajud%2F&state=e225ff63-0490-4fdf-9f33-7cffd7774372&nonce=f6eca0a0-cc8a-4b2f-8c7f-ad4a513d1ecf&response_mode=fragment&response_type=code&scope=openid)\n\n[Sistema Integrado de Avaliação de Desempenho Funcional - Siades](https://www.trf1.jus.br/trf1/servidor/sistema-integrado-de-avaliacao-de-desempenho-funcional---siades)\n\n[Contatos](https://www.trf1.jus.br/trf1/servidor/contatos)\n\n**[Informativos](https://www.trf1.jus.br/trf1/informativos)**\n\n**[LGPD](https://www.trf1.jus.br/trf1/servicos/lgpd)**\n\n**[Magistrado](https://www.trf1.jus.br/trf1/magistrado)**\n\n**[Memória](https://www.trf1.jus.br/trf1/memoria-institucional/nasce-um-tribunal)**\n\n**[Servidor](https://www.trf1.jus.br/trf1/servidor)**",
+    "dados_dossie": {
+      "nascimento": {
+        "cidade": "Brasília/DF"
+      },
+      "origem": "Magistratura federal. Ex-promotor MPDFT (1991-1993). Juiz federal desde 1993 (SJMG, SJDF). Promovido por antiguidade.",
+      "perfil_ideologico": "Juiz federal de carreira com passagem pelo MP e pela magistratura eleitoral (TRE-TO, TRE-PA). Ampla experiência em convocações no TRF1.",
+      "perfil_psicologico": "Experiente e versátil. Atuou em múltiplas seções judiciárias e tribunais eleitorais. Perfil institucional pela vasta experiência em convocações.",
+      "estilo_decisorio": "Generalista federal com experiência em diversas matérias. Atuação em licitações, contratos administrativos e direito ambiental (3ª Seção).",
+      "secao": "3ª Seção",
+      "turma": "5ª Turma",
+      "formacao": "Direito (UnB, 1990)",
+      "carreira_previa": "Advogado (1990-1991), promotor MPDFT (1991-1993), juiz federal substituto SJMG (1993), juiz titular 18ª Vara SJDF (1999), juiz TRE-TO e TRE-PA",
+      "especialidade": "Licitacao, contratos administrativos, atos administrativos em geral, concursos publicos, direito ambiental, sucessoes, registros publicos",
+      "curiosidades": "Tomou posse em 07/12/2023 junto com Joao Carlos Mayer Soares. Ocupou vaga da aposentadoria do desembargador federal Olindo Menezes. Gabinete: Ed. Sede II, 7o andar.",
+      "analise_comportamental": "Magistrado de longa carreira. Trajetoria: advocacia, Ministerio Publico, magistratura federal."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Advogado (1990-1991)"
+  },
+  "padroes_decisao": {
+    "Direito Administrativo": "Especializacao em Direito Administrativo com profundo conhecimento da jurisprudencia federal sobre servidores publicos, licitacoes e contratos. Decisoes tecnicamente fundamentadas que influenciam a orientacao do tribunal em materia administrativa.",
+    "Direito Tributario": "Postura intermediaria em questoes fiscais, aplicando o principio da legalidade tributaria com rigor sem prejuizo da funcao arrecadatoria. Atento as teses firmadas em recursos repetitivos.",
+    "Direito Previdenciario": "Postura intermediaria em litígios previdenciarios, exigindo cumprimento dos requisitos legais mas com sensibilidade social. Atento a evolucao jurisprudencial sobre atividades especiais e tempo de contribuicao.",
+    "Direito Ambiental": "Referencia em Direito Ambiental no tribunal, com producao academica e jurisprudencial significativa na area. Aplica os principios da precaucao e do poluidor-pagador com rigor, priorizando a protecao do meio ambiente ecologicamente equilibrado.",
+    "Improbidade Administrativa": "Postura intermediaria em materia de improbidade, diferenciando atos dolosamente improbos de meras irregularidades administrativas. Aplica o principio da proporcionalidade na dosimetria das sancoes."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Magistrado de longa carreira. Trajetoria: advocacia, Ministerio Publico, magistratura federal."
+    ],
+    "confianca_global": 4
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/alexandre-vasconcelos",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    },
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

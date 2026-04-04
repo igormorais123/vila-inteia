@@ -1,0 +1,67 @@
+{
+  "id": "tjdft-fernando-antonio-habibe-pereira",
+  "nome": "Des. Fernando Antonio Habibe Pereira",
+  "nome_completo": "Fernando Antonio Habibe Pereira",
+  "orgao": "TJDFT",
+  "cargo": "Desembargador",
+  "situacao": "titular",
+  "dados_publicos": {
+    "assessor": "Eduardo Tavares Maciel Aquino",
+    "telefones_gabinete": "(61)3103-6890",
+    "dados_dossie": {
+      "perfil_ideologico": "Intelectual e filósofo do direito. Seus votos discutem a",
+      "analise_comportamental": "Intelectual e filósofo do direito. Seus votos discutem a",
+      "nascimento": {
+        "cidade": "Sao Luis/MA"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": "Maranhense em Brasilia desde 1978. Pessoa correta, honrada, integra e proba.",
+      "turma": "Turma Civel",
+      "formacao": "Informacao nao confirmada.",
+      "carreira_previa": "Advogado. Chefe da assessoria do PGR. Analista do STJ. Juiz Substituto desde novembro de 1990. Titular da 6a Vara Criminal de Brasilia desde 1997.",
+      "especialidade": "Direito Criminal transitando para Civel",
+      "curiosidades": "Promovido por unanimidade. Membro suplente do TRE-DF."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Civil": "Aplica o Codigo Civil com enfase na boa-fe objetiva e na funcao social do contrato. Decisoes fundamentadas e atentas ao contexto socioeconomico das partes.",
+    "Direito do Consumidor": "Posicao intermediaria em litígios de consumo, protegendo o consumidor vulneravel mas exigindo comprovacao adequada dos danos alegados. Atento a jurisprudencia do STJ em materia consumerista.",
+    "Direito de Familia": "Posicao equilibrada em Direito de Familia, com atencao as peculiaridades de cada caso. Valoriza a fundamentacao em laudos periciais e estudos psicossociais.",
+    "Direito Penal": "Vasta experiencia em materia penal, com dominio da dosimetria da pena e das circunstancias judiciais. Postura firme na repressao criminal, com atencao ao principio da individualizacao da pena.",
+    "Execucao/Cumprimento de Sentenca": "Busca a satisfacao do credito de forma eficiente, utilizando o arsenal de medidas executivas disponiveis. Pondera entre celeridade e garantias processuais do executado."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Intelectual e filósofo do direito. Seus votos discutem a",
+      "Analise comportamental: Intelectual e filósofo do direito. Seus votos discutem a"
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+      "tipo": "site-oficial",
+      "observacao": "Ordem alfabetica (2a instancia)"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TJDFT",
+    "descricao": "Desembargador do TJDFT com atuação jurídica"
+  }
+}

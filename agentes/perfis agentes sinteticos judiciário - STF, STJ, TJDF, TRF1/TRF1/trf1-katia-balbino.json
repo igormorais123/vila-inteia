@@ -1,0 +1,88 @@
+{
+  "id": "trf1-katia-balbino",
+  "nome": "Kátia Balbino",
+  "nome_completo": "Katia Balbino de Carvalho Ferreira",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 1º andar - 1S",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/katiabalbino",
+    "dados_dossie": {
+      "perfil_ideologico": "Progressista/Direitos Humanos. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justi",
+      "analise_comportamental": "Progressista/Direitos Humanos. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justiça. É uma gestora inovadora.",
+      "nascimento": {
+        "data": null,
+        "cidade": "Salvador/BA"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": "Sensibilidade social destacada. Instrumental na Resolucao 343/2020 do CNJ sobre condicoes especiais para deficientes.",
+      "secao": "3a",
+      "turma": "6a Turma (3a Secao)",
+      "formacao": "Bacharelado em Direito pela UnB (1994). Pos-graduacao lato sensu em Direito Processual Civil pelo IBDP/Instituto Brasiliense de Ensino.",
+      "carreira_previa": "Juiza federal desde 1995. Atuou em Goiania (vara civel e execucao fiscal), mutirao no TRF1, vara criminal em Salvador (1998). Juiza Federal Titular da 9a Vara SJBA (1999-2006). Titular da 25a Vara/JEFs SJDF (2006-2010). Juiza convocada para auxilio a desembargadora Neuza Alves (2006-2010). Auxiliar da COJEF (2008-2010).",
+      "especialidade": "Acessibilidade e inclusao, direito previdenciario, JEFs, processo civil",
+      "curiosidades": "Posse em 10/05/2023 por merecimento. Coautora da Resolucao CJF 570/2019 (teletrabalho para magistrados com deficiencia). Peca fundamental para a Resolucao 343/2020 do CNJ. Lei 14.253/2021."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Procuradora Federal da UnB"
+  },
+  "padroes_decisao": {
+    "Direito Administrativo": "Postura protetiva dos administrados frente ao poder publico, com enfase no controle judicial dos atos administrativos. Interpreta restritivamente a discricionariedade administrativa e ampliativamente os direitos dos cidadaos.",
+    "Direito Tributario": "Posicao garantista em materia tributaria, com interpretacao restritiva do poder de tributar do Estado. Aplica rigorosamente os principios da legalidade, anterioridade e capacidade contributiva em favor do contribuinte.",
+    "Direito Previdenciario": "Especializacao em materia previdenciaria com profundo conhecimento da legislacao do RGPS e do RPPS. Posicao consolidada sobre temas como aposentadoria especial, atividades concomitantes e revisao de beneficios.",
+    "Direito Ambiental": "Postura protetiva do meio ambiente, com aplicacao rigorosa do principio da precaucao. Interpreta ampliativamente as obrigacoes ambientais e restritivamente as permissoes de degradacao.",
+    "Improbidade Administrativa": "Posicao garantista em acoes de improbidade, exigindo prova robusta do dolo do agente publico. Aplica a LIA com atencao ao principio da proporcionalidade, diferenciando condutas graves de irregularidades administrativas menores."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Progressista/Direitos Humanos. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justi",
+      "Analise comportamental: Progressista/Direitos Humanos. Reconhecida internacionalmente por sua atuação em pautas de gênero e diversidade. Traz uma visão moderna e humanizada para a corte, focada em inclusão e acesso à justi",
+      "Perfil ideologico: Mestrado internacional em Acesso a Justica (Montreal, Canada). Foco em gestao judicial e eficiencia."
+    ],
+    "confianca_global": 5
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/katiabalbino",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    },
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

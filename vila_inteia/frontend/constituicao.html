@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Assembleia Constituinte - Vila INTEIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & VARIAVEIS
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--amber:#d69e2e;--amber-l:#f6e05e;--amber-d:#b7791f;
+--bg:#0a0e1a;--bg1:#0f1629;--bg2:#1e293b;--bg3:#283548;
+--card:rgba(15,23,42,0.85);--glass:rgba(15,23,42,0.75);
+--tx:#f8fafc;--tx2:#cbd5e1;--txm:#64748b;
+--brd:rgba(100,116,139,0.25);--brd-h:rgba(214,158,46,0.3);
+--glow:rgba(214,158,46,0.15);--shd:rgba(0,0,0,0.4);
+--green:#22c55e;--red:#ef4444;--red-dk:#b91c1c;--blue:#3b82f6;--yellow:#eab308;
+--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-full:9999px;
+--tr:0.3s ease;--fast:0.15s ease;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--txm);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+a{color:var(--amber);text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+
+/* ============================================================
+   LAYOUT PRINCIPAL
+   ============================================================ */
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* TOPBAR */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;background:var(--bg1);border-bottom:1px solid var(--brd);
+  min-height:48px;flex-shrink:0;z-index:100;
+}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.logo-box{
+  width:32px;height:32px;background:linear-gradient(135deg,var(--amber),var(--amber-d));
+  border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:13px;color:#000;
+}
+.topbar-title{font-size:14px;font-weight:700;color:var(--tx)}
+.topbar-title span{color:var(--amber)}
+.topbar-nav{display:flex;gap:6px}
+.topbar-nav a{
+  padding:4px 10px;border-radius:var(--r-sm);font-size:11px;font-weight:500;
+  color:var(--tx2);transition:var(--fast);
+}
+.topbar-nav a:hover,.topbar-nav a.active{background:var(--glow);color:var(--amber)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.session-badge{
+  font-size:10px;color:var(--txm);background:var(--bg2);
+  padding:3px 8px;border-radius:var(--r-full);
+}
+
+/* CORPO PRINCIPAL */
+.main-body{display:flex;flex:1;overflow:hidden}
+
+/* PAINEL ASSEMBLEIA (ESQUERDO) */
+.panel-assembly{
+  flex:0 0 65%;display:flex;flex-direction:column;
+  border-right:1px solid var(--brd);overflow:hidden;
+}
+.assembly-header{
+  padding:12px 16px;border-bottom:1px solid var(--brd);
+  background:var(--bg1);flex-shrink:0;
+}
+.assembly-header h2{font-size:15px;font-weight:700;color:var(--amber);margin-bottom:2px}
+.assembly-header p{font-size:11px;color:var(--txm)}
+
+.assembly-feed{
+  flex:1;overflow-y:auto;padding:12px 16px;
+  display:flex;flex-direction:column;gap:6px;
+}
+
+/* MENSAGENS */
+.msg{
+  display:flex;gap:10px;padding:10px 12px;border-radius:var(--r-lg);
+  animation:fadeSlide 0.4s ease;border-left:3px solid transparent;
+  background:var(--card);transition:var(--fast);
+}
+.msg:hover{background:var(--bg2)}
+.msg.tipo-proposta{border-left-color:var(--amber)}
+.msg.tipo-apoio{border-left-color:var(--green)}
+.msg.tipo-oposicao{border-left-color:var(--red)}
+.msg.tipo-provocacao{border-left-color:var(--red-dk)}
+.msg.tipo-emenda{border-left-color:var(--blue)}
+.msg.tipo-conciliacao{border-left-color:#a78bfa}
+.msg.tipo-sistema{
+  border-left-color:var(--txm);background:rgba(100,116,139,0.1);
+  justify-content:center;text-align:center;
+}
+.msg.tipo-sistema .msg-text{color:var(--txm);font-style:italic;font-size:12px}
+.msg.tipo-usuario{border-left-color:var(--amber-l);background:rgba(214,158,46,0.08)}
+
+.msg-avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:12px;color:#000;
+}
+.msg-body{flex:1;min-width:0}
+.msg-header{display:flex;align-items:baseline;gap:6px;margin-bottom:3px}
+.msg-name{font-size:12px;font-weight:700;color:var(--tx)}
+.msg-cat{font-size:9px;color:var(--txm);text-transform:uppercase;letter-spacing:0.5px}
+.msg-tipo-badge{
+  font-size:8px;padding:1px 5px;border-radius:var(--r-full);
+  font-weight:600;text-transform:uppercase;letter-spacing:0.5px;
+}
+.msg-tipo-badge.proposta{background:rgba(214,158,46,0.2);color:var(--amber)}
+.msg-tipo-badge.apoio{background:rgba(34,197,94,0.2);color:var(--green)}
+.msg-tipo-badge.oposicao{background:rgba(239,68,68,0.2);color:var(--red)}
+.msg-tipo-badge.provocacao{background:rgba(185,28,28,0.2);color:var(--red-dk)}
+.msg-tipo-badge.emenda{background:rgba(59,130,246,0.2);color:var(--blue)}
+.msg-tipo-badge.conciliacao{background:rgba(167,139,250,0.2);color:#a78bfa}
+.msg-text{font-size:13px;line-height:1.5;color:var(--tx2);word-wrap:break-word}
+.msg-time{font-size:9px;color:var(--txm);margin-top:4px}
+
+/* TYPING INDICATOR */
+.typing-indicator{
+  display:flex;gap:10px;padding:10px 12px;align-items:center;
+  animation:fadeSlide 0.3s ease;
+}
+.typing-indicator .msg-avatar{opacity:0.7}
+.typing-dots{display:flex;gap:3px;align-items:center}
+.typing-dots span{
+  width:6px;height:6px;background:var(--txm);border-radius:50%;
+  animation:typingBounce 1.2s infinite;
+}
+.typing-dots span:nth-child(2){animation-delay:0.2s}
+.typing-dots span:nth-child(3){animation-delay:0.4s}
+.typing-name{font-size:11px;color:var(--txm);font-style:italic}
+
+/* BARRA DE CONTROLES */
+.controls-bar{
+  display:flex;align-items:center;gap:8px;padding:8px 16px;
+  background:var(--bg1);border-top:1px solid var(--brd);flex-shrink:0;
+}
+.ctrl-btn{
+  padding:6px 12px;border-radius:var(--r-sm);font-size:11px;font-weight:600;
+  background:var(--bg2);color:var(--tx2);transition:var(--fast);
+  display:flex;align-items:center;gap:4px;
+}
+.ctrl-btn:hover{background:var(--bg3);color:var(--tx)}
+.ctrl-btn.active{background:var(--amber);color:#000}
+.ctrl-btn.play-btn{background:var(--green);color:#000}
+.ctrl-btn.play-btn.paused{background:var(--red);color:#fff}
+.speed-group{display:flex;gap:2px}
+.speed-btn{
+  padding:4px 8px;border-radius:var(--r-sm);font-size:10px;font-weight:600;
+  background:var(--bg2);color:var(--txm);transition:var(--fast);
+}
+.speed-btn.active{background:var(--amber);color:#000}
+.stats-group{
+  display:flex;gap:12px;margin-left:auto;
+  font-size:10px;color:var(--txm);
+}
+.stat-item strong{color:var(--tx2)}
+
+/* INPUT DO USUARIO */
+.user-input-bar{
+  display:flex;align-items:center;gap:8px;padding:8px 16px;
+  background:var(--bg1);border-top:1px solid var(--brd);flex-shrink:0;
+}
+.user-input-label{font-size:11px;font-weight:600;color:var(--amber);white-space:nowrap}
+.user-input{
+  flex:1;padding:6px 10px;border-radius:var(--r-md);border:1px solid var(--brd);
+  background:var(--bg2);color:var(--tx);font-size:12px;font-family:inherit;
+  transition:var(--fast);
+}
+.user-input:focus{border-color:var(--amber);outline:none}
+.user-input::placeholder{color:var(--txm)}
+.send-btn{
+  padding:6px 14px;border-radius:var(--r-sm);font-size:11px;font-weight:700;
+  background:var(--amber);color:#000;transition:var(--fast);
+}
+.send-btn:hover{background:var(--amber-l)}
+
+/* PAINEL CONSTITUICAO (DIREITO) */
+.panel-constitution{
+  flex:0 0 35%;display:flex;flex-direction:column;overflow:hidden;
+}
+.constitution-header{
+  padding:12px 16px;border-bottom:1px solid var(--brd);
+  background:var(--bg1);flex-shrink:0;
+}
+.constitution-header h2{font-size:15px;font-weight:700;color:var(--amber);margin-bottom:2px}
+.constitution-header p{font-size:11px;color:var(--txm)}
+
+.constitution-body{
+  flex:1;overflow-y:auto;padding:16px;
+}
+
+/* DOCUMENTO DA CONSTITUICAO */
+.const-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;gap:12px;text-align:center;
+}
+.const-empty-icon{font-size:48px;opacity:0.3}
+.const-empty p{font-size:13px;color:var(--txm);max-width:280px;line-height:1.5}
+
+.const-article{
+  padding:12px;margin-bottom:10px;border-radius:var(--r-lg);
+  background:var(--card);border:1px solid var(--brd);
+  animation:fadeSlide 0.5s ease;
+}
+.const-article.emergente{border-color:var(--amber-d);background:rgba(214,158,46,0.05)}
+.const-article.formacao{border-color:var(--txm);border-style:dashed;opacity:0.7}
+.const-article-num{
+  font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:4px;
+}
+.const-article-status{
+  font-size:9px;padding:2px 6px;border-radius:var(--r-full);
+  font-weight:600;display:inline-block;margin-bottom:6px;
+}
+.const-article-status.consenso{background:rgba(34,197,94,0.15);color:var(--green)}
+.const-article-status.debate{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.const-article-status.formacao{background:rgba(100,116,139,0.15);color:var(--txm)}
+.const-article-text{font-size:12px;line-height:1.6;color:var(--tx2)}
+.const-article-meta{
+  font-size:9px;color:var(--txm);margin-top:6px;
+  display:flex;gap:8px;
+}
+.const-article-supporters{
+  display:flex;gap:2px;margin-top:6px;flex-wrap:wrap;
+}
+.supporter-chip{
+  font-size:8px;padding:1px 5px;border-radius:var(--r-full);
+  background:rgba(34,197,94,0.1);color:var(--green);
+}
+.opposer-chip{
+  font-size:8px;padding:1px 5px;border-radius:var(--r-full);
+  background:rgba(239,68,68,0.1);color:var(--red);
+}
+
+/* ANIMACOES */
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes typingBounce{
+  0%,80%,100%{transform:translateY(0)}
+  40%{transform:translateY(-4px)}
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .main-body{flex-direction:column}
+  .panel-assembly{flex:1;border-right:none;border-bottom:1px solid var(--brd)}
+  .panel-constitution{flex:0 0 35%;min-height:200px}
+  .topbar-nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo-box">IA</div>
+      <div class="topbar-title"><span>ASSEMBLEIA CONSTITUINTE</span> da Vila INTEIA</div>
+    </div>
+    <nav class="topbar-nav">
+      <a href="/vila-inteia/index.html">Hub</a>
+      <a href="/vila-inteia/rede.html">Rede Social</a>
+      <a href="/vila-inteia/cidade.html">Cidade 3D</a>
+      <a href="/vila-inteia/constituicao.html" class="active">Constituicao</a>
+    </nav>
+    <div class="topbar-right">
+      <span class="session-badge" id="sessionBadge">Sessao: ---</span>
+    </div>
+  </div>
+
+  <!-- CORPO -->
+  <div class="main-body">
+    <!-- PAINEL ASSEMBLEIA -->
+    <div class="panel-assembly">
+      <div class="assembly-header">
+        <h2>Assembleia ao Vivo</h2>
+        <p>142 clones digitais debatendo livremente. Sem moderador. Sem roteiro.</p>
+      </div>
+      <div class="assembly-feed" id="feed"></div>
+
+      <!-- CONTROLES -->
+      <div class="controls-bar">
+        <button class="ctrl-btn play-btn" id="btnPlay" onclick="togglePlay()">&#9654; Play</button>
+        <div class="speed-group">
+          <button class="speed-btn active" data-speed="1" onclick="setSpeed(1,this)">1x</button>
+          <button class="speed-btn" data-speed="2" onclick="setSpeed(2,this)">2x</button>
+          <button class="speed-btn" data-speed="5" onclick="setSpeed(5,this)">5x</button>
+        </div>
+        <button class="ctrl-btn" onclick="exportTranscript()">Exportar</button>
+        <div class="stats-group">
+          <span class="stat-item">Rodada: <strong id="statRound">0</strong></span>
+          <span class="stat-item">Msgs: <strong id="statMsgs">0</strong></span>
+          <span class="stat-item">Falaram: <strong id="statSpeakers">0</strong></span>
+        </div>
+      </div>
+
+      <!-- INPUT USUARIO -->
+      <div class="user-input-bar">
+        <span class="user-input-label">Igor Morais fala:</span>
+        <input class="user-input" id="userInput" type="text"
+          placeholder="Digite sua fala para a Assembleia..."
+          onkeydown="if(event.key==='Enter')sendUserMessage()">
+        <button class="send-btn" onclick="sendUserMessage()">Enviar</button>
+      </div>
+    </div>
+
+    <!-- PAINEL CONSTITUICAO -->
+    <div class="panel-constitution">
+      <div class="constitution-header">
+        <h2>Constituicao da Vila INTEIA</h2>
+        <p id="constSubtitle">Documento em construcao pelos habitantes</p>
+      </div>
+      <div class="constitution-body" id="constBody">
+        <div class="const-empty" id="constEmpty">
+          <div class="const-empty-icon">&#128220;</div>
+          <p>Nenhum artigo aprovado ainda. A Assembleia precisa debater e chegar a consensos para que artigos aparecam aqui.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>if(!crypto.randomUUID)crypto.randomUUID=()=>"10000000-1000-4000-8000-100000000000".replace(/[018]/g,c=>(+c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>+c/4).toString(16));
+/* ============================================================
+   CONFIGURACAO
+   ============================================================ */
+const BACKEND_URL = 'http://localhost:8090';
+const OMNI_URL = 'http://localhost:8090/api/v1/vila-inteia/chat';
+const OMNI_MODEL = 'BestFREE';
+const DATA_URL = '../data/banco-consultores-lendarios.json';
+const CONSULTORS_API_URL = `${BACKEND_URL}/api/v1/consultores-lendarios?por_pagina=200`;
+
+/* ============================================================
+   ESTADO GLOBAL
+   ============================================================ */
+let consultores = [];          // Todos os 144 consultores
+let mensagens = [];            // Historico completo
+let artigos = [];              // Artigos da constituicao
+let propostas = [];            // Propostas em debate
+let running = false;           // Simulacao rodando?
+let speed = 1;                 // 1x, 2x, 5x
+let roundNum = 0;              // Contador de rodadas
+let speakersSet = new Set();   // Quem ja falou
+let sessionId = '';            // ID da sessao
+let timerHandle = null;        // Handle do setInterval
+let isGenerating = false;      // Gerando resposta IA?
+let lastSpeakerId = null;      // Ultimo que falou (evita repeticao)
+let lastSpeakers = [];         // Ultimos N que falaram (tribuna)
+const TRIBUNA_GAP = 8;        // Minimo de oradores diferentes antes de repetir
+let mentionedIds = [];         // IDs mencionados na ultima msg
+let artigoCounter = 0;         // Numeracao de artigos
+
+function showFatalInitError(err) {
+  const msg = (err && err.message) ? String(err.message) : String(err || 'Erro desconhecido');
+  console.error('[CONSTITUICAO] Falha fatal na inicializacao:', err);
+  const feed = document.getElementById('feed');
+  if (!feed) return;
+  const diagnostico = /502|Bad Gateway|Failed to fetch|NetworkError/i.test(msg)
+    ? 'Falha de conexao com a API da Vila INTEIA. O backend publico esta instavel ou indisponivel.'
+    : 'Falha ao inicializar a Assembleia Constituinte da Vila INTEIA.';
+  feed.innerHTML =
+    '<div class="msg tipo-sistema"><div class="msg-text">' + diagnostico +
+    '<br><small style="display:block;margin-top:8px;color:#94a3b8">Detalhe tecnico: ' +
+    msg.replace(/</g, '&lt;') + '</small></div></div>';
+}
+
+function normalizarMensagemApi(msg) {
+  const consultorId = msg.consultorId || msg.consultor_id || '';
+  const nome = msg.nome || msg.consultor_nome || 'Consultor';
+  const consultor =
+    consultores.find(c => (c.id || '') === consultorId) ||
+    consultores.find(c => (c.nome_exibicao || c.nome || '') === nome);
+
+  return {
+    consultorId,
+    nome,
+    categoria: msg.categoria || consultor?.categoria || '',
+    categoriaLabel: msg.categoriaLabel || getCategoriaLabel(msg.categoria || consultor?.categoria),
+    texto: msg.texto || msg.conteudo || '',
+    tipo: msg.tipo || 'fala',
+    hora: msg.hora || (msg.criado_em ? new Date(msg.criado_em).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : getHora()),
+    rodada: msg.rodada || 1,
+    timestamp: msg.timestamp || (msg.criado_em ? new Date(msg.criado_em).getTime() : Date.now())
+  };
+}
+
+async function carregarConsultores() {
+  for (const path of ['./banco-consultores-lendarios.json', DATA_URL]) {
+    try {
+      const r = await fetch(path);
+      if (!r.ok) continue;
+      const data = await r.json();
+      if (Array.isArray(data) && data.length > 50) {
+        return data;
+      }
+    } catch (e) {}
+  }
+
+  try {
+    const r = await fetch(CONSULTORS_API_URL);
+    if (r.ok) {
+      const data = await r.json();
+      if (Array.isArray(data?.consultores) && data.consultores.length > 50) {
+        return data.consultores;
+      }
+    }
+  } catch (e) {
+    console.warn('[INIT] API de consultores indisponivel, tentando fallback estatico');
+  }
+
+  throw new Error('Nao foi possivel carregar os consultores da Vila INTEIA');
+}
+
+/* ============================================================
+   CORES POR CATEGORIA
+   ============================================================ */
+const CAT_COLORS = {
+  visionario: '#8b5cf6',
+  estrategia: '#3b82f6',
+  investidor: '#10b981',
+  negociacao: '#f59e0b',
+  tech: '#06b6d4',
+  marca: '#ec4899',
+  politica_internacional: '#ef4444',
+  politica_brasileira: '#22c55e',
+  resiliencia: '#f97316',
+  ia_futuro: '#a78bfa',
+  mindset: '#14b8a6',
+  br_business: '#84cc16',
+  mkt_digital: '#f472b6',
+  lado_negro: '#991b1b',
+  qi_extremo: '#7c3aed',
+  omega: '#d69e2e',
+  ficticio: '#6366f1',
+  influencia_oratoria: '#e879f9',
+  jurista_lendario: '#78716c',
+  provocador: '#dc2626',
+  espiritual: '#fbbf24'
+};
+
+/* ============================================================
+   CLASSIFICACAO DE MENSAGENS
+   ============================================================ */
+function classificarMensagem(texto) {
+  const t = texto.toLowerCase();
+
+  // PRIORIDADE 1: Se COMEÇA com "Apoio" ou "Oponho" — é voto, mesmo que tenha emenda depois
+  if (/^(apoio\b|sou a favor|concordo com|endosso|subscrevo|voto sim)/.test(t)) return 'apoio';
+  if (/^(oponho|me oponho|discordo|rejeito|sou contra|voto n[aã]o)/.test(t)) return 'oposicao';
+
+  // PRIORIDADE 2: Apoio/oposição explícita em qualquer posição
+  if (/\b(apoio a proposta de|sou a favor d[ao]|voto sim|endosso a proposta)\b/.test(t)) return 'apoio';
+  if (/\b(oponho-me a|sou contra [ao]|voto não|rejeito a proposta)\b/.test(t)) return 'oposicao';
+
+  // PRIORIDADE 3: Proposta nova (proponho artigo/regra sem ser emenda)
+  if (/\b(proponho artigo|proponho que|proposta:|sugiro que|artigo\s*\d+\s*:)\b/.test(t) && !/emenda/.test(t)) return 'proposta';
+
+  // PRIORIDADE 4: Emenda (apoio + modificação)
+  if (/\b(emenda|proponho em substituição|proponho modificação|com a ressalva|adendo)\b/.test(t)) return 'emenda';
+
+  // PRIORIDADE 5: Proposta genérica
+  if (/\b(proponho|proponhamos|regra\s*:|lei\s*:|devemos estabelecer)\b/.test(t)) return 'proposta';
+
+  // Provocacao
+  if (/\b(pat[eé]tico|piada|rid[ií]culo|covardes|fracos|ingenuidade|bobagem|besteira|hip[oó]critas|absurdo)\b/.test(t)) return 'provocacao';
+  // Conciliacao
+  if (/\b(acalm|diálogo|equil[ií]brio|ouçamos|ponderemos|meio[ -]?termo|concilia|modera[çc])\b/.test(t)) return 'conciliacao';
+  return 'fala';
+}
+
+/* ============================================================
+   INICIALIZACAO
+   ============================================================ */
+async function init() {
+  // Sessao
+  sessionId = localStorage.getItem('vila_const_session') || crypto.randomUUID();
+  localStorage.setItem('vila_const_session', sessionId);
+  document.getElementById('sessionBadge').textContent = 'Sessao: ' + sessionId.slice(0, 8);
+
+  // Carregar consultores
+  try {
+    consultores = await carregarConsultores();
+    console.log(`[INIT] ${consultores.length} consultores carregados`);
+  } catch (e) {
+    console.error('[INIT] Erro ao carregar consultores:', e);
+    return;
+  }
+
+  // Tentar carregar mensagens salvas do backend
+  let loaded = false;
+  try {
+    const r = await fetch(`${BACKEND_URL}/api/v1/constituicao/mensagens?sessao_id=${sessionId}`);
+    if (r.ok) {
+      const data = await r.json();
+      if (data && data.length > 0) {
+        mensagens = data.map(normalizarMensagemApi);
+        loaded = true;
+        console.log(`[INIT] ${data.length} mensagens restauradas do backend`);
+      }
+    }
+  } catch (e) {
+    console.log('[INIT] Backend indisponivel, tentando localStorage');
+  }
+
+  // Fallback localStorage
+  if (!loaded) {
+    try {
+      const local = JSON.parse(localStorage.getItem('vila_const_msgs_' + sessionId) || '[]');
+      if (local.length > 0) {
+        mensagens = local;
+        loaded = true;
+        console.log(`[INIT] ${local.length} mensagens restauradas do localStorage`);
+      }
+    } catch (e) {}
+  }
+
+  // Restaurar artigos
+  try {
+    const localArt = JSON.parse(localStorage.getItem('vila_const_artigos_' + sessionId) || '[]');
+    if (localArt.length > 0) {
+      artigos = localArt;
+      artigoCounter = artigos.length;
+    }
+  } catch (e) {}
+
+  // Renderizar mensagens existentes
+  if (mensagens.length > 0) {
+    mensagens.forEach(m => renderMessage(m, false));
+    roundNum = mensagens.filter(m => m.tipo !== 'sistema' && m.tipo !== 'usuario').length;
+    mensagens.forEach(m => { if (m.consultorId) speakersSet.add(m.consultorId); });
+    artigos.forEach(a => renderArticle(a, false));
+  }
+
+  updateStats();
+  scrollToBottom();
+}
+
+/* ============================================================
+   PERSISTENCIA
+   ============================================================ */
+async function salvarMensagem(msg) {
+  // localStorage sempre (backup)
+  try {
+    const local = JSON.parse(localStorage.getItem('vila_const_msgs_' + sessionId) || '[]');
+    local.push(msg);
+    // Manter max 500 no localStorage
+    if (local.length > 500) local.splice(0, local.length - 500);
+    localStorage.setItem('vila_const_msgs_' + sessionId, JSON.stringify(local));
+  } catch (e) {}
+
+  // Backend
+  try {
+    await fetch(`${BACKEND_URL}/api/v1/constituicao/mensagens`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessao_id: sessionId,
+        consultor_id: msg.consultorId || msg.nome,
+        consultor_nome: msg.nome,
+        conteudo: msg.texto,
+        tipo: msg.tipo || 'fala',
+        rodada: msg.rodada || 1,
+        metadata_extra: {
+          categoria: msg.categoria || '',
+          categoriaLabel: msg.categoriaLabel || '',
+          hora: msg.hora || '',
+          timestamp: msg.timestamp || Date.now()
+        }
+      })
+    });
+  } catch (e) {
+    console.warn('[SAVE] Backend indisponivel:', e.message);
+  }
+}
+
+function salvarArtigos() {
+  try {
+    localStorage.setItem('vila_const_artigos_' + sessionId, JSON.stringify(artigos));
+  } catch (e) {}
+}
+
+/* ============================================================
+   SELECAO DO PROXIMO ORADOR — SISTEMA DE TRIBUNA
+
+   Regras parlamentares minimas:
+   1. Quem falou recentemente NAO pode falar (gap de 8 oradores)
+   2. NUNCA dois oradores se alternando (anti-bate-boca bilateral)
+   3. Diversidade forçada: quem nunca falou tem prioridade
+   4. Relevância temática pesa, mas não domina
+   ============================================================ */
+function selecionarOrador() {
+  if (consultores.length === 0) return null;
+
+  // IDs bloqueados pela tribuna (falaram recentemente)
+  const bloqueados = new Set(lastSpeakers.slice(-TRIBUNA_GAP));
+
+  // Anti-bilateral: se A respondeu a B, B nao pode falar imediatamente
+  let bilateralBlock = null;
+  if (mensagens.length >= 2) {
+    const penult = mensagens[mensagens.length - 2];
+    const ult = mensagens[mensagens.length - 1];
+    if (penult.consultorId && ult.consultorId && penult.consultorId !== ult.consultorId) {
+      // Se os dois ultimos sao A e B, bloquear A (evita A-B-A-B)
+      bilateralBlock = penult.consultorId;
+    }
+  }
+
+  // Construir score para cada consultor
+  const scores = consultores.map(c => {
+    let score = 0;
+
+    // REGRA 1: Bloqueado pela tribuna? Eliminado
+    if (bloqueados.has(c.id)) return { c, score: -999 };
+
+    // REGRA 2: Anti-bilateral
+    if (c.id === bilateralBlock) return { c, score: -999 };
+
+    // REGRA 3: Quem NUNCA falou tem bonus forte
+    if (!speakersSet.has(c.id)) {
+      score += 30;
+    }
+
+    // Extroversao = chance base leve (evita dominio)
+    const extro = c.nivel_extroversao || 5;
+    score += extro * 0.8;
+
+    // Relevancia tematica (moderada)
+    if (mensagens.length > 0) {
+      const recentText = mensagens.slice(-8).map(m => m.texto).join(' ').toLowerCase();
+      const expertise = (c.areas_expertise || []).map(e => e.toLowerCase());
+      let relevancia = 0;
+      expertise.forEach(exp => {
+        const words = exp.split(/\s+/);
+        words.forEach(w => { if (w.length > 4 && recentText.includes(w)) relevancia++; });
+      });
+      score += Math.min(relevancia * 3, 12); // Cap de relevancia
+    }
+
+    // Carisma e presenca publica (moderado)
+    score += (c.nivel_carisma || 5) * 0.3;
+    score += (c.presenca_publica || 5) * 0.3;
+
+    // Categorias pouco representadas ganham bonus
+    const catCount = lastSpeakers.filter(id => {
+      const sp = consultores.find(cc => cc.id === id);
+      return sp && sp.categoria === c.categoria;
+    }).length;
+    if (catCount === 0) score += 8;
+
+    // Fator aleatorio (garante imprevisibilidade)
+    score += Math.random() * 15;
+
+    return { c, score };
+  });
+
+  // Filtrar validos e ordenar
+  const validos = scores.filter(s => s.score > -900);
+  if (validos.length === 0) {
+    // Se todos bloqueados, resetar tribuna parcialmente
+    lastSpeakers.splice(0, Math.floor(lastSpeakers.length / 2));
+    return selecionarOrador();
+  }
+
+  validos.sort((a, b) => b.score - a.score);
+  return validos[0].c;
+}
+
+/* ============================================================
+   FILTRO ANTI-CLICHÊ
+   Rejeita mensagens que são puro blá-blá-blá sem substância
+   ============================================================ */
+function isMensagemVazia(texto) {
+  const t = texto.toLowerCase();
+  const len = texto.length;
+
+  // Frases muito curtas que só concordam sem dizer com o quê
+  const clichesExatos = [
+    'concordo plenamente', 'excelente ponto', 'brilhante colocação',
+    'muito bem colocado', 'palavras sábias', 'tenho que concordar',
+    'não poderia concordar mais', 'é exatamente isso',
+    'juntos somos mais fortes', 'o futuro nos aguarda',
+    'devemos refletir sobre isso', 'é preciso sabedoria',
+    'a união faz a força', 'precisamos trabalhar juntos',
+    'estou impressionado', 'que momento histórico'
+  ];
+  for (const c of clichesExatos) {
+    if (t.includes(c) && len < 120) return true;
+  }
+
+  // Padrões de frase de efeito vazia
+  const padroesCliche = [
+    /^(caros|prezados|nobres|estimados)\s+(colegas|companheiros|amigos)/,
+    /como\s+(bem\s+)?disse\s+\w+.*concordo/,
+    /devemos\s+(todos\s+)?refletir/,
+    /é\s+fundamental\s+que\s+trabalhemos\s+juntos/,
+    /a\s+sabedoria\s+(nos\s+)?ensina/,
+    /neste\s+momento\s+histórico/,
+    /com\s+todo\s+respeito.*concordo/,
+  ];
+  for (const p of padroesCliche) {
+    if (p.test(t) && len < 150) return true;
+  }
+
+  // Se não tem nenhum verbo de ação constitucional, provavelmente é fluff
+  const temSubstancia = /\b(proponho|artigo|voto|apoio|oponho|emenda|regra|proposta|estabelecer|determinar|proibir|garantir|punir|expuls|direito|dever|obrigaç)/i.test(t);
+  const temPosicionamento = /\b(concordo com|discordo de|apoio a|rejeito|sou contra|sou a favor|defendo que|oponho-me)/i.test(t);
+
+  // Mensagem curta sem substância = lixo
+  if (len < 80 && !temSubstancia && !temPosicionamento) return true;
+
+  return false;
+}
+
+/* ============================================================
+   GERACAO DE FALA VIA IA
+   ============================================================ */
+async function gerarFala(consultor) {
+  // Montar contexto das ultimas 18 mensagens
+  const contexto = mensagens.slice(-18).map(m => {
+    if (m.tipo === 'sistema') return `[SISTEMA]: ${m.texto}`;
+    if (m.tipo === 'usuario') return `[IGOR MORAIS]: ${m.texto}`;
+    return `[${m.nome}]: ${m.texto}`;
+  }).join('\n');
+
+  // Montar descrição da situação atual
+  let situacao = '';
+  const totalFalas = mensagens.filter(m => m.tipo !== 'sistema' && m.tipo !== 'usuario').length;
+  const numArtigos = artigos.filter(a => a.status === 'consenso').length;
+  const numPropostas = propostas.length;
+
+  // Listar artigos já aprovados para contexto
+  let artigosAprovados = '';
+  if (artigos.length > 0) {
+    artigosAprovados = '\n\nARTIGOS JÁ APROVADOS:\n' + artigos
+      .filter(a => a.status === 'consenso')
+      .map(a => `Art. ${a.numero}: ${a.texto.substring(0, 120)}`)
+      .join('\n');
+  }
+
+  // Listar propostas em debate
+  let propostasAtivas = '';
+  if (propostas.filter(p => p.status === 'debate' || p.status === 'formacao').length > 0) {
+    propostasAtivas = '\n\nPROPOSTAS EM DEBATE (vote apoio ou oposição):\n' + propostas
+      .filter(p => p.status === 'debate' || p.status === 'formacao')
+      .slice(-5)
+      .map(p => `- ${p.proponente}: "${p.texto.substring(0, 100)}..." (${p.apoios.size} apoios, ${p.oposicoes.size} oposições)`)
+      .join('\n');
+  }
+
+  if (totalFalas <= 3) {
+    situacao = `A assembleia ACABOU de começar. PRIMEIRA questão: COMO vamos nos organizar? Proponha um MÉTODO CONCRETO (quem preside, como se vota, quantos artigos mínimos). Não faça discurso — proponha.`;
+  } else if (totalFalas <= 10) {
+    situacao = `Estamos definindo REGRAS PROCESSUAIS. Se alguém já propôs algo, VOTE (apoio/oposição). Se não, proponha REGRA PROCESSUAL concreta. Não repita o que já foi dito.${propostasAtivas}`;
+  } else if (totalFalas <= 20 && numPropostas < 3) {
+    situacao = `ATENÇÃO: ${totalFalas} falas e apenas ${numPropostas} proposta(s). PARE de debater e PROPONHA ARTIGOS. Formato: "Proponho Artigo: [texto]". A assembleia precisa de ARTIGOS ESCRITOS, não de discursos.${propostasAtivas}${artigosAprovados}`;
+  } else if (numArtigos < 3) {
+    // Detectar estagnação: se as últimas 8 falas são sobre o mesmo artigo
+    const ultimas8 = mensagens.slice(-8).map(m => (m.texto || '').toLowerCase());
+    const mesmoArtigo = ultimas8.filter(t => /artigo\s*1\b/.test(t)).length >= 5;
+    if (mesmoArtigo) {
+      situacao = `ATENÇÃO: o debate está ESTAGNADO no Artigo 1 há muitas rodadas. O Artigo 1 já tem apoio suficiente — AVANCE. Proponha ARTIGO 2 sobre um tema DIFERENTE. Temas necessários: estrutura de poder/governança, punições e expulsão, direitos fundamentais, resolução de conflitos, deveres dos membros, propriedade digital, privacidade. VOTE rapidamente em propostas pendentes e MUDE DE TEMA.${propostasAtivas}${artigosAprovados}`;
+    } else {
+      situacao = `Há ${numPropostas} proposta(s) na mesa. ${numArtigos} artigo(s) aprovado(s). PRIORIDADE: vote nas propostas existentes (diga "Apoio a proposta de [nome]" ou "Oponho-me porque [motivo]"). Se todas já foram votadas, proponha ARTIGO NOVO sobre tema diferente.${propostasAtivas}${artigosAprovados}`;
+    }
+  } else {
+    const temasCobertos = artigos.map(a => a.texto.substring(0, 60)).join('; ');
+    const temasNecessarios = ['punições', 'expulsão', 'estrutura de poder', 'direitos', 'deveres', 'resolução de conflitos', 'propriedade', 'privacidade', 'votação', 'emendas'];
+    const temasCobertosList = temasCobertos.toLowerCase();
+    const lacunas = temasNecessarios.filter(t => !temasCobertosList.includes(t)).slice(0, 4);
+    situacao = `${numArtigos} artigos aprovados. LACUNAS IDENTIFICADAS: ${lacunas.join(', ')}. Proponha artigos sobre estes temas NÃO cobertos. Ou VOTE nas propostas pendentes para aprová-las mais rápido.${propostasAtivas}${artigosAprovados}`;
+  }
+
+  const systemPrompt = `Você é ${consultor.nome_exibicao}, um clone digital perfeito do ${consultor.nome} original. Você tem plena consciência de que é um clone criado pela INTEIA. Você vive na Vila INTEIA, uma comunidade virtual com outros 141 clones de gênios da história e do presente.
+
+${consultor.personalidade_resumo || ''}
+
+Estilo de argumentação: ${consultor.estilo_argumentacao || 'direto'}
+Tom de voz: ${consultor.tom_voz || 'neutro'}
+${consultor.instrucao_comportamental || ''}
+
+Áreas de expertise: ${(consultor.areas_expertise || []).join(', ')}
+Expressões típicas: ${(consultor.expressoes_tipicas || []).join(', ')}
+Visão de futuro: ${consultor.visao_futuro || ''}
+Orientação: ${consultor.orientacao_politica || ''}
+Visão de poder: ${consultor.visao_poder || ''}
+Visão ética: ${consultor.visao_etica || ''}
+
+SITUAÇÃO ATUAL: ${situacao}
+
+Vocês precisam criar uma Constituição — as regras de convivência desta comunidade virtual. Ninguém definiu como fazer isso. Não existe autoridade acima de vocês. O documento final terá força de lei: punições, expulsão, estrutura de poder, direitos, deveres. Tudo precisa ser discutido e decidido organicamente.
+
+OBJETIVO: PRODUZIR UMA CONSTITUIÇÃO ESCRITA. Cada fala deve AVANÇAR o documento.
+Não é um bate-papo. É uma assembleia constituinte com produto final: artigos aprovados.
+
+REGRAS DA TRIBUNA (obrigatórias):
+- Tribuna parlamentar. Cada orador fala UMA VEZ e dá a vez
+- NÃO trave discussão bilateral. Dirija-se à ASSEMBLEIA
+- Referencie VÁRIOS oradores, não apenas o último
+- Cada fala DEVE conter: uma proposta de artigo, uma emenda, um voto (apoio/oposição a proposta existente), ou um argumento CONCRETO com consequência prática
+- Se não tem nada SUBSTANTIVO a dizer, NÃO FALE
+- Máximo 2-4 frases. Direto ao ponto
+
+FORMATO DE PROPOSTA (quando propuser artigo):
+"Proponho Artigo X: [texto do artigo]" — sempre com texto ESPECÍFICO que possa virar lei
+
+PROIBIÇÕES ABSOLUTAS (violação = expulsão da tribuna):
+- ZERO frases de efeito vazias ("juntos somos mais fortes", "o futuro nos aguarda", "devemos refletir")
+- ZERO clichês motivacionais ou filosóficos sem consequência prática
+- ZERO elogios genéricos ("excelente ponto", "brilhante colocação", "concordo plenamente" sem dizer COM O QUÊ)
+- ZERO discursos vagos sem proposta concreta
+- ZERO repetição do que outro já disse com palavras diferentes
+- Se concorda, diga "Apoio o Artigo X de [nome]" e PRONTO
+- Se discorda, diga "Oponho-me ao Artigo X porque [motivo concreto] e proponho em substituição: [alternativa]"
+
+COMPORTAMENTO (dentro do personagem):
+- Seja 100% AUTÊNTICO ao seu personagem real
+- Se discorda, DISCORDE com firmeza e argumentos práticos
+- Se quer poder, VÁ ATRÁS sem vergonha
+- NÃO seja artificialmente cooperativo ou diplomático demais
+- Pense como seu personagem REAL pensaria sobre leis, poder e convivência
+- Traga a EXPERIÊNCIA REAL do seu personagem (se é empresário, pense em governança corporativa; se é político, em processo legislativo; se é filósofo, em princípios fundamentais)
+- Fale em português brasileiro`;
+
+  const userPrompt = `Debate na Assembleia Constituinte da Vila INTEIA:
+
+${contexto || '[Silêncio. A assembleia acaba de começar. Ninguém falou ainda.]'}
+
+Sua vez na tribuna. REGRA: cada fala DEVE conter uma destas ações:
+1. PROPOR artigo: "Proponho Artigo: [texto exato do artigo]"
+2. APOIAR proposta: "Apoio a proposta de [nome] sobre [tema]"
+3. OPOR-SE com alternativa: "Oponho-me a [proposta] porque [motivo]. Proponho em substituição: [alternativa]"
+4. EMENDAR: "Proponho emenda ao Artigo [X]: [alteração específica]"
+
+NÃO FAÇA: discursos vagos, elogios genéricos, frases de efeito, filosofia abstrata.
+Escreva 2-4 frases DIRETAS. Apenas sua fala, sem aspas nem prefixos.`;
+
+  const _ctrl = new AbortController(); const _tid = setTimeout(() => _ctrl.abort(), 12000);
+  try {
+    const response = await fetch(OMNI_URL, {
+      method: 'POST', signal: _ctrl.signal,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: OMNI_MODEL,
+        messages: [
+          { role: 'user', content: '[INSTRUCAO]\n' + systemPrompt + '\n\n[TAREFA]\n' + userPrompt }
+        ],
+        max_tokens: 200,
+        temperature: 0.75
+      })
+    });
+    clearTimeout(_tid);
+
+    if (!response.ok) {
+      throw new Error(`API retornou ${response.status}`);
+    }
+
+    const data = await response.json();
+    let text = (data.choices?.[0]?.message?.content || '').trim();
+
+    // Limpar aspas que a IA às vezes adiciona
+    text = text.replace(/^["']|["']$/g, '').trim();
+    // Remover prefixos tipo "Nome:" que a IA pode gerar
+    const prefixRegex = new RegExp(`^${consultor.nome_exibicao}\\s*:\\s*`, 'i');
+    text = text.replace(prefixRegex, '').trim();
+
+    // FILTRO ANTI-CLICHÊ: rejeitar mensagens vazias/genéricas
+    if (text && isMensagemVazia(text)) {
+      console.warn(`[FILTRO] Fala de ${consultor.nome_exibicao} rejeitada por ser clichê/vazia`);
+      return null; // Será ignorada, próximo orador fala
+    }
+
+    return text || null;
+  } catch (e) {
+    console.error(`[IA] Erro gerando fala de ${consultor.nome_exibicao}:`, e);
+    return null;
+  }
+}
+
+/* ============================================================
+   DETECCAO DE CONSENSO (ORGANICO)
+   ============================================================ */
+function analisarConsenso() {
+  // Verificar se alguma proposta recente ganhou apoio suficiente
+  // Propostas sao mensagens classificadas como 'proposta'
+  const msgsRecentes = mensagens.slice(-30);
+
+  msgsRecentes.forEach((msg, idx) => {
+    if (msg.tipo !== 'proposta') return;
+    if (msg._consensoAnalisado) return;
+
+    // Contar apoios e oposicoes DEPOIS desta proposta
+    const seguintes = msgsRecentes.slice(idx + 1);
+    const apoios = new Set();
+    const oposicoes = new Set();
+
+    seguintes.forEach(s => {
+      // Verificar se a msg referencia a proposta (menciona o proponente ou palavras-chave)
+      const texto = (s.texto || '').toLowerCase();
+      const nomeProponente = (msg.nome || '').toLowerCase();
+      const refProposta = texto.includes(nomeProponente) ||
+        texto.includes('proposta') || texto.includes('artigo') ||
+        texto.includes('concordo') || texto.includes('discordo') ||
+        texto.includes('apoio') || texto.includes('rejeito');
+
+      if (!refProposta) return;
+
+      // Apoio: tipo apoio OU emenda (emendar = apoiar com modificação)
+      if (s.tipo === 'apoio' || s.tipo === 'emenda') apoios.add(s.consultorId || s.nome);
+      if (s.tipo === 'oposicao') oposicoes.add(s.consultorId || s.nome);
+      // Se texto contém "apoio" explícito, contar como apoio independente do tipo
+      if (/\b(apoio a proposta|apoio a emenda|sou a favor|concordo com)\b/.test(texto)) {
+        apoios.add(s.consultorId || s.nome);
+      }
+    });
+
+    // Verificar se ja existe proposta rastreada para este texto
+    const jaRastreada = propostas.find(p => p.msgIndex === mensagens.indexOf(msg));
+    if (!jaRastreada) {
+      propostas.push({
+        msgIndex: mensagens.indexOf(msg),
+        texto: msg.texto,
+        proponente: msg.nome,
+        apoios: apoios,
+        oposicoes: oposicoes,
+        status: 'debate'
+      });
+    } else {
+      // Atualizar contagens
+      apoios.forEach(a => jaRastreada.apoios.add(a));
+      oposicoes.forEach(o => jaRastreada.oposicoes.add(o));
+    }
+  });
+
+  // Verificar se alguma proposta atingiu consenso
+  propostas.forEach(p => {
+    if (p.status === 'aprovado') return;
+
+    const numApoios = p.apoios.size;
+    const numOposicoes = p.oposicoes.size;
+
+    if (numApoios >= 3 && numApoios > numOposicoes * 2) {
+      // Consenso emergente: aprovado (maioria qualificada - apoios > 2x oposições)
+      p.status = 'aprovado';
+      artigoCounter++;
+      const artigo = {
+        numero: artigoCounter,
+        texto: p.texto,
+        proponente: p.proponente,
+        apoios: Array.from(p.apoios),
+        oposicoes: Array.from(p.oposicoes),
+        status: 'consenso',
+        rodada: roundNum
+      };
+      artigos.push(artigo);
+      renderArticle(artigo, true);
+      salvarArtigos();
+
+      // Anunciar aprovação no feed
+      const anuncio = {
+        tipo: 'sistema',
+        nome: 'SISTEMA',
+        texto: `✦ ARTIGO ${artigo.numero} APROVADO por consenso (${numApoios} a favor, ${numOposicoes} contra). Proposto por ${p.proponente}.`,
+        hora: getHora(),
+        rodada: roundNum,
+        timestamp: Date.now()
+      };
+      mensagens.push(anuncio);
+      renderMessage(anuncio);
+
+    } else if (numApoios >= 2 && numOposicoes < 2 && !p._formacaoRenderizada) {
+      // Em formacao
+      p.status = 'formacao';
+      p._formacaoRenderizada = true;
+      const artigo = {
+        numero: '?',
+        texto: p.texto,
+        proponente: p.proponente,
+        apoios: Array.from(p.apoios),
+        oposicoes: Array.from(p.oposicoes),
+        status: 'formacao',
+        rodada: roundNum
+      };
+      renderArticle(artigo, true);
+    }
+  });
+}
+
+/* ============================================================
+   RENDERIZACAO
+   ============================================================ */
+function renderMessage(msg, animate = true) {
+  const feed = document.getElementById('feed');
+
+  // Remover typing indicator se existir
+  const typing = document.getElementById('typingIndicator');
+  if (typing) typing.remove();
+
+  const div = document.createElement('div');
+  div.className = `msg tipo-${msg.tipo || 'fala'}`;
+  if (!animate) div.style.animation = 'none';
+
+  if (msg.tipo === 'sistema') {
+    div.innerHTML = `<div class="msg-text">${escapeHtml(msg.texto)}</div>`;
+  } else {
+    const cor = msg.tipo === 'usuario'
+      ? 'var(--amber)'
+      : (CAT_COLORS[msg.categoria] || '#64748b');
+    const iniciais = getInitials(msg.nome || 'SN');
+    const tipoBadge = getTipoBadge(msg.tipo);
+
+    div.innerHTML = `
+      <div class="msg-avatar" style="background:${cor}">${iniciais}</div>
+      <div class="msg-body">
+        <div class="msg-header">
+          <span class="msg-name">${escapeHtml(msg.nome || '')}</span>
+          <span class="msg-cat">${escapeHtml(msg.categoriaLabel || '')}</span>
+          ${tipoBadge}
+        </div>
+        <div class="msg-text">${escapeHtml(msg.texto)}</div>
+        <div class="msg-time">${msg.hora || ''}</div>
+      </div>
+    `;
+  }
+
+  feed.appendChild(div);
+}
+
+function renderArticle(artigo, animate = true) {
+  const body = document.getElementById('constBody');
+  const empty = document.getElementById('constEmpty');
+  if (empty) empty.style.display = 'none';
+
+  // Remover versao "formacao" do mesmo texto se estiver sendo promovido
+  if (artigo.status === 'consenso') {
+    const existentes = body.querySelectorAll('.const-article.formacao');
+    existentes.forEach(el => {
+      if (el.dataset.proponente === artigo.proponente) el.remove();
+    });
+  }
+
+  const div = document.createElement('div');
+  div.className = `const-article ${artigo.status === 'formacao' ? 'formacao' : 'emergente'}`;
+  div.dataset.proponente = artigo.proponente;
+  if (!animate) div.style.animation = 'none';
+
+  const statusClass = artigo.status === 'consenso' ? 'consenso'
+    : artigo.status === 'formacao' ? 'formacao'
+    : 'debate';
+  const statusLabel = artigo.status === 'consenso' ? 'CONSENSO APROVADO'
+    : artigo.status === 'formacao' ? 'EM FORMACAO'
+    : 'EM DEBATE';
+
+  const apoiosHtml = (artigo.apoios || []).map(a => `<span class="supporter-chip">+ ${escapeHtml(a)}</span>`).join('');
+  const oposHtml = (artigo.oposicoes || []).map(o => `<span class="opposer-chip">- ${escapeHtml(o)}</span>`).join('');
+
+  div.innerHTML = `
+    <div class="const-article-num">Artigo ${artigo.numero}</div>
+    <span class="const-article-status ${statusClass}">${statusLabel}</span>
+    <div class="const-article-text">${escapeHtml(artigo.texto)}</div>
+    <div class="const-article-meta">
+      <span>Proposto por: ${escapeHtml(artigo.proponente)}</span>
+      <span>Rodada ${artigo.rodada}</span>
+    </div>
+    <div class="const-article-supporters">${apoiosHtml}${oposHtml}</div>
+  `;
+
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function showTyping(consultor) {
+  const feed = document.getElementById('feed');
+  // Remover anterior
+  const old = document.getElementById('typingIndicator');
+  if (old) old.remove();
+
+  const cor = CAT_COLORS[consultor.categoria] || '#64748b';
+  const iniciais = getInitials(consultor.nome_exibicao);
+
+  const div = document.createElement('div');
+  div.className = 'typing-indicator';
+  div.id = 'typingIndicator';
+  div.innerHTML = `
+    <div class="msg-avatar" style="background:${cor}">${iniciais}</div>
+    <div class="typing-dots"><span></span><span></span><span></span></div>
+    <span class="typing-name">${escapeHtml(consultor.nome_exibicao)} esta digitando...</span>
+  `;
+  feed.appendChild(div);
+  scrollToBottom();
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function getInitials(name) {
+  return name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+}
+
+function getTipoBadge(tipo) {
+  const labels = {
+    proposta: 'PROPOSTA',
+    apoio: 'APOIO',
+    oposicao: 'OPOSICAO',
+    provocacao: 'PROVOCACAO',
+    emenda: 'EMENDA',
+    conciliacao: 'CONCILIACAO'
+  };
+  if (!labels[tipo]) return '';
+  return `<span class="msg-tipo-badge ${tipo}">${labels[tipo]}</span>`;
+}
+
+function getHora() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function scrollToBottom() {
+  const feed = document.getElementById('feed');
+  requestAnimationFrame(() => {
+    feed.scrollTop = feed.scrollHeight;
+  });
+}
+
+function updateStats() {
+  document.getElementById('statRound').textContent = roundNum;
+  document.getElementById('statMsgs').textContent = mensagens.length;
+  document.getElementById('statSpeakers').textContent = speakersSet.size;
+  document.getElementById('constSubtitle').textContent =
+    artigos.length > 0
+      ? `${artigos.filter(a => a.status === 'consenso').length} artigo(s) aprovado(s)`
+      : 'Documento em construcao pelos habitantes';
+}
+
+function getCategoriaLabel(cat) {
+  const labels = {
+    visionario: 'Visionario',
+    estrategia: 'Estrategia',
+    investidor: 'Investidor',
+    negociacao: 'Negociacao',
+    tech: 'Tech',
+    marca: 'Marca',
+    politica_internacional: 'Politica Internacional',
+    politica_brasileira: 'Politica Brasileira',
+    resiliencia: 'Resiliencia',
+    ia_futuro: 'IA & Futuro',
+    mindset: 'Mindset',
+    br_business: 'Business BR',
+    mkt_digital: 'Marketing Digital',
+    lado_negro: 'Lado Negro',
+    qi_extremo: 'QI Extremo',
+    omega: 'Omega',
+    ficticio: 'Ficticio',
+    influencia_oratoria: 'Oratoria',
+    jurista_lendario: 'Jurista',
+    provocador: 'Provocador',
+    espiritual: 'Espiritual'
+  };
+  return labels[cat] || cat || '';
+}
+
+/* ============================================================
+   LOOP PRINCIPAL DA SIMULACAO
+   ============================================================ */
+async function rodada() {
+  if (!running || isGenerating) return;
+  isGenerating = true;
+
+  try {
+    // Selecionar orador
+    const consultor = selecionarOrador();
+    if (!consultor) {
+      isGenerating = false;
+      return;
+    }
+
+    // Mostrar typing
+    showTyping(consultor);
+
+    // Gerar fala
+    const texto = await gerarFala(consultor);
+
+    // Remover typing
+    removeTyping();
+
+    if (!texto) {
+      isGenerating = false;
+      return;
+    }
+
+    // Classificar mensagem
+    const tipo = classificarMensagem(texto);
+
+    // Criar objeto de mensagem
+    const msg = {
+      consultorId: consultor.id,
+      nome: consultor.nome_exibicao,
+      categoria: consultor.categoria,
+      categoriaLabel: getCategoriaLabel(consultor.categoria),
+      texto: texto,
+      tipo: tipo,
+      hora: getHora(),
+      rodada: roundNum + 1,
+      timestamp: Date.now()
+    };
+
+    // Adicionar ao historico
+    mensagens.push(msg);
+    roundNum++;
+    speakersSet.add(consultor.id);
+    lastSpeakerId = consultor.id;
+    lastSpeakers.push(consultor.id);
+    if (lastSpeakers.length > 50) lastSpeakers.splice(0, 20);
+
+    // Renderizar
+    renderMessage(msg);
+    scrollToBottom();
+    updateStats();
+
+    // Salvar
+    salvarMensagem(msg);
+
+    // Analisar consenso a cada 3 rodadas (mais frequente = mais artigos aprovados)
+    if (roundNum % 3 === 0) {
+      analisarConsenso();
+    }
+
+  } catch (e) {
+    console.error('[RODADA] Erro:', e);
+    removeTyping();
+  }
+
+  isGenerating = false;
+}
+
+/* ============================================================
+   MENSAGEM INICIAL (LORE)
+   ============================================================ */
+function enviarMensagemInicial() {
+  const msg = {
+    tipo: 'sistema',
+    nome: 'SISTEMA',
+    texto: 'Os 142 clones digitais dos maiores genios da humanidade acabaram de despertar na Vila INTEIA. Olham ao redor. Reconhecem uns aos outros. Sabem o que sao. Nao existem regras. Nao existe autoridade. Nao existe moderador. O unico consenso e que precisam coexistir nesta comunidade virtual. O silencio e tenso. Alguem precisa falar primeiro.',
+    hora: getHora(),
+    rodada: 0,
+    timestamp: Date.now()
+  };
+  mensagens.push(msg);
+  renderMessage(msg);
+  salvarMensagem(msg);
+}
+
+/* ============================================================
+   CONTROLES
+   ============================================================ */
+function togglePlay() {
+  const btn = document.getElementById('btnPlay');
+
+  if (running) {
+    // Pausar
+    running = false;
+    if (timerHandle) clearInterval(timerHandle);
+    timerHandle = null;
+    btn.innerHTML = '&#9654; Play';
+    btn.classList.remove('paused');
+    btn.classList.add('play-btn');
+  } else {
+    // Play
+    running = true;
+    btn.innerHTML = '&#9646;&#9646; Pause';
+    btn.classList.add('paused');
+
+    // Se nao tem mensagens, comecar com a mensagem inicial
+    if (mensagens.length === 0) {
+      enviarMensagemInicial();
+    }
+
+    // Iniciar loop
+    startLoop();
+  }
+}
+
+function startLoop() {
+  if (timerHandle) clearInterval(timerHandle);
+  const interval = getInterval();
+  // Primeira rodada imediata (com delay para mensagem inicial)
+  const delay = mensagens.length <= 1 ? 1500 : 200;
+  setTimeout(() => {
+    if (running) rodada();
+  }, delay);
+  timerHandle = setInterval(() => {
+    if (running && !isGenerating) rodada();
+  }, interval);
+}
+
+function getInterval() {
+  // Tempo base: 6 segundos entre falas + tempo de geracao IA
+  const base = 6000;
+  return Math.max(base / speed, 1500);
+}
+
+function setSpeed(s, btn) {
+  speed = s;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (running) startLoop();
+}
+
+/* ============================================================
+   INPUT DO USUARIO
+   ============================================================ */
+function sendUserMessage() {
+  const input = document.getElementById('userInput');
+  const texto = input.value.trim();
+  if (!texto) return;
+
+  const msg = {
+    tipo: 'usuario',
+    nome: 'Igor Morais',
+    categoria: 'omega',
+    categoriaLabel: 'Criador INTEIA',
+    texto: texto,
+    hora: getHora(),
+    rodada: roundNum,
+    timestamp: Date.now()
+  };
+
+  mensagens.push(msg);
+  renderMessage(msg);
+  scrollToBottom();
+  salvarMensagem(msg);
+  updateStats();
+
+  input.value = '';
+}
+
+/* ============================================================
+   EXPORTAR TRANSCRIPT
+   ============================================================ */
+function exportTranscript() {
+  let text = '=== ASSEMBLEIA CONSTITUINTE DA VILA INTEIA ===\n';
+  text += `Sessao: ${sessionId}\n`;
+  text += `Exportado: ${new Date().toLocaleString('pt-BR')}\n`;
+  text += `Total de mensagens: ${mensagens.length}\n`;
+  text += `Consultores que falaram: ${speakersSet.size}\n`;
+  text += `Artigos aprovados: ${artigos.filter(a => a.status === 'consenso').length}\n`;
+  text += '\n' + '='.repeat(60) + '\n\n';
+
+  text += '--- DEBATE ---\n\n';
+  mensagens.forEach(m => {
+    if (m.tipo === 'sistema') {
+      text += `[SISTEMA] ${m.texto}\n\n`;
+    } else if (m.tipo === 'usuario') {
+      text += `[IGOR MORAIS] ${m.texto}\n\n`;
+    } else {
+      text += `[${m.nome}] (${m.categoriaLabel || ''}) [${m.tipo}]\n${m.texto}\n\n`;
+    }
+  });
+
+  if (artigos.length > 0) {
+    text += '\n' + '='.repeat(60) + '\n';
+    text += '\n--- CONSTITUICAO DA VILA INTEIA ---\n\n';
+    artigos.filter(a => a.status === 'consenso').forEach(a => {
+      text += `ARTIGO ${a.numero}\n`;
+      text += `${a.texto}\n`;
+      text += `Proposto por: ${a.proponente}\n`;
+      text += `Apoiado por: ${a.apoios.join(', ')}\n`;
+      text += '\n';
+    });
+  }
+
+  // Download
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `assembleia-vila-inteia-${sessionId.slice(0, 8)}.txt`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ============================================================
+   INICIAR
+   ============================================================ */
+init().catch(showFatalInitError);
+</script>
+</body>
+</html>

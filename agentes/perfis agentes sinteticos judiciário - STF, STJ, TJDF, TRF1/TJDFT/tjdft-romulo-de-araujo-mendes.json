@@ -1,0 +1,67 @@
+{
+  "id": "tjdft-romulo-de-araujo-mendes",
+  "nome": "Des. Rômulo de Araújo Mendes",
+  "nome_completo": "Romulo de Araujo Mendes",
+  "orgao": "TJDFT",
+  "cargo": "Desembargador",
+  "situacao": "titular",
+  "dados_publicos": {
+    "assessor": "Izabel Patrício da Silva",
+    "telefones_gabinete": "(61)3103-5068",
+    "dados_dossie": {
+      "perfil_ideologico": "Jovem e dinâmico",
+      "analise_comportamental": "Jovem e dinâmico. Traz agilidade aos julgamentos cíveis.",
+      "nascimento": {
+        "cidade": "Patrocinio/MG"
+      },
+      "origem": "magistratura",
+      "perfil_psicologico": "Sonhava ser engenheiro de foguetes. Comecou como office boy. Paixao por arte e historia.",
+      "turma": "1a Turma Civel e 1a Camara Civel",
+      "formacao": "Direito pela UFU (1986). Especializacao em Processual Civil pela UFU (1988).",
+      "carreira_previa": "Advogado em Uberlandia e BH. Juiz Substituto desde 1993. Atuou em diversas varas civeis e de familia.",
+      "especialidade": "Direito Civel, Direito de Familia, Processual Civil",
+      "curiosidades": "Desembargador desde janeiro de 2017. Posse marcada pelo luto do min. Teori Zavascki."
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Civil": "Atuacao aprofundada em Direito Civil, com dominio tecnico em responsabilidade civil e contratos. Decisoes fundamentadas na dogmatica civilista contemporanea, com atencao a funcao social dos institutos juridicos.",
+    "Direito do Consumidor": "Aplica o Codigo de Defesa do Consumidor reconhecendo a hipossuficiencia do consumidor, com decisoes equilibradas que ponderam entre protecao consumerista e seguranca juridica nas relacoes de mercado.",
+    "Direito de Familia": "Especializacao em Direito de Familia, com abordagem sensivel as complexidades dos conflitos familiares. Prioriza o melhor interesse da crianca e do adolescente, com decisoes que frequentemente incorporam pareceres interdisciplinares.",
+    "Direito Penal": "Aplica o Direito Penal com equilibrio entre a necessidade de repressao e as garantias fundamentais. Atento a jurisprudencia do STF e STJ em materia de penas e execucao penal.",
+    "Execucao/Cumprimento de Sentenca": "Zela pela efetividade do cumprimento de sentenca, aplicando medidas coercitivas proporcionais. Observa o principio da menor onerosidade ao devedor sem comprometer o direito do credor."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Jovem e dinâmico",
+      "Analise comportamental: Jovem e dinâmico. Traz agilidade aos julgamentos cíveis."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.tjdft.jus.br/institucional/composicao/2a-instancia/desembargadores/ordem-alfabetica",
+      "tipo": "site-oficial",
+      "observacao": "Ordem alfabetica (2a instancia)"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TJDFT",
+    "descricao": "Desembargador do TJDFT com atuação jurídica"
+  }
+}

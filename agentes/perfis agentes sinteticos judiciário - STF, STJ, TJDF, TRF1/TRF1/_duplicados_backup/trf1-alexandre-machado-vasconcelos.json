@@ -1,0 +1,53 @@
+{
+  "id": "trf1-alexandre-machado-vasconcelos",
+  "nome": "Des. Alexandre Machado Vasconcelos",
+  "nome_completo": "Alexandre Machado Vasconcelos",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "dados_dossie": {
+      "perfil_ideologico": "Magistrado de longa carreira. Trajetoria: advocacia, Ministerio Publico, magistratura federal.",
+      "analise_comportamental": "Magistrado de longa carreira. Trajetoria: advocacia, Ministerio Publico, magistratura federal.",
+      "nascimento": "Natural de Brasilia/DF.",
+      "formacao": "Graduacao pela UnB (1990).",
+      "carreira_previa": "Advogado (1990-1991). Promotor de Justica Substituto MPDFT (1991-1993). Juiz Federal desde setembro/1993. Titular da 18a Vara SJDF. Desembargador Federal desde 07/12/2023 (antiguidade)."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Advogado (1990-1991)"
+  },
+  "padroes_decisao": {},
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Magistrado de longa carreira. Trajetoria: advocacia, Ministerio Publico, magistratura federal."
+    ],
+    "confianca_global": 4
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-02-01",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

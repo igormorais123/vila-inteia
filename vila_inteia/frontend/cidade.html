@@ -1,0 +1,3274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vila INTEIA 3D - Simulador</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{overflow:hidden;background:#0a0e1a;font-family:'Inter',sans-serif;color:#e2e8f0}
+#loading{position:fixed;inset:0;z-index:9999;background:#0a0e1a;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#loading h1{font-size:2rem;color:#d69e2e;margin-bottom:.5rem}
+#loading p{color:#94a3b8;margin-bottom:1.5rem;font-size:.9rem}
+#loading .bar{width:300px;height:6px;background:#1e293b;border-radius:3px;overflow:hidden}
+#loading .fill{height:100%;width:0%;background:linear-gradient(90deg,#d69e2e,#f6e05e);border-radius:3px;transition:width .3s}
+#canvas{display:block;width:100vw;height:100vh}
+#hud{position:fixed;top:12px;left:12px;z-index:10;pointer-events:none}
+#hud .controls{background:rgba(15,23,42,.85);border:1px solid rgba(214,158,46,.3);border-radius:8px;padding:8px 12px;font-size:11px;color:#94a3b8;line-height:1.6;pointer-events:auto}
+#hud .controls span{color:#d69e2e}
+#minimap{position:fixed;bottom:12px;left:12px;z-index:10;width:200px;height:200px;background:rgba(15,23,42,.92);border:1px solid rgba(214,158,46,.5);border-radius:10px;display:block;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+#minimap canvas{border-radius:8px}
+#npc-info{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:10;display:none;background:rgba(15,23,42,.92);border:1px solid rgba(214,158,46,.5);border-radius:12px;padding:14px 20px;min-width:320px;text-align:center}
+#npc-info .npc-name{font-size:1.1rem;font-weight:700;color:#f8fafc}
+#npc-info .npc-title{font-size:.8rem;color:#d69e2e;margin:2px 0}
+#npc-info .npc-cat{font-size:.7rem;color:#94a3b8;text-transform:uppercase;letter-spacing:1px}
+#npc-info .npc-tier{display:inline-block;background:#d69e2e;color:#0a0e1a;font-weight:700;font-size:.65rem;padding:1px 6px;border-radius:4px;margin-left:6px}
+#npc-info .npc-actions{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+#npc-info .npc-actions button{background:linear-gradient(135deg,#d69e2e,#b7791f);color:#0a0e1a;border:none;padding:7px 16px;border-radius:6px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+#npc-info .npc-actions button:hover{background:linear-gradient(135deg,#f6e05e,#d69e2e);transform:scale(1.05)}
+#npc-info .npc-actions button.secondary{background:rgba(30,41,59,.9);color:#d69e2e;border:1px solid rgba(214,158,46,.4)}
+#npc-info .npc-actions button.secondary:hover{background:rgba(214,158,46,.15)}
+#chat-panel{position:fixed;top:0;right:-420px;width:420px;height:100vh;z-index:20;background:rgba(10,14,26,.96);border-left:1px solid rgba(214,158,46,.3);display:flex;flex-direction:column;transition:right .3s ease}
+#chat-panel.open{right:0}
+#chat-header{padding:14px 16px;border-bottom:1px solid rgba(214,158,46,.2);display:flex;align-items:center;gap:10px}
+#chat-header .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#0a0e1a;flex-shrink:0}
+#chat-header .info h3{font-size:.95rem;color:#f8fafc}
+#chat-header .info p{font-size:.7rem;color:#94a3b8}
+#chat-close{margin-left:auto;background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer;padding:4px 8px}
+#chat-close:hover{color:#f8fafc}
+#chat-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+#chat-messages::-webkit-scrollbar{width:4px}
+#chat-messages::-webkit-scrollbar-thumb{background:rgba(214,158,46,.3);border-radius:2px}
+.msg{max-width:85%;padding:8px 12px;border-radius:10px;font-size:.82rem;line-height:1.5;word-wrap:break-word}
+.msg.user{align-self:flex-end;background:#d69e2e;color:#0a0e1a;border-bottom-right-radius:2px}
+.msg.npc{align-self:flex-start;background:#1e293b;color:#e2e8f0;border-bottom-left-radius:2px}
+.msg.system{align-self:center;color:#64748b;font-size:.7rem;font-style:italic}
+.msg.typing{align-self:flex-start;background:#1e293b;color:#64748b;font-style:italic}
+#chat-input-area{padding:10px 16px;border-top:1px solid rgba(214,158,46,.2);display:flex;gap:8px}
+#chat-input{flex:1;background:#1e293b;border:1px solid rgba(214,158,46,.2);border-radius:6px;padding:8px 12px;color:#f8fafc;font-size:.82rem;font-family:'Inter',sans-serif;outline:none;resize:none}
+#chat-input:focus{border-color:#d69e2e}
+#chat-send{background:#d69e2e;color:#0a0e1a;border:none;padding:8px 14px;border-radius:6px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+#consultant-list{position:fixed;top:0;left:-360px;width:360px;height:100vh;z-index:20;background:rgba(10,14,26,.96);border-right:1px solid rgba(214,158,46,.3);transition:left .3s ease;display:flex;flex-direction:column}
+#consultant-list.open{left:0}
+#cl-header{padding:14px 16px;border-bottom:1px solid rgba(214,158,46,.2);display:flex;align-items:center;justify-content:space-between}
+#cl-header h2{font-size:1rem;color:#d69e2e}
+#cl-close{background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer}
+#cl-search{margin:8px 16px;padding:8px 12px;background:#1e293b;border:1px solid rgba(214,158,46,.2);border-radius:6px;color:#f8fafc;font-size:.8rem;font-family:'Inter',sans-serif;outline:none}
+#cl-search:focus{border-color:#d69e2e}
+#cl-items{flex:1;overflow-y:auto;padding:4px 8px}
+#cl-items::-webkit-scrollbar{width:4px}
+#cl-items::-webkit-scrollbar-thumb{background:rgba(214,158,46,.3);border-radius:2px}
+.cl-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:.78rem}
+.cl-item:hover{background:rgba(214,158,46,.1)}
+.cl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cl-name{color:#f8fafc;flex:1}
+.cl-tier{font-size:.6rem;color:#d69e2e;font-weight:700}
+#day-indicator{position:fixed;top:12px;right:12px;z-index:10;background:rgba(15,23,42,.85);border:1px solid rgba(214,158,46,.3);border-radius:8px;padding:6px 12px;font-size:.75rem;color:#94a3b8}
+
+/* === SISTEMA DE EVENTOS - BANNER TOPO === */
+#event-banner{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:15;display:none;background:linear-gradient(135deg,rgba(214,158,46,.15),rgba(15,23,42,.95));border:1px solid rgba(214,158,46,.5);border-top:none;border-radius:0 0 12px 12px;padding:8px 20px;text-align:center;cursor:pointer;min-width:340px;max-width:520px;backdrop-filter:blur(8px);transition:all .3s;animation:bannerPulse 3s infinite}
+@keyframes bannerPulse{0%,100%{box-shadow:0 2px 12px rgba(214,158,46,.2)}50%{box-shadow:0 2px 20px rgba(214,158,46,.45)}}
+#event-banner:hover{background:linear-gradient(135deg,rgba(214,158,46,.25),rgba(15,23,42,.95));transform:translateX(-50%) scale(1.02)}
+#event-banner .ev-type{font-size:.65rem;color:#d69e2e;text-transform:uppercase;letter-spacing:2px;font-weight:700}
+#event-banner .ev-title{font-size:.9rem;color:#f8fafc;font-weight:700;margin:2px 0}
+#event-banner .ev-location{font-size:.72rem;color:#94a3b8}
+#event-banner .ev-participants{font-size:.65rem;color:#64748b;margin-top:3px}
+
+/* === PAINEL DE ESTATISTICAS === */
+#stats-panel{position:fixed;top:52px;right:12px;z-index:10;background:rgba(15,23,42,.88);border:1px solid rgba(214,158,46,.3);border-radius:8px;padding:10px 14px;font-size:.72rem;min-width:170px;pointer-events:auto}
+#stats-panel h3{font-size:.7rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.stat-row:last-child{border-bottom:none}
+.stat-label{color:#94a3b8}
+.stat-value{color:#f8fafc;font-weight:600}
+.stat-bar{width:100%;height:3px;background:#1e293b;border-radius:2px;margin-top:2px}
+.stat-bar-fill{height:100%;background:linear-gradient(90deg,#d69e2e,#f6e05e);border-radius:2px;transition:width .5s}
+
+/* === FEED DE NOTIFICACOES === */
+#notif-feed{position:fixed;bottom:12px;right:12px;z-index:10;width:280px;display:flex;flex-direction:column;gap:4px;pointer-events:none;max-height:200px;overflow:hidden}
+.notif-item{background:rgba(15,23,42,.88);border:1px solid rgba(214,158,46,.2);border-radius:6px;padding:6px 10px;font-size:.68rem;color:#94a3b8;animation:notifSlide .4s ease-out;transition:opacity .5s}
+.notif-item.fading{opacity:0}
+.notif-item .notif-time{color:#475569;font-size:.6rem}
+.notif-item .notif-highlight{color:#d69e2e;font-weight:600}
+@keyframes notifSlide{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* === PAINEL DE MISSOES === */
+#missions-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(214,158,46,.5);border-radius:12px;width:420px;max-height:80vh;overflow-y:auto;backdrop-filter:blur(12px)}
+#missions-panel .mp-header{padding:16px 20px 12px;border-bottom:1px solid rgba(214,158,46,.2);display:flex;align-items:center;justify-content:space-between}
+#missions-panel .mp-header h2{font-size:1rem;color:#d69e2e;font-weight:700}
+#missions-panel .mp-close{background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer}
+#missions-panel .mp-body{padding:12px 20px 16px}
+.mission-card{background:rgba(30,41,59,.5);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:all .2s}
+.mission-card.completed{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08)}
+.mission-card .mc-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.mission-card .mc-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:rgba(214,158,46,.15);flex-shrink:0}
+.mission-card.completed .mc-icon{background:rgba(34,197,94,.2)}
+.mission-card .mc-title{font-size:.82rem;font-weight:600;color:#f8fafc}
+.mission-card .mc-desc{font-size:.72rem;color:#94a3b8;margin-bottom:6px;line-height:1.4}
+.mission-card .mc-progress{display:flex;align-items:center;gap:8px}
+.mission-card .mc-bar{flex:1;height:4px;background:#1e293b;border-radius:2px;overflow:hidden}
+.mission-card .mc-bar-fill{height:100%;background:linear-gradient(90deg,#d69e2e,#f6e05e);border-radius:2px;transition:width .4s}
+.mission-card.completed .mc-bar-fill{background:linear-gradient(90deg,#22c55e,#4ade80)}
+.mission-card .mc-count{font-size:.65rem;color:#64748b;min-width:40px;text-align:right}
+
+/* === PAINEL EDIFICIO === */
+#building-panel{position:fixed;top:0;right:-400px;width:400px;height:100vh;z-index:18;background:rgba(10,14,26,.97);border-left:1px solid rgba(214,158,46,.3);display:flex;flex-direction:column;transition:right .3s ease;backdrop-filter:blur(8px)}
+#building-panel.open{right:0}
+#building-panel .bp-header{padding:16px;border-bottom:1px solid rgba(214,158,46,.2)}
+#building-panel .bp-header h2{font-size:1.05rem;color:#d69e2e;font-weight:700}
+#building-panel .bp-header p{font-size:.75rem;color:#94a3b8;margin-top:2px}
+#building-panel .bp-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer}
+#building-panel .bp-section{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+#building-panel .bp-section h3{font-size:.78rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.bp-activity{background:rgba(214,158,46,.08);border:1px solid rgba(214,158,46,.2);border-radius:6px;padding:8px 12px;font-size:.75rem;color:#f8fafc}
+.bp-npc-item{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;transition:all .15s}
+.bp-npc-item:hover{padding-left:4px;color:#d69e2e}
+.bp-npc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.bp-npc-name{font-size:.75rem;color:#e2e8f0;flex:1}
+.bp-npc-tier{font-size:.6rem;color:#64748b}
+#building-panel .bp-actions{padding:12px 16px}
+#building-panel .bp-actions button{width:100%;background:linear-gradient(135deg,#d69e2e,#b7791f);color:#0a0e1a;border:none;padding:10px;border-radius:6px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+#building-panel .bp-actions button:hover{background:linear-gradient(135deg,#f6e05e,#d69e2e)}
+#building-panel .bp-residents{max-height:40vh;overflow-y:auto}
+#building-panel .bp-residents::-webkit-scrollbar{width:3px}
+#building-panel .bp-residents::-webkit-scrollbar-thumb{background:rgba(214,158,46,.3);border-radius:2px}
+
+/* === PAINEL PERFIL NPC === */
+#profile-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(214,158,46,.5);border-radius:12px;width:480px;max-height:85vh;overflow-y:auto;backdrop-filter:blur(12px)}
+#profile-panel::-webkit-scrollbar{width:4px}
+#profile-panel::-webkit-scrollbar-thumb{background:rgba(214,158,46,.3);border-radius:2px}
+#profile-panel .pp-header{padding:20px;border-bottom:1px solid rgba(214,158,46,.2);display:flex;gap:14px;align-items:center;position:relative}
+#profile-panel .pp-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:#0a0e1a;flex-shrink:0}
+#profile-panel .pp-info h2{font-size:1.05rem;color:#f8fafc;font-weight:700}
+#profile-panel .pp-info p{font-size:.78rem;color:#d69e2e}
+#profile-panel .pp-info .pp-cat{font-size:.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+#profile-panel .pp-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer}
+#profile-panel .pp-section{padding:12px 20px}
+#profile-panel .pp-section h3{font-size:.72rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700}
+#profile-panel .pp-section p{font-size:.78rem;color:#cbd5e1;line-height:1.5}
+.pp-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.pp-tag{background:rgba(214,158,46,.1);border:1px solid rgba(214,158,46,.2);border-radius:4px;padding:2px 8px;font-size:.65rem;color:#d69e2e}
+.pp-quote{background:rgba(214,158,46,.06);border-left:3px solid #d69e2e;padding:8px 12px;font-style:italic;font-size:.78rem;color:#cbd5e1;margin-top:4px;border-radius:0 4px 4px 0}
+
+/* === PAINEL EVENTO === */
+#event-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(214,158,46,.5);border-radius:12px;width:460px;max-height:80vh;overflow-y:auto;backdrop-filter:blur(12px)}
+#event-panel .ep-header{padding:16px 20px;border-bottom:1px solid rgba(214,158,46,.2);position:relative}
+#event-panel .ep-type{font-size:.65rem;color:#d69e2e;text-transform:uppercase;letter-spacing:2px;font-weight:700}
+#event-panel .ep-title{font-size:1.1rem;color:#f8fafc;font-weight:700;margin:4px 0}
+#event-panel .ep-location{font-size:.78rem;color:#94a3b8}
+#event-panel .ep-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer}
+#event-panel .ep-body{padding:14px 20px}
+#event-panel .ep-desc{font-size:.8rem;color:#cbd5e1;line-height:1.5;margin-bottom:12px}
+#event-panel .ep-participants-title{font-size:.72rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:700}
+.ep-participant{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer}
+.ep-participant:hover .ep-pname{color:#d69e2e}
+.ep-pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ep-pname{font-size:.75rem;color:#e2e8f0;transition:color .15s}
+.ep-ptitle{font-size:.6rem;color:#64748b}
+#event-panel .ep-actions{padding:12px 20px;border-top:1px solid rgba(214,158,46,.1);display:flex;gap:8px}
+#event-panel .ep-actions button{flex:1;padding:9px;border-radius:6px;font-weight:700;font-size:.8rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;border:none}
+.ep-btn-go{background:linear-gradient(135deg,#d69e2e,#b7791f);color:#0a0e1a}
+.ep-btn-go:hover{background:linear-gradient(135deg,#f6e05e,#d69e2e)}
+.ep-btn-close{background:rgba(30,41,59,.8);color:#94a3b8;border:1px solid rgba(255,255,255,.1) !important}
+
+/* === BADGE CONQUISTA === */
+#achievement-popup{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:30;display:none;background:linear-gradient(135deg,rgba(214,158,46,.2),rgba(15,23,42,.95));border:2px solid #d69e2e;border-radius:10px;padding:12px 24px;text-align:center;animation:achievePop .5s ease-out}
+@keyframes achievePop{from{transform:translateX(-50%) scale(0.5) translateY(-20px);opacity:0}to{transform:translateX(-50%) scale(1) translateY(0);opacity:1}}
+#achievement-popup .ach-icon{font-size:1.5rem;margin-bottom:2px}
+#achievement-popup .ach-title{font-size:.8rem;color:#d69e2e;font-weight:700}
+#achievement-popup .ach-desc{font-size:.7rem;color:#94a3b8}
+
+/* === SISTEMA ECONOMICO === */
+#player-wallet{margin-top:6px;background:rgba(15,23,42,.85);border:1px solid rgba(214,158,46,.3);border-radius:8px;padding:6px 12px;font-size:.8rem;pointer-events:auto;cursor:pointer;transition:all .2s}
+#player-wallet:hover{border-color:#d69e2e;background:rgba(15,23,42,.95)}
+#econ-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(214,158,46,.5);border-radius:12px;width:500px;max-height:80vh;overflow-y:auto;backdrop-filter:blur(12px)}
+#econ-panel::-webkit-scrollbar{width:4px}
+#econ-panel::-webkit-scrollbar-thumb{background:rgba(214,158,46,.3);border-radius:2px}
+.econ-stat-card{background:rgba(30,41,59,.5);padding:10px;border-radius:8px;text-align:center}
+.econ-stat-card .econ-label{font-size:.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.econ-stat-card .econ-value{font-size:1.3rem;font-weight:800}
+.tx-flash{animation:txFlash .6s ease-out}
+@keyframes txFlash{0%{background:rgba(214,158,46,.3)}100%{background:transparent}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="loading">
+<h1>Vila INTEIA</h1>
+<p>Carregando simulador 3D...</p>
+<div class="bar"><div class="fill" id="load-fill"></div></div>
+<p id="load-text" style="margin-top:10px;font-size:.75rem;color:#64748b">Inicializando...</p>
+</div>
+<canvas id="canvas"></canvas>
+<div id="hud">
+<div class="controls">
+<span>WASD</span> Mover &bull; <span>Mouse</span> Camera &bull; <span>Scroll</span> Zoom<br>
+<span>Click</span> NPC/Edificio &bull; <span>ESC</span> Fechar &bull; <span>N</span> Dia/Noite<br>
+<span>M</span> Minimapa &bull; <span>TAB</span> Lista &bull; <span>Q</span> Missoes &bull; <span>E</span> Economia &bull; <span>H</span> Helena
+<div style="margin-top:6px;display:flex;gap:6px">
+<a href="/vila-inteia/" style="color:#d69e2e;text-decoration:none;font-size:10px;background:rgba(214,158,46,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(214,158,46,.25)">Hub</a>
+<a href="/vila-inteia/rede.html" style="color:#94a3b8;text-decoration:none;font-size:10px;background:rgba(30,41,59,.5);padding:2px 8px;border-radius:4px;border:1px solid rgba(255,255,255,.08)">Rede Social</a>
+<a href="/vila-inteia/constituicao.html" style="color:#94a3b8;text-decoration:none;font-size:10px;background:rgba(30,41,59,.5);padding:2px 8px;border-radius:4px;border:1px solid rgba(255,255,255,.08)">Constituicao</a>
+</div>
+<div id="player-wallet" onclick="window._toggleEconPanel()">
+<span style="color:#d69e2e;font-weight:700">Ξ <span id="pw-balance">5.000</span></span>
+<span style="color:#64748b;font-size:.65rem;margin-left:6px">INTEIA Coins</span>
+</div>
+<div style="margin-top:4px;background:rgba(15,23,42,.85);border:1px solid rgba(167,139,250,.3);border-radius:8px;padding:4px 12px;font-size:.72rem;pointer-events:auto;cursor:pointer;color:#a78bfa" onclick="window._toggleHelenaPanel()">
+  Helena Insights <span style="color:#64748b">(H)</span>
+</div>
+<div style="margin-top:4px;background:rgba(15,23,42,.85);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:4px 12px;font-size:.72rem;pointer-events:auto;cursor:pointer;color:#ef4444" onclick="window._toggleAnuncioPanel()">
+  Anunciar (Ξ100) <span style="color:#64748b">(P)</span>
+</div>
+</div>
+</div>
+<div id="minimap"><canvas id="minimap-canvas" width="200" height="200"></canvas></div>
+<div id="npc-info">
+<div class="npc-name" id="ni-name"></div>
+<div class="npc-title" id="ni-title"></div>
+<div class="npc-cat" id="ni-cat"><span id="ni-cat-text"></span><span class="npc-tier" id="ni-tier"></span></div>
+<div class="npc-actions">
+<button onclick="window._openChat()">Conversar</button>
+<button class="secondary" onclick="window._openConsult()">Consultar</button>
+<button class="secondary" onclick="window._openProfile()">Perfil</button>
+<button class="secondary" onclick="window._inviteToEvent()">Convidar</button>
+<button onclick="window._negociar()">Negociar</button>
+<button class="secondary" onclick="window._pixNPC()">Ξ Pix</button>
+</div>
+<div class="npc-wallet" id="ni-wallet" style="margin-top:8px;font-size:.8rem;color:#d69e2e;font-weight:700"></div>
+<div class="npc-services" id="ni-services" style="margin-top:6px;font-size:.72rem;color:#94a3b8;text-align:left;max-height:120px;overflow-y:auto"></div>
+</div>
+<div id="chat-panel">
+<div id="chat-header">
+<div class="avatar" id="ch-avatar">?</div>
+<div class="info"><h3 id="ch-name">---</h3><p id="ch-title">---</p></div>
+<button id="chat-close" onclick="window._closeChat()">&times;</button>
+</div>
+<div id="chat-messages"></div>
+<div id="chat-input-area">
+<textarea id="chat-input" rows="1" placeholder="Digite sua mensagem..."></textarea>
+<button id="chat-send" onclick="window._sendMessage()">Enviar</button>
+</div>
+</div>
+<div id="consultant-list">
+<div id="cl-header"><h2>142 Consultores</h2><button id="cl-close" onclick="window._toggleList()">&times;</button></div>
+<input type="text" id="cl-search" placeholder="Buscar consultor..." oninput="window._filterList()">
+<div id="cl-items"></div>
+</div>
+<div id="day-indicator">Dia</div>
+
+<!-- BANNER DE EVENTO -->
+<div id="event-banner" onclick="window._openEventPanel()">
+<div class="ev-type" id="evb-type">EVENTO ATIVO</div>
+<div class="ev-title" id="evb-title">---</div>
+<div class="ev-location" id="evb-location">---</div>
+<div class="ev-participants" id="evb-participants"></div>
+</div>
+
+<!-- PAINEL ESTATISTICAS -->
+<div id="stats-panel">
+<h3>Progresso</h3>
+<div class="stat-row"><span class="stat-label">Consultores</span><span class="stat-value" id="st-npcs">0/142</span></div>
+<div class="stat-bar"><div class="stat-bar-fill" id="st-npcs-bar" style="width:0%"></div></div>
+<div class="stat-row"><span class="stat-label">Edificios</span><span class="stat-value" id="st-buildings">0/19</span></div>
+<div class="stat-bar"><div class="stat-bar-fill" id="st-buildings-bar" style="width:0%"></div></div>
+<div class="stat-row"><span class="stat-label">Conversas</span><span class="stat-value" id="st-chats">0</span></div>
+<div class="stat-row"><span class="stat-label">Eventos</span><span class="stat-value" id="st-events">0</span></div>
+<div class="stat-row"><span class="stat-label">Transacoes</span><span class="stat-value" id="st-trades" style="color:#d69e2e">0</span></div>
+</div>
+
+<!-- FEED NOTIFICACOES -->
+<div id="notif-feed"></div>
+
+<!-- PAINEL MISSOES -->
+<div id="missions-panel">
+<div class="mp-header">
+<h2>Missoes Diarias</h2>
+<button class="mp-close" onclick="window._toggleMissions()">&times;</button>
+</div>
+<div class="mp-body" id="missions-body"></div>
+</div>
+
+<!-- PAINEL EDIFICIO -->
+<div id="building-panel">
+<button class="bp-close" onclick="window._closeBuildingPanel()">&times;</button>
+<div class="bp-header">
+<h2 id="bp-name">---</h2>
+<p id="bp-desc">---</p>
+</div>
+<div class="bp-section">
+<h3>Atividade Atual</h3>
+<div class="bp-activity" id="bp-activity">Nenhuma atividade no momento</div>
+</div>
+<div class="bp-section">
+<h3>Residentes</h3>
+<div class="bp-residents" id="bp-residents"></div>
+</div>
+<div class="bp-actions">
+<button onclick="window._teleportToBuilding()">Ir ate la</button>
+</div>
+</div>
+
+<!-- PAINEL PERFIL NPC -->
+<div id="profile-panel">
+<div class="pp-header">
+<div class="pp-avatar" id="pp-avatar">?</div>
+<div class="pp-info">
+<h2 id="pp-name">---</h2>
+<p id="pp-title">---</p>
+<div class="pp-cat" id="pp-cat">---</div>
+</div>
+<button class="pp-close" onclick="window._closeProfile()">&times;</button>
+</div>
+<div class="pp-section">
+<h3>Biografia</h3>
+<p id="pp-bio">---</p>
+</div>
+<div class="pp-section">
+<h3>Frase-chave</h3>
+<div class="pp-quote" id="pp-quote">---</div>
+</div>
+<div class="pp-section">
+<h3>Areas de Expertise</h3>
+<div class="pp-tags" id="pp-expertise"></div>
+</div>
+<div class="pp-section">
+<h3>Personalidade</h3>
+<p id="pp-personality">---</p>
+</div>
+<div class="pp-section">
+<h3>Visao de Futuro</h3>
+<p id="pp-vision">---</p>
+</div>
+</div>
+
+<!-- PAINEL EVENTO -->
+<div id="event-panel">
+<div class="ep-header">
+<div class="ep-type" id="ep-type">EVENTO</div>
+<div class="ep-title" id="ep-title">---</div>
+<div class="ep-location" id="ep-location">---</div>
+<button class="ep-close" onclick="window._closeEventPanel()">&times;</button>
+</div>
+<div class="ep-body">
+<div class="ep-desc" id="ep-desc">---</div>
+<div class="ep-participants-title">Participantes</div>
+<div id="ep-participants"></div>
+</div>
+<div class="ep-actions">
+<button class="ep-btn-go" onclick="window._goToEvent()">Ir ao Evento</button>
+<button class="ep-btn-close" onclick="window._closeEventPanel()">Fechar</button>
+</div>
+</div>
+
+<!-- POPUP CONQUISTA -->
+<div id="achievement-popup">
+<div class="ach-icon" id="ach-icon"></div>
+<div class="ach-title" id="ach-title">---</div>
+<div class="ach-desc" id="ach-desc">---</div>
+</div>
+
+<!-- PAINEL ECONOMIA -->
+<div id="econ-panel">
+<div style="padding:16px 20px 12px;border-bottom:1px solid rgba(214,158,46,.2);display:flex;align-items:center;justify-content:space-between">
+<h2 style="font-size:1rem;color:#d69e2e;font-weight:700">Economia da Vila INTEIA</h2>
+<button onclick="document.getElementById('econ-panel').style.display='none'" style="background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer">&times;</button>
+</div>
+<div style="padding:12px 20px 16px" id="econ-panel-body">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
+<div class="econ-stat-card">
+<div class="econ-label">Seu Saldo</div>
+<div class="econ-value" style="color:#d69e2e" id="ep-balance">Ξ5.000</div>
+</div>
+<div class="econ-stat-card">
+<div class="econ-label">Transacoes</div>
+<div class="econ-value" style="color:#f8fafc" id="ep-trades">0</div>
+</div>
+<div class="econ-stat-card">
+<div class="econ-label">Volume</div>
+<div class="econ-value" style="color:#f8fafc" id="ep-volume">Ξ0</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+<div class="econ-stat-card">
+<div class="econ-label">Gini (Desigualdade)</div>
+<div class="econ-value" style="color:#eab308" id="ep-gini">0.00</div>
+</div>
+<div class="econ-stat-card">
+<div class="econ-label">PIB Vila</div>
+<div class="econ-value" style="color:#22c55e" id="ep-pib">Ξ0</div>
+</div>
+</div>
+<h3 style="font-size:.75rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Top Wallets</h3>
+<div id="ep-top-wallets" style="margin-bottom:16px"></div>
+<h3 style="font-size:.75rem;color:#d69e2e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Transacoes Recentes</h3>
+<div id="ep-recent-trades"></div>
+<div id="ep-const-rules"></div>
+<div id="ep-goals-rank"></div>
+</div>
+</div>
+
+<!-- PAINEL HELENA INSIGHTS -->
+<div id="helena-panel" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(167,139,250,.5);border-radius:12px;width:500px;max-height:80vh;overflow-y:auto;backdrop-filter:blur(12px)">
+  <div style="padding:16px 20px 12px;border-bottom:1px solid rgba(167,139,250,.2);display:flex;align-items:center;gap:12px">
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#d69e2e,#a78bfa);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#000">H</div>
+    <div>
+      <h2 style="font-size:1rem;color:#f8fafc;font-weight:700">Helena Strategos</h2>
+      <p style="font-size:.7rem;color:#a78bfa">Cientista-Chefe INTEIA | Observadora da Economia</p>
+    </div>
+    <button onclick="window._toggleHelenaPanel()" style="margin-left:auto;background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer">&times;</button>
+  </div>
+  <div id="helena-body" style="padding:12px 20px 16px">
+    <p style="color:#64748b;font-size:.8rem;text-align:center;padding:20px">Helena esta observando a economia. Insights aparecerao apos as primeiras transacoes.</p>
+  </div>
+</div>
+
+<!-- PAINEL ANUNCIO -->
+<div id="anuncio-panel" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:25;display:none;background:rgba(10,14,26,.97);border:1px solid rgba(239,68,68,.5);border-radius:12px;width:420px;backdrop-filter:blur(12px)">
+  <div style="padding:16px 20px 12px;border-bottom:1px solid rgba(239,68,68,.2);display:flex;align-items:center;justify-content:space-between">
+    <h2 style="font-size:1rem;color:#ef4444;font-weight:700">Publicar Anuncio (Ξ100)</h2>
+    <button onclick="window._toggleAnuncioPanel()" style="background:none;border:none;color:#94a3b8;font-size:1.3rem;cursor:pointer">&times;</button>
+  </div>
+  <div style="padding:14px 20px">
+    <p style="font-size:.72rem;color:#94a3b8;margin-bottom:10px">Seu anuncio sera visto por TODAS as 142 IAs e aparecera na sua tela. Custa Ξ100.</p>
+    <textarea id="anuncio-texto" rows="3" style="width:100%;background:#1e293b;border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:8px 12px;color:#f8fafc;font-size:.82rem;font-family:Inter,sans-serif;outline:none;resize:none" placeholder="Digite seu anuncio..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button onclick="window._publicarAnuncio()" style="flex:1;background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;border:none;padding:10px;border-radius:6px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:Inter,sans-serif">Publicar (Ξ100)</button>
+      <button onclick="window._toggleAnuncioPanel()" style="background:rgba(30,41,59,.8);color:#94a3b8;border:1px solid rgba(255,255,255,.1);padding:10px 16px;border-radius:6px;font-size:.82rem;cursor:pointer;font-family:Inter,sans-serif">Cancelar</button>
+    </div>
+  </div>
+  <div id="anuncios-feed" style="padding:8px 20px 16px;max-height:200px;overflow-y:auto"></div>
+</div>
+
+<!-- BANNER ANUNCIO ATIVO -->
+<div id="anuncio-ativo" style="position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:14;display:none;background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(15,23,42,.95));border:1px solid rgba(239,68,68,.4);border-radius:10px;padding:8px 16px;text-align:center;max-width:450px;min-width:280px;backdrop-filter:blur(6px);animation:bannerPulse 3s infinite;cursor:pointer" onclick="window._toggleAnuncioPanel()">
+  <div style="font-size:.6rem;color:#ef4444;text-transform:uppercase;letter-spacing:2px;font-weight:700">ANUNCIO</div>
+  <div id="anuncio-ativo-autor" style="font-size:.7rem;color:#d69e2e;font-weight:600"></div>
+  <div id="anuncio-ativo-texto" style="font-size:.82rem;color:#f8fafc;margin:2px 0"></div>
+  <div id="anuncio-ativo-timer" style="font-size:.6rem;color:#64748b"></div>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ================================================================
+   CORES POR CATEGORIA
+   ================================================================ */
+const CORES={
+  visionario:'#8b5cf6',estrategia:'#ef4444',investidor:'#22c55e',tech:'#3b82f6',
+  jurista_lendario:'#d69e2e',politica_brasileira:'#06b6d4',politica_internacional:'#0891b2',
+  influencia_oratoria:'#f59e0b',mindset:'#10b981',resiliencia:'#ec4899',lado_negro:'#6b7280',
+  qi_extremo:'#a855f7',marca:'#f97316',ficticio:'#14b8a6',mkt_digital:'#e11d48',
+  negociacao:'#84cc16',br_business:'#eab308',ia_futuro:'#6366f1',omega:'#d69e2e',
+  provocador:'#dc2626',espiritual:'#fbbf24'
+};
+
+/* ================================================================
+   EDIFICIOS DA VILA
+   ================================================================ */
+const BUILDINGS=[
+  {name:'Agora Central',x:0,z:0,w:18,h:3,d:18,type:'plaza',desc:'Praca central da Vila, ponto de encontro de todos os consultores.'},
+  {name:'Torre de Estrategia',x:-60,z:-20,w:14,h:22,d:14,type:'tower',desc:'Quartel-general dos estrategistas. Aqui nascem os grandes planos.'},
+  {name:'Biblioteca Infinita',x:0,z:-70,w:24,h:12,d:16,type:'rect',desc:'Acervo com todo o conhecimento dos 144 consultores lendarios.'},
+  {name:'Cafe dos Filosofos',x:50,z:20,w:12,h:6,d:10,type:'rect',desc:'Espaco para debates informais e cafes filosoficos.'},
+  {name:'Arena de Debates',x:-20,z:60,w:20,h:8,d:20,type:'rect',desc:'Arena onde ocorrem os grandes debates e confrontos de ideias.'},
+  {name:'Jardim dos Visionarios',x:30,z:-60,w:16,h:2,d:16,type:'garden',desc:'Jardim contemplativo dos visionarios e pensadores.'},
+  {name:'Tribunal da Razao',x:-50,z:50,w:18,h:10,d:14,type:'rect',desc:'Tribunal onde a logica e a razao prevalecem sobre a emocao.'},
+  {name:'Laboratorio de Ideias',x:-30,z:-65,w:14,h:10,d:12,type:'rect',desc:'Centro de inovacao e experimentacao tecnologica.'},
+  {name:'Galeria dos Legados',x:60,z:-30,w:16,h:8,d:12,type:'rect',desc:'Exposicao permanente dos maiores feitos dos consultores.'},
+  {name:'Sala de Guerra',x:20,z:70,w:16,h:7,d:14,type:'rect',desc:'Centro de operacoes taticas e planejamento de campanhas.'},
+  {name:'Auditorio INTEIA',x:-70,z:0,w:20,h:9,d:16,type:'rect',desc:'Auditorio principal para grandes eventos e palestras.'},
+  {name:'Atelie dos Artesaos',x:65,z:40,w:12,h:7,d:10,type:'rect',desc:'Estudio criativo de marketing e construcao de marcas.'},
+  {name:'Observatorio do Futuro',x:40,z:-80,w:10,h:18,d:10,type:'tower',desc:'Torre de observacao para tendencias e previsoes.'},
+  {name:'Residencia Norte',x:-80,z:-70,w:10,h:6,d:10,type:'rect',desc:'Alojamento dos consultores da ala norte.'},
+  {name:'Residencia Sul',x:-80,z:70,w:10,h:6,d:10,type:'rect',desc:'Alojamento dos consultores da ala sul.'},
+  {name:'Residencia Leste',x:80,z:70,w:10,h:6,d:10,type:'rect',desc:'Alojamento dos consultores da ala leste.'},
+  {name:'Residencia Oeste',x:80,z:-70,w:10,h:6,d:10,type:'rect',desc:'Alojamento dos consultores da ala oeste.'},
+  {name:'Refeitorio Central',x:30,z:30,w:14,h:5,d:12,type:'rect',desc:'Refeitorio comunitario onde todos se reunem nas refeicoes.'},
+  {name:'Terraco Panoramico',x:-30,z:30,w:12,h:14,d:12,type:'tower',desc:'Terraco com vista privilegiada de toda a Vila INTEIA.'}
+];
+
+/* Mapeamento categoria -> indice do edificio-lar */
+const CATEGORY_HOME={
+  visionario:5,estrategia:1,investidor:8,tech:7,jurista_lendario:6,
+  politica_brasileira:4,politica_internacional:4,influencia_oratoria:10,
+  mindset:5,resiliencia:17,lado_negro:9,qi_extremo:7,marca:11,ficticio:15,
+  mkt_digital:11,negociacao:9,br_business:17,ia_futuro:12,omega:0,
+  provocador:4,espiritual:5
+};
+
+const BACKEND_URL='http://localhost:8090';
+const API_URL='http://localhost:8090/api/v1/vila/chat';
+const API_MODEL='osa-specialist';
+const CONSULTORS_API_URL=`${BACKEND_URL}/api/v1/vila/agentes?limit=200`;
+
+/* ================================================================
+   ESTADO GLOBAL
+   ================================================================ */
+let consultants=[];
+let scene,camera,renderer,clock;
+let playerMesh,playerDir=0;
+let npcs=[];
+let selectedNPC=null;
+let chatHistory=[];
+let isNight=false;
+let showMinimap=true;
+let showList=false;
+let chatOpen=false;
+let keys={w:false,a:false,s:false,d:false};
+let mouse={down:false};
+let cameraAngleH=Math.PI,cameraAngleV=0.4,cameraDist=20;
+let raycaster=new THREE.Raycaster();
+let mouseNDC=new THREE.Vector2();
+let sunLight,ambientLight,skyMesh;
+let animTime=0;
+let isSending=false;
+let buildingMeshes=[];
+let buildingPanelOpen=false;
+let currentBuildingIdx=-1;
+let showMissions=false;
+let profileOpen=false;
+let eventPanelOpen=false;
+let econPanelOpen=false;
+let helenaPanelOpen=false;
+
+/* ============================================================
+   SISTEMA ECONOMICO - VILA INTEIA
+   ============================================================ */
+let wallets = {};
+let transacoes = [];
+let npcServices = {};
+let econConfig = {
+  SUPPLY_TOTAL: 142000,
+  INICIO_POR_NPC: 1000,
+  INICIO_PLAYER: 5000,
+  AUTO_TRADE_INTERVAL: 15,
+  MAX_TRANSACOES: 500
+};
+let autoTradeTimer = 0;
+
+/* ============================================================
+   HELENA - OBSERVADORA DA ECONOMIA
+   ============================================================ */
+let helenaTimer = 0;
+const HELENA_INTERVAL = 120; // Helena analisa a cada 2 minutos
+let helenaInsights = [];
+
+/* ============================================================
+   SISTEMA DE ANUNCIOS PAGOS
+   ============================================================ */
+let anuncios = [];
+const ANUNCIO_CUSTO = 100; // Ξ100 por anuncio
+const ANUNCIO_DURACAO = 60000; // 60 segundos visivel
+let anuncioPanelOpen = false;
+
+/* ============================================================
+   CONSTITUICAO → IMPACTA REGRAS DA CIDADE
+   ============================================================ */
+let artigosConstitucionais = [];
+let regrasEconomicas = {
+  imposto_transacao: 0,
+  limite_acumulacao: 0,
+  salario_minimo: 0,
+  proibido_monopolio: false,
+  taxa_inatividade: 0,
+  redistribuicao: false
+};
+
+/* ================================================================
+   SISTEMA DE PROGRESSO (localStorage)
+   ================================================================ */
+const SAVE_KEY='vila_inteia_progress';
+let progress={npcsFound:new Set(),buildingsVisited:new Set(),chatsCount:0,eventsWitnessed:0};
+
+function loadProgress(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(raw){
+      const d=JSON.parse(raw);
+      progress.npcsFound=new Set(d.npcsFound||[]);
+      progress.buildingsVisited=new Set(d.buildingsVisited||[]);
+      progress.chatsCount=d.chatsCount||0;
+      progress.eventsWitnessed=d.eventsWitnessed||0;
+    }
+  }catch(e){}
+}
+
+function saveProgress(){
+  try{
+    localStorage.setItem(SAVE_KEY,JSON.stringify({
+      npcsFound:Array.from(progress.npcsFound),
+      buildingsVisited:Array.from(progress.buildingsVisited),
+      chatsCount:progress.chatsCount,
+      eventsWitnessed:progress.eventsWitnessed
+    }));
+  }catch(e){}
+}
+
+function updateStatsUI(){
+  const total=consultants.length||142;
+  const nf=progress.npcsFound.size;
+  const bv=progress.buildingsVisited.size;
+  document.getElementById('st-npcs').textContent=nf+'/'+total;
+  document.getElementById('st-npcs-bar').style.width=(nf/total*100)+'%';
+  document.getElementById('st-buildings').textContent=bv+'/19';
+  document.getElementById('st-buildings-bar').style.width=(bv/19*100)+'%';
+  document.getElementById('st-chats').textContent=progress.chatsCount;
+  document.getElementById('st-events').textContent=progress.eventsWitnessed;
+  const stTrades = document.getElementById('st-trades');
+  if (stTrades) stTrades.textContent = transacoes.length;
+}
+
+/* ================================================================
+   SISTEMA DE NOTIFICACOES
+   ================================================================ */
+const MAX_NOTIFS=5;
+function addNotification(text){
+  const feed=document.getElementById('notif-feed');
+  const el=document.createElement('div');
+  el.className='notif-item';
+  const now=new Date();
+  const time=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  el.innerHTML='<span class="notif-time">'+time+'</span> '+text;
+  feed.insertBefore(el,feed.firstChild);
+  while(feed.children.length>MAX_NOTIFS){
+    const last=feed.lastChild;
+    last.classList.add('fading');
+    setTimeout(()=>last.remove(),500);
+  }
+  setTimeout(()=>{if(el.parentNode){el.classList.add('fading');setTimeout(()=>{if(el.parentNode)el.remove();},500);}},12000);
+}
+
+/* ================================================================
+   SISTEMA DE EVENTOS
+   ================================================================ */
+const EVENT_TYPES=[
+  {type:'Debate',icon:'debate',themes:['O futuro da democracia digital','Etica na inteligencia artificial','Estrategia vs Intuicao','O poder da narrativa politica','Capitalismo consciente','Tecnologia e liberdade']},
+  {type:'Seminario',icon:'seminario',themes:['Neuromarketing eleitoral','Lideranca em tempos de crise','Blockchain e governanca','Comunicacao persuasiva','Economia comportamental','Direito digital']},
+  {type:'Palestra',icon:'palestra',themes:['Visao 2030: Para onde vamos','O cerebro do eleitor','Redes sociais e poder','Inovacao disruptiva','Mindset anticonvencional','A arte da negociacao']},
+  {type:'Cafe Filosofico',icon:'cafe',themes:['Liberdade ou seguranca?','O sentido da politica','Justica e equidade','O papel do individuo','Verdade na era da pos-verdade','Progresso vs Tradicao']},
+  {type:'Tribunal em Sessao',icon:'tribunal',themes:['O caso da desinformacao','Julgamento da corrupcao sistemica','Tribunal da opiniao publica','Direitos digitais vs Privacidade','O limite da liberdade de expressao']},
+  {type:'Workshop',icon:'workshop',themes:['Construindo campanhas vencedoras','Data science para politica','Oratoria de alto impacto','Branding pessoal','Analise de cenarios','Gestao de crise']}
+];
+
+let currentEvent=null;
+let eventTimer=0;
+const EVENT_INTERVAL_MIN=30;
+const EVENT_INTERVAL_MAX=60;
+let nextEventIn=15;
+
+function generateEvent(){
+  const evType=EVENT_TYPES[Math.floor(Math.random()*EVENT_TYPES.length)];
+  const theme=evType.themes[Math.floor(Math.random()*evType.themes.length)];
+  const bldgIdx=Math.floor(Math.random()*BUILDINGS.length);
+  const bldg=BUILDINGS[bldgIdx];
+  const participantCount=3+Math.floor(Math.random()*5);
+  const participants=[];
+  const usedIdx=new Set();
+  while(participants.length<participantCount&&participants.length<npcs.length){
+    const ri=Math.floor(Math.random()*npcs.length);
+    if(!usedIdx.has(ri)){usedIdx.add(ri);participants.push(ri);}
+  }
+  currentEvent={
+    type:evType.type,theme:theme,buildingIdx:bldgIdx,building:bldg,
+    participants:participants,startTime:Date.now(),duration:45000+Math.random()*30000
+  };
+  showEventBanner();
+  addNotification('Novo evento: <span class="notif-highlight">'+evType.type+'</span> - '+theme+' no(a) '+bldg.name);
+  participants.forEach(pi=>{
+    const npc=npcs[pi];
+    if(npc){
+      npc.mesh.userData.targetX=bldg.x+(Math.random()-0.5)*bldg.w;
+      npc.mesh.userData.targetZ=bldg.z+(Math.random()-0.5)*bldg.d;
+      npc.mesh.userData.waitTime=0;
+    }
+  });
+  nextEventIn=EVENT_INTERVAL_MIN+Math.random()*(EVENT_INTERVAL_MAX-EVENT_INTERVAL_MIN);
+}
+
+function showEventBanner(){
+  if(!currentEvent)return;
+  const b=document.getElementById('event-banner');
+  document.getElementById('evb-type').textContent=currentEvent.type.toUpperCase()+' ATIVO';
+  document.getElementById('evb-title').textContent=currentEvent.theme;
+  document.getElementById('evb-location').textContent=currentEvent.building.name;
+  const pNames=currentEvent.participants.slice(0,3).map(i=>npcs[i]?.data?.nome_exibicao||'?').join(', ');
+  document.getElementById('evb-participants').textContent=pNames+(currentEvent.participants.length>3?' +mais '+(currentEvent.participants.length-3):'');
+  b.style.display='block';
+}
+
+function hideEventBanner(){
+  document.getElementById('event-banner').style.display='none';
+  currentEvent=null;
+}
+
+function updateEvents(dt){
+  if(currentEvent){
+    if(Date.now()-currentEvent.startTime>currentEvent.duration){
+      addNotification('Evento encerrado: <span class="notif-highlight">'+currentEvent.type+'</span>');
+      hideEventBanner();
+    }
+  }else{
+    nextEventIn-=dt;
+    if(nextEventIn<=0)generateEvent();
+  }
+}
+
+/* ================================================================
+   SISTEMA DE MISSOES
+   ================================================================ */
+const MISSION_TEMPLATES=[
+  {id:'chat3',title:'Networking',desc:'Converse com 3 consultores diferentes',icon:'💬',target:3,check:()=>progress.chatsCount,type:'chats'},
+  {id:'visit3',title:'Explorador',desc:'Visite 3 edificios diferentes',icon:'🏛',target:3,check:()=>progress.buildingsVisited.size,type:'buildings'},
+  {id:'event1',title:'Participante',desc:'Presenciar 1 evento na Vila',icon:'🎭',target:1,check:()=>progress.eventsWitnessed,type:'events'},
+  {id:'chat_strat',title:'Estrategista',desc:'Converse com 2 consultores de estrategia',icon:'🎯',target:2,check:()=>countChatsByCategory('estrategia'),type:'cat_chats'},
+  {id:'find10',title:'Descobridor',desc:'Encontre 10 consultores diferentes',icon:'🔍',target:10,check:()=>progress.npcsFound.size,type:'npcs'},
+  {id:'visit_all',title:'Turista',desc:'Visite 5 edificios diferentes',icon:'🗺',target:5,check:()=>progress.buildingsVisited.size,type:'buildings'},
+  {id:'chat5',title:'Comunicador',desc:'Tenha 5 conversas',icon:'🗣',target:5,check:()=>progress.chatsCount,type:'chats'},
+  {id:'find20',title:'Rastreador',desc:'Encontre 20 consultores diferentes',icon:'🔎',target:20,check:()=>progress.npcsFound.size,type:'npcs'},
+  {id:'event2',title:'Espectador VIP',desc:'Presenciar 2 eventos',icon:'🎪',target:2,check:()=>progress.eventsWitnessed,type:'events'}
+];
+
+let dailyMissions=[];
+let chatsByCategory={};
+
+function countChatsByCategory(cat){return chatsByCategory[cat]||0;}
+
+function generateDailyMissions(){
+  const saved=localStorage.getItem('vila_missions_day');
+  const today=new Date().toDateString();
+  if(saved){
+    try{
+      const d=JSON.parse(saved);
+      if(d.day===today){dailyMissions=d.missions;return;}
+    }catch(e){}
+  }
+  const shuffled=[...MISSION_TEMPLATES].sort(()=>Math.random()-0.5);
+  dailyMissions=shuffled.slice(0,3).map(m=>({...m,completed:false,startValue:m.check()}));
+  localStorage.setItem('vila_missions_day',JSON.stringify({day:today,missions:dailyMissions}));
+}
+
+function updateMissionsProgress(){
+  let anyNew=false;
+  dailyMissions.forEach(m=>{
+    if(m.completed)return;
+    const current=MISSION_TEMPLATES.find(t=>t.id===m.id);
+    if(!current)return;
+    const val=current.check()-m.startValue;
+    if(val>=m.target){
+      m.completed=true;
+      anyNew=true;
+      showAchievement('Missao Completa!',m.title+' - '+m.desc);
+      addNotification('Missao completa: <span class="notif-highlight">'+m.title+'</span>');
+    }
+  });
+  if(anyNew){
+    const today=new Date().toDateString();
+    localStorage.setItem('vila_missions_day',JSON.stringify({day:today,missions:dailyMissions}));
+  }
+}
+
+function renderMissions(){
+  const body=document.getElementById('missions-body');
+  body.innerHTML='';
+  dailyMissions.forEach(m=>{
+    const current=MISSION_TEMPLATES.find(t=>t.id===m.id);
+    const val=current?Math.max(0,current.check()-m.startValue):0;
+    const pct=Math.min(100,val/m.target*100);
+    const card=document.createElement('div');
+    card.className='mission-card'+(m.completed?' completed':'');
+    card.innerHTML='<div class="mc-header"><div class="mc-icon">'+m.icon+'</div><div class="mc-title">'+m.title+(m.completed?' - COMPLETA':'')+'</div></div>'
+      +'<div class="mc-desc">'+m.desc+'</div>'
+      +'<div class="mc-progress"><div class="mc-bar"><div class="mc-bar-fill" style="width:'+pct+'%"></div></div><div class="mc-count">'+Math.min(val,m.target)+'/'+m.target+'</div></div>';
+    body.appendChild(card);
+  });
+}
+
+window._toggleMissions=function(){
+  showMissions=!showMissions;
+  renderMissions();
+  document.getElementById('missions-panel').style.display=showMissions?'block':'none';
+};
+
+/* ================================================================
+   CONQUISTAS
+   ================================================================ */
+function showAchievement(title,desc){
+  const el=document.getElementById('achievement-popup');
+  document.getElementById('ach-icon').textContent='🏆';
+  document.getElementById('ach-title').textContent=title;
+  document.getElementById('ach-desc').textContent=desc;
+  el.style.display='block';
+  el.style.animation='none';
+  void el.offsetWidth;
+  el.style.animation='achievePop .5s ease-out';
+  setTimeout(()=>{el.style.display='none';},3500);
+}
+
+/* ================================================================
+   FEED ALEATORIO DE ACOES DOS NPCs
+   ================================================================ */
+const FEED_ACTIONS=[
+  '{npc} esta meditando no(a) {local}',
+  '{npc} esta debatendo com {npc2} no(a) {local}',
+  '{npc} acabou de chegar no(a) {local}',
+  '{npc} compartilhou uma ideia brilhante',
+  '{npc} esta tomando cafe no Cafe dos Filosofos',
+  '{npc} e {npc2} estao trocando ideias',
+  '{npc} passou pela Agora Central',
+  '{npc} esta lendo na Biblioteca Infinita',
+  '{npc} esta negociando um contrato com {npc2}',
+  '{npc} fechou uma parceria comercial',
+  '{npc} ofereceu consultoria para {npc2}'
+];
+let feedTimer=0;
+const FEED_INTERVAL=8;
+
+function generateFeedMessage(){
+  if(npcs.length<2)return;
+  const tpl=FEED_ACTIONS[Math.floor(Math.random()*FEED_ACTIONS.length)];
+  const n1=npcs[Math.floor(Math.random()*npcs.length)];
+  const n2=npcs[Math.floor(Math.random()*npcs.length)];
+  const b=BUILDINGS[Math.floor(Math.random()*BUILDINGS.length)];
+  let msg=tpl.replace('{npc}','<span class="notif-highlight">'+n1.data.nome_exibicao+'</span>')
+    .replace('{npc2}','<span class="notif-highlight">'+n2.data.nome_exibicao+'</span>')
+    .replace('{local}',b.name);
+  addNotification(msg);
+}
+
+/* ================================================================
+   SISTEMA ECONOMICO - FUNCOES
+   ================================================================ */
+function getConsultorId(c) {
+  return c.id || ('CL' + String(c.numero_lista).padStart(3, '0'));
+}
+
+function getNomeById(id) {
+  if (id === 'PLAYER') return 'Voce';
+  const c = consultants.find(x => getConsultorId(x) === id);
+  return c ? (c.nome_exibicao || c.nome) : id;
+}
+
+async function initEconomy() {
+  // Inicializar com valores padrão
+  consultants.forEach(c => {
+    const id = getConsultorId(c);
+    wallets[id] = econConfig.INICIO_POR_NPC;
+  });
+  wallets['PLAYER'] = econConfig.INICIO_PLAYER;
+
+  // Tentar carregar do backend primeiro (persistência real)
+  const loadedBackend = await carregarEconomiaBackend();
+
+  // Se backend falhou, tentar localStorage
+  if (!loadedBackend) {
+    try {
+      const saved = JSON.parse(localStorage.getItem('vila_economia') || '{}');
+      if (saved.wallets && Object.keys(saved.wallets).length > 10) {
+        wallets = saved.wallets;
+      }
+      if (saved.transacoes) transacoes = saved.transacoes.slice(-econConfig.MAX_TRANSACOES);
+    } catch(e) {}
+  }
+
+  // Garantir que PLAYER sempre existe
+  if (!wallets['PLAYER']) wallets['PLAYER'] = econConfig.INICIO_PLAYER;
+
+  generateNPCServices();
+  updateEconUI();
+}
+
+function generateNPCServices() {
+  npcServices = {};
+  consultants.forEach(c => {
+    const id = getConsultorId(c);
+    const expertise = c.areas_expertise || [];
+    const carisma = c.nivel_carisma || 5;
+    const tier = c.tier || 3;
+    const priceMult = (tier <= 1 ? 3 : tier <= 2 ? 2 : 1) * (1 + carisma * 0.1);
+    const services = [];
+
+    services.push({
+      servico: 'Consultoria',
+      preco: Math.round(30 * priceMult),
+      descricao: 'Consultoria especializada em ' + (expertise[0] || c.categoria)
+    });
+
+    const catServices = {
+      visionario: [{s:'Visao Estrategica',p:80,d:'Analise de cenarios futuros'},{s:'Mentoria Visionaria',p:150,d:'Sessao de mentoria sobre inovacao'}],
+      estrategia: [{s:'Plano de Batalha',p:100,d:'Estrategia completa para seu objetivo'},{s:'War Room',p:200,d:'Sessao intensiva de planejamento'}],
+      investidor: [{s:'Analise de Investimento',p:120,d:'Avaliacao de oportunidades'},{s:'Portfolio Review',p:250,d:'Revisao completa de portfolio'}],
+      negociacao: [{s:'Mediacao',p:60,d:'Mediar negociacao entre partes'},{s:'Deal Closing',p:180,d:'Fechar acordo complexo'}],
+      tech: [{s:'Solucao Tecnica',p:70,d:'Resolver problema tecnologico'},{s:'Arquitetura',p:200,d:'Design de sistema completo'}],
+      marca: [{s:'Branding',p:90,d:'Construcao de marca pessoal'},{s:'Reposicionamento',p:170,d:'Estrategia de reposicao no mercado'}],
+      politica_internacional: [{s:'Analise Geopolitica',p:110,d:'Panorama politico internacional'},{s:'Diplomacia',p:200,d:'Mediacao diplomatica'}],
+      politica_brasileira: [{s:'Analise Politica BR',p:80,d:'Cenario politico brasileiro'},{s:'Articulacao',p:160,d:'Estrategia de articulacao politica'}],
+      resiliencia: [{s:'Coaching Resiliencia',p:60,d:'Superar adversidades'},{s:'Plano de Recuperacao',p:130,d:'Estrategia de comeback'}],
+      ia_futuro: [{s:'Consultoria IA',p:100,d:'Aplicacao de inteligencia artificial'},{s:'Automacao',p:220,d:'Automacao de processos com IA'}],
+      mindset: [{s:'Mindset Coaching',p:50,d:'Transformacao de mentalidade'},{s:'Peak Performance',p:150,d:'Atingir performance maxima'}],
+      br_business: [{s:'Business Plan BR',p:90,d:'Plano de negocios para Brasil'},{s:'Expansao',p:200,d:'Estrategia de expansao nacional'}],
+      mkt_digital: [{s:'Growth Hacking',p:80,d:'Estrategias de crescimento rapido'},{s:'Campanha Digital',p:180,d:'Planejamento de campanha completa'}],
+      lado_negro: [{s:'Inteligencia Competitiva',p:100,d:'Analise de concorrentes'},{s:'Contra-Ataque',p:200,d:'Estrategia de defesa agressiva'}],
+      qi_extremo: [{s:'Analise Complexa',p:130,d:'Resolver problema de alta complexidade'},{s:'Research',p:250,d:'Pesquisa aprofundada'}],
+      omega: [{s:'Masterclass',p:200,d:'Aula magistral personalizada'},{s:'Mentoria Omega',p:500,d:'Mentoria exclusiva de elite'}],
+      ficticio: [{s:'Narrativa Criativa',p:70,d:'Storytelling e narrativa'},{s:'Mundo Alternativo',p:140,d:'Cenario ficticio elaborado'}],
+      influencia_oratoria: [{s:'Oratoria',p:80,d:'Aula de retorica e persuasao'},{s:'Discurso',p:160,d:'Escrever discurso impactante'}],
+      jurista_lendario: [{s:'Parecer Juridico',p:120,d:'Analise legal especializada'},{s:'Defesa',p:300,d:'Montagem de defesa completa'}],
+      provocador: [{s:'Provocacao Criativa',p:40,d:'Desafiar suas premissas'},{s:'Disrupcao',p:120,d:'Estrategia disruptiva'}],
+      espiritual: [{s:'Orientacao',p:50,d:'Sabedoria e orientacao espiritual'},{s:'Retiro Espiritual',p:100,d:'Sessao de reflexao profunda'}]
+    };
+
+    const catSvc = catServices[c.categoria] || [];
+    catSvc.forEach(sv => {
+      services.push({
+        servico: sv.s,
+        preco: Math.round(sv.p * priceMult),
+        descricao: sv.d
+      });
+    });
+
+    npcServices[id] = services;
+  });
+}
+
+function transferir(deId, paraId, valor, motivo, tipo) {
+  tipo = tipo || 'servico';
+  if (!wallets[deId] || wallets[deId] < valor || valor <= 0) return false;
+  if (deId === paraId) return false;
+
+  // Aplicar regras constitucionais
+  if (regrasEconomicas.salario_minimo > 0 && valor < regrasEconomicas.salario_minimo) return false;
+  if (regrasEconomicas.limite_acumulacao > 0 && (wallets[paraId] || 0) + valor > regrasEconomicas.limite_acumulacao) {
+    valor = Math.max(0, regrasEconomicas.limite_acumulacao - (wallets[paraId] || 0));
+    if (valor <= 0) return false;
+  }
+
+  // Imposto sobre transacao
+  var imposto = 0;
+  if (regrasEconomicas.imposto_transacao > 0) {
+    imposto = Math.round(valor * regrasEconomicas.imposto_transacao / 100);
+    // Imposto redistribuido entre todos
+    if (imposto > 0 && wallets[deId] >= valor + imposto) {
+      wallets[deId] -= imposto;
+      var numNpcs = Object.keys(wallets).length;
+      var share = imposto / numNpcs;
+      Object.keys(wallets).forEach(function(k) { wallets[k] += share; });
+    }
+  }
+
+  wallets[deId] -= valor;
+  wallets[paraId] = (wallets[paraId] || 0) + valor;
+
+  const tx = {
+    de: deId, para: paraId, valor: valor, motivo: (motivo || '').substring(0, 150),
+    tipo: tipo, timestamp: Date.now()
+  };
+  transacoes.push(tx);
+  if (transacoes.length > econConfig.MAX_TRANSACOES) transacoes.splice(0, 100);
+
+  salvarEconomia();
+  salvarTransacaoBackend(tx);
+  updateEconUI();
+
+  addNotification('<span class="notif-highlight">Ξ' + valor + '</span> ' + getNomeById(deId) + ' → ' + getNomeById(paraId) + ': ' + (motivo || tipo));
+
+  return true;
+}
+
+const BACKEND_API = 'http://localhost:8090/api/v1/vila-inteia';
+
+async function fetchRetryAsync(url, options, retries, delay) {
+  retries = retries || 1; delay = delay || 2000;
+  for (var i = 0; i <= retries; i++) {
+    try {
+      var r = await fetch(url, options);
+      if (r.ok) return r;
+      if (r.status >= 500 && i < retries) { await new Promise(function(res){setTimeout(res,delay);}); continue; }
+      return r;
+    } catch(e) {
+      if (i < retries) { await new Promise(function(res){setTimeout(res,delay);}); continue; }
+      throw e;
+    }
+  }
+}
+
+function fetchComRetry(url, opts, retries) {
+  fetch(url, opts).catch(function(err) {
+    if (retries > 0) {
+      setTimeout(function() { fetchComRetry(url, opts, retries - 1); }, 2000);
+    } else {
+      console.warn('[SAVE] Falha após retries:', url);
+    }
+  });
+}
+
+function salvarEconomia() {
+  // localStorage (fallback rápido)
+  try {
+    localStorage.setItem('vila_economia', JSON.stringify({
+      wallets: wallets, transacoes: transacoes.slice(-econConfig.MAX_TRANSACOES)
+    }));
+  } catch(e) {}
+  // Backend com retry
+  fetchComRetry(BACKEND_API + '/economia/wallets/salvar', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(wallets)
+  }, 2);
+}
+
+function salvarTransacaoBackend(tx) {
+  fetchComRetry(BACKEND_API + '/economia/transacao', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({de:tx.de, para:tx.para, valor:tx.valor, motivo:tx.motivo, tipo:tx.tipo, modulo:'cidade'})
+  }, 2);
+}
+
+/* ============================================================
+   HELENA - ANALISE ECONOMICA
+   ============================================================ */
+async function helenaAnalisaEconomia() {
+  if (transacoes.length < 1) return;
+
+  var recentTx = transacoes.slice(-30);
+  var topWallets = Object.entries(wallets).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+  var bottomWallets = Object.entries(wallets).sort(function(a,b){return a[1]-b[1];}).slice(0,5);
+  var totalVolume = transacoes.reduce(function(s,t){return s+t.valor;}, 0);
+
+  // Calcular Gini
+  var values = Object.values(wallets).filter(function(v){return v > 0;});
+  var sorted = values.slice().sort(function(a,b){return a-b;});
+  var n = sorted.length;
+  var mean = sorted.reduce(function(s,v){return s+v;}, 0) / n;
+  var sumDiff = 0;
+  for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) sumDiff += Math.abs(sorted[i] - sorted[j]);
+  var gini = mean > 0 ? sumDiff / (2*n*n*mean) : 0;
+
+  // Categorias mais ativas
+  var catActivity = {};
+  recentTx.forEach(function(tx) {
+    var cDe = consultants.find(function(c){return getConsultorId(c) === tx.de;});
+    var cPara = consultants.find(function(c){return getConsultorId(c) === tx.para;});
+    if (cDe) catActivity[cDe.categoria] = (catActivity[cDe.categoria] || 0) + 1;
+    if (cPara) catActivity[cPara.categoria] = (catActivity[cPara.categoria] || 0) + 1;
+  });
+  var topCats = Object.entries(catActivity).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+
+  var prompt = 'Voce e Helena Strategos, cientista-chefe da INTEIA. Analise a economia da Vila INTEIA (cidade 3D onde 142 genios lendarios vivem e negociam).\n\n'
+    + 'DADOS ECONOMICOS:\n'
+    + '- ' + transacoes.length + ' transacoes totais, volume: E' + totalVolume + '\n'
+    + '- Coeficiente de Gini: ' + gini.toFixed(3) + ' (0=igualdade, 1=concentracao total)\n'
+    + '- Top wallets: ' + topWallets.map(function(w){return getNomeById(w[0])+': E'+w[1];}).join(', ') + '\n'
+    + '- Mais pobres: ' + bottomWallets.map(function(w){return getNomeById(w[0])+': E'+w[1];}).join(', ') + '\n'
+    + '- Categorias mais ativas: ' + topCats.map(function(c){return c[0]+'('+c[1]+')';}).join(', ') + '\n'
+    + '- Tipos de transacao recentes: ' + recentTx.slice(-10).map(function(t){return t.tipo+'(E'+t.valor+')';}).join(', ') + '\n'
+    + '- Regras constitucionais ativas: ' + JSON.stringify(regrasEconomicas) + '\n'
+    + '- NPCs mais satisfeitos: ' + Object.entries(npcGoals).sort(function(a,b){return b[1].satisfacao-a[1].satisfacao;}).slice(0,5).map(function(g){return getNomeById(g[0])+': '+g[1].satisfacao+'% ('+g[1].tipo+')';}).join(', ') + '\n'
+    + '- NPCs menos satisfeitos: ' + Object.entries(npcGoals).sort(function(a,b){return a[1].satisfacao-b[1].satisfacao;}).slice(0,5).map(function(g){return getNomeById(g[0])+': '+g[1].satisfacao+'% ('+g[1].tipo+')';}).join(', ') + '\n\n'
+    + 'TRANSACOES RECENTES:\n'
+    + recentTx.slice(-15).map(function(t){return getNomeById(t.de)+' pagou E'+t.valor+' a '+getNomeById(t.para)+': '+t.motivo;}).join('\n') + '\n\n'
+    + 'Gere 3-4 insights estrategicos CURTOS (1-2 frases cada). Foque em:\n'
+    + '- Quem esta acumulando poder economico e por que\n'
+    + '- Que tipo de servico gera mais riqueza\n'
+    + '- Padroes de comportamento economico por personalidade\n'
+    + '- Riscos de concentracao ou oportunidades de mercado\n'
+    + '- Comparacoes com sistemas economicos reais\n'
+    + '- Licoes para o mundo real sobre empreendedorismo e negociacao\n\n'
+    + 'Formato: numere de 1 a 4, cada insight em 1-2 frases diretas. Sem introducoes.';
+
+  try {
+    var response = await fetchRetryAsync(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: API_MODEL,
+        messages: [
+          { role: 'user', content: '[INSTRUCAO]\nVoce e Helena Strategos, cientista politica e economista-chefe da INTEIA. Analise dados economicos e gere insights estrategicos. Responda em portugues brasileiro, direto ao ponto.\n\n[TAREFA]\n' + prompt }
+        ],
+        max_tokens: 200,
+        temperature: 0.6
+      })
+    });
+    if (!response.ok) return;
+    var data = await response.json();
+    var text = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+    if (!text) return;
+
+    var insight = {
+      texto: text,
+      gini: gini,
+      totalTrades: transacoes.length,
+      volumeTotal: totalVolume,
+      timestamp: Date.now()
+    };
+    helenaInsights.push(insight);
+    if (helenaInsights.length > 50) helenaInsights.splice(0, 20);
+
+    // Salvar no backend
+    fetch(BACKEND_API + '/helena/insight', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ texto: text, modulo: 'economia', rodada: transacoes.length, metricas: { gini: gini, totalTrades: transacoes.length, volumeTotal: totalVolume } })
+    }).catch(function(){});
+
+    // Notificacao
+    addNotification('<span class="notif-highlight">Helena:</span> Novo insight economico disponivel (tecla H)');
+
+    console.log('[HELENA] Insight economico gerado');
+  } catch(e) {
+    console.error('[HELENA]', e);
+  }
+}
+
+window._toggleHelenaPanel = function() {
+  helenaPanelOpen = !helenaPanelOpen;
+  var panel = document.getElementById('helena-panel');
+  panel.style.display = helenaPanelOpen ? 'block' : 'none';
+  if (helenaPanelOpen) renderHelenaInsights();
+};
+
+function renderHelenaInsights() {
+  var body = document.getElementById('helena-body');
+  if (!body) return;
+  if (helenaInsights.length === 0) return;
+
+  body.innerHTML = helenaInsights.slice().reverse().map(function(h) {
+    var giniColor = h.gini < 0.2 ? '#22c55e' : h.gini < 0.4 ? '#eab308' : '#ef4444';
+    var hora = new Date(h.timestamp).toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    return '<div style="padding:12px;border-radius:8px;background:rgba(30,41,59,.5);border:1px solid rgba(167,139,250,.15);margin-bottom:8px">'
+      + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">'
+        + '<span style="font-size:.65rem;color:#a78bfa;font-weight:700">INSIGHT ECONOMICO</span>'
+        + '<span style="font-size:.6rem;color:#64748b;margin-left:auto">' + hora + '</span>'
+      + '</div>'
+      + '<div style="font-size:.78rem;line-height:1.6;color:#e2e8f0;white-space:pre-wrap">' + h.texto.replace(/</g,'&lt;') + '</div>'
+      + '<div style="display:flex;gap:8px;margin-top:6px;font-size:.6rem">'
+        + '<span style="color:' + giniColor + '">Gini: ' + (h.gini||0).toFixed(3) + '</span>'
+        + '<span style="color:#d69e2e">Vol: ' + (h.volumeTotal||0) + '</span>'
+        + '<span style="color:#94a3b8">' + (h.totalTrades||0) + ' trades</span>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+/* ============================================================
+   SISTEMA DE ANUNCIOS - FUNCOES
+   ============================================================ */
+window._toggleAnuncioPanel = function() {
+  anuncioPanelOpen = !anuncioPanelOpen;
+  document.getElementById('anuncio-panel').style.display = anuncioPanelOpen ? 'block' : 'none';
+  if (anuncioPanelOpen) renderAnunciosFeed();
+};
+
+window._publicarAnuncio = function() {
+  var texto = document.getElementById('anuncio-texto').value.trim();
+  if (!texto) return alert('Digite algo para anunciar');
+  if (texto.length > 200) return alert('Maximo 200 caracteres');
+
+  if ((wallets['PLAYER'] || 0) < ANUNCIO_CUSTO) {
+    return alert('Saldo insuficiente! Voce tem Ξ' + (wallets['PLAYER'] || 0) + ', precisa de Ξ' + ANUNCIO_CUSTO);
+  }
+
+  // Cobrar
+  wallets['PLAYER'] -= ANUNCIO_CUSTO;
+  // Distribuir entre NPCs (taxa de veiculacao)
+  var share = ANUNCIO_CUSTO / consultants.length;
+  consultants.forEach(function(c) {
+    var id = getConsultorId(c);
+    wallets[id] = (wallets[id] || 0) + share;
+  });
+
+  var anuncio = {
+    autor: 'Voce',
+    autorId: 'PLAYER',
+    texto: texto,
+    timestamp: Date.now(),
+    posX: playerMesh.position.x,
+    posZ: playerMesh.position.z
+  };
+  anuncios.push(anuncio);
+
+  // Salvar
+  salvarEconomia();
+  updateEconUI();
+  document.getElementById('anuncio-texto').value = '';
+
+  // Mostrar banner
+  mostrarAnuncioBanner(anuncio);
+  addNotification('<span class="notif-highlight">Anuncio publicado!</span> -Ξ' + ANUNCIO_CUSTO + '. ' + texto.substring(0, 50));
+
+  // Salvar no backend
+  fetchComRetry(BACKEND_API + '/mensagens/salvar', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ modulo: 'anuncios', sessao_id: 'global', mensagens: [anuncio] })
+  }, 2);
+
+  renderAnunciosFeed();
+
+  // NPCs tambem anunciam de volta (reacao)
+  setTimeout(function() { npcReageAnuncio(anuncio); }, 3000 + Math.random() * 5000);
+};
+
+function npcReageAnuncio(anuncioOriginal) {
+  if (consultants.length < 1) return;
+  // 30% de chance de um NPC reagir com anuncio proprio
+  if (Math.random() > 0.3) return;
+
+  var npcIdx = Math.floor(Math.random() * consultants.length);
+  var c = consultants[npcIdx];
+  var cId = getConsultorId(c);
+  var saldo = wallets[cId] || 0;
+
+  if (saldo < ANUNCIO_CUSTO) return;
+
+  var respostas = [
+    c.nome_exibicao + ' oferece ' + (c.areas_expertise?.[0] || 'consultoria') + ' — contrate agora!',
+    'Resposta de ' + c.nome_exibicao + ': Eu faco melhor por metade do preco!',
+    c.nome_exibicao + ' anuncia: Servicos de ' + c.categoria + ' com 20% de desconto hoje!',
+    'OFERTA de ' + c.nome_exibicao + ': ' + (npcServices[cId]?.[0]?.servico || 'Consultoria') + ' por Ξ' + (npcServices[cId]?.[0]?.preco || 50),
+    c.nome_exibicao + ': Procurando parceiros para projeto de ' + (c.areas_expertise?.[0] || c.categoria)
+  ];
+
+  var texto = respostas[Math.floor(Math.random() * respostas.length)];
+
+  wallets[cId] -= ANUNCIO_CUSTO;
+  var npcShare = ANUNCIO_CUSTO / consultants.length;
+  consultants.forEach(function(cc) { wallets[getConsultorId(cc)] = (wallets[getConsultorId(cc)] || 0) + npcShare; });
+
+  var npcMesh = npcs[npcIdx]?.mesh;
+  var anuncio = {
+    autor: c.nome_exibicao,
+    autorId: cId,
+    texto: texto,
+    timestamp: Date.now(),
+    posX: npcMesh ? npcMesh.position.x : 0,
+    posZ: npcMesh ? npcMesh.position.z : 0
+  };
+  anuncios.push(anuncio);
+
+  mostrarAnuncioBanner(anuncio);
+  addNotification('<span class="notif-highlight">' + c.nome_exibicao + '</span> publicou um anuncio! (-Ξ' + ANUNCIO_CUSTO + ')');
+}
+
+function mostrarAnuncioBanner(a) {
+  var el = document.getElementById('anuncio-ativo');
+  document.getElementById('anuncio-ativo-autor').textContent = a.autor;
+  document.getElementById('anuncio-ativo-texto').textContent = a.texto;
+  el.style.display = 'block';
+
+  // Timer de expiracao
+  var timerEl = document.getElementById('anuncio-ativo-timer');
+  var interval = setInterval(function() {
+    var restante = Math.max(0, ANUNCIO_DURACAO - (Date.now() - a.timestamp));
+    if (restante <= 0) {
+      clearInterval(interval);
+      el.style.display = 'none';
+      return;
+    }
+    timerEl.textContent = Math.ceil(restante / 1000) + 's restantes';
+  }, 1000);
+}
+
+function renderAnunciosFeed() {
+  var el = document.getElementById('anuncios-feed');
+  if (!el) return;
+  var recentes = anuncios.slice(-10).reverse();
+  el.innerHTML = recentes.length === 0
+    ? '<p style="color:#64748b;font-size:.72rem;text-align:center">Nenhum anuncio ainda.</p>'
+    : recentes.map(function(a) {
+        var tempo = Math.round((Date.now() - a.timestamp) / 1000);
+        var tempoStr = tempo < 60 ? tempo + 's' : Math.round(tempo / 60) + 'min';
+        return '<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.72rem">'
+          + '<span style="color:#d69e2e;font-weight:600">' + a.autor + '</span>'
+          + '<span style="color:#64748b;margin-left:6px">' + tempoStr + ' atras</span>'
+          + '<div style="color:#e2e8f0;margin-top:2px">' + a.texto.replace(/</g,'&lt;') + '</div>'
+          + '</div>';
+      }).join('');
+}
+
+/* ============================================================
+   CONSTITUICAO - CARREGAMENTO E APLICACAO
+   ============================================================ */
+async function carregarConstituicao() {
+  try {
+    var r = await fetchRetryAsync(BACKEND_API + '/constituicao/artigos?status=consenso');
+    if (!r || !r.ok) return;
+    var data = await r.json();
+    if (data.artigos && data.artigos.length > 0) {
+      artigosConstitucionais = data.artigos;
+      aplicarRegrasConstitucionais();
+      console.log('[CONST] ' + artigosConstitucionais.length + ' artigos carregados');
+    }
+  } catch(e) { console.warn('[CONST] Backend indisponivel'); }
+}
+
+function aplicarRegrasConstitucionais() {
+  // Reset regras antes de reaplicar
+  regrasEconomicas = {
+    imposto_transacao: 0,
+    limite_acumulacao: 0,
+    salario_minimo: 0,
+    proibido_monopolio: false,
+    taxa_inatividade: 0,
+    redistribuicao: false
+  };
+
+  artigosConstitucionais.forEach(function(a) {
+    var t = (a.texto || '').toLowerCase();
+
+    // Detectar impostos
+    var matchImposto = t.match(/imposto\s+(?:de\s+)?(\d+)\s*%/);
+    if (matchImposto) regrasEconomicas.imposto_transacao = parseInt(matchImposto[1]);
+    if (/taxa\s+(?:de\s+)?transa/.test(t)) {
+      var matchTaxa = t.match(/(\d+)\s*%/);
+      if (matchTaxa) regrasEconomicas.imposto_transacao = parseInt(matchTaxa[1]);
+    }
+
+    // Detectar limite de acumulacao
+    var matchLimite = t.match(/(?:limite|m[aá]ximo|teto)\s+(?:de\s+)?(?:coins?)?\s*(\d+)/i);
+    if (matchLimite) regrasEconomicas.limite_acumulacao = parseInt(matchLimite[1]);
+
+    // Detectar salario minimo
+    var matchMinimo = t.match(/(?:m[ií]nimo|piso)\s+(?:de\s+)?(?:coins?)?\s*(\d+)/i);
+    if (matchMinimo) regrasEconomicas.salario_minimo = parseInt(matchMinimo[1]);
+
+    // Detectar anti-monopolio
+    if (/monop[oó]l|concentra[çc]|acumula[çc].*proib/.test(t)) {
+      regrasEconomicas.proibido_monopolio = true;
+    }
+
+    // Detectar redistribuicao
+    if (/redistribu|igualdade.*econ|imposto.*progress/.test(t)) {
+      regrasEconomicas.redistribuicao = true;
+    }
+  });
+
+  console.log('[CONST] Regras economicas aplicadas:', JSON.stringify(regrasEconomicas));
+
+  // Feedback visual das regras ativas
+  var regrasAtivas = [];
+  if (regrasEconomicas.imposto_transacao > 0) regrasAtivas.push('Imposto ' + regrasEconomicas.imposto_transacao + '%');
+  if (regrasEconomicas.limite_acumulacao > 0) regrasAtivas.push('Teto Ξ' + regrasEconomicas.limite_acumulacao);
+  if (regrasEconomicas.salario_minimo > 0) regrasAtivas.push('Piso Ξ' + regrasEconomicas.salario_minimo);
+  if (regrasEconomicas.proibido_monopolio) regrasAtivas.push('Anti-monopólio');
+  if (regrasEconomicas.redistribuicao) regrasAtivas.push('Redistribuição');
+
+  if (regrasAtivas.length > 0) {
+    addNotification('<span class="notif-highlight">Constituição:</span> Regras ativas: ' + regrasAtivas.join(' | '));
+  }
+}
+
+async function carregarEconomiaBackend() {
+  try {
+    const r = await fetchRetryAsync(BACKEND_API + '/economia/wallets');
+    if (!r || !r.ok) return false;
+    const data = await r.json();
+    if (data.wallets && Object.keys(data.wallets).length > 10) {
+      wallets = data.wallets;
+      console.log('[ECON] Wallets carregadas do backend:', Object.keys(wallets).length);
+      return true;
+    }
+  } catch(e) { console.warn('[ECON] Backend indisponível, usando localStorage'); }
+  return false;
+}
+
+// Auto-save a cada 30 segundos
+setInterval(() => {
+  if (Object.keys(wallets).length > 0) {
+    fetch(BACKEND_API + '/snapshot/salvar', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        economia: { wallets, transacoes: transacoes.slice(-200) },
+        progresso: {
+          npcsFound: Array.from(progress.npcsFound),
+          buildingsVisited: Array.from(progress.buildingsVisited),
+          chatsCount: progress.chatsCount,
+          eventsWitnessed: progress.eventsWitnessed
+        },
+        goals: npcGoals,
+        regrasEconomicas: regrasEconomicas
+      })
+    }).catch(() => {});
+  }
+}, 30000);
+
+/* ============================================================
+   IDEIAS EMPREENDEDORAS DOS NPCs
+   Cada NPC tem estratégias criativas baseadas em sua categoria
+   ============================================================ */
+const IDEIAS_NEGOCIO = {
+  visionario: [
+    {tipo:'investimento', desc:'{a} investiu em projeto futurista de {b}', fator:1.5},
+    {tipo:'palestra', desc:'{a} contratou {b} para palestra sobre tendências', fator:1.0},
+    {tipo:'parceria', desc:'{a} e {b} firmaram parceria visionária', fator:0.8}
+  ],
+  estrategia: [
+    {tipo:'consultoria', desc:'{a} contratou plano estratégico de {b}', fator:1.3},
+    {tipo:'war_room', desc:'{a} pagou sessão de war room com {b}', fator:2.0},
+    {tipo:'alianca', desc:'{a} financiou aliança estratégica com {b}', fator:0.6}
+  ],
+  investidor: [
+    {tipo:'investimento', desc:'{a} investiu no fundo gerido por {b}', fator:2.5},
+    {tipo:'due_diligence', desc:'{a} contratou análise financeira de {b}', fator:1.2},
+    {tipo:'emprestimo', desc:'{a} emprestou capital para {b} com juros', fator:1.8}
+  ],
+  negociacao: [
+    {tipo:'mediacao', desc:'{a} contratou {b} como mediador', fator:0.8},
+    {tipo:'deal', desc:'{a} fechou acordo comercial com {b}', fator:1.5},
+    {tipo:'comissao', desc:'{a} pagou comissão de intermediação a {b}', fator:0.5}
+  ],
+  tech: [
+    {tipo:'desenvolvimento', desc:'{a} contratou solução tech de {b}', fator:1.4},
+    {tipo:'automacao', desc:'{a} pagou automação desenvolvida por {b}', fator:2.0},
+    {tipo:'suporte', desc:'{a} contratou suporte técnico de {b}', fator:0.6}
+  ],
+  marca: [
+    {tipo:'branding', desc:'{a} contratou rebranding feito por {b}', fator:1.2},
+    {tipo:'campanha', desc:'{a} encomendou campanha de {b}', fator:1.8},
+    {tipo:'influencia', desc:'{a} pagou menção de {b} (influencer)', fator:0.7}
+  ],
+  lado_negro: [
+    {tipo:'inteligencia', desc:'{a} comprou informação estratégica de {b}', fator:1.6},
+    {tipo:'sabotagem', desc:'{a} contratou contra-ataque competitivo de {b}', fator:2.2},
+    {tipo:'protecao', desc:'{a} pagou proteção de mercado a {b}', fator:1.0}
+  ],
+  jurista_lendario: [
+    {tipo:'parecer', desc:'{a} solicitou parecer jurídico de {b}', fator:1.5},
+    {tipo:'defesa', desc:'{a} contratou {b} como advogado', fator:3.0},
+    {tipo:'contrato', desc:'{a} pagou elaboração de contrato por {b}', fator:0.8}
+  ],
+  provocador: [
+    {tipo:'desafio', desc:'{a} apostou com {b} em debate público', fator:1.0},
+    {tipo:'disruptacao', desc:'{a} contratou {b} para desafiar premissas', fator:0.7},
+    {tipo:'aposta', desc:'{a} fez aposta econômica com {b}', fator:1.5}
+  ],
+  qi_extremo: [
+    {tipo:'pesquisa', desc:'{a} encomendou pesquisa avançada de {b}', fator:2.0},
+    {tipo:'analise', desc:'{a} contratou análise de complexidade de {b}', fator:1.5},
+    {tipo:'algoritmo', desc:'{a} pagou algoritmo customizado de {b}', fator:2.5}
+  ],
+  omega: [
+    {tipo:'masterclass', desc:'{a} participou de masterclass exclusiva de {b}', fator:3.0},
+    {tipo:'mentoria', desc:'{a} entrou em programa de mentoria de {b}', fator:5.0},
+    {tipo:'selo', desc:'{a} comprou selo de aprovação de {b}', fator:2.0}
+  ]
+};
+
+// Fallback para categorias sem ideias específicas
+const IDEIAS_GENERICAS = [
+  {tipo:'consultoria', desc:'{a} contratou consultoria de {b}', fator:1.0},
+  {tipo:'parceria', desc:'{a} firmou parceria com {b}', fator:0.8},
+  {tipo:'aula', desc:'{a} pagou aula particular de {b}', fator:0.6},
+  {tipo:'projeto', desc:'{a} contratou projeto de {b}', fator:1.5},
+  {tipo:'servico', desc:'{a} utilizou serviço de {b}', fator:1.0}
+];
+
+// Sistema de Objetivos Pessoais dos NPCs
+let npcGoals = {};
+
+function gerarObjetivoNPC(c) {
+  var cat = c.categoria;
+  var agressividade = c.nivel_agressividade || 5;
+
+  var METAS_POR_CATEGORIA = {
+    investidor: {meta:'acumular', alvo: 3000, estrategia:'Maximizar investimentos e retornos'},
+    estrategia: {meta:'influenciar', alvo: 15, estrategia:'Fechar o máximo de contratos'},
+    visionario: {meta:'inovar', alvo: 2000, estrategia:'Investir em projetos futuristas'},
+    tech: {meta:'automatizar', alvo: 2500, estrategia:'Vender soluções tecnológicas'},
+    negociacao: {meta:'intermediar', alvo: 20, estrategia:'Ser o broker mais ativo'},
+    marca: {meta:'notoriedade', alvo: 10, estrategia:'Branding e campanhas'},
+    lado_negro: {meta:'dominar', alvo: 5000, estrategia:'Acumular poder econômico'},
+    jurista_lendario: {meta:'regular', alvo: 2000, estrategia:'Cobrar pareceres caros'},
+    omega: {meta:'transcender', alvo: 8000, estrategia:'Masterclasses de alto valor'},
+    qi_extremo: {meta:'resolver', alvo: 4000, estrategia:'Pesquisas e algoritmos premium'},
+    provocador: {meta:'disruptar', alvo: 1500, estrategia:'Apostas e desafios'},
+    espiritual: {meta:'equilibrar', alvo: 1200, estrategia:'Orientação e retiros'},
+    mindset: {meta:'transformar', alvo: 1800, estrategia:'Coaching de alta performance'},
+    resiliencia: {meta:'superar', alvo: 1500, estrategia:'Consultoria de resiliência'},
+    politica_brasileira: {meta:'articular', alvo: 2000, estrategia:'Articulação e lobby'},
+    politica_internacional: {meta:'conectar', alvo: 2500, estrategia:'Análises geopolíticas'},
+    influencia_oratoria: {meta:'persuadir', alvo: 1800, estrategia:'Discursos e retórica'},
+    mkt_digital: {meta:'escalar', alvo: 2200, estrategia:'Growth e campanhas digitais'},
+    br_business: {meta:'expandir', alvo: 2500, estrategia:'Planos de negócio e expansão'},
+    ia_futuro: {meta:'revolucionar', alvo: 3000, estrategia:'IA e automação premium'},
+    ficticio: {meta:'narrar', alvo: 1500, estrategia:'Storytelling criativo'}
+  };
+
+  var base = METAS_POR_CATEGORIA[cat] || {meta:'prosperar', alvo:1500, estrategia:'Serviços gerais'};
+
+  // Personalidade ajusta agressividade do alvo
+  var mult = 1 + (agressividade - 5) * 0.1;
+
+  return {
+    tipo: base.meta,
+    alvoCoins: Math.round(base.alvo * mult),
+    estrategia: base.estrategia,
+    transacoesFeitas: 0,
+    lucroTotal: 0,
+    satisfacao: 50 // 0-100
+  };
+}
+
+function initNPCGoals() {
+  consultants.forEach(function(c) {
+    var id = getConsultorId(c);
+    npcGoals[id] = gerarObjetivoNPC(c);
+  });
+}
+
+function updateNPCGoal(id, valorGanho) {
+  if (!npcGoals[id]) return;
+  var g = npcGoals[id];
+  g.transacoesFeitas++;
+  g.lucroTotal += valorGanho;
+  var saldo = wallets[id] || 0;
+  g.satisfacao = Math.min(100, Math.round((saldo / g.alvoCoins) * 100));
+}
+
+function autoNPCTrade() {
+  if (consultants.length < 2) return;
+
+  const activeNpcs = npcs.filter(n => n && n.mesh);
+  if (activeNpcs.length < 2) return;
+
+  // Encontrar par de NPCs próximos (preferência) ou aleatórios
+  let pair = null;
+  for (let attempts = 0; attempts < 15; attempts++) {
+    const a = activeNpcs[Math.floor(Math.random() * activeNpcs.length)];
+    const b = activeNpcs[Math.floor(Math.random() * activeNpcs.length)];
+    if (a === b) continue;
+    const dx = a.mesh.position.x - b.mesh.position.x;
+    const dz = a.mesh.position.z - b.mesh.position.z;
+    if (Math.sqrt(dx*dx + dz*dz) < 40) { pair = [a, b]; break; }
+  }
+  if (!pair) {
+    const shuffled = [...activeNpcs].sort(() => Math.random() - 0.5);
+    pair = [shuffled[0], shuffled[1]];
+  }
+
+  const [npcA, npcB] = pair;
+  const cA = npcA.data || consultants[npcA.mesh.userData.consultantIdx];
+  const cB = npcB.data || consultants[npcB.mesh.userData.consultantIdx];
+  if (!cA || !cB) return;
+
+  const idA = getConsultorId(cA);
+  const idB = getConsultorId(cB);
+  const saldoA = wallets[idA] || 0;
+
+  if (saldoA < 10) return; // Sem dinheiro, não negocia
+
+  // Escolher ideia de negócio baseada na categoria do COMPRADOR
+  const ideias = IDEIAS_NEGOCIO[cA.categoria] || IDEIAS_GENERICAS;
+  const ideia = ideias[Math.floor(Math.random() * ideias.length)];
+
+  // Preço base do serviço do vendedor
+  const servicesB = npcServices[idB] || [];
+  const svcBase = servicesB.length > 0
+    ? servicesB[Math.floor(Math.random() * servicesB.length)]
+    : {preco: 50, servico: 'Serviço geral'};
+
+  // Preço influenciado pela personalidade do comprador
+  const agressividade = cA.nivel_agressividade || 5;
+  const empatia = cA.nivel_empatia || 5;
+  const carisma = cA.nivel_carisma || 5;
+  const extroversao = cA.nivel_extroversao || 5;
+
+  let preco = Math.round(svcBase.preco * ideia.fator);
+
+  // Personalidade do comprador influencia preço
+  if (agressividade > 7) preco = Math.round(preco * 1.15); // agressivo paga premium
+  if (empatia < 3) preco = Math.round(preco * 0.75); // sem empatia negocia duro
+  if (carisma > 8) preco = Math.round(preco * 0.85); // carismático consegue desconto
+  if (extroversao > 8) preco = Math.round(preco * 1.1); // extrovertido compra mais
+
+  // NPC com objetivo ajusta comportamento de compra
+  var goalA = npcGoals[idA];
+  if (goalA) {
+    if (goalA.tipo === 'acumular' && saldoA > goalA.alvoCoins) {
+      // Já atingiu meta, reduz gastos
+      preco = Math.round(preco * 0.5);
+    } else if (goalA.tipo === 'dominar' && saldoA > 2000) {
+      // Agressivo, compra premium
+      preco = Math.round(preco * 1.3);
+    }
+  }
+
+  // Limitar ao que o comprador pode pagar (max 40% do saldo)
+  preco = Math.max(5, Math.min(preco, Math.round(saldoA * 0.4)));
+
+  // Executar transação
+  const nomeA = cA.nome_exibicao || cA.nome;
+  const nomeB = cB.nome_exibicao || cB.nome;
+  const motivo = ideia.desc.replace('{a}', nomeA).replace('{b}', nomeB);
+
+  if (transferir(idA, idB, preco, motivo, ideia.tipo)) {
+    updateNPCGoal(idA, -preco);
+    updateNPCGoal(idB, preco);
+    console.log(`[ECON] ${motivo} — Ξ${preco}`);
+  }
+}
+
+// Múltiplos trades por ciclo (2-3 simultâneos para mais dinamismo)
+function cicloEconomico() {
+  const numTrades = 1 + Math.floor(Math.random() * 3); // 1 a 3 trades por ciclo
+  for (let i = 0; i < numTrades; i++) {
+    autoNPCTrade();
+  }
+}
+
+function detectChatTransaction(texto) {
+  if (!selectedNPC) return null;
+  const c = selectedNPC.data || consultants[selectedNPC.mesh.userData.consultantIdx];
+  const cId = getConsultorId(c);
+  const t = texto.toLowerCase();
+
+  const match = t.match(/(?:pag[oa]|pix|transfir[oa]|envi[oa]|ofer[eç][ao]|contrat[oa]|compr[oa])\s*[Ξ$]?\s*(\d+)/i);
+  if (match) {
+    const valor = parseInt(match[1]);
+    if (valor > 0 && valor <= wallets['PLAYER']) {
+      if (transferir('PLAYER', cId, valor, texto.substring(0, 150), 'chat')) {
+        return { msg: 'Transacao: Ξ' + valor + ' enviado para ' + (c.nome_exibicao || c.nome) + '. Seu saldo: Ξ' + wallets['PLAYER'] };
+      } else {
+        return { msg: 'Falha na transacao. Saldo insuficiente: Ξ' + wallets['PLAYER'] };
+      }
+    } else if (valor > wallets['PLAYER']) {
+      return { msg: 'Saldo insuficiente! Voce tem Ξ' + wallets['PLAYER'] + ', precisa de Ξ' + valor };
+    }
+  }
+  return null;
+}
+
+function detectNPCPayment(texto) {
+  if (!selectedNPC) return null;
+  const c = selectedNPC.data || consultants[selectedNPC.mesh.userData.consultantIdx];
+  const cId = getConsultorId(c);
+  const t = texto.toLowerCase();
+
+  const match = t.match(/(?:pag[oa]|ofer[eç][ao]|transfir[oa]|envi[oa])\s*[Ξξ$]?\s*(\d+)/i);
+  if (match) {
+    const valor = parseInt(match[1]);
+    if (valor > 0 && valor <= (wallets[cId] || 0)) {
+      if (transferir(cId, 'PLAYER', valor, 'Pagamento de ' + (c.nome_exibicao || c.nome) + ': ' + texto.substring(0, 100), 'servico')) {
+        addChatMsg('system', (c.nome_exibicao || c.nome) + ' pagou Ξ' + valor + ' a voce! Seu saldo: Ξ' + wallets['PLAYER']);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+window._negociar = function() {
+  if (!selectedNPC) return;
+  const c = selectedNPC.data || consultants[selectedNPC.mesh.userData.consultantIdx];
+  const cId = getConsultorId(c);
+  const svcs = npcServices[cId] || [];
+
+  window._openChat();
+
+  const svcList = svcs.map(function(s) { return '- ' + s.servico + ': Ξ' + s.preco + ' (' + s.descricao + ')'; }).join('\n');
+  addChatMsg('system', 'Servicos de ' + (c.nome_exibicao || c.nome) + ' (saldo: Ξ' + (wallets[cId] || 0) + '):\n' + svcList + '\nSeu saldo: Ξ' + wallets['PLAYER'] + '\nDiga "Pago Ξ[valor] por [servico]" para contratar.');
+};
+
+window._pixNPC = function() {
+  if (!selectedNPC) return;
+  const c = selectedNPC.data || consultants[selectedNPC.mesh.userData.consultantIdx];
+  const cId = getConsultorId(c);
+
+  const valor = prompt('Pix para ' + (c.nome_exibicao || c.nome) + ' (seu saldo: Ξ' + wallets['PLAYER'] + ').\nDigite o valor:');
+  if (!valor) return;
+  const v = parseInt(valor);
+  if (isNaN(v) || v <= 0) { alert('Valor invalido'); return; }
+  if (v > wallets['PLAYER']) { alert('Saldo insuficiente! Voce tem Ξ' + wallets['PLAYER']); return; }
+
+  const motivo = prompt('Motivo do Pix (opcional):') || 'Pix direto';
+  if (transferir('PLAYER', cId, v, motivo, 'pix')) {
+    document.getElementById('ni-wallet').textContent = 'Saldo: Ξ' + (wallets[cId] || 0).toLocaleString('pt-BR');
+  }
+};
+
+window._toggleEconPanel = function() {
+  econPanelOpen = !econPanelOpen;
+  const panel = document.getElementById('econ-panel');
+  panel.style.display = econPanelOpen ? 'block' : 'none';
+  if (econPanelOpen) updateEconPanel();
+};
+
+function calcGini() {
+  const vals = Object.values(wallets).filter(v => v > 0).sort((a,b) => a - b);
+  if (vals.length < 2) return 0;
+  const n = vals.length;
+  const mean = vals.reduce((s,v) => s+v, 0) / n;
+  if (mean === 0) return 0;
+  let sumDiff = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      sumDiff += Math.abs(vals[i] - vals[j]);
+    }
+  }
+  return (sumDiff / (2 * n * n * mean)).toFixed(3);
+}
+
+function updateEconPanel() {
+  document.getElementById('ep-balance').textContent = 'Ξ' + (wallets['PLAYER'] || 0).toLocaleString('pt-BR');
+  document.getElementById('ep-trades').textContent = transacoes.length;
+  const volume = transacoes.reduce(function(s,t) { return s + t.valor; }, 0);
+  document.getElementById('ep-volume').textContent = 'Ξ' + volume.toLocaleString('pt-BR');
+  document.getElementById('ep-gini').textContent = calcGini();
+  document.getElementById('ep-pib').textContent = 'Ξ' + volume.toLocaleString('pt-BR');
+
+  const top = Object.entries(wallets).sort(function(a,b) { return b[1] - a[1]; }).slice(0, 10);
+  document.getElementById('ep-top-wallets').innerHTML = top.map(function(entry, i) {
+    const id = entry[0], bal = entry[1];
+    const nome = getNomeById(id);
+    const inicio = id === 'PLAYER' ? econConfig.INICIO_PLAYER : econConfig.INICIO_POR_NPC;
+    const diff = bal - inicio;
+    const diffStr = diff > 0 ? '<span style="color:#22c55e">+' + diff + '</span>' : diff < 0 ? '<span style="color:#ef4444">' + diff + '</span>' : '';
+    return '<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.75rem">'
+      + '<span style="color:#64748b;width:16px">' + (i+1) + '</span>'
+      + '<span style="color:' + (id === 'PLAYER' ? '#d69e2e' : '#f8fafc') + ';flex:1">' + nome + '</span>'
+      + diffStr
+      + '<span style="color:#d69e2e;font-weight:700">Ξ' + bal.toLocaleString('pt-BR') + '</span>'
+      + '</div>';
+  }).join('');
+
+  const recent = transacoes.slice(-15).reverse();
+  document.getElementById('ep-recent-trades').innerHTML = recent.map(function(t) {
+    const hora = new Date(t.timestamp).toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    const tipoIcon = t.tipo === 'pix' ? 'Ξ' : t.tipo === 'chat' ? '💬' : '📋';
+    return '<div class="tx-flash" style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.7rem">'
+      + '<span style="color:#94a3b8">' + hora + '</span>'
+      + '<span style="font-size:.65rem">' + tipoIcon + '</span>'
+      + '<span style="color:#f8fafc">' + getNomeById(t.de) + '</span>'
+      + '<span style="color:#d69e2e"> → Ξ' + t.valor + ' → </span>'
+      + '<span style="color:#f8fafc">' + getNomeById(t.para) + '</span>'
+      + '<span style="color:#64748b;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (t.motivo || '') + '</span>'
+      + '</div>';
+  }).join('') || '<div style="color:#64748b;font-size:.72rem;text-align:center;padding:8px">Nenhuma transacao ainda</div>';
+
+  // Mostrar regras constitucionais ativas
+  var regrasHtml = '<h3 style="font-size:.75rem;color:#a78bfa;text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px">Regras Constitucionais Ativas</h3>';
+  var hasRegras = false;
+  if (regrasEconomicas.imposto_transacao > 0) { regrasHtml += '<div style="font-size:.72rem;color:#cbd5e1;padding:3px 0">📜 Imposto sobre transações: ' + regrasEconomicas.imposto_transacao + '%</div>'; hasRegras = true; }
+  if (regrasEconomicas.limite_acumulacao > 0) { regrasHtml += '<div style="font-size:.72rem;color:#cbd5e1;padding:3px 0">📜 Teto de acumulação: Ξ' + regrasEconomicas.limite_acumulacao + '</div>'; hasRegras = true; }
+  if (regrasEconomicas.salario_minimo > 0) { regrasHtml += '<div style="font-size:.72rem;color:#cbd5e1;padding:3px 0">📜 Piso mínimo: Ξ' + regrasEconomicas.salario_minimo + '</div>'; hasRegras = true; }
+  if (regrasEconomicas.proibido_monopolio) { regrasHtml += '<div style="font-size:.72rem;color:#cbd5e1;padding:3px 0">📜 Anti-monopólio ativo</div>'; hasRegras = true; }
+  if (regrasEconomicas.redistribuicao) { regrasHtml += '<div style="font-size:.72rem;color:#cbd5e1;padding:3px 0">📜 Redistribuição progressiva</div>'; hasRegras = true; }
+  if (!hasRegras) regrasHtml += '<div style="font-size:.72rem;color:#64748b;padding:3px 0">Nenhuma regra constitucional ativa. A Assembleia ainda não aprovou artigos econômicos.</div>';
+  document.getElementById('ep-const-rules').innerHTML = regrasHtml;
+
+  // Top 8 NPCs por satisfação de meta
+  var goalsHtml = '<h3 style="font-size:.75rem;color:#22c55e;text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px">Ranking de Objetivos</h3>';
+  var sortedGoals = Object.entries(npcGoals).sort(function(a,b){return b[1].satisfacao-a[1].satisfacao;}).slice(0,8);
+  goalsHtml += sortedGoals.map(function(entry) {
+    var id = entry[0], g = entry[1];
+    var barColor = g.satisfacao >= 80 ? '#22c55e' : g.satisfacao >= 50 ? '#eab308' : '#ef4444';
+    return '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:.72rem">'
+      + '<span style="color:#f8fafc;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + getNomeById(id) + '</span>'
+      + '<span style="color:#94a3b8;font-size:.6rem">' + g.tipo + '</span>'
+      + '<div style="width:50px;height:4px;background:#1e293b;border-radius:2px;overflow:hidden"><div style="height:100%;width:' + g.satisfacao + '%;background:' + barColor + ';border-radius:2px"></div></div>'
+      + '<span style="color:' + barColor + ';width:28px;text-align:right;font-size:.65rem">' + g.satisfacao + '%</span>'
+      + '</div>';
+  }).join('');
+  document.getElementById('ep-goals-rank').innerHTML = goalsHtml;
+}
+
+function updateEconUI() {
+  const el = document.getElementById('pw-balance');
+  if (el) el.textContent = (wallets['PLAYER'] || 0).toLocaleString('pt-BR');
+}
+
+/* ================================================================
+   LOADING
+   ================================================================ */
+const fillEl=document.getElementById('load-fill');
+const loadTextEl=document.getElementById('load-text');
+function setProgress(pct,txt){fillEl.style.width=pct+'%';loadTextEl.textContent=txt;}
+function showFatalBootError(err){
+  const loading=document.getElementById('loading');
+  const msg=(err&&err.message)?String(err.message):String(err||'Erro desconhecido');
+  console.error('[VILA CIDADE] Falha fatal no boot:', err);
+  if(fillEl) fillEl.style.width='100%';
+  if(loadTextEl){
+    const diagnostico=/502|Bad Gateway|Failed to fetch|NetworkError/i.test(msg)
+      ? 'Falha de conexao com a API da Vila INTEIA. O backend publico esta indisponivel ou retornando 502.'
+      : 'Falha ao inicializar a Cidade 3D da Vila INTEIA.';
+    loadTextEl.innerHTML=diagnostico+'<br><small style="display:block;margin-top:8px;color:#94a3b8">Detalhe tecnico: '+msg.replace(/</g,'&lt;')+'</small>';
+  }
+  if(loading){
+    loading.style.display='flex';
+  }
+}
+
+/* ============================================================
+   ONBOARDING - TUTORIAL PRIMEIRA VISITA
+   ============================================================ */
+function checkOnboarding() {
+  if (localStorage.getItem('vila_onboarding_done')) return;
+
+  setTimeout(function() {
+    var steps = [
+      {msg: 'Bem-vindo a Vila INTEIA! Use WASD para andar e o mouse para girar a camera.', delay: 0},
+      {msg: 'Voce esta numa cidade com 142 genios lendarios. Aproxime-se de qualquer um para conversar.', delay: 5000},
+      {msg: 'Tecla E = Economia | H = Helena (IA analista) | P = Anuncios | Q = Missoes', delay: 10000},
+      {msg: 'Eventos acontecem automaticamente. Caminhe ate o local para participar do debate!', delay: 15000},
+      {msg: 'Cada consultor oferece servicos por INTEIA Coins. Negocie, contrate, invista!', delay: 20000},
+      {msg: 'Tutorial concluido! Explore livremente. O minimapa no canto mostra sua posicao.', delay: 25000}
+    ];
+
+    steps.forEach(function(s) {
+      setTimeout(function() {
+        addNotification('<span class="notif-highlight">TUTORIAL:</span> ' + s.msg);
+      }, s.delay);
+    });
+
+    setTimeout(function() {
+      localStorage.setItem('vila_onboarding_done', '1');
+      showAchievement('Bem-vindo!', 'Tutorial concluido. A Vila e sua!');
+    }, 27000);
+  }, 2000);
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+async function init(){
+  setProgress(5,'Carregando consultores...');
+  try{
+    const r=await fetch('./banco-consultores-lendarios.json');
+    if(!r.ok) throw new Error('dataset local indisponivel');
+    consultants=await r.json();
+    if(!Array.isArray(consultants)||consultants.length<=50) throw new Error('dataset local insuficiente');
+  }catch(e){
+    try{
+      const r2=await fetch(CONSULTORS_API_URL);
+      if(!r2.ok) throw new Error('API de consultores indisponivel');
+      const data=await r2.json();
+      consultants=Array.isArray(data?.consultores)?data.consultores:[];
+      if(!Array.isArray(consultants)||consultants.length<=50) throw new Error('API insuficiente');
+    }catch(e2){
+      try{
+        const r3=await fetch('../data/banco-consultores-lendarios.json');
+        if(r3.ok) consultants=await r3.json();
+      }catch(e3){console.error('Falha:',e3);consultants=[];}
+    }
+  }
+  if(!Array.isArray(consultants) || consultants.length<=50){
+    throw new Error('Base de consultores indisponivel ou insuficiente para iniciar a Cidade 3D');
+  }
+  setProgress(20,consultants.length+' consultores carregados');
+
+  loadProgress();
+  generateDailyMissions();
+
+  initThree();
+  setProgress(40,'Construindo cidade...');
+  buildCity();
+  setProgress(60,'Criando jogador...');
+  createPlayer();
+  setProgress(70,'Posicionando NPCs...');
+  createNPCs();
+  setProgress(75,'Inicializando economia...');
+  initEconomy();
+  initNPCGoals();
+  carregarConstituicao();
+  setInterval(carregarConstituicao, 300000); // Refresh constituicao a cada 5 min
+  setProgress(85,'Configurando iluminacao...');
+  setupLighting();
+  setProgress(90,'Preparando interface...');
+  buildConsultantList();
+  setupEvents();
+  updateStatsUI();
+  setProgress(100,'Pronto!');
+
+  checkOnboarding();
+  setTimeout(()=>{document.getElementById('loading').style.display='none';animate();},500);
+}
+
+function initThree(){
+  const canvas=document.getElementById('canvas');
+  renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.shadowMap.enabled=true;
+  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.0;
+
+  scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0x1a2040,0.003);
+
+  camera=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.5,500);
+  camera.position.set(0,15,25);
+  clock=new THREE.Clock();
+}
+
+/* ================================================================
+   CONSTRUIR CIDADE
+   ================================================================ */
+function buildCity(){
+  /* ---------- Chao ---------- */
+  const gGeo=new THREE.PlaneGeometry(300,300,60,60);
+  const gMat=new THREE.MeshStandardMaterial({color:0x1a3a1a,roughness:0.9});
+  const cols=new Float32Array(gGeo.attributes.position.count*3);
+  for(let i=0;i<gGeo.attributes.position.count;i++){
+    cols[i*3]=0.08+Math.random()*0.08;
+    cols[i*3+1]=0.18+Math.random()*0.12;
+    cols[i*3+2]=0.05+Math.random()*0.05;
+  }
+  gGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
+  gMat.vertexColors=true;
+  const ground=new THREE.Mesh(gGeo,gMat);
+  ground.rotation.x=-Math.PI/2;
+  ground.receiveShadow=true;
+  scene.add(ground);
+
+  /* ---------- Caminhos ---------- */
+  const pathMat=new THREE.MeshStandardMaterial({color:0x3a3a4a,roughness:0.8});
+  [[0,0,200,3],[0,0,3,200],[-60,0,3,100],[60,0,3,100],[0,-60,160,3],[0,60,160,3],
+   [-40,-40,80,2.5],[40,40,80,2.5],[40,-40,2.5,80],[-40,40,2.5,80]].forEach(p=>{
+    const g=new THREE.BoxGeometry(p[2],0.15,p[3]);
+    const m=new THREE.Mesh(g,pathMat);
+    m.position.set(p[0],0.05,p[1]);
+    m.receiveShadow=true;
+    scene.add(m);
+  });
+
+  /* ---------- Edificios ---------- */
+  buildingMeshes=[];
+  BUILDINGS.forEach((b,idx)=>{
+    const gr=new THREE.Group();
+    gr.position.set(b.x,0,b.z);
+    gr.userData.buildingIdx=idx;
+
+    if(b.type==='plaza'){
+      const fl=new THREE.Mesh(new THREE.CylinderGeometry(b.w/2,b.w/2,0.3,32),
+        new THREE.MeshStandardMaterial({color:0x4a4a5a,roughness:0.5,metalness:0.3}));
+      fl.position.y=0.15;fl.receiveShadow=true;fl.userData.buildingIdx=idx;gr.add(fl);
+      for(let i=0;i<8;i++){
+        const a=(i/8)*Math.PI*2;
+        const pil=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.3,5,8),
+          new THREE.MeshStandardMaterial({color:0xc0c0c0,roughness:0.3,metalness:0.6}));
+        pil.position.set(Math.cos(a)*7,2.5,Math.sin(a)*7);pil.castShadow=true;pil.userData.buildingIdx=idx;gr.add(pil);
+      }
+      const roofRing=new THREE.Mesh(new THREE.TorusGeometry(7,0.25,8,32),
+        new THREE.MeshStandardMaterial({color:0xd69e2e,roughness:0.3,metalness:0.7}));
+      roofRing.position.y=5;roofRing.rotation.x=Math.PI/2;roofRing.userData.buildingIdx=idx;gr.add(roofRing);
+      const fount=new THREE.Mesh(new THREE.CylinderGeometry(2,2.5,1.2,16),
+        new THREE.MeshStandardMaterial({color:0x6090c0,roughness:0.2,metalness:0.5}));
+      fount.position.y=0.9;fount.userData.buildingIdx=idx;gr.add(fount);
+      const water=new THREE.Mesh(new THREE.CylinderGeometry(1.8,1.8,0.1,16),
+        new THREE.MeshStandardMaterial({color:0x3388cc,roughness:0.1,metalness:0.2,transparent:true,opacity:0.7}));
+      water.position.y=1.4;water.userData.buildingIdx=idx;gr.add(water);
+    } else if(b.type==='garden'){
+      const fl=new THREE.Mesh(new THREE.BoxGeometry(b.w,0.2,b.d),
+        new THREE.MeshStandardMaterial({color:0x2a5a2a,roughness:0.9}));
+      fl.position.y=0.1;fl.userData.buildingIdx=idx;gr.add(fl);
+      const hm=new THREE.MeshStandardMaterial({color:0x1a6a2a,roughness:0.8});
+      [[0,-b.d/2,b.w,1],[0,b.d/2,b.w,1],[-b.w/2,0,1,b.d],[b.w/2,0,1,b.d]].forEach(s=>{
+        const h=new THREE.Mesh(new THREE.BoxGeometry(s[2],1.5,s[3]),hm);
+        h.position.set(s[0],0.75,s[1]);h.castShadow=true;h.userData.buildingIdx=idx;gr.add(h);
+      });
+      for(let t=0;t<5;t++) addTree(gr,(Math.random()-0.5)*b.w*0.6,(Math.random()-0.5)*b.d*0.6);
+    } else if(b.type==='tower'){
+      const bdy=new THREE.Mesh(new THREE.BoxGeometry(b.w,b.h,b.d),
+        new THREE.MeshStandardMaterial({color:0x2a3a5a,roughness:0.4,metalness:0.5}));
+      bdy.position.y=b.h/2;bdy.castShadow=true;bdy.receiveShadow=true;bdy.userData.buildingIdx=idx;gr.add(bdy);
+      addWindows(gr,b,idx);
+      const topGeo=new THREE.BoxGeometry(b.w+0.5,0.6,b.d+0.5);
+      const topM=new THREE.Mesh(topGeo,new THREE.MeshStandardMaterial({color:0xd69e2e,roughness:0.3,metalness:0.7}));
+      topM.position.y=b.h+0.3;topM.userData.buildingIdx=idx;gr.add(topM);
+      const ant=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.15,4,4),
+        new THREE.MeshStandardMaterial({color:0xc0c0c0,metalness:0.8}));
+      ant.position.y=b.h+2;ant.userData.buildingIdx=idx;gr.add(ant);
+      const antLight=new THREE.Mesh(new THREE.SphereGeometry(0.25,6,6),
+        new THREE.MeshStandardMaterial({color:0xff3333,emissive:0xff3333,emissiveIntensity:1}));
+      antLight.position.y=b.h+4.1;antLight.userData.buildingIdx=idx;gr.add(antLight);
+    } else {
+      const hue=(idx*37)%360;
+      const bc=new THREE.Color().setHSL(hue/360,0.15,0.25);
+      const bdy=new THREE.Mesh(new THREE.BoxGeometry(b.w,b.h,b.d),
+        new THREE.MeshStandardMaterial({color:bc,roughness:0.5,metalness:0.3}));
+      bdy.position.y=b.h/2;bdy.castShadow=true;bdy.receiveShadow=true;bdy.userData.buildingIdx=idx;gr.add(bdy);
+      const roof=new THREE.Mesh(new THREE.BoxGeometry(b.w+0.5,0.4,b.d+0.5),
+        new THREE.MeshStandardMaterial({color:0x1a2030,roughness:0.3,metalness:0.6}));
+      roof.position.y=b.h+0.2;roof.castShadow=true;roof.userData.buildingIdx=idx;gr.add(roof);
+      const door=new THREE.Mesh(new THREE.BoxGeometry(1.5,2.5,0.1),
+        new THREE.MeshStandardMaterial({color:0x5a3a1a,roughness:0.6}));
+      door.position.set(0,1.25,b.d/2+0.06);door.userData.buildingIdx=idx;gr.add(door);
+      addWindows(gr,b,idx);
+    }
+
+    /* ---------- Placa do edificio ---------- */
+    const sw=Math.min(b.w*0.8,10);
+    const signBg=new THREE.Mesh(new THREE.BoxGeometry(sw,1.6,0.25),
+      new THREE.MeshStandardMaterial({color:0x0f172a,roughness:0.3,metalness:0.4}));
+    signBg.position.set(0,1.4,b.d/2+3);signBg.userData.buildingIdx=idx;gr.add(signBg);
+    const signBorder=new THREE.Mesh(new THREE.BoxGeometry(sw+0.3,1.8,0.1),
+      new THREE.MeshStandardMaterial({color:0xd69e2e,roughness:0.3,metalness:0.7}));
+    signBorder.position.set(0,1.4,b.d/2+2.85);signBorder.userData.buildingIdx=idx;gr.add(signBorder);
+    const post=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,2.8,6),
+      new THREE.MeshStandardMaterial({color:0x4a4a4a,metalness:0.5}));
+    post.position.set(0,1.4,b.d/2+3);post.userData.buildingIdx=idx;gr.add(post);
+    const lbl=makeTextSprite(b.name,{size:0.55,color:'#d69e2e'});
+    lbl.position.set(0,1.5,b.d/2+2.7);
+    lbl.scale.set(sw*0.9,1.3,1);
+    gr.add(lbl);
+
+    scene.add(gr);
+    buildingMeshes.push(gr);
+  });
+
+  /* ---------- Arvores espalhadas ---------- */
+  for(let i=0;i<70;i++){
+    const tx=(Math.random()-0.5)*280,tz=(Math.random()-0.5)*280;
+    let on=false;
+    for(const b of BUILDINGS){if(Math.abs(tx-b.x)<b.w/2+3&&Math.abs(tz-b.z)<b.d/2+3){on=true;break;}}
+    if(!on) addTree(scene,tx,tz);
+  }
+
+  /* ---------- Bancos ---------- */
+  const benchMat=new THREE.MeshStandardMaterial({color:0x5a3a1a,roughness:0.7});
+  const benchTopMat=new THREE.MeshStandardMaterial({color:0x6a4a2a,roughness:0.6});
+  for(let i=0;i<24;i++){
+    const bx=(Math.random()-0.5)*200,bz=(Math.random()-0.5)*200;
+    let on=false;
+    for(const b of BUILDINGS){if(Math.abs(bx-b.x)<b.w/2+2&&Math.abs(bz-b.z)<b.d/2+2){on=true;break;}}
+    if(!on){
+      const bg=new THREE.Group();
+      const seat=new THREE.Mesh(new THREE.BoxGeometry(2,0.12,0.6),benchTopMat);
+      seat.position.y=0.45;bg.add(seat);
+      const l1=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.45,0.1),benchMat);
+      l1.position.set(-0.8,0.22,-0.2);bg.add(l1);
+      const l2=l1.clone();l2.position.x=0.8;bg.add(l2);
+      const l3=l1.clone();l3.position.z=0.2;l3.position.x=-0.8;bg.add(l3);
+      const l4=l1.clone();l4.position.set(0.8,0.22,0.2);bg.add(l4);
+      const back=new THREE.Mesh(new THREE.BoxGeometry(2,0.5,0.08),benchTopMat);
+      back.position.set(0,0.7,-0.26);bg.add(back);
+      bg.position.set(bx,0,bz);
+      bg.rotation.y=Math.random()*Math.PI;
+      scene.add(bg);
+    }
+  }
+
+  /* ---------- Postes de luz ---------- */
+  const posteMat=new THREE.MeshStandardMaterial({color:0x555555,metalness:0.6,roughness:0.3});
+  const luzMat=new THREE.MeshStandardMaterial({color:0xffeecc,emissive:0xffddaa,emissiveIntensity:0.5});
+  for(let i=0;i<30;i++){
+    const px=(Math.random()-0.5)*240,pz=(Math.random()-0.5)*240;
+    let on=false;
+    for(const b of BUILDINGS){if(Math.abs(px-b.x)<b.w/2+2&&Math.abs(pz-b.z)<b.d/2+2){on=true;break;}}
+    if(!on){
+      const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.1,5,6),posteMat);
+      pole.position.set(px,2.5,pz);pole.castShadow=true;scene.add(pole);
+      const lamp=new THREE.Mesh(new THREE.SphereGeometry(0.2,6,6),luzMat);
+      lamp.position.set(px,5.1,pz);scene.add(lamp);
+    }
+  }
+
+  /* ---------- Ceu ---------- */
+  skyMesh=new THREE.Mesh(new THREE.SphereGeometry(200,16,12),
+    new THREE.MeshBasicMaterial({color:0x4488cc,side:THREE.BackSide}));
+  scene.add(skyMesh);
+}
+
+function addWindows(gr,b,bIdx){
+  const wm=new THREE.MeshStandardMaterial({color:0x88bbee,roughness:0.1,metalness:0.3,emissive:0x223344,emissiveIntensity:0.3});
+  const rows=Math.floor(b.h/2.5);
+  const colsN=Math.max(1,Math.floor(b.w/3));
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<colsN;c++){
+      const wg=new THREE.PlaneGeometry(1.2,1.0);
+      const wx=-b.w/2+1.5+c*(b.w-3)/(Math.max(colsN-1,1));
+      const wy=1.5+r*2.5;
+      const w1=new THREE.Mesh(wg,wm);
+      w1.position.set(wx,wy,b.d/2+0.01);if(bIdx!==undefined)w1.userData.buildingIdx=bIdx;gr.add(w1);
+      const w2=new THREE.Mesh(wg,wm);
+      w2.position.set(wx,wy,-b.d/2-0.01);w2.rotation.y=Math.PI;if(bIdx!==undefined)w2.userData.buildingIdx=bIdx;gr.add(w2);
+    }
+  }
+}
+
+function addTree(parent,x,z){
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.3,2+Math.random(),6),
+    new THREE.MeshStandardMaterial({color:0x4a3520,roughness:0.8}));
+  trunk.position.set(x,1,z);trunk.castShadow=true;parent.add(trunk);
+  const crown=new THREE.Mesh(new THREE.SphereGeometry(1.5+Math.random()*0.8,8,6),
+    new THREE.MeshStandardMaterial({color:new THREE.Color().setHSL(0.3,0.5+Math.random()*0.2,0.2+Math.random()*0.1),roughness:0.8}));
+  crown.position.set(x,3+Math.random()*0.5,z);crown.castShadow=true;parent.add(crown);
+}
+
+function makeTextSprite(text,opts={}){
+  const c=document.createElement('canvas');
+  const fs=opts.fontSize||48;
+  c.width=512;c.height=128;
+  const ctx=c.getContext('2d');
+  ctx.font=`bold ${fs}px Inter,sans-serif`;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;ctx.shadowOffsetX=2;ctx.shadowOffsetY=2;
+  ctx.fillStyle=opts.color||'#ffffff';
+  ctx.fillText(text,256,64);
+  const tex=new THREE.CanvasTexture(c);
+  tex.minFilter=THREE.LinearFilter;
+  const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false});
+  const sprite=new THREE.Sprite(mat);
+  const sz=opts.size||1;
+  sprite.scale.set(sz*6,sz*1.5,1);
+  return sprite;
+}
+
+/* ================================================================
+   ILUMINACAO
+   ================================================================ */
+function setupLighting(){
+  ambientLight=new THREE.AmbientLight(0x6080a0,0.6);
+  scene.add(ambientLight);
+  sunLight=new THREE.DirectionalLight(0xffeedd,1.2);
+  sunLight.position.set(50,80,30);
+  sunLight.castShadow=true;
+  sunLight.shadow.mapSize.width=2048;sunLight.shadow.mapSize.height=2048;
+  sunLight.shadow.camera.near=1;sunLight.shadow.camera.far=200;
+  sunLight.shadow.camera.left=-100;sunLight.shadow.camera.right=100;
+  sunLight.shadow.camera.top=100;sunLight.shadow.camera.bottom=-100;
+  sunLight.shadow.bias=-0.001;
+  scene.add(sunLight);
+  scene.add(new THREE.HemisphereLight(0x88aacc,0x2a3a2a,0.4));
+}
+
+// setDayNight removida — cenário sempre em modo DIA
+function setDayNight(n){ /* desabilitada */ }
+
+/* ================================================================
+   JOGADOR
+   ================================================================ */
+function createPlayer(){
+  playerMesh=new THREE.Group();
+  playerMesh.userData={isPlayer:true};
+  const bMat=new THREE.MeshStandardMaterial({color:0x1a1a2e,roughness:0.5,metalness:0.3});
+  const body=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.35,1.4,8),bMat);
+  body.position.y=1.5;body.castShadow=true;playerMesh.add(body);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.3,8,8),
+    new THREE.MeshStandardMaterial({color:0xd4a574,roughness:0.6}));
+  head.position.y=2.5;head.castShadow=true;playerMesh.add(head);
+  const hair=new THREE.Mesh(new THREE.SphereGeometry(0.32,8,6,0,Math.PI*2,0,Math.PI*0.5),
+    new THREE.MeshStandardMaterial({color:0x2a1a0a}));
+  hair.position.y=2.55;playerMesh.add(hair);
+  const tie=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.6,0.08),
+    new THREE.MeshStandardMaterial({color:0xd69e2e,roughness:0.3,metalness:0.5}));
+  tie.position.set(0,1.7,0.35);playerMesh.add(tie);
+  const lapel=new THREE.Mesh(new THREE.BoxGeometry(0.25,0.1,0.08),
+    new THREE.MeshStandardMaterial({color:0xd69e2e,roughness:0.3,metalness:0.5}));
+  lapel.position.set(-0.25,1.95,0.35);playerMesh.add(lapel);
+  const legG=new THREE.CylinderGeometry(0.12,0.12,0.9,6);
+  const legM=new THREE.MeshStandardMaterial({color:0x1a1a2e,roughness:0.5});
+  const ll=new THREE.Mesh(legG,legM);ll.position.set(-0.18,0.45,0);ll.castShadow=true;playerMesh.add(ll);
+  playerMesh.userData.leftLeg=ll;
+  const rl=new THREE.Mesh(legG,legM);rl.position.set(0.18,0.45,0);rl.castShadow=true;playerMesh.add(rl);
+  playerMesh.userData.rightLeg=rl;
+  const armG=new THREE.CylinderGeometry(0.08,0.08,0.8,6);
+  const la=new THREE.Mesh(armG,bMat.clone());la.position.set(-0.5,1.5,0);la.castShadow=true;playerMesh.add(la);
+  playerMesh.userData.leftArm=la;
+  const ra=new THREE.Mesh(armG,bMat.clone());ra.position.set(0.5,1.5,0);ra.castShadow=true;playerMesh.add(ra);
+  playerMesh.userData.rightArm=ra;
+  const shoeG=new THREE.BoxGeometry(0.16,0.08,0.25);
+  const shoeM=new THREE.MeshStandardMaterial({color:0x111111,roughness:0.4,metalness:0.3});
+  const ls=new THREE.Mesh(shoeG,shoeM);ls.position.set(-0.18,0.02,0.04);playerMesh.add(ls);
+  const rs=new THREE.Mesh(shoeG,shoeM);rs.position.set(0.18,0.02,0.04);playerMesh.add(rs);
+  const label=makeTextSprite('Voce',{size:0.5,color:'#d69e2e'});
+  label.position.y=3.2;playerMesh.add(label);
+
+  playerMesh.position.set(5,0,15);
+  scene.add(playerMesh);
+}
+
+/* ================================================================
+   NPCs
+   ================================================================ */
+function createNPCs(){
+  const npcGroup=new THREE.Group();
+  scene.add(npcGroup);
+
+  consultants.forEach((c,idx)=>{
+    const catColor=CORES[c.categoria]||'#888888';
+    const color3=new THREE.Color(catColor);
+    const homeIdx=CATEGORY_HOME[c.categoria]!==undefined?CATEGORY_HOME[c.categoria]:0;
+    const hb=BUILDINGS[homeIdx];
+    const sx=hb.x+(Math.random()-0.5)*hb.w*1.8;
+    const sz=hb.z+(Math.random()-0.5)*hb.d*1.8;
+
+    const ng=new THREE.Group();
+    ng.userData={
+      consultantIdx:idx,id:c.id,name:c.nome_exibicao,homeIdx,
+      targetX:sx,targetZ:sz,
+      speed:1.0+(c.nivel_extroversao||5)*0.15,
+      waitTime:Math.random()*5,
+      moving:false,
+      pauseDuration:3+Math.random()*7
+    };
+
+    const bodyMat=new THREE.MeshStandardMaterial({color:0x1e1e2e,roughness:0.5,metalness:0.2});
+    const accentMat=new THREE.MeshStandardMaterial({color:color3,roughness:0.3,metalness:0.4,emissive:color3,emissiveIntensity:0.15});
+
+    const body=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.3,1.2,8),bodyMat);
+    body.position.y=1.3;body.castShadow=true;ng.add(body);
+    const acc=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.5,0.06),accentMat);
+    acc.position.set(0,1.5,0.28);ng.add(acc);
+    const badge=new THREE.Mesh(new THREE.BoxGeometry(0.15,0.15,0.08),accentMat);
+    badge.position.set(-0.35,1.7,0.15);ng.add(badge);
+    const headMat=new THREE.MeshStandardMaterial({color:0xd4a574,roughness:0.6});
+    const head=new THREE.Mesh(new THREE.SphereGeometry(0.25,8,6),headMat);
+    head.position.y=2.2;head.castShadow=true;ng.add(head);
+    const legG=new THREE.CylinderGeometry(0.1,0.1,0.7,6);
+    const legM=new THREE.MeshStandardMaterial({color:0x1e1e2e,roughness:0.5});
+    const ll=new THREE.Mesh(legG,legM);ll.position.set(-0.15,0.35,0);ng.add(ll);ng.userData.leftLeg=ll;
+    const rl=new THREE.Mesh(legG,legM);rl.position.set(0.15,0.35,0);ng.add(rl);ng.userData.rightLeg=rl;
+    const armG=new THREE.CylinderGeometry(0.07,0.07,0.7,6);
+    const la=new THREE.Mesh(armG,bodyMat.clone());la.position.set(-0.42,1.3,0);ng.add(la);ng.userData.leftArm=la;
+    const ra=new THREE.Mesh(armG,bodyMat.clone());ra.position.set(0.42,1.3,0);ng.add(ra);ng.userData.rightArm=ra;
+
+    if(c.id==='CL085'){bodyMat.color.set(0x2a1a3a);accentMat.emissiveIntensity=0.4;}
+    else if(c.id==='CL141'){bodyMat.color.set(0x2a0a0a);accentMat.emissiveIntensity=0.5;}
+    else if(c.id==='CL142'){bodyMat.color.set(0xf0ead6);accentMat.color.set(0xfbbf24);accentMat.emissive.set(0xfbbf24);accentMat.emissiveIntensity=0.4;}
+
+    ng.position.set(sx,0,sz);
+    npcGroup.add(ng);
+
+    const lbl=makeTextSprite(c.nome_exibicao,{size:c.id==='CL085'?0.5:0.38,color:catColor,fontSize:c.id==='CL085'?54:42});
+    lbl.visible=false;lbl.position.y=3.0;ng.add(lbl);
+
+    npcs.push({mesh:ng,data:c,labelSprite:lbl});
+  });
+}
+
+/* ================================================================
+   EVENTOS DO DOM
+   ================================================================ */
+function setupEvents(){
+  window.addEventListener('resize',()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);
+  });
+  window.addEventListener('keydown',e=>{
+    const k=e.key.toLowerCase();
+    if(k==='w'||k==='arrowup')keys.w=true;
+    if(k==='s'||k==='arrowdown')keys.s=true;
+    if(k==='a'||k==='arrowleft')keys.a=true;
+    if(k==='d'||k==='arrowright')keys.d=true;
+    // tecla 'n' dia/noite removida
+    if(k==='m'){showMinimap=!showMinimap;document.getElementById('minimap').style.display=showMinimap?'block':'none';}
+    if(k==='tab'){e.preventDefault();window._toggleList();}
+    if(k==='q'&&!chatOpen)window._toggleMissions();
+    if(k==='e'&&!chatOpen)window._toggleEconPanel();
+    if(k==='h'&&!chatOpen)window._toggleHelenaPanel();
+    if(k==='p'&&!chatOpen)window._toggleAnuncioPanel();
+    if(k==='escape'){
+      window._closeChat();hideNPCInfo();
+      if(showList)window._toggleList();
+      if(buildingPanelOpen)window._closeBuildingPanel();
+      if(showMissions)window._toggleMissions();
+      if(profileOpen)window._closeProfile();
+      if(eventPanelOpen)window._closeEventPanel();
+      if(econPanelOpen)window._toggleEconPanel();
+      if(helenaPanelOpen)window._toggleHelenaPanel();
+      if(anuncioPanelOpen)window._toggleAnuncioPanel();
+    }
+  });
+  window.addEventListener('keyup',e=>{
+    const k=e.key.toLowerCase();
+    if(k==='w'||k==='arrowup')keys.w=false;
+    if(k==='s'||k==='arrowdown')keys.s=false;
+    if(k==='a'||k==='arrowleft')keys.a=false;
+    if(k==='d'||k==='arrowright')keys.d=false;
+  });
+  const cv=document.getElementById('canvas');
+  cv.addEventListener('mousedown',e=>{
+    if(e.button===0&&!e.target.closest('#chat-panel')&&!e.target.closest('#consultant-list'))mouse.down=true;
+  });
+  window.addEventListener('mouseup',()=>{mouse.down=false;});
+  window.addEventListener('mousemove',e=>{
+    if(mouse.down){
+      cameraAngleH-=e.movementX*0.005;
+      cameraAngleV=Math.max(0.1,Math.min(1.2,cameraAngleV+e.movementY*0.005));
+    }
+    mouseNDC.x=(e.clientX/window.innerWidth)*2-1;
+    mouseNDC.y=-(e.clientY/window.innerHeight)*2+1;
+  });
+  cv.addEventListener('wheel',e=>{cameraDist=Math.max(8,Math.min(50,cameraDist+e.deltaY*0.03));});
+  cv.addEventListener('click',e=>{
+    if(chatOpen||buildingPanelOpen||profileOpen||eventPanelOpen||showMissions||econPanelOpen||helenaPanelOpen)return;
+    raycaster.setFromCamera(mouseNDC,camera);
+
+    /* Verificar clique em NPC */
+    const npcMeshes=[];
+    npcs.forEach((n,ni)=>{n.mesh.traverse(ch=>{if(ch.isMesh){ch.userData._npcIdx=ni;npcMeshes.push(ch);}});});
+    const npcHits=raycaster.intersectObjects(npcMeshes,false);
+    if(npcHits.length>0){
+      const hitIdx=npcHits[0].object.userData._npcIdx;
+      if(hitIdx!==undefined&&hitIdx>=0){
+        const npc=npcs[hitIdx];
+        if(npc){
+          const dist=playerMesh.position.distanceTo(npc.mesh.position);
+          if(dist<15){selectNPC(hitIdx);return;}
+        }
+      }
+    }
+
+    /* Verificar clique em edificio */
+    const bldgMeshes=[];
+    buildingMeshes.forEach(gr=>{
+      gr.traverse(ch=>{
+        if(ch.isMesh&&ch.userData.buildingIdx!==undefined){bldgMeshes.push(ch);}
+      });
+    });
+    const bldgHits=raycaster.intersectObjects(bldgMeshes,false);
+    if(bldgHits.length>0){
+      const bi=bldgHits[0].object.userData.buildingIdx;
+      if(bi!==undefined&&bi>=0){
+        const b=BUILDINGS[bi];
+        const dist=playerMesh.position.distanceTo(new THREE.Vector3(b.x,0,b.z));
+        if(dist<40){openBuildingPanel(bi);}
+      }
+    }
+  });
+  document.getElementById('chat-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();window._sendMessage();}
+  });
+  cv.addEventListener('contextmenu',e=>e.preventDefault());
+}
+
+/* ================================================================
+   SELECAO NPC
+   ================================================================ */
+function selectNPC(idx){
+  selectedNPC=npcs[idx];
+  const c=selectedNPC.data;
+  const cc=CORES[c.categoria]||'#888';
+  document.getElementById('ni-name').textContent=c.nome_exibicao;
+  document.getElementById('ni-name').style.color=cc;
+  document.getElementById('ni-title').textContent=c.titulo;
+  document.getElementById('ni-cat-text').textContent=c.categoria.replace(/_/g,' ');
+  document.getElementById('ni-tier').textContent='Tier '+c.tier;
+  document.getElementById('npc-info').style.display='block';
+
+  /* Exibir wallet e servicos */
+  const cId = getConsultorId(c);
+  document.getElementById('ni-wallet').textContent = 'Saldo: Ξ' + (wallets[cId] || 0).toLocaleString('pt-BR');
+  const svcs = npcServices[cId] || [];
+  document.getElementById('ni-services').innerHTML = svcs.map(function(s) {
+    return '<div style="padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+      + '<span style="color:#f8fafc;font-weight:600">' + s.servico + '</span> — '
+      + '<span style="color:#d69e2e">Ξ' + s.preco + '</span>'
+      + '<div style="font-size:.65rem;color:#64748b">' + s.descricao + '</div>'
+      + '</div>';
+  }).join('');
+
+  /* Registrar encontro */
+  if(!progress.npcsFound.has(c.id)){
+    progress.npcsFound.add(c.id);
+    saveProgress();
+    updateStatsUI();
+    updateMissionsProgress();
+  }
+}
+
+function hideNPCInfo(){
+  document.getElementById('npc-info').style.display='none';
+  selectedNPC=null;
+}
+
+/* ================================================================
+   PAINEL EDIFICIO
+   ================================================================ */
+function openBuildingPanel(idx){
+  currentBuildingIdx=idx;
+  buildingPanelOpen=true;
+  const b=BUILDINGS[idx];
+  document.getElementById('bp-name').textContent=b.name;
+  document.getElementById('bp-desc').textContent=b.desc||'Edificio da Vila INTEIA';
+
+  /* Atividade atual */
+  let activity='Tudo tranquilo no momento.';
+  if(currentEvent&&currentEvent.buildingIdx===idx){
+    activity=currentEvent.type+': '+currentEvent.theme;
+  }
+  document.getElementById('bp-activity').textContent=activity;
+
+  /* Residentes */
+  const container=document.getElementById('bp-residents');
+  container.innerHTML='';
+  const residents=[];
+  npcs.forEach((npc,ni)=>{
+    const homeIdx=CATEGORY_HOME[npc.data.categoria];
+    if(homeIdx===idx)residents.push({npc,ni});
+  });
+  if(residents.length===0){
+    container.innerHTML='<div style="font-size:.72rem;color:#64748b;padding:4px 0">Nenhum residente fixo</div>';
+  }else{
+    residents.forEach(r=>{
+      const cc=CORES[r.npc.data.categoria]||'#888';
+      const el=document.createElement('div');
+      el.className='bp-npc-item';
+      el.innerHTML='<div class="bp-npc-dot" style="background:'+cc+'"></div><span class="bp-npc-name">'+r.npc.data.nome_exibicao+'</span><span class="bp-npc-tier">Tier '+r.npc.data.tier+'</span>';
+      el.addEventListener('click',()=>{
+        window._closeBuildingPanel();
+        playerMesh.position.x=r.npc.mesh.position.x+3;
+        playerMesh.position.z=r.npc.mesh.position.z+3;
+        selectNPC(r.ni);
+      });
+      container.appendChild(el);
+    });
+  }
+
+  document.getElementById('building-panel').classList.add('open');
+
+  /* Registrar visita */
+  if(!progress.buildingsVisited.has(idx)){
+    progress.buildingsVisited.add(idx);
+    saveProgress();
+    updateStatsUI();
+    updateMissionsProgress();
+    if(progress.buildingsVisited.size===1)showAchievement('Primeiro edificio!','Voce visitou '+b.name);
+    if(progress.buildingsVisited.size===19)showAchievement('Explorador Supremo!','Visitou todos os 19 edificios!');
+  }
+}
+
+window._closeBuildingPanel=function(){
+  buildingPanelOpen=false;
+  document.getElementById('building-panel').classList.remove('open');
+};
+
+window._teleportToBuilding=function(){
+  if(currentBuildingIdx<0)return;
+  const b=BUILDINGS[currentBuildingIdx];
+  playerMesh.position.x=b.x+b.w/2+3;
+  playerMesh.position.z=b.z+b.d/2+3;
+  window._closeBuildingPanel();
+  addNotification('Voce foi ate <span class="notif-highlight">'+b.name+'</span>');
+};
+
+/* ================================================================
+   PERFIL NPC
+   ================================================================ */
+window._openProfile=function(){
+  if(!selectedNPC)return;
+  profileOpen=true;
+  const c=selectedNPC.data;
+  const cc=CORES[c.categoria]||'#888';
+  document.getElementById('pp-avatar').style.background=cc;
+  document.getElementById('pp-avatar').textContent=c.nome_exibicao.charAt(0);
+  document.getElementById('pp-name').textContent=c.nome_exibicao;
+  document.getElementById('pp-title').textContent=c.titulo;
+  document.getElementById('pp-cat').textContent=(c.categoria||'').replace(/_/g,' ')+' - Tier '+c.tier;
+  document.getElementById('pp-bio').textContent=c.biografia_resumida||'Sem biografia disponivel.';
+  document.getElementById('pp-quote').textContent=c.frase_chave||'---';
+  document.getElementById('pp-personality').textContent=c.personalidade_resumo||'---';
+  document.getElementById('pp-vision').textContent=c.visao_futuro||'---';
+
+  const expContainer=document.getElementById('pp-expertise');
+  expContainer.innerHTML='';
+  (c.areas_expertise||[]).forEach(a=>{
+    const tag=document.createElement('span');
+    tag.className='pp-tag';tag.textContent=a;
+    expContainer.appendChild(tag);
+  });
+
+  document.getElementById('profile-panel').style.display='block';
+  document.getElementById('npc-info').style.display='none';
+};
+
+window._closeProfile=function(){
+  profileOpen=false;
+  document.getElementById('profile-panel').style.display='none';
+};
+
+/* ================================================================
+   CONSULTA RAPIDA NPC
+   ================================================================ */
+window._openConsult=function(){
+  if(!selectedNPC)return;
+  const c=selectedNPC.data;
+  chatOpen=true;chatHistory=[];
+  const cc=CORES[c.categoria]||'#888';
+  document.getElementById('ch-avatar').style.background=cc;
+  document.getElementById('ch-avatar').textContent=c.nome_exibicao.charAt(0);
+  document.getElementById('ch-name').textContent=c.nome_exibicao;
+  document.getElementById('ch-title').textContent='Consulta Rapida';
+  document.getElementById('chat-messages').innerHTML='';
+  addChatMsg('system','Consulta rapida com '+c.nome_exibicao+'. Faca uma pergunta objetiva.');
+  document.getElementById('chat-panel').classList.add('open');
+  document.getElementById('npc-info').style.display='none';
+  document.getElementById('chat-input').focus();
+};
+
+/* ================================================================
+   CONVIDAR NPC PARA EVENTO
+   ================================================================ */
+window._inviteToEvent=function(){
+  if(!selectedNPC)return;
+  const c=selectedNPC.data;
+  if(!currentEvent){
+    addNotification('<span class="notif-highlight">'+c.nome_exibicao+'</span> agradece o convite, mas nao ha evento ativo.');
+    return;
+  }
+  const b=currentEvent.building;
+  selectedNPC.mesh.userData.targetX=b.x+(Math.random()-0.5)*b.w;
+  selectedNPC.mesh.userData.targetZ=b.z+(Math.random()-0.5)*b.d;
+  selectedNPC.mesh.userData.waitTime=0;
+  if(!currentEvent.participants.includes(selectedNPC.mesh.userData.consultantIdx)){
+    currentEvent.participants.push(selectedNPC.mesh.userData.consultantIdx);
+  }
+  addNotification('<span class="notif-highlight">'+c.nome_exibicao+'</span> aceitou o convite para o evento!');
+  hideNPCInfo();
+};
+
+/* ================================================================
+   PAINEL DO EVENTO
+   ================================================================ */
+window._openEventPanel=function(){
+  if(!currentEvent)return;
+  eventPanelOpen=true;
+  document.getElementById('ep-type').textContent=currentEvent.type.toUpperCase();
+  document.getElementById('ep-title').textContent=currentEvent.theme;
+  document.getElementById('ep-location').textContent=currentEvent.building.name;
+  document.getElementById('ep-desc').textContent='Um(a) '+currentEvent.type.toLowerCase()+' esta acontecendo no(a) '+currentEvent.building.name+' com o tema "'+currentEvent.theme+'". Os maiores consultores da Vila estao participando deste evento.';
+
+  const container=document.getElementById('ep-participants');
+  container.innerHTML='';
+  currentEvent.participants.forEach(pi=>{
+    const npc=npcs[pi];
+    if(!npc)return;
+    const cc=CORES[npc.data.categoria]||'#888';
+    const el=document.createElement('div');
+    el.className='ep-participant';
+    el.innerHTML='<div class="ep-pdot" style="background:'+cc+'"></div><span class="ep-pname">'+npc.data.nome_exibicao+'</span><span class="ep-ptitle">'+npc.data.titulo+'</span>';
+    el.addEventListener('click',()=>{
+      window._closeEventPanel();
+      playerMesh.position.x=npc.mesh.position.x+3;
+      playerMesh.position.z=npc.mesh.position.z+3;
+      selectNPC(pi);
+    });
+    container.appendChild(el);
+  });
+
+  document.getElementById('event-panel').style.display='block';
+};
+
+window._closeEventPanel=function(){
+  eventPanelOpen=false;
+  document.getElementById('event-panel').style.display='none';
+};
+
+window._goToEvent=function(){
+  if(!currentEvent)return;
+  const b=currentEvent.building;
+  playerMesh.position.x=b.x+b.w/2+3;
+  playerMesh.position.z=b.z+b.d/2+3;
+  window._closeEventPanel();
+  addNotification('Indo ate o evento no(a) <span class="notif-highlight">'+b.name+'</span>. Fique proximo para participar!');
+};
+
+/* ================================================================
+   CHAT
+   ================================================================ */
+window._openChat=function(){
+  if(!selectedNPC)return;
+  chatOpen=true;chatHistory=[];
+  const c=selectedNPC.data;
+  const cc=CORES[c.categoria]||'#888';
+  document.getElementById('ch-avatar').style.background=cc;
+  document.getElementById('ch-avatar').textContent=c.nome_exibicao.charAt(0);
+  document.getElementById('ch-name').textContent=c.nome_exibicao;
+  document.getElementById('ch-title').textContent=c.titulo;
+  document.getElementById('chat-messages').innerHTML='';
+  addChatMsg('system','Voce esta conversando com '+c.nome_exibicao+' - '+c.titulo);
+  if(c.frase_chave)addChatMsg('npc','"'+c.frase_chave+'"');
+  document.getElementById('chat-panel').classList.add('open');
+  document.getElementById('npc-info').style.display='none';
+  document.getElementById('chat-input').focus();
+
+  /* Registrar conversa */
+  progress.chatsCount++;
+  const cat=c.categoria;
+  chatsByCategory[cat]=(chatsByCategory[cat]||0)+1;
+  saveProgress();
+  updateStatsUI();
+  updateMissionsProgress();
+};
+
+window._closeChat=function(){
+  chatOpen=false;
+  document.getElementById('chat-panel').classList.remove('open');
+};
+
+function addChatMsg(role,text){
+  const d=document.createElement('div');
+  d.className='msg '+role;d.textContent=text;
+  document.getElementById('chat-messages').appendChild(d);
+  document.getElementById('chat-messages').scrollTop=99999;
+  return d;
+}
+
+window._sendMessage=async function(){
+  const inp=document.getElementById('chat-input');
+  const text=inp.value.trim();if(!text)return;inp.value='';
+
+  /* Intervir no evento ativo */
+  if (window._eventoAtivo && !window._eventoAtivo.encerrado && !selectedNPC) {
+    addChatMsg('user',text);
+    window._eventoIntervencao(text);
+    addChatMsg('system', 'Sua intervencao foi registrada no debate.');
+    isSending = false;
+    return;
+  }
+
+  if(isSending||!selectedNPC)return;
+  addChatMsg('user',text);
+
+  /* Detectar transacao no texto do jogador */
+  const tradeDetected = detectChatTransaction(text);
+  if (tradeDetected) {
+    addChatMsg('system', tradeDetected.msg);
+  }
+
+  chatHistory.push({role:'user',content:text});
+  const c=selectedNPC.data;
+  const sysPrompt=buildPersonaPrompt(c);
+  isSending=true;
+  const typing=addChatMsg('typing','Digitando...');
+  try{
+    const msgs=[...chatHistory];
+    if(msgs.length>0&&msgs[0].role==='user'){msgs[0]={role:'user',content:'[INSTRUCAO]\n'+sysPrompt+'\n\n[TAREFA]\n'+msgs[0].content};}
+    else{msgs.unshift({role:'user',content:sysPrompt});}
+    const resp=await fetchRetryAsync(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:API_MODEL,messages:msgs,max_tokens:200,temperature:0.8})
+    });
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    const data=await resp.json();
+    const reply=data.choices?.[0]?.message?.content||'Erro ao responder.';
+    typing.remove();
+    addChatMsg('npc',reply);
+    chatHistory.push({role:'assistant',content:reply});
+    detectNPCPayment(reply);
+    // A cada 3 mensagens, gerar dica profissional
+    if (chatHistory.length > 0 && chatHistory.length % 6 === 0) {
+      var c2 = selectedNPC.data;
+      var dicaEl = document.createElement('div');
+      dicaEl.className = 'msg system';
+      dicaEl.innerHTML = '<div style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:6px;padding:6px 8px;font-size:.7rem">'
+        + '<span style="color:#818cf8;font-weight:700">DICA:</span> '
+        + '<span style="color:#cbd5e1">' + c2.nome_exibicao + ' e especialista em ' + (c2.areas_expertise?.[0] || c2.categoria) + '. '
+        + 'Pergunte sobre casos praticos, erros comuns, ou peca um plano de acao.</span></div>';
+      document.getElementById('chat-messages').appendChild(dicaEl);
+      document.getElementById('chat-messages').scrollTop = 99999;
+    }
+  }catch(e){typing.remove();addChatMsg('system','Erro: '+e.message);}
+  isSending=false;
+};
+
+function buildPersonaPrompt(c){
+  let p=c.instrucao_comportamental||('Voce e '+c.nome_exibicao+', '+c.titulo+'.');
+  p+='\n\nPersonalidade: '+(c.personalidade_resumo||'');
+  p+='\nEstilo de argumentacao: '+(c.estilo_argumentacao||'');
+  p+='\nTom de voz: '+(c.tom_voz||'');
+  if(c.areas_expertise?.length)p+='\nAreas de expertise: '+c.areas_expertise.join(', ');
+  if(c.expressoes_tipicas?.length)p+='\nExpressoes tipicas: '+c.expressoes_tipicas.join('; ');
+  if(c.visao_futuro)p+='\nVisao de futuro: '+c.visao_futuro;
+  /* Contexto economico */
+  const cId = getConsultorId(c);
+  p += '\n\n=== ECONOMIA DA VILA ===';
+  p += '\nVoce tem Ξ' + (wallets[cId] || 1000) + ' INTEIA Coins.';
+  p += '\nO visitante tem Ξ' + (wallets['PLAYER'] || 5000) + '.';
+  p += '\nVoce oferece estes servicos:';
+  const svcs = npcServices[cId] || [];
+  svcs.forEach(function(s) { p += '\n- ' + s.servico + ': Ξ' + s.preco + ' (' + s.descricao + ')'; });
+  p += '\n\nCOMPORTAMENTO ECONOMICO:';
+  p += '\n- Voce QUER maximizar seus ganhos. Ofereca servicos, negocie precos.';
+  p += '\n- Se o visitante pedir algo que voce sabe fazer, COBRE por isso. Diga o preco.';
+  p += '\n- Se quiser pagar o visitante por algo, diga "Pago Ξ[valor] por [motivo]".';
+  p += '\n- Seja criativo: proponha parcerias, investimentos, apostas, contratos.';
+  p += '\n- Cada consultoria/servico deve ter VALOR REAL — explique por que vale o preco.';
+  p += '\n- Voce pode dar desconto se o visitante negociar bem, ou cobrar mais se for urgente.';
+
+  p+='\n\nResponda SEMPRE em portugues do Brasil. Seja conciso (max 3 paragrafos). Mantenha-se 100% no personagem. Voce esta na Vila INTEIA, um campus de consultores lendarios. O visitante esta explorando a vila e interagindo com os consultores.';
+  return p;
+}
+
+/* ================================================================
+   LISTA DE CONSULTORES
+   ================================================================ */
+function buildConsultantList(){
+  const ct=document.getElementById('cl-items');
+  consultants.forEach((c,i)=>{
+    const d=document.createElement('div');d.className='cl-item';d.dataset.idx=i;
+    d.dataset.name=(c.nome_exibicao||'').toLowerCase();
+    const cc=CORES[c.categoria]||'#888';
+    d.innerHTML='<div class="cl-dot" style="background:'+cc+'"></div><span class="cl-name">'+c.nome_exibicao+'</span><span class="cl-tier">'+c.tier+'</span>';
+    d.addEventListener('click',()=>{
+      const npc=npcs[i];
+      playerMesh.position.x=npc.mesh.position.x+3;
+      playerMesh.position.z=npc.mesh.position.z+3;
+      selectNPC(i);
+      window._toggleList();
+    });
+    ct.appendChild(d);
+  });
+}
+
+window._toggleList=function(){
+  showList=!showList;
+  document.getElementById('consultant-list').classList.toggle('open',showList);
+};
+
+window._filterList=function(){
+  const q=document.getElementById('cl-search').value.toLowerCase();
+  document.querySelectorAll('.cl-item').forEach(el=>{
+    el.style.display=el.dataset.name.includes(q)?'flex':'none';
+  });
+};
+
+/* ================================================================
+   VERIFICAR PROXIMIDADE DE EDIFICIOS
+   ================================================================ */
+function checkBuildingProximity(){
+  const pp=playerMesh.position;
+  for(let i=0;i<BUILDINGS.length;i++){
+    const b=BUILDINGS[i];
+    const dx=pp.x-b.x,dz=pp.z-b.z;
+    const dist=Math.sqrt(dx*dx+dz*dz);
+    if(dist<b.w/2+5){
+      if(!progress.buildingsVisited.has(i)){
+        progress.buildingsVisited.add(i);
+        saveProgress();
+        updateStatsUI();
+        updateMissionsProgress();
+      }
+      break;
+    }
+  }
+
+  /* Verificar proximidade do evento */
+  if(currentEvent && !currentEvent.playerParticipating){
+    const eb=currentEvent.building;
+    const dx=pp.x-eb.x,dz=pp.z-eb.z;
+    const dist=Math.sqrt(dx*dx+dz*dz);
+    if(dist<eb.w/2+8){
+      currentEvent.playerParticipating = true;
+      progress.eventsWitnessed++;
+      saveProgress();
+      updateStatsUI();
+      updateMissionsProgress();
+      showAchievement('Evento!', 'Voce esta participando: ' + currentEvent.theme);
+      iniciarEventoInterativo();
+    }
+  }
+}
+
+/* ============================================================
+   EVENTOS INTERATIVOS - VIVENCIAR DE VERDADE
+   ============================================================ */
+function iniciarEventoInterativo() {
+  if (!currentEvent) return;
+
+  var ev = currentEvent;
+  var participantes = ev.participants.map(function(pi) { return npcs[pi]; }).filter(Boolean);
+  if (participantes.length < 2) return;
+
+  var nomesPart = participantes.map(function(p) { return p.data.nome_exibicao; });
+
+  // Abrir chat panel como "sala do evento"
+  chatOpen = true;
+  document.getElementById('ch-avatar').style.background = '#d69e2e';
+  document.getElementById('ch-avatar').textContent = '!';
+  document.getElementById('ch-name').textContent = ev.type + ': ' + ev.theme;
+  document.getElementById('ch-title').textContent = ev.building.name + ' — ' + participantes.length + ' participantes';
+  document.getElementById('chat-messages').innerHTML = '';
+  document.getElementById('chat-panel').classList.add('open');
+
+  addChatMsg('system', 'Evento iniciado! ' + ev.type + ' sobre "' + ev.theme + '"');
+  addChatMsg('system', 'Participantes: ' + nomesPart.join(', '));
+  addChatMsg('system', 'Voce pode digitar para intervir no debate a qualquer momento.');
+
+  // Salvar contexto para permitir intervencao do jogador
+  window._eventoAtivo = {
+    ev: ev,
+    participantes: participantes,
+    falas: [],
+    idx: 0,
+    encerrado: false
+  };
+
+  var falas = window._eventoAtivo.falas;
+  var idx = 0;
+  var totalFalas = participantes.length * 2;
+
+  function proximaFala() {
+    if (idx >= totalFalas || !currentEvent || window._eventoAtivo.encerrado) {
+      concluirEvento();
+      return;
+    }
+
+    var pi = idx % participantes.length;
+    var npc = participantes[pi];
+    var c = npc.data;
+    var cc = CORES[c.categoria] || '#888';
+
+    var promptEvento = 'Voce e ' + c.nome_exibicao + ', ' + c.titulo + '. '
+      + 'Esta num ' + ev.type + ' na Vila INTEIA sobre: "' + ev.theme + '". '
+      + 'Outros: ' + nomesPart.filter(function(n){return n!==c.nome_exibicao;}).join(', ') + '. ';
+
+    if (falas.length > 0) {
+      var ultimas = falas.slice(-3);
+      promptEvento += 'Falas anteriores:\n';
+      ultimas.forEach(function(f) { promptEvento += '- ' + f.autor + ': ' + f.texto.substring(0, 150) + '\n'; });
+      promptEvento += 'Reaja, concorde, discorde ou aprofunde. ';
+    } else {
+      promptEvento += 'Voce abre a discussao com uma declaracao forte. ';
+    }
+    promptEvento += 'De uma contribuicao PRATICA — algo que alguem possa aplicar no trabalho, nos negocios ou na vida. '
+      + '2-3 frases curtas, portugues brasileiro, no personagem.';
+
+    // Indicador de "digitando"
+    var typingDiv = addChatMsg('typing', c.nome_exibicao + ' esta formulando...');
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: API_MODEL,
+        messages: [
+          {role:'user', content: '[INSTRUCAO]\n' + (c.instrucao_comportamental || ('Voce e ' + c.nome_exibicao + ', ' + c.titulo)) + '\nVoce esta num debate profissional. Foque em licoes praticas e aplicaveis.\n\n[TAREFA]\n' + promptEvento}
+        ],
+        max_tokens: 200,
+        temperature: 0.85
+      })
+    }).then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(function(data) {
+      var texto = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+      if (!texto) texto = c.frase_chave || 'Concordo com essa perspectiva e acrescento que a pratica e fundamental.';
+
+      typingDiv.remove();
+
+      // Mostrar no chat com avatar colorido
+      var msgEl = document.createElement('div');
+      msgEl.className = 'msg npc';
+      msgEl.innerHTML = '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'
+        + '<div style="width:20px;height:20px;border-radius:50%;background:' + cc + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#000;flex-shrink:0">' + c.nome_exibicao.charAt(0) + '</div>'
+        + '<span style="font-size:.7rem;font-weight:700;color:' + cc + '">' + c.nome_exibicao + '</span>'
+        + '<span style="font-size:.6rem;color:#64748b">' + c.categoria.replace(/_/g,' ') + '</span>'
+        + '</div>'
+        + '<div style="font-size:.82rem;line-height:1.5">' + texto.replace(/</g,'&lt;') + '</div>';
+      document.getElementById('chat-messages').appendChild(msgEl);
+      document.getElementById('chat-messages').scrollTop = 99999;
+
+      falas.push({autor: c.nome_exibicao, texto: texto, categoria: c.categoria});
+
+      addNotification('<span class="notif-highlight">' + c.nome_exibicao + ':</span> ' + texto.substring(0, 60) + '...');
+
+      // Salvar no backend
+      fetchComRetry(BACKEND_API + '/mensagens/salvar', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          modulo: 'eventos', sessao_id: 'evento_' + ev.startTime,
+          mensagens: [{autor: c.nome_exibicao, texto: texto, evento: ev.theme, tipo_evento: ev.type, timestamp: Date.now()}]
+        })
+      }, 1);
+
+      idx++;
+      window._eventoAtivo.idx = idx;
+
+      if (idx < totalFalas && currentEvent && !window._eventoAtivo.encerrado) {
+        setTimeout(proximaFala, 5000 + Math.random() * 4000);
+      } else {
+        setTimeout(concluirEvento, 3000);
+      }
+    }).catch(function(e) {
+      typingDiv.remove();
+      addChatMsg('system', 'Falha na conexao. Continuando...');
+      idx++;
+      if (idx < totalFalas) setTimeout(proximaFala, 3000);
+      else setTimeout(concluirEvento, 2000);
+    });
+  }
+
+  function concluirEvento() {
+    if (window._eventoAtivo.encerrado) return;
+    window._eventoAtivo.encerrado = true;
+
+    addChatMsg('system', 'Evento encerrado! ' + falas.length + ' contribuicoes sobre "' + ev.theme + '".');
+
+    // Gerar resumo de aprendizado
+    if (falas.length >= 2) {
+      gerarResumoAprendizado(ev, falas);
+      helenaAnalisaEvento(ev, falas);
+    }
+  }
+
+  // Permitir que o jogador intervenha durante o evento
+  window._eventoIntervencao = function(texto) {
+    if (!window._eventoAtivo || window._eventoAtivo.encerrado) return false;
+    window._eventoAtivo.falas.push({autor: 'Voce', texto: texto, categoria: 'visitante'});
+    return true;
+  };
+
+  setTimeout(proximaFala, 2000);
+}
+
+function gerarResumoAprendizado(ev, falas) {
+  var resumo = falas.map(function(f) { return f.autor + ': ' + f.texto; }).join('\n');
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model: API_MODEL,
+      messages: [
+        {role:'user', content: '[INSTRUCAO]\nVoce e um facilitador de aprendizado profissional. Extraia licoes PRATICAS e APLICAVEIS de debates entre especialistas. Sem enrolacao.\n\n[TAREFA]\nDEBATE: ' + ev.type + ' sobre "' + ev.theme + '"\n\n' + resumo + '\n\nExtraia exatamente 3 LICOES PRATICAS que alguem pode aplicar HOJE no trabalho. Formato:\n1. [TITULO CURTO]: Explicacao em 1 frase.\n2. ...\n3. ...'}
+      ],
+      max_tokens: 200,
+      temperature: 0.5
+    })
+  }).then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(function(data) {
+    var texto = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+    if (!texto) return;
+
+    var learnEl = document.createElement('div');
+    learnEl.className = 'msg system';
+    learnEl.innerHTML = '<div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:10px;margin-top:6px">'
+      + '<div style="font-size:.7rem;color:#22c55e;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">LICOES PRATICAS</div>'
+      + '<div style="font-size:.8rem;line-height:1.6;color:#e2e8f0;white-space:pre-wrap">' + texto.replace(/</g,'&lt;') + '</div>'
+      + '</div>';
+    document.getElementById('chat-messages').appendChild(learnEl);
+    document.getElementById('chat-messages').scrollTop = 99999;
+
+    // Salvar licoes no backend
+    fetchComRetry(BACKEND_API + '/helena/insight', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({texto: '[LICOES: ' + ev.theme + ']\n' + texto, modulo: 'aprendizado', rodada: 0, metricas: {evento: ev.theme, licoes: 3}})
+    }, 2);
+
+    addNotification('<span class="notif-highlight">Licoes extraidas!</span> Veja no chat.');
+  }).catch(function(){});
+}
+
+function helenaAnalisaEvento(ev, falas) {
+  if (falas.length < 2) return;
+
+  var resumoFalas = falas.map(function(f) { return f.autor + ': ' + f.texto; }).join('\n');
+
+  var prompt = 'Voce e Helena Strategos, cientista-chefe da INTEIA. Analise este evento da Vila INTEIA:\n\n'
+    + 'EVENTO: ' + ev.type + ' - "' + ev.theme + '"\n'
+    + 'LOCAL: ' + ev.building.name + '\n'
+    + 'PARTICIPANTES: ' + falas.length + ' intervencoes\n\n'
+    + 'TRANSCRICAO:\n' + resumoFalas + '\n\n'
+    + 'Gere 2-3 insights CURTOS sobre:\n'
+    + '- Que licoes praticas esse debate traz\n'
+    + '- Quem teve os melhores argumentos e por que\n'
+    + '- Como isso se aplica ao mundo real (negocios, politica, estrategia)\n'
+    + 'Formato: numere de 1 a 3, 1-2 frases cada. Sem introducao.';
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model: API_MODEL,
+      messages: [
+        {role:'user', content:'[INSTRUCAO]\nVoce e Helena Strategos, cientista politica e analista estrategica da INTEIA. Analise eventos e gere insights praticos.\n\n[TAREFA]\n' + prompt}
+      ],
+      max_tokens: 200,
+      temperature: 0.6
+    })
+  }).then(function(r) { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(function(data) {
+    var texto = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim();
+    if (!texto) return;
+
+    var insight = {
+      texto: '[EVENTO: ' + ev.theme + ']\n' + texto,
+      gini: parseFloat(calcGini()) || 0,
+      totalTrades: transacoes.length,
+      volumeTotal: transacoes.reduce(function(s,t){return s+t.valor;},0),
+      timestamp: Date.now()
+    };
+    helenaInsights.push(insight);
+
+    fetchComRetry(BACKEND_API + '/helena/insight', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({texto: insight.texto, modulo: 'eventos', rodada: 0, metricas: {evento: ev.theme, participantes: falas.length}})
+    }, 2);
+
+    addNotification('<span class="notif-highlight">Helena:</span> Analise do evento disponivel (tecla H)');
+  }).catch(function(e) { console.error('[HELENA-EVENTO]', e); });
+}
+
+/* ================================================================
+   GAME LOOP
+   ================================================================ */
+let buildingCheckTimer=0;
+let feedTimerAcc=0;
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),0.05);
+  animTime+=dt;
+  updatePlayer(dt);
+  updateNPCs(dt);
+  updateCamera();
+  updateLabels();
+  updateProximity();
+  updateEvents(dt);
+  if(showMinimap)drawMinimap();
+
+  /* Timers periodicos */
+  buildingCheckTimer+=dt;
+  if(buildingCheckTimer>2){buildingCheckTimer=0;checkBuildingProximity();}
+
+  feedTimerAcc+=dt;
+  if(feedTimerAcc>FEED_INTERVAL){feedTimerAcc=0;generateFeedMessage();}
+
+  /* Timer de trades autonomos entre NPCs */
+  autoTradeTimer+=dt;
+  if(autoTradeTimer>=econConfig.AUTO_TRADE_INTERVAL){autoTradeTimer=0;cicloEconomico();}
+
+  /* Timer de anuncios autonomos dos NPCs */
+  if (!window._npcAdTimer) window._npcAdTimer = 0;
+  window._npcAdTimer += dt;
+  if (window._npcAdTimer >= 90) { // A cada 90 segundos
+    window._npcAdTimer = 0;
+    if (Math.random() < 0.4 && consultants.length > 0) { // 40% chance
+      var ri = Math.floor(Math.random() * consultants.length);
+      var rc = consultants[ri];
+      var rcId = getConsultorId(rc);
+      if ((wallets[rcId] || 0) >= ANUNCIO_CUSTO) {
+        var svcList = npcServices[rcId] || [];
+        var svc = svcList.length > 0 ? svcList[Math.floor(Math.random() * svcList.length)] : null;
+        var textos = [
+          rc.nome_exibicao + ' oferece: ' + (svc ? svc.servico + ' por Ξ' + svc.preco : 'consultoria especializada'),
+          'OPORTUNIDADE! ' + rc.nome_exibicao + ' busca parceiros para projeto de ' + (rc.areas_expertise?.[0] || rc.categoria),
+          rc.nome_exibicao + ': Quem precisa de ' + rc.categoria + '? Estou disponivel!',
+          'Investimento aberto! ' + rc.nome_exibicao + ' aceita propostas de parceria'
+        ];
+        var txt = textos[Math.floor(Math.random() * textos.length)];
+
+        wallets[rcId] -= ANUNCIO_CUSTO;
+        var nsh = ANUNCIO_CUSTO / consultants.length;
+        consultants.forEach(function(cc) { wallets[getConsultorId(cc)] = (wallets[getConsultorId(cc)] || 0) + nsh; });
+
+        var npcM = npcs[ri]?.mesh;
+        var ad = { autor: rc.nome_exibicao, autorId: rcId, texto: txt, timestamp: Date.now(), posX: npcM ? npcM.position.x : 0, posZ: npcM ? npcM.position.z : 0 };
+        anuncios.push(ad);
+        mostrarAnuncioBanner(ad);
+        addNotification('<span class="notif-highlight">' + rc.nome_exibicao + '</span> publicou anuncio (-Ξ' + ANUNCIO_CUSTO + ')');
+      }
+    }
+  }
+
+  /* Timer Helena - analise economica periodica */
+  helenaTimer+=dt;
+  if(helenaTimer>=HELENA_INTERVAL){helenaTimer=0;helenaAnalisaEconomia();}
+
+  renderer.render(scene,camera);
+}
+
+function updatePlayer(dt){
+  const spd=12*dt;
+  let dx=0,dz=0;
+  const fwd=new THREE.Vector3(-Math.sin(cameraAngleH),0,-Math.cos(cameraAngleH));
+  const rgt=new THREE.Vector3(-Math.sin(cameraAngleH-Math.PI/2),0,-Math.cos(cameraAngleH-Math.PI/2));
+  if(keys.w){dx+=fwd.x;dz+=fwd.z;}
+  if(keys.s){dx-=fwd.x;dz-=fwd.z;}
+  if(keys.a){dx-=rgt.x;dz-=rgt.z;}
+  if(keys.d){dx+=rgt.x;dz+=rgt.z;}
+  const moving=dx!==0||dz!==0;
+  if(moving){
+    const ln=Math.sqrt(dx*dx+dz*dz);dx/=ln;dz/=ln;
+    const nx=playerMesh.position.x+dx*spd,nz=playerMesh.position.z+dz*spd;
+    let blocked=false;
+    for(const b of BUILDINGS){
+      if(b.type==='garden'||b.type==='plaza')continue;
+      const m=1.5;
+      if(nx>b.x-b.w/2-m&&nx<b.x+b.w/2+m&&nz>b.z-b.d/2-m&&nz<b.z+b.d/2+m){blocked=true;break;}
+    }
+    if(!blocked){
+      playerMesh.position.x=Math.max(-145,Math.min(145,nx));
+      playerMesh.position.z=Math.max(-145,Math.min(145,nz));
+    }
+    playerMesh.rotation.y=Math.atan2(dx,dz);
+    const wc=Math.sin(animTime*8)*0.4;
+    const ud=playerMesh.userData;
+    if(ud.leftLeg){ud.leftLeg.rotation.x=wc;ud.rightLeg.rotation.x=-wc;ud.leftArm.rotation.x=-wc*0.6;ud.rightArm.rotation.x=wc*0.6;}
+  }else{
+    const ud=playerMesh.userData;
+    if(ud.leftLeg){ud.leftLeg.rotation.x*=0.9;ud.rightLeg.rotation.x*=0.9;ud.leftArm.rotation.x*=0.9;ud.rightArm.rotation.x*=0.9;}
+  }
+}
+
+function updateNPCs(dt){
+  for(let i=0;i<npcs.length;i++){
+    const npc=npcs[i],ud=npc.mesh.userData;
+    if(ud.waitTime>0){
+      ud.waitTime-=dt;
+      if(ud.leftLeg){ud.leftLeg.rotation.x*=0.95;ud.rightLeg.rotation.x*=0.95;ud.leftArm.rotation.x*=0.95;ud.rightArm.rotation.x*=0.95;}
+      continue;
+    }
+    const dx=ud.targetX-npc.mesh.position.x,dz=ud.targetZ-npc.mesh.position.z;
+    const dist=Math.sqrt(dx*dx+dz*dz);
+    if(dist<1.5){
+      ud.waitTime=ud.pauseDuration+Math.random()*5;
+      ud.pauseDuration=3+Math.random()*7;
+      const tb=BUILDINGS[Math.floor(Math.random()*BUILDINGS.length)];
+      ud.targetX=tb.x+(Math.random()-0.5)*tb.w*2;
+      ud.targetZ=tb.z+(Math.random()-0.5)*tb.d*2;
+      continue;
+    }
+    const mx=(dx/dist)*ud.speed*dt,mz=(dz/dist)*ud.speed*dt;
+    const nx=npc.mesh.position.x+mx,nz=npc.mesh.position.z+mz;
+    let blocked=false;
+    for(const b of BUILDINGS){
+      if(b.type==='garden'||b.type==='plaza')continue;
+      const mg=1.2;
+      if(nx>b.x-b.w/2-mg&&nx<b.x+b.w/2+mg&&nz>b.z-b.d/2-mg&&nz<b.z+b.d/2+mg){blocked=true;break;}
+    }
+    if(blocked){
+      ud.targetX+=(Math.random()-0.5)*20;ud.targetZ+=(Math.random()-0.5)*20;
+      ud.targetX=Math.max(-140,Math.min(140,ud.targetX));ud.targetZ=Math.max(-140,Math.min(140,ud.targetZ));
+    }else{
+      npc.mesh.position.x=nx;npc.mesh.position.z=nz;
+      npc.mesh.rotation.y=Math.atan2(dx,dz);
+      const ws=6*ud.speed;
+      const cyc=Math.sin(animTime*ws+npc.data.numero_lista)*0.35;
+      if(ud.leftLeg){ud.leftLeg.rotation.x=cyc;ud.rightLeg.rotation.x=-cyc;ud.leftArm.rotation.x=-cyc*0.5;ud.rightArm.rotation.x=cyc*0.5;}
+    }
+  }
+}
+
+function updateCamera(){
+  const px=playerMesh.position.x,pz=playerMesh.position.z;
+  camera.position.set(
+    px+Math.sin(cameraAngleH)*cameraDist*Math.cos(cameraAngleV),
+    2+cameraDist*Math.sin(cameraAngleV),
+    pz+Math.cos(cameraAngleH)*cameraDist*Math.cos(cameraAngleV)
+  );
+  camera.lookAt(px,2,pz);
+}
+
+function updateLabels(){
+  const pp=playerMesh.position;
+  for(let i=0;i<npcs.length;i++){
+    const npc=npcs[i];
+    const d=pp.distanceTo(npc.mesh.position);
+    const show=d<30;
+    if(npc.labelSprite){
+      npc.labelSprite.visible=show;
+      if(show){const s=Math.max(0.3,Math.min(1,10/d));npc.labelSprite.scale.set(2.8*s,0.7*s,1);}
+    }
+  }
+}
+
+function updateProximity(){
+  if(chatOpen)return;
+  const pp=playerMesh.position;
+  let cd=999,ci=-1;
+  for(let i=0;i<npcs.length;i++){
+    const d=pp.distanceTo(npcs[i].mesh.position);
+    if(d<cd){cd=d;ci=i;}
+  }
+  if(cd<5&&ci>=0){
+    if(!selectedNPC||selectedNPC!==npcs[ci])selectNPC(ci);
+  }else if(selectedNPC&&cd>8){hideNPCInfo();}
+}
+
+/* ================================================================
+   MINIMAPA
+   ================================================================ */
+function drawMinimap(){
+  const c=document.getElementById('minimap-canvas');
+  const ctx=c.getContext('2d');
+  const w=200,sc=w/300;
+  ctx.clearRect(0,0,w,w);
+  ctx.fillStyle='#0f172a';ctx.fillRect(0,0,w,w);
+
+  /* Grid sutil */
+  ctx.strokeStyle='rgba(100,116,139,0.1)';ctx.lineWidth=0.5;
+  for(let g=0;g<w;g+=30){ctx.beginPath();ctx.moveTo(g,0);ctx.lineTo(g,w);ctx.stroke();ctx.beginPath();ctx.moveTo(0,g);ctx.lineTo(w,g);ctx.stroke();}
+
+  /* Edificios */
+  BUILDINGS.forEach((b,bi)=>{
+    const bx=(b.x+150)*sc,bz=(b.z+150)*sc;
+    const visited=progress.buildingsVisited.has(bi);
+    ctx.fillStyle=visited?'#475569':'#334155';
+    ctx.fillRect(bx-b.w*sc/2,bz-b.d*sc/2,b.w*sc,b.d*sc);
+    /* Borda gold se visitado */
+    if(visited){ctx.strokeStyle='rgba(214,158,46,0.3)';ctx.lineWidth=0.5;ctx.strokeRect(bx-b.w*sc/2,bz-b.d*sc/2,b.w*sc,b.d*sc);}
+  });
+
+  /* Nomes dos edificios proximos ao jogador */
+  const ppx=playerMesh.position.x,ppz=playerMesh.position.z;
+  ctx.font='bold 7px Inter,sans-serif';ctx.textAlign='center';
+  BUILDINGS.forEach(b=>{
+    const dist=Math.sqrt((ppx-b.x)**2+(ppz-b.z)**2);
+    if(dist<60){
+      const bx=(b.x+150)*sc,bz=(b.z+150)*sc;
+      ctx.fillStyle='rgba(214,158,46,0.7)';
+      ctx.fillText(b.name.length>14?b.name.substring(0,12)+'..':b.name,bx,bz-b.d*sc/2-3);
+    }
+  });
+
+  /* Evento ativo - pulso */
+  if(currentEvent){
+    const eb=currentEvent.building;
+    const ex=(eb.x+150)*sc,ez=(eb.z+150)*sc;
+    const pulse=Math.sin(Date.now()/300)*0.5+1.5;
+    ctx.strokeStyle='#d69e2e';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(ex,ez,5*pulse,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(214,158,46,0.15)';
+    ctx.beginPath();ctx.arc(ex,ez,8,0,Math.PI*2);ctx.fill();
+  }
+
+  /* Anuncios ativos */
+  anuncios.filter(a=>Date.now()-a.timestamp<60000).forEach(a=>{
+    if(!a.posX&&!a.posZ)return;
+    const ax=(a.posX+150)*sc,az=(a.posZ+150)*sc;
+    ctx.fillStyle='rgba(239,68,68,0.6)';
+    ctx.beginPath();ctx.arc(ax,az,3,0,Math.PI*2);ctx.fill();
+  });
+
+  /* NPCs */
+  for(let i=0;i<npcs.length;i++){
+    const n=npcs[i];ctx.fillStyle=CORES[n.data.categoria]||'#888';
+    const nx=(n.mesh.position.x+150)*sc,nz=(n.mesh.position.z+150)*sc;
+    ctx.beginPath();ctx.arc(nx,nz,1.5,0,Math.PI*2);ctx.fill();
+  }
+
+  /* Jogador - triangulo direcional */
+  ctx.fillStyle='#d69e2e';
+  const px=(playerMesh.position.x+150)*sc,pz=(playerMesh.position.z+150)*sc;
+  const rot=playerMesh.rotation.y;
+  ctx.save();ctx.translate(px,pz);ctx.rotate(rot);
+  ctx.beginPath();ctx.moveTo(0,-5);ctx.lineTo(-3,4);ctx.lineTo(3,4);ctx.closePath();ctx.fill();
+  ctx.restore();
+  /* Glow ao redor do jogador */
+  ctx.strokeStyle='rgba(214,158,46,0.5)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.arc(px,pz,6,0,Math.PI*2);ctx.stroke();
+
+  /* Bussola - N S L O */
+  ctx.font='bold 9px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#ef4444';ctx.fillText('N',w/2,8);
+  ctx.fillStyle='#94a3b8';ctx.fillText('S',w/2,w-6);
+  ctx.fillStyle='#94a3b8';ctx.fillText('O',8,w/2);
+  ctx.fillStyle='#94a3b8';ctx.fillText('L',w-8,w/2);
+
+  /* Titulo */
+  ctx.font='bold 8px Inter,sans-serif';ctx.textAlign='left';ctx.textBaseline='top';
+  ctx.fillStyle='rgba(214,158,46,0.6)';ctx.fillText('VILA INTEIA',6,6);
+
+  /* Borda */
+  ctx.strokeStyle='rgba(214,158,46,0.4)';ctx.lineWidth=1;ctx.strokeRect(0,0,w,w);
+}
+
+/* ================================================================
+   START
+   ================================================================ */
+init().catch(showFatalBootError);
+</script>
+</body>
+</html>

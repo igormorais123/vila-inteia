@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vila INTEIA — Portal Unificado</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#d69e2e;--amber-light:#f6e05e;--amber-dark:#b7791f;
+  --bg:#0a0e1a;--bg2:#0f172a;--bg3:#1e293b;
+  --text:#f8fafc;--text2:#cbd5e1;--text-muted:#64748b;
+  --border:rgba(100,116,139,.25);--glow:rgba(214,158,46,.15);
+  --radius:12px;--transition:.3s ease;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* Top bar */
+.topbar{
+  height:52px;background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 16px;gap:8px;z-index:100;
+}
+.topbar .logo{
+  font-size:18px;font-weight:800;color:var(--amber);margin-right:16px;
+  letter-spacing:-0.5px;
+}
+.topbar .logo span{color:var(--text);font-weight:400;font-size:13px;margin-left:6px;opacity:.6}
+
+/* Tabs */
+.tabs{display:flex;gap:2px;flex:1}
+.tab{
+  padding:8px 16px;border-radius:8px 8px 0 0;cursor:pointer;
+  font-size:13px;font-weight:500;color:var(--text2);
+  transition:var(--transition);border:1px solid transparent;
+  border-bottom:none;display:flex;align-items:center;gap:6px;
+  background:transparent;
+}
+.tab:hover{background:var(--bg3);color:var(--text)}
+.tab.active{
+  background:var(--bg);color:var(--amber);
+  border-color:var(--border);
+  border-bottom:2px solid var(--amber);
+}
+.tab .badge{
+  background:var(--amber);color:#000;font-size:10px;
+  padding:1px 6px;border-radius:10px;font-weight:700;
+}
+
+/* Status bar */
+.status-bar{
+  display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text-muted);
+  margin-left:auto;
+}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.status-dot.on{background:#22c55e}
+.status-dot.off{background:#ef4444}
+
+/* Content */
+.content{height:calc(100vh - 52px);position:relative}
+.content iframe{
+  width:100%;height:100%;border:none;position:absolute;top:0;left:0;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.content iframe.active{opacity:1;pointer-events:all}
+
+/* Loading */
+.loader{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;color:var(--text-muted);
+}
+.loader .spinner{
+  width:40px;height:40px;border:3px solid var(--border);
+  border-top-color:var(--amber);border-radius:50%;
+  animation:spin 1s linear infinite;margin:0 auto 12px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Quick actions */
+.quick-actions{
+  position:fixed;bottom:16px;right:16px;z-index:200;
+  display:flex;flex-direction:column;gap:8px;
+}
+.qbtn{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg2);color:var(--text);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  transition:var(--transition);box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.qbtn:hover{background:var(--amber);color:#000;transform:scale(1.1)}
+.qbtn[title]:hover::after{
+  content:attr(title);position:absolute;right:56px;
+  background:var(--bg3);color:var(--text);padding:4px 10px;
+  border-radius:6px;font-size:11px;white-space:nowrap;
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);color:var(--text);padding:10px 20px;
+  border-radius:8px;border:1px solid var(--amber);font-size:13px;
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;
+}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="logo">VILA INTEIA<span>Think Tank Vivo</span></div>
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-view="mapa" onclick="switchView('mapa')">
+      🗺️ Mapa
+    </div>
+    <div class="tab" data-view="cidade3d" onclick="switchView('cidade3d')">
+      🏙️ 3D
+    </div>
+    <div class="tab" data-view="rede" onclick="switchView('rede')">
+      🌐 Rede Social
+    </div>
+    <div class="tab" data-view="jogo" onclick="switchView('jogo')">
+      🎮 Assembleia
+    </div>
+    <div class="tab" data-view="constituicao" onclick="switchView('constituicao')">
+      📜 Constituição
+    </div>
+  </div>
+
+  <div class="status-bar" id="statusBar">
+    <span class="status-dot on"></span>
+    <span id="stepCount">—</span>
+    <span>|</span>
+    <span id="agentCount">—</span>
+    <span>|</span>
+    <span id="convCount">—</span>
+  </div>
+</div>
+
+<!-- Content (iframes) -->
+<div class="content" id="content">
+  <iframe id="frame-mapa" src="index.html" class="active"></iframe>
+  <iframe id="frame-cidade3d" data-src="cidade.html"></iframe>
+  <iframe id="frame-rede" data-src="rede.html"></iframe>
+  <iframe id="frame-jogo" data-src="jogo.html"></iframe>
+  <iframe id="frame-constituicao" data-src="constituicao.html"></iframe>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions">
+  <button class="qbtn" title="Injetar Tópico" onclick="injectTopic()">💡</button>
+  <button class="qbtn" title="Rodar Step" onclick="runStep()">▶️</button>
+  <button class="qbtn" title="Auto-Step" onclick="toggleAutoStep()" id="btnAuto">⏯️</button>
+  <button class="qbtn" title="SWOT Rápido" onclick="quickSWOT()">📊</button>
+  <button class="qbtn" title="Debate" onclick="quickDebate()">⚔️</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:8090';
+const VILA = API + '/api/v1/vila';
+let autoStepOn = false;
+
+// View switching with lazy loading
+function switchView(view) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-view="${view}"]`).classList.add('active');
+
+  document.querySelectorAll('.content iframe').forEach(f => f.classList.remove('active'));
+  const frame = document.getElementById('frame-' + view);
+
+  // Lazy load iframe
+  if (frame.dataset.src && !frame.src) {
+    frame.src = frame.dataset.src;
+  }
+  frame.classList.add('active');
+}
+
+// Status bar update
+async function updateStatus() {
+  try {
+    const r = await fetch(VILA + '/stats', {signal: AbortSignal.timeout(3000)});
+    const d = await r.json();
+    document.getElementById('stepCount').textContent = `Step ${d.step}`;
+    document.getElementById('agentCount').textContent = `${Object.values(d.agentes_por_local || {}).reduce((a,b)=>a+b,0)} agentes`;
+    document.getElementById('convCount').textContent = `${d.total_conversas} conversas`;
+  } catch(e) {
+    document.getElementById('stepCount').textContent = 'offline';
+  }
+}
+
+// Quick actions
+async function injectTopic() {
+  const tema = prompt('Tema para os consultores debaterem:');
+  if (!tema) return;
+  try {
+    await fetch(VILA + '/topico', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({topico: tema})
+    });
+    toast(`Tópico injetado: ${tema}`);
+  } catch(e) { toast('Erro ao injetar tópico'); }
+}
+
+async function runStep() {
+  toast('Executando step...');
+  try {
+    await fetch(VILA + '/step', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+    toast('Step concluído');
+    updateStatus();
+  } catch(e) { toast('Erro no step'); }
+}
+
+async function toggleAutoStep() {
+  autoStepOn = !autoStepOn;
+  const endpoint = autoStepOn ? '/auto-step/iniciar?intervalo=30' : '/auto-step/parar';
+  try {
+    await fetch(VILA + endpoint, {method:'POST'});
+    document.getElementById('btnAuto').style.background = autoStepOn ? '#22c55e' : '';
+    toast(autoStepOn ? 'Auto-step iniciado (30s)' : 'Auto-step parado');
+  } catch(e) { toast('Erro no auto-step'); }
+}
+
+async function quickSWOT() {
+  const tema = prompt('Tema para análise SWOT:');
+  if (!tema) return;
+  toast('Gerando SWOT com 5 consultores...');
+  try {
+    const r = await fetch(VILA + '/oficinas/torre_estrategia/executar?ferramenta=SWOT&tema=' + encodeURIComponent(tema), {method:'POST'});
+    const d = await r.json();
+    const nomes = d.contribuicoes.map(c => c.agente_nome).join(', ');
+    toast(`SWOT pronto! ${d.total_agentes} consultores: ${nomes}`);
+  } catch(e) { toast('Erro no SWOT'); }
+}
+
+async function quickDebate() {
+  const tema = prompt('Tema do debate:');
+  if (!tema) return;
+  toast('Gerando debate entre consultores...');
+  try {
+    const r = await fetch(API + '/api/v1/rede/debate', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({tema})
+    });
+    const d = await r.json();
+    toast(`Debate: ${d.post?.titulo || 'Concluído'}`);
+  } catch(e) { toast('Erro no debate'); }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Init
+updateStatus();
+setInterval(updateStatus, 15000);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === '1') switchView('mapa');
+  if (e.key === '2') switchView('cidade3d');
+  if (e.key === '3') switchView('rede');
+  if (e.key === '4') switchView('jogo');
+  if (e.key === '5') switchView('constituicao');
+  if (e.key === ' ' && e.ctrlKey) { e.preventDefault(); runStep(); }
+});
+</script>
+</body>
+</html>

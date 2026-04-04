@@ -1,0 +1,85 @@
+{
+  "id": "trf1-ana-carolina-roman",
+  "nome": "Ana Carolina Roman",
+  "nome_completo": "Ana Carolina Alves Araujo Roman",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede III - 2º andar",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/ana-carolina-roman-",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "**Nomeada por Decreto Presidencial de 16/05/2023, com posse e exercício em 07/06/2023.**\n\nPossui mestrado em Constituição e Sociedade pelo Instituto Brasiliense de Direito Público (2020). Atualmente é procurador da república do Ministério Público Federal. Tem experiência na área de Direito, com ênfase em Direito Constitucional\n\n**Formação acadêmica/titulação**\n\n**2018 - 2020**\n\nMestrado em Constituição e Sociedade. Instituto Brasiliense de Direito Público, IDP, Brasília, Brasil Título: O CASO TRABALHADORES DA FAZENDA BRASIL VERDE VS BRASIL: A APLICAÇÃO DA PROBIÇÃO DA ESCRAVIDÃO PELA CORTE INTERAMERICANA DE DIREITOS HUMANOS E SEUS REFLEXOS NA TUTELA DE DIREITOS PELO SUPREMO TRIBUNAL FEDERAL, Ano de obtenção: 2020\n\n**2004 - 2006**\n\nEspecialização em Especialização em Direitos Humanos. Faculdade de Direito da USP, FDUSP, São Paulo, Brasil Título: TRABALHO FORÇADO NO BRASIL: ESTUDO SOBRE O ART. 149 DO CÓDIGO PENAL\n\n**Atuação profissional**\n\nMinistério Público Federal - MPF \n\nVínculo institucional 2004 - Atual Vínculo: Servidor público , Enquadramento funcional: Procurador da República",
+    "dados_dossie": {
+      "analise_comportamental": " Recém empossado (2024). Origem Bahia.",
+      "nascimento": {
+        "data": null,
+        "cidade": "Natal/RN (potiguar)"
+      },
+      "origem": "MP (quinto constitucional)",
+      "perfil_ideologico": "Atuacao marcante em direitos humanos, combate a escravidao contemporanea e trafico de pessoas",
+      "perfil_psicologico": "Nome de conciliacao com ampla base de apoio no governo e na oposicao",
+      "secao": "3a",
+      "turma": "12a Turma",
+      "formacao": "Graduacao em Direito pela UFRN (1999). Especializacao em Direitos Humanos pela USP (2007). Mestrado em Direito Constitucional pelo IDP (2020).",
+      "carreira_previa": "Procuradora da Republica desde 2004. Vice-presidente da ANPR. Procuradora-chefe substituta e procuradora-chefe da PRDF. Corregedora auxiliar do MPF (2014-2016). Integrante do Grupo de Apoio ao Combate a Escravidao Contemporanea. Representante da ANPR na Conatrae.",
+      "especialidade": "Licitacao, contratos administrativos, atos administrativos, concursos publicos, direito ambiental, direitos humanos",
+      "curiosidades": "19a mulher a integrar a Corte desde 1989, 10a em atividade. Posse em 07/06/2023. Nomeada por Lula. Quinto constitucional do MPF. Vaga da Lei 14.253/2021."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "Procuradora da Republica desde 2004"
+  },
+  "padroes_decisao": {
+    "Direitos Humanos": "Especialista. Atuacao no combate a escravidao contemporanea e protecao de direitos fundamentais."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Analise comportamental:  Recém empossado (2024). Origem Bahia.",
+      "Perfil ideologico: Especialista em Direitos Humanos. Atuacao destacada no combate a escravidao contemporanea. Considerada 'nome de conciliacao' com apoio bipartidario."
+    ],
+    "confianca_global": 6
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/ana-carolina-roman-",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    },
+    {
+      "url": "https://portal.trf1.jus.br/portaltrf1/magistrados/desembargadores-federais/",
+      "tipo": "site-oficial",
+      "observacao": "Portal TRF-1 - Desembargadores Federais"
+    },
+    {
+      "url": null,
+      "tipo": "dossie_compass",
+      "observacao": "Dossie Completo: Os 43 Desembargadores Federais do TRF-1 (compilado 2026-02)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}

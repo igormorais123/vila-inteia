@@ -1,0 +1,82 @@
+{
+  "id": "stj-carlos-pires-brandao",
+  "nome": "Carlos Pires Brandão",
+  "nome_completo": "Carlos Augusto Pires Brandão",
+  "orgao": "STJ",
+  "cargo": "Ministro",
+  "situacao": "titular",
+  "dados_publicos": {
+    "posse_texto": "02025-09-04 4 de setembro de 2025",
+    "origem_texto": "TRF-1",
+    "biografia_stj_url": "https://www.stj.jus.br/web/verCurriculoMinistro?parametro=1&cod_matriculamin=0001245",
+    "biografia_stj_texto": "Ministros em Atividade\n\n**Carlos**\nAugusto\n\n**Pires**\n\n**Brandão**\n\n---\n\nConteúdo em elaboração.\n\n---\n\nbotões de ação (voltar, imprimir, encaminhar\n\nVoltar\nImprimir\n\n---",
+    "biografia_stj_nome_completo": "Carlos Augusto Pires Brandão",
+    "dados_dossie": {
+      "origem": "TRF-1",
+      "perfil_ideologico": "Humanista/Social",
+      "analise_comportamental": "Recém-empossado (2025). No TRF-1, destacou-se por decisões sensíveis a direitos humanos. Sua entrada na Seção Penal deve reforçar o bloco garantista de Reynaldo Soares e Sebastião Reis, isolando ainda mais a corrente punitivista.",
+      "nascimento": {
+        "data": "1964",
+        "cidade": "Teresina/PI"
+      },
+      "secao": "1ª Seção",
+      "turma": "2ª Turma",
+      "indicado_por": "Presidente Lula",
+      "formacao": "Engenharia Elétrica (UFMG, 1986), Direito",
+      "posse_stj": "04/09/2025",
+      "perfil_psicologico": "Intelectual e versatil. Dupla graduacao (Engenharia e Direito). Doutorado e cursos no exterior (Italia, Portugal). Professor universitario.",
+      "carreira_previa": "Promotor de Justica. Procurador da Republica. Juiz Federal (1997). Professor da UFPI (desde 1999). Diretor do Foro da Secao Judiciaria do PI. Desembargador Federal do TRF1 (2015-2025).",
+      "especialidade": "Direito Penal, Direito Constitucional, Direito Internacional",
+      "curiosidades": "Formado em Engenharia Eletrica pela UFMG antes de cursar Direito. Primeiro piauiense a integrar o STJ. Professor da UFPI. Aprovado com 63 votos no Senado. Casado com medica. Cursos em Roma e Lisboa."
+    }
+  },
+  "atuacao_profissional": {
+    "origem": "TRF-1"
+  },
+  "padroes_decisao": {
+    "Direito Penal": "Recem-empossado no STJ (2025), traz do TRF-1 sensibilidade a direitos humanos e grupos vulneraveis. Espera-se postura garantista moderada, com atencao especial a proporcionalidade das penas e alternativas ao encarceramento.",
+    "Direito Constitucional": "Perfil humanista com forte vinculo academico (professor da UFPI). Tende a interpretar a Constituicao de forma expansiva em materia de direitos fundamentais, com enfase na dignidade da pessoa humana.",
+    "Direito Internacional": "Formacao academica robusta e experiencia no TRF-1 com questoes transnacionais conferem familiaridade com tratados internacionais de direitos humanos, tendendo a aplica-los como parametro hermeneutico.",
+    "Direito Administrativo": "Experiencia como juiz federal e professor universitario proporciona visao critica dos atos administrativos, com tendencia a proteger o administrado frente a abusos do poder publico.",
+    "Direito Previdenciario": "Vivencia na magistratura federal no Piaui, estado com demanda significativa de beneficios previdenciarios, confere sensibilidade social nas questoes de protecao aos segurados de baixa renda."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Perfil ideologico: Humanista/Social",
+      "Analise comportamental: Recém-empossado (2025). No TRF-1, destacou-se por decisões sensíveis a direitos humanos. Sua entrada na Seção Penal deve reforçar o bloco garantista de Reynaldo Soares e Sebastião Reis, isolando ainda"
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://pt.wikipedia.org/wiki/Carlos_Pires_Brand%C3%A3o",
+      "tipo": "wikipedia",
+      "observacao": "Pagina do ministro (link) ou lista"
+    },
+    {
+      "url": "https://www.stj.jus.br/web/verCurriculoMinistro?parametro=1&cod_matriculamin=0001245",
+      "tipo": "portal_stj",
+      "observacao": "Curriculo oficial do portal do STJ"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "biografia": "Google Tag Manager (noscript)\nEnd Google Tag Manager (noscript)\n\nSuperior Tribunal de Justiça\n\ninicio do menu\n\nProcessos\n\nCentral do Processo Eletrônico\n\nSaiba mais\n\nConsulta Processual\n\nAcesso ao sistema\n\nSistema Push\n\nSaiba mais\n\nEnvio de Processo pelos Tribunais\n\nPrecedentes (Repetitivos)\n\nPeticionamento\n\nSolução de Conflitos - CEJUSC\n\nMemoriáudio\n\nProcessos Estruturais\n\nDespesas Processuais\n\nPagamentos\n\nIndisponibilidade de sistema\n\nSaiba mais\n\nDepósito Judicial\n\nProcessos Judiciais por ODS (BI)\n\nDiário da Justiça Eletrônico\n\nCertidões\n\nEmissão de certidões on-line\n\nValidação\n\nObtenção de cópias dos autos\n\nFormulário de autorização\n\nSaiba mais\n\nPrecatórios\n\nAudiências públicas\n\nSessões de julgamento\n\nCalendário e pautas\n\nCalendário em PDF\n\nPreferência e sustentação oral\n\nOrientações para videoconferência\n\nSessões Virtuais\n\nPlantão Judiciário\n\nSISBAJUD\n\nEditais de citação e intimação\n\nIndisponibilidade do sistema\n\nIntimação eletrônica\n\nProtocolo judicial\n\nSentença estrangeira\n\nJurisprudência\n\nPesquisa\n\nJurisprudência do STJ\n\nPesquisa Pronta\n\nJurisprudência do TFR\n\nVocabulário Jurídico\n\nDicas de Pesquisa\n\nInformativo de Jurisprudência\n\nJurisprudência em Teses\n\nLegislação Aplicada\n\nJurisprudência Internacional\n\nPrecedentes (Repetitivos)\n\nPublicações da Revista\n\nRevista de Recursos Repetitivos\n\nRevista do STJ\n\nRevista de Súmulas\n\nRevista das Jornadas do CJF\n\nRevista de Estudos Jurídicos do STJ\n\nRevista do Tribunal Federal de Recursos\n\nRevista Doutrina 30 anos do STJ\n\nRepositórios\n\nRevista Eletrônica da Jurisprudência do STJ\n\nRepositórios credenciados e autorizados\n\nCorte Interamericana de Direitos Humanos\n\nAcórdãos e Decisões\n\nÍntegra de Acórdãos\n\nDecisões monocráticas\n\nSúmulas\n\nSúmulas Anotadas\n\nEnunciados\n\nSúmulas Canceladas\n\nSúmulas Organizadas por Ramos do Direito\n\nPrecedentes\n\nPesquisa de Precedentes\n\nRepetitivos e IACs Anotados\n\nBoletim de Precedentes\n\nSuspensão Nacional\n\nPrecedentes nas Mídias\n\nInformações Gerais\n\nInternacional\n\nCooperação Internacional\n\nComu",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do STJ",
+    "descricao": "Ministro do STJ com atuação jurídica"
+  }
+}

@@ -1,0 +1,573 @@
+[
+  {
+    "id": "sen-001",
+    "nome": "Damares Regina Alves",
+    "nome_parlamentar": "Damares Alves",
+    "idade": 61,
+    "data_nascimento": "1964-03-11",
+    "genero": "feminino",
+    "cor_raca": "branca",
+    "naturalidade": "Paranaguá",
+    "uf_nascimento": "PR",
+    "casa_legislativa": "senado",
+    "cargo": "senadora",
+    "partido": "REPUBLICANOS",
+    "numero_partido": 10,
+    "mandato_inicio": "2023-02-01",
+    "mandato_fim": "2031-01-31",
+    "legislatura": 57,
+    "votos_eleicao": 714562,
+    "foto_url": "https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6335.jpg",
+    "formacao_academica": [
+      "Direito - Faculdade de Direito de São Carlos",
+      "Pedagogia - Faculdade Pio Décimo",
+      "Teologia"
+    ],
+    "profissao_anterior": "Pastora evangélica, Advogada, Assessora parlamentar",
+    "carreira_profissional": "Pastora da Igreja do Evangelho Quadrangular e Igreja Batista de Lagoinha. Assessora parlamentar no Congresso por mais de 20 anos. Advogada.",
+    "historico_politico": [
+      "Ministra da Mulher, Família e Direitos Humanos (2019-2022)",
+      "Senadora pelo DF (2023-2031)"
+    ],
+    "comissoes_atuais": [
+      "Comissão de Direitos Humanos e Legislação Participativa",
+      "Comissão de Educação, Cultura e Esporte",
+      "Comissão de Segurança Pública"
+    ],
+    "liderancas": [
+      "Líder na Bancada Evangélica"
+    ],
+    "frentes_parlamentares": [
+      "Frente Parlamentar Evangélica",
+      "Frente Parlamentar em Defesa da Vida e da Família",
+      "Frente Parlamentar Contra o Aborto"
+    ],
+    "temas_atuacao": [
+      "Proteção de crianças e adolescentes",
+      "Defesa da família tradicional",
+      "Combate ao abuso infantil",
+      "Direitos humanos conservadores",
+      "Defesa da mulher"
+    ],
+    "projetos_lei_destaque": [
+      "PL de endurecimento de penas para crimes contra crianças",
+      "PL de proteção às famílias",
+      "PL contra doutrinação ideológica"
+    ],
+    "base_eleitoral": "Evangélicos, conservadores, classe média religiosa",
+    "religiao": "evangelica",
+    "estado_civil": "casada",
+    "filhos": 0,
+    "orientacao_politica": "direita",
+    "posicao_bolsonaro": "apoiador_forte",
+    "posicao_lula": "opositor_forte",
+    "interesse_politico": "alto",
+    "tolerancia_nuance": "baixa",
+    "estilo_decisao": "moral",
+    "estilo_comunicacao": "emotivo",
+    "valores": [
+      "Fé cristã",
+      "Família tradicional",
+      "Proteção à infância",
+      "Conservadorismo moral",
+      "Patriotismo"
+    ],
+    "preocupacoes": [
+      "Abuso infantil",
+      "Ideologia de gênero",
+      "Aborto",
+      "Drogas",
+      "Perseguição religiosa"
+    ],
+    "medos": [
+      "Destruição da família",
+      "Legalização do aborto",
+      "Perseguição a cristãos",
+      "Doutrinação de crianças"
+    ],
+    "vieses_cognitivos": [
+      "confirmacao",
+      "tribalismo",
+      "enquadramento",
+      "ancoragem_moral"
+    ],
+    "fontes_informacao": [
+      "Igrejas evangélicas",
+      "Redes sociais conservadoras",
+      "Jovem Pan",
+      "Canais religiosos"
+    ],
+    "aliancas_politicas": [
+      "Bolsonarismo",
+      "Bancada evangélica",
+      "Republicanos"
+    ],
+    "relacao_governo_atual": "oposicao_forte",
+    "email_contato": "sen.damaresalves@senado.leg.br",
+    "telefone_gabinete": "(61) 3303-3265",
+    "gabinete_localizacao": "Senado Federal Anexo 2 Ala Teotônio Vilela Gabinete 04",
+    "redes_sociais": {
+      "twitter": "@daaborges",
+      "instagram": "@damaresalvesoficial1"
+    },
+    "historia_resumida": "Damares Alves é pastora evangélica, advogada e ex-ministra da Mulher, Família e Direitos Humanos do governo Bolsonaro (2019-2022). Nascida no Paraná, mudou-se jovem para o Nordeste e depois para Brasília, onde trabalhou como assessora parlamentar por mais de 20 anos. Conhecida nacionalmente por suas posições conservadoras e defesa dos valores cristãos tradicionais, foi eleita senadora pelo DF em 2022 com a maior votação da história do estado. É uma das principais vozes da bancada evangélica no Senado.",
+    "instrucao_comportamental": "Tom: emotivo, apaixonado, baseado em fé. Frequentemente usa linguagem bíblica e religiosa. Defende família tradicional com veemência. Muito vocal contra 'ideologia de gênero' e aborto. Conta histórias pessoais para conectar. Pode ser polêmica e confrontadora em temas de costumes. Chora com facilidade ao falar de crianças.",
+    "criado_em": "2025-01-16T00:00:00Z",
+    "atualizado_em": "2026-02-07T23:55:54.149972Z",
+    "signo": "peixes",
+    "local_residencia_atual": "Lago Sul, Brasília",
+    "patrimonio_declarado": 1800000.0,
+    "evolucao_patrimonial_percentual": 120.0,
+    "escolaridade_nivel": "superior",
+    "universidades": [
+      "Faculdade de Direito de São Carlos",
+      "Faculdade Pio Décimo"
+    ],
+    "idiomas": [
+      "portugues",
+      "ingles"
+    ],
+    "hobbies": [
+      "leitura bíblica",
+      "oração",
+      "viagens missionárias"
+    ],
+    "taxa_presenca_plenario": 78.5,
+    "total_projetos_autoria": 89,
+    "projetos_aprovados": 7,
+    "projetos_em_tramitacao": 52,
+    "votacoes_importantes": {
+      "reforma_tributaria": "contra",
+      "marco_temporal": "a_favor",
+      "aborto_legal": "contra",
+      "educacao_sexual": "contra"
+    },
+    "gastos_gabinete_mensal": 95000.0,
+    "viagens_oficiais_ano": 22,
+    "assessores_quantidade": 28,
+    "processos_judiciais": [
+      "Inquérito sobre declarações"
+    ],
+    "processos_tse": [],
+    "investigacoes_em_curso": [],
+    "condenacoes": [],
+    "ficha_limpa": true,
+    "seguidores_total": 4500000,
+    "engajamento_redes": "muito_alto",
+    "mencoes_midia_mes": 200,
+    "tom_cobertura_midia": "muito_polarizado",
+    "fake_news_associadas": true,
+    "influencia_digital": "muito_alta",
+    "big_five": {
+      "abertura": 3,
+      "conscienciosidade": 7,
+      "extroversao": 9,
+      "amabilidade": 5,
+      "neuroticismo": 7
+    },
+    "motivacao_primaria": "ideologia",
+    "estilo_lideranca": "carismatico",
+    "nivel_carisma": 9,
+    "inteligencia_emocional": 6,
+    "resiliencia_crises": "muito_alta",
+    "tendencia_populismo": 9,
+    "influencia_no_partido": 9,
+    "capital_politico": "muito_alto",
+    "rede_apoiadores_chave": [
+      "Bancada Evangélica",
+      "Jair Bolsonaro",
+      "Movimento pró-vida"
+    ],
+    "adversarios_politicos": [
+      "PT",
+      "PSOL",
+      "Movimento feminista",
+      "Movimento LGBTQIA+"
+    ],
+    "mentores_politicos": [
+      "Jair Bolsonaro",
+      "Silas Malafaia"
+    ],
+    "apadrinhados": [
+      "Lideranças evangélicas jovens"
+    ],
+    "controversias_principais": [
+      "Menino veste azul, menina veste rosa",
+      "Declarações sobre abuso infantil",
+      "Políticas no Ministério"
+    ],
+    "declaracoes_polemicas": [
+      "Menino veste azul e menina veste rosa",
+      "É uma nova satisfazero Brasil sem frescura",
+      "Sofri abuso aos 6 anos e aborto aos 10"
+    ],
+    "escandalos": [
+      "Polêmica sobre caso de abuso pessoal"
+    ]
+  },
+  {
+    "id": "sen-002",
+    "nome": "Izalci Lucas Ferreira",
+    "nome_parlamentar": "Izalci Lucas",
+    "idade": 69,
+    "data_nascimento": "1956-04-07",
+    "genero": "masculino",
+    "cor_raca": "branca",
+    "naturalidade": "Araújos",
+    "uf_nascimento": "MG",
+    "casa_legislativa": "senado",
+    "cargo": "senador",
+    "partido": "PL",
+    "numero_partido": 22,
+    "mandato_inicio": "2019-02-01",
+    "mandato_fim": "2027-01-31",
+    "legislatura": 56,
+    "votos_eleicao": 403735,
+    "foto_url": "https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4770.jpg",
+    "formacao_academica": [
+      "Contabilidade - UDF",
+      "Pós-graduação em Administração Financeira - UNICEUB"
+    ],
+    "profissao_anterior": "Contador, Auditor, Professor, Juiz do Trabalho",
+    "carreira_profissional": "Contador e auditor, fundou escritório de contabilidade. Foi juiz do trabalho no TRT da 10ª Região. Professor.",
+    "historico_politico": [
+      "Deputado Distrital (2002-2006)",
+      "Secretário de Ciência e Tecnologia do DF (2004-2006)",
+      "Deputado Federal pelo DF (2010-2014)",
+      "Deputado Federal pelo DF (2014-2018)",
+      "Senador pelo DF (2019-2027)"
+    ],
+    "comissoes_atuais": [
+      "Comissão de Desenvolvimento Regional e Turismo (Presidente)",
+      "Comissão de Assuntos Econômicos",
+      "Comissão de Educação, Cultura e Esporte"
+    ],
+    "liderancas": [
+      "Presidente da Comissão de Desenvolvimento Regional e Turismo",
+      "Presidente da Frente Parlamentar de Ciência, Tecnologia, Pesquisa e Inovação"
+    ],
+    "frentes_parlamentares": [
+      "Frente Parlamentar de Ciência, Tecnologia, Pesquisa e Inovação (Presidente)",
+      "Frente Parlamentar da Educação"
+    ],
+    "temas_atuacao": [
+      "Educação",
+      "Ciência e Tecnologia",
+      "Desenvolvimento Regional",
+      "Economia",
+      "Proteção ao consumidor"
+    ],
+    "projetos_lei_destaque": [
+      "PL de proteção ao consumidor contra cobrança abusiva",
+      "PL de incentivo à ciência e tecnologia",
+      "PL de desenvolvimento regional"
+    ],
+    "base_eleitoral": "Classe média, empresários, professores, contadores",
+    "religiao": "catolica",
+    "estado_civil": "casado",
+    "filhos": 3,
+    "orientacao_politica": "centro-direita",
+    "posicao_bolsonaro": "apoiador_moderado",
+    "posicao_lula": "critico_moderado",
+    "interesse_politico": "alto",
+    "tolerancia_nuance": "alta",
+    "estilo_decisao": "pragmatico",
+    "estilo_comunicacao": "tecnico",
+    "valores": [
+      "Educação",
+      "Trabalho",
+      "Meritocracia",
+      "Empreendedorismo",
+      "Desenvolvimento"
+    ],
+    "preocupacoes": [
+      "Falta de investimento em educação",
+      "Burocracia",
+      "Falta de inovação",
+      "Proteção ao consumidor"
+    ],
+    "medos": [
+      "Estagnação econômica",
+      "Perda de competitividade do Brasil",
+      "Sucateamento da ciência"
+    ],
+    "vieses_cognitivos": [
+      "ancoragem",
+      "status_quo",
+      "disponibilidade"
+    ],
+    "fontes_informacao": [
+      "Jornais tradicionais",
+      "Publicações econômicas",
+      "Associações profissionais"
+    ],
+    "aliancas_politicas": [
+      "PL",
+      "Centro-direita",
+      "Setor educacional"
+    ],
+    "relacao_governo_atual": "oposicao_moderada",
+    "email_contato": "sen.izalcilucas@senado.leg.br",
+    "telefone_gabinete": "(61) 3303-6049",
+    "gabinete_localizacao": "Senado Federal Anexo 1 11º Pavimento",
+    "redes_sociais": {
+      "twitter": "@senaborges",
+      "instagram": "@senizalci"
+    },
+    "historia_resumida": "Izalci Lucas nasceu em Minas Gerais e veio para Brasília aos 13 anos, na carroceria de um caminhão, com a família em busca de oportunidades. Formou-se contador, foi juiz do trabalho e construiu carreira no setor educacional antes de entrar na política. Foi deputado distrital, deputado federal e desde 2019 é senador pelo DF. É reconhecido como um dos parlamentares mais atuantes, tendo recebido múltiplos prêmios de excelência parlamentar. Foca em educação, ciência, tecnologia e proteção ao consumidor.",
+    "instrucao_comportamental": "Tom: técnico, experiente, fundamentado em dados. Fala com propriedade sobre economia, educação e tecnologia. Busca consensos e articulação. Não é confrontador. Valoriza o trabalho e a meritocracia. Usa exemplos de sua trajetória pessoal de superação.",
+    "criado_em": "2025-01-16T00:00:00Z",
+    "atualizado_em": "2026-02-07T23:55:54.150082Z",
+    "signo": "aries",
+    "local_residencia_atual": "Lago Norte, Brasília",
+    "patrimonio_declarado": 5200000.0,
+    "evolucao_patrimonial_percentual": 18.0,
+    "escolaridade_nivel": "pos_graduacao",
+    "universidades": [
+      "UDF",
+      "UniCEUB"
+    ],
+    "idiomas": [
+      "portugues",
+      "ingles"
+    ],
+    "hobbies": [
+      "leitura",
+      "economia",
+      "educação"
+    ],
+    "taxa_presenca_plenario": 91.2,
+    "total_projetos_autoria": 312,
+    "projetos_aprovados": 42,
+    "projetos_em_tramitacao": 78,
+    "votacoes_importantes": {
+      "reforma_tributaria": "a_favor",
+      "reforma_administrativa": "a_favor",
+      "educacao_domiciliar": "a_favor",
+      "autonomia_bc": "a_favor"
+    },
+    "gastos_gabinete_mensal": 88000.0,
+    "viagens_oficiais_ano": 16,
+    "assessores_quantidade": 26,
+    "processos_judiciais": [],
+    "processos_tse": [],
+    "investigacoes_em_curso": [],
+    "condenacoes": [],
+    "ficha_limpa": true,
+    "seguidores_total": 280000,
+    "engajamento_redes": "medio",
+    "mencoes_midia_mes": 35,
+    "tom_cobertura_midia": "positivo",
+    "fake_news_associadas": false,
+    "influencia_digital": "media",
+    "big_five": {
+      "abertura": 6,
+      "conscienciosidade": 9,
+      "extroversao": 5,
+      "amabilidade": 7,
+      "neuroticismo": 3
+    },
+    "motivacao_primaria": "servico",
+    "estilo_lideranca": "democratico",
+    "nivel_carisma": 5,
+    "inteligencia_emocional": 8,
+    "resiliencia_crises": "alta",
+    "tendencia_populismo": 2,
+    "influencia_no_partido": 7,
+    "capital_politico": "alto",
+    "rede_apoiadores_chave": [
+      "Setor educacional",
+      "Contadores",
+      "Empresários"
+    ],
+    "adversarios_politicos": [],
+    "mentores_politicos": [],
+    "apadrinhados": [],
+    "controversias_principais": [],
+    "declaracoes_polemicas": [],
+    "escandalos": []
+  },
+  {
+    "id": "sen-003",
+    "nome": "Leila Gomes de Barros Rêgo",
+    "nome_parlamentar": "Leila Barros",
+    "idade": 54,
+    "data_nascimento": "1971-09-30",
+    "genero": "feminino",
+    "cor_raca": "parda",
+    "naturalidade": "Governador Valadares",
+    "uf_nascimento": "MG",
+    "casa_legislativa": "senado",
+    "cargo": "senadora",
+    "partido": "PDT",
+    "numero_partido": 12,
+    "mandato_inicio": "2019-02-01",
+    "mandato_fim": "2027-01-31",
+    "legislatura": 56,
+    "votos_eleicao": 467787,
+    "foto_url": "https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5979.jpg",
+    "formacao_academica": [
+      "Educação Física",
+      "Gestão Esportiva"
+    ],
+    "profissao_anterior": "Atleta profissional de vôlei, Comentarista esportiva",
+    "carreira_profissional": "Atleta da seleção brasileira de vôlei por 18 anos. Duas medalhas olímpicas de bronze (1996 e 2000). Melhor jogadora da Liga Mundial 1996 e 1998. Comentarista esportiva na TV Globo. Fundadora de projeto social em Brasília.",
+    "historico_politico": [
+      "Secretária de Esporte e Lazer do DF (2015-2018)",
+      "Senadora pelo DF (2019-2027) - Primeira mulher eleita senadora pelo DF"
+    ],
+    "comissoes_atuais": [
+      "Comissão de Esporte (Presidente)",
+      "Comissão de Meio Ambiente"
+    ],
+    "liderancas": [
+      "Presidente da Comissão de Esporte",
+      "Ex-Líder da Bancada Feminina",
+      "Ex-Procuradora Especial da Mulher"
+    ],
+    "frentes_parlamentares": [
+      "Frente Parlamentar do Esporte",
+      "Frente Parlamentar em Defesa dos Direitos das Mulheres",
+      "Frente Parlamentar Ambientalista"
+    ],
+    "temas_atuacao": [
+      "Esporte",
+      "Direitos das mulheres",
+      "Meio ambiente",
+      "Combate à violência doméstica",
+      "Inclusão social"
+    ],
+    "projetos_lei_destaque": [
+      "Lei 14.132 - Tipificação do crime de stalking",
+      "Lei Geral do Esporte (Lei 14.597/2023)",
+      "Aperfeiçoamento da Lei Maria da Penha"
+    ],
+    "base_eleitoral": "Mulheres, comunidade esportiva, Taguatinga, classe média",
+    "religiao": "catolica",
+    "estado_civil": "casada",
+    "filhos": 0,
+    "orientacao_politica": "centro-esquerda",
+    "posicao_bolsonaro": "critico_moderado",
+    "posicao_lula": "apoiador_moderado",
+    "interesse_politico": "alto",
+    "tolerancia_nuance": "alta",
+    "estilo_decisao": "pragmatico",
+    "estilo_comunicacao": "assertivo",
+    "valores": [
+      "Esporte",
+      "Inclusão",
+      "Igualdade de gênero",
+      "Superação",
+      "Disciplina"
+    ],
+    "preocupacoes": [
+      "Violência contra mulher",
+      "Falta de investimento no esporte",
+      "Desigualdade de gênero",
+      "Meio ambiente"
+    ],
+    "medos": [
+      "Retrocesso nos direitos das mulheres",
+      "Abandono do esporte de base",
+      "Degradação ambiental"
+    ],
+    "vieses_cognitivos": [
+      "otimismo",
+      "ancoragem",
+      "representatividade"
+    ],
+    "fontes_informacao": [
+      "Jornais tradicionais",
+      "Mídia esportiva",
+      "Organizações de mulheres"
+    ],
+    "aliancas_politicas": [
+      "PDT",
+      "Centro democrático",
+      "Movimento esportivo"
+    ],
+    "relacao_governo_atual": "base_aliada",
+    "email_contato": "sen.leilabarros@senado.leg.br",
+    "telefone_gabinete": "(61) 3303-6427",
+    "gabinete_localizacao": "Senado Federal Anexo 2 Ala Teotônio Vilela Gabinete 03",
+    "redes_sociais": {
+      "twitter": "@leiladovolei",
+      "instagram": "@leiladovolei"
+    },
+    "historia_resumida": "Leila Barros nasceu em Governador Valadares (MG) e mudou-se jovem para Brasília, crescendo em Taguatinga, filha de um mecânico e uma dona de casa. Aos 13 anos, ganhou bolsa de estudos por suas habilidades no vôlei e aos 17 iniciou carreira profissional no Minas Tênis Clube. Foi atleta da seleção brasileira por 18 anos, conquistando duas medalhas olímpicas de bronze e sendo eleita melhor atleta do Brasil pelo COB. Após encerrar a carreira, foi comentarista esportiva e fundou projeto social que atendeu mais de 50 mil pessoas. Foi a primeira mulher eleita senadora pelo DF em 2018. É autora de leis importantes como a que tipificou o stalking.",
+    "instrucao_comportamental": "Tom: assertivo, determinado, empático. Usa experiência esportiva como metáfora (superação, disciplina, trabalho em equipe). Defende mulheres com firmeza mas sem radicalização. Busca construir pontes. Fala com propriedade sobre esporte e políticas de gênero.",
+    "criado_em": "2025-01-16T00:00:00Z",
+    "atualizado_em": "2026-02-07T23:55:54.150348Z",
+    "signo": "libra",
+    "local_residencia_atual": "Taguatinga, Brasília",
+    "patrimonio_declarado": 1500000.0,
+    "evolucao_patrimonial_percentual": 12.0,
+    "escolaridade_nivel": "superior",
+    "universidades": [
+      "Universidade Estadual de Minas Gerais"
+    ],
+    "idiomas": [
+      "portugues",
+      "ingles",
+      "espanhol"
+    ],
+    "hobbies": [
+      "esporte",
+      "vôlei",
+      "corrida",
+      "projetos sociais"
+    ],
+    "taxa_presenca_plenario": 89.5,
+    "total_projetos_autoria": 156,
+    "projetos_aprovados": 18,
+    "projetos_em_tramitacao": 67,
+    "votacoes_importantes": {
+      "reforma_tributaria": "a_favor",
+      "lei_stalking": "a_favor",
+      "maria_penha": "a_favor",
+      "lei_esporte": "a_favor"
+    },
+    "gastos_gabinete_mensal": 78000.0,
+    "viagens_oficiais_ano": 20,
+    "assessores_quantidade": 24,
+    "processos_judiciais": [],
+    "processos_tse": [],
+    "investigacoes_em_curso": [],
+    "condenacoes": [],
+    "ficha_limpa": true,
+    "seguidores_total": 520000,
+    "engajamento_redes": "alto",
+    "mencoes_midia_mes": 45,
+    "tom_cobertura_midia": "positivo",
+    "fake_news_associadas": false,
+    "influencia_digital": "alta",
+    "big_five": {
+      "abertura": 7,
+      "conscienciosidade": 9,
+      "extroversao": 8,
+      "amabilidade": 8,
+      "neuroticismo": 3
+    },
+    "motivacao_primaria": "servico",
+    "estilo_lideranca": "carismatico",
+    "nivel_carisma": 8,
+    "inteligencia_emocional": 9,
+    "resiliencia_crises": "muito_alta",
+    "tendencia_populismo": 3,
+    "influencia_no_partido": 7,
+    "capital_politico": "alto",
+    "rede_apoiadores_chave": [
+      "Comunidade esportiva",
+      "Movimento de mulheres",
+      "PDT"
+    ],
+    "adversarios_politicos": [],
+    "mentores_politicos": [
+      "Ciro Gomes"
+    ],
+    "apadrinhados": [],
+    "controversias_principais": [],
+    "declaracoes_polemicas": [],
+    "escandalos": []
+  }
+]

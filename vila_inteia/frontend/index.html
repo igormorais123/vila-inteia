@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vila INTEIA - Think Tank Vivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#d69e2e;--amber-light:#f6e05e;--amber-dark:#b7791f;
+  --gold:#d69e2e;--silver:#94a3b8;--bronze:#c2884a;
+  --success:#22c55e;--warning:#eab308;--danger:#ef4444;--info:#3b82f6;
+  --radius-sm:6px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;
+  --transition:0.3s ease;
+  --sidebar-w:260px;--panel-w:340px;--bottombar-h:160px;
+}
+[data-theme="dark"]{
+  --bg-root:#0a0e1a;--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-tertiary:#283548;
+  --bg-card:rgba(30,41,59,.7);--bg-glass:rgba(15,23,42,.75);
+  --text-primary:#f8fafc;--text-secondary:#cbd5e1;--text-muted:#64748b;
+  --border:rgba(100,116,139,.25);--border-active:rgba(214,158,46,.4);
+  --glow:rgba(214,158,46,.15);--shadow:rgba(0,0,0,.4);
+}
+[data-theme="light"]{
+  --bg-root:#f1f5f9;--bg-primary:#ffffff;--bg-secondary:#f8fafc;--bg-tertiary:#e2e8f0;
+  --bg-card:rgba(255,255,255,.85);--bg-glass:rgba(255,255,255,.8);
+  --text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;
+  --border:rgba(148,163,184,.3);--border-active:rgba(214,158,46,.5);
+  --glow:rgba(214,158,46,.1);--shadow:rgba(0,0,0,.1);
+}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg-root);color:var(--text-primary);
+  display:flex;flex-direction:column;
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;flex:1;overflow:hidden;position:relative}
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;
+  background:var(--bg-primary);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:20;transition:var(--transition);
+  overflow-y:auto;
+}
+.sidebar.collapsed{min-width:60px;width:60px}
+.sidebar.collapsed .sidebar-label,.sidebar.collapsed .nav-text,
+.sidebar.collapsed .sim-controls-body,.sidebar.collapsed .topic-section,
+.sidebar.collapsed .sidebar-footer-text{display:none}
+.sidebar.collapsed .logo-name,.sidebar.collapsed .logo-tagline{display:none}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px 0}
+
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.map-container{flex:1;position:relative;overflow:hidden}
+.right-panel{
+  width:0;overflow:hidden;border-left:1px solid var(--border);
+  background:var(--bg-primary);transition:width .3s ease;z-index:10;
+}
+.right-panel.open{width:var(--panel-w);min-width:var(--panel-w)}
+.right-panel-inner{width:var(--panel-w);height:100%;overflow-y:auto;padding:20px}
+.bottom-bar{
+  height:var(--bottombar-h);border-top:1px solid var(--border);
+  background:var(--bg-primary);overflow:hidden;display:flex;flex-direction:column;
+}
+
+/* ===== SIDEBAR ===== */
+.logo-section{padding:20px 16px;border-bottom:1px solid var(--border)}
+.logo-row{display:flex;align-items:center;gap:10px}
+.logo-box{
+  width:36px;height:36px;background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;color:#fff;flex-shrink:0;
+}
+.logo-name{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.logo-name .hl{color:var(--amber)}
+.logo-tagline{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+.sidebar-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-muted);padding:16px 16px 6px;
+}
+.nav-list{list-style:none}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;
+  transition:var(--transition);border-left:3px solid transparent;font-size:13px;
+  color:var(--text-secondary);
+}
+.nav-item:hover{background:var(--glow);color:var(--text-primary)}
+.nav-item.active{border-left-color:var(--amber);color:var(--amber);background:var(--glow)}
+.nav-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+
+.sim-controls{border-top:1px solid var(--border);margin-top:auto}
+.sim-controls-header{padding:12px 16px 6px;display:flex;align-items:center;justify-content:space-between}
+.sim-controls-header span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted)}
+.sim-time{font-size:12px;font-weight:600;color:var(--amber);font-variant-numeric:tabular-nums}
+.sim-controls-body{padding:4px 16px 12px}
+.sim-btns{display:flex;gap:6px;margin-bottom:10px}
+.sim-btn{
+  flex:1;padding:7px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);cursor:pointer;
+  font-size:13px;transition:var(--transition);display:flex;align-items:center;
+  justify-content:center;gap:4px;font-family:inherit;
+}
+.sim-btn:hover{border-color:var(--amber);background:var(--glow)}
+.sim-btn.active{border-color:var(--amber);background:rgba(214,158,46,.2);color:var(--amber)}
+.topic-section{margin-top:6px}
+.topic-input{
+  width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;resize:none;outline:none;transition:var(--transition);
+}
+.topic-input:focus{border-color:var(--amber)}
+.topic-send{
+  width:100%;margin-top:6px;padding:7px;border:none;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));color:#fff;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--transition);
+}
+.topic-send:hover{filter:brightness(1.1)}
+
+.sidebar-footer{
+  padding:12px 16px;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.theme-toggle{
+  width:32px;height:32px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--amber)}
+.sidebar-footer-text{font-size:10px;color:var(--text-muted)}
+.collapse-btn{
+  margin-left:auto;width:28px;height:28px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);background:var(--bg-secondary);color:var(--text-muted);
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.collapse-btn:hover{color:var(--amber);border-color:var(--amber)}
+
+/* ===== MAP ===== */
+.map-svg{width:100%;height:100%;display:block}
+.map-edge{stroke:var(--border);stroke-width:1.5;fill:none;opacity:.5}
+.map-node{cursor:pointer}
+.map-node:hover .node-bg{stroke:var(--amber);stroke-width:2;filter:drop-shadow(0 0 8px rgba(214,158,46,.3))}
+.node-bg{
+  fill:var(--bg-card);stroke:var(--border);stroke-width:1.5;
+  rx:12;ry:12;transition:all .3s ease;
+}
+.map-node.active .node-bg{stroke:var(--amber);stroke-width:2;filter:drop-shadow(0 0 12px rgba(214,158,46,.35))}
+.map-node.has-convo .node-bg{stroke:var(--amber-dark);stroke-width:1.5}
+.node-icon{font-size:20px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.node-label{
+  fill:var(--text-primary);font-size:10px;font-weight:600;text-anchor:middle;
+  pointer-events:none;font-family:'Inter',sans-serif;
+}
+.node-badge{
+  font-size:9px;font-weight:700;text-anchor:middle;dominant-baseline:central;
+  pointer-events:none;font-family:'Inter',sans-serif;
+}
+.badge-bg{rx:8;ry:8}
+.pulse-ring{
+  fill:none;stroke:var(--amber);stroke-width:1;opacity:0;
+  animation:pulse-anim 2s ease-out infinite;
+}
+@keyframes pulse-anim{
+  0%{r:35;opacity:.6}100%{r:55;opacity:0}
+}
+.agent-dot{
+  r:3;fill:var(--amber);opacity:.8;
+  transition:cx .8s ease, cy .8s ease;
+}
+
+/* ===== RIGHT PANEL ===== */
+.panel-close{
+  position:absolute;top:12px;right:12px;width:28px;height:28px;
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-muted);cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;z-index:5;
+}
+.panel-close:hover{color:var(--danger);border-color:var(--danger)}
+.panel-header{margin-bottom:16px;position:relative;padding-right:36px}
+.panel-icon{font-size:28px;margin-bottom:6px}
+.panel-title{font-size:16px;font-weight:700;margin-bottom:2px}
+.panel-desc{font-size:12px;color:var(--text-muted);line-height:1.5}
+.panel-section{margin-bottom:16px}
+.panel-section-title{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;
+}
+.art-detail.visible{display:block!important}
+.agent-row{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);
+  border:1px solid transparent;
+}
+.agent-row:hover{background:var(--glow);border-color:var(--border)}
+.agent-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber-dark),var(--amber));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.agent-name{font-size:12px;font-weight:600;line-height:1.2}
+.agent-role{font-size:10px;color:var(--text-muted)}
+.agent-action{font-size:14px;margin-left:auto;flex-shrink:0}
+.tier-badge{
+  display:inline-block;padding:1px 6px;border-radius:10px;font-size:9px;
+  font-weight:700;margin-left:4px;vertical-align:middle;
+}
+.tier-S{background:linear-gradient(135deg,#d69e2e,#f6e05e);color:#1a1a2e}
+.tier-A{background:linear-gradient(135deg,#64748b,#94a3b8);color:#fff}
+.tier-B{background:linear-gradient(135deg,#92400e,#c2884a);color:#fff}
+.convo-card{
+  padding:10px;border-radius:var(--radius-md);background:var(--bg-secondary);
+  border:1px solid var(--border);margin-bottom:8px;
+}
+.convo-topic{font-size:12px;font-weight:600;margin-bottom:4px}
+.convo-participants{font-size:10px;color:var(--text-muted)}
+.convo-snippet{font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.4;font-style:italic}
+
+/* ===== BOTTOM BAR ===== */
+.bottom-header{
+  padding:8px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.bottom-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+.bottom-scroll{flex:1;overflow-y:auto;padding:8px 16px}
+.feed-item{
+  display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:12px;
+}
+.feed-item:last-child{border-bottom:none}
+.feed-emoji{font-size:14px;flex-shrink:0;margin-top:1px}
+.feed-text{color:var(--text-secondary);line-height:1.4}
+.feed-text strong{color:var(--text-primary);font-weight:600}
+.feed-text .loc{color:var(--amber);font-weight:500}
+.feed-time{font-size:10px;color:var(--text-muted);margin-left:auto;flex-shrink:0;white-space:nowrap}
+
+/* ===== AGENT POPUP ===== */
+.agent-popup{
+  position:fixed;z-index:100;width:300px;
+  background:var(--bg-primary);border:1px solid var(--border-active);
+  border-radius:var(--radius-xl);padding:20px;
+  box-shadow:0 20px 60px var(--shadow),0 0 30px var(--glow);
+  backdrop-filter:blur(20px);
+  animation:popIn .2s ease;
+}
+@keyframes popIn{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
+.popup-close{
+  position:absolute;top:10px;right:10px;width:24px;height:24px;
+  border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:14px;
+}
+.popup-close:hover{color:var(--danger)}
+.popup-avatar{
+  width:48px;height:48px;border-radius:50%;margin:0 auto 10px;
+  background:linear-gradient(135deg,var(--amber-dark),var(--amber-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;
+}
+.popup-name{font-size:15px;font-weight:700;text-align:center;margin-bottom:2px}
+.popup-title{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:8px}
+.popup-meta{display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.popup-tag{
+  padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;
+  background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);
+}
+.popup-action{
+  text-align:center;padding:8px;border-radius:var(--radius-sm);
+  background:var(--bg-secondary);font-size:11px;color:var(--text-secondary);
+}
+
+/* ===== STATS VIEW ===== */
+.stats-overlay{
+  position:absolute;inset:0;background:var(--bg-glass);backdrop-filter:blur(8px);
+  z-index:15;overflow-y:auto;padding:30px;display:none;
+}
+.stats-overlay.visible{display:block}
+.art-detail.visible,.convo-detail.visible{display:block!important}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{
+  padding:20px;border-radius:var(--radius-lg);background:var(--bg-card);
+  border:1px solid var(--border);backdrop-filter:blur(10px);
+}
+.stat-value{font-size:28px;font-weight:800;color:var(--amber);margin-bottom:2px}
+.stat-label{font-size:11px;color:var(--text-muted);font-weight:500}
+.chart-section{margin-bottom:24px}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:12px}
+.bar-chart{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:flex;align-items:center;gap:8px}
+.bar-label{font-size:10px;color:var(--text-secondary);width:140px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:18px;background:var(--bg-secondary);border-radius:9px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:9px;transition:width .6s ease;background:linear-gradient(90deg,var(--amber-dark),var(--amber))}
+.bar-val{font-size:10px;font-weight:600;color:var(--text-muted);width:24px;flex-shrink:0}
+.donut-wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.donut-svg{width:160px;height:160px}
+.donut-legend{display:flex;flex-direction:column;gap:4px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ===== SEARCH / FILTER ===== */
+.search-bar{
+  padding:8px 16px;border-bottom:1px solid var(--border);display:none;
+}
+.search-bar.visible{display:flex;gap:8px;align-items:center}
+.search-input{
+  flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;outline:none;
+}
+.search-input:focus{border-color:var(--amber)}
+.filter-select{
+  padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-secondary);color:var(--text-primary);font-size:12px;
+  font-family:inherit;outline:none;cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .sidebar{position:fixed;left:-260px;z-index:50;height:100vh}
+  .sidebar.mobile-open{left:0}
+  .right-panel.open{position:fixed;right:0;top:0;bottom:0;z-index:40;width:100%;max-width:340px}
+  .mobile-toggle{display:flex !important}
+  .bottom-bar{height:120px}
+}
+.mobile-toggle{
+  display:none;position:fixed;top:12px;left:12px;z-index:55;
+  width:36px;height:36px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-primary);color:var(--text-primary);cursor:pointer;
+  align-items:center;justify-content:center;font-size:16px;
+}
+
+/* ===== UTILITIES ===== */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+
+<div class="app">
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-section">
+    <div class="logo-row">
+      <div class="logo-box">IA</div>
+      <div>
+        <div class="logo-name">INTE<span class="hl">IA</span></div>
+        <div class="logo-tagline">Vila INTEIA &mdash; Think Tank Vivo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-label" style="color:var(--amber);font-weight:700;font-size:11px">Ferramentas</div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item" data-view="briefing" style="background:rgba(34,197,94,0.08);border-left:3px solid #22c55e"><span class="nav-icon" style="color:#22c55e">&#128220;</span><span class="nav-text" style="color:#22c55e;font-weight:700">Briefing</span></li>
+    <li class="nav-item" data-view="consultar"><span class="nav-icon" style="color:var(--amber)">&#128483;</span><span class="nav-text" style="color:var(--amber);font-weight:600">Consultar Painel</span></li>
+    <li class="nav-item" data-view="desafio"><span class="nav-icon" style="color:#3b82f6">&#127919;</span><span class="nav-text" style="color:#3b82f6;font-weight:600">Design Sprint</span></li>
+    <li class="nav-item" data-view="workspace"><span class="nav-icon">&#128196;</span><span class="nav-text">Produtos</span></li>
+  </ul>
+  <div class="sidebar-label">Vila</div>
+  <ul class="nav-list">
+    <li class="nav-item active" data-view="map"><span class="nav-icon">&#127758;</span><span class="nav-text">Mapa</span></li>
+    <li class="nav-item" data-view="agents"><span class="nav-icon">&#129333;</span><span class="nav-text">Agentes (146)</span></li>
+    <li class="nav-item" data-view="convos"><span class="nav-icon">&#128172;</span><span class="nav-text">Conversas</span></li>
+    <li class="nav-item" data-view="synth"><span class="nav-icon">&#128161;</span><span class="nav-text">Sinteses</span></li>
+    <li class="nav-item" data-view="stats"><span class="nav-icon">&#128202;</span><span class="nav-text">Stats</span></li>
+  </ul>
+
+  <div class="sidebar-label" style="margin-top:12px">Experiências</div>
+  <ul class="nav-list" style="margin-bottom:0">
+    <li class="nav-item" onclick="window.location.href='jogo.html'" style="cursor:pointer"><span class="nav-icon">&#127918;</span><span class="nav-text">Assembleia</span></li>
+    <li class="nav-item" onclick="window.location.href='cidade.html'" style="cursor:pointer"><span class="nav-icon">&#127961;</span><span class="nav-text">Cidade 3D</span></li>
+    <li class="nav-item" onclick="window.location.href='rede.html'" style="cursor:pointer"><span class="nav-icon">&#128240;</span><span class="nav-text">Rede Social</span></li>
+  </ul>
+
+  <div class="sidebar-label" style="margin-top:12px">Externo</div>
+  <ul class="nav-list" style="margin-bottom:0">
+    <li class="nav-item" onclick="window.open('https://mirantenews.com.br','_blank')" style="cursor:pointer"><span class="nav-icon">&#128240;</span><span class="nav-text">Mirante News</span></li>
+    <li class="nav-item" onclick="window.open('https://inteia.com.br','_blank')" style="cursor:pointer"><span class="nav-icon">&#127760;</span><span class="nav-text">INTEIA</span></li>
+  </ul>
+
+  <!-- Status cards inline -->
+  <div id="hubStatusCards" style="padding:8px 16px;margin-top:8px"></div>
+
+  <div class="sim-controls">
+    <div class="sim-controls-header">
+      <span>Simulacao</span>
+      <span class="sim-time" id="simTime">08:00</span>
+    </div>
+    <div class="sim-controls-body">
+      <div class="sim-btns">
+        <button class="sim-btn" id="btnPlay" onclick="togglePlay()" title="Space">&#9654; Play</button>
+        <button class="sim-btn" id="btnStep" onclick="doStep()" title="&#8594;">&#9654;&#124; Step</button>
+      </div>
+      <div class="topic-section">
+        <textarea class="topic-input" id="topicInput" rows="2" placeholder="Injetar topico na Vila..."></textarea>
+        <button class="topic-send" onclick="injectTopic()">Injetar Topico</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
+    <span class="sidebar-footer-text">Powered by INTEIA</span>
+    <button class="collapse-btn" onclick="collapseSidebar()" aria-label="Recolher menu">&#171;</button>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main-area">
+  <div class="search-bar" id="searchBar">
+    <input class="search-input" id="searchInput" placeholder="Buscar agente..." oninput="filterAgents()">
+    <select class="filter-select" id="filterCat" onchange="filterAgents()">
+      <option value="">Todas categorias</option>
+      <option value="visionario">Visionario</option>
+      <option value="estrategia">Estrategia</option>
+      <option value="filosofo">Filosofo</option>
+      <option value="psicologo">Psicologo</option>
+      <option value="investidor">Investidor</option>
+      <option value="jurista">Jurista</option>
+      <option value="marca">Marca</option>
+      <option value="lado_negro">Lado Negro</option>
+      <option value="lider">Lider</option>
+      <option value="mindset">Mindset</option>
+      <option value="qi_extremo">QI Extremo</option>
+      <option value="tech">Tech</option>
+      <option value="influencia">Influencia</option>
+      <option value="politica">Politica</option>
+    </select>
+  </div>
+
+  <div class="map-container" id="mapContainer">
+    <svg class="map-svg" id="mapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <!-- Stats overlay -->
+    <div class="stats-overlay" id="statsOverlay"></div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-header">
+      <span class="bottom-title">&#9889; Feed de Atividades</span>
+      <span style="font-size:10px;color:var(--text-muted)" id="feedCount">0 eventos</span>
+    </div>
+    <div class="bottom-scroll" id="feedScroll"></div>
+  </div>
+</div>
+
+<!-- ===== RIGHT PANEL ===== -->
+<div class="right-panel" id="rightPanel">
+  <div class="right-panel-inner" id="panelContent"></div>
+</div>
+</div>
+
+<!-- ===== AGENT POPUP ===== -->
+<div class="agent-popup" id="agentPopup" style="display:none"></div>
+
+<script>
+/* ===================================================================
+   Vila INTEIA - Think Tank Vivo
+   Frontend completo com modo demo (dados mock)
+   =================================================================== */
+
+// ---- CONFIG ----
+window._VILA_API = (() => {
+  // KVM4 backend (producao)
+  const KVM4 = 'http://localhost:8090/api/v1/vila';
+  // Render legacy (fallback)
+  const RENDER = location.origin + '/api/v1/vila';
+  // Se esta na Vercel (inteia.com.br) ou localhost, usa KVM4
+  if (location.hostname.includes('inteia.com.br') || location.hostname.includes('vercel.app')) return KVM4;
+  // Se esta no Render, usa relativo
+  if (location.hostname.includes('onrender.com')) return RENDER;
+  // Local dev ou servido pelo proprio backend
+  return '/api/v1/vila';
+})();
+
+// ---- DATA ----
+const LOCATIONS = [
+  {id:'agora',name:'Agora Central',icon:'\u{1F3DB}',desc:'Praca publica para debates abertos entre todos os consultores.',x:.5,y:.48,connections:['cafe','arena','auditorio','refeitorio','terraco']},
+  {id:'torre',name:'Torre de Estrategia',icon:'\u{1F3F0}',desc:'Sala reservada para planejamento estrategico de alto nivel.',x:.18,y:.18,connections:['agora','sala_guerra','lab','cafe']},
+  {id:'biblioteca',name:'Biblioteca Infinita',icon:'\u{1F4DA}',desc:'Acervo ilimitado de conhecimento para pesquisa profunda.',x:.78,y:.15,connections:['agora','observatorio','lab','galeria']},
+  {id:'cafe',name:'Cafe dos Filosofos',icon:'\u2615',desc:'Espaco informal para conversas espontaneas e insights inesperados.',x:.42,y:.25,connections:['agora','torre','lab','arena']},
+  {id:'arena',name:'Arena de Debates',icon:'\u2694\uFE0F',desc:'Debates estruturados com regras formais e moderacao.',x:.22,y:.62,connections:['agora','tribunal','cafe','sala_guerra']},
+  {id:'jardim',name:'Jardim dos Visionarios',icon:'\u{1F33F}',desc:'Espaco ao ar livre para reflexao criativa e meditacao.',x:.82,y:.52,connections:['agora','terraco','galeria','observatorio']},
+  {id:'tribunal',name:'Tribunal da Razao',icon:'\u2696\uFE0F',desc:'Analise juridica, etica e argumentacao rigorosa.',x:.15,y:.78,connections:['arena','sala_guerra','res_s']},
+  {id:'lab',name:'Laboratorio de Ideias',icon:'\u{1F52C}',desc:'Prototipagem rapida e experimentacao de conceitos.',x:.5,y:.12,connections:['torre','biblioteca','cafe','observatorio']},
+  {id:'galeria',name:'Galeria dos Legados',icon:'\u{1F5BC}',desc:'Memorial dos grandes feitos e licoes historicas.',x:.88,y:.35,connections:['biblioteca','jardim','terraco']},
+  {id:'sala_guerra',name:'Sala de Guerra',icon:'\u{1F6E1}',desc:'Centro de comando para gestao de crises e cenarios adversos.',x:.1,y:.45,connections:['torre','arena','tribunal']},
+  {id:'auditorio',name:'Auditorio INTEIA',icon:'\u{1F3A4}',desc:'Apresentacoes formais, keynotes e lancamentos.',x:.35,y:.6,connections:['agora','refeitorio','arena']},
+  {id:'atelie',name:'Atelie dos Artesaos',icon:'\u{1F3A8}',desc:'Criacao artistica, storytelling e design de narrativas.',x:.9,y:.68,connections:['jardim','galeria','terraco']},
+  {id:'observatorio',name:'Observatorio do Futuro',icon:'\u{1F52D}',desc:'Monitoramento de tendencias e sinais fracos.',x:.7,y:.08,connections:['biblioteca','lab','jardim']},
+  {id:'res_n',name:'Residencia Norte',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala norte.',x:.5,y:.02,connections:['lab']},
+  {id:'res_s',name:'Residencia Sul',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala sul.',x:.5,y:.92,connections:['refeitorio','tribunal']},
+  {id:'res_e',name:'Residencia Leste',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala leste.',x:.96,y:.5,connections:['atelie','jardim']},
+  {id:'res_w',name:'Residencia Oeste',icon:'\u{1F3E0}',desc:'Alojamentos dos consultores — ala oeste.',x:.04,y:.5,connections:['sala_guerra']},
+  {id:'refeitorio',name:'Refeitorio Central',icon:'\u{1F37D}',desc:'Area de alimentacao e convivio informal.',x:.42,y:.78,connections:['agora','auditorio','res_s']},
+  {id:'terraco',name:'Terraco Panoramico',icon:'\u{1F305}',desc:'Vista panoramica, networking e reflexao ao por-do-sol.',x:.68,y:.62,connections:['agora','jardim','atelie','galeria']}
+];
+const LOC_MAP={};LOCATIONS.forEach(l=>LOC_MAP[l.id]=l);
+
+const AGENTS = [
+  {id:1,name:'Elon Musk',cat:'visionario',tier:'S',title:'Inovador Visionario',location:'lab',action:'\u{1F680}',status:'prototipando'},
+  {id:2,name:'Warren Buffett',cat:'investidor',tier:'S',title:'Oraculo dos Investimentos',location:'torre',action:'\u{1F4B0}',status:'analisando'},
+  {id:3,name:'Sun Tzu',cat:'estrategia',tier:'S',title:'Mestre da Arte da Guerra',location:'sala_guerra',action:'\u2694\uFE0F',status:'planejando'},
+  {id:4,name:'Socrates',cat:'filosofo',tier:'S',title:'Pai da Filosofia Ocidental',location:'cafe',action:'\u{1F914}',status:'questionando'},
+  {id:5,name:'Carl Jung',cat:'psicologo',tier:'S',title:'Explorador do Inconsciente',location:'jardim',action:'\u{1F9E0}',status:'refletindo'},
+  {id:6,name:'Rui Barbosa',cat:'jurista',tier:'A',title:'Aguia de Haia',location:'tribunal',action:'\u2696\uFE0F',status:'argumentando'},
+  {id:7,name:'Steve Jobs',cat:'marca',tier:'S',title:'Genio do Design e Marca',location:'auditorio',action:'\u{1F3A4}',status:'apresentando'},
+  {id:8,name:'Machiavelli',cat:'lado_negro',tier:'A',title:'O Principe do Poder',location:'torre',action:'\u{1F3AD}',status:'maquinando'},
+  {id:9,name:'Napoleon',cat:'estrategia',tier:'A',title:'Imperador Estrategista',location:'arena',action:'\u{1F451}',status:'debatendo'},
+  {id:10,name:'Elizabeth II',cat:'lider',tier:'A',title:'Lideranca Eterna',location:'agora',action:'\u{1F451}',status:'observando'},
+  {id:11,name:'Gandhi',cat:'mindset',tier:'S',title:'Alma da Nao-Violencia',location:'jardim',action:'\u{1F54A}\uFE0F',status:'meditando'},
+  {id:12,name:'Nikola Tesla',cat:'qi_extremo',tier:'S',title:'Genio Incompreendido',location:'lab',action:'\u26A1',status:'inventando'},
+  {id:13,name:'Cleopatra',cat:'influencia',tier:'A',title:'Rainha da Diplomacia',location:'terraco',action:'\u{1F48E}',status:'negociando'},
+  {id:14,name:'Jeff Bezos',cat:'visionario',tier:'A',title:'Arquiteto de Escala',location:'biblioteca',action:'\u{1F4CA}',status:'pesquisando'},
+  {id:15,name:'Marie Curie',cat:'qi_extremo',tier:'S',title:'Pioneira da Ciencia',location:'observatorio',action:'\u{1F52C}',status:'observando'},
+  {id:16,name:'Ada Lovelace',cat:'tech',tier:'A',title:'Mae da Computacao',location:'lab',action:'\u{1F4BB}',status:'programando'},
+  {id:17,name:'Marcus Aurelius',cat:'mindset',tier:'S',title:'Imperador Estoico',location:'biblioteca',action:'\u{1F4D6}',status:'estudando'},
+  {id:18,name:'Angela Merkel',cat:'politica',tier:'A',title:'Chanceler de Ferro',location:'torre',action:'\u{1F4CB}',status:'planejando'},
+  {id:19,name:'Sigmund Freud',cat:'psicologo',tier:'A',title:'Pai da Psicanalise',location:'cafe',action:'\u{1F6CB}\uFE0F',status:'analisando'},
+  {id:20,name:'Aristoteles',cat:'filosofo',tier:'A',title:'O Polimata',location:'arena',action:'\u{1F4DD}',status:'debatendo'}
+];
+
+const CONVERSATIONS = [
+  {
+    id:1,location:'cafe',topic:'A natureza da consciencia artificial',
+    participants:[4,19],
+    snippet:'Socrates questiona se uma IA pode realmente "conhecer a si mesma", enquanto Freud argumenta que o inconsciente nao requer substrato biologico.',
+    time:'08:23'
+  },
+  {
+    id:2,location:'torre',topic:'Estrategia de poder no seculo XXI',
+    participants:[8,18,2],
+    snippet:'Machiavelli defende que dados sao o novo territorio, Merkel pondera sobre regulamentacao e Buffett calcula o valor de mercado da confianca.',
+    time:'08:15'
+  },
+  {
+    id:3,location:'lab',topic:'O proximo paradigma tecnologico',
+    participants:[1,12,16],
+    snippet:'Tesla propoe energia sem fio para data centers, Lovelace modela algoritmos de compressao e Musk conecta tudo ao plano de colonizacao de Marte.',
+    time:'08:30'
+  }
+];
+
+const FEED_ENTRIES = [
+  {emoji:'\u{1F4A1}',text:'<strong>Nikola Tesla</strong> teve um insight sobre <em>transmissao de energia quanrica</em> no <span class="loc">Laboratorio de Ideias</span>',time:'08:32'},
+  {emoji:'\u{1F91D}',text:'<strong>Cleopatra</strong> iniciou negociacao com <strong>Elizabeth II</strong> no <span class="loc">Terraco Panoramico</span>',time:'08:30'},
+  {emoji:'\u{1F52C}',text:'<strong>Marie Curie</strong> publicou observacao sobre <em>padroes eleitorais emergentes</em> no <span class="loc">Observatorio do Futuro</span>',time:'08:28'},
+  {emoji:'\u{1F3A4}',text:'<strong>Steve Jobs</strong> iniciou keynote: "Design como estrategia politica" no <span class="loc">Auditorio INTEIA</span>',time:'08:25'},
+  {emoji:'\u2615',text:'<strong>Socrates</strong> e <strong>Freud</strong> debatem consciencia no <span class="loc">Cafe dos Filosofos</span>',time:'08:23'},
+  {emoji:'\u{1F3F0}',text:'<strong>Angela Merkel</strong> convocou reuniao estrategica na <span class="loc">Torre de Estrategia</span>',time:'08:20'},
+  {emoji:'\u2694\uFE0F',text:'<strong>Napoleon</strong> desafiou <strong>Aristoteles</strong> para debate formal na <span class="loc">Arena de Debates</span>',time:'08:18'},
+  {emoji:'\u{1F6E1}',text:'<strong>Sun Tzu</strong> mapeou 3 cenarios de crise na <span class="loc">Sala de Guerra</span>',time:'08:15'},
+  {emoji:'\u{1F33F}',text:'<strong>Gandhi</strong> e <strong>Carl Jung</strong> meditam juntos no <span class="loc">Jardim dos Visionarios</span>',time:'08:12'},
+  {emoji:'\u{1F4DA}',text:'<strong>Marcus Aurelius</strong> anotou reflexao estoica na <span class="loc">Biblioteca Infinita</span>',time:'08:10'},
+  {emoji:'\u{1F680}',text:'<strong>Elon Musk</strong> apresentou prototipo de interface IA no <span class="loc">Laboratorio de Ideias</span>',time:'08:05'},
+  {emoji:'\u{1F3DB}',text:'Vila INTEIA iniciou novo ciclo de simulacao. <strong>20 agentes</strong> ativos.',time:'08:00'}
+];
+
+const CAT_COLORS = {
+  visionario:'#8b5cf6',estrategia:'#ef4444',filosofo:'#3b82f6',psicologo:'#ec4899',
+  investidor:'#22c55e',jurista:'#64748b',marca:'#f97316',lado_negro:'#6b21a8',
+  lider:'#d69e2e',mindset:'#14b8a6',qi_extremo:'#06b6d4',tech:'#a855f7',
+  influencia:'#f43f5e',politica:'#0ea5e9'
+};
+
+// ---- STATE ----
+let state = {
+  selectedLocation: null,
+  playing: false,
+  playInterval: null,
+  simMinutes: 480, // 08:00
+  currentView: 'map',
+  agents: JSON.parse(JSON.stringify(AGENTS)),
+  conversations: JSON.parse(JSON.stringify(CONVERSATIONS)),
+  feed: [...FEED_ENTRIES],
+  agentPopup: null,
+  dragNode: null,
+  dragOffset: {x:0,y:0},
+  nodePositions: {},
+  apiConnected: false,
+};
+
+// Mapeamento backend local → frontend local
+const _BACKEND_TO_FRONT = {
+  'agora':'agora','torre_estrategia':'torre','biblioteca':'biblioteca',
+  'cafe_filosofos':'cafe','arena_debates':'arena','jardim_visionarios':'jardim',
+  'tribunal':'tribunal','laboratorio':'lab','galeria':'galeria',
+  'sala_guerra':'sala_guerra','auditorio':'auditorio','atelie':'atelie',
+  'observatorio':'observatorio','residencias_norte':'res_n','residencias_sul':'res_s',
+  'residencias_leste':'res_e','residencias_oeste':'res_w','refeitorio':'refeitorio',
+  'terraco':'terraco',
+};
+
+function mapBackendAgent(a) {
+  return {
+    id: a.id,
+    name: a.nome,
+    cat: a.categoria || 'visionario',
+    tier: a.tier || 'B',
+    title: a.titulo || '',
+    location: _BACKEND_TO_FRONT[a.local_atual] || a.local_atual || 'agora',
+    action: a.emoji || '\u{1F4AC}',
+    status: a.acao || 'pensando',
+    frase: a.frase_iconica || a.titulo || '',
+    expertise: a.areas_expertise || [],
+    humor: a.humor || '',
+    energia: a.energia || 0,
+    memoria_total: a.memoria_total || 0,
+    status_vida: a.status_vida || 'vivo',
+    conversando_com: a.conversando_com || null,
+  };
+}
+
+// Copy node positions
+LOCATIONS.forEach(l => { state.nodePositions[l.id] = {x:l.x, y:l.y}; });
+
+// ---- UTILITIES ----
+function formatTime(mins){
+  const h=Math.floor(mins/60)%24, m=mins%60;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function agentsAt(locId){return state.agents.filter(a=>a.location===locId);}
+function convosAt(locId){return state.conversations.filter(c=>c.location===locId);}
+
+// ---- RENDER MAP ----
+function renderMap(){
+  const svg=document.getElementById('mapSvg');
+  const rect=svg.getBoundingClientRect();
+  const W=rect.width||1000, H=rect.height||600;
+  const pad=50;
+
+  function px(loc){
+    const p=state.nodePositions[loc.id];
+    return {x:pad+p.x*(W-2*pad), y:pad+p.y*(H-2*pad)};
+  }
+
+  let html='';
+  // Edges
+  const drawnEdges=new Set();
+  LOCATIONS.forEach(loc=>{
+    const p1=px(loc);
+    (loc.connections||[]).forEach(cid=>{
+      const key=[loc.id,cid].sort().join('-');
+      if(drawnEdges.has(key))return;
+      drawnEdges.add(key);
+      const other=LOC_MAP[cid];
+      if(!other)return;
+      const p2=px(other);
+      html+=`<line class="map-edge" x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"/>`;
+    });
+  });
+
+  // Nodes
+  LOCATIONS.forEach(loc=>{
+    const p=px(loc);
+    const agents=agentsAt(loc.id);
+    const convos=convosAt(loc.id);
+    const isActive=state.selectedLocation===loc.id;
+    const hasConvo=convos.length>0;
+    const count=agents.length;
+    const badgeColor=count===0?'var(--text-muted)':count<3?'var(--success)':count<5?'var(--warning)':'var(--danger)';
+    const cls=`map-node${isActive?' active':''}${hasConvo?' has-convo':''}`;
+    const nw=120,nh=60;
+
+    html+=`<g class="${cls}" data-loc="${loc.id}" transform="translate(${p.x},${p.y})">`;
+    if(hasConvo) html+=`<circle class="pulse-ring" cx="0" cy="0" r="40"/>`;
+    html+=`<rect class="node-bg" x="${-nw/2}" y="${-nh/2}" width="${nw}" height="${nh}"/>`;
+    html+=`<text class="node-icon" x="0" y="-8">${loc.icon}</text>`;
+    html+=`<text class="node-label" x="0" y="14">${loc.name.length>16?loc.name.slice(0,15)+'...':loc.name}</text>`;
+    // Badge
+    if(count>0){
+      html+=`<rect class="badge-bg" x="38" y="${-nh/2-4}" width="20" height="16" fill="${badgeColor}"/>`;
+      html+=`<text class="node-badge" x="48" y="${-nh/2+5}" fill="#fff">${count}</text>`;
+    }
+    // Agent dots
+    agents.forEach((a,i)=>{
+      const angle=(2*Math.PI*i)/Math.max(agents.length,1);
+      const r=28+Math.random()*4;
+      const dx=Math.cos(angle)*r, dy=Math.sin(angle)*r;
+      html+=`<circle class="agent-dot" cx="${dx}" cy="${dy}" data-agent="${a.id}" style="fill:${CAT_COLORS[a.cat]||'var(--amber)'}"/>`;
+    });
+    html+=`</g>`;
+  });
+
+  svg.innerHTML=html;
+
+  // Event listeners
+  svg.querySelectorAll('.map-node').forEach(g=>{
+    g.addEventListener('click',e=>{
+      e.stopPropagation();
+      const locId=g.dataset.loc;
+      selectLocation(locId);
+    });
+    // Drag
+    g.addEventListener('mousedown',e=>{
+      if(e.button!==0)return;
+      const locId=g.dataset.loc;
+      const svgPt=svgPoint(svg,e.clientX,e.clientY);
+      const p=px(LOC_MAP[locId]);
+      state.dragNode=locId;
+      state.dragOffset={x:svgPt.x-p.x, y:svgPt.y-p.y};
+      e.preventDefault();
+    });
+  });
+
+  svg.querySelectorAll('.agent-dot').forEach(c=>{
+    c.addEventListener('click',e=>{
+      e.stopPropagation();
+      const aId=parseInt(c.dataset.agent);
+      showAgentPopup(aId,e.clientX,e.clientY);
+    });
+  });
+
+  svg.addEventListener('click',()=>{
+    closePanel();
+    closeAgentPopup();
+  });
+}
+
+function svgPoint(svg,cx,cy){
+  const pt=svg.createSVGPoint();
+  pt.x=cx;pt.y=cy;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+// Drag handlers
+document.addEventListener('mousemove',e=>{
+  if(!state.dragNode)return;
+  const svg=document.getElementById('mapSvg');
+  const rect=svg.getBoundingClientRect();
+  const W=rect.width,H=rect.height,pad=50;
+  const pt=svgPoint(svg,e.clientX,e.clientY);
+  let nx=(pt.x-state.dragOffset.x-pad)/(W-2*pad);
+  let ny=(pt.y-state.dragOffset.y-pad)/(H-2*pad);
+  nx=Math.max(0,Math.min(1,nx));
+  ny=Math.max(0,Math.min(1,ny));
+  state.nodePositions[state.dragNode]={x:nx,y:ny};
+  renderMap();
+});
+document.addEventListener('mouseup',()=>{state.dragNode=null;});
+
+// ---- PANELS ----
+function selectLocation(locId){
+  state.selectedLocation=locId;
+  renderMap();
+  openPanel(locId);
+}
+
+function openPanel(locId){
+  const loc=LOC_MAP[locId];
+  if(!loc)return;
+  const agents=agentsAt(locId);
+  const convos=convosAt(locId);
+  const panel=document.getElementById('rightPanel');
+  const content=document.getElementById('panelContent');
+
+  let h=`<button class="panel-close" onclick="closePanel()">&times;</button>`;
+  h+=`<div class="panel-header">`;
+  h+=`<div class="panel-icon">${loc.icon}</div>`;
+  h+=`<div class="panel-title">${loc.name}</div>`;
+  h+=`<div class="panel-desc">${loc.desc}</div>`;
+  h+=`</div>`;
+
+  // Agents
+  h+=`<div class="panel-section">`;
+  h+=`<div class="panel-section-title">\u{1F465} Agentes presentes (${agents.length})</div>`;
+  if(agents.length===0) h+=`<p style="font-size:12px;color:var(--text-muted);padding:8px">Nenhum agente neste local.</p>`;
+  agents.forEach(a=>{
+    h+=`<div class="agent-row" onclick="showAgentPopup('${a.id}',event.clientX,event.clientY)">`;
+    h+=`<div class="agent-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+    h+=`<div><div class="agent-name">${a.name}<span class="tier-badge tier-${a.tier}">${a.tier}</span></div>`;
+    h+=`<div class="agent-role">${a.title}</div></div>`;
+    h+=`<div class="agent-action" title="${a.status}">${a.action}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+
+  // Conversations
+  if(convos.length>0){
+    h+=`<div class="panel-section">`;
+    h+=`<div class="panel-section-title">\u{1F4AC} Conversas ativas</div>`;
+    convos.forEach(c=>{
+      const parts=c.participants.map(pid=>{const a=state.agents.find(x=>x.id===pid);return a?a.name:'?';}).join(', ');
+      h+=`<div class="convo-card">`;
+      h+=`<div class="convo-topic">${c.topic}</div>`;
+      h+=`<div class="convo-participants">${parts} &mdash; ${c.time}</div>`;
+      h+=`<div class="convo-snippet">"${c.snippet}"</div>`;
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+
+  // Oficina — ferramentas reais do local
+  h+=`<div class="panel-section" id="panelOficina_${locId}">`;
+  h+=`<div class="panel-section-title">\u{1F6E0} Oficina</div>`;
+  h+=`<p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Carregando ferramentas...</p>`;
+  h+=`</div>`;
+
+  // Artefatos produzidos neste local
+  h+=`<div class="panel-section" id="panelArtefatos_${locId}">`;
+  h+=`<div class="panel-section-title">\u{1F4C4} Artefatos Produzidos</div>`;
+  h+=`<p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Carregando...</p>`;
+  h+=`</div>`;
+
+  content.innerHTML=h;
+  panel.classList.add('open');
+
+  // Carregar oficina do backend
+  carregarOficina(locId);
+}
+
+// Mapeamento IDs frontend → IDs backend (campus.py)
+const _LOC_ID_MAP = {
+  'lab': 'laboratorio',
+  'torre': 'torre_estrategia',
+  'cafe': 'cafe_filosofos',
+  'arena': 'arena_debates',
+  'jardim': 'jardim_visionarios',
+  'sala_guerra': 'sala_guerra',
+  'galeria': 'galeria',
+  'res_n': 'residencias_norte',
+  'res_s': 'residencias_sul',
+  'res_e': 'residencias_leste',
+  'res_w': 'residencias_oeste',
+  'terraco': 'terraco',
+  // Design Sprint & Problem Solving
+  'sprint_entender': 'sprint_entender',
+  'sprint_idear': 'sprint_idear',
+  'sprint_decidir': 'sprint_decidir',
+  'sprint_prototipar': 'sprint_prototipar',
+  'sprint_testar': 'sprint_testar',
+  'arvore_problemas': 'arvore_problemas',
+  'frameworks_estrategicos': 'frameworks_estrategicos',
+  'design_thinking': 'design_thinking',
+  'pesquisa_cientifica': 'pesquisa_cientifica',
+  'lean_agile': 'lean_agile',
+  // IDs iguais
+  'agora': 'agora',
+  'biblioteca': 'biblioteca',
+  'tribunal': 'tribunal',
+  'auditorio': 'auditorio',
+  'atelie': 'atelie',
+  'observatorio': 'observatorio',
+  'refeitorio': 'refeitorio',
+};
+
+async function carregarOficina(locId) {
+  const backendLocId = _LOC_ID_MAP[locId] || locId;
+  const API = window._VILA_API || 'http://localhost:8090/api/v1/vila';
+  try {
+    const resp = await fetch(API + '/oficinas/' + backendLocId);
+    const data = await resp.json();
+    const el = document.getElementById('panelOficina_' + locId);
+    if (!el || data.erro) {
+      if (el) el.innerHTML = `<div class="panel-section-title">\u{1F6E0} Oficina</div><p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Local sem oficina de produção.</p>`;
+      return;
+    }
+
+    let h = `<div class="panel-section-title">\u{1F6E0} ${data.nome || 'Oficina'}</div>`;
+    h += `<p style="font-size:11px;color:var(--text-muted);padding:2px 8px;margin-bottom:6px">${data.descricao || ''}</p>`;
+
+    if (data.ferramentas && data.ferramentas.length) {
+      data.ferramentas.forEach(f => {
+        const icons = {codigo:'\u{1F4BB}', pesquisa:'\u{1F50D}', escrita:'\u{270F}', analise:'\u{1F4CA}', visual:'\u{1F3A8}', votacao:'\u{1F5F3}', comunicacao:'\u{1F4E2}'};
+        const ic = icons[f.tipo] || '\u{2699}';
+        h += `<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.05)">`;
+        h += `<span>${ic}</span>`;
+        h += `<div style="flex:1"><strong style="color:var(--text-primary)">${f.nome}</strong>`;
+        h += `<div style="color:var(--text-muted);font-size:10px">${f.descricao || ''}</div></div>`;
+        if (f.custo > 0) h += `<span style="color:var(--amber);font-size:10px">\u039E${f.custo}</span>`;
+        h += `</div>`;
+      });
+    }
+
+    if (data.artefatos_produzidos > 0) {
+      h += `<div style="padding:6px 8px;font-size:11px;color:var(--amber)">\u{2705} ${data.artefatos_produzidos} artefatos produzidos</div>`;
+    }
+
+    el.innerHTML = h;
+  } catch(e) {
+    console.warn('Oficina indisponível:', e);
+  }
+
+  // Carregar artefatos do workspace
+  try {
+    const resp2 = await fetch(API + '/workspace');
+    const wdata = await resp2.json();
+    const el2 = document.getElementById('panelArtefatos_' + locId);
+    if (!el2) return;
+
+    const arquivos = (wdata.arquivos || []).filter(a => {
+      // Filtrar artefatos que foram produzidos neste local (pelo nome da ferramenta)
+      return true; // Mostrar todos por enquanto
+    });
+
+    if (arquivos.length === 0) {
+      el2.innerHTML = `<div class="panel-section-title">\u{1F4C4} Artefatos Produzidos</div><p style="font-size:11px;color:var(--text-muted);padding:4px 8px">Nenhum artefato ainda. Inicie um desafio!</p>`;
+      return;
+    }
+
+    let h2 = `<div class="panel-section-title">\u{1F4C4} Artefatos (${arquivos.length})</div>`;
+    arquivos.slice(-8).forEach(a => {
+      const ext = (a.arquivo || '').split('.').pop();
+      const extIcons = {py:'\u{1F40D}', md:'\u{1F4DD}', json:'\u{1F4CA}', html:'\u{1F310}', csv:'\u{1F4C8}'};
+      const ei = extIcons[ext] || '\u{1F4C4}';
+      h2 += `<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer" title="${a.arquivo}">`;
+      h2 += `<span>${ei}</span>`;
+      h2 += `<div style="flex:1"><strong style="color:var(--text-primary)">${a.arquivo}</strong>`;
+      h2 += `<div style="color:var(--text-muted);font-size:10px">${a.agente_nome || '?'} &mdash; ${a.tipo || ''}</div></div>`;
+      h2 += `<span style="font-size:10px;color:var(--text-muted)">${a.tamanho || 0}ch</span>`;
+      h2 += `</div>`;
+    });
+    el2.innerHTML = h2;
+  } catch(e) { /* silencioso */ }
+}
+
+function closePanel(){
+  document.getElementById('rightPanel').classList.remove('open');
+  state.selectedLocation=null;
+  renderMap();
+}
+
+// ---- AGENT POPUP ----
+function showAgentPopup(agentId,cx,cy){
+  const a=state.agents.find(x=>x.id===agentId);
+  if(!a)return;
+  const popup=document.getElementById('agentPopup');
+  const locName=LOC_MAP[a.location]?.name||'';
+  let h=`<button class="popup-close" onclick="closeAgentPopup()">&times;</button>`;
+  h+=`<div class="popup-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+  h+=`<div class="popup-name">${a.name}</div>`;
+  h+=`<div class="popup-title">${a.title}</div>`;
+  h+=`<div class="popup-meta">`;
+  h+=`<span class="popup-tag">${a.cat}</span>`;
+  h+=`<span class="tier-badge tier-${a.tier}" style="font-size:11px">${a.tier}</span>`;
+  h+=`</div>`;
+  h+=`<div class="popup-action">${a.action} ${a.status} em <strong>${locName}</strong></div>`;
+  if(a.frase) h+=`<div style="font-style:italic;font-size:11px;color:var(--text-muted);margin-top:8px;padding:6px;background:var(--bg-secondary);border-radius:6px;border-left:2px solid var(--amber)">"${a.frase}"</div>`;
+  if(a.expertise&&a.expertise.length) h+=`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">${a.expertise.slice(0,4).map(e=>`<span style="font-size:10px;background:var(--bg-secondary);padding:2px 6px;border-radius:4px;color:var(--amber)">${e}</span>`).join('')}</div>`;
+  h+=`<button onclick="chatComAgente('${a.id}')" style="margin-top:10px;width:100%;background:linear-gradient(135deg,var(--amber),var(--amber-dark));border:none;color:#000;padding:8px;border-radius:6px;cursor:pointer;font-weight:700;font-size:12px">💬 Conversar com ${a.name.split(' ')[0]}</button>`;
+  popup.innerHTML=h;
+  // Position
+  const vw=window.innerWidth,vh=window.innerHeight;
+  let left=cx+12,top=cy-60;
+  if(left+310>vw) left=cx-310;
+  if(top+200>vh) top=vh-210;
+  if(top<10) top=10;
+  popup.style.left=left+'px';
+  popup.style.top=top+'px';
+  popup.style.display='block';
+}
+function closeAgentPopup(){document.getElementById('agentPopup').style.display='none';}
+
+function renderAgentsList(){
+  const ov=document.getElementById('statsOverlay');
+  const q=(document.getElementById('searchInput')?.value||'').toLowerCase();
+  const cat=document.getElementById('catFilter')?.value||'';
+  let filtered=state.agents.filter(a=>{
+    if(q&&!a.name.toLowerCase().includes(q)&&!a.title.toLowerCase().includes(q)) return false;
+    if(cat&&a.cat!==cat) return false;
+    return true;
+  });
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">🤵 ${filtered.length} Consultores</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
+  filtered.forEach(a=>{
+    const locName=LOC_MAP[a.location]?.name||a.location||'';
+    h+=`<div class="agent-row" onclick="showAgentPopup('${a.id}',event.clientX,event.clientY)" style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-secondary);border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:border-color .2s">`;
+    h+=`<div class="agent-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+    h+=`<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.name} <span class="tier-badge tier-${a.tier}" style="font-size:9px">${a.tier}</span></div>`;
+    h+=`<div style="font-size:10px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.title}</div>`;
+    h+=`<div style="font-size:9px;color:var(--amber)">${a.action} ${locName?'• '+locName:''}</div>`;
+    h+=`</div></div>`;
+  });
+  h+=`</div>`;
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function chatComAgente(agentId){
+  const msg=prompt('Sua pergunta para o consultor:');
+  if(!msg) return;
+  closeAgentPopup();
+  const ov=document.getElementById('statsOverlay');
+  ov.innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:16px">💬</div><p>Consultando...</p></div>`;
+  ov.classList.add('visible');
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    const r=await fetch(API+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agente_id:agentId,mensagem:msg})});
+    const d=await r.json();
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:18px;font-weight:700">💬 ${d.agente_nome}</h2>`;
+    h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+    h+=`</div>`;
+    h+=`<div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">${d.titulo} • ${d.categoria}</div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;margin-bottom:12px;font-size:13px;border-left:3px solid var(--amber)"><strong>Você:</strong> ${msg}</div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;font-size:13px;line-height:1.6;white-space:pre-wrap">${d.resposta}</div>`;
+    h+=`<button onclick="chatComAgente('${agentId}')" style="margin-top:12px;width:100%;background:var(--bg-secondary);border:1px solid var(--amber);color:var(--amber);padding:10px;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px">Continuar conversa</button>`;
+    ov.innerHTML=h;
+  }catch(e){
+    ov.innerHTML=`<p style="color:#ef4444">Erro: ${e.message}</p>`;
+  }
+}
+
+// ---- FEED ----
+function renderFeed(){
+  const el=document.getElementById('feedScroll');
+  let h='';
+  state.feed.forEach(f=>{
+    h+=`<div class="feed-item">`;
+    h+=`<span class="feed-emoji">${f.emoji}</span>`;
+    h+=`<span class="feed-text">${f.text}</span>`;
+    h+=`<span class="feed-time">${f.time}</span>`;
+    h+=`</div>`;
+  });
+  el.innerHTML=h;
+  document.getElementById('feedCount').textContent=state.feed.length+' eventos';
+}
+
+// ---- SIMULATION ----
+function togglePlay(){
+  state.playing=!state.playing;
+  const btn=document.getElementById('btnPlay');
+  if(state.playing){
+    btn.classList.add('active');
+    btn.innerHTML='\u23F8 Pausar';
+    state.playInterval=setInterval(()=>doStep(),3000);
+  }else{
+    btn.classList.remove('active');
+    btn.innerHTML='\u25B6 Play';
+    clearInterval(state.playInterval);
+  }
+}
+
+async function doStep(){
+  if(state.apiConnected){
+    // Chamar backend real
+    const API=window._VILA_API;
+    state.feed.unshift({emoji:'\u23F3',text:'<strong>Executando step...</strong>',time:formatTime(state.simMinutes)});
+    renderFeed();
+    try{
+      const r=await fetch(API+'/step',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({n_steps:1})});
+      const d=await r.json();
+      state.feed.unshift({
+        emoji:'\u2705',
+        text:`<strong>Step ${d.step_atual}</strong> concluido — ${d.resumos?.length||0} eventos`,
+        time:(d.hora_atual||'').slice(11,16)||formatTime(state.simMinutes)
+      });
+      // Recarregar agentes
+      const aR=await fetch(API+'/agentes',{signal:AbortSignal.timeout(5000)});
+      const aD=await aR.json();
+      const ag=aD.agentes||aD;
+      if(Array.isArray(ag)&&ag.length>0) state.agents=ag.map(mapBackendAgent);
+      // Recarregar conversas
+      const cR=await fetch(API+'/conversas?limite=10',{signal:AbortSignal.timeout(3000)});
+      const cD=await cR.json();
+      const cvs=cD.conversas||[];
+      if(cvs.length>0){
+        state.conversations=cvs.map((c,i)=>{
+          const turnos=c.turnos||[];
+          const lastT=turnos.length>0?turnos[turnos.length-1]:null;
+          const snippet=lastT?(Array.isArray(lastT)?(lastT[1]||'').slice(0,120):(lastT.conteudo||'').slice(0,120)):'...';
+          return {id:c.id||i, location:_BACKEND_TO_FRONT[c.local_id]||c.local_id||'agora',
+            topic:c.topico||'conversa', participants:[c.parceiro_nome||'?'],
+            snippet:snippet, time:c.hora||''};
+        });
+      }
+    }catch(e){
+      state.feed.unshift({emoji:'\u274C',text:`Erro no step: ${e.message}`,time:formatTime(state.simMinutes)});
+    }
+  }else{
+    // Modo demo local
+    state.simMinutes+=15;
+    document.getElementById('simTime').textContent=formatTime(state.simMinutes);
+    const numMoves=1+Math.floor(Math.random()*3);
+    for(let i=0;i<numMoves;i++){
+      const a=state.agents[Math.floor(Math.random()*state.agents.length)];
+      const loc=LOC_MAP[a.location];
+      if(!loc||!loc.connections||loc.connections.length===0) continue;
+      const newLoc=loc.connections[Math.floor(Math.random()*loc.connections.length)];
+      const oldLoc=a.location;
+      a.location=newLoc;
+      const actions=['\u{1F4AC}','\u{1F914}','\u{1F4DD}','\u{1F50D}','\u2615','\u{1F4A1}','\u{1F4CA}'];
+      const statuses=['conversando','refletindo','anotando','pesquisando','descansando','idealizando','analisando'];
+      const ri=Math.floor(Math.random()*actions.length);
+      a.action=actions[ri]; a.status=statuses[ri];
+      state.feed.unshift({emoji:'\u{1F6B6}',text:`<strong>${a.name}</strong> moveu-se para <span class="loc">${LOC_MAP[newLoc]?.name||newLoc}</span>`,time:formatTime(state.simMinutes)});
+    }
+    if(Math.random()>.6){
+      const locs=LOCATIONS.map(l=>({loc:l,agents:agentsAt(l.id)})).filter(x=>x.agents.length>=2);
+      if(locs.length>0){
+        const pick=locs[Math.floor(Math.random()*locs.length)];
+        const a1=pick.agents[Math.floor(Math.random()*pick.agents.length)];
+        let a2=a1; while(a2.id===a1.id) a2=pick.agents[Math.floor(Math.random()*pick.agents.length)];
+        const topics=['futuro da democracia digital','impacto da IA generativa','lideranca em tempos de crise','etica e poder','inovacao disruptiva'];
+        const t=topics[Math.floor(Math.random()*topics.length)];
+        state.feed.unshift({emoji:'\u{1F4AC}',text:`<strong>${a1.name}</strong> e <strong>${a2.name}</strong> sobre <em>${t}</em>`,time:formatTime(state.simMinutes)});
+      }
+    }
+  }
+  if(state.feed.length>50) state.feed=state.feed.slice(0,50);
+  renderMap();
+  renderFeed();
+  if(state.selectedLocation) openPanel(state.selectedLocation);
+}
+
+async function injectTopic(){
+  const input=document.getElementById('topicInput');
+  const topic=input.value.trim();
+  if(!topic) return;
+  if(state.apiConnected){
+    const API=window._VILA_API;
+    try{
+      await fetch(API+'/topico',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topico:topic,importancia:8})});
+      state.feed.unshift({emoji:'\u{1F4E3}',text:`<strong>INTEIA</strong> injetou topico: <em>"${topic}"</em> — agentes vao reagir no proximo step`,time:'agora'});
+    }catch(e){
+      state.feed.unshift({emoji:'\u274C',text:`Erro ao injetar topico: ${e.message}`,time:'agora'});
+    }
+  }else{
+    state.feed.unshift({emoji:'\u{1F4E3}',text:`<strong>INTEIA</strong> injetou topico: <em>"${topic}"</em> &mdash; agentes reagindo...`,time:formatTime(state.simMinutes)});
+    state.agents.slice(0,5).forEach(a=>{if(Math.random()>.4) a.location='agora';});
+  }
+  input.value='';
+  renderMap();
+  renderFeed();
+}
+
+// ---- NAVIGATION ----
+function setView(view){
+  state.currentView=view;
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.classList.toggle('active',n.dataset.view===view);
+  });
+  const statsOv=document.getElementById('statsOverlay');
+  const searchBar=document.getElementById('searchBar');
+  statsOv.classList.remove('visible');
+  searchBar.classList.remove('visible');
+
+  if(view==='stats') renderStats();
+  if(view==='agents'){ searchBar.classList.add('visible'); renderAgentsList(); }
+  if(view==='convos') showConvosView();
+  if(view==='synth') showSynthView();
+  if(view==='desafio') showDesafioView();
+  if(view==='workspace') showWorkspaceView();
+  if(view==='briefing') showBriefingView();
+  if(view==='consultar') showConsultarView();
+}
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click',()=>setView(n.dataset.view));
+});
+
+// ---- STATS VIEW ----
+function renderStats(){
+  const ov=document.getElementById('statsOverlay');
+  const totalAgents=state.agents.length;
+  const activeConvos=state.conversations.length;
+  const totalMoves=state.feed.filter(f=>f.emoji==='\u{1F6B6}').length;
+  const insights=state.feed.filter(f=>f.emoji==='\u{1F4A1}').length;
+
+  // Occupancy
+  const occData=LOCATIONS.map(l=>({name:l.name,count:agentsAt(l.id).length})).sort((a,b)=>b.count-a.count);
+  const maxOcc=Math.max(...occData.map(d=>d.count),1);
+
+  // Category distribution
+  const catCount={};
+  state.agents.forEach(a=>{catCount[a.cat]=(catCount[a.cat]||0)+1;});
+  const catEntries=Object.entries(catCount).sort((a,b)=>b[1]-a[1]);
+  const totalCats=catEntries.reduce((s,e)=>s+e[1],0);
+
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4CA} Dashboard de Estatisticas</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  // KPIs
+  h+=`<div class="stats-grid">`;
+  h+=statCard('\u{1F465}',totalAgents,'Agentes ativos');
+  h+=statCard('\u{1F4AC}',activeConvos,'Conversas ativas');
+  h+=statCard('\u{1F4A1}',insights,'Insights gerados');
+  h+=statCard('\u{1F6B6}',totalMoves,'Movimentacoes');
+  h+=`</div>`;
+
+  // Occupancy chart
+  h+=`<div class="chart-section"><div class="chart-title">Ocupacao por Local</div><div class="bar-chart">`;
+  occData.forEach(d=>{
+    const pct=maxOcc>0?Math.round(d.count/maxOcc*100):0;
+    h+=`<div class="bar-row">`;
+    h+=`<div class="bar-label" title="${d.name}">${d.name}</div>`;
+    h+=`<div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>`;
+    h+=`<div class="bar-val">${d.count}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+
+  // Donut (CSS-based)
+  h+=`<div class="chart-section"><div class="chart-title">Distribuicao por Categoria</div>`;
+  h+=`<div class="donut-wrap">`;
+  h+=buildDonut(catEntries,totalCats);
+  h+=`<div class="donut-legend">`;
+  catEntries.forEach(([cat,cnt])=>{
+    h+=`<div class="legend-item"><div class="legend-dot" style="background:${CAT_COLORS[cat]||'#888'}"></div>${cat} (${cnt})</div>`;
+  });
+  h+=`</div></div></div>`;
+
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+function statCard(emoji,value,label){
+  return `<div class="stat-card"><div class="stat-value">${emoji} ${value}</div><div class="stat-label">${label}</div></div>`;
+}
+
+function buildDonut(entries,total){
+  const size=160,cx=80,cy=80,r=55,r2=35;
+  let h=`<svg class="donut-svg" viewBox="0 0 ${size} ${size}">`;
+  let cumAngle=-Math.PI/2;
+  entries.forEach(([cat,cnt])=>{
+    const angle=(cnt/total)*2*Math.PI;
+    const x1=cx+r*Math.cos(cumAngle), y1=cy+r*Math.sin(cumAngle);
+    const x1i=cx+r2*Math.cos(cumAngle), y1i=cy+r2*Math.sin(cumAngle);
+    cumAngle+=angle;
+    const x2=cx+r*Math.cos(cumAngle), y2=cy+r*Math.sin(cumAngle);
+    const x2i=cx+r2*Math.cos(cumAngle), y2i=cy+r2*Math.sin(cumAngle);
+    const large=angle>Math.PI?1:0;
+    h+=`<path d="M${x1i},${y1i} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} L${x2i},${y2i} A${r2},${r2} 0 ${large},0 ${x1i},${y1i}" fill="${CAT_COLORS[cat]||'#888'}" opacity="0.85"/>`;
+  });
+  h+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" fill="var(--text-primary)" font-size="16" font-weight="700">${total}</text>`;
+  h+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" fill="var(--text-muted)" font-size="8">agentes</text>`;
+  h+=`</svg>`;
+  return h;
+}
+
+// ---- CONVOS VIEW ----
+async function showConvosView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API;
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4AC} Conversas Recentes</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  try{
+    const r=await fetch(API+'/conversas?limite=30',{signal:AbortSignal.timeout(5000)});
+    const d=await r.json();
+    const convos=d.conversas||[];
+    h+=`<div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">${d.total||convos.length} conversas no total</div>`;
+    if(convos.length===0){
+      h+=`<p style="color:var(--text-muted);text-align:center;padding:20px">Nenhuma conversa registrada. Rode mais steps!</p>`;
+    }
+    convos.slice().reverse().forEach(c=>{
+      const locFront=_BACKEND_TO_FRONT[c.local_id]||c.local_id||'?';
+      const locName=LOC_MAP[locFront]?.name||c.local_id||'?';
+      const parts=c.parceiro_nome||'?';
+      const topic=c.topico||'conversa';
+      const turnos=c.turnos||[];
+      // turnos can be [[nome,texto]] or [{nome,conteudo}]
+      function getTurnoText(t){
+        if(Array.isArray(t)) return {nome:t[0]||'?',texto:(t[1]||'').slice(0,200)};
+        return {nome:t.nome||t.papel||'?',texto:(t.conteudo||t.texto||'').slice(0,200)};
+      }
+      const lastT=turnos.length>0?getTurnoText(turnos[turnos.length-1]):{nome:'',texto:'...'};
+      h+=`<div class="convo-card" style="margin-bottom:12px;cursor:pointer" onclick="this.querySelector('.convo-detail')?.classList.toggle('visible')">`;
+      h+=`<div style="display:flex;justify-content:space-between;align-items:flex-start">`;
+      h+=`<div class="convo-topic" style="font-size:14px">${topic}</div>`;
+      h+=`<span style="font-size:10px;color:var(--text-muted)">${turnos.length} turnos</span>`;
+      h+=`</div>`;
+      h+=`<div class="convo-participants" style="margin-bottom:4px">\u{1F4CD} ${locName} &mdash; ${parts}</div>`;
+      h+=`<div class="convo-snippet">"${lastT.texto}"</div>`;
+      // Expandivel com todos os turnos
+      if(turnos.length>1){
+        h+=`<div class="convo-detail" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">`;
+        turnos.forEach(t=>{
+          const tt=getTurnoText(t);
+          const color=tt.nome.includes('?')?'#22c55e':'var(--amber)';
+          h+=`<div style="font-size:11px;margin-bottom:4px"><strong style="color:${color}">${tt.nome}:</strong> ${tt.texto}</div>`;
+        });
+        h+=`</div>`;
+      }
+      h+=`</div>`;
+    });
+  }catch(e){
+    // Fallback: conversas locais
+    state.conversations.forEach(c=>{
+      const locName=LOC_MAP[c.location]?.name||c.location;
+      const parts=Array.isArray(c.participants)?c.participants.map(pid=>{const a=state.agents.find(x=>x.id===pid);return a?a.name:pid;}).join(', '):c.participants;
+      h+=`<div class="convo-card" style="margin-bottom:12px">`;
+      h+=`<div class="convo-topic" style="font-size:14px">${c.topic}</div>`;
+      h+=`<div class="convo-participants">\u{1F4CD} ${locName} &mdash; ${parts}</div>`;
+      h+=`<div class="convo-snippet">"${c.snippet}"</div>`;
+      h+=`</div>`;
+    });
+  }
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- SYNTH VIEW ----
+async function showSynthView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API;
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4A1} Sinteses e Insights</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  try{
+    const r=await fetch(API+'/sinteses',{signal:AbortSignal.timeout(5000)});
+    const d=await r.json();
+    const sinteses=d.sinteses||[];
+    if(sinteses.length===0){
+      h+=`<p style="color:var(--text-muted);text-align:center;padding:20px">Nenhuma sintese ainda. Rode mais steps para os agentes gerarem insights.</p>`;
+      h+=`<button onclick="doStep().then(()=>showSynthView())" style="display:block;margin:0 auto;background:linear-gradient(135deg,var(--amber),var(--amber-dark));border:none;color:#000;padding:10px 24px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px">Rodar Step + Recarregar</button>`;
+    }else{
+      sinteses.slice().reverse().forEach(s=>{
+        const parts=(s.participantes||[]).join(', ')||'varios consultores';
+        const conf=s.confianca?` (confianca: ${s.confianca})`:'';
+        h+=`<div class="convo-card" style="margin-bottom:12px">`;
+        h+=`<div class="convo-topic" style="font-size:14px">\u{1F4A1} ${s.topico||'Sintese'}</div>`;
+        h+=`<div class="convo-participants" style="margin-bottom:6px">\u{1F465} ${parts}${conf}</div>`;
+        h+=`<div style="font-size:12px;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">${(s.sintese||'').slice(0,500)}</div>`;
+        h+=`</div>`;
+      });
+    }
+  }catch(e){
+    h+=`<p style="color:#ef4444">Erro ao carregar sinteses: ${e.message}</p>`;
+  }
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- DESAFIO VIEW (interativo) ----
+async function showDesafioView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API||'/api/v1/vila';
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F3AF} Desafio Coletivo</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  try{
+    const resp=await fetch(API+'/desafio');
+    const data=await resp.json();
+    const des=data.desafio||data;
+    if(!data||data.status==='inativo'||data.ativo===false){
+      h+=`<div style="text-align:center;padding:30px">`;
+      h+=`<p style="color:var(--text-muted);margin-bottom:16px">Nenhum desafio ativo.</p>`;
+      h+=`<textarea id="vilaDesafioInput" placeholder="Digite o tema do desafio..." style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:10px;border-radius:var(--radius-sm);font-size:13px;resize:vertical;font-family:inherit;margin-bottom:12px"></textarea>`;
+      h+=`<button onclick="iniciarDesafioMapa()" style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:12px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;font-weight:700">Iniciar Desafio</button>`;
+      h+=`</div>`;
+    }else{
+      const pct=des.progresso||Math.round((data.progresso_total||0)*100);
+      h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">`;
+      h+=`<span style="font-size:32px">${des.icone||'\u{1F3AF}'}</span>`;
+      h+=`<div><div style="font-weight:700;font-size:16px">${des.tema||des.nome||'Desafio'}</div>`;
+      h+=`<div style="font-size:12px;color:var(--text-muted)">Fase: ${des.fase||'?'} (${des.fase_atual||0}/${(des.fases||[]).length})</div></div>`;
+      h+=`</div>`;
+      h+=`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px">Progresso</span><span style="font-weight:700;color:#22c55e">${pct}%</span></div>`;
+      h+=`<div style="height:10px;background:var(--bg-secondary);border-radius:5px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#22c55e,var(--amber));width:${pct}%"></div></div></div>`;
+      // Fases
+      const fasesList=des.fases||data.fases||[];
+      if(fasesList.length){
+        fasesList.forEach((f,i)=>{
+          const fName=typeof f==='string'?f:(f.nome||f);
+          const cur=i===(des.fase_atual||data.fase_atual_idx||0);
+          const done=typeof f==='string'?i<(des.fase_atual||0):(f.status==='concluida');
+          const fp=done?100:(cur?50:0);
+          const bg=done?'rgba(34,197,94,0.15)':cur?'rgba(201,149,42,0.15)':'var(--bg-secondary)';
+          const ic=done?'\u2705':cur?'\u25B6':'\u25CB';
+          h+=`<div style="background:${bg};padding:10px;border-radius:var(--radius-sm);margin-bottom:6px;display:flex;align-items:center;gap:8px">`;
+          h+=`<span>${ic}</span><div style="flex:1"><strong>${fName}</strong><div style="font-size:11px;color:var(--text-muted)">${typeof f==='object'?(f.descricao||''):(cur?'Fase atual':'')}</div></div>`;
+          h+=`<span style="font-weight:700;font-size:12px">${fp}%</span></div>`;
+        });
+      }
+      // Metricas
+      const m=data.metricas||{};
+      h+=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:16px">`;
+      [{v:m.total_contribuicoes||0,l:'Contribuições',c:'#22c55e'},{v:m.agentes_participantes||0,l:'Participantes',c:'var(--amber)'},{v:m.total_votos||0,l:'Votos',c:'#3b82f6'},{v:m.total_debates||0,l:'Debates',c:'#ef4444'}].forEach(x=>{
+        h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:20px;font-weight:700;color:${x.c}">${x.v}</div><div style="font-size:10px;color:var(--text-muted)">${x.l}</div></div>`;
+      });
+      h+=`</div>`;
+      // Contribuicoes recentes
+      const recentes=des.contribuicoes||data.contribuicoes_recentes||[];
+      if(recentes.length){
+        h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">Contribuições Recentes</h3>`;
+        recentes.slice(-6).reverse().forEach(c=>{
+          h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);margin-bottom:4px;font-size:12px;border-left:3px solid #22c55e">`;
+          h+=`<strong>${c.agente_nome||'?'}</strong> <span style="color:var(--text-muted)">${(c.contribuicao||c.conteudo||'').slice(0,120)}</span></div>`;
+        });
+      }
+    }
+  }catch(e){h+=`<p style="color:#ef4444">Erro ao carregar desafio: ${e.message}</p>`;}
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function iniciarDesafioMapa(){
+  const tema=document.getElementById('vilaDesafioInput')?.value?.trim();
+  if(!tema){alert('Digite o tema');return;}
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    await fetch(API+'/desafio/iniciar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tema:tema})});
+    showDesafioView();
+  }catch(e){alert('Erro: '+e.message);}
+}
+
+// ---- WORKSPACE / PRODUTOS VIEW (interativo) ----
+async function showWorkspaceView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API||'/api/v1/vila';
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4C4} Produtos Gerados</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  try{
+    // Oficinas
+    const ofResp=await fetch(API+'/oficinas');
+    const ofData=await ofResp.json();
+    const oficinas=ofData.oficinas||[];
+
+    h+=`<h3 style="font-size:14px;margin-bottom:8px">\u{2699} Oficinas (${oficinas.length})</h3>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">`;
+    oficinas.forEach(o=>{
+      const nf=o.ferramentas?o.ferramentas.length:0;
+      h+=`<div onclick="showOficinaDetail('${o.id||o.local_id}')" style="background:var(--bg-secondary);padding:10px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border);transition:all .2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.borderColor='var(--amber)';this.style.background='var(--glow)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-secondary)'">`;
+      const oIcons={laboratorio:'🔬',torre_estrategia:'🏰',tribunal:'⚖️',biblioteca:'📚',arena_debates:'⚔️',atelie:'🎨',observatorio:'🔭'};
+      h+=`<span style="font-size:20px">${oIcons[o.id]||'⚙️'}</span>`;
+      h+=`<div style="flex:1"><div style="font-weight:600;font-size:12px">${o.nome}</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted)">${nf} ferramentas</div></div>`;
+      h+=`<span style="color:var(--amber);font-size:11px;font-weight:600">Abrir ▶</span>`;
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+
+    // Workspace
+    const wsResp=await fetch(API+'/workspace');
+    const wsData=await wsResp.json();
+    const arquivos=wsData.arquivos||[];
+
+    h+=`<h3 style="font-size:14px;margin-bottom:8px">\u{1F4C2} Artefatos no Workspace (${arquivos.length})</h3>`;
+    if(arquivos.length===0){
+      h+=`<p style="color:var(--text-muted);font-size:12px;padding:16px;text-align:center">Nenhum artefato ainda. Inicie um desafio e rode a simulação!</p>`;
+    }else{
+      const extIcons={py:'\u{1F40D}',md:'\u{1F4DD}',json:'\u{1F4CA}',html:'\u{1F310}',csv:'\u{1F4C8}',mdx:'\u{1F4F0}'};
+      arquivos.slice(-20).reverse().forEach((a,idx)=>{
+        const nome=a.nome||a.arquivo||'Artefato';
+        const tipo=a.tipo||'';
+        const tipoIcons={sintese:'💡',conversa:'💬',design_sprint:'🎯',analise_oficina:'📊',debate:'⚔️'};
+        const ic=tipoIcons[tipo]||'\u{1F4C4}';
+        const parts=Array.isArray(a.participantes)?a.participantes.join(', '):'';
+        const extra=[
+          parts?`${parts}`:'',
+          a.agentes?`${a.agentes} agentes`:'',
+          a.turnos?`${a.turnos} turnos`:'',
+          a.local?`📍 ${a.local}`:'',
+          a.confianca?`Confiança: ${a.confianca}`:'',
+        ].filter(Boolean).join(' • ');
+        h+=`<div onclick="this.querySelector('.art-detail')?.classList.toggle('visible')" style="padding:10px;background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:6px;border-left:3px solid var(--amber);cursor:pointer">`;
+        h+=`<div style="display:flex;align-items:center;gap:8px">`;
+        h+=`<span style="font-size:18px">${ic}</span>`;
+        h+=`<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">${nome}</div>`;
+        h+=`<div style="font-size:10px;color:var(--text-muted)">${tipo} ${extra?'• '+extra:''}</div></div>`;
+        h+=`<span style="font-size:10px;color:var(--text-muted)">▼</span></div>`;
+        h+=`<div class="art-detail" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:12px;line-height:1.5;color:var(--text-secondary)">`;
+        if(a.conteudo) h+=`<p>${a.conteudo.slice(0,300)}${a.conteudo.length>300?'...':''}</p>`;
+        else h+=`<p style="color:var(--text-muted)">Tipo: ${tipo} | ID: ${a.id||'?'}</p>`;
+        h+=`</div></div>`;
+      });
+    }
+
+    // Economia
+    const ecResp=await fetch(API+'/economia');
+    const ecData=await ecResp.json();
+    h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">\u{1F4B0} Economia</h3>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700;color:var(--amber)">\u039E${ecData.supply_total||0}</div><div style="font-size:10px;color:var(--text-muted)">Supply Total</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700">${ecData.agentes_ativos||ecData.total_carteiras||0}</div><div style="font-size:10px;color:var(--text-muted)">Carteiras</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:8px;border-radius:var(--radius-sm);text-align:center"><div style="font-size:16px;font-weight:700">${ecData.gini||0}</div><div style="font-size:10px;color:var(--text-muted)">Gini</div></div>`;
+    h+=`</div>`;
+
+    // Top agentes
+    const top=ecData.top_ricos||ecData.top_10||[];
+    if(top.length){
+      h+=`<h3 style="font-size:14px;margin-top:16px;margin-bottom:8px">\u{1F3C6} Top Agentes</h3>`;
+      top.slice(0,5).forEach((t,i)=>{
+        h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px;font-size:12px">`;
+        h+=`<span style="font-weight:700;color:var(--amber)">#${i+1}</span>`;
+        h+=`<span style="flex:1">${t.nome||t.agente_id||'?'}</span>`;
+        h+=`<span>\u039E${t.saldo||0}</span>`;
+        h+=`</div>`;
+      });
+    }
+
+  }catch(e){h+=`<p style="color:#ef4444">Erro: ${e.message}</p>`;}
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function showOficinaDetail(localId){
+  const API=window._VILA_API||'/api/v1/vila';
+  const backendId=_LOC_ID_MAP[localId]||localId;
+  try{
+    const resp=await fetch(API+'/oficinas/'+backendId);
+    const data=await resp.json();
+    if(data.erro)return;
+    const ov=document.getElementById('statsOverlay');
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:18px;font-weight:700">\u{2699} ${data.nome}</h2>`;
+    h+=`<button onclick="showWorkspaceView()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">\u{2190} Voltar</button>`;
+    h+=`</div>`;
+    h+=`<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">${data.descricao}</p>`;
+    const icons={codigo:'\u{1F4BB}',pesquisa:'\u{1F50D}',escrita:'\u{270F}',analise:'\u{1F4CA}',visual:'\u{1F3A8}',votacao:'\u{1F5F3}',comunicacao:'\u{1F4E2}'};
+    const ferrIcons={'Monte Carlo':'🎲','Random Forest':'🌲','SWOT':'📊','PESTEL':'🌐','Teoria dos Jogos':'♟️','Design Sprint':'🎯','Brainstorm':'💡','SCAMPER':'🔧','Analise de Sentimento':'💬','Pesquisa Academica':'📚','Debate Estruturado':'⚔️','Analise Jurisprudencial':'⚖️','Meta-Analise':'🔬','Cenarios Prospectivos':'🔮','Revisao Sistematica':'📋','Monitoramento':'📡','Radar de Tendencias':'📈','Analise de Redes':'🕸️','Mapa Mental':'🧠','Prototipagem':'🛠️','Advocacia do Diabo':'😈','Deliberacao':'🤝','Due Diligence':'🔍','Parecer Juridico':'📜'};
+    (data.ferramentas||[]).forEach(f=>{
+      const fname=typeof f==='string'?f:f.nome;
+      const ficon=ferrIcons[fname]||'\u{2699}';
+      h+=`<div onclick="executarFerramenta('${backendId}','${fname}')" style="background:var(--bg-secondary);padding:12px;border-radius:var(--radius-sm);margin-bottom:8px;border-left:3px solid var(--amber);cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#22c55e'" onmouseout="this.style.borderColor='var(--amber)'">`;
+      h+=`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">${ficon}</span><strong style="font-size:13px">${fname}</strong>`;
+      h+=`<span style="margin-left:auto;font-size:11px;color:#22c55e;font-weight:600">▶ Executar</span>`;
+      h+=`</div>`;
+      h+=`</div>`;
+    });
+    if(data.artefatos_produzidos>0)h+=`<div style="margin-top:12px;padding:8px;background:rgba(34,197,94,0.1);border-radius:var(--radius-sm);font-size:12px;color:#22c55e">\u{2705} ${data.artefatos_produzidos} artefatos produzidos nesta oficina</div>`;
+    ov.innerHTML=h;
+  }catch(e){}
+}
+
+async function executarFerramenta(oficinaId,ferramenta){
+  const tema=prompt(`Tema para ${ferramenta}:`);
+  if(!tema) return;
+  const ov=document.getElementById('statsOverlay');
+  ov.innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:40px;margin-bottom:16px">⚙️</div><p>Executando ${ferramenta} com 5 consultores...</p><p style="font-size:12px;color:var(--text-muted);margin-top:8px">Isso pode levar ~30 segundos</p></div>`;
+  ov.classList.add('visible');
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    const r=await fetch(API+'/oficinas/'+oficinaId+'/executar?ferramenta='+encodeURIComponent(ferramenta)+'&tema='+encodeURIComponent(tema),{method:'POST'});
+    const d=await r.json();
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:18px;font-weight:700">⚙️ ${ferramenta}</h2>`;
+    h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+    h+=`</div>`;
+    h+=`<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Tema: ${d.tema||tema} • ${d.total_agentes||0} consultores</div>`;
+    (d.contribuicoes||[]).forEach(c=>{
+      h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--amber)">`;
+      h+=`<div style="font-weight:700;font-size:13px;margin-bottom:6px">${c.agente_nome} <span style="font-size:10px;color:var(--text-muted)">(${c.categoria})</span></div>`;
+      h+=`<div style="font-size:12px;line-height:1.6;white-space:pre-wrap">${(c.analise||c.contribuicao||'').replace(/</g,'&lt;')}</div>`;
+      h+=`</div>`;
+    });
+    ov.innerHTML=h;
+  }catch(e){
+    ov.innerHTML=`<p style="color:#ef4444;padding:20px">Erro: ${e.message}</p>`;
+  }
+}
+
+async function showArtefato(nomeArquivo){
+  const API=window._VILA_API||'/api/v1/vila';
+  try{
+    // Pegar desafio ativo para saber o ID
+    const dResp=await fetch(API+'/desafio');
+    const dData=await dResp.json();
+    const desafioId=dData.id||'';
+    if(!desafioId){alert('Nenhum desafio ativo');return;}
+    const resp=await fetch(API+'/workspace/'+desafioId+'/arquivo/'+encodeURIComponent(nomeArquivo));
+    const data=await resp.json();
+    const ov=document.getElementById('statsOverlay');
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:16px;font-weight:700">\u{1F4C4} ${nomeArquivo}</h2>`;
+    h+=`<button onclick="showWorkspaceView()" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">\u{2190} Voltar</button>`;
+    h+=`</div>`;
+    h+=`<pre style="background:var(--bg-secondary);padding:16px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;overflow:auto;max-height:70vh;white-space:pre-wrap;word-break:break-word;color:var(--text-primary)">${(data.conteudo||'Vazio').replace(/</g,'&lt;')}</pre>`;
+    ov.innerHTML=h;
+  }catch(e){alert('Erro ao ler artefato: '+e.message);}
+}
+
+// ---- BRIEFING VIEW ----
+async function showBriefingView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API;
+  ov.innerHTML=`<div style="text-align:center;padding:40px"><div style="font-size:40px;margin-bottom:16px">&#128220;</div><p>Gerando briefing executivo...</p><p style="font-size:12px;color:var(--text-muted);margin-top:8px">Consultando 146 agentes via IA</p></div>`;
+  ov.classList.add('visible');
+  try{
+    const r=await fetch(API+'/briefing',{signal:AbortSignal.timeout(30000)});
+    const d=await r.json();
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+    h+=`<h2 style="font-size:18px;font-weight:700">&#128220; Briefing Executivo</h2>`;
+    h+=`<div style="display:flex;gap:8px"><button onclick="copyBriefing()" style="background:var(--bg-secondary);border:1px solid var(--border);color:var(--amber);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit">&#128203; Copiar</button>`;
+    h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button></div></div>`;
+    // Metricas
+    const m=d.metricas||{};
+    h+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">`;
+    [{v:m.agentes,l:'Agentes',c:'var(--amber)'},{v:m.conversas,l:'Conversas',c:'#22c55e'},{v:m.reflexoes,l:'Reflexoes',c:'#3b82f6'},{v:m.sinteses,l:'Sinteses',c:'#8b5cf6'}].forEach(x=>{
+      h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:8px;text-align:center"><div style="font-size:20px;font-weight:700;color:${x.c}">${x.v||0}</div><div style="font-size:10px;color:var(--text-muted)">${x.l}</div></div>`;
+    });
+    h+=`</div>`;
+    // Insight IA
+    h+=`<div id="briefingContent" style="background:linear-gradient(135deg,rgba(214,158,46,0.08),rgba(34,197,94,0.05));border:1px solid rgba(214,158,46,0.2);border-radius:12px;padding:16px;margin-bottom:16px">`;
+    h+=`<div style="font-weight:700;color:var(--amber);margin-bottom:8px;font-size:14px">&#129504; Insight da Vila</div>`;
+    h+=`<div style="font-size:13px;line-height:1.7;white-space:pre-wrap">${d.insight_ia||'Sem insight disponivel.'}</div>`;
+    h+=`</div>`;
+    // Temas quentes
+    if(d.temas_quentes?.length){
+      h+=`<div style="margin-bottom:16px"><div style="font-weight:700;font-size:13px;margin-bottom:8px">&#128293; Temas Quentes</div>`;
+      d.temas_quentes.forEach(t=>{
+        h+=`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px"><span style="font-weight:700;color:var(--amber)">${t.mencoes}x</span><span>${t.tema}</span></div>`;
+      });
+      h+=`</div>`;
+    }
+    // Consultores ativos
+    if(d.consultores_ativos?.length){
+      h+=`<div style="margin-bottom:16px"><div style="font-weight:700;font-size:13px;margin-bottom:8px">&#127942; Consultores Mais Ativos</div>`;
+      d.consultores_ativos.forEach((c,i)=>{
+        h+=`<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px"><span style="font-weight:700;color:var(--amber)">#${i+1}</span><span style="flex:1">${c.nome}</span><span style="color:var(--text-muted)">${c.interacoes} interacoes</span></div>`;
+      });
+      h+=`</div>`;
+    }
+    // Acao rapida
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px">`;
+    h+=`<button onclick="showConsultarView()" style="background:linear-gradient(135deg,var(--amber),var(--amber-dark));border:none;color:#000;padding:12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">&#128483; Consultar Painel</button>`;
+    h+=`<button onclick="showDesafioView()" style="background:linear-gradient(135deg,#3b82f6,#2563eb);border:none;color:#fff;padding:12px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">&#127919; Design Sprint</button>`;
+    h+=`</div>`;
+    ov.innerHTML=h;
+  }catch(e){ov.innerHTML=`<p style="color:#ef4444;padding:20px">Erro: ${e.message}</p>`;}
+}
+
+function copyBriefing(){
+  const el=document.getElementById('briefingContent');
+  if(!el)return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const btn=document.querySelector('[onclick="copyBriefing()"]');
+    if(btn){btn.textContent='Copiado!';setTimeout(()=>btn.textContent='&#128203; Copiar',2000);}
+  });
+}
+
+// ---- CONSULTAR PAINEL VIEW ----
+async function showConsultarView(){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700">&#128483; Consultar Painel de Consultores</h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+  h+=`<p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Faca uma pergunta e receba respostas de multiplos consultores lendarios com perspectivas diversas.</p>`;
+  h+=`<textarea id="consultaPergunta" placeholder="Ex: Qual a melhor estrategia para vender IA para escritorios de advocacia?" style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:12px;border-radius:8px;font-size:13px;resize:vertical;font-family:inherit;margin-bottom:8px"></textarea>`;
+  h+=`<div style="display:flex;gap:8px;margin-bottom:12px">`;
+  h+=`<select id="consultaCat" style="flex:1;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:8px;border-radius:6px;font-size:12px;font-family:inherit">`;
+  h+=`<option value="">Todas categorias</option><option value="visionario">Visionarios</option><option value="estrategia">Estrategia</option><option value="investidor">Investidores</option><option value="jurista">Juristas</option><option value="tech">Tech</option><option value="marca">Marca</option><option value="psicologo">Psicologos</option><option value="filosofo">Filosofos</option></select>`;
+  h+=`<select id="consultaN" style="width:80px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:8px;border-radius:6px;font-size:12px;font-family:inherit"><option value="3">3</option><option value="5" selected>5</option><option value="7">7</option><option value="10">10</option></select>`;
+  h+=`<button onclick="executarConsulta()" style="background:linear-gradient(135deg,var(--amber),var(--amber-dark));border:none;color:#000;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">Consultar</button>`;
+  h+=`</div>`;
+  h+=`<div id="consultaResultado"></div>`;
+  // Sugestoes rapidas
+  h+=`<div style="margin-top:16px"><div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">Sugestoes rapidas:</div>`;
+  const sugs=['Como precificar um produto de IA no Brasil?','Qual o maior risco de uma startup de IA em 2026?','Devo focar em B2B ou B2G?','Como convencer um advogado a usar IA?','Estrategia para primeiro milhao de receita'];
+  sugs.forEach(s=>{
+    h+=`<button onclick="document.getElementById('consultaPergunta').value='${s}';executarConsulta()" style="display:inline-block;margin:2px;padding:4px 10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:20px;color:var(--text-secondary);cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">${s}</button>`;
+  });
+  h+=`</div>`;
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function executarConsulta(){
+  const pergunta=document.getElementById('consultaPergunta')?.value?.trim();
+  if(!pergunta){alert('Digite uma pergunta');return;}
+  const cat=document.getElementById('consultaCat')?.value||'';
+  const n=parseInt(document.getElementById('consultaN')?.value||'5');
+  const res=document.getElementById('consultaResultado');
+  res.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:24px">&#9203;</div><p style="font-size:12px;color:var(--text-muted)">Consultando ${n} especialistas... (~15s)</p></div>`;
+  const API=window._VILA_API;
+  try{
+    const body={pergunta:pergunta,n_consultores:n};
+    if(cat) body.categorias=[cat];
+    const r=await fetch(API+'/consulta',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(60000)});
+    const d=await r.json();
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">`;
+    h+=`<div style="font-weight:700;font-size:14px">${d.total_consultores} consultores responderam</div>`;
+    h+=`<button onclick="copiarConsulta()" style="background:var(--bg-secondary);border:1px solid var(--border);color:var(--amber);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:inherit">Copiar tudo</button></div>`;
+    h+=`<div id="consultaTexto">`;
+    (d.respostas||[]).forEach(r=>{
+      h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;margin-bottom:8px;border-left:3px solid ${CAT_COLORS[r.categoria]||'var(--amber)'}">`;
+      h+=`<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">`;
+      h+=`<strong style="font-size:13px">${r.agente_nome}</strong>`;
+      h+=`<span class="tier-badge tier-${r.tier}" style="font-size:9px">${r.tier}</span>`;
+      h+=`<span style="font-size:10px;color:var(--text-muted)">${r.categoria}</span>`;
+      h+=`<button onclick="chatComAgente('${r.agente_id}')" style="margin-left:auto;background:none;border:1px solid var(--border);color:var(--text-muted);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;font-family:inherit">Chat &#8594;</button>`;
+      h+=`</div>`;
+      h+=`<div style="font-size:12px;line-height:1.6;white-space:pre-wrap">${(r.resposta||'').replace(/</g,'&lt;')}</div>`;
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+    res.innerHTML=h;
+  }catch(e){res.innerHTML=`<p style="color:#ef4444">Erro: ${e.message}</p>`;}
+}
+
+function copiarConsulta(){
+  const el=document.getElementById('consultaTexto');
+  if(el)navigator.clipboard.writeText(el.innerText).then(()=>alert('Copiado!'));
+}
+
+// ---- HUB STATUS CARDS (sidebar) ----
+async function loadHubStatus(){
+  const el=document.getElementById('hubStatusCards');
+  if(!el)return;
+  const API=window._VILA_API||'/api/v1/vila';
+  let h='';
+  try{
+    const [dResp,eResp]=await Promise.all([
+      fetch(API+'/desafio').catch(()=>null),
+      fetch(API+'/economia').catch(()=>null),
+    ]);
+    const d=dResp?await dResp.json():null;
+    const e=eResp?await eResp.json():null;
+    // Desafio mini card
+    if(d&&d.status!=='inativo'){
+      const pct=Math.round((d.progresso_total||0)*100);
+      h+=`<div onclick="setView('desafio')" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:var(--radius-sm);padding:8px;margin-bottom:6px;cursor:pointer;font-size:11px">`;
+      h+=`<div style="font-weight:700;color:#22c55e">\u{1F3AF} ${(d.nome||'').slice(0,30)}</div>`;
+      h+=`<div style="height:4px;background:var(--bg-secondary);border-radius:2px;margin-top:4px"><div style="height:100%;background:#22c55e;width:${pct}%;border-radius:2px"></div></div>`;
+      h+=`<div style="color:var(--text-muted);margin-top:2px">${d.fase_atual?d.fase_atual.nome:'—'} · ${pct}%</div>`;
+      h+=`</div>`;
+    }
+    // Economia mini card
+    if(e&&e.supply_total>0){
+      h+=`<div onclick="setView('workspace')" style="background:rgba(201,149,42,0.1);border:1px solid rgba(201,149,42,0.2);border-radius:var(--radius-sm);padding:8px;cursor:pointer;font-size:11px">`;
+      h+=`<div style="font-weight:700;color:var(--amber)">\u039E ${e.supply_circulante||e.supply_total} em circulação</div>`;
+      h+=`<div style="color:var(--text-muted)">${e.agentes_ativos||e.total_carteiras||0} agentes · Gini: ${e.gini} · ${e.transacoes_hoje||0} transações</div>`;
+      h+=`</div>`;
+    }
+  }catch(e){}
+  el.innerHTML=h;
+}
+// Atualizar status a cada 30s
+setInterval(loadHubStatus,30000);
+
+// ---- SEARCH / FILTER ----
+function filterAgents(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const cat=document.getElementById('filterCat').value;
+  const filtered=state.agents.filter(a=>{
+    const matchName=!q||a.name.toLowerCase().includes(q);
+    const matchCat=!cat||a.cat===cat;
+    return matchName&&matchCat;
+  });
+  showFilteredAgents(filtered);
+}
+
+function showFilteredAgents(agents){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="margin-bottom:16px">`;
+  h+=`<h2 style="font-size:16px;font-weight:700">\u{1F465} ${agents.length} agente(s) encontrado(s)</h2>`;
+  h+=`</div>`;
+  agents.forEach(a=>{
+    const locName=LOC_MAP[a.location]?.name||'';
+    h+=`<div class="agent-row" style="margin-bottom:4px;border:1px solid var(--border);border-radius:var(--radius-md);padding:10px" onclick="showAgentPopup('${a.id}',event.clientX,event.clientY)">`;
+    h+=`<div class="agent-avatar" style="background:linear-gradient(135deg,${CAT_COLORS[a.cat]||'#d69e2e'}88,${CAT_COLORS[a.cat]||'#d69e2e'})">${getInitials(a.name)}</div>`;
+    h+=`<div style="flex:1"><div class="agent-name">${a.name}<span class="tier-badge tier-${a.tier}">${a.tier}</span></div>`;
+    h+=`<div class="agent-role">${a.title}</div>`;
+    h+=`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">\u{1F4CD} ${locName} &mdash; ${a.action} ${a.status}</div>`;
+    h+=`</div></div>`;
+  });
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+// ---- THEME ----
+function toggleTheme(){
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme');
+  html.setAttribute('data-theme',current==='dark'?'light':'dark');
+  const btn=document.querySelector('.theme-toggle');
+  btn.innerHTML=current==='dark'?'\u2600\uFE0F':'\u{1F319}';
+  renderMap();
+}
+
+// ---- SIDEBAR ----
+function collapseSidebar(){
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+
+// ---- KEYBOARD ----
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.code==='Space'){e.preventDefault();togglePlay();}
+  if(e.code==='ArrowRight'){e.preventDefault();doStep();}
+  if(e.code==='Escape'){closePanel();closeAgentPopup();document.getElementById('statsOverlay').classList.remove('visible');}
+});
+
+// ---- RESIZE ----
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>renderMap(),100);
+});
+
+// ---- API MODE ----
+async function loadFromAPI(){
+  const API=window._VILA_API;
+  try{
+    // Carregar agentes reais
+    const aResp=await fetch(API+'/agentes',{signal:AbortSignal.timeout(5000)});
+    const aData=await aResp.json();
+    const agentes=aData.agentes||aData;
+    if(Array.isArray(agentes)&&agentes.length>0){
+      state.agents=agentes.map(mapBackendAgent);
+      state.apiConnected=true;
+      console.log(`Vila INTEIA: ${state.agents.length} agentes carregados da API`);
+    }
+    // Carregar conversas reais
+    const cResp=await fetch(API+'/conversas?limite=20',{signal:AbortSignal.timeout(3000)});
+    const cData=await cResp.json();
+    const convos=cData.conversas||[];
+    if(convos.length>0){
+      state.conversations=convos.map((c,i)=>{
+        const turnos=c.turnos||[];
+        const lastT=turnos.length>0?turnos[turnos.length-1]:null;
+        const snippet=lastT?(Array.isArray(lastT)?(lastT[1]||'').slice(0,120):(lastT.conteudo||'').slice(0,120)):'...';
+        return {
+          id: c.id||i,
+          location: _BACKEND_TO_FRONT[c.local_id]||c.local_id||'agora',
+          topic: c.topico||'conversa',
+          participants: [c.parceiro_nome||'?'],
+          snippet: snippet,
+          time: c.hora||'',
+        };
+      });
+    }
+    // Carregar stats para feed
+    const sResp=await fetch(API+'/stats',{signal:AbortSignal.timeout(3000)});
+    const sData=await sResp.json();
+    state.simMinutes=480; // reset
+    if(sData.step>0){
+      state.feed.unshift({
+        emoji:'\u{1F4CA}',
+        text:`<strong>Backend conectado</strong>: Step ${sData.step}, ${sData.total_conversas||0} conversas, ${sData.total_sinteses||0} sinteses`,
+        time: (sData.hora||'').slice(11,16)||'agora'
+      });
+    }
+  }catch(e){
+    console.log('Vila INTEIA: Modo demo (API indisponivel)',e.message);
+    state.feed.unshift({emoji:'\u26A0\uFE0F',text:'<strong>API offline</strong> — modo demonstracao ativo',time:'agora'});
+  }
+}
+
+// ---- INIT ----
+async function init(){
+  renderMap();
+  renderFeed();
+  await loadFromAPI();
+  renderMap();
+  renderFeed();
+  loadHubStatus();
+  // Auto-refresh do backend a cada 30s
+  setInterval(async()=>{
+    if(!state.apiConnected)return;
+    try{
+      const API=window._VILA_API;
+      const r=await fetch(API+'/agentes',{signal:AbortSignal.timeout(3000)});
+      const d=await r.json();
+      const ag=d.agentes||d;
+      if(Array.isArray(ag)&&ag.length>0){
+        state.agents=ag.map(mapBackendAgent);
+        renderMap();
+        if(state.selectedLocation) openPanel(state.selectedLocation);
+      }
+    }catch(e){}
+  },30000);
+}
+
+init();
+</script>
+</body>
+</html>

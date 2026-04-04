@@ -1,0 +1,69 @@
+{
+  "id": "trf1-pedro-braga-filho",
+  "nome": "Pedro Braga Filho",
+  "nome_completo": "Pedro Braga Filho",
+  "orgao": "TRF1",
+  "cargo": "Desembargador Federal",
+  "situacao": "titular",
+  "dados_publicos": {
+    "gabinete_texto": "Ed. Sede II - 1º andar - Sala 1N",
+    "funcao_administrativa": null,
+    "pagina_trf1": "https://www.trf1.jus.br/trf1/em-atividade/pedro-braga-filho",
+    "telefone": "(61) 3314-5225",
+    "biografia_trf1_texto": "Pedro Braga Filho, natural de Salvador/BA, filho de Pedro Braga e Odete Rodrigues Braga, foi nomeado por Decreto Presidencial de 18/10/2022 (DOU 19/10/2022) e tomou posse no TRF-1ª Região em 07/11/2022.\n\n#### Instrução\n\nBacharel em Direito pela Universidade Federal da Bahia (18/08/1978).\n\nMestre em Direito, Área de Concentração em Direito Econômico, pela Universidade Federal da Bahia (21/09/1998).\n\nAtividades Profissionais\n\nJuiz Federal Substituto, em 10/08/1992, na titularidade plena das 1ª e 2ª Varas da Seção Judiciária do Piauí (1992 a 1993).\n\nRespondeu pela Seção Judiciária do Piauí e foi Diretor do Foro (1992 a 1993).\n\nJuiz do Tribunal Regional Eleitoral do Piauí (1992 a 1993).\n\nJuiz Federal Substituto na titularidade plena e Juiz Federal da 1ª Vara da Seção Judiciária da Bahia (1993 a 2010).\n\nJuiz Diretor do Foro da Seção Judiciária da Bahia (1996 a 1997).\n\nJuiz do Tribunal Regional Eleitoral da Bahia (16/09/1999 a 16/09/2001).\n\nMembro da 1ª Turma Recursal da Seção Judiciária da Bahia (2007 a 2008).\n\nPresidente da 2ª Turma Recursal da Seção Judiciária da Bahia (2008 a 2010), tendo participado neste período de sessões da Turma Regional de Uniformização da 1ª Região.\n\nMembro da 1ª Câmara Regional Previdenciária da Bahia (23/02/2015 a 23/08/2015).\n\nJuiz Federal Convocado para auxílio ao Tribunal Regional Federal da 1ª Região, em decorrência das férias do Desembargador Federal Tourinho Neto, no período de 22/06/2009 a 21/07/2009.\n\nParticipou do Mutirão das Turmas Recursais da Bahia, realizado de 16/03/2016 a 16/12/2016.\n\nJuiz Federal da 19ª Vara da Seção judiciária da Bahia (2010 a 2022).\n\nProcurador do Trabalho, Ministério Público do Trabalho, no período de 17/12/1991 a 09/08/1992.\n\nMonitor concursado da disciplina Introdução ao Estudo do Direito, Faculdade de Direito da Universidade Federal da Bahia (2º semestre de 1975 ao 1º semestre de 1978).\n\nProfessor Substituto (contratado) da disciplina Introdução ao Estudo do Direito, Faculdade de Direito da Universidade Federal da Bahia (07/08/1995 a 31/12/1995).\n\nProfessor da FACS-Faculdades Salvador S/C (01/08/1990 a 31/07/1995-licenciado de 01/03/1992 a 31/07/1995), SESB-Sociedade de Ensino Superior da Bahia (01/03/1998 a 31/05/2000) e FACS S/C (01/06/2000 a 15/03/2002 e 01/03/2003 a 01/02/2005), tendo lecionado as disciplinas Instituições de Direito Público e Privado, Direito Civil e Introdução ao Estudo do Direito.\n\n#### Publicações\n\nO Condomínio Especial como Sujeito de Direito, na Revista Jurídica dos Formandos em Direito da UFBA, Ano II, Vol. II, 1997.\n\nGlobalização e a Teoria Geral dos Contratos, no livro Globalização e Direito, Coordenadores Adroaldo Leão e Rodolfo Pamplona Filho, Rio de Janeiro, Forense, 2002.\n\nResponsabilidade tributária de administradores e redirecionamento da execução fiscal, na Coleção Jornada de Estudos Esmaf, 13 - II Jornada de Direito Tributário, Tribunal Regional Federal da 1ª Região, Escola da Magistratura Federal da 1ª Região, Brasília, ESMAF, 2012.",
+    "dados_dossie": {
+      "analise_comportamental": "Recém empossado (2024). Origem Bahia.",
+      "nascimento": {
+        "cidade": "Salvador/BA"
+      },
+      "perfil_ideologico": "Técnico com forte base acadêmica em direito econômico e tributário. Longa carreira como juiz federal na Bahia (30 anos). Atuação em direito tributário e econômico. Promovido por antiguidade em 2022.",
+      "formacao": "Direito (UFBA, 1978), Mestrado em Direito Econômico (UFBA, 1998)",
+      "carreira_previa": "Procurador do Trabalho MPT (1991-1992), juiz federal substituto SJPI (1992-1993), juiz federal SJBA (1993-2022, com várias funções), membro TRE-PI e TRE-BA, presidente 2ª Turma Recursal SJBA, professor substituto UFBA e FACS-Salvador"
+    }
+  },
+  "atuacao_profissional": {},
+  "padroes_decisao": {
+    "Direito Administrativo": "Decide materia administrativa com equilibrio entre legalidade e interesse publico. Atento a jurisprudencia consolidada do STJ e do proprio TRF1 sobre servidores publicos e atos da Administracao.",
+    "Direito Tributario": "Atuacao destacada em Direito Tributario, com dominio da legislacao tributaria federal e da jurisprudencia do STJ e STF em materia fiscal. Decisoes que equilibram a arrecadacao publica com os direitos dos contribuintes.",
+    "Direito Previdenciario": "Aplica a legislacao previdenciaria observando a jurisprudencia do STJ e da TNU. Decide questoes como aposentadoria, auxilio-doenca e pensao com equilibrio entre direitos do segurado e sustentabilidade do sistema.",
+    "Direito Ambiental": "Aplica a legislacao ambiental com equilibrio, reconhecendo a responsabilidade objetiva em dano ambiental. Atento a jurisprudencia do STJ sobre areas de preservacao permanente, reserva legal e responsabilidade por dano ambiental.",
+    "Improbidade Administrativa": "Decide acoes de improbidade com equilibrio, exigindo prova de dolo conforme exigencia da Lei 14.230/2021. Aplica sancoes proporcionais a gravidade da conduta e ao dano ao erario."
+  },
+  "hipoteses_para_simulacao": {
+    "instrucoes": [
+      "Inferencias aqui sao aproximacoes para simulacao; nao tratar como fato.",
+      "Sempre rotular o agente como simulacao e evitar qualquer uso para enganar terceiros."
+    ],
+    "tracos_operacionais": [
+      "Analise comportamental: Recém empossado (2024). Origem Bahia."
+    ],
+    "confianca_global": null
+  },
+  "riscos_e_cuidados": [
+    "Nao usar para impersonacao (nao assinar como a pessoa real).",
+    "Nao incluir dados pessoais nao-publicos."
+  ],
+  "fontes": [
+    {
+      "url": "https://www.trf1.jus.br/trf1/desembargadores-federais/em-atividade",
+      "tipo": "site-oficial",
+      "observacao": "Lista (Em atividade)"
+    },
+    {
+      "url": "https://www.trf1.jus.br/trf1/em-atividade/pedro-braga-filho",
+      "tipo": "site-oficial",
+      "observacao": "Pagina individual"
+    },
+    {
+      "url": null,
+      "tipo": "pesquisa_perplexity",
+      "observacao": "Dados extraidos de pesquisa Perplexity AI (2026-01-30)"
+    }
+  ],
+  "atualizado_em": "2026-01-31",
+  "persona_simulada": {
+    "tom_comunicacao": "formal e técnico",
+    "tendencias_decisorias": "Baseadas na jurisprudência do TRF1",
+    "descricao": "Desembargador Federal do TRF1 com atuação jurídica"
+  }
+}
