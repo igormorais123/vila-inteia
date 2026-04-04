@@ -157,36 +157,141 @@ def _sintetizar(contribuicoes: list[dict], tema: str, tecnica_nome: str) -> str:
 
 
 def _calcular_metricas(contribuicoes: list[dict], sintese: str) -> dict:
-    """Calcula indicadores de qualidade da execucao da tecnica."""
+    """
+    Indicadores anti-trapaca: medem qualidade REAL, nao apenas quantidade.
+
+    Principios anti-dissimulacao:
+    1. Medir ESTRUTURA (a tecnica foi seguida?) nao apenas tamanho
+    2. Medir ESPECIFICIDADE (dados concretos?) nao apenas fluencia
+    3. Medir DIVERGENCIA (consultores discordam?) nao apenas concordancia
+    4. Medir UNICIDADE (respostas sao diferentes entre si?) nao copias
+    5. Todos os indicadores sao verificaveis por humano em <30s
+    """
+    import re
+
     n = len(contribuicoes)
     if n == 0:
-        return {"completude": 0, "diversidade": 0, "profundidade_media": 0, "cobertura_metodologica": 0}
+        return _metricas_zeradas()
 
-    # Diversidade de categorias
+    respostas = [c["resposta"] for c in contribuicoes]
     cats = set(c["categoria"] for c in contribuicoes)
+
+    # ===== 1. ADERENCIA ESTRUTURAL (a tecnica foi aplicada?) =====
+    # Verifica se a resposta segue o formato pedido pela tecnica
+    # Conta marcadores estruturais: headers (#), listas (1. ou -), labels (MAIUSCULAS:)
+    marcadores_por_resp = []
+    for r in respostas:
+        headers = len(re.findall(r'^#{1,3}\s', r, re.MULTILINE))
+        listas = len(re.findall(r'^\s*[\d]+[.)]\s|^\s*[-*]\s', r, re.MULTILINE))
+        labels = len(re.findall(r'^[A-Z][A-Z\s]{2,}:', r, re.MULTILINE))
+        marcadores_por_resp.append(headers + listas + labels)
+    aderencia = round(sum(1 for m in marcadores_por_resp if m >= 3) / n, 2)
+
+    # ===== 2. ESPECIFICIDADE (dados concretos, nao genericos) =====
+    # Conta: numeros, percentuais, nomes proprios (Maiusculas), datas, valores R$
+    espec_por_resp = []
+    for r in respostas:
+        numeros = len(re.findall(r'\d+[%,.]?\d*', r))
+        nomes_proprios = len(re.findall(r'\b[A-Z][a-záéíóúâêôãõç]+(?:\s[A-Z][a-záéíóúâêôãõç]+)*\b', r))
+        valores = len(re.findall(r'R\$\s?[\d.,]+|US\$\s?[\d.,]+|\d+\s?(?:mil|milhao|bi)', r, re.IGNORECASE))
+        total = numeros + nomes_proprios + valores
+        espec_por_resp.append(total)
+    especificidade = round(sum(1 for e in espec_por_resp if e >= 5) / n, 2)
+
+    # ===== 3. UNICIDADE (respostas diferentes entre si?) =====
+    # Compara pares de respostas: se muito similares, flag de copia/template
+    def _similaridade_simples(a, b):
+        """Jaccard de palavras — robusto e sem dependencia externa."""
+        wa = set(a.lower().split())
+        wb = set(b.lower().split())
+        if not wa or not wb:
+            return 0
+        return len(wa & wb) / len(wa | wb)
+
+    pares_sim = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            pares_sim.append(_similaridade_simples(respostas[i], respostas[j]))
+    sim_media = sum(pares_sim) / max(len(pares_sim), 1) if pares_sim else 0
+    # Unicidade: 1.0 se respostas muito diferentes, 0.0 se copias
+    unicidade = round(max(0, 1.0 - sim_media * 2), 2)
+
+    # ===== 4. DIVERGENCIA (tem discordancia real?) =====
+    # Verifica se a sintese menciona divergencia/discordancia
+    div_keywords = ["divergen", "discorda", "contrari", "oposto", "diferent", "nao concorda",
+                    "contra-argum", "ressalva", "porem", "entretanto", "no entanto"]
+    sintese_lower = (sintese or "").lower()
+    divergencia_encontrada = sum(1 for k in div_keywords if k in sintese_lower)
+    divergencia = round(min(divergencia_encontrada / 3, 1.0), 2)
+
+    # ===== 5. COMPLETUDE SUBSTANCIAL (nao apenas tamanho) =====
+    # Resposta >100 chars E com estrutura E com dados = completa
+    completas = sum(
+        1 for i, r in enumerate(respostas)
+        if len(r) > 150 and marcadores_por_resp[i] >= 2 and espec_por_resp[i] >= 3
+    )
+    completude = round(completas / n, 2)
+
+    # ===== 6. DIVERSIDADE DE PERSPECTIVA =====
     diversidade = round(len(cats) / max(n, 1), 2)
 
-    # Profundidade media (tamanho das respostas como proxy)
-    tamanhos = [len(c["resposta"]) for c in contribuicoes]
-    prof_media = round(sum(tamanhos) / n)
+    # ===== 7. COBERTURA DA SINTESE =====
+    # Sintese deve mencionar pelo menos 50% dos consultores pelo nome
+    nomes_na_sintese = sum(1 for c in contribuicoes if c["agente_nome"].split()[0] in (sintese or ""))
+    cob_nomes = round(nomes_na_sintese / n, 2) if n > 0 else 0
+    cob_tamanho = 1.0 if sintese and len(sintese) > 300 else 0.5 if sintese and len(sintese) > 100 else 0.0
+    cobertura = round((cob_nomes * 0.5 + cob_tamanho * 0.5), 2)
 
-    # Completude (respostas nao vazias / total)
-    completude = round(sum(1 for c in contribuicoes if len(c["resposta"]) > 100) / n, 2)
+    # ===== SCORE COMPOSTO (ponderado, dificil de manipular) =====
+    # Peso maior nos indicadores mais dificeis de falsificar
+    score = round((
+        aderencia * 0.20 +        # Seguiu a estrutura da tecnica?
+        especificidade * 0.20 +    # Tem dados concretos?
+        unicidade * 0.20 +         # Respostas sao unicas?
+        divergencia * 0.10 +       # Existe discordancia real?
+        completude * 0.15 +        # Substancialmente completo?
+        diversidade * 0.05 +       # Categorias diferentes?
+        cobertura * 0.10           # Sintese integra todos?
+    ) * 10, 1)
 
-    # Cobertura (sintese gerada e substancial)
-    cob = 1.0 if sintese and len(sintese) > 200 else 0.5 if sintese else 0.0
-
-    # Score composto
-    score = round((completude * 0.3 + diversidade * 0.2 + min(prof_media / 800, 1.0) * 0.3 + cob * 0.2) * 10, 1)
+    # ===== FLAGS ANTI-TRAPACA =====
+    flags = []
+    if sim_media > 0.4:
+        flags.append("ALERTA: respostas muito similares entre si (possivel template)")
+    if especificidade < 0.3:
+        flags.append("ALERTA: respostas genericas sem dados concretos")
+    if aderencia < 0.3:
+        flags.append("ALERTA: tecnica nao foi seguida estruturalmente")
+    if divergencia == 0:
+        flags.append("ALERTA: zero divergencia — possivel pensamento de grupo")
+    if any(len(r) < 80 for r in respostas):
+        flags.append("ALERTA: resposta(s) suspeitamente curta(s)")
 
     return {
         "score_qualidade": score,
-        "completude": completude,
+        "aderencia_estrutural": aderencia,
+        "especificidade_dados": especificidade,
+        "unicidade_respostas": unicidade,
+        "divergencia_real": divergencia,
+        "completude_substancial": completude,
         "diversidade_categorias": diversidade,
+        "cobertura_sintese": cobertura,
         "categorias_representadas": list(cats),
-        "profundidade_media_chars": prof_media,
-        "cobertura_sintese": cob,
+        "profundidade_media_chars": round(sum(len(r) for r in respostas) / n),
+        "similaridade_media_pares": round(sim_media, 3),
         "total_contribuicoes": n,
+        "flags_anti_trapaca": flags,
+        "verificavel_humano": True,
+    }
+
+
+def _metricas_zeradas():
+    return {
+        "score_qualidade": 0, "aderencia_estrutural": 0, "especificidade_dados": 0,
+        "unicidade_respostas": 0, "divergencia_real": 0, "completude_substancial": 0,
+        "diversidade_categorias": 0, "cobertura_sintese": 0, "categorias_representadas": [],
+        "profundidade_media_chars": 0, "similaridade_media_pares": 0, "total_contribuicoes": 0,
+        "flags_anti_trapaca": ["SEM DADOS"], "verificavel_humano": True,
     }
 
 
