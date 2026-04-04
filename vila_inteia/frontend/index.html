@@ -361,6 +361,7 @@ body{
     <li class="nav-item" data-view="consultar"><span class="nav-icon" style="color:var(--amber)">&#128483;</span><span class="nav-text" style="color:var(--amber);font-weight:600">Consultar Painel</span></li>
     <li class="nav-item" data-view="desafio"><span class="nav-icon" style="color:#3b82f6">&#127919;</span><span class="nav-text" style="color:#3b82f6;font-weight:600">Design Sprint</span></li>
     <li class="nav-item" data-view="workspace"><span class="nav-icon">&#128196;</span><span class="nav-text">Produtos</span></li>
+    <li class="nav-item" data-view="problemsolving" style="background:rgba(6,182,212,0.08);border-left:3px solid #06b6d4"><span class="nav-icon" style="color:#06b6d4">&#129504;</span><span class="nav-text" style="color:#06b6d4;font-weight:700">Problem Solving</span></li>
   </ul>
   <div class="sidebar-label">Vila</div>
   <ul class="nav-list">
@@ -1153,6 +1154,7 @@ function setView(view){
   if(view==='briefing') showBriefingView();
   if(view==='autoresearch') showAutoResearchView();
   if(view==='consultar') showConsultarView();
+  if(view==='problemsolving') showProblemSolvingView();
 }
 document.querySelectorAll('.nav-item').forEach(n=>{
   n.addEventListener('click',()=>setView(n.dataset.view));
@@ -1998,6 +2000,160 @@ async function init(){
       }
     }catch(e){}
   },30000);
+}
+
+// ---- PROBLEM SOLVING VIEW (Van Aken & Berends) ----
+async function showProblemSolvingView(){
+  const ov=document.getElementById('statsOverlay');
+  const API=window._VILA_API;
+  const CY='#06b6d4';
+
+  // Tecnicas hardcoded (espelho do backend) para renderizar sem fetch inicial
+  const FASES=[
+    {id:'definicao',nome:'Definicao do Problema',cor:'#22c55e',icon:'&#128269;',tecnicas:[
+      {slug:'causa_efeito',nome:'Arvore de Causa-Efeito',desc:'Mapeia causas raiz e efeitos em estrutura hierarquica'},
+      {slug:'steepled',nome:'Analise STEEPLED',desc:'Scan macro-ambiental: Social, Tecnologico, Economico, Ecologico, Politico, Legal, Etico, Demografico'},
+      {slug:'stakeholder',nome:'Analise de Stakeholders',desc:'Mapeia partes interessadas, poder e estrategia de engajamento'},
+      {slug:'quick_scan',nome:'Quick Scan',desc:'Analise rapida de desempenho: gaps e quick wins'},
+    ]},
+    {id:'diagnostico',nome:'Analise e Diagnostico',cor:'#eab308',icon:'&#128300;',tecnicas:[
+      {slug:'ishikawa',nome:'Ishikawa (Fishbone)',desc:'Causas raiz por categorias (6M)'},
+      {slug:'incidente_critico',nome:'Incidente Critico',desc:'Analisa eventos decisivos para extrair padroes'},
+      {slug:'bpm',nome:'Modelagem de Processos',desc:'Processo AS-IS vs. TO-BE'},
+      {slug:'cinco_porques',nome:'5 Porques',desc:'Iteracao de por que ate a causa raiz'},
+      {slug:'ssm',nome:'Soft Systems Methodology',desc:'Problemas mal-estruturados via visoes de mundo (Checkland)'},
+    ]},
+    {id:'solucao',nome:'Design de Solucao',cor:'#8b5cf6',icon:'&#128161;',tecnicas:[
+      {slug:'idealized_design',nome:'Idealized Design (Ackoff)',desc:'Projeta solucao ideal sem restricoes'},
+      {slug:'triz',nome:'TRIZ',desc:'40 principios inventivos para contradicoes tecnicas'},
+      {slug:'design_thinking',nome:'Design Thinking',desc:'Empatia, Definicao, Ideacao, Prototipagem, Teste'},
+      {slug:'appreciative_inquiry',nome:'Investigacao Apreciativa',desc:'4D: Discover, Dream, Design, Destiny'},
+      {slug:'mcdm',nome:'Decisao Multicriterio',desc:'Avalia alternativas com criterios ponderados'},
+      {slug:'cbr',nome:'Raciocinio Baseado em Casos',desc:'Busca solucoes em casos analogos'},
+    ]},
+    {id:'intervencao',nome:'Intervencao',cor:'#ef4444',icon:'&#9889;',tecnicas:[
+      {slug:'resistencia',nome:'Analise de Resistencia',desc:'Fontes de resistencia e estrategias (Kotter/Lewin)'},
+      {slug:'plano_comunicacao',nome:'Plano de Comunicacao',desc:'Mensagens, canais, audiencias e cronograma'},
+      {slug:'piloto',nome:'Implementacao Piloto',desc:'Experimento controlado antes do rollout'},
+      {slug:'action_research',nome:'Pesquisa-Acao',desc:'Ciclo intervir-observar-refletir-replanejar (Lewin)'},
+    ]},
+    {id:'avaliacao',nome:'Avaliacao',cor:'#3b82f6',icon:'&#128202;',tecnicas:[
+      {slug:'pos_teste',nome:'Avaliacao Pos-Teste',desc:'Mede resultados comparando com baseline'},
+      {slug:'comparative_change',nome:'Design Comparativo',desc:'Grupo experimental vs. controle'},
+      {slug:'post_project_review',nome:'Revisao Pos-Projeto',desc:'Retrospectiva: o que funcionou, licoes aprendidas'},
+      {slug:'triangulacao',nome:'Triangulacao',desc:'Valida com multiplas fontes, metodos e perspectivas'},
+    ]},
+    {id:'transversal',nome:'Transversais',cor:'var(--amber)',icon:'&#128279;',tecnicas:[
+      {slug:'revisao_literatura',nome:'Revisao Sistematica',desc:'Busca e analisa literatura com criterios'},
+      {slug:'snowball',nome:'Metodo Snowball',desc:'Expande rede de fontes a partir de semente'},
+      {slug:'member_check',nome:'Member Check',desc:'Valida achados com stakeholders'},
+      {slug:'pratica_deliberada',nome:'Pratica Deliberada',desc:'Programa de desenvolvimento de competencias (Ericsson)'},
+    ]},
+  ];
+
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700;color:${CY}">&#129504; Problem Solving <span style="font-size:11px;color:var(--text-muted);font-weight:400">Van Aken &amp; Berends</span></h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  // Explicacao
+  h+=`<div style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;line-height:1.6">`;
+  h+=`<strong style="color:${CY}">Ciclo de 5 fases</strong> baseado no livro <em>Problem Solving in Organizations</em>. `;
+  h+=`Cada tecnica e aplicada por <strong>N consultores</strong> da Vila com prompts especificos. `;
+  h+=`Selecione uma tecnica, defina o tema e veja o painel de especialistas trabalhando.</div>`;
+
+  // Fases como acordeoes
+  FASES.forEach(f=>{
+    h+=`<div style="margin-bottom:8px;border:1px solid var(--border);border-radius:8px;overflow:hidden">`;
+    h+=`<div onclick="this.parentElement.querySelector('.ps-body').classList.toggle('ps-open')" style="display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;background:var(--bg-secondary);border-left:3px solid ${f.cor}">`;
+    h+=`<span style="font-size:16px">${f.icon}</span>`;
+    h+=`<span style="font-weight:700;font-size:13px;color:${f.cor}">${f.nome}</span>`;
+    h+=`<span style="margin-left:auto;font-size:10px;color:var(--text-muted)">${f.tecnicas.length} tecnicas &#9660;</span>`;
+    h+=`</div>`;
+    h+=`<div class="ps-body" style="display:none;padding:8px">`;
+    f.tecnicas.forEach(t=>{
+      h+=`<div onclick="openPSTecnica('${t.slug}','${t.nome.replace(/'/g,"\\'")}','${f.id}')" style="padding:8px 12px;margin:4px 0;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='${f.cor}'" onmouseout="this.style.borderColor='var(--border)'">`;
+      h+=`<div style="font-weight:600;font-size:12px">${t.nome}</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">${t.desc}</div>`;
+      h+=`</div>`;
+    });
+    h+=`</div></div>`;
+  });
+
+  // Area de resultado
+  h+=`<div id="psResultado" style="margin-top:12px"></div>`;
+
+  // CSS para toggle
+  h+=`<style>.ps-open{display:block!important}</style>`;
+
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+function openPSTecnica(slug,nome,fase){
+  const res=document.getElementById('psResultado');
+  const CY='#06b6d4';
+  let h=`<div style="background:var(--bg-secondary);border:1px solid ${CY};border-radius:8px;padding:14px;margin-bottom:8px">`;
+  h+=`<div style="font-weight:700;font-size:14px;color:${CY};margin-bottom:10px">&#129504; ${nome}</div>`;
+  h+=`<textarea id="psTema" placeholder="Descreva o problema ou tema a ser analisado..." style="width:100%;height:60px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:10px;border-radius:6px;font-size:13px;resize:vertical;font-family:inherit;margin-bottom:8px"></textarea>`;
+  h+=`<div style="display:flex;gap:8px;align-items:center">`;
+  h+=`<label style="font-size:10px;color:var(--text-muted)">Consultores:</label>`;
+  h+=`<select id="psN" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:6px;border-radius:4px;font-size:12px;font-family:inherit"><option value="3">3</option><option value="5" selected>5</option><option value="7">7</option><option value="10">10</option></select>`;
+  h+=`<button onclick="runPSTecnica('${slug}','${nome}','${fase}')" style="margin-left:auto;background:linear-gradient(135deg,${CY},#0891b2);border:none;color:#fff;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">&#9654; Executar</button>`;
+  h+=`</div></div>`;
+  h+=`<div id="psOutput"></div>`;
+  res.innerHTML=h;
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+async function runPSTecnica(slug,nome,fase){
+  const tema=document.getElementById('psTema')?.value?.trim();
+  if(!tema){alert('Descreva o tema');return;}
+  const n=parseInt(document.getElementById('psN')?.value||'5');
+  const out=document.getElementById('psOutput');
+  const CY='#06b6d4';
+
+  out.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:32px;margin-bottom:12px;animation:spin 2s linear infinite">&#129504;</div><p style="font-weight:600">${nome} em andamento...</p><p style="font-size:12px;color:var(--text-muted);margin-top:4px">${n} consultores analisando</p><p style="font-size:11px;color:${CY};margin-top:8px">Estimativa: ~${n*8}s</p></div>`;
+
+  const API=window._VILA_API;
+  try{
+    const r=await fetch(API+'/problem-solving',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tecnica:slug,tema:tema,n_consultores:n,fase:fase}),signal:AbortSignal.timeout(300000)});
+    const d=await r.json();
+    if(d.detail){out.innerHTML=`<p style="color:#ef4444;padding:12px">${d.detail}</p>`;return;}
+
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">`;
+    h+=`<div style="font-weight:700;font-size:14px;color:${CY}">${d.meta?.tecnica||nome} — ${d.meta?.tempo_segundos||'?'}s</div>`;
+    h+=`<button onclick="navigator.clipboard.writeText(document.getElementById('psSintText').innerText).then(()=>alert('Copiado!'))" style="background:var(--bg-secondary);border:1px solid var(--border);color:${CY};padding:4px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:inherit">Copiar</button></div>`;
+
+    // Sintese executiva
+    h+=`<div id="psSintText" style="background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(34,197,94,0.05));border:1px solid rgba(6,182,212,0.25);border-radius:12px;padding:16px;margin-bottom:16px">`;
+    h+=`<div style="font-weight:700;color:${CY};margin-bottom:8px;font-size:14px">&#129504; Sintese Executiva</div>`;
+    h+=`<div style="font-size:13px;line-height:1.7;white-space:pre-wrap">${(d.sintese||'').replace(/</g,'&lt;')}</div>`;
+    h+=`</div>`;
+
+    // KPIs
+    h+=`<div style="display:flex;gap:12px;margin-bottom:16px">`;
+    h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:8px;text-align:center;flex:1"><div style="font-size:22px;font-weight:700;color:${CY}">${(d.contribuicoes||[]).length}</div><div style="font-size:10px;color:var(--text-muted)">Consultores</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:8px;text-align:center;flex:1"><div style="font-size:22px;font-weight:700">${d.meta?.tempo_segundos||0}s</div><div style="font-size:10px;color:var(--text-muted)">Tempo</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:8px;text-align:center;flex:1"><div style="font-size:22px;font-weight:700">${d.meta?.fase||'?'}</div><div style="font-size:10px;color:var(--text-muted)">Fase</div></div>`;
+    h+=`</div>`;
+
+    // Contribuicoes individuais
+    h+=`<div style="font-size:12px;font-weight:600;margin-bottom:6px">Contribuicoes individuais:</div>`;
+    (d.contribuicoes||[]).forEach(c=>{
+      h+=`<div style="background:var(--bg-secondary);padding:10px;border-radius:8px;margin-bottom:6px;border-left:3px solid ${CY}">`;
+      h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">`;
+      h+=`<strong style="font-size:12px">${c.agente_nome}</strong>`;
+      h+=`<span style="font-size:10px;color:var(--text-muted)">${c.categoria} | ${c.titulo?.slice(0,40)||''}</span>`;
+      h+=`</div>`;
+      h+=`<div style="font-size:12px;line-height:1.6;white-space:pre-wrap">${(c.resposta||'').replace(/</g,'&lt;')}</div>`;
+      h+=`</div>`;
+    });
+
+    out.innerHTML=h;
+  }catch(e){
+    out.innerHTML=`<p style="color:#ef4444;padding:20px">Erro: ${e.message}</p>`;
+  }
 }
 
 init();

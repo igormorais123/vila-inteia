@@ -52,10 +52,44 @@ curl -X POST http://localhost:8090/api/v1/vila/auto-research \
 
 O score tipicamente sobe 1-2 pontos entre iteração 1 e 3, com as críticas eliminando generalizações e forçando especificidade.
 
+## Problem Solving Toolkit (Van Aken & Berends)
+
+27 técnicas do livro **"Problem Solving in Organizations: A Methodological Handbook"** (Cambridge University Press, 2018) implementadas como ferramentas executáveis pelos 146 consultores.
+
+Organizadas pelo **ciclo de 5 fases**:
+
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│ 1. DEFINIÇÃO │───▶│ 2. DIAGNÓST. │───▶│ 3. SOLUÇÃO   │───▶│ 4. INTERVEN. │───▶│ 5. AVALIAÇÃO │
+│              │    │              │    │              │    │              │    │              │
+│ Causa-Efeito │    │ Ishikawa     │    │ Ackoff Design│    │ Resistência  │    │ Pós-Teste    │
+│ STEEPLED     │    │ 5 Porquês    │    │ TRIZ         │    │ Comunicação  │    │ Comparativo  │
+│ Stakeholder  │    │ Incid.Crít.  │    │ Dsgn Thinking│    │ Piloto       │    │ Pós-Projeto  │
+│ Quick Scan   │    │ BPM/BPMN     │    │ Apreciativa  │    │ Action Rsrch │    │ Triangulação │
+│              │    │ Soft Systems │    │ Multicritério│    │              │    │              │
+│              │    │              │    │ Case-Based   │    │              │    │              │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+                                    + 4 Transversais: Revisão Sistemática, Snowball, Member Check, Prática Deliberada
+```
+
+**Endpoint:**
+```bash
+# Listar todas as técnicas
+curl http://localhost:8090/api/v1/vila/problem-solving/tecnicas
+
+# Executar uma técnica
+curl -X POST http://localhost:8090/api/v1/vila/problem-solving \
+  -H "Content-Type: application/json" \
+  -d '{"tecnica": "cinco_porques", "tema": "Por que empresas resistem a adotar IA?", "n_consultores": 5}'
+```
+
+Cada técnica seleciona consultores por expertise relevante, envia prompts metodológicos específicos e gera uma síntese executiva integrando todas as perspectivas.
+
 ## Ferramentas Disponíveis
 
 | Ferramenta | Endpoint | O que faz |
 |---|---|---|
+| **Problem Solving (27)** | `POST /api/v1/vila/problem-solving` | 27 técnicas de Van Aken & Berends |
 | **Auto-Research** | `POST /api/v1/vila/auto-research` | Loop iterativo Gerar→Avaliar→Criticar→Refinar→Sintetizar |
 | **Briefing Executivo** | `GET /api/v1/vila/briefing` | Resumo IA do que os consultores discutem |
 | **Consultar Painel** | `POST /api/v1/vila/consulta` | Pergunta livre → N consultores respondem |
@@ -88,6 +122,7 @@ vila_inteia/
 │   │   ├── espacial.py        # Memória do campus
 │   │   └── rascunho.py        # Estado atual do agente
 │   ├── auto_research.py       # Auto-Research Loop (Karpathy)
+│   ├── problem_solving.py     # 27 técnicas Van Aken & Berends
 │   ├── rede_social.py         # Rede social entre agentes
 │   └── gatilhos.py            # Motor de eventos
 ├── api/                       # API REST (FastAPI)

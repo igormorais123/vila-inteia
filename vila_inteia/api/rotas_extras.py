@@ -640,3 +640,56 @@ def auto_research_history():
     sim = obter_simulacao()
     # AutoResearchLoop e stateless por enquanto, retorna vazio
     return {"total": 0, "sessions": []}
+
+
+# ============================================================
+# PROBLEM SOLVING (Van Aken & Berends — 28 tecnicas)
+# ============================================================
+
+class ProblemSolvingInput(BaseModel):
+    tecnica: str
+    tema: str
+    n_consultores: int = 5
+    fase: Optional[str] = None
+
+
+@router.get("/problem-solving/tecnicas")
+def listar_tecnicas_ps():
+    """Lista todas as tecnicas de problem solving agrupadas por fase."""
+    from ..engine.problem_solving import listar_tecnicas
+    return listar_tecnicas()
+
+
+@router.post("/problem-solving")
+def executar_problem_solving(dados: ProblemSolvingInput):
+    """
+    Executa uma tecnica de problem solving com N consultores da Vila.
+
+    Body:
+        tecnica: str - slug da tecnica (ex: ishikawa, cinco_porques, triz)
+        tema: str - o problema/tema a ser analisado
+        n_consultores: int (default 5) - quantos consultores participam
+        fase: str (optional) - filtro informativo (nao muda o comportamento)
+    """
+    from .rotas_vila import obter_simulacao
+    from ..engine.problem_solving import executar_tecnica
+
+    if not dados.tema.strip():
+        raise HTTPException(400, "Campo 'tema' obrigatorio")
+
+    sim = obter_simulacao()
+    resultado = executar_tecnica(sim, dados.tecnica, dados.tema.strip(), dados.n_consultores)
+
+    if "erro" in resultado:
+        raise HTTPException(404, resultado["erro"])
+
+    # Salvar no workspace
+    _workspace_arquivos.append({
+        "id": f"ps-{dados.tecnica}-{str(uuid.uuid4())[:6]}",
+        "tipo": "problem_solving",
+        "nome": f"{resultado['meta']['tecnica']}: {dados.tema[:40]}",
+        "fase": dados.fase or resultado["meta"]["fase"],
+        "agentes": resultado["meta"]["n_consultores"],
+    })
+
+    return resultado
