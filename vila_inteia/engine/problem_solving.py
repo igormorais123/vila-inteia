@@ -75,6 +75,8 @@ def executar_tecnica(simulacao, slug: str, tema: str, n_consultores: int = 5) ->
     t = TECNICAS[slug]
     start = time.time()
     resultado = t["fn"](simulacao, tema, n_consultores)
+    # Calcular metricas de qualidade
+    metricas = _calcular_metricas(resultado.get("contribuicoes", []), resultado.get("sintese", ""))
     resultado["meta"] = {
         "tecnica": t["nome"],
         "slug": slug,
@@ -84,6 +86,7 @@ def executar_tecnica(simulacao, slug: str, tema: str, n_consultores: int = 5) ->
         "tempo_segundos": round(time.time() - start, 1),
         "timestamp": datetime.now().isoformat(),
     }
+    resultado["metricas"] = metricas
     return resultado
 
 
@@ -134,20 +137,66 @@ def _consultar_agentes(agentes, system_template: str, user_prompt: str, max_toke
 def _sintetizar(contribuicoes: list[dict], tema: str, tecnica_nome: str) -> str:
     """Gera sintese executiva a partir das contribuicoes."""
     todas = "\n".join(
-        f"- {c['agente_nome']} ({c['categoria']}): {c['resposta'][:300]}"
+        f"- {c['agente_nome']} ({c['categoria']}): {c['resposta'][:400]}"
         for c in contribuicoes
     )
     return chamar_llm_conversa(
-        "Voce e o sintetizador estrategico da INTEIA. Combine as analises abaixo em uma "
-        f"sintese executiva coerente da tecnica '{tecnica_nome}'. Identifique convergencias, "
-        "divergencias e recomendacoes acionaveis. Max 300 palavras. Portugues.",
+        "Voce e o sintetizador estrategico da INTEIA. Produza uma sintese EXECUTIVA "
+        f"da tecnica '{tecnica_nome}' aplicada ao tema abaixo. "
+        "FORMATO OBRIGATORIO:\n"
+        "1. CONVERGENCIA: onde os consultores concordam (2-3 pontos)\n"
+        "2. DIVERGENCIA: onde discordam e por que\n"
+        "3. INSIGHT DIFERENCIAL: o que so esse painel combinado revelaria\n"
+        "4. RECOMENDACAO ACIONAVEL: 3 acoes concretas priorizadas por impacto\n"
+        "5. NIVEL DE CONFIANCA: Alta/Media/Baixa + justificativa\n"
+        "Max 350 palavras. Portugues.",
         f"Tema: {tema}\n\nContribuicoes:\n{todas}",
         modelo="rapido",
-        max_tokens=600,
+        max_tokens=700,
     ) or "Sintese nao disponivel."
 
 
-_SYS = "Voce e {nome}, {titulo}. Especialidades: {areas}. Responda como voce mesmo, com seu estilo e expertise unica. Portugues, max 200 palavras."
+def _calcular_metricas(contribuicoes: list[dict], sintese: str) -> dict:
+    """Calcula indicadores de qualidade da execucao da tecnica."""
+    n = len(contribuicoes)
+    if n == 0:
+        return {"completude": 0, "diversidade": 0, "profundidade_media": 0, "cobertura_metodologica": 0}
+
+    # Diversidade de categorias
+    cats = set(c["categoria"] for c in contribuicoes)
+    diversidade = round(len(cats) / max(n, 1), 2)
+
+    # Profundidade media (tamanho das respostas como proxy)
+    tamanhos = [len(c["resposta"]) for c in contribuicoes]
+    prof_media = round(sum(tamanhos) / n)
+
+    # Completude (respostas nao vazias / total)
+    completude = round(sum(1 for c in contribuicoes if len(c["resposta"]) > 100) / n, 2)
+
+    # Cobertura (sintese gerada e substancial)
+    cob = 1.0 if sintese and len(sintese) > 200 else 0.5 if sintese else 0.0
+
+    # Score composto
+    score = round((completude * 0.3 + diversidade * 0.2 + min(prof_media / 800, 1.0) * 0.3 + cob * 0.2) * 10, 1)
+
+    return {
+        "score_qualidade": score,
+        "completude": completude,
+        "diversidade_categorias": diversidade,
+        "categorias_representadas": list(cats),
+        "profundidade_media_chars": prof_media,
+        "cobertura_sintese": cob,
+        "total_contribuicoes": n,
+    }
+
+
+_SYS = (
+    "Voce e {nome}, {titulo}. Especialidades: {areas}. "
+    "REGRAS: (1) Responda EM CARATER como voce mesmo — use seu estilo, vocabulario e perspectiva unicos. "
+    "(2) Inclua DADOS CONCRETOS: numeros, percentuais, exemplos reais, nomes de empresas/casos. "
+    "(3) Seja ESPECIFICO ao tema — nao generalize. "
+    "(4) Max 250 palavras. Portugues do Brasil."
+)
 
 
 # ============================================================
