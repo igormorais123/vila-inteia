@@ -586,3 +586,57 @@ def briefing_personalizado(dados: dict):
         "sintese_executiva": sintese or "Síntese não disponível.",
         "gerado_em": datetime.now().isoformat(),
     }
+
+
+# ============================================================
+# AUTO-RESEARCH (Karpathy Loop)
+# ============================================================
+
+@router.post("/auto-research")
+async def auto_research(dados: dict):
+    """
+    Auto-Research Loop inspirado em Andrej Karpathy.
+
+    Loop iterativo: Gerar -> Avaliar -> Criticar -> Refinar -> Sintetizar
+    Cada iteracao melhora a qualidade usando critica cruzada entre consultores.
+    Para quando score >= threshold ou max_iterations atingido.
+
+    Body:
+        pergunta: str - A questao a ser pesquisada
+        n_consultores: int (default 5) - Quantos consultores participam
+        max_iterations: int (default 3) - Maximo de iteracoes do loop
+        quality_threshold: float (default 8.0) - Score minimo para parar
+        categorias: list (optional) - Filtrar por categorias de consultor
+    """
+    import asyncio
+    from .rotas_vila import obter_simulacao
+    from ..engine.auto_research import AutoResearchLoop
+
+    sim = obter_simulacao()
+    loop = AutoResearchLoop(sim)
+
+    pergunta = dados.get("pergunta", "")
+    if not pergunta:
+        raise HTTPException(400, "Campo 'pergunta' obrigatorio")
+
+    result = await asyncio.to_thread(
+        loop.run,
+        pergunta=pergunta,
+        n_consultores=dados.get("n_consultores", 5),
+        max_iterations=dados.get("max_iterations", 3),
+        quality_threshold=dados.get("quality_threshold", 8.0),
+        categorias=dados.get("categorias"),
+    )
+
+    return result
+
+
+@router.get("/auto-research/history")
+def auto_research_history():
+    """Retorna historico de auto-research sessions."""
+    from .rotas_vila import obter_simulacao
+    from ..engine.auto_research import AutoResearchLoop
+
+    sim = obter_simulacao()
+    # AutoResearchLoop e stateless por enquanto, retorna vazio
+    return {"total": 0, "sessions": []}

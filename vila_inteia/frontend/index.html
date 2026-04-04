@@ -357,6 +357,7 @@ body{
   <div class="sidebar-label" style="color:var(--amber);font-weight:700;font-size:11px">Ferramentas</div>
   <ul class="nav-list" id="navList">
     <li class="nav-item" data-view="briefing" style="background:rgba(34,197,94,0.08);border-left:3px solid #22c55e"><span class="nav-icon" style="color:#22c55e">&#128220;</span><span class="nav-text" style="color:#22c55e;font-weight:700">Briefing</span></li>
+    <li class="nav-item" data-view="autoresearch" style="background:rgba(139,92,246,0.08);border-left:3px solid #8b5cf6"><span class="nav-icon" style="color:#8b5cf6">&#128300;</span><span class="nav-text" style="color:#8b5cf6;font-weight:700">Auto-Research</span></li>
     <li class="nav-item" data-view="consultar"><span class="nav-icon" style="color:var(--amber)">&#128483;</span><span class="nav-text" style="color:var(--amber);font-weight:600">Consultar Painel</span></li>
     <li class="nav-item" data-view="desafio"><span class="nav-icon" style="color:#3b82f6">&#127919;</span><span class="nav-text" style="color:#3b82f6;font-weight:600">Design Sprint</span></li>
     <li class="nav-item" data-view="workspace"><span class="nav-icon">&#128196;</span><span class="nav-text">Produtos</span></li>
@@ -1150,6 +1151,7 @@ function setView(view){
   if(view==='desafio') showDesafioView();
   if(view==='workspace') showWorkspaceView();
   if(view==='briefing') showBriefingView();
+  if(view==='autoresearch') showAutoResearchView();
   if(view==='consultar') showConsultarView();
 }
 document.querySelectorAll('.nav-item').forEach(n=>{
@@ -1575,6 +1577,131 @@ async function showArtefato(nomeArquivo){
     h+=`<pre style="background:var(--bg-secondary);padding:16px;border-radius:var(--radius-sm);font-size:12px;line-height:1.6;overflow:auto;max-height:70vh;white-space:pre-wrap;word-break:break-word;color:var(--text-primary)">${(data.conteudo||'Vazio').replace(/</g,'&lt;')}</pre>`;
     ov.innerHTML=h;
   }catch(e){alert('Erro ao ler artefato: '+e.message);}
+}
+
+// ---- AUTO-RESEARCH VIEW (Karpathy Loop) ----
+async function showAutoResearchView(){
+  const ov=document.getElementById('statsOverlay');
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">`;
+  h+=`<h2 style="font-size:18px;font-weight:700;color:#8b5cf6">&#128300; Auto-Research <span style="font-size:11px;color:var(--text-muted);font-weight:400">Karpathy Loop</span></h2>`;
+  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`</div>`;
+
+  // Explicacao do metodo
+  h+=`<div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;line-height:1.6">`;
+  h+=`<strong style="color:#8b5cf6">Como funciona:</strong> Inspirado no conceito de auto-aprimoramento de Karpathy, `;
+  h+=`o sistema roda <strong>N iteracoes</strong> onde consultores <strong>geram</strong> respostas, `;
+  h+=`<strong>avaliam</strong> entre si (score 0-10), <strong>criticam</strong> falhas, e <strong>refinam</strong> na proxima rodada. `;
+  h+=`O loop para quando o score atinge o threshold ou esgota as iteracoes.</div>`;
+
+  // Diagrama do loop
+  h+=`<div style="display:flex;justify-content:center;gap:4px;margin-bottom:16px;flex-wrap:wrap">`;
+  const steps=[{e:'&#128172;',l:'Gerar',c:'#22c55e'},{e:'&#127942;',l:'Avaliar',c:'var(--amber)'},{e:'&#128269;',l:'Criticar',c:'#ef4444'},{e:'&#128736;',l:'Refinar',c:'#3b82f6'},{e:'&#129504;',l:'Sintetizar',c:'#8b5cf6'},{e:'&#128202;',l:'Meta-Score',c:'#06b6d4'}];
+  steps.forEach((s,i)=>{
+    h+=`<div style="text-align:center;padding:6px 10px;background:var(--bg-secondary);border-radius:6px;border-bottom:2px solid ${s.c};min-width:70px">`;
+    h+=`<div style="font-size:16px">${s.e}</div><div style="font-size:10px;color:${s.c};font-weight:600">${s.l}</div></div>`;
+    if(i<steps.length-1) h+=`<div style="display:flex;align-items:center;color:var(--text-muted);font-size:14px">&#8594;</div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<textarea id="arPergunta" placeholder="Ex: Qual a melhor estrategia de precificacao para um SaaS de IA juridica no Brasil?" style="width:100%;height:70px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:12px;border-radius:8px;font-size:13px;resize:vertical;font-family:inherit;margin-bottom:8px"></textarea>`;
+
+  h+=`<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">`;
+  h+=`<div style="flex:1;min-width:120px"><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Consultores</label>`;
+  h+=`<select id="arN" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:8px;border-radius:6px;font-size:12px;font-family:inherit"><option value="3">3</option><option value="5" selected>5</option><option value="7">7</option></select></div>`;
+  h+=`<div style="flex:1;min-width:120px"><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Iteracoes</label>`;
+  h+=`<select id="arIter" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:8px;border-radius:6px;font-size:12px;font-family:inherit"><option value="1">1 (rapido)</option><option value="2">2 (padrao)</option><option value="3" selected>3 (profundo)</option></select></div>`;
+  h+=`<div style="flex:1;min-width:120px"><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Threshold</label>`;
+  h+=`<select id="arThreshold" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:8px;border-radius:6px;font-size:12px;font-family:inherit"><option value="7">7.0 (relaxado)</option><option value="8" selected>8.0 (padrao)</option><option value="9">9.0 (rigoroso)</option></select></div>`;
+  h+=`<div style="display:flex;align-items:flex-end"><button onclick="runAutoResearch()" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);border:none;color:#fff;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit;white-space:nowrap">&#9654; Pesquisar</button></div>`;
+  h+=`</div>`;
+
+  h+=`<div id="arResultado"></div>`;
+
+  // Sugestoes
+  h+=`<div style="margin-top:12px"><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Temas sugeridos:</div>`;
+  ['Como um escritorio de advocacia pode usar IA generativa sem violar etica profissional?','Qual a estrategia otima de precificacao para cursos online B2B no Brasil?','Como validar um MVP de produto de IA com orcamento de R$5.000?'].forEach(s=>{
+    h+=`<button onclick="document.getElementById('arPergunta').value=this.textContent;runAutoResearch()" style="display:block;width:100%;text-align:left;margin:3px 0;padding:6px 10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s" onmouseover="this.style.borderColor='#8b5cf6';this.style.color='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">${s}</button>`;
+  });
+  h+=`</div>`;
+
+  ov.innerHTML=h;
+  ov.classList.add('visible');
+}
+
+async function runAutoResearch(){
+  const pergunta=document.getElementById('arPergunta')?.value?.trim();
+  if(!pergunta){alert('Digite uma pergunta');return;}
+  const n=parseInt(document.getElementById('arN')?.value||'5');
+  const iter=parseInt(document.getElementById('arIter')?.value||'3');
+  const threshold=parseFloat(document.getElementById('arThreshold')?.value||'8');
+  const res=document.getElementById('arResultado');
+
+  // Loading com progresso
+  res.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:32px;margin-bottom:12px;animation:spin 2s linear infinite">&#128300;</div><p style="font-weight:600">Auto-Research em andamento...</p><p style="font-size:12px;color:var(--text-muted);margin-top:4px">${n} consultores x ${iter} iteracoes (threshold ${threshold})</p><p style="font-size:11px;color:var(--text-muted);margin-top:8px">Cada iteracao: Gerar &#8594; Avaliar &#8594; Criticar &#8594; Sintetizar</p><p style="font-size:11px;color:#8b5cf6;margin-top:8px">Estimativa: ~${iter*n*5}s</p></div>`;
+
+  const API=window._VILA_API;
+  try{
+    const r=await fetch(API+'/auto-research',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pergunta,n_consultores:n,max_iterations:iter,quality_threshold:threshold}),signal:AbortSignal.timeout(300000)});
+    const d=await r.json();
+    if(d.erro){res.innerHTML=`<p style="color:#ef4444">${d.erro}</p>`;return;}
+
+    let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">`;
+    h+=`<div style="font-weight:700;font-size:14px;color:#8b5cf6">Resultado: ${d.iterations} iteracoes em ${d.tempo_total_segundos}s</div>`;
+    h+=`<button onclick="navigator.clipboard.writeText(document.getElementById('arFinalText').innerText).then(()=>alert('Copiado!'))" style="background:var(--bg-secondary);border:1px solid var(--border);color:#8b5cf6;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:inherit">Copiar</button></div>`;
+
+    // Score e convergencia
+    const scoreColor=d.score_final>=8?'#22c55e':d.score_final>=6?'var(--amber)':'#ef4444';
+    h+=`<div style="display:flex;gap:12px;margin-bottom:16px">`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:28px;font-weight:700;color:${scoreColor}">${d.score_final}</div><div style="font-size:10px;color:var(--text-muted)">Score Final</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:28px;font-weight:700">${d.iterations}/${d.max_iterations}</div><div style="font-size:10px;color:var(--text-muted)">Iteracoes</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:28px;font-weight:700">${d.consultores?.length||0}</div><div style="font-size:10px;color:var(--text-muted)">Consultores</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:28px;font-weight:700;color:${d.convergiu?'#22c55e':'#ef4444'}">${d.convergiu?'&#9989;':'&#10060;'}</div><div style="font-size:10px;color:var(--text-muted)">Convergiu</div></div>`;
+    h+=`</div>`;
+
+    // Resposta final
+    h+=`<div id="arFinalText" style="background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(34,197,94,0.05));border:1px solid rgba(139,92,246,0.25);border-radius:12px;padding:16px;margin-bottom:16px">`;
+    h+=`<div style="font-weight:700;color:#8b5cf6;margin-bottom:8px;font-size:14px">&#129504; Resposta Final (Score ${d.score_final})</div>`;
+    h+=`<div style="font-size:13px;line-height:1.7;white-space:pre-wrap">${(d.resposta_final||'').replace(/</g,'&lt;')}</div>`;
+    h+=`</div>`;
+
+    // Consultores participantes
+    h+=`<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;margin-bottom:6px">Consultores:</div><div style="display:flex;flex-wrap:wrap;gap:4px">`;
+    (d.consultores||[]).forEach(c=>{
+      h+=`<span style="padding:2px 8px;background:var(--bg-secondary);border-radius:12px;font-size:10px;border:1px solid var(--border)">${c.nome} <span style="color:var(--amber)">${c.tier}</span></span>`;
+    });
+    h+=`</div></div>`;
+
+    // Detalhes por iteracao (colapsavel)
+    (d.detalhes_iteracoes||[]).forEach((it,idx)=>{
+      const prevScore=idx>0?d.detalhes_iteracoes[idx-1].meta_score:0;
+      const delta=idx>0?(it.meta_score-prevScore).toFixed(1):'--';
+      const deltaColor=delta>0?'#22c55e':delta<0?'#ef4444':'var(--text-muted)';
+      h+=`<div onclick="this.querySelector('.ar-detail')?.classList.toggle('visible')" style="background:var(--bg-secondary);padding:10px;border-radius:8px;margin-bottom:6px;cursor:pointer;border-left:3px solid #8b5cf6">`;
+      h+=`<div style="display:flex;justify-content:space-between;align-items:center">`;
+      h+=`<span style="font-weight:600;font-size:12px">Iteracao ${it.iteration}</span>`;
+      h+=`<span style="font-size:11px">Score: <strong style="color:${scoreColor}">${it.meta_score}</strong> ${idx>0?`<span style="color:${deltaColor}">(${delta>0?'+':''}${delta})</span>`:''}</span>`;
+      h+=`</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted)">Avaliador: ${it.evaluator} | Critico: ${it.critic} &#9660;</div>`;
+      h+=`<div class="ar-detail" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">`;
+      // Respostas scored
+      (it.responses||[]).forEach(r=>{
+        h+=`<div style="font-size:11px;margin-bottom:4px;padding:4px;border-left:2px solid ${r.score>=7?'#22c55e':'var(--border)'}"><strong>${r.agent_name}</strong> (${r.score}) — ${r.response?.slice(0,150)}...</div>`;
+      });
+      // Criticas
+      if(it.criticisms?.length){
+        h+=`<div style="margin-top:6px;font-size:10px;color:#ef4444;font-weight:600">Criticas:</div>`;
+        it.criticisms.forEach(c=>{
+          h+=`<div style="font-size:10px;margin:2px 0;padding:2px 6px;background:rgba(239,68,68,0.05);border-radius:4px">${c.critic} &#8594; ${c.target}: ${c.criticism?.slice(0,120)}</div>`;
+        });
+      }
+      h+=`</div></div>`;
+    });
+
+    res.innerHTML=h;
+  }catch(e){
+    res.innerHTML=`<p style="color:#ef4444;padding:20px">Erro: ${e.message}</p>`;
+  }
 }
 
 // ---- BRIEFING VIEW ----
