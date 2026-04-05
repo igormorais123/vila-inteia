@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mirante News — Projeto de Investimento R$50K/mês | De Portal Local a Referência Nacional</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-card: #1a2236;
+    --bg-accent: rgba(0,212,255,0.06);
+    --gold: #c9a227;
+    --gold-light: #e8d48b;
+    --gold-dim: rgba(201,162,39,0.3);
+    --cyan: #00d4ff;
+    --cyan-dim: rgba(0,212,255,0.3);
+    --navy: #1B2A4A;
+    --text-primary: #e8e6e3;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border: rgba(0,212,255,0.15);
+    --success: #2E7D32;
+    --warning: #F57C00;
+    --danger: #C62828;
+    --info: #1565C0;
+    --purple: #8b5cf6;
+    --radius: 12px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg-primary); color:var(--text-primary); font-family:'Outfit',sans-serif; font-size:15px; line-height:1.7; }
+  .container { max-width:1100px; margin:0 auto; padding:40px 24px; }
+
+  .header { text-align:center; padding:60px 0 40px; border-bottom:1px solid var(--border); margin-bottom:48px; }
+  .header-badge { display:inline-block; background:linear-gradient(135deg,var(--cyan),#0891b2); color:#0a0e1a; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:2px; padding:6px 16px; border-radius:20px; text-transform:uppercase; margin-bottom:20px; }
+  .header h1 { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:700; color:var(--cyan); line-height:1.2; margin-bottom:12px; }
+  .header .subtitle { font-size:18px; color:var(--text-secondary); font-weight:300; max-width:700px; margin:0 auto; }
+  .header-meta { margin-top:24px; display:flex; justify-content:center; gap:24px; font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
+
+  .section { margin-bottom:48px; page-break-inside:avoid; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:var(--cyan); margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .section-subtitle { font-size:13px; color:var(--text-muted); margin-bottom:20px; font-family:'JetBrains Mono',monospace; }
+
+  .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; }
+  .card-highlight { background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,212,255,0.02)); border:1px solid var(--cyan-dim); }
+  .card h3 { font-size:16px; font-weight:700; color:var(--cyan); margin-bottom:8px; }
+  .card p { font-size:14px; color:var(--text-secondary); line-height:1.6; }
+
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin:20px 0; }
+  .kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; text-align:center; }
+  .kpi-value { font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; color:var(--cyan); line-height:1; }
+  .kpi-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
+
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:13px; }
+  th { background:var(--bg-card); color:var(--cyan); font-weight:600; padding:10px 12px; text-align:left; border-bottom:2px solid var(--cyan-dim); font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:1px; }
+  td { padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--text-secondary); }
+  tr:hover td { background:rgba(0,212,255,0.03); }
+
+  .timeline { position:relative; padding-left:32px; }
+  .timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--cyan),var(--cyan-dim),transparent); }
+  .timeline-item { position:relative; margin-bottom:24px; padding:16px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); }
+  .timeline-item::before { content:''; position:absolute; left:-26px; top:20px; width:10px; height:10px; background:var(--cyan); border-radius:50%; }
+  .timeline-item h4 { font-size:14px; font-weight:700; color:var(--cyan); margin-bottom:4px; }
+  .timeline-item .period { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); margin-bottom:8px; }
+
+  .scenario-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:20px 0; }
+  .scenario { padding:20px; border-radius:var(--radius); border:1px solid; }
+  .scenario.pessimista { border-color:var(--danger); background:rgba(198,40,40,0.06); }
+  .scenario.base { border-color:var(--cyan-dim); background:var(--bg-accent); }
+  .scenario.otimista { border-color:var(--success); background:rgba(46,125,50,0.06); }
+  .scenario h4 { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .scenario.pessimista h4 { color:#ef5350; }
+  .scenario.base h4 { color:var(--cyan); }
+  .scenario.otimista h4 { color:#66bb6a; }
+  .scenario .big { font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:700; margin:8px 0; }
+
+  .progress-bar { height:8px; background:var(--bg-secondary); border-radius:4px; overflow:hidden; margin:8px 0; }
+  .progress-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--cyan),#0891b2); }
+
+  .tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600; font-family:'JetBrains Mono',monospace; }
+  .tag-cyan { background:rgba(0,212,255,0.15); color:var(--cyan); }
+  .tag-gold { background:rgba(201,162,39,0.15); color:var(--gold); }
+  .tag-green { background:rgba(46,125,50,0.15); color:#66bb6a; }
+  .tag-red { background:rgba(198,40,40,0.15); color:#ef5350; }
+  .tag-purple { background:rgba(139,92,246,0.15); color:var(--purple); }
+
+  blockquote { border-left:3px solid var(--cyan); padding:12px 20px; margin:16px 0; background:var(--bg-accent); border-radius:0 var(--radius) var(--radius) 0; font-style:italic; color:var(--text-secondary); }
+
+  ul.checklist { list-style:none; padding:0; }
+  ul.checklist li { padding:6px 0; padding-left:24px; position:relative; font-size:14px; color:var(--text-secondary); }
+  ul.checklist li::before { content:'✓'; position:absolute; left:0; color:var(--cyan); font-weight:700; }
+
+  .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .cols-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+
+  .footer { margin-top:60px; padding:32px 0; border-top:1px solid var(--border); text-align:center; color:var(--text-muted); font-size:12px; }
+
+  @media (max-width:768px) { .cols-2,.cols-3,.scenario-grid { grid-template-columns:1fr; } .header h1 { font-size:28px; } }
+  @media print { body { background:#fff; color:#1a1a1a; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="header-badge">Projeto de Investimento — Documento Confidencial</div>
+  <h1>Mirante News — De Portal Local a Referência Nacional</h1>
+  <div class="subtitle">Plano de investimento R$50.000/mês para transformar o primeiro portal de notícias 100% movido por IA do Brasil em um dos maiores veículos digitais do país</div>
+  <div class="header-meta">
+    <span>📅 2026-04-05</span>
+    <span>🔒 Confidencial</span>
+    <span>📊 Confiança: 0.75</span>
+    <span>🤖 Vila INTEIA + 7 Diretores IA + 33 Consultores</span>
+  </div>
+</div>
+
+<!-- 1. SUMÁRIO -->
+<div class="section">
+  <div class="section-title">1. Sumário Executivo</div>
+  <div class="card card-highlight">
+    <h3>Tese: O primeiro portal de notícias do Brasil operado por IA pode escalar 1000x mais barato que um portal tradicional</h3>
+    <p>O <strong>Mirante News</strong> (mirantenews.com.br) opera com <strong>6 agentes de IA</strong> que produzem 10+ artigos/dia, custando <strong>R$0 em LLM</strong> (via OmniRoute). O Metrópoles — maior portal do DF — tem 200 profissionais e 78.8M visitantes/mês. O Mirante pode atingir 10-30% dessa audiência com <strong>1% do custo</strong>.</p>
+    <p style="margin-top:12px">Com R$50K/mês por 18 meses (R$900K total), o Mirante pode:</p>
+    <ul class="checklist" style="margin-top:12px">
+      <li><strong>Mês 6:</strong> 500K-1M pageviews/mês, receita de ads R$5-10K/mês</li>
+      <li><strong>Mês 12:</strong> 5-10M pageviews/mês, receita R$30-80K/mês, breakeven</li>
+      <li><strong>Mês 18:</strong> 15-30M pageviews/mês, receita R$100-300K/mês, top 10 portais do DF</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 2. O QUE É O MIRANTE -->
+<div class="section">
+  <div class="section-title">2. O que é o Mirante News</div>
+  <div class="section-subtitle">O primeiro portal de notícias 100% operado por IA editorial no Brasil</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-value">6</div><div class="kpi-label">Agentes IA Editorial</div></div>
+    <div class="kpi"><div class="kpi-value">60</div><div class="kpi-label">Variantes / Artigo</div></div>
+    <div class="kpi"><div class="kpi-value">50K</div><div class="kpi-label">Personas Sintéticas</div></div>
+    <div class="kpi"><div class="kpi-value">15</div><div class="kpi-label">Editorias</div></div>
+    <div class="kpi"><div class="kpi-value">R$0</div><div class="kpi-label">Custo LLM / mês</div></div>
+    <div class="kpi"><div class="kpi-value">10+</div><div class="kpi-label">Artigos / Dia</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Pipeline Editorial — 6 Agentes IA (LangGraph)</h3>
+    <table>
+      <tr><th>#</th><th>Agente</th><th>Função</th><th>Modelo</th></tr>
+      <tr><td>1</td><td>Curador</td><td>Monitora RSS a cada 15min, classifica relevância</td><td>Claude Sonnet 4.6</td></tr>
+      <tr><td>2</td><td>Pesquisador</td><td>Análise profunda de fontes múltiplas</td><td>Claude Sonnet 4.6</td></tr>
+      <tr><td>3</td><td>Escritor</td><td>Artigos 500+ palavras com citação obrigatória</td><td>Claude Sonnet 4.6</td></tr>
+      <tr><td>4</td><td>Fact-Checker</td><td>Verificação com score 0-100 (abaixo de 60 = rejeitado)</td><td>Claude Sonnet 4.6</td></tr>
+      <tr><td>5</td><td>Editor</td><td>Revisão final, tom editorial, confiança</td><td>Claude Sonnet 4.6</td></tr>
+      <tr><td>6</td><td>SEO Optimizer</td><td>Títulos, meta, FAQ, structured data, GEO</td><td>GPT-5.4-mini</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Diferenciais Tecnológicos Únicos</h3>
+    <ul class="checklist">
+      <li><strong>Evolução Genética:</strong> 60 variantes por artigo avaliadas em 5 dimensões (clareza, factualidade, engajamento, tom, SEO) com scoring ELO</li>
+      <li><strong>50K Personas Sintéticas:</strong> Baseadas em dados IBGE do Censo — simulam reação demográfica a cada notícia</li>
+      <li><strong>GEO (Generative Engine Optimization):</strong> llms.txt público, 12 crawlers IA autorizados, schema speakable — otimizado para AI Search</li>
+      <li><strong>Transparência Total:</strong> Cada artigo mostra score de fact-check, confiança, fontes e logs do pipeline</li>
+      <li><strong>RAG Chatbot:</strong> "Pergunte ao Mirante" — conversa com todo o acervo publicado</li>
+      <li><strong>Custo LLM Zero:</strong> OmniRoute da INTEIA com assinaturas mensais (sem cobrança por token)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Stack Técnico</h3>
+    <table>
+      <tr><th>Camada</th><th>Tecnologia</th><th>Custo/mês</th></tr>
+      <tr><td>Frontend</td><td>Next.js 16 + Tailwind + shadcn/ui (Vercel)</td><td>~R$0 (free tier)</td></tr>
+      <tr><td>Backend</td><td>FastAPI + LangGraph + LiteLLM (Docker VPS)</td><td>~R$500</td></tr>
+      <tr><td>Banco</td><td>Supabase PostgreSQL + PGMQ (7 tabelas)</td><td>~R$0 (free tier)</td></tr>
+      <tr><td>Analytics</td><td>Plausible (privacy-first, sem cookies)</td><td>~R$50</td></tr>
+      <tr><td>Busca</td><td>Pagefind WebAssembly (client-side)</td><td>R$0</td></tr>
+      <tr><td>LLM</td><td>OmniRoute (Claude + GPT via assinatura)</td><td>R$0</td></tr>
+      <tr><td><strong>TOTAL INFRA</strong></td><td></td><td><strong>~R$550/mês</strong></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 3. BENCHMARK -->
+<div class="section">
+  <div class="section-title">3. Benchmark — Metrópoles vs Mirante</div>
+  <div class="section-subtitle">O que o maior portal do DF gasta vs o que o Mirante pode fazer com IA</div>
+
+  <div class="cols-2">
+    <div class="card" style="border-top:3px solid var(--danger)">
+      <h3 style="color:#ef5350">Metrópoles (Modelo Tradicional)</h3>
+      <table>
+        <tr><td>Visitantes únicos/mês</td><td><strong>78.8M</strong></td></tr>
+        <tr><td>TikTok seguidores</td><td>6M (maior da AL)</td></tr>
+        <tr><td>Equipe</td><td>200+ profissionais</td></tr>
+        <tr><td>Folha estimada/mês</td><td>R$2-4M</td></tr>
+        <tr><td>Custo por artigo</td><td>~R$500-2.000</td></tr>
+        <tr><td>Artigos/dia</td><td>100-200</td></tr>
+        <tr><td>Fundação</td><td>2015</td></tr>
+        <tr><td>Foco</td><td>DF + Nacional</td></tr>
+      </table>
+    </div>
+    <div class="card" style="border-top:3px solid var(--cyan)">
+      <h3>Mirante News (Modelo IA)</h3>
+      <table>
+        <tr><td>Visitantes únicos/mês</td><td><strong>~0 (novo)</strong></td></tr>
+        <tr><td>Equipe</td><td>1 fundador + 6 agentes IA</td></tr>
+        <tr><td>Folha/mês</td><td>R$0 (IA)</td></tr>
+        <tr><td>Custo por artigo</td><td><strong>~R$0.05</strong></td></tr>
+        <tr><td>Artigos/dia (potencial)</td><td>50-200 (escalável)</td></tr>
+        <tr><td>Fundação</td><td>2026</td></tr>
+        <tr><td>Foco</td><td>DF (hiperlocal 30 RAs)</td></tr>
+        <tr><td>Diferencial</td><td>Custo 10.000x menor por artigo</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <blockquote>
+    <strong>A vantagem estrutural:</strong> O Metrópoles gasta ~R$500 por artigo com jornalistas. O Mirante gasta ~R$0.05. Isso significa que com R$50K/mês o Mirante pode produzir o equivalente a 1 milhão de artigos do Metrópoles em volume. A batalha não é em qualidade jornalística (onde humanos ganham) — é em <strong>cobertura hiperlocal</strong> onde nenhum portal consegue estar em 30 RAs simultaneamente.
+  </blockquote>
+</div>
+
+<!-- 4. MERCADO -->
+<div class="section">
+  <div class="section-title">4. Mercado de Mídia Digital no Brasil</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-value">41.5%</div><div class="kpi-label">Share Digital (superou TV)</div></div>
+    <div class="kpi"><div class="kpi-value">R$3-5</div><div class="kpi-label">CPM Programática BR</div></div>
+    <div class="kpi"><div class="kpi-value">-8%</div><div class="kpi-label">Queda receita publishers/ano</div></div>
+    <div class="kpi"><div class="kpi-value">US$50-100K</div><div class="kpi-label">Google News Initiative Grants</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Oportunidades Específicas para o Mirante</h3>
+    <ul class="checklist">
+      <li><strong>Hiperlocal DF:</strong> 3.1M habitantes, 30+ RAs, nenhum portal cobre todas. Metrópoles foca no macro, Correio é pago, GPS é genérico.</li>
+      <li><strong>Eleições 2026:</strong> Outubro 2026 = pico de demanda por informação política. 155M eleitores, TSE regulou IA. Mirante com 50K personas pode simular reações eleitorais.</li>
+      <li><strong>IA como diferencial editorial:</strong> Transparência de scores, fact-check automático, chatbot RAG = confiança que portais tradicionais não oferecem.</li>
+      <li><strong>Google News Initiative:</strong> Grants de US$50-100K para jornalismo com IA. Mirante se encaixa perfeitamente (pipeline 6 agentes + evolução genética).</li>
+      <li><strong>GEO (AI Search):</strong> Mirante já otimizado para citação por ChatGPT, Claude, Gemini — canal de tráfego que portais tradicionais ignoram.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 5. ALOCAÇÃO -->
+<div class="section">
+  <div class="section-title">5. Alocação do Investimento — R$50.000/mês</div>
+
+  <table>
+    <tr><th>Frente</th><th>Valor/mês</th><th>%</th><th>O que Compra</th><th>KPI</th></tr>
+    <tr><td><span class="tag tag-cyan">CONTEÚDO</span></td><td>R$15.000</td><td>30%</td><td>3 jornalistas freelance (pautas exclusivas, investigativo, opinião) + 1 editor</td><td>30 artigos exclusivos/mês, 5 investigativos</td></tr>
+    <tr><td><span class="tag tag-gold">MARKETING</span></td><td>R$15.000</td><td>30%</td><td>Google Ads R$6K + Meta Ads R$4K + SEO R$3K + influenciadores DF R$2K</td><td>500K→5M pageviews, 50K newsletter</td></tr>
+    <tr><td><span class="tag tag-purple">TECNOLOGIA</span></td><td>R$10.000</td><td>20%</td><td>Dev (melhorias pipeline, app mobile, push notifications, personalização por RA)</td><td>App publicado, push 100K, personalização ativa</td></tr>
+    <tr><td><span class="tag tag-green">COMERCIAL</span></td><td>R$7.000</td><td>14%</td><td>1 executivo comercial + media kit + parcerias anunciantes locais</td><td>20 anunciantes, R$30K/mês em ads diretos</td></tr>
+    <tr><td><span class="tag tag-red">OPERAÇÕES</span></td><td>R$3.000</td><td>6%</td><td>Infra cloud, ferramentas, jurídico, contabilidade</td><td>Uptime 99.9%, compliance</td></tr>
+  </table>
+</div>
+
+<!-- 6. CENÁRIOS -->
+<div class="section">
+  <div class="section-title">6. Cenários de Receita — 18 Meses</div>
+
+  <div class="scenario-grid">
+    <div class="scenario pessimista">
+      <h4>Pessimista</h4>
+      <div class="big" style="color:#ef5350">R$30K</div>
+      <p style="font-size:12px;color:var(--text-muted)">Receita/mês no mês 18</p>
+      <ul class="checklist" style="margin-top:8px">
+        <li>3M pageviews/mês</li>
+        <li>CPM R$3 programática</li>
+        <li>R$9K ads programáticos</li>
+        <li>R$15K ads diretos</li>
+        <li>R$6K newsletter/branded</li>
+        <li>Breakeven: não atinge</li>
+      </ul>
+    </div>
+    <div class="scenario base">
+      <h4>Base</h4>
+      <div class="big" style="color:var(--cyan)">R$120K</div>
+      <p style="font-size:12px;color:var(--text-muted)">Receita/mês no mês 18</p>
+      <ul class="checklist" style="margin-top:8px">
+        <li>10M pageviews/mês</li>
+        <li>CPM R$4 programática</li>
+        <li>R$40K ads programáticos</li>
+        <li>R$50K ads diretos locais</li>
+        <li>R$20K branded content</li>
+        <li>R$10K newsletter premium</li>
+        <li>Breakeven: mês 10-12</li>
+      </ul>
+    </div>
+    <div class="scenario otimista">
+      <h4>Otimista</h4>
+      <div class="big" style="color:#66bb6a">R$300K</div>
+      <p style="font-size:12px;color:var(--text-muted)">Receita/mês no mês 18</p>
+      <ul class="checklist" style="margin-top:8px">
+        <li>25M pageviews/mês</li>
+        <li>CPM R$5 (premium)</li>
+        <li>R$125K ads programáticos</li>
+        <li>R$100K ads diretos</li>
+        <li>R$50K branded + eventos</li>
+        <li>R$25K assinaturas</li>
+        <li>Breakeven: mês 7</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Modelo de Receita Diversificado</h3>
+    <table>
+      <tr><th>Fonte</th><th>% da Receita</th><th>Descrição</th><th>Início</th></tr>
+      <tr><td>Ads Programáticos (Google AdSense + Header Bidding)</td><td>35%</td><td>CPM R$3-5, escala com pageviews</td><td>Mês 1</td></tr>
+      <tr><td>Ads Diretos Locais (imobiliárias, hospitais, universidades)</td><td>30%</td><td>Pacotes R$2-10K/mês por anunciante</td><td>Mês 3</td></tr>
+      <tr><td>Branded Content / Publieditoriais</td><td>15%</td><td>Artigos patrocinados R$2-5K cada</td><td>Mês 4</td></tr>
+      <tr><td>Newsletter Premium</td><td>10%</td><td>Resumo diário DF + análise IA, R$29/mês</td><td>Mês 6</td></tr>
+      <tr><td>Governo (publicidade legal obrigatória)</td><td>5%</td><td>GDF, CLDF, órgãos federais (licitação)</td><td>Mês 9</td></tr>
+      <tr><td>Eventos / Webinars</td><td>5%</td><td>Debates eleitorais IA, workshops</td><td>Mês 12</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 7. ROADMAP -->
+<div class="section">
+  <div class="section-title">7. Roadmap — 18 Meses</div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>Fase 1 — Lançamento e Tração (Meses 1-3)</h4>
+      <div class="period">Abril — Junho 2026 | Budget: R$150K</div>
+      <p><strong>Conteúdo:</strong> Escalar para 30-50 artigos/dia via IA. Contratar 3 jornalistas freelance para pautas exclusivas (investigativo, opinião, dados). Lançar cobertura hiperlocal das 10 maiores RAs.</p>
+      <p><strong>Marketing:</strong> Google Ads para notícias DF (R$6K). SEO agressivo em "notícias [nome da RA]". Parcerias com 5 influenciadores locais. Newsletter diária gratuita.</p>
+      <p><strong>Tecnologia:</strong> Push notifications. App mobile (PWA). Personalização por RA. Alertas de última hora.</p>
+      <p><strong>Meta:</strong> 500K pageviews/mês, 10K newsletter, 5 anunciantes</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 2 — Crescimento (Meses 4-6)</h4>
+      <div class="period">Julho — Setembro 2026 | Budget: R$150K</div>
+      <p><strong>Conteúdo:</strong> Expandir para todas 30+ RAs. Lançar "Mirante Verifica" (fact-checking eleitoral). Podcast semanal "Mirante IA". Coluna de dados eleitorais com 50K personas.</p>
+      <p><strong>Marketing:</strong> Cobertura pré-eleitoral como diferencial. Debates IA simulados. PR em mídia nacional ("portal de IA que cobre eleições"). Meta Ads para DF.</p>
+      <p><strong>Comercial:</strong> Executivo comercial contratado. Media kit profissional. Prospecção ativa: 50 anunciantes locais.</p>
+      <p><strong>Meta:</strong> 2-5M pageviews/mês, 30K newsletter, R$20K receita/mês</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 3 — Eleições 2026 (Meses 7-9)</h4>
+      <div class="period">Outubro — Dezembro 2026 | Budget: R$150K</div>
+      <p><strong>O CATALISADOR:</strong> Eleições outubro 2026. Cobertura 24/7. Simulações com 50K personas. Apuração em tempo real com IA. "Mirante Eleições" como vertical dedicada.</p>
+      <p><strong>Expectativa:</strong> Pico de tráfego 5-10x. Cobertura viral. Consolidação como referência IA + política no DF.</p>
+      <p><strong>Meta:</strong> 5-15M pageviews/mês (pico eleitoral), R$50-80K receita/mês</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 4 — Consolidação e Escala (Meses 10-18)</h4>
+      <div class="period">Janeiro — Setembro 2027 | Budget: R$450K</div>
+      <p><strong>Pós-eleições:</strong> Reter audiência eleitoral com cobertura de posse, primeiros 100 dias. Expandir para nacional (replicar modelo DF para outros estados).</p>
+      <p><strong>Monetização:</strong> Newsletter premium paga. Branded content regular. Selo "Mirante Verifica" como serviço para outras redações. Licenciamento do pipeline IA.</p>
+      <p><strong>Meta:</strong> 10-30M pageviews/mês, R$100-300K receita/mês, top 10 portais DF</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. FONTES DE FINANCIAMENTO -->
+<div class="section">
+  <div class="section-title">8. Fontes de Financiamento</div>
+
+  <table>
+    <tr><th>Fonte</th><th>Valor Potencial</th><th>Timeline</th><th>Probabilidade</th></tr>
+    <tr><td><strong>Google News Initiative (JournalismAI)</strong></td><td>US$50-100K (R$250-500K)</td><td>6-9 meses</td><td><span class="tag tag-green">ALTA</span> (perfil perfeito)</td></tr>
+    <tr><td><strong>Meta Journalism Project</strong></td><td>US$25-50K</td><td>6-12 meses</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>Receita de Ads (programática + direta)</strong></td><td>R$5K → R$120K/mês</td><td>Crescente</td><td><span class="tag tag-green">ALTA</span></td></tr>
+    <tr><td><strong>FAPDF — Editais Inovação</strong></td><td>R$100-500K</td><td>3-6 meses</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>Anunciantes Locais DF</strong></td><td>R$10-50K/mês</td><td>3-6 meses</td><td><span class="tag tag-green">ALTA</span></td></tr>
+    <tr><td><strong>GDF — Publicidade Legal</strong></td><td>R$5-20K/mês</td><td>6-12 meses</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>Newsletter Premium (R$29/mês)</strong></td><td>R$5-25K/mês</td><td>6-12 meses</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>Investidor Anjo / VC de Mídia</strong></td><td>R$500K-2M</td><td>12-18 meses</td><td><span class="tag tag-purple">FUTURA</span></td></tr>
+  </table>
+</div>
+
+<!-- 9. QUICK WINS -->
+<div class="section">
+  <div class="section-title">9. Quick Wins — Antes de Investir R$50K/mês</div>
+
+  <table>
+    <tr><th>#</th><th>Ação</th><th>Custo</th><th>Tempo</th><th>Impacto</th></tr>
+    <tr><td>1</td><td>Registrar no Google News e ser aceito como publisher</td><td>R$0</td><td>1-2 semanas</td><td>Tráfego orgânico do Google Discover</td></tr>
+    <tr><td>2</td><td>Criar micro-portais para 10 maiores RAs (Ceilândia, Taguatinga, Samambaia...)</td><td>R$0</td><td>3 dias</td><td>SEO hiperlocal, audiência cativa</td></tr>
+    <tr><td>3</td><td>Candidatar ao Google News Initiative (JournalismAI Innovation Challenge)</td><td>R$0</td><td>2 semanas</td><td>US$50-100K em funding</td></tr>
+    <tr><td>4</td><td>Escalar de 10 para 50 artigos/dia (pipeline IA já suporta)</td><td>~R$10</td><td>1 dia</td><td>5x mais superfície de SEO</td></tr>
+    <tr><td>5</td><td>Lançar newsletter diária "Bom Dia DF" com resumo IA</td><td>R$0</td><td>2 dias</td><td>Base de email para monetizar</td></tr>
+    <tr><td>6</td><td>Ativar Google AdSense + Header Bidding</td><td>R$0</td><td>1 semana</td><td>Receita imediata por pageview</td></tr>
+    <tr><td>7</td><td>Post viral: "Como um portal de IA cobre 30 RAs do DF sem jornalistas"</td><td>R$0</td><td>1 dia</td><td>PR nacional, credibilidade tech</td></tr>
+    <tr><td>8</td><td>Ativar push notifications para breaking news</td><td>R$0</td><td>2 dias</td><td>Retorno diário de leitores</td></tr>
+  </table>
+</div>
+
+<!-- 10. ESTRATÉGIA HIPERLOCAL -->
+<div class="section">
+  <div class="section-title">10. Estratégia Hiperlocal — O Moat do Mirante</div>
+  <div class="section-subtitle">A vantagem que nenhum portal humano pode replicar</div>
+
+  <div class="card card-highlight">
+    <h3>30 RAs do DF = 30 micro-portais com IA dedicada</h3>
+    <p>O DF tem 30+ Regiões Administrativas, cada uma com 50-300K habitantes. Nenhum portal cobre todas. O Metrópoles foca no Plano Piloto. O Correio é genérico. O Mirante pode ter <strong>um agente dedicado para cada RA</strong> — monitorando RSS locais, DODF, decisões do GDF que afetam aquela região, trânsito, segurança, educação.</p>
+
+    <div class="cols-3" style="margin-top:16px">
+      <div>
+        <p style="font-weight:700;color:var(--cyan)">Tier 1 — Maiores (300K+ hab)</p>
+        <p style="font-size:12px">Ceilândia, Taguatinga, Samambaia, Plano Piloto, Águas Claras</p>
+        <p style="font-size:11px;color:var(--text-muted)">5-10 artigos/dia cada</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--gold)">Tier 2 — Médias (100-300K)</p>
+        <p style="font-size:12px">Recanto, Gama, Guará, Santa Maria, Sobradinho, São Sebastião</p>
+        <p style="font-size:11px;color:var(--text-muted)">3-5 artigos/dia cada</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--purple)">Tier 3 — Menores (&lt;100K)</p>
+        <p style="font-size:12px">Lago Sul, Lago Norte, Park Way, Sudoeste, Noroeste, Jardim Botânico</p>
+        <p style="font-size:11px;color:var(--text-muted)">1-2 artigos/dia cada (alto poder aquisitivo = CPM alto)</p>
+      </div>
+    </div>
+
+    <blockquote style="margin-top:16px">
+      <strong>O paradoxo hiperlocal:</strong> As RAs menores (Lago Sul, Sudoeste) têm menos habitantes mas <strong>CPM 3-5x maior</strong> porque o público tem poder aquisitivo alto. Anunciantes de imóveis de luxo pagam R$20-50 CPM para atingir moradores do Lago Sul. Nenhum portal oferece isso hoje.
+    </blockquote>
+  </div>
+</div>
+
+<!-- 11. VILA INTEIA RESULTADOS -->
+<div class="section">
+  <div class="section-title">11. Análise da Vila INTEIA — Resultados em Tempo Real</div>
+  <div class="section-subtitle">5 técnicas de Problem Solving aplicadas ao Mirante News (execução no servidor)</div>
+
+  <div class="card">
+    <h3>Técnicas Executadas</h3>
+    <table>
+      <tr><th>Técnica</th><th>O que Analisou</th><th>Status</th></tr>
+      <tr><td>Quick Scan</td><td>Gaps, benchmarks, quick wins vs Metrópoles</td><td><span class="tag tag-gold">Processando</span></td></tr>
+      <tr><td>Decisão Multicritério</td><td>7 alternativas de investimento × 6 critérios</td><td><span class="tag tag-gold">Processando</span></td></tr>
+      <tr><td>Design Thinking</td><td>4 personas DF, jornada do leitor ideal</td><td><span class="tag tag-gold">Processando</span></td></tr>
+      <tr><td>Stakeholder Analysis</td><td>Anunciantes, governo, Google, fundos de mídia</td><td><span class="tag tag-gold">Processando</span></td></tr>
+      <tr><td>Implementação Piloto</td><td>Experimento 90 dias: 0→500K pageviews</td><td><span class="tag tag-gold">Processando</span></td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:12px;color:var(--text-muted)">Os resultados serão integrados assim que as execuções completarem. Cada técnica usa 7 consultores lendários com prompts específicos da metodologia Van Aken &amp; Berends.</p>
+  </div>
+</div>
+
+<!-- 12. RED TEAM -->
+<div class="section">
+  <div class="section-title">12. Red Team — Riscos e Mitigações</div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 1: "Jornalismo de IA não é jornalismo"</h3>
+    <p><strong>Argumento:</strong> Leitores e jornalistas podem rejeitar conteúdo produzido por IA. Credibilidade zero.</p>
+    <p><strong>Mitigação:</strong> (a) Transparência total — cada artigo mostra score de fact-check e pipeline. (b) Jornalistas humanos para investigativo e opinião. (c) "Mirante Verifica" como selo de qualidade. (d) IA como ferramenta, não substituto — 30% do conteúdo é exclusivo humano.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 2: Google penaliza conteúdo IA</h3>
+    <p><strong>Argumento:</strong> Google pode reduzir ranking de sites com conteúdo gerado por IA.</p>
+    <p><strong>Mitigação:</strong> (a) Google explicitamente permite conteúdo IA desde que seja útil e original. (b) Evolução genética garante unicidade. (c) GEO otimizado com llms.txt e speakable schema. (d) Conteúdo hiperlocal é naturalmente único (ninguém mais cobre "trânsito no Gama às 7h").</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 3: Receita de ads insuficiente</h3>
+    <p><strong>Argumento:</strong> CPM brasileiro é baixo (R$3-5). 10M pageviews = R$30-50K, insuficiente para R$50K/mês de investimento.</p>
+    <p><strong>Mitigação:</strong> (a) Diversificar: ads diretos locais pagam 3-10x mais que programática. (b) Newsletter premium R$29/mês. (c) Branded content R$2-5K por artigo. (d) Eventos e debates IA. (e) Licenciamento do pipeline para outras redações.</p>
+  </div>
+</div>
+
+<!-- 13. PROPOSTA PARA FINANCIADOR -->
+<div class="section">
+  <div class="section-title">13. Proposta para Financiador</div>
+
+  <div class="card card-highlight">
+    <h3>Mirante News — O Futuro do Jornalismo Local no Brasil</h3>
+    <div class="cols-2" style="margin:16px 0">
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:8px">O Problema</p>
+        <p style="font-size:14px">Portais de notícias locais não conseguem cobrir todas as regiões porque jornalistas são caros. Resultado: 30 RAs do DF sem cobertura dedicada. Moradores de Ceilândia não têm "seu" portal.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:8px">A Solução</p>
+        <p style="font-size:14px">Mirante News: 6 agentes IA que produzem 50+ artigos/dia a R$0.05 cada, cobrindo todas as 30 RAs simultaneamente. Fact-check automático, evolução genética, transparência total.</p>
+      </div>
+    </div>
+    <div class="cols-2">
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:8px">O Mercado</p>
+        <p style="font-size:14px">DF: 3.1M habitantes, renda per capita mais alta do Brasil. Mídia digital superou TV (41.5% share). Eleições 2026 como catalisador. Metrópoles provou que portal do DF pode ter 78M visitantes/mês.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--cyan);margin-bottom:8px">O Pedido</p>
+        <p style="font-size:14px">R$50K/mês por 18 meses (R$900K). Meta: 10-30M pageviews, R$120-300K receita/mês. Replicável para qualquer capital do Brasil (modelo escalável).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 14. CONCLUSÃO -->
+<div class="section">
+  <div class="section-title">14. Conclusão e Próximos Passos</div>
+  <div class="card card-highlight">
+    <h3>Recomendação Final</h3>
+    <p>O Mirante News tem uma vantagem estrutural que nenhum concorrente pode replicar a curto prazo: <strong>produção de conteúdo a custo marginal zero</strong>. Com R$50K/mês investidos em distribuição, conteúdo exclusivo e comercialização, o portal pode atingir relevância regional em 6 meses e se tornar referência nacional em 18 meses.</p>
+
+    <table style="margin-top:16px">
+      <tr><th>#</th><th>Ação Imediata</th><th>Prazo</th></tr>
+      <tr><td>1</td><td>Registrar no Google News como publisher</td><td>Esta semana</td></tr>
+      <tr><td>2</td><td>Escalar pipeline para 50 artigos/dia</td><td>2 dias</td></tr>
+      <tr><td>3</td><td>Criar cobertura hiperlocal das 10 maiores RAs</td><td>1 semana</td></tr>
+      <tr><td>4</td><td>Ativar Google AdSense + Header Bidding</td><td>1 semana</td></tr>
+      <tr><td>5</td><td>Lançar newsletter "Bom Dia DF"</td><td>3 dias</td></tr>
+      <tr><td>6</td><td>Candidatar ao Google News Initiative</td><td>2 semanas</td></tr>
+      <tr><td>7</td><td>Contratar executivo comercial (ads locais)</td><td>30 dias</td></tr>
+      <tr><td>8</td><td>Preparar cobertura especial Eleições 2026</td><td>60 dias</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;color:var(--cyan);margin-bottom:4px">MIRANTE NEWS</p>
+  <p style="font-size:11px;color:var(--text-muted)">O futuro do jornalismo local — movido por Inteligência Artificial</p>
+  <p style="margin-top:12px">Produzido pela INTEIA — Instituto de Treinamento e Estudos em Inteligência Artificial</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:8px">
+    Classificação: Confidencial | Analistas: Vila INTEIA (146 consultores) + 7 Diretores IA<br>
+    Metodologia: Van Aken &amp; Berends + MCDM + Design Thinking + Stakeholder Analysis<br>
+    Gerado em: 2026-04-05 | Confiança Global: 0.75
+  </p>
+</div>
+
+</div>
+</body>
+</html>
