@@ -2056,11 +2056,44 @@ async function showProblemSolvingView(){
   h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
   h+=`</div>`;
 
-  // Explicacao
-  h+=`<div style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;line-height:1.6">`;
-  h+=`<strong style="color:${CY}">Ciclo de 5 fases</strong> baseado no livro <em>Problem Solving in Organizations</em>. `;
-  h+=`Cada tecnica e aplicada por <strong>N consultores</strong> da Vila com prompts especificos. `;
-  h+=`Selecione uma tecnica, defina o tema e veja o painel de especialistas trabalhando.</div>`;
+  // Tabs: Areas | Tecnicas
+  h+=`<div style="display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border)">`;
+  h+=`<button id="psTabAreas" onclick="switchPSTab('areas')" style="flex:1;padding:10px;background:rgba(6,182,212,0.12);border:none;border-bottom:2px solid ${CY};color:${CY};font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">&#127919; Combos por Area</button>`;
+  h+=`<button id="psTabTecnicas" onclick="switchPSTab('tecnicas')" style="flex:1;padding:10px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted);font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">&#129504; Tecnicas Individuais</button>`;
+  h+=`</div>`;
+
+  // === TAB AREAS ===
+  h+=`<div id="psPanelAreas">`;
+  h+=`<div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.5">Selecione uma <strong style="color:${CY}">area de atuacao</strong> e descreva o problema. O sistema executa automaticamente uma sequencia otimizada de tecnicas, passando contexto entre elas.</div>`;
+
+  const AREAS=[
+    {slug:'juridico',nome:'Juridico',icon:'&#9878;&#65039;',cor:'#f59e0b',desc:'Casos judiciais, compliance, contratos',fluxo:'Stakeholders → 5 Porques → Casos Analogos → Resistencia',ex:'Empresa recebeu auto de infracao do CADE por pratica anticoncorrencial'},
+    {slug:'eleitoral',nome:'Eleitoral / Campanha',icon:'&#128499;&#65039;',cor:'#8b5cf6',desc:'Estrategia de campanha, comunicacao politica',fluxo:'STEEPLED → Quick Scan → Multicriterio → Comunicacao → Piloto',ex:'Candidato com 12% precisa chegar a 25% em 60 dias'},
+    {slug:'educacao',nome:'Educacao / Politica Publica',icon:'&#127891;',cor:'#22c55e',desc:'Reforma curricular, gestao escolar, programas',fluxo:'SSM → Design Thinking → Piloto → Pos-Teste → Pesquisa-Acao',ex:'Evasao de 30% no ensino medio noturno da rede publica'},
+    {slug:'startup',nome:'Startup / Inovacao',icon:'&#128640;',cor:'#06b6d4',desc:'MVP, pivot, growth, product-market fit',fluxo:'Quick Scan → TRIZ → Idealized Design → Design Thinking → Piloto',ex:'SaaS com 50 usuarios beta e churn de 40% no primeiro mes'},
+    {slug:'gestao_publica',nome:'Gestao Publica',icon:'&#127963;&#65039;',cor:'#3b82f6',desc:'Reforma administrativa, servicos ao cidadao',fluxo:'STEEPLED → BPM → Stakeholders → Resistencia → Pesquisa-Acao → Triangulacao',ex:'Secretaria leva 45 dias para processar transferencia escolar'},
+    {slug:'saude',nome:'Saude / Hospitalar',icon:'&#127973;',cor:'#ef4444',desc:'Processos hospitalares, qualidade assistencial',fluxo:'Ishikawa → BPM → 5 Porques → Piloto → Pos-Teste',ex:'Taxa de infeccao hospitalar 3x acima da media nacional'},
+    {slug:'pesquisa_academica',nome:'Pesquisa Academica',icon:'&#128218;',cor:'#a855f7',desc:'Doutorado, revisao sistematica, metodologia',fluxo:'Revisao Sistematica → Snowball → Triangulacao → Member Check',ex:'Revisao sistematica sobre IA generativa na administracao publica (2020-2025)'},
+    {slug:'crise',nome:'Crise / Urgencia',icon:'&#128680;',cor:'#dc2626',desc:'Emergencia operacional, incidente critico',fluxo:'Quick Scan → 5 Porques → Causa-Efeito → Comunicacao → Pos-Teste',ex:'Vazamento de dados de 50 mil clientes descoberto ha 2 horas'},
+  ];
+
+  h+=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:12px">`;
+  AREAS.forEach(a=>{
+    h+=`<div onclick="openAreaCombo('${a.slug}')" style="padding:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;border-left:3px solid ${a.cor}" onmouseover="this.style.borderColor='${a.cor}';this.style.background='rgba(${a.cor==='#f59e0b'?'245,158,11':a.cor==='#8b5cf6'?'139,92,246':a.cor==='#22c55e'?'34,197,94':a.cor==='#06b6d4'?'6,182,212':a.cor==='#3b82f6'?'59,130,246':a.cor==='#ef4444'?'239,68,68':a.cor==='#a855f7'?'168,85,247':'220,38,38'},0.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg-card)'">`;
+    h+=`<div style="font-size:18px;margin-bottom:4px">${a.icon}</div>`;
+    h+=`<div style="font-weight:700;font-size:13px;color:${a.cor}">${a.nome}</div>`;
+    h+=`<div style="font-size:10px;color:var(--text-muted);margin-top:2px">${a.desc}</div>`;
+    h+=`<div style="font-size:9px;color:var(--text-muted);margin-top:6px;font-style:italic">&#8627; ${a.fluxo}</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+  h+=`<div id="areaComboForm"></div>`;
+  h+=`<div id="areaComboResult"></div>`;
+  h+=`</div>`;
+
+  // === TAB TECNICAS ===
+  h+=`<div id="psPanelTecnicas" style="display:none">`;
+  h+=`<div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.5"><strong style="color:${CY}">Ciclo de 5 fases</strong> baseado em <em>Problem Solving in Organizations</em>. Selecione uma tecnica individual, defina o tema e veja os consultores trabalhando.</div>`;
 
   // Fases como acordeoes
   FASES.forEach(f=>{
@@ -2083,11 +2116,120 @@ async function showProblemSolvingView(){
   // Area de resultado
   h+=`<div id="psResultado" style="margin-top:12px"></div>`;
 
+  h+=`</div>`; // close psPanelTecnicas
+
   // CSS para toggle
   h+=`<style>.ps-open{display:block!important}</style>`;
 
   ov.innerHTML=h;
   ov.classList.add('visible');
+}
+
+function switchPSTab(tab){
+  const CY='#06b6d4';
+  const btnA=document.getElementById('psTabAreas');
+  const btnT=document.getElementById('psTabTecnicas');
+  const panA=document.getElementById('psPanelAreas');
+  const panT=document.getElementById('psPanelTecnicas');
+  if(tab==='areas'){
+    btnA.style.background='rgba(6,182,212,0.12)';btnA.style.borderBottom=`2px solid ${CY}`;btnA.style.color=CY;
+    btnT.style.background='none';btnT.style.borderBottom='2px solid transparent';btnT.style.color='var(--text-muted)';
+    panA.style.display='block';panT.style.display='none';
+  } else {
+    btnT.style.background='rgba(6,182,212,0.12)';btnT.style.borderBottom=`2px solid ${CY}`;btnT.style.color=CY;
+    btnA.style.background='none';btnA.style.borderBottom='2px solid transparent';btnA.style.color='var(--text-muted)';
+    panT.style.display='block';panA.style.display='none';
+  }
+}
+
+const _AREAS_DATA={
+  juridico:{ex:'Empresa recebeu auto de infracao do CADE por pratica anticoncorrencial',tecnicas:4},
+  eleitoral:{ex:'Candidato com 12% precisa chegar a 25% em 60 dias',tecnicas:5},
+  educacao:{ex:'Evasao de 30% no ensino medio noturno da rede publica',tecnicas:5},
+  startup:{ex:'SaaS com 50 usuarios beta e churn de 40% no primeiro mes',tecnicas:5},
+  gestao_publica:{ex:'Secretaria leva 45 dias para processar transferencia escolar',tecnicas:6},
+  saude:{ex:'Taxa de infeccao hospitalar 3x acima da media nacional',tecnicas:5},
+  pesquisa_academica:{ex:'Revisao sistematica sobre IA generativa na administracao publica',tecnicas:4},
+  crise:{ex:'Vazamento de dados de 50 mil clientes descoberto ha 2 horas',tecnicas:5},
+};
+
+function openAreaCombo(slug){
+  const form=document.getElementById('areaComboForm');
+  const CY='#06b6d4';
+  const a=_AREAS_DATA[slug];
+  let h=`<div style="background:var(--bg-secondary);border:1px solid ${CY};border-radius:8px;padding:14px;margin-top:8px">`;
+  h+=`<div style="font-weight:700;font-size:14px;color:${CY};margin-bottom:10px">&#127919; Combo: ${slug.replace(/_/g,' ')}</div>`;
+  h+=`<textarea id="comboTema" placeholder="${a.ex}" style="width:100%;height:70px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:10px;border-radius:6px;font-size:13px;resize:vertical;font-family:inherit;margin-bottom:8px"></textarea>`;
+  h+=`<div style="display:flex;gap:8px;align-items:center">`;
+  h+=`<label style="font-size:10px;color:var(--text-muted)">Consultores por fase:</label>`;
+  h+=`<select id="comboN" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:6px;border-radius:4px;font-size:12px;font-family:inherit"><option value="3">3</option><option value="5" selected>5</option><option value="7">7</option></select>`;
+  h+=`<span style="font-size:10px;color:var(--text-muted);margin-left:auto">~${a.tecnicas} tecnicas sequenciais</span>`;
+  h+=`<button onclick="runAreaCombo('${slug}')" style="background:linear-gradient(135deg,${CY},#0891b2);border:none;color:#fff;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">&#9654; Executar Combo</button>`;
+  h+=`</div></div>`;
+  form.innerHTML=h;
+  document.getElementById('areaComboResult').innerHTML='';
+  form.scrollIntoView({behavior:'smooth'});
+}
+
+async function runAreaCombo(slug){
+  const tema=document.getElementById('comboTema')?.value?.trim();
+  if(!tema){alert('Descreva o problema');return;}
+  const n=parseInt(document.getElementById('comboN')?.value||'5');
+  const out=document.getElementById('areaComboResult');
+  const CY='#06b6d4';
+  const a=_AREAS_DATA[slug];
+
+  out.innerHTML=`<div style="text-align:center;padding:30px;background:var(--bg-secondary);border-radius:12px;margin-top:12px"><div style="font-size:36px;margin-bottom:12px;animation:spin 2s linear infinite">&#127919;</div><p style="font-weight:700;font-size:15px">Combo em execucao...</p><p style="font-size:12px;color:var(--text-muted);margin-top:6px">${a.tecnicas} tecnicas × ${n} consultores = ${a.tecnicas*n} consultas sequenciais</p><p style="font-size:11px;color:${CY};margin-top:8px">Estimativa: ~${a.tecnicas*n*5}s (cada fase alimenta a proxima)</p><div id="comboProgress" style="margin-top:12px;font-size:11px;color:var(--text-muted)"></div></div>`;
+
+  const API=window._VILA_API;
+  try{
+    const r=await fetch(API+'/problem-solving/combo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({area:slug,tema:tema,n_consultores:n}),signal:AbortSignal.timeout(600000)});
+    const d=await r.json();
+    if(d.detail){out.innerHTML=`<p style="color:#ef4444;padding:12px">${d.detail}</p>`;return;}
+
+    let h='';
+
+    // Header com metricas gerais
+    h+=`<div style="display:flex;gap:12px;margin:12px 0">`;
+    h+=`<div style="background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(34,197,94,0.08));padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:24px;font-weight:700;color:${CY}">${d.meta?.tecnicas_executadas||'?'}</div><div style="font-size:10px;color:var(--text-muted)">Tecnicas</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:24px;font-weight:700">${d.meta?.tempo_total_segundos||0}s</div><div style="font-size:10px;color:var(--text-muted)">Tempo Total</div></div>`;
+    h+=`<div style="background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center;flex:1"><div style="font-size:24px;font-weight:700">${d.meta?.n_consultores||5}</div><div style="font-size:10px;color:var(--text-muted)">Por Fase</div></div>`;
+    h+=`</div>`;
+
+    // Fluxo visual
+    h+=`<div style="background:var(--bg-secondary);border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;color:var(--text-muted)">`;
+    h+=`<strong style="color:${CY}">Fluxo:</strong> ${d.fluxo||''}`;
+    h+=`</div>`;
+
+    // Sintese final (destaque)
+    h+=`<div style="background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(139,92,246,0.08));border:1px solid rgba(6,182,212,0.3);border-radius:12px;padding:16px;margin-bottom:16px">`;
+    h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">`;
+    h+=`<div style="font-weight:700;color:${CY};font-size:15px">&#127919; Sintese Final Integrada</div>`;
+    h+=`<button onclick="navigator.clipboard.writeText(document.getElementById('comboSintFinal').innerText).then(()=>this.textContent='Copiado!')" style="background:var(--bg-secondary);border:1px solid var(--border);color:${CY};padding:4px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:inherit">Copiar</button>`;
+    h+=`</div>`;
+    h+=`<div id="comboSintFinal" style="font-size:13px;line-height:1.7;white-space:pre-wrap">${(d.sintese_final||'').replace(/</g,'&lt;')}</div>`;
+    h+=`</div>`;
+
+    // Resultados por fase (acordeoes)
+    h+=`<div style="font-weight:700;font-size:13px;margin-bottom:8px">Detalhes por Fase:</div>`;
+    (d.resultados||[]).forEach((r,i)=>{
+      const cor=i%2===0?CY:'#8b5cf6';
+      h+=`<div style="margin-bottom:6px;border:1px solid var(--border);border-radius:8px;overflow:hidden">`;
+      h+=`<div onclick="this.parentElement.querySelector('.combo-body').classList.toggle('ps-open')" style="display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;background:var(--bg-secondary);border-left:3px solid ${cor}">`;
+      h+=`<span style="font-weight:700;font-size:12px;color:${cor}">Fase ${r.meta?.passo}/${r.meta?.total_passos}</span>`;
+      h+=`<span style="font-size:12px">${r.meta?.tecnica||'?'}</span>`;
+      h+=`<span style="margin-left:auto;font-size:10px;color:var(--text-muted)">${r.meta?.tempo_segundos||0}s | score ${r.metricas?.score_qualidade?.toFixed(1)||'?'} &#9660;</span>`;
+      h+=`</div>`;
+      h+=`<div class="combo-body" style="display:none;padding:10px">`;
+      h+=`<div style="font-size:12px;line-height:1.6;white-space:pre-wrap;margin-bottom:8px;background:rgba(6,182,212,0.05);padding:10px;border-radius:6px">${(r.sintese||'').replace(/</g,'&lt;')}</div>`;
+      h+=`<div style="font-size:10px;color:var(--text-muted)">Consultores: ${(r.contribuicoes||[]).map(c=>c.agente_nome).join(', ')}</div>`;
+      h+=`</div></div>`;
+    });
+
+    out.innerHTML=h;
+  }catch(e){
+    out.innerHTML=`<p style="color:#ef4444;padding:20px">Erro: ${e.message}</p>`;
+  }
 }
 
 function openPSTecnica(slug,nome,fase){

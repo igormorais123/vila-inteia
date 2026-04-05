@@ -660,6 +660,54 @@ def listar_tecnicas_ps():
     return listar_tecnicas()
 
 
+@router.get("/problem-solving/areas")
+def listar_areas_ps():
+    """Lista combos de tecnicas por area (juridico, eleitoral, educacao, etc.)."""
+    from ..engine.problem_solving import listar_combos
+    return listar_combos()
+
+
+class ComboAreaInput(BaseModel):
+    area: str
+    tema: str
+    n_consultores: int = 5
+
+
+@router.post("/problem-solving/combo")
+def executar_combo_area(dados: ComboAreaInput):
+    """
+    Executa sequencia completa de tecnicas para uma area.
+    As tecnicas sao encadeadas — cada fase recebe contexto das anteriores.
+
+    Body:
+        area: str - slug da area (juridico, eleitoral, educacao, startup, gestao_publica, saude, pesquisa_academica, crise)
+        tema: str - o problema a ser analisado
+        n_consultores: int (default 5)
+    """
+    from .rotas_vila import obter_simulacao
+    from ..engine.problem_solving import executar_combo
+
+    if not dados.tema.strip():
+        raise HTTPException(400, "Campo 'tema' obrigatorio")
+
+    sim = obter_simulacao()
+    resultado = executar_combo(sim, dados.area, dados.tema.strip(), dados.n_consultores)
+
+    if "erro" in resultado:
+        raise HTTPException(404, resultado["erro"])
+
+    # Salvar no workspace
+    _workspace_arquivos.append({
+        "id": f"combo-{dados.area}-{str(uuid.uuid4())[:6]}",
+        "tipo": "combo_area",
+        "nome": f"Combo {resultado['area']}: {dados.tema[:40]}",
+        "area": dados.area,
+        "tecnicas": resultado["meta"]["tecnicas_executadas"],
+    })
+
+    return resultado
+
+
 @router.post("/problem-solving")
 def executar_problem_solving(dados: ProblemSolvingInput):
     """

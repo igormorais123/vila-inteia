@@ -47,6 +47,203 @@ def registrar(fase: str, slug: str, nome: str, descricao: str, categorias_pref: 
     return decorator
 
 
+COMBOS_AREAS = {
+    "juridico": {
+        "nome": "Juridico",
+        "descricao": "Casos judiciais, peticoes, compliance, contratos, litigios",
+        "icon": "⚖️",
+        "cor": "#f59e0b",
+        "tecnicas": ["stakeholder", "cinco_porques", "cbr", "resistencia"],
+        "fluxo": "Mapear partes → Causa raiz → Precedentes → Implementar",
+        "exemplo_tema": "Empresa recebeu auto de infracao do CADE por pratica anticoncorrencial",
+    },
+    "eleitoral": {
+        "nome": "Eleitoral / Campanha",
+        "descricao": "Estrategia de campanha, comunicacao politica, analise de cenarios",
+        "icon": "🗳️",
+        "cor": "#8b5cf6",
+        "tecnicas": ["steepled", "quick_scan", "mcdm", "plano_comunicacao", "piloto"],
+        "fluxo": "Macro-contexto → Gaps → Decidir → Comunicar → Testar",
+        "exemplo_tema": "Candidato a governador do DF com 12% das intencoes precisa chegar a 25% em 60 dias",
+    },
+    "educacao": {
+        "nome": "Educacao / Politica Publica",
+        "descricao": "Reforma curricular, gestao escolar, avaliacao de programas educacionais",
+        "icon": "🎓",
+        "cor": "#22c55e",
+        "tecnicas": ["ssm", "design_thinking", "piloto", "pos_teste", "action_research"],
+        "fluxo": "Entender complexidade → Centrar no usuario → Testar → Medir → Co-criar",
+        "exemplo_tema": "Evasao de 30% no ensino medio noturno da rede publica do DF",
+    },
+    "startup": {
+        "nome": "Startup / Inovacao",
+        "descricao": "Validacao de produto, MVP, pivot, growth, product-market fit",
+        "icon": "🚀",
+        "cor": "#06b6d4",
+        "tecnicas": ["quick_scan", "triz", "idealized_design", "design_thinking", "piloto"],
+        "fluxo": "Diagnostico rapido → Inventar → Idealizar → Prototipar → Testar",
+        "exemplo_tema": "SaaS de IA juridica com 50 usuarios beta e churn de 40% no primeiro mes",
+    },
+    "gestao_publica": {
+        "nome": "Gestao Publica",
+        "descricao": "Reforma administrativa, eficiencia, transparencia, servicos ao cidadao",
+        "icon": "🏛️",
+        "cor": "#3b82f6",
+        "tecnicas": ["steepled", "bpm", "stakeholder", "resistencia", "action_research", "triangulacao"],
+        "fluxo": "Contexto macro → Processos → Partes → Resistencia → Co-criar → Validar",
+        "exemplo_tema": "Secretaria de Educacao leva 45 dias para processar pedido de transferencia escolar",
+    },
+    "saude": {
+        "nome": "Saude / Gestao Hospitalar",
+        "descricao": "Processos hospitalares, qualidade assistencial, gestao de leitos, protocolos clinicos",
+        "icon": "🏥",
+        "cor": "#ef4444",
+        "tecnicas": ["ishikawa", "bpm", "cinco_porques", "piloto", "pos_teste"],
+        "fluxo": "Causas raiz → Processo → Profundidade → Testar → Medir",
+        "exemplo_tema": "Taxa de infeccao hospitalar 3x acima da media nacional na UTI",
+    },
+    "pesquisa_academica": {
+        "nome": "Pesquisa Academica",
+        "descricao": "Doutorado, artigos, teses, revisao sistematica, metodologia cientifica",
+        "icon": "📚",
+        "cor": "#a855f7",
+        "tecnicas": ["revisao_literatura", "snowball", "triangulacao", "member_check"],
+        "fluxo": "Evidencia → Expandir → Validar → Confirmar",
+        "exemplo_tema": "Revisao sistematica sobre impacto de IA generativa na administracao publica (2020-2025)",
+    },
+    "crise": {
+        "nome": "Crise / Urgencia",
+        "descricao": "Problema grave com deadline, incidente critico, emergencia operacional",
+        "icon": "🚨",
+        "cor": "#dc2626",
+        "tecnicas": ["quick_scan", "cinco_porques", "causa_efeito", "plano_comunicacao", "pos_teste"],
+        "fluxo": "Rapido → Causa raiz → Estruturar → Comunicar → Medir",
+        "exemplo_tema": "Vazamento de dados de 50 mil clientes descoberto ha 2 horas — LGPD exige notificacao em 72h",
+    },
+}
+
+
+def listar_combos() -> dict:
+    """Retorna catalogo de combos por area."""
+    return {
+        slug: {
+            "slug": slug,
+            "nome": c["nome"],
+            "descricao": c["descricao"],
+            "icon": c["icon"],
+            "cor": c["cor"],
+            "tecnicas": c["tecnicas"],
+            "fluxo": c["fluxo"],
+            "exemplo_tema": c["exemplo_tema"],
+        }
+        for slug, c in COMBOS_AREAS.items()
+    }
+
+
+def executar_combo(simulacao, area_slug: str, tema: str, n_consultores: int = 5) -> dict:
+    """Executa sequencia de tecnicas de uma area, passando contexto entre elas."""
+    if area_slug not in COMBOS_AREAS:
+        return {"erro": f"Area '{area_slug}' nao encontrada. Disponiveis: {list(COMBOS_AREAS.keys())}"}
+
+    combo = COMBOS_AREAS[area_slug]
+    resultados = []
+    contexto_acumulado = ""
+    tempo_total = 0
+
+    for i, slug in enumerate(combo["tecnicas"]):
+        if slug not in TECNICAS:
+            continue
+        # Enriquecer tema com contexto das fases anteriores
+        tema_enriquecido = tema
+        if contexto_acumulado:
+            tema_enriquecido = (
+                f"{tema}\n\n"
+                f"--- CONTEXTO DAS FASES ANTERIORES ---\n"
+                f"{contexto_acumulado[-1500:]}"
+            )
+        start = time.time()
+        t = TECNICAS[slug]
+        try:
+            resultado = t["fn"](simulacao, tema_enriquecido, n_consultores)
+        except Exception as e:
+            resultado = {
+                "contribuicoes": [],
+                "sintese": f"[Erro na execucao: {str(e)[:200]}]",
+            }
+        metricas = _calcular_metricas(resultado.get("contribuicoes", []), resultado.get("sintese", ""))
+        elapsed = round(time.time() - start, 1)
+        tempo_total += elapsed
+
+        resultado["meta"] = {
+            "tecnica": t["nome"],
+            "slug": slug,
+            "fase": t["fase"],
+            "tema": tema,
+            "n_consultores": n_consultores,
+            "tempo_segundos": elapsed,
+            "passo": i + 1,
+            "total_passos": len(combo["tecnicas"]),
+        }
+        resultado["metricas"] = metricas
+        resultados.append(resultado)
+
+        # Acumular contexto para proximo passo
+        sintese = resultado.get("sintese", "")
+        if sintese:
+            contexto_acumulado += f"\n[{t['nome']}]: {sintese[:500]}\n"
+
+    # Sintese final do combo
+    todas_sinteses = "\n".join(
+        f"Fase {r['meta']['passo']}/{r['meta']['total_passos']} - {r['meta']['tecnica']}:\n{r.get('sintese', '')[:400]}"
+        for r in resultados
+    )
+    try:
+        sintese_final = chamar_llm_conversa(
+            "Voce e o sintetizador estrategico da INTEIA. "
+            f"Um combo de {len(resultados)} tecnicas de Problem Solving foi aplicado na area '{combo['nome']}' "
+            f"seguindo o fluxo: {combo['fluxo']}.\n"
+            "Produza uma SINTESE EXECUTIVA FINAL integrando todos os resultados.\n"
+            "FORMATO:\n"
+            "1. DIAGNOSTICO INTEGRADO: visao holistica do problema\n"
+            "2. RECOMENDACOES PRIORIZADAS: top 3-5 acoes concretas com responsavel e prazo\n"
+            "3. RISCOS E MITIGACOES: principais riscos e como reduzir\n"
+            "4. PROXIMO PASSO IMEDIATO: acao #1 para segunda-feira\n"
+            "5. NIVEL DE CONFIANCA: 0-100% com justificativa\n"
+            "Seja CONCRETO com dados e numeros. Maximo 500 palavras.",
+            f"TEMA: {tema}\n\nRESULTADOS DAS TECNICAS:\n{todas_sinteses}",
+            modelo="rapido",
+            max_tokens=800,
+        )
+    except Exception:
+        sintese_final = None
+
+    if not sintese_final:
+        sintese_final = (
+            "SINTESE AUTOMATICA (fallback):\n"
+            + "\n".join(
+                f"- {r['meta']['tecnica']}: {r.get('sintese', '(sem sintese)')[:200]}"
+                for r in resultados
+            )
+        )
+
+    return {
+        "area": combo["nome"],
+        "area_slug": area_slug,
+        "fluxo": combo["fluxo"],
+        "tema": tema,
+        "resultados": resultados,
+        "sintese_final": sintese_final,
+        "meta": {
+            "area": combo["nome"],
+            "tecnicas_executadas": len(resultados),
+            "total_tecnicas": len(combo["tecnicas"]),
+            "tempo_total_segundos": round(tempo_total, 1),
+            "n_consultores": n_consultores,
+            "timestamp": datetime.now().isoformat(),
+        },
+    }
+
+
 def listar_tecnicas() -> dict:
     """Retorna catalogo agrupado por fase."""
     fases = {
