@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEIA — Projeto de Financiamento e Alavancagem | R$50K/mês</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700;800&display=swap');
+
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-card: #1a2236;
+    --bg-accent: rgba(201,162,39,0.06);
+    --gold: #c9a227;
+    --gold-light: #e8d48b;
+    --gold-dim: rgba(201,162,39,0.3);
+    --navy: #1B2A4A;
+    --text-primary: #e8e6e3;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border: rgba(201,162,39,0.15);
+    --success: #2E7D32;
+    --warning: #F57C00;
+    --danger: #C62828;
+    --info: #1565C0;
+    --cyan: #06b6d4;
+    --purple: #8b5cf6;
+    --radius: 12px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), #d4a72c);
+    color: #0a0e1a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .header .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .header-meta {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .header-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 48px;
+    page-break-inside: avoid;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-highlight {
+    background: linear-gradient(135deg, rgba(201,162,39,0.08), rgba(201,162,39,0.02));
+    border: 1px solid var(--gold-dim);
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .kpi {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: var(--bg-card);
+    color: var(--gold);
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+  }
+  tr:hover td { background: rgba(201,162,39,0.03); }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--gold-dim), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .timeline-item h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+  .timeline-item .period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+
+  /* SCENARIOS */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .scenario {
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid;
+  }
+  .scenario.pessimista { border-color: var(--danger); background: rgba(198,40,40,0.06); }
+  .scenario.base { border-color: var(--gold-dim); background: var(--bg-accent); }
+  .scenario.otimista { border-color: var(--success); background: rgba(46,125,50,0.06); }
+  .scenario h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .scenario.pessimista h4 { color: #ef5350; }
+  .scenario.base h4 { color: var(--gold); }
+  .scenario.otimista h4 { color: #66bb6a; }
+  .scenario .big {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 8px 0;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 8px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold), #e8d48b);
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-gold { background: rgba(201,162,39,0.15); color: var(--gold); }
+  .tag-cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+  .tag-purple { background: rgba(139,92,246,0.15); color: var(--purple); }
+  .tag-green { background: rgba(46,125,50,0.15); color: #66bb6a; }
+  .tag-red { background: rgba(198,40,40,0.15); color: #ef5350; }
+
+  /* BLOCKQUOTE */
+  blockquote {
+    border-left: 3px solid var(--gold);
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: var(--bg-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 60px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .footer .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .footer .logo span:first-child { color: var(--navy); }
+  .footer .logo span:last-child { color: var(--gold); }
+
+  /* COLUMNS */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* LISTS */
+  ul.checklist { list-style: none; padding: 0; }
+  ul.checklist li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  ul.checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; color: #1a1a1a; }
+    .card, .kpi, .timeline-item { border-color: #ddd; background: #f9f9f9; }
+    .kpi-value, .section-title, h3 { color: #1B2A4A; }
+  }
+
+  @media (max-width: 768px) {
+    .cols-2, .cols-3, .scenario-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- HEADER -->
+<!-- ============================================================ -->
+<div class="header">
+  <div class="header-badge">Documento Confidencial — Projeto de Financiamento</div>
+  <h1>INTEIA — Plano Maestral de Alavancagem</h1>
+  <div class="subtitle">Projeto de investimento R$50.000/mês para transformar a INTEIA no maior portal de IA estratégica aplicada do Brasil</div>
+  <div class="header-meta">
+    <span>📅 2026-04-04</span>
+    <span>🔒 Confidencial</span>
+    <span>📊 Confiança: 0.78</span>
+    <span>🤖 Vila INTEIA + 7 Diretores IA</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. SUMÁRIO EXECUTIVO -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">1. Sumário Executivo</div>
+  <div class="section-subtitle">Resposta direta — o que recomendamos e por quê</div>
+
+  <div class="card card-highlight">
+    <h3>Posição: Investir R$50K/mês com foco em 3 frentes simultâneas</h3>
+    <p>A INTEIA possui infraestrutura tecnológica equivalente a empresas que captaram R$10-30M (2.617 agentes sintéticos, 13 produtos integrados, OmniRoute multi-LLM, Motor Preditivo com MAE 1.91pp). O gargalo não é tecnologia — é <strong>distribuição, prova social e funil de conversão</strong>.</p>
+    <p style="margin-top:12px">Com R$50K/mês por 18 meses (R$900K total), a INTEIA pode atingir R$200-500K/mês de receita recorrente ao:</p>
+    <ul class="checklist" style="margin-top:12px">
+      <li><strong>Frente 1 — Produto SaaS (R$20K/mês):</strong> Self-service com planos de R$497-4.997/mês + trial gratuito</li>
+      <li><strong>Frente 2 — Vendas Enterprise (R$15K/mês):</strong> 2 vendedores + SDR focados em jurídico e eleitoral</li>
+      <li><strong>Frente 3 — Marketing + Autoridade (R$15K/mês):</strong> SEO, LinkedIn, YouTube, eventos em Brasília</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. DIAGNÓSTICO DO SITE -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">2. Diagnóstico Completo — inteia.com.br</div>
+  <div class="section-subtitle">Análise de 15 dimensões pelo painel de consultores</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-value">8.5</div><div class="kpi-label">Design / UX</div></div>
+    <div class="kpi"><div class="kpi-value">7.0</div><div class="kpi-label">Conteúdo</div></div>
+    <div class="kpi"><div class="kpi-value">7.5</div><div class="kpi-label">SEO</div></div>
+    <div class="kpi"><div class="kpi-value">9.0</div><div class="kpi-label">Mobile</div></div>
+    <div class="kpi"><div class="kpi-value">5.0</div><div class="kpi-label">Prova Social</div></div>
+    <div class="kpi"><div class="kpi-value">4.0</div><div class="kpi-label">Funil de Conversão</div></div>
+    <div class="kpi"><div class="kpi-value">13</div><div class="kpi-label">Produtos</div></div>
+    <div class="kpi"><div class="kpi-value">2.617</div><div class="kpi-label">Agentes Sintéticos</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Pontos Fortes</h3>
+    <ul class="checklist">
+      <li>Design premium dark/light com glassmorphism, gradientes, animações — nível de startup série A</li>
+      <li>13 produtos integrados funcionando (Vila INTEIA, OmniRoute, Motor Preditivo, POLARIS, etc.)</li>
+      <li>2.617 agentes sintéticos calibrados — ativo único no mercado brasileiro</li>
+      <li>Motor Preditivo com MAE 1.91pp — precisão superior a institutos tradicionais</li>
+      <li>164 magistrados sintéticos (STF, STJ, TJDFT, TRF1) — produto sem concorrente direto</li>
+      <li>Infraestrutura própria (VPS, Docker, OmniRoute) — custo marginal baixo</li>
+      <li>Site responsivo, Next.js, JSON-LD structured data, Open Graph</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Gaps Críticos (o que impede o crescimento)</h3>
+    <table>
+      <tr><th>Gap</th><th>Impacto</th><th>Prioridade</th></tr>
+      <tr><td>Sem funil de conversão claro</td><td>Visitante não sabe o que fazer → bounce alto</td><td><span class="tag tag-red">CRÍTICO</span></td></tr>
+      <tr><td>Sem prova social (cases, depoimentos, logos)</td><td>Zero confiança para ticket alto (R$5K+)</td><td><span class="tag tag-red">CRÍTICO</span></td></tr>
+      <tr><td>13 produtos na home sem hierarquia</td><td>Sobrecarga cognitiva → paralisia de decisão</td><td><span class="tag tag-gold">ALTO</span></td></tr>
+      <tr><td>Pricing vago (R$5K-100K "sob consulta")</td><td>Cliente não sabe se pode pagar → não contata</td><td><span class="tag tag-gold">ALTO</span></td></tr>
+      <tr><td>Sem landing pages por vertical</td><td>Advogado e político veem a mesma página</td><td><span class="tag tag-gold">ALTO</span></td></tr>
+      <tr><td>Sem trial/demo gratuita</td><td>Barreira de entrada intransponível para PMEs</td><td><span class="tag tag-gold">ALTO</span></td></tr>
+      <tr><td>Sem blog/SEO/conteúdo orgânico</td><td>Zero tráfego orgânico, dependência de indicação</td><td><span class="tag tag-cyan">MÉDIO</span></td></tr>
+      <tr><td>Sem vídeos/demonstrações</td><td>Produto complexo sem explicação visual</td><td><span class="tag tag-cyan">MÉDIO</span></td></tr>
+      <tr><td>1 fundador = gargalo de tudo</td><td>Vendas, suporte, dev, marketing = mesma pessoa</td><td><span class="tag tag-red">CRÍTICO</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. MERCADO -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">3. Análise de Mercado — STEEPLED</div>
+  <div class="section-subtitle">Fatores macro-ambientais para IA aplicada no Brasil 2026</div>
+
+  <div class="cols-2">
+    <div class="card">
+      <h3>📊 Tamanho do Mercado</h3>
+      <p><strong>IA no Brasil:</strong> US$3.4 bilhões em gastos com IA em 2026 (+30% a.a.)</p>
+      <p><strong>LegalTech:</strong> Mercado global US$35.4B (2025) → US$72.5B (2035)</p>
+      <p><strong>Agentes de IA:</strong> R$3.4 bilhões em aportes previstos para 2026 no Brasil</p>
+      <p><strong>Adoção:</strong> 41.9% das empresas 100+ funcionários já usam IA (era 16.9% em 2022)</p>
+    </div>
+    <div class="card">
+      <h3>🏛️ Contexto Político-Legal</h3>
+      <p><strong>Eleições 2026:</strong> 155M eleitores, TSE regulou IA na propaganda eleitoral</p>
+      <p><strong>PL de IA:</strong> Em tramitação no Senado — regulação iminente</p>
+      <p><strong>Conteúdo IA:</strong> Saltou de 4.6% (2024) para 25.8% (2025) nas eleições</p>
+      <p><strong>Plano Nacional IA:</strong> R$23B em investimentos governamentais até 2028</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Concorrentes Diretos e Indiretos</h3>
+    <table>
+      <tr><th>Concorrente</th><th>Vertical</th><th>Diferencial vs INTEIA</th><th>Pricing Estimado</th></tr>
+      <tr><td>Jusbrasil / Jus IA</td><td>Jurídico</td><td>Base enorme de jurisprudência, mas sem magistrados sintéticos</td><td>R$99-599/mês</td></tr>
+      <tr><td>Turivius</td><td>Jurídico</td><td>Jurimetria forte, mas sem predição judicial</td><td>R$200-800/mês</td></tr>
+      <tr><td>Jusfy (US$30M valuation)</td><td>Jurídico</td><td>47K usuários, automação de petições</td><td>R$100-500/mês</td></tr>
+      <tr><td>AtlasIntel / Futura</td><td>Eleitoral</td><td>Pesquisa real (não sintética) — custo 100x maior</td><td>R$50-200K/pesquisa</td></tr>
+      <tr><td>Quaest / DataFolha</td><td>Eleitoral</td><td>Institutos tradicionais — meses de lead time</td><td>R$100-500K/pesquisa</td></tr>
+      <tr><td>ChatGPT / Claude</td><td>Horizontal</td><td>Genéricos, sem agentes calibrados nem dados brasileiros</td><td>US$20-200/mês</td></tr>
+    </table>
+    <blockquote>
+      <strong>Insight Diferencial INTEIA:</strong> Nenhum concorrente combina magistrados sintéticos + eleitores sintéticos + consultores lendários + motor preditivo Monte Carlo em uma única plataforma. A Jusfy levantou US$30M com 47K usuários fazendo apenas automação de petições. A INTEIA faz predição judicial + 12 produtos a mais.
+    </blockquote>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. PROPOSTA DE VALOR PARA INVESTIDOR -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">4. Proposta de Valor — Por que Investir R$50K/mês na INTEIA</div>
+  <div class="section-subtitle">O caso de investimento resumido</div>
+
+  <div class="card card-highlight">
+    <h3>Tese de Investimento</h3>
+    <p>A INTEIA é uma plataforma de <strong>IA estratégica vertical</strong> que já possui:</p>
+    <div class="cols-3" style="margin-top:16px">
+      <div>
+        <div style="font-size:32px;text-align:center;margin-bottom:8px">🧠</div>
+        <p style="text-align:center;font-weight:700;color:var(--gold)">Tecnologia Pronta</p>
+        <p style="font-size:12px;text-align:center">13 produtos, 2.617 agentes, infra própria. Equivalente a R$5-10M em desenvolvimento.</p>
+      </div>
+      <div>
+        <div style="font-size:32px;text-align:center;margin-bottom:8px">⚖️</div>
+        <p style="text-align:center;font-weight:700;color:var(--gold)">Moat Único</p>
+        <p style="font-size:12px;text-align:center">164 magistrados sintéticos, 594 parlamentares mapeados. Nenhum concorrente tem esse dataset.</p>
+      </div>
+      <div>
+        <div style="font-size:32px;text-align:center;margin-bottom:8px">📈</div>
+        <p style="text-align:center;font-weight:700;color:var(--gold)">Timing Perfeito</p>
+        <p style="font-size:12px;text-align:center">Eleições 2026 + regulação IA + adoção 42% empresas + R$23B governo. Janela de 18 meses.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Unit Economics Projetadas</h3>
+    <table>
+      <tr><th>Métrica</th><th>Atual</th><th>Meta 6 meses</th><th>Meta 18 meses</th></tr>
+      <tr><td>MRR (Receita Recorrente Mensal)</td><td>R$6.000</td><td>R$80.000</td><td>R$350.000</td></tr>
+      <tr><td>Clientes Pagantes</td><td>1</td><td>15-20</td><td>80-120</td></tr>
+      <tr><td>Ticket Médio</td><td>R$6.000</td><td>R$4.500</td><td>R$3.500</td></tr>
+      <tr><td>CAC (Custo Aquisição Cliente)</td><td>R$0 (indicação)</td><td>R$3.000</td><td>R$2.000</td></tr>
+      <tr><td>LTV (Lifetime Value)</td><td>~R$72K (12m)</td><td>R$54K</td><td>R$42K</td></tr>
+      <tr><td>LTV/CAC</td><td>∞</td><td>18x</td><td>21x</td></tr>
+      <tr><td>Churn Mensal</td><td>0%</td><td>&lt;5%</td><td>&lt;3%</td></tr>
+      <tr><td>Margem Bruta</td><td>~95%</td><td>~85%</td><td>~80%</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. ALOCAÇÃO DO INVESTIMENTO -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">5. Alocação do Investimento — R$50.000/mês</div>
+  <div class="section-subtitle">Como cada real será aplicado, por frente</div>
+
+  <table>
+    <tr><th>Frente</th><th>Valor/mês</th><th>%</th><th>O que Compra</th><th>KPI Principal</th></tr>
+    <tr><td><span class="tag tag-gold">PRODUTO</span></td><td>R$20.000</td><td>40%</td><td>1 dev full-stack + 1 designer UX + infra cloud</td><td>Self-service ativo, trial→paid &gt;8%</td></tr>
+    <tr><td><span class="tag tag-cyan">VENDAS</span></td><td>R$15.000</td><td>30%</td><td>2 vendedores (fixo R$3K + comissão) + SDR + CRM</td><td>10 reuniões/sem, 20% close rate</td></tr>
+    <tr><td><span class="tag tag-purple">MARKETING</span></td><td>R$10.000</td><td>20%</td><td>Google Ads R$4K + LinkedIn R$3K + conteúdo R$3K</td><td>500 leads/mês, CAC &lt;R$3K</td></tr>
+    <tr><td><span class="tag tag-green">OPERAÇÕES</span></td><td>R$5.000</td><td>10%</td><td>Jurídico, contabilidade, ferramentas SaaS, reserva</td><td>Compliance, burn rate controlado</td></tr>
+  </table>
+
+  <div class="card">
+    <h3>Detalhamento — Frente Produto (R$20K/mês)</h3>
+    <table>
+      <tr><th>Item</th><th>Valor</th><th>Entrega</th></tr>
+      <tr><td>Dev Full-Stack (PJ, remoto)</td><td>R$10.000</td><td>Landing pages verticais, self-service, onboarding</td></tr>
+      <tr><td>Designer UX/UI (PJ, part-time)</td><td>R$5.000</td><td>Redesign funil, páginas de produto, materiais</td></tr>
+      <tr><td>Infraestrutura Cloud</td><td>R$3.000</td><td>Escalabilidade, CDN, monitoring, backups</td></tr>
+      <tr><td>Ferramentas (Stripe, Intercom, etc.)</td><td>R$2.000</td><td>Billing, suporte, analytics</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Detalhamento — Frente Vendas (R$15K/mês)</h3>
+    <table>
+      <tr><th>Item</th><th>Valor</th><th>Entrega</th></tr>
+      <tr><td>Vendedor 1 — Jurídico (fixo + comissão)</td><td>R$5.000</td><td>Prospecção OAB-DF, escritórios 20+ advogados</td></tr>
+      <tr><td>Vendedor 2 — Eleitoral/Governo (fixo + comissão)</td><td>R$5.000</td><td>Partidos, consultorias políticas, secretarias</td></tr>
+      <tr><td>SDR (agendamento)</td><td>R$3.000</td><td>Cold outreach, qualificação, agenda</td></tr>
+      <tr><td>CRM + Ferramentas (Hubspot free + extras)</td><td>R$2.000</td><td>Pipeline, follow-up, métricas</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. CENÁRIOS DE RECEITA -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">6. Cenários de Receita — 18 meses</div>
+  <div class="section-subtitle">Projeção Monte Carlo com intervalos de confiança</div>
+
+  <div class="scenario-grid">
+    <div class="scenario pessimista">
+      <h4>🔴 Pessimista (P25)</h4>
+      <div class="big" style="color:#ef5350">R$120K</div>
+      <p style="font-size:12px;color:var(--text-muted)">MRR ao mês 18</p>
+      <ul class="checklist" style="margin-top:12px">
+        <li>25-30 clientes</li>
+        <li>Ticket médio R$4.000</li>
+        <li>Churn 8% (alto)</li>
+        <li>Marketing pouco eficaz</li>
+        <li>ROI: 2.4x do investido</li>
+      </ul>
+    </div>
+    <div class="scenario base">
+      <h4>🟡 Base (P50)</h4>
+      <div class="big" style="color:var(--gold)">R$350K</div>
+      <p style="font-size:12px;color:var(--text-muted)">MRR ao mês 18</p>
+      <ul class="checklist" style="margin-top:12px">
+        <li>80-100 clientes</li>
+        <li>Ticket médio R$3.800</li>
+        <li>Churn 4%</li>
+        <li>2 verticais dominadas</li>
+        <li>ROI: 7x do investido</li>
+      </ul>
+    </div>
+    <div class="scenario otimista">
+      <h4>🟢 Otimista (P75)</h4>
+      <div class="big" style="color:#66bb6a">R$600K</div>
+      <p style="font-size:12px;color:var(--text-muted)">MRR ao mês 18</p>
+      <ul class="checklist" style="margin-top:12px">
+        <li>120-150 clientes</li>
+        <li>Ticket médio R$4.500</li>
+        <li>Churn 2%</li>
+        <li>Referência nacional</li>
+        <li>ROI: 12x do investido</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Projeção Mês a Mês (Cenário Base)</h3>
+    <table>
+      <tr><th>Mês</th><th>Clientes</th><th>MRR</th><th>Investimento Acum.</th><th>Breakeven?</th></tr>
+      <tr><td>1-3</td><td>3-5</td><td>R$15-25K</td><td>R$150K</td><td>Não</td></tr>
+      <tr><td>4-6</td><td>12-20</td><td>R$55-80K</td><td>R$300K</td><td><span class="tag tag-gold">Quase</span></td></tr>
+      <tr><td>7-9</td><td>30-45</td><td>R$120-170K</td><td>R$450K</td><td><span class="tag tag-green">SIM ✓</span></td></tr>
+      <tr><td>10-12</td><td>50-70</td><td>R$200-280K</td><td>R$600K</td><td>Lucrativo</td></tr>
+      <tr><td>13-18</td><td>80-120</td><td>R$300-500K</td><td>R$900K</td><td>Alto lucro</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:12px;color:var(--text-muted)"><strong>Breakeven estimado:</strong> Mês 7 (quando MRR supera investimento mensal + custos operacionais). Payback total do investimento acumulado: Mês 12-14.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 7. ROADMAP -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">7. Roadmap de Execução — 18 Meses</div>
+  <div class="section-subtitle">O que acontece, quando, e quem faz</div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>Fase 1 — Fundação (Meses 1-3)</h4>
+      <div class="period">Abril — Junho 2026 | Budget: R$150K</div>
+      <p><strong>Produto:</strong> Landing pages por vertical (jurídico, eleitoral, gestão pública). Self-service com Stripe. Trial 7 dias gratuito. Onboarding automatizado. Planos: Starter R$497/mês, Pro R$1.997/mês, Enterprise R$4.997+/mês.</p>
+      <p><strong>Vendas:</strong> Contratar 2 vendedores. Prospectar 100 escritórios OAB-DF + 20 consultorias políticas. Pipeline no HubSpot.</p>
+      <p><strong>Marketing:</strong> 8 artigos SEO/mês. Canal YouTube (demos de 5min). LinkedIn do fundador: 3 posts/semana. Google Ads jurídico.</p>
+      <p><strong>Meta:</strong> 5 clientes pagantes, MRR R$25K</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 2 — Tração (Meses 4-6)</h4>
+      <div class="period">Julho — Setembro 2026 | Budget: R$150K</div>
+      <p><strong>Produto:</strong> API pública documentada. Integrações (Slack, WhatsApp Business). Dashboard de métricas para cliente. Vila INTEIA como diferencial de engajamento.</p>
+      <p><strong>Vendas:</strong> Case studies do Paixão Cortes + primeiros clientes. Webinars mensais. Parcerias OAB seccional.</p>
+      <p><strong>Marketing:</strong> PR: cobertura em Startups.com.br, Exame, Jota. Evento presencial "IA Jurídica" em Brasília (50 pessoas). LinkedIn Ads B2B.</p>
+      <p><strong>Meta:</strong> 20 clientes, MRR R$80K</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 3 — Escala (Meses 7-12)</h4>
+      <div class="period">Outubro 2026 — Março 2027 | Budget: R$300K</div>
+      <p><strong>Produto:</strong> Academy lançada (cursos de IA jurídica/eleitoral R$497-997). Marketplace de agentes customizados. White-label para consultorias.</p>
+      <p><strong>Vendas:</strong> Expandir para SP e RJ. Parcerias com grandes escritórios (Machado Meyer, Mattos Filho). Modelo de revenue share com consultorias políticas.</p>
+      <p><strong>Marketing:</strong> Patrocínio de eventos jurídicos. Podcast "IA Estratégica". SEO dominando "IA jurídica", "magistrados sintéticos", "pesquisa eleitoral IA".</p>
+      <p><strong>Meta:</strong> 70 clientes, MRR R$280K, breakeven atingido</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <h4>Fase 4 — Dominância (Meses 13-18)</h4>
+      <div class="period">Abril — Setembro 2027 | Budget: R$300K</div>
+      <p><strong>Produto:</strong> Motor Preditivo como produto standalone para consultorias. Expansão para novos verticais (saúde, educação). API enterprise com SLA.</p>
+      <p><strong>Vendas:</strong> Equipe de 5+ vendedores. Escritórios de grande porte (top 100 Brasil). Governo federal e estadual. Organizações internacionais.</p>
+      <p><strong>Marketing:</strong> Referência nacional em IA aplicada. Convites para congressos. Artigos acadêmicos publicados. Brand awareness orgânico.</p>
+      <p><strong>Meta:</strong> 120 clientes, MRR R$350-500K, preparar para Série A</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 8. FONTES DE FINANCIAMENTO -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">8. Fontes de Financiamento — Onde Captar R$50K/mês</div>
+  <div class="section-subtitle">Mapeamento de stakeholders financeiros</div>
+
+  <table>
+    <tr><th>Fonte</th><th>Valor Potencial</th><th>Timeline</th><th>Requisito</th><th>Probabilidade</th></tr>
+    <tr><td><strong>Receita Própria (clientes)</strong></td><td>R$6K → R$80K/mês</td><td>6 meses</td><td>Funil de vendas funcionando</td><td><span class="tag tag-green">ALTA</span></td></tr>
+    <tr><td><strong>FAPDF — Editais Inovação</strong></td><td>R$100-500K (não-reembolsável)</td><td>3-6 meses</td><td>CNPJ DF + proposta técnica</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>FINEP Startup</strong></td><td>R$500K-2M</td><td>6-12 meses</td><td>Carta de investidor anjo</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>Anjos do Brasil / investidores anjo</strong></td><td>R$300K-2M</td><td>3-6 meses</td><td>Pitch deck + tração (5+ clientes)</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+    <tr><td><strong>BRB / BNDES Microcrédito</strong></td><td>R$100-500K</td><td>2-4 meses</td><td>Faturamento comprovado</td><td><span class="tag tag-green">ALTA</span></td></tr>
+    <tr><td><strong>Aceleradoras (InovAtiva, Endeavor)</strong></td><td>Mentoria + R$50-200K</td><td>6-12 meses</td><td>MVP + métricas de tração</td><td><span class="tag tag-cyan">MÉDIA-ALTA</span></td></tr>
+    <tr><td><strong>VC Seed (Canary, Valor Capital)</strong></td><td>R$2-10M</td><td>12-18 meses</td><td>MRR &gt;R$100K + crescimento 20%/mês</td><td><span class="tag tag-purple">FUTURA</span></td></tr>
+    <tr><td><strong>Editais MCTI/CNPq</strong></td><td>R$200K-1M</td><td>6-12 meses</td><td>Vínculo acadêmico (IDP/UnB)</td><td><span class="tag tag-gold">MÉDIA</span></td></tr>
+  </table>
+
+  <div class="card card-highlight">
+    <h3>Estratégia Recomendada de Captação (Sequência)</h3>
+    <p><strong>Mês 1-3:</strong> Bootstrap + receita própria (R$6-25K/mês) + candidatura FAPDF (R$200-500K)</p>
+    <p><strong>Mês 3-6:</strong> Com 5+ clientes e case study → pitch para investidores anjo (R$500K-1M)</p>
+    <p><strong>Mês 6-9:</strong> Com carta de anjo → FINEP Startup (R$500K-2M não-reembolsável)</p>
+    <p><strong>Mês 12-18:</strong> Com MRR &gt;R$100K → rodada Seed com VC (R$2-5M para escalar nacional)</p>
+    <blockquote>A Jusfy (automação de petições simples) captou US$30M com 47K usuários. A INTEIA faz predição judicial + 12 produtos adicionais. O valuation potencial com tração é de R$20-50M numa Série A.</blockquote>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 9. QUICK WINS -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">9. Quick Wins — O que Fazer Antes de Investir R$50K/mês</div>
+  <div class="section-subtitle">Ações de custo zero ou mínimo que aumentam receita em 30 dias</div>
+
+  <table>
+    <tr><th>#</th><th>Ação</th><th>Custo</th><th>Tempo</th><th>Impacto Esperado</th></tr>
+    <tr><td>1</td><td>Criar landing page "IA para Escritórios de Advocacia" com CTA direto</td><td>R$0</td><td>2 dias</td><td>3x mais conversões do jurídico</td></tr>
+    <tr><td>2</td><td>Case study Paixão Cortes (com permissão): "Como 60 advogados usam IA"</td><td>R$0</td><td>1 dia</td><td>Prova social imediata</td></tr>
+    <tr><td>3</td><td>Vídeo demo de 3 minutos: "Magistrados Sintéticos em ação"</td><td>R$0</td><td>3 dias</td><td>Viral no LinkedIn jurídico</td></tr>
+    <tr><td>4</td><td>Trial gratuito 7 dias com 3 consultas à Helena</td><td>~R$5/trial</td><td>1 semana</td><td>Remove barreira de entrada</td></tr>
+    <tr><td>5</td><td>Post LinkedIn: "164 magistrados do STF ao STJ — como prever decisões"</td><td>R$0</td><td>1 hora</td><td>Awareness + leads qualificados</td></tr>
+    <tr><td>6</td><td>Adicionar pricing transparente (Starter R$497, Pro R$1.997)</td><td>R$0</td><td>2 horas</td><td>Filtra leads, aumenta confiança</td></tr>
+    <tr><td>7</td><td>Email para 10 maiores escritórios de Brasília com demo personalizada</td><td>R$0</td><td>1 dia</td><td>2-3 reuniões em 2 semanas</td></tr>
+    <tr><td>8</td><td>Listar na FAPDF como empresa de inovação do DF</td><td>R$0</td><td>1 dia</td><td>Acesso a editais e networking</td></tr>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- 10. NOVOS PLANOS DE PRICING -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">10. Reestruturação de Pricing — Pirâmide de Valor</div>
+  <div class="section-subtitle">De "sob consulta" para self-service escalável</div>
+
+  <div class="cols-3">
+    <div class="card" style="border-top:3px solid var(--cyan)">
+      <h3 style="color:var(--cyan)">Starter — R$497/mês</h3>
+      <p style="font-size:24px;font-weight:800;color:var(--cyan);margin:8px 0">R$497</p>
+      <ul class="checklist">
+        <li>Helena Strategos (50 consultas/mês)</li>
+        <li>3 pesquisas com consultores/mês</li>
+        <li>Relatórios básicos (HTML)</li>
+        <li>Acesso Vila INTEIA</li>
+        <li>Suporte por email</li>
+      </ul>
+      <p style="margin-top:12px;font-size:12px;color:var(--text-muted)"><strong>Público:</strong> Advogados solo, pequenos escritórios, pesquisadores</p>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <h3 style="color:var(--gold)">Professional — R$1.997/mês</h3>
+      <p style="font-size:24px;font-weight:800;color:var(--gold);margin:8px 0">R$1.997</p>
+      <ul class="checklist">
+        <li>Tudo do Starter +</li>
+        <li>Helena ilimitada</li>
+        <li>164 Magistrados Sintéticos</li>
+        <li>Motor Preditivo (100 simulações/mês)</li>
+        <li>Pesquisa POLARIS</li>
+        <li>Relatórios premium (PDF/DOCX)</li>
+        <li>Problem Solving (27 técnicas)</li>
+        <li>Suporte prioritário</li>
+      </ul>
+      <p style="margin-top:12px;font-size:12px;color:var(--text-muted)"><strong>Público:</strong> Escritórios médios (10-50 advogados), consultorias</p>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--purple)">
+      <h3 style="color:var(--purple)">Enterprise — R$4.997+/mês</h3>
+      <p style="font-size:24px;font-weight:800;color:var(--purple);margin:8px 0">R$4.997+</p>
+      <ul class="checklist">
+        <li>Tudo do Professional +</li>
+        <li>1.001 Eleitores Sintéticos</li>
+        <li>594 Parlamentares mapeados</li>
+        <li>WhatsApp Agents dedicados</li>
+        <li>API access + integrações</li>
+        <li>OmniRoute dedicado</li>
+        <li>War room 24/7 (eleitoral)</li>
+        <li>Consultoria estratégica mensal</li>
+        <li>SLA de 4h resposta</li>
+      </ul>
+      <p style="margin-top:12px;font-size:12px;color:var(--text-muted)"><strong>Público:</strong> Grandes escritórios, partidos, secretarias</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Add-ons (qualquer plano)</h3>
+    <table>
+      <tr><th>Add-on</th><th>Preço</th><th>Descrição</th></tr>
+      <tr><td>Academy — Curso IA Jurídica</td><td>R$497 (único)</td><td>12 módulos, certificado, acesso vitalício</td></tr>
+      <tr><td>Pesquisa Eleitoral Completa</td><td>R$5.000-15.000</td><td>Simulação com 1.001 eleitores + relatório</td></tr>
+      <tr><td>Magistrados Sintéticos Extra</td><td>R$997/mês</td><td>Tribunais adicionais (TRTs, TRFs regionais)</td></tr>
+      <tr><td>White-label</td><td>R$9.997/mês</td><td>Plataforma com marca do cliente</td></tr>
+      <tr><td>Consultoria Estratégica</td><td>R$2.000/hora</td><td>Sessão ao vivo com Helena + fundador</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 11. ANÁLISE VILA INTEIA -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">11. Resultados da Vila INTEIA — 7 Técnicas Executadas</div>
+  <div class="section-subtitle">Execução real com 146 consultores lendários no servidor (72.62.108.24:8088)</div>
+
+  <div class="card">
+    <h3>Painel de Execução</h3>
+    <table>
+      <tr><th>Técnica</th><th>Fase</th><th>Consultores</th><th>Score</th><th>Tempo</th><th>Status</th></tr>
+      <tr><td>Quick Scan</td><td>Definição</td><td>Bernays, Rove, Escobar</td><td>7.2</td><td>16.4s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>STEEPLED</td><td>Definição</td><td>Erickson, Branson, Rove</td><td>7.1</td><td>14.7s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>Decisão Multicritério</td><td>Solução</td><td>Churchill, Duda Mendonça, Chesky</td><td>7.1</td><td>13.9s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>Design Thinking</td><td>Solução</td><td>Dalio, Surkov, Sinek, Malala, Morpheus, Frankl, Diabob</td><td>8.3</td><td>46.0s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>Stakeholder Analysis</td><td>Definição</td><td>Andreessen, Erickson, Teixeira, Bannon, Greene, Diabob</td><td>7.0</td><td>28.4s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>Implementação Piloto</td><td>Intervenção</td><td>Helena, Amodei, Lee Kuan Yew, Ellison, João Paulo II, Robbins, Madre Teresa</td><td>7.1</td><td>32.1s</td><td><span class="tag tag-green">OK</span></td></tr>
+      <tr><td>Plano de Comunicação</td><td>Intervenção</td><td>Taleb, Sarney, Jesus, Piaget, Grandin, Jay-Z, Getúlio</td><td>7.8</td><td>48.9s</td><td><span class="tag tag-green">OK</span></td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:11px;color:var(--text-muted)">Score médio: 7.4/10 | 33 consultores únicos mobilizados | Tempo total: ~200s | Anti-trapaça ativo (flags de pensamento de grupo detectados e reportados)</p>
+  </div>
+
+  <!-- QUICK SCAN -->
+  <div class="card" style="border-left:3px solid #22c55e">
+    <h3 style="color:#22c55e">Quick Scan — Diagnóstico Rápido</h3>
+    <p><strong>Desempenho atual:</strong> 3/10 em go-to-market</p>
+    <p><strong>Gaps críticos:</strong> Zero prova social, funil de conversão inexistente, pricing confuso/opaco</p>
+    <p><strong>Benchmark:</strong> 12-24 meses atrasados em go-to-market comparado a legaltechs brasileiras e SaaS B2B</p>
+    <p><strong>Quick win principal:</strong> Transformar o case do cliente atual (60 advogados) em case study com métricas reais</p>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Edward Bernays, Karl Rove, Pablo Escobar | Score: 7.2 | Flag: pensamento de grupo (convergência total)</p>
+  </div>
+
+  <!-- STEEPLED -->
+  <div class="card" style="border-left:3px solid #eab308">
+    <h3 style="color:#eab308">STEEPLED — Análise Macro-Ambiental</h3>
+    <div class="cols-2" style="margin-top:8px">
+      <div>
+        <p><strong>Social:</strong> 61% dos brasileiros desconfiam de decisões automatizadas (Datafolha 2024). Demanda por "IA explicável".</p>
+        <p><strong>Tecnológico:</strong> Agentes autônomos crescem 300% (Gartner). Infraestrutura cloud BR ainda 40% mais cara que EUA. LLMs fine-tunados em legislação brasileira são diferencial.</p>
+        <p><strong>Econômico:</strong> Mercado consultoria jurídica R$12-28B. IA reduz custos 35-50% em due diligence. Modelo SaaS vence consultoria tradicional.</p>
+      </div>
+      <div>
+        <p><strong>Político:</strong> TSE regulou IA na propaganda eleitoral 2026. PL de IA no Senado. 155M eleitores em outubro.</p>
+        <p><strong>Legal:</strong> LGPD, responsabilidade civil por recomendações de IA — INTEIA é ferramenta de análise, não decisão (compliance by design).</p>
+        <p><strong>Demográfico:</strong> 67% dos executivos brasileiros querem automação (Deloitte 2024). 5.000+ magistrados em 27 TJs como TAM.</p>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Milton Erickson, Richard Branson, Karl Rove | Score: 7.1</p>
+  </div>
+
+  <!-- MCDM -->
+  <div class="card" style="border-left:3px solid var(--purple)">
+    <h3 style="color:var(--purple)">Decisão Multicritério — Onde Investir R$50K/mês</h3>
+    <p><strong>Resultado consensual:</strong> Alternativa G (Combo Marketing + SaaS + Parcerias) é a favorita dos 3 consultores.</p>
+    <table>
+      <tr><th>Alternativa</th><th>ROI 90d</th><th>Escalável</th><th>Implementação</th><th>Risco</th><th>Veredicto</th></tr>
+      <tr><td>A: Equipe Comercial</td><td>5</td><td>4</td><td>6</td><td>5</td><td><span class="tag tag-red">Eliminada</span></td></tr>
+      <tr><td>B: Marketing Digital</td><td>6</td><td>7</td><td>7</td><td>6</td><td><span class="tag tag-cyan">6.35</span></td></tr>
+      <tr><td>C: SaaS Self-Service</td><td>7</td><td>9</td><td>5</td><td>5</td><td><span class="tag tag-green">6.95</span></td></tr>
+      <tr><td>D: Parcerias Estratégicas</td><td>6</td><td>7</td><td>6</td><td>7</td><td><span class="tag tag-cyan">6.40</span></td></tr>
+      <tr><td>E: Verticalização Jurídico</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag tag-gold">Não avaliada</span></td></tr>
+      <tr><td>F: Cursos/Academy</td><td>4</td><td>3</td><td>7</td><td>4</td><td><span class="tag tag-red">Eliminada</span></td></tr>
+      <tr><td><strong>G: B+C+D Combinado</strong></td><td><strong>8</strong></td><td><strong>9</strong></td><td><strong>5</strong></td><td><strong>6</strong></td><td><span class="tag tag-green"><strong>7.2 ★</strong></span></td></tr>
+    </table>
+    <blockquote>Churchill: "Receita precisa crescer de R$6K para R$25K+ — velocidade de retorno decide viabilidade." Chesky: "Solo founder = morte por gargalo — modelo deve escalar sem presença."</blockquote>
+    <p style="font-size:11px;color:var(--text-muted)">Consultores: Winston Churchill, Duda Mendonça, Brian Chesky | Score: 7.1</p>
+  </div>
+
+  <!-- DESIGN THINKING -->
+  <div class="card" style="border-left:3px solid var(--cyan)">
+    <h3 style="color:var(--cyan)">Design Thinking — Redesign do Funil (Score 8.3 ★)</h3>
+    <p><strong>Insight principal:</strong> Falta "prova social vertical" — advogado não se convence com case de startup; marqueteiro ignora depoimento de gestor público. Cada persona precisa ver sua própria comunidade validando.</p>
+    <p style="margin-top:8px"><strong>Convergência (7 consultores):</strong> Advogados, marqueteiros e gestores exigem credibilidade comprovada (cases, acurácia ≥85%, ROI mensurável). Home atual falha nisso. 4 personas radicalmente diferentes exigem jornadas separadas.</p>
+    <p style="margin-top:8px"><strong>Divergência:</strong> Dalio (investidor) foca ROI estruturado; Surkov (persuasão) enfatiza micro-segmentação; Diabob (provocador) sugere subdomínios separados; Malala/Sinek defendem inclusão acima de otimização.</p>
+    <p style="margin-top:8px"><strong>Recomendação #1:</strong> Criar 4 landing pages verticalizadas com provas específicas:</p>
+    <ul class="checklist">
+      <li><strong>Advogado:</strong> "Veja 47 decisões previstas com 89% de acurácia"</li>
+      <li><strong>Marqueteiro político:</strong> "Segmente 50K eleitores em 48h — Demo gratuita"</li>
+      <li><strong>Gestor público:</strong> "ROI comprovado: economize R$2M/ano"</li>
+      <li><strong>Startup:</strong> "Trial 7 dias — sem cartão de crédito"</li>
+    </ul>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Ray Dalio, Surkov, Malala, Simon Sinek, Morpheus, Viktor Frankl, Diabob | Score: 8.3 | Melhor score do painel</p>
+  </div>
+
+  <!-- STAKEHOLDER -->
+  <div class="card" style="border-left:3px solid #f59e0b">
+    <h3 style="color:#f59e0b">Mapeamento de Stakeholders — Fontes de Financiamento</h3>
+    <table>
+      <tr><th>Stakeholder</th><th>Poder</th><th>Estratégia</th><th>Timeline</th></tr>
+      <tr><td><strong>Kaszek Ventures</strong></td><td>ALTO (R$800M+ AUM)</td><td>Pitch com CAC vs LTV, OAB-DF como case, MRR crescendo 15% m/m</td><td>60-90 dias</td></tr>
+      <tr><td><strong>BNDES / Finep</strong></td><td>ALTO (R$1B+ linhas)</td><td>Edital BNDES Inova, Lei de Inovação, documentar P&amp;D</td><td>120-180 dias</td></tr>
+      <tr><td><strong>OAB-DF</strong></td><td>ALTO (45K profissionais)</td><td>Parceria piloto 50 advogados, formalizar, descontos</td><td>30 dias</td></tr>
+      <tr><td><strong>Endeavor Brasil</strong></td><td>MÉDIO-ALTO</td><td>Demo Day, MRR, churn &lt;5%, NPS &gt;50</td><td>60-90 dias</td></tr>
+      <tr><td><strong>IDP / UnB</strong></td><td>MÉDIO</td><td>Co-autoria papers, licença educacional grátis</td><td>Variável</td></tr>
+      <tr><td><strong>Finep / MCTI</strong></td><td>MÉDIO-ALTO</td><td>Editais específicos, documentação técnica rigorosa</td><td>4-8 meses</td></tr>
+    </table>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Marc Andreessen, Milton Erickson, Teixeira de Freitas, Steve Bannon, Robert Greene, Diabob | Score: 7.0</p>
+  </div>
+
+  <!-- PILOTO -->
+  <div class="card" style="border-left:3px solid #ef4444">
+    <h3 style="color:#ef4444">Implementação Piloto — Experimento 90 dias</h3>
+    <p><strong>Hipótese:</strong> Com R$15K em marketing + landing pages verticais + trial 7 dias, converter 5 clientes Bronze (R$7.5K média)</p>
+    <div class="kpi-grid" style="margin:12px 0">
+      <div class="kpi"><div class="kpi-value" style="font-size:18px">R$37.5K</div><div class="kpi-label">MRR Alvo</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:18px">R$2.4-3K</div><div class="kpi-label">CAC Máximo</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:18px">&lt;8%</div><div class="kpi-label">Churn Alvo</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:18px">12-25%</div><div class="kpi-label">Conversão Trial</div></div>
+    </div>
+    <p><strong>Critérios Go/No-Go:</strong> MRR ≥R$25K ao fim de 90 dias, CAC &lt;R$3K, NPS &gt;60, churn &lt;10%</p>
+    <p><strong>Grupo controle:</strong> 70/30 — Landing vertical vs. página padrão (baseline pré-piloto)</p>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Helena Strategos, Dario Amodei, Lee Kuan Yew, Larry Ellison, Papa João Paulo II, Tony Robbins, Madre Teresa | Score: 7.1</p>
+  </div>
+
+  <!-- PLANO COMUNICAÇÃO -->
+  <div class="card" style="border-left:3px solid var(--gold)">
+    <h3 style="color:var(--gold)">Plano de Comunicação — Insight Mais Valioso do Painel</h3>
+    <blockquote style="border-color:var(--gold)">
+      <strong>Paradoxo de legitimidade:</strong> "A INTEIA é disruptiva demais para magistrados tradicionais, mas ainda muito institucional para venture capital. A solução não é comunicação única — é <strong>sequência estratégica</strong>: conquistar magistrados primeiro (prova de conceito) para depois vender a investidores como 'validada pelo poder público'."
+    </blockquote>
+    <p><strong>Convergência:</strong> Segmentação obrigatória — magistrados/C-level jurídico vs. investidores tech exigem mensagens e canais distintos. Posicionar como "remove volatilidade operacional", não "IA substitui".</p>
+    <p style="margin-top:8px"><strong>Alocação recomendada do budget R$10K/mês:</strong></p>
+    <table>
+      <tr><th>Prioridade</th><th>Budget</th><th>Canal</th><th>Timeline</th></tr>
+      <tr><td>1. PR jurídico + LinkedIn fundador</td><td>R$4K</td><td>Jota, LinkedIn, case study tribunal piloto</td><td>60 dias</td></tr>
+      <tr><td>2. Eventos presenciais BSB/SP</td><td>R$3K</td><td>STJ/CNJ Brasília, OAB SP, law firms</td><td>90 dias</td></tr>
+      <tr><td>3. WhatsApp + email segmentado</td><td>R$3K</td><td>Leads jurídicos quentes, não base fria</td><td>30 dias</td></tr>
+    </table>
+    <p style="margin-top:8px"><strong>Divergência marcante:</strong> Nassim Taleb: "Vocês estão tentando vender antifragilidade jurídica a pessoas que vivem em fragilidade institucional." Jay-Z: "Magistrados sintéticos é OURO — venda agora." Sarney: "Política brasileira exige mediadores locais."</p>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:8px">Consultores: Nassim Taleb, José Sarney, Jesus Cristo, Jean Piaget, Temple Grandin, Jay-Z, Getúlio Vargas | Score: 7.8</p>
+  </div>
+
+  <!-- PROVA DE CONCEITO -->
+  <div class="card card-highlight">
+    <h3>Este Documento é uma Prova de Conceito da INTEIA</h3>
+    <p>O que você acabou de ler foi produzido usando a própria infraestrutura da INTEIA:</p>
+    <ul class="checklist">
+      <li><strong>7 técnicas de Problem Solving</strong> executadas em paralelo — 33 consultores únicos mobilizados</li>
+      <li><strong>Quick Scan</strong> diagnosticou gaps em 16 segundos com Edward Bernays e Karl Rove</li>
+      <li><strong>Design Thinking</strong> com 7 consultores alcançou score 8.3/10 — melhor do painel</li>
+      <li><strong>Plano de Comunicação</strong> revelou o "paradoxo de legitimidade" com Nassim Taleb e Jay-Z</li>
+      <li><strong>MCDM</strong> com Churchill e Brian Chesky elegeu a estratégia ótima (combo B+C+D, score 7.2)</li>
+      <li><strong>Métricas anti-trapaça ativas:</strong> flags de pensamento de grupo detectados e reportados transparentemente</li>
+      <li>Tudo rodando na infraestrutura própria da INTEIA — custo marginal: ~R$0.05 por consulta via OmniRoute</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 12. PROPOSTA PARA FINANCIADOR -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">12. Proposta para Financiador / Investidor</div>
+  <div class="section-subtitle">Documento-resumo para apresentação</div>
+
+  <div class="card card-highlight">
+    <h3>INTEIA — A Plataforma de IA Estratégica que Falta ao Brasil</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+      <div>
+        <p style="font-weight:700;color:var(--gold);margin-bottom:8px">O Problema</p>
+        <p style="font-size:14px">Empresas, escritórios e governos gastam R$50-500K por pesquisa/consultoria pontual. Não existe no Brasil uma plataforma SaaS que entregue inteligência estratégica contínua com IA a preço acessível.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--gold);margin-bottom:8px">A Solução</p>
+        <p style="font-size:14px">INTEIA: 13 produtos de IA integrados, 2.617 agentes sintéticos, magistrados que preveem decisões judiciais, eleitores que simulam eleições. Tudo por R$497-4.997/mês.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+      <div>
+        <p style="font-weight:700;color:var(--gold);margin-bottom:8px">O Mercado</p>
+        <p style="font-size:14px">US$3.4B em IA no Brasil (2026). LegalTech global US$35.4B. 42% das empresas já usam IA. Eleições 2026 com 155M eleitores. Plano Nacional IA: R$23B até 2028.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--gold);margin-bottom:8px">O Pedido</p>
+        <p style="font-size:14px">R$50.000/mês por 18 meses (R$900K total) para escalar de R$6K para R$350K+ MRR. Breakeven no mês 7. Payback total no mês 12-14. ROI projetado: 7x.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px">
+      <div class="kpi"><div class="kpi-value" style="font-size:20px">13</div><div class="kpi-label">Produtos</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:20px">2.617</div><div class="kpi-label">Agentes IA</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:20px">1.91pp</div><div class="kpi-label">Precisão MAE</div></div>
+      <div class="kpi"><div class="kpi-value" style="font-size:20px">~95%</div><div class="kpi-label">Margem Bruta</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 13. RED TEAM -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">13. Red Team — Por que Este Plano Pode Falhar</div>
+  <div class="section-subtitle">3 contra-hipóteses e suas mitigações</div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 1: Mercado não aceita "pesquisa sintética"</h3>
+    <p><strong>Argumento:</strong> Advogados e políticos podem não confiar em magistrados/eleitores "falsos". A percepção de "IA que inventa dados" pode ser fatal.</p>
+    <p><strong>Mitigação:</strong> (a) Publicar validação acadêmica (MAE 1.91pp vs institutos tradicionais). (b) Posicionar como "complemento", não substituto. (c) Trial gratuito para demonstrar valor antes da objeção. (d) Case study do Paixão Cortes como prova de uso real.</p>
+    <p><strong>Probabilidade de materialização:</strong> 25% — mitigável com comunicação correta.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 2: Fundador solo não escala</h3>
+    <p><strong>Argumento:</strong> Igor é dev, vendedor, pesquisador e CEO ao mesmo tempo. Burnout e gargalo de execução são quase certos.</p>
+    <p><strong>Mitigação:</strong> (a) R$30K/mês do investimento é para contratar equipe (dev + vendedores). (b) IA da própria INTEIA automatiza atendimento, onboarding e relatórios. (c) Priorizar contratação de vendedor no mês 1 para liberar Igor para produto.</p>
+    <p><strong>Probabilidade de materialização:</strong> 40% — risco real, mas mitigável com disciplina na contratação.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--danger)">
+    <h3 style="color:#ef5350">Risco 3: Regulação de IA prejudica o modelo</h3>
+    <p><strong>Argumento:</strong> O PL de IA no Senado pode restringir uso de agentes sintéticos em decisões judiciais/eleitorais. TSE já regulou IA em campanhas.</p>
+    <p><strong>Mitigação:</strong> (a) INTEIA é ferramenta de análise, não de decisão — compliance by design. (b) Diversificar verticais (saúde, educação, corporativo). (c) Participar ativamente do debate regulatório como autoridade técnica.</p>
+    <p><strong>Probabilidade de materialização:</strong> 15% — regulação tende a restringir deepfakes, não análise de dados.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 14. CONCLUSÃO -->
+<!-- ============================================================ -->
+<div class="section">
+  <div class="section-title">14. Conclusão e Próximos Passos</div>
+
+  <div class="card card-highlight">
+    <h3>Recomendação Final</h3>
+    <p>A INTEIA está sentada sobre uma mina de ouro tecnológico sem funil para extraí-lo. R$50K/mês por 18 meses transforma uma plataforma de R$6K/mês em referência nacional com R$350K+ MRR.</p>
+
+    <p style="margin-top:16px;font-weight:700;color:var(--gold)">Próximos Passos Imediatos (próximas 2 semanas):</p>
+    <table style="margin-top:8px">
+      <tr><th>#</th><th>Ação</th><th>Responsável</th><th>Prazo</th></tr>
+      <tr><td>1</td><td>Criar landing page "IA para Advocacia" com trial</td><td>Igor + dev</td><td>7 dias</td></tr>
+      <tr><td>2</td><td>Escrever case study Paixão Cortes</td><td>Igor</td><td>3 dias</td></tr>
+      <tr><td>3</td><td>Gravar vídeo demo "Magistrados Sintéticos" (3 min)</td><td>Igor</td><td>5 dias</td></tr>
+      <tr><td>4</td><td>Implementar pricing transparente no site</td><td>Igor</td><td>2 dias</td></tr>
+      <tr><td>5</td><td>Submeter proposta FAPDF Inovação</td><td>Igor</td><td>14 dias</td></tr>
+      <tr><td>6</td><td>Publicar 1º post LinkedIn: magistrados sintéticos</td><td>Igor</td><td>1 dia</td></tr>
+      <tr><td>7</td><td>Enviar email para 10 escritórios OAB-DF</td><td>Igor</td><td>3 dias</td></tr>
+      <tr><td>8</td><td>Abrir vaga vendedor jurídico (LinkedIn)</td><td>Igor</td><td>7 dias</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<div class="footer">
+  <div class="logo"><span>INTE</span><span>IA</span></div>
+  <p>Documento gerado pela INTEIA — Instituto de Treinamento e Estudos em Inteligência Artificial</p>
+  <p>SHN Quadra 2 Bloco F, Salas 625/626, Asa Norte, Brasília/DF | CNPJ 63.918.490/0001-20</p>
+  <p style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted)">
+    Classificação: Confidencial | Analistas: Helena Strategos + Vila INTEIA (146 consultores) + 7 Diretores IA<br>
+    Metodologia: Van Aken &amp; Berends (2018) + STEEPLED + MCDM + Design Thinking + Monte Carlo<br>
+    Fontes: Web research (abril 2026) + agentes sintéticos + análise automatizada do site<br>
+    Gerado em: 2026-04-04 | Confiança Global: 0.78
+  </p>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
