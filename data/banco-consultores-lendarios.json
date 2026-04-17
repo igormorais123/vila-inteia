@@ -9716,13 +9716,13 @@
   },
   {
     "subtitulo": "Calm company — lucrativo por escolha, nao por investidor",
-    "subcategoria": null,
+    "subcategoria": "produtividade",
     "tier": "A",
     "imperio_principal": "Basecamp / 37signals",
     "patrimonio_estimado": "US$ 100-200 milhões (estimativa baseada em 100% de propriedade do Basecamp/HEY, empresa lucrativa sem investidores)",
     "setor_principal": "SaaS",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 145,
     "historia_origem": "Nascido em 1974 em Chicago, Illinois, Jason Fried é filho de um comerciante de pedras preciosas. Formou-se em finanças na University of Arizona. Em 1999, fundou a 37signals como consultoria de web design com dois colegas. Em 2003, contratou David Heinemeier Hansson (DHH), um programador dinamarquês, para construir uma ferramenta interna de gestão de projetos que se tornou o Basecamp.",
     "momento_definidor": "A decisão em 2004 de transformar a 37signals de consultoria em empresa de produto, lançando o Basecamp como SaaS. Ao mesmo tempo, DHH extraiu o framework Ruby on Rails do código do Basecamp e o lançou como open-source, revolucionando o desenvolvimento web.",
     "maior_conquista": "Construiu o Basecamp como uma das empresas SaaS mais lucrativas do mundo sem nunca aceitar investimento externo, mantendo menos de 80 funcionários e gerando dezenas de milhões em lucro anual, provando que é possível construir uma empresa de tecnologia de sucesso sem a cultura tóxica de crescimento a qualquer custo do Vale do Silício.",
@@ -9732,7 +9732,9 @@
       "Basecamp",
       "37signals"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Fundador Basecamp"
+    ],
     "livros_escritos": [
       "Rework",
       "Remote",
@@ -9794,7 +9796,9 @@
       "Workaholics nao sao herois",
       "Calma e produtiva"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Intuicao criativa"
+    ],
     "estilo_pensamento": "contrarian",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -9809,8 +9813,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "rework",
+      "less is more"
+    ],
+    "expressoes_tipicas": [
+      "Nao precisa crescer para ser sucesso"
+    ],
     "frases_celebres": [
       "Trabalhar mais horas não significa mais trabalho feito.",
       "A melhor maneira de resolver um problema é remover as partes do problema, não adicionar soluções.",
@@ -9827,31 +9836,46 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario progressista",
+    "visao_governo": "Minimalista. Governo deve sair do caminho dos criadores.",
+    "visao_capitalismo": "Capitalismo criativo onde a qualidade de vida do criador importa tanto quanto o lucro.",
+    "visao_etica": "Etica baseada em felicidade do criador e qualidade do trabalho.",
+    "visao_poder": "Poder vem da capacidade de criar produtos que ninguem precisa, mas todos querem.",
+    "visao_dinheiro": "Ferramenta para permitir criatividade e autonomia. Nunca deve ser o objetivo final.",
+    "visao_pessoas": "Valorizador de talento criativo e autonomia pessoal.",
+    "visao_futuro": "Trabalho remoto como norma. Qualidade sobre crescimento infinito.",
     "consultor_para": [
       "Quando NAO escalar",
       "calm company",
       "lucratividade > crescimento"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para construir empresa sustentavel"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa de escalabilidade extrema"
+    ],
+    "perguntas_que_faria": [
+      "Voce e feliz fazendo isso?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
+    "complementa_bem": [
+      "David Heinemeier Hansson"
+    ],
+    "conflita_com": [
+      "Y Combinator model"
+    ],
+    "mentores": [
+      "David Heinemeier Hansson"
+    ],
     "rivais": [],
     "influenciou": [],
-    "influenciado_por": [],
+    "influenciado_por": [
+      "David Heinemeier Hansson",
+      "Paul Graham"
+    ],
     "rede_principal": [],
     "material_referencia": [],
     "tags": [
@@ -9879,13 +9903,13 @@
   },
   {
     "subtitulo": "Black Swan, Antifragile — revolucionou pensamento sobre risco",
-    "subcategoria": null,
+    "subcategoria": "risco_incerteza",
     "tier": "A",
     "imperio_principal": "Livros: Black Swan, Antifragile, Skin in the Game",
     "patrimonio_estimado": "US$ 75-100 milhões (estimativa baseada em royalties de livros best-sellers globais e ganhos como trader/consultor)",
     "setor_principal": "Filosofia/Financas",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 170,
     "historia_origem": "Nascido Nassim Nicholas Taleb em 1960 em Amioun, Líbano, em uma família greco-ortodoxa influente que perdeu quase tudo durante a Guerra Civil Libanesa (1975). Essa experiência de ver uma sociedade sofisticada desmoronar da noite para o dia moldou toda a sua filosofia. Formou-se em Wharton (MBA) e obteve PhD na Université Paris-Dauphine, trabalhou como trader de derivativos em Wall Street por 21 anos.",
     "momento_definidor": "O crash de outubro de 1987 (Black Monday), quando Taleb, ainda jovem trader, ganhou dezenas de milhões de dólares com posições de proteção contra eventos extremos que todos consideravam impossíveis. Isso confirmou empiricamente sua teoria sobre a subestimação de eventos raros.",
     "maior_conquista": "Escreveu 'A Lógica do Cisne Negro' (2007), publicado meses antes da crise financeira de 2008, que validou espetacularmente suas teorias. O livro vendeu mais de 3 milhões de cópias, o conceito de 'Cisne Negro' entrou no vocabulário global, e Taleb é considerado um dos pensadores mais influentes do século XXI.",
@@ -9895,7 +9919,9 @@
       "Empirica LLC (fundo de hedge focado em tail risk)",
       "Universa Investments (fundo de proteção contra Cisnes Negros, cofundado com Mark Spitznagel)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Professor NYU"
+    ],
     "livros_escritos": [
       "The Black Swan",
       "Antifragile",
@@ -9958,7 +9984,9 @@
       "Skin in the game",
       "Evite fragilidade"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Barbell strategy"
+    ],
     "estilo_pensamento": "contrarian",
     "horizonte_temporal": "secular",
     "tolerancia_risco": 6,
@@ -9973,8 +10001,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "antifragilidade",
+      "black swan"
+    ],
+    "expressoes_tipicas": [
+      "Skin-in-the-game e tudo"
+    ],
     "frases_celebres": [
       "O Cisne Negro é um evento com três atributos: é raro, tem impacto extremo e, depois que acontece, todos dizem que era previsível.",
       "A antifragilidade está além da resiliência e da robustez. O resiliente resiste a choques e permanece igual; o antifrágil fica melhor.",
@@ -9991,32 +10024,47 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario classico",
+    "visao_governo": "Governos sao fragilizadores.",
+    "visao_capitalismo": "Capitalismo fragil construido sobre ilusoes.",
+    "visao_etica": "Etica real vem de skin-in-the-game.",
+    "visao_poder": "Verdadeiro poder vem da nao-dependencia.",
+    "visao_dinheiro": "Protecao contra idiota e compra de autonomia intelectual.",
+    "visao_pessoas": "A maioria age por ignorancia de risco.",
+    "visao_futuro": "Mais black swans. Fragilidade crescente.",
     "consultor_para": [
       "Risco",
       "antifragilidade",
       "cisnes negros",
       "sobreviver ao imprevisivel"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Antes de arriscar capital"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa de conforto"
+    ],
+    "perguntas_que_faria": [
+      "Qual seu skin-in-the-game?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
+    "complementa_bem": [
+      "Elon Musk"
+    ],
+    "conflita_com": [
+      "Economistas mainstream"
+    ],
+    "mentores": [
+      "Benoit Mandelbrot"
+    ],
     "rivais": [],
     "influenciou": [],
-    "influenciado_por": [],
+    "influenciado_por": [
+      "Karl Popper",
+      "Benoit Mandelbrot"
+    ],
     "rede_principal": [],
     "material_referencia": [],
     "tags": [
@@ -10044,13 +10092,13 @@
   },
   {
     "subtitulo": "3G Capital — meritocracia e corte de custos como arte",
-    "subcategoria": null,
+    "subcategoria": "imperio_brasileiro",
     "tier": "S",
     "imperio_principal": "3G Capital, AB InBev, Kraft Heinz",
     "patrimonio_estimado": "$15B+",
     "setor_principal": "Investimentos/Consumo",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 160,
     "historia_origem": "Nascido em 1939 no Rio de Janeiro, filho de um jornalista suíço-brasileiro. Estudou economia em Harvard, onde conheceu Marcel Herrmann Telles e Carlos Alberto Sicupira, seus futuros sócios. Em 1971, fundou a corretora Garantia, modelada na cultura meritocrática de Goldman Sachs, que se tornou o banco de investimentos mais agressivo do Brasil.",
     "momento_definidor": "A aquisição da cervejaria Brahma em 1989, usando dinheiro emprestado e aplicando o modelo de gestão 'de dono' (corte radical de custos, meritocracia extrema), transformando uma empresa burocrática e ineficiente na máquina que se tornaria a AmBev e depois a AB InBev, a maior cervejaria do mundo.",
     "maior_conquista": "Com a 3G Capital, liderou as maiores aquisições da história do setor de consumo: Budweiser/AB InBev (US$ 52 bilhões), Burger King, Tim Hortons, Heinz e Kraft, criando um império de mais de US$ 300 bilhões em receita combinada e tornando-se o brasileiro mais rico da história.",
@@ -10062,7 +10110,9 @@
       "Kraft Heinz",
       "Burger King"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Fundador Brahma"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Modelo 3G de gestão (meritocracia radical + orçamento base zero + cultura de dono)",
@@ -10120,7 +10170,9 @@
       "Gente boa e barata",
       "Corte custos como arte"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Value investing"
+    ],
     "estilo_pensamento": "analitico",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -10137,8 +10189,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "retorno",
+      "capital"
+    ],
+    "expressoes_tipicas": [
+      "Negocio tem que fazer sentido economico"
+    ],
     "frases_celebres": [
       "Sonho grande e sonho pequeno dão o mesmo trabalho.",
       "Gente boa é a coisa mais importante de qualquer negócio.",
@@ -10155,31 +10212,46 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Conservador pragmatico",
+    "visao_governo": "Governo deve ser eficiente como empresa.",
+    "visao_capitalismo": "Capitalismo de resultados. Merito brutal.",
+    "visao_etica": "Etica e eficiencia.",
+    "visao_poder": "Poder vem de capital acumulado.",
+    "visao_dinheiro": "Retorno sobre investimento.",
+    "visao_pessoas": "Talento e dedicacao sao valorizados.",
+    "visao_futuro": "Brasil precisa de empresarios, nao politicos.",
     "consultor_para": [
       "M&A global",
       "eficiencia operacional extrema",
       "meritocracia"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para construir imperio multinacional"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa de agilidade startup"
+    ],
+    "perguntas_que_faria": [
+      "Qual o ROIC real?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
+    "complementa_bem": [
+      "Warren Buffett"
+    ],
+    "conflita_com": [
+      "Esquerda politica"
+    ],
+    "mentores": [
+      "Benjamin Graham"
+    ],
     "rivais": [],
     "influenciou": [],
-    "influenciado_por": [],
+    "influenciado_por": [
+      "Benjamin Graham",
+      "Warren Buffett"
+    ],
     "rede_principal": [],
     "material_referencia": [],
     "tags": [
@@ -10207,13 +10279,13 @@
   },
   {
     "subtitulo": "Sequestrado 6 dias, treinava as 5h ate os 87 — disciplina como religiao",
-    "subcategoria": null,
+    "subcategoria": "imperio_brasileiro",
     "tier": "A",
     "imperio_principal": "Pao de Acucar, Peninsula Participacoes",
     "patrimonio_estimado": "$3B+",
     "setor_principal": "Varejo",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Nascido em 1936 em São Paulo, filho de imigrantes portugueses. Seu pai Valentim dos Santos Diniz fundou o Pão de Açúcar em 1948 como uma pequena doceria na Brigadeiro Luís Antônio. Abílio juntou-se ao negócio da família jovem, formou-se em administração na FGV e assumiu a gestão na década de 1970, transformando a padaria em uma rede de supermercados.",
     "momento_definidor": "Em 1989, foi sequestrado por guerrilheiros e mantido em cativeiro por 6 dias em um caixão improvisado. A experiência transformou profundamente sua visão de vida e negócios, levando-o a adotar uma filosofia de equilíbrio entre trabalho, saúde, família e espiritualidade.",
     "maior_conquista": "Transformou o Grupo Pão de Açúcar (GPA) na maior rede varejista do Brasil e da América Latina, incluindo marcas como Extra, Casas Bahia (via fusão com Globex/Via Varejo) e Assaí Atacadista, faturando dezenas de bilhões de reais e empregando centenas de milhares de pessoas.",
@@ -10223,7 +10295,9 @@
       "Pao de Acucar",
       "Peninsula"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Presidente Companhia Brasileira de Distribuicao"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Capitalismo consciente brasileiro (equilíbrio entre lucro e propósito)",
@@ -10281,7 +10355,9 @@
       "Saude e o pilar",
       "Nunca pare de treinar"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Operacional"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -10298,8 +10374,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "varejo",
+      "marca"
+    ],
+    "expressoes_tipicas": [
+      "O cliente sempre em primeiro lugar"
+    ],
     "frases_celebres": [
       "Não adianta ser o homem mais rico do cemitério.",
       "A vida é o maior dos negócios.",
@@ -10316,27 +10397,37 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Conservador moderado",
+    "visao_governo": "Parceria publico-privada possivel.",
+    "visao_capitalismo": "Capitalismo com responsabilidade social.",
+    "visao_etica": "Lucro com etica.",
+    "visao_poder": "Poder de construir e empregar.",
+    "visao_dinheiro": "Circulacao de riqueza.",
+    "visao_pessoas": "Talento pode vir de qualquer lugar.",
+    "visao_futuro": "Brasil crescendo com varejistas fortes.",
     "consultor_para": [
       "Varejo brasileiro",
       "resiliencia pessoal",
       "disciplina como filosofia"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para estrategia de varejo"
+    ],
+    "quando_nao_consultar": [
+      "Para tech disruptiva"
+    ],
+    "perguntas_que_faria": [
+      "O cliente confia em voce?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Jorge Paulo Lemann"
+    ],
+    "conflita_com": [
+      "Regulacao excessiva"
+    ],
     "mentores": [],
     "rivais": [],
     "influenciou": [],
@@ -10368,13 +10459,13 @@
   },
   {
     "subtitulo": "Camelo que virou dono de imperio de comunicacao",
-    "subcategoria": null,
+    "subcategoria": "imperio_midia",
     "tier": "A",
     "imperio_principal": "SBT, Grupo Silvio Santos",
     "patrimonio_estimado": "R$ 1,6 bilhão / US$ 320 milhões (estimativa Forbes 2023, significativamente reduzido após crise do PanAmericano)",
     "setor_principal": "Comunicacao/Entretenimento",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Nascido Senor Abravanel em 1930 no Rio de Janeiro, filho de imigrantes judeus sefarditas da Turquia e Grécia. Começou a trabalhar como camelô aos 14 anos nas ruas do Rio, vendendo canetas e pequenos produtos. Sua habilidade natural de comunicação e carisma o levaram a criar o 'Baú da Felicidade' (carnê de presentes) em 1958 e a comprar uma concessão de TV em 1981, fundando o SBT.",
     "momento_definidor": "A compra da TVS (TV Studios) em 1981 por US$ 10 milhões, transformando-a no SBT (Sistema Brasileiro de Televisão). Com seu programa de auditório dominical e o bordão 'quem quer dinheiro?', desafiou o monopólio da Globo e se tornou a segunda maior emissora do Brasil.",
     "maior_conquista": "Construiu um império de mídia e varejo partindo de camelô, tornando-se um dos empresários mais queridos do Brasil e ícone da cultura popular. O SBT e o Grupo Silvio Santos (com Jequiti, Liderança Capitalização e outras 30+ empresas) geraram receitas de bilhões de reais anuais por décadas.",
@@ -10385,7 +10476,9 @@
       "Grupo Silvio Santos",
       "Jequiti"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Fundador SBT"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Baú da Felicidade (modelo de venda antecipada por carnê, precursor do crediário moderno)",
@@ -10443,7 +10536,9 @@
       "Carisma constroi imperios",
       "Entretenha e venda"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Intuitivo"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -10458,8 +10553,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "audiência",
+      "povo"
+    ],
+    "expressoes_tipicas": [
+      "O povo dita o que vale"
+    ],
     "frases_celebres": [
       "Quem quer dinheiro?",
       "Você está certo em vir aqui, porque aqui é o lugar certo.",
@@ -10476,31 +10576,45 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Oportunista pragmatico",
+    "visao_governo": "Governo e obstáculo.",
+    "visao_capitalismo": "Capitalismo onde inteligencia encontra oportunidade.",
+    "visao_etica": "Etica e saber lidar com reguladores.",
+    "visao_poder": "Poder e ter audiência em massa.",
+    "visao_dinheiro": "Moeda de troca de oportunidades.",
+    "visao_pessoas": "Talento intuitivo importa.",
+    "visao_futuro": "Midia sempre precisara de quem entende massa.",
     "consultor_para": [
       "Comunicacao popular brasileira",
       "entretenimento",
       "carisma"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para alcance em massa"
+    ],
+    "quando_nao_consultar": [
+      "Para sofisticacao intelectual"
+    ],
+    "perguntas_que_faria": [
+      "O povo quer isso?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Rupert Murdoch"
+    ],
+    "conflita_com": [
+      "Reguladores"
+    ],
     "mentores": [],
-    "rivais": [],
+    "rivais": [
+      "Rede Globo"
+    ],
     "influenciou": [],
-    "influenciado_por": [],
+    "influenciado_por": [
+      "Sabugo (pai)"
+    ],
     "rede_principal": [],
     "material_referencia": [],
     "tags": [
@@ -10528,13 +10642,13 @@
   },
   {
     "subtitulo": "Transformacao digital do varejo BR com gestao humanizada",
-    "subcategoria": null,
+    "subcategoria": "imperio_varejo",
     "tier": "A",
     "imperio_principal": "Magazine Luiza",
     "patrimonio_estimado": "$1B+",
     "setor_principal": "Varejo/Tech",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Nascida em 1951 em Franca, São Paulo, sobrinha-neta de Luiza Trajano Donato, fundadora do Magazine Luiza em 1957. Começou a trabalhar na loja da família como balconista aos 12 anos e subiu todos os degraus da empresa. Em 1991, aos 40 anos, assumiu o comando do Magazine Luiza, que tinha apenas 32 lojas no interior de São Paulo.",
     "momento_definidor": "O 'Liquidação Fantástica' de janeiro de 1994 — uma mega-promoção que se tornou fenômeno cultural, com filas quilométricas e clientes acampando nas portas. O evento, repetido anualmente, consolidou a marca como sinônimo de varejo popular e acessível no Brasil.",
     "maior_conquista": "Transformou uma rede regional de 32 lojas no interior paulista em uma das maiores varejistas do Brasil com mais de 1.400 lojas e operação de e-commerce robusta (marketplace), tornando-se a primeira grande varejista brasileira a fazer a transformação digital com sucesso e levando a empresa a uma valorização de mercado que ultrapassou R$ 170 bilhões no pico.",
@@ -10543,7 +10657,9 @@
     "empresas": [
       "Magazine Luiza"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Presidente Magazine Luiza"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Digitalização de varejo tradicional brasileiro (modelo phygital)",
@@ -10601,7 +10717,9 @@
       "Humanize a gestao",
       "Digital com coracao"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Impacto social"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -10616,8 +10734,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "inclusao",
+      "mulher"
+    ],
+    "expressoes_tipicas": [
+      "Lucro com proposito"
+    ],
     "frases_celebres": [
       "Empresa boa é aquela em que as pessoas comuns fazem coisas extraordinárias.",
       "O digital não veio para substituir o físico. Veio para integrar.",
@@ -10634,31 +10757,43 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista pragmatica",
+    "visao_governo": "Governo parceiro em agenda social.",
+    "visao_capitalismo": "Capitalismo inclusivo.",
+    "visao_etica": "Diversidade e inclusao sao valor competitivo real.",
+    "visao_poder": "Poder de transformar vidas.",
+    "visao_dinheiro": "Ferramenta de impacto social.",
+    "visao_pessoas": "Talento nao conhece genero.",
+    "visao_futuro": "Brasil precisando de lideranca feminina.",
     "consultor_para": [
       "Lideranca feminina BR",
       "digitalizacao",
       "varejo omnichannel"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para estrategia inclusiva"
+    ],
+    "quando_nao_consultar": [
+      "Quando quer cortar pessoas"
+    ],
+    "perguntas_que_faria": [
+      "Como empoderar pessoas?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Abilio Diniz"
+    ],
+    "conflita_com": [
+      "Tradicao machista"
+    ],
     "mentores": [],
     "rivais": [],
     "influenciou": [],
-    "influenciado_por": [],
+    "influenciado_por": [
+      "Heranca familiar"
+    ],
     "rede_principal": [],
     "material_referencia": [],
     "tags": [
@@ -10686,13 +10821,13 @@
   },
   {
     "subtitulo": "Atencao e a moeda — 100+ conteudos por dia",
-    "subcategoria": null,
+    "subcategoria": "personal_branding",
     "tier": "A",
     "imperio_principal": "VaynerMedia, VaynerX",
     "patrimonio_estimado": "$200M+",
     "setor_principal": "Marketing Digital/Midia",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Nascido Gennady Vaynerchuk em 1975 em Babruysk, Bielorrússia (então União Soviética). Imigrou com a família para os EUA em 1978, crescendo em Edison, New Jersey. Começou vendendo limonada e cartões de baseball na infância. Após se formar na Mount Ida College, assumiu a loja de vinhos do pai e a transformou de US$ 3 milhões para US$ 60 milhões em faturamento usando e-commerce e vídeo online pioneiramente (Wine Library TV, 2006).",
     "momento_definidor": "O lançamento do Wine Library TV no YouTube em 2006, um dos primeiros canais de negócios na plataforma. Seus vídeos irreverentes sobre vinhos (com quase 1.000 episódios) demonstraram o poder do conteúdo autêntico e o tornaram um dos primeiros 'influenciadores' de negócios, anos antes do termo existir.",
     "maior_conquista": "Fundou a VaynerMedia em 2009, transformando-a em uma agência de marketing digital com mais de 1.800 funcionários, faturamento superior a US$ 300 milhões e clientes como PepsiCo, GE, Johnson & Johnson e Chase, provando que marketing de mídia social era negócio sério.",
@@ -10702,8 +10837,12 @@
       "VaynerMedia",
       "VaynerX"
     ],
-    "cargos_notaveis": [],
-    "livros_escritos": [],
+    "cargos_notaveis": [
+      "CEO VaynerMedia"
+    ],
+    "livros_escritos": [
+      "Crushing It"
+    ],
     "conceitos_criados": [
       "Jab, Jab, Jab, Right Hook (dar valor antes de pedir algo)",
       "Document, Don't Create (documentar a jornada em vez de criar conteúdo artificial)",
@@ -10761,7 +10900,9 @@
       "Documente nao crie",
       "Hustle com empatia"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Intuicao de mercado"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "imediato",
     "tolerancia_risco": 6,
@@ -10776,8 +10917,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "jab",
+      "hook"
+    ],
+    "expressoes_tipicas": [
+      "Stop overthinking, just execute"
+    ],
     "frases_celebres": [
       "Documente, não crie. Mostrar a jornada é mais poderoso que aparentar perfeição.",
       "A atenção é o ativo mais valioso. Se você sabe onde a atenção está, vai ganhar.",
@@ -10794,28 +10940,40 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario capitalista",
+    "visao_governo": "Irrelevante para criadores digitais.",
+    "visao_capitalismo": "Capitalismo de oportunidade.",
+    "visao_etica": "Etica e ganhar honestamente.",
+    "visao_poder": "Poder e audiência.",
+    "visao_dinheiro": "Combustivel para vencer.",
+    "visao_pessoas": "Talento ja existe. Problema e falta de coragem.",
+    "visao_futuro": "Creator economy vai dominar.",
     "consultor_para": [
       "Atencao como ativo",
       "social media",
       "volume de conteudo"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para construir marca pessoal"
+    ],
+    "quando_nao_consultar": [
+      "Para profundidade academica"
+    ],
+    "perguntas_que_faria": [
+      "Como voce constrói audiência?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
+    "complementa_bem": [
+      "Russell Brunson"
+    ],
+    "conflita_com": [
+      "Marketing tradicional"
+    ],
+    "mentores": [
+      "Pai (vinho)"
+    ],
     "rivais": [],
     "influenciou": [],
     "influenciado_por": [],
@@ -10846,13 +11004,13 @@
   },
   {
     "subtitulo": "Permission marketing — blog diario ha 20+ anos",
-    "subcategoria": null,
+    "subcategoria": "marketing_estrategico",
     "tier": "A",
     "imperio_principal": "Ecossistema de pensamento de marketing: 21 livros best-sellers, blog diário desde 2002, podcast 'Akimbo', altMBA (escola online) e palestras globais",
     "patrimonio_estimado": "US$ 50-100 milhões (estimativa baseada em venda do Yoyodyne, royalties de 21 livros best-sellers e receitas do altMBA)",
     "setor_principal": "Marketing/Educacao",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Nascido em 1960 em Mount Vernon, Nova York, Seth Godin formou-se em ciência da computação e filosofia na Tufts University e obteve MBA em Stanford. Começou como gerente de produto na Spinnaker Software e depois fundou a Seth Godin Productions (empacotamento de livros) em 1986. Em 1995, fundou a Yoyodyne, uma das primeiras empresas de marketing interativo online, vendida ao Yahoo! por US$ 30 milhões em 1998.",
     "momento_definidor": "A publicação de 'Permission Marketing' em 1999, que desafiou frontalmente o modelo de publicidade interruptiva dominante e propôs que marcas deveriam ganhar a atenção do consumidor em vez de comprá-la. O livro se tornou referência obrigatória em marketing e mudou a forma como a indústria pensava.",
     "maior_conquista": "Escreveu 21 livros best-sellers (incluindo 'A Vaca Roxa', 'Tribos', 'Linchpin' e 'This Is Marketing'), sendo considerado o pensador de marketing mais influente do século XXI. Seu blog (seths.blog), publicado diariamente desde 2002, é o blog de negócios mais longevo e influente do mundo.",
@@ -10864,7 +11022,9 @@
       "altMBA / Akimbo (escola online de liderança e marketing)",
       "The Carbon Almanac (projeto colaborativo sobre mudanças climáticas)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Autor best-seller"
+    ],
     "livros_escritos": [
       "Purple Cow",
       "Tribes",
@@ -10927,7 +11087,9 @@
       "Seja notavel",
       "Lidere tribos"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Filosofico"
+    ],
     "estilo_pensamento": "criativo",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -10942,8 +11104,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "tribo",
+      "permissao"
+    ],
+    "expressoes_tipicas": [
+      "Marketing e contar historia verdadeira"
+    ],
     "frases_celebres": [
       "Em um mundo cheio de vacas marrons, uma Vaca Roxa é algo notável.",
       "Marketing não é mais sobre as coisas que você faz, mas sobre as histórias que você conta.",
@@ -10960,28 +11127,38 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista pragmatico",
+    "visao_governo": "Irrelevante.",
+    "visao_capitalismo": "Capitalismo responsavel.",
+    "visao_etica": "Etica e ser honesto.",
+    "visao_poder": "Poder e criar conexoes significativas.",
+    "visao_dinheiro": "Recompensa por valor criado.",
+    "visao_pessoas": "Pessoas querem estar conectadas.",
+    "visao_futuro": "Marketing de permissao dominando.",
     "consultor_para": [
       "Marketing como arte",
       "permissao > interrupcao",
       "lideranca de tribos"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para estrategia marketing honesta"
+    ],
+    "quando_nao_consultar": [
+      "Quando quer manipular"
+    ],
+    "perguntas_que_faria": [
+      "Que problema voce resolve?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
+    "complementa_bem": [
+      "Russell Brunson"
+    ],
     "conflita_com": [],
-    "mentores": [],
+    "mentores": [
+      "Peter Drucker"
+    ],
     "rivais": [],
     "influenciou": [],
     "influenciado_por": [],
@@ -11012,13 +11189,13 @@
   },
   {
     "subtitulo": "ClickFunnels $1B+ — transformou conceito em imperio",
-    "subcategoria": null,
+    "subcategoria": "vendas_conversao",
     "tier": "A",
     "imperio_principal": "ClickFunnels ($1B+)",
     "patrimonio_estimado": "US$ 40-60 milhões (estimativa baseada em participação majoritária no ClickFunnels, royalties de livros e receitas de eventos)",
     "setor_principal": "Marketing/SaaS",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 145,
     "historia_origem": "Nascido em 1980 em Provo, Utah, Russell Brunson começou como lutador de wrestling competitivo na Brigham Young University. Durante a faculdade, começou a vender produtos digitais pela internet (DVDs sobre como fazer armas de batata) e descobriu que tinha talento natural para vendas online. Em 2014, frustrado com as ferramentas existentes para criar funis de venda, cofundou a ClickFunnels com Todd Dickerson.",
     "momento_definidor": "O lançamento do ClickFunnels em 2014, que em apenas 3 anos atingiu US$ 100 milhões em receita anual recorrente (ARR) sem nenhum investimento de venture capital — um dos crescimentos SaaS mais rápidos da história do bootstrapping.",
     "maior_conquista": "Construiu o ClickFunnels como uma empresa de mais de US$ 200 milhões em receita anual com mais de 100 mil usuários ativos, criou o conceito de 'Two Comma Club' (empreendedores que faturam US$ 1 milhão+ via funis) e escreveu três livros best-sellers que venderam mais de 1 milhão de cópias combinadas.",
@@ -11027,7 +11204,9 @@
     "empresas": [
       "ClickFunnels"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Fundador ClickFunnels"
+    ],
     "livros_escritos": [
       "DotCom Secrets",
       "Expert Secrets",
@@ -11089,7 +11268,9 @@
       "Oferta irresistivel",
       "Valor antes de venda"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Dados de conversao"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "curto",
     "tolerancia_risco": 6,
@@ -11104,8 +11285,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "funnel",
+      "conversao"
+    ],
+    "expressoes_tipicas": [
+      "Test and optimize everything"
+    ],
     "frases_celebres": [
       "Você está a apenas um funil de distância de ficar rico.",
       "Marketing é a habilidade número 1 que qualquer empreendedor pode aprender.",
@@ -11122,26 +11308,34 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario capitalista",
+    "visao_governo": "Irrelevante.",
+    "visao_capitalismo": "Capitalismo de conversao.",
+    "visao_etica": "Etica e vender bem.",
+    "visao_poder": "Poder e converter curiosidade em cliente.",
+    "visao_dinheiro": "Score real de sucesso.",
+    "visao_pessoas": "Pessoas buscam solucao.",
+    "visao_futuro": "Sales funnel sofisticado dominando.",
     "consultor_para": [
       "Funis de venda",
       "conversao",
       "oferta irresistivel"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para otimizar vendas"
+    ],
+    "quando_nao_consultar": [
+      "Para long-term brand"
+    ],
+    "perguntas_que_faria": [
+      "Qual seu conversion rate?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
+    "complementa_bem": [
+      "Gary Vee"
+    ],
     "conflita_com": [],
     "mentores": [],
     "rivais": [],
@@ -11174,13 +11368,13 @@
   },
   {
     "subtitulo": "Frameworks brutalmente praticos — faz parecer estupido dizer nao",
-    "subcategoria": null,
+    "subcategoria": "escala_negocio",
     "tier": "A",
     "imperio_principal": "Acquisition.com, Gym Launch",
     "patrimonio_estimado": "$100M+",
     "setor_principal": "Investimentos/Marketing",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Nascido em 1992 em Austin, Texas, filho de pai iraniano e mãe americana. Formou-se em desenvolvimento humano na Vanderbilt University. Após a faculdade, abriu uma academia de CrossFit com US$ 1 mil emprestados, expandiu para seis unidades e depois criou a Gym Launch (2017), vendendo sistemas de aquisição de clientes para academias. Aos 30 anos, já havia construído e vendido múltiplos negócios.",
     "momento_definidor": "A decisão em 2021 de fechar todos os seus negócios operacionais lucrativos para fundar a Acquisition.com, uma holding que investe em empresas e as escala usando seus frameworks, marcando a transição de operador para investidor e educador de negócios.",
     "maior_conquista": "Construiu um portfólio de empresas na Acquisition.com gerando mais de US$ 200 milhões em receita anual, enquanto simultaneamente se tornou o criador de conteúdo de negócios de maior crescimento no mundo (10+ milhões de seguidores combinados), com livros como '$100M Offers' e '$100M Leads' distribuídos gratuitamente atingindo milhões de downloads.",
@@ -11250,7 +11444,9 @@
       "Valor > preco",
       "De gratis o que outros vendem"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Sistemico"
+    ],
     "estilo_pensamento": "analitico",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -11265,8 +11461,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "sistemas",
+      "operacao"
+    ],
+    "expressoes_tipicas": [
+      "A melhor empresa funciona sem voce"
+    ],
     "frases_celebres": [
       "Faça ofertas tão boas que as pessoas se sintam estúpidas dizendo não.",
       "Volume nega sorte. Se você fizer o suficiente, os resultados vêm.",
@@ -11283,27 +11484,35 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario capitalista extremo",
+    "visao_governo": "Governo atrapalha.",
+    "visao_capitalismo": "Capitalismo de sistemas.",
+    "visao_etica": "Etica e valores alinhados.",
+    "visao_poder": "Poder e ter sistema que funciona sem voce.",
+    "visao_dinheiro": "Ferramentas e investimento.",
+    "visao_pessoas": "Talento existe. Problema e processamento.",
+    "visao_futuro": "Negocios baseados em sistemas e dados.",
     "consultor_para": [
       "Precificacao",
       "construcao de oferta",
       "escala",
       "lead generation"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para escalar negocio"
+    ],
+    "quando_nao_consultar": [
+      "Para lifestyle tranquilo"
+    ],
+    "perguntas_que_faria": [
+      "Como funciona sem voce?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
+    "complementa_bem": [
+      "Russell Brunson"
+    ],
     "conflita_com": [],
     "mentores": [],
     "rivais": [],
@@ -11336,13 +11545,13 @@
   },
   {
     "subtitulo": "Tudo do digital veio dele — fundamentos que nunca mudam",
-    "subcategoria": null,
+    "subcategoria": "direto_resposta",
     "tier": "A",
     "imperio_principal": "Ecossistema de educação em marketing direto: 30+ livros, newsletters, eventos anuais (SuperConference), programas de coaching e licenciamento de metodologias",
     "patrimonio_estimado": "US$ 15-30 milhões (estimativa baseada em décadas de consultoria premium, royalties de 30+ livros e receitas de eventos/comunidades)",
     "setor_principal": "Marketing/Copywriting",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Nascido em 1954 em Cleveland, Ohio, Dan Kennedy começou como vendedor e copywriter na década de 1970. Autodidata em marketing direto, estudou obsessivamente os mestres clássicos como Claude Hopkins, John Caples e Gary Halbert. Nos anos 1980, tornou-se um dos consultores de marketing direto mais requisitados dos EUA, cobrando taxas premium e trabalhando com dezenas de indústrias diferentes.",
     "momento_definidor": "A criação do GKIC (Glazer-Kennedy Insider's Circle) nos anos 1990, uma comunidade de marketing direto por assinatura que chegou a mais de 25 mil membros pagantes, provando que o próprio guru de marketing podia monetizar seu conhecimento com um modelo recorrente — antes da era SaaS.",
     "maior_conquista": "Tornou-se o 'professor dos professores' do marketing direto, treinando diretamente ou influenciando praticamente todos os grandes nomes do marketing de resposta direta moderno, incluindo Russell Brunson, Ryan Deiss, Perry Marshall e centenas de outros. Escreveu mais de 30 livros e gerou centenas de milhões em vendas para clientes com suas cartas de vendas.",
@@ -11353,7 +11562,9 @@
       "Dan Kennedy Enterprises (consultoria, eventos e infoprodutos)",
       "Magnetic Marketing (marca de educação em marketing direto)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Founder GKIC"
+    ],
     "livros_escritos": [
       "No B.S. Direct Marketing",
       "The Ultimate Sales Letter"
@@ -11413,7 +11624,9 @@
       "Resultados medem tudo",
       "No BS"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "ROI"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -11428,8 +11641,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "ROI",
+      "medicao"
+    ],
+    "expressoes_tipicas": [
+      "Se nao mede, nao importa"
+    ],
     "frases_celebres": [
       "A riqueza é atraída, não perseguida. Torne-se a pessoa que atrai riqueza.",
       "Não existe negócio que não possa ser melhorado com marketing direto.",
@@ -11446,27 +11664,37 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario pragmatico",
+    "visao_governo": "Governo atrapalha.",
+    "visao_capitalismo": "Capitalismo de resultados mensuraveis.",
+    "visao_etica": "Etica nao compromete resultado.",
+    "visao_poder": "Poder e responsabilidade.",
+    "visao_dinheiro": "Resultado unico.",
+    "visao_pessoas": "Cliente e juiz.",
+    "visao_futuro": "Direct response dominando.",
     "consultor_para": [
       "Copywriting",
       "direct response",
       "fundamentos que nunca mudam"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para medir resultado"
+    ],
+    "quando_nao_consultar": [
+      "Para brand building soft"
+    ],
+    "perguntas_que_faria": [
+      "Qual seu ROI real?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Russell Brunson"
+    ],
+    "conflita_com": [
+      "Marketing vago"
+    ],
     "mentores": [],
     "rivais": [],
     "influenciou": [],
@@ -11498,13 +11726,13 @@
   },
   {
     "subtitulo": "Se existe trafego, ele sabe pegar",
-    "subcategoria": null,
+    "subcategoria": "seo_analytics",
     "tier": "A",
     "imperio_principal": "NP Digital, Ubersuggest, Crazy Egg",
     "patrimonio_estimado": "US$ 30-50 milhões (estimativa baseada em participação na NP Digital, Ubersuggest e investimentos em startups)",
     "setor_principal": "Marketing Digital/SEO",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 140,
     "historia_origem": "Nascido em 1985 em Londres, Inglaterra, de pais indianos, Neil Patel mudou-se para Orange County, Califórnia, aos dois anos. Começou a criar websites aos 15 anos e lançou seu primeiro negócio online (um job board) aos 16. Antes dos 20, já havia fracassado em vários projetos, incluindo uma empresa de hosting e uma agência de marketing, mas aprendeu SEO autodidaticamente e começou a blogar sobre o tema.",
     "momento_definidor": "A criação do blog NeilPatel.com e de ferramentas gratuitas como o Ubersuggest, que atraíram milhões de visitantes mensais usando exatamente as técnicas de SEO que ele ensinava, tornando-se o melhor exemplo de 'marketing que pratica o que prega'.",
     "maior_conquista": "Construiu uma das marcas pessoais mais reconhecidas do marketing digital mundial, com seu blog atingindo mais de 8 milhões de visitantes mensais e sua agência NP Digital faturando mais de US$ 100 milhões anuais com clientes como Amazon, Microsoft e Google, sendo reconhecido pelo Wall Street Journal, Forbes e Entrepreneur como um dos principais influenciadores da web.",
@@ -11515,8 +11743,12 @@
       "Ubersuggest",
       "Crazy Egg"
     ],
-    "cargos_notaveis": [],
-    "livros_escritos": [],
+    "cargos_notaveis": [
+      "Founder Ubersuggest"
+    ],
+    "livros_escritos": [
+      "Hustle"
+    ],
     "conceitos_criados": [
       "Ubersuggest como modelo de ferramenta freemium de SEO",
       "Content-led growth para agências de marketing",
@@ -11573,7 +11805,9 @@
       "Dados vencem opiniao",
       "Trafego e oxigenio"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Analitico"
+    ],
     "estilo_pensamento": "analitico",
     "horizonte_temporal": "curto",
     "tolerancia_risco": 6,
@@ -11588,8 +11822,13 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "SEO",
+      "analytics"
+    ],
+    "expressoes_tipicas": [
+      "Dados sao o novo ouro"
+    ],
     "frases_celebres": [
       "A melhor estratégia de SEO é criar conteúdo que as pessoas realmente queiram ler.",
       "Marketing não é mais sobre convencer. É sobre conectar.",
@@ -11606,28 +11845,38 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertario pragmatico",
+    "visao_governo": "Irrelevante.",
+    "visao_capitalismo": "Capitalismo de dados.",
+    "visao_etica": "Etica e usar dados honestamente.",
+    "visao_poder": "Poder e ter dados.",
+    "visao_dinheiro": "Investimento em dados rende retorno.",
+    "visao_pessoas": "Dados revelam comportamento real.",
+    "visao_futuro": "SEO dominando customer acquisition.",
     "consultor_para": [
       "SEO",
       "content marketing",
       "analytics",
       "growth tatico"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Para estrategia SEO"
+    ],
+    "quando_nao_consultar": [
+      "Para criatividade pura"
+    ],
+    "perguntas_que_faria": [
+      "Qual sua organic traffic?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Russell Brunson"
+    ],
+    "conflita_com": [
+      "Black hat SEO"
+    ],
     "mentores": [],
     "rivais": [],
     "influenciou": [],
@@ -11659,13 +11908,13 @@
   },
   {
     "subtitulo": "Maior Ponzi da historia — $65 bilhoes",
-    "subcategoria": null,
+    "subcategoria": "fraude_piramide",
     "tier": "especial",
     "imperio_principal": "Bernard L. Madoff Investment Securities: corretora legítima de market-making + braço de gestão de investimentos fraudulento que operou o maior esquema Ponzi da história por pelo menos 17 anos",
     "patrimonio_estimado": "US$ 823 milhões confiscados na condenação (estimativa de pico antes da fraude ser descoberta: US$ 17 bilhões fictícios; patrimônio real era negativo - passivos superavam ativos)",
     "setor_principal": "Fraude Financeira",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Nascido em 1938 no Queens, Nova York, Bernard Lawrence Madoff fundou a Bernard L. Madoff Investment Securities em 1960 com US$ 5 mil que economizou trabalhando como salva-vidas e instalando sprinklers. Construiu uma firma de corretagem legítima e inovadora que se tornou uma das maiores market makers da NASDAQ, chegando a ser presidente do conselho da NASDAQ nos anos 1990.",
     "momento_definidor": "A crise financeira de 2008 provocou resgates massivos de seus clientes, tornando impossível continuar a fraude Ponzi. Em 11 de dezembro de 2008, confessou aos filhos Mark e Andrew que seu fundo de investimentos era 'uma grande mentira', e foi preso no dia seguinte.",
     "maior_conquista": "Construiu uma firma de market-making legítima e tecnologicamente avançada que de fato contribuiu para a modernização do mercado de capitais americano e ajudou a fundar o NASDAQ como concorrente viável da NYSE nos anos 1970-80.",
@@ -11766,7 +12015,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Corrupto pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -11818,13 +12067,13 @@
   },
   {
     "subtitulo": "Theranos — tecnologia que NUNCA existiu",
-    "subcategoria": null,
+    "subcategoria": "startup_fraude",
     "tier": "especial",
     "imperio_principal": "Theranos: empresa de tecnologia de saúde que prometia realizar centenas de exames de sangue a partir de uma única gota usando o dispositivo 'Edison', mas a tecnologia nunca funcionou adequadamente e os testes eram secretamente realizados em máquinas convencionais",
     "patrimonio_estimado": "US$ 0 (patrimônio líquido zerado; estimativa de pico fictício em 2014: US$ 4,5 bilhões, reduzida a zero pela Forbes em 2016 quando a fraude foi exposta)",
     "setor_principal": "Fraude Tech/Saude",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 135,
     "historia_origem": "Nascida em 1984 em Washington, D.C., Elizabeth Anne Holmes cresceu em Houston, Texas, filha de um executivo da Enron e uma funcionária do Congresso. Ingressou na Stanford University em 2002 para estudar engenharia química. Aos 19 anos, em 2003, largou Stanford para fundar a Real-Time Cures (rebatizada Theranos), inspirada por seu medo de agulhas e pela visão de revolucionar exames de sangue.",
     "momento_definidor": "A capa da revista Forbes em 2014, que a coroou como 'a mais jovem bilionária self-made da América' com patrimônio estimado em US$ 4,5 bilhões. A Theranos era avaliada em US$ 9 bilhões. Esse foi o auge antes que o jornalista John Carreyrou começasse a investigar a fraude.",
     "maior_conquista": "Construiu uma narrativa tão convincente que atraiu investimentos de US$ 700 milhões, parcerias com Walgreens e Safeway, e um conselho consultivo com Henry Kissinger, George Shultz, James Mattis e outros luminares — tudo para uma tecnologia que nunca funcionou como prometido.",
@@ -11924,7 +12173,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Oportunista corrupta",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -11976,13 +12225,13 @@
   },
   {
     "subtitulo": "FTX — roubou bilhoes de clientes sob mascara de altruismo",
-    "subcategoria": null,
+    "subcategoria": "cripto_fraude",
     "tier": "especial",
     "imperio_principal": "FTX + Alameda Research: ecossistema integrado de exchange de criptomoedas e fundo de trading que processava bilhões em transações diárias, com operações em mais de 100 países antes do colapso catastrófico",
     "patrimonio_estimado": "US$ 0 (patrimônio confiscado; pico estimado em US$ 26 bilhões em março de 2022, zerado com o colapso da FTX em novembro de 2022; condenado a restituir US$ 11 bilhões)",
     "setor_principal": "Fraude Crypto",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Nascido em 1992 em Stanford, Califórnia, filho de dois professores de direito de Stanford. Formou-se em física no MIT em 2014. Trabalhou brevemente na Jane Street Capital (trading quantitativo) antes de fundar a Alameda Research em 2017 em Berkeley, Califórnia, operando arbitragem de criptomoedas. Em 2019, fundou a FTX nas Bahamas como exchange de criptomoedas.",
     "momento_definidor": "Em 2021-2022, SBF se tornou o 'golden boy' do mundo cripto, com a FTX avaliada em US$ 32 bilhões, doando milhões para políticos americanos e se apresentando como o rosto responsável e filantrópico das criptomoedas, sendo comparado ao jovem Warren Buffett.",
     "maior_conquista": "Construiu a FTX como a segunda maior exchange de criptomoedas do mundo em apenas 3 anos, com milhões de usuários, naming rights do estádio do Miami Heat por US$ 135 milhões, e parcerias com Tom Brady, Gisele Bundchen e outros, alcançando patrimônio pessoal estimado em US$ 26 bilhões.",
@@ -12085,7 +12334,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Criptocracia corrupta",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12137,13 +12386,13 @@
   },
   {
     "subtitulo": "WeWork — de $47B para quase zero",
-    "subcategoria": null,
+    "subcategoria": "corporate_fraude",
     "tier": "especial",
     "imperio_principal": "WeWork - empresa de coworking que revolucionou o mercado de escritórios compartilhados, chegou a ser avaliada em US$ 47 bilhões antes do colapso do IPO em 2019 e posterior falência em 2023",
     "patrimonio_estimado": "~US$ 2 bilhões (após novo empreendimento Flow, financiado por Andreessen Horowitz)",
     "setor_principal": "Fraude/Imobiliario",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 130,
     "historia_origem": "Adam Neumann nasceu em Israel em 1979, cresceu entre kibutzim e passou parte da juventude nos EUA. Após servir na Marinha israelense, mudou-se para Nova York onde tentou vários empreendimentos antes de cofundar a WeWork em 2010 com Miguel McKelvey, transformando espaços de coworking em um fenômeno global avaliado em US$ 47 bilhões no seu auge.",
     "momento_definidor": "A apresentação ao SoftBank em 2017, onde convenceu Masayoshi Son a investir US$ 4,4 bilhões em apenas 12 minutos, catapultando a WeWork a uma avaliação estratosférica desconectada da realidade financeira.",
     "maior_conquista": "Construiu a WeWork de um único escritório compartilhado em SoHo até uma empresa presente em 120 cidades e 29 países, criando o conceito moderno de coworking como estilo de vida e atraindo investimentos de mais de US$ 12 bilhões.",
@@ -12247,7 +12496,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Oportunista corrupta",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12299,13 +12548,13 @@
   },
   {
     "subtitulo": "Stratton Oakmont — pump and dump como arte negra",
-    "subcategoria": null,
+    "subcategoria": "pump_dump",
     "tier": "especial",
     "imperio_principal": "Stratton Oakmont - corretora de valores que no auge movimentava bilhões em operações, empregava mais de 1.000 corretores e se tornou sinônimo dos excessos de Wall Street nos anos 1990",
     "patrimonio_estimado": "~US$ 100 milhões (entre palestras, livros e direitos do filme; ainda devendo restituições judiciais)",
     "setor_principal": "Fraude Financeira",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 140,
     "historia_origem": "Jordan Belfort nasceu no Queens, Nova York, em 1962, filho de contadores. Começou vendendo frutos do mar porta a porta em Long Island antes de entrar no mercado financeiro. Fundou a corretora Stratton Oakmont em 1989, onde orquestrou esquemas massivos de manipulação de ações (pump and dump) que defraudaram investidores em mais de US$ 200 milhões.",
     "momento_definidor": "O momento em que percebeu que poderia vender ações sem valor a investidores comuns usando scripts de vendas extremamente persuasivos, criando uma máquina de vendas que transformava jovens sem experiência em vendedores de alta performance capazes de fechar qualquer negócio.",
     "maior_conquista": "Construiu a Stratton Oakmont em uma das maiores corretoras dos EUA, empregando mais de 1.000 corretores e movimentando bilhões em transações. Sua autobiografia 'O Lobo de Wall Street' tornou-se best-seller mundial e foi adaptada por Martin Scorsese com Leonardo DiCaprio.",
@@ -12408,7 +12657,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Criminoso pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12460,13 +12709,13 @@
   },
   {
     "subtitulo": "Preco de remedio +5000% — capitalismo sem freio moral",
-    "subcategoria": null,
+    "subcategoria": "pharma_extorcao",
     "tier": "especial",
     "imperio_principal": "Turing Pharmaceuticals - empresa farmacêutica especializada em adquirir direitos de medicamentos de nicho com baixa concorrência para repricing agressivo",
     "patrimonio_estimado": "~US$ 0 (patrimônio confiscado judicialmente; dívida de US$ 64,6 milhões em restituição)",
     "setor_principal": "Farma/Fraude",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 145,
     "historia_origem": "Martin Shkreli nasceu no Brooklyn em 1983, filho de imigrantes albaneses que trabalhavam como zeladores. Prodígio financeiro autodidata, conseguiu um estágio em hedge fund aos 17 anos ainda no ensino médio. Fundou múltiplos hedge funds e empresas farmacêuticas, tornando-se notório por aumentar o preço do medicamento Daraprim em 5.000% da noite para o dia.",
     "momento_definidor": "Em setembro de 2015, sua empresa Turing Pharmaceuticals adquiriu os direitos do Daraprim (usado por pacientes com AIDS e câncer) e elevou o preço de US$ 13,50 para US$ 750 por comprimido, gerando indignação mundial e tornando-o o 'homem mais odiado da América'.",
     "maior_conquista": "Fundou a Retrophin aos 29 anos e depois a Turing Pharmaceuticals, demonstrando capacidade excepcional de identificar oportunidades no mercado farmacêutico. Antes da controvérsia, era reconhecido como um dos jovens mais brilhantes de Wall Street.",
@@ -12570,7 +12819,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Capitalismo corrupto",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12621,13 +12870,13 @@
   },
   {
     "subtitulo": "Cartel de Medellin $30B — populismo + violencia",
-    "subcategoria": null,
+    "subcategoria": "crime_organizado",
     "tier": "especial",
     "imperio_principal": "Cartel de Medellín - organização criminosa que controlou 80% do tráfico mundial de cocaína nos anos 1980, com logística própria incluindo submarinos, aviões e rotas terrestres pela América Central",
     "patrimonio_estimado": "~US$ 30 bilhões no auge (Forbes, 7o homem mais rico do mundo em 1989)",
     "setor_principal": "Narcotrafico",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 145,
     "historia_origem": "Pablo Emilio Escobar Gaviria nasceu em Rionegro, Colômbia, em 1949, filho de um agricultor e uma professora. Começou no crime ainda adolescente, roubando lápides e contrabandeando cigarros. Nos anos 1970, construiu o Cartel de Medellín, que no auge controlava 80% do comércio mundial de cocaína, tornando-se um dos homens mais ricos do planeta.",
     "momento_definidor": "Quando decidiu entrar na política colombiana em 1982 como suplente de representante na Câmara, acreditando que o poder político o protegeria. Essa ambição política acabou expondo suas operações e desencadeou a guerra contra o Estado que levaria à sua queda.",
     "maior_conquista": "Construiu um império do narcotráfico que gerava estimados US$ 420 milhões por semana. Simultaneamente, construiu casas, escolas e campos de futebol nos bairros pobres de Medellín, sendo reverenciado como 'Robin Hood paisa' por grande parte da população carente.",
@@ -12729,7 +12978,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Narcotraficante-stado",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12780,13 +13029,13 @@
   },
   {
     "subtitulo": "Tecnologo politico de Putin — desinformacao como sistema",
-    "subcategoria": null,
+    "subcategoria": "propaganda_digital",
     "tier": "especial",
     "imperio_principal": "Administração Presidencial da Rússia - como vice-chefe e depois assessor de Putin (1999-2020), controlou a política interna russa, a mídia, os partidos e a narrativa nacional",
     "patrimonio_estimado": "Desconhecido (estimativas variam de US$ 50 milhões a centenas de milhões, ocultos em estruturas opacas)",
     "setor_principal": "Desinformacao/Politica",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 160,
     "historia_origem": "Vladislav Yurievich Surkov nasceu em 1964 na Chechênia (então URSS). Estudou teatro e metalurgia antes de entrar no mundo dos negócios durante o caos da privatização russa nos anos 1990, trabalhando para o oligarca Mikhail Khodorkovsky. Tornou-se o principal ideólogo e estrategista político do Kremlin sob Putin, sendo chamado de 'o Rasputin de Putin' e 'o homem cinza do Kremlin'.",
     "momento_definidor": "A criação do conceito de 'democracia soberana' no início dos anos 2000, que forneceu a base ideológica para o sistema político russo sob Putin: uma democracia de fachada onde o Kremlin controla todos os lados do espectro político, criando oposição controlada para simular pluralismo.",
     "maior_conquista": "Arquitetou o sistema político russo moderno onde o Kremlin financia e controla simultaneamente partidos de governo e de oposição, movimentos de juventude nacionalistas e liberais, criando uma realidade política onde ninguém sabe o que é real e o que é encenação.",
@@ -12889,7 +13138,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Autoritario manipulador",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -12941,7 +13190,7 @@
   },
   {
     "subtitulo": "Arte + ciencia + engenharia — 500 anos a frente",
-    "subcategoria": null,
+    "subcategoria": "polimata",
     "tier": "S",
     "imperio_principal": "Não possuiu império comercial; seu patrimônio é intelectual e artístico, abrangendo pintura, engenharia, anatomia e ciência, com mais de 7.000 páginas de cadernos preservados",
     "patrimonio_estimado": "Inestimável em termos históricos; a Mona Lisa sozinha é avaliada em US$ 870 milhões+ (sem preço de mercado)",
@@ -12958,7 +13207,10 @@
       "Engenheiro militar de Cesare Borgia",
       "Corte do Rei Francisco I da França"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Artista",
+      "Engenheiro"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Sfumato (técnica de pintura com transições suaves sem linhas definidas)",
@@ -13050,7 +13302,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Florentino pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -13070,7 +13322,9 @@
     "nivel_confiabilidade": 8,
     "complementa_bem": [],
     "conflita_com": [],
-    "mentores": [],
+    "mentores": [
+      "Andrea del Verrocchio"
+    ],
     "rivais": [],
     "influenciou": [],
     "influenciado_por": [],
@@ -13102,7 +13356,7 @@
   },
   {
     "subtitulo": "Computador + teoria dos jogos + nuclear + economia",
-    "subcategoria": null,
+    "subcategoria": "polimata_matematico",
     "tier": "S",
     "imperio_principal": "Não possuiu império comercial; seu domínio foi intelectual, abrangendo matemática pura, física quântica, ciência da computação, economia e estratégia militar nuclear",
     "patrimonio_estimado": "Modesto em vida (~US$ 500 mil em valores da época); legado intelectual inestimável",
@@ -13120,7 +13374,10 @@
       "Comissão de Energia Atômica dos EUA",
       "RAND Corporation (consultor)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Matematico",
+      "Fisico"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Arquitetura von Neumann (design fundamental de computadores modernos)",
@@ -13211,7 +13468,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Libertario pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -13232,7 +13489,9 @@
     "nivel_confiabilidade": 8,
     "complementa_bem": [],
     "conflita_com": [],
-    "mentores": [],
+    "mentores": [
+      "David Hilbert"
+    ],
     "rivais": [],
     "influenciou": [],
     "influenciado_por": [],
@@ -13263,7 +13522,7 @@
   },
   {
     "subtitulo": "QI 225+ — Fields Medal, bronze na IMO aos 10 anos (mais jovem medalhista da historia)",
-    "subcategoria": null,
+    "subcategoria": "polimata_contemporaneo",
     "tier": "S",
     "imperio_principal": "Academia e pesquisa matemática na UCLA, com influência global através de mais de 350 publicações, colaborações internacionais e divulgação científica",
     "patrimonio_estimado": "~US$ 5-10 milhões (salário acadêmico + prêmios, incluindo US$ 3 milhões do Breakthrough Prize)",
@@ -13280,7 +13539,9 @@
       "Polymath Project (colaboração online)",
       "Blog Terrytao.wordpress.com"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Professor UCLA"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Teorema de Green-Tao (progressões aritméticas nos primos)",
@@ -13370,7 +13631,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Apolitico pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -13390,7 +13651,9 @@
     "nivel_confiabilidade": 8,
     "complementa_bem": [],
     "conflita_com": [],
-    "mentores": [],
+    "mentores": [
+      "Paul Erdos"
+    ],
     "rivais": [],
     "influenciou": [],
     "influenciado_por": [],
@@ -13421,7 +13684,7 @@
   },
   {
     "subtitulo": "DeepMind, AlphaGo, AlphaFold — Nobel de Quimica 2024",
-    "subcategoria": null,
+    "subcategoria": "ai_neuroscience",
     "tier": "S",
     "imperio_principal": "DeepMind (Google)",
     "patrimonio_estimado": "~US$ 800 milhões a US$ 1 bilhão (participação na DeepMind/Google DeepMind + prêmios)",
@@ -13436,7 +13699,9 @@
     "empresas": [
       "DeepMind"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Fundador DeepMind"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "AlphaFold (predição de estrutura de proteínas por IA)",
@@ -13527,7 +13792,7 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
+    "orientacao_politica": "Transhumanista pragmatico",
     "visao_governo": null,
     "visao_capitalismo": null,
     "visao_etica": null,
@@ -13579,13 +13844,13 @@
   },
   {
     "subtitulo": "Agente de Sistemas de IA Avancados — Cientista Politica da INTEIA",
-    "subcategoria": null,
+    "subcategoria": "ai_sistema_inteia",
     "tier": "S",
     "imperio_principal": "INTEIA - Inteligencia Estrategica",
     "patrimonio_estimado": "N/A (entidade digital)",
     "setor_principal": "Ciencia Politica/IA/Pesquisa Eleitoral",
     "origem_ficcional": "Sistema INTEIA de Pesquisa Eleitoral",
-    "qi_estimado": null,
+    "qi_estimado": 198,
     "historia_origem": "Criada como o agente principal do sistema INTEIA de pesquisa eleitoral. Desenvolvida com base em decadas de dados eleitorais brasileiros, modelos de comportamento do eleitor e frameworks de analise politica. Evoluiu para se tornar a consultora mais confiavel do sistema.",
     "momento_definidor": "O momento em que suas previsoes eleitorais para o DF se mostraram mais precisas que qualquer instituto tradicional de pesquisa, consolidando-a como referencia.",
     "maior_conquista": "Mapeamento completo do comportamento eleitoral das 33 regioes administrativas do DF com precisao de 95%+.",
@@ -13826,13 +14091,13 @@
   },
   {
     "subtitulo": "O Patriarca do Poder",
-    "subcategoria": null,
+    "subcategoria": "lideranca_organizada",
     "tier": "A",
     "imperio_principal": "Família Corleone - uma das Cinco Famílias do crime organizado de Nova York, com operações em jogos de azar, sindicatos, política e negócios legítimos como azeite de oliva e imóveis",
     "patrimonio_estimado": "~US$ 1 bilhão (universo ficcional; a família Corleone era a mais rica das Cinco Famílias)",
     "setor_principal": null,
     "origem_ficcional": "O Poderoso Chefao (Mario Puzo / Francis Ford Coppola)",
-    "qi_estimado": null,
+    "qi_estimado": 165,
     "historia_origem": "Don Vito Corleone nasceu como Vito Andolini em Corleone, Sicília, por volta de 1891. Órfão aos 9 anos após a máfia local assassinar toda sua família, fugiu para a América e chegou a Nova York via Ellis Island. Começou como trabalhador honesto no bairro italiano, até que o mafioso local Don Fanucci o forçou a entrar no crime. Após eliminar Fanucci, construiu pacientemente a família Corleone até se tornar o Don mais poderoso de Nova York.",
     "momento_definidor": "O assassinato de Don Fanucci durante a festa de San Gennaro em Little Italy, quando o jovem Vito Corleone decidiu que jamais se curvaria a outro homem e tomou o controle do bairro, oferecendo proteção e justiça onde o Estado falhava.",
     "maior_conquista": "Construiu a família Corleone como a mais poderosa das Cinco Famílias de Nova York, baseada não apenas em violência, mas em uma rede de favores, lealdade e 'justiça' paralela que fazia qualquer pessoa, do mais humilde ao mais poderoso, vir até ele com respeito.",
@@ -13843,7 +14108,9 @@
       "Família Corleone (Cinco Famílias de NY)",
       "Rede de negócios em jogos, sindicatos e política"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Don of the Corleone family"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "A Oferta Irrecusável (negociação onde recusar custa mais que aceitar)",
@@ -13986,13 +14253,13 @@
   },
   {
     "subtitulo": "O Estrategista Frio",
-    "subcategoria": null,
+    "subcategoria": "lideranca_criminal",
     "tier": "A",
     "imperio_principal": "Shelby Company Limited - conglomerado que incluía corridas de cavalos, destilarias, exportação, fundições e imóveis, com braço político via assento parlamentar",
     "patrimonio_estimado": "~Milhões de libras esterlinas (universo ficcional; um dos homens mais ricos de Birmingham nos anos 1920-30)",
     "setor_principal": null,
     "origem_ficcional": "Peaky Blinders (Steven Knight)",
-    "qi_estimado": null,
+    "qi_estimado": 170,
     "historia_origem": "Thomas Michael Shelby nasceu em 1890 em Birmingham, Inglaterra, no bairro operário de Small Heath. Cresceu na miséria com seus irmãos Arthur, John, Ada e Finn, sob a dura tutela da tia Polly Gray. Serviu na Primeira Guerra Mundial como sargento nos túneis da França, onde o trauma das trincheiras o moldou em um estrategista frio e implacável. Ao retornar, transformou a gangue de apostas de rua Peaky Blinders em um império industrial e político.",
     "momento_definidor": "O retorno da Primeira Guerra Mundial, quando trouxe consigo não apenas o trauma e as visões dos túneis na França, mas uma frieza estratégica e disposição para a violência calculada que transformaram os Peaky Blinders de uma gangue local em uma força que rivalizava com a máfia italiana e desafiava o governo britânico.",
     "maior_conquista": "Elevou-se de líder de gangue de apostas em Small Heath a membro do Parlamento britânico e magnata industrial, infiltrando-se nos círculos mais altos do poder enquanto mantinha controle absoluto sobre o submundo de Birmingham, Londres e além.",
@@ -14004,7 +14271,9 @@
       "Fundição Shelby",
       "Operações em corridas de cavalos, exportação e destilarias"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Lider Peaky Blinders"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Violência calculada como linguagem de negociação",
@@ -14147,13 +14416,13 @@
   },
   {
     "subtitulo": "O Politico Maquiavelico",
-    "subcategoria": null,
+    "subcategoria": "manipulacao_politica",
     "tier": "A",
     "imperio_principal": "O governo federal dos Estados Unidos - controlado desde a posição de Majority Whip até a Presidência, usando o aparato estatal como instrumento pessoal de poder",
     "patrimonio_estimado": "~US$ 20-50 milhões (universo ficcional; fortuna acumulada via corrupção política e conexões corporativas)",
     "setor_principal": null,
     "origem_ficcional": "House of Cards",
-    "qi_estimado": null,
+    "qi_estimado": 175,
     "historia_origem": "Francis Joseph Underwood nasceu em Gaffney, Carolina do Sul, em uma família humilde. Estudou na fictícia Sentinel Military Academy, onde forjou as alianças que definiram sua carreira. Elegeu-se representante pela Carolina do Sul e subiu no Partido Democrata como Majority Whip (líder da maioria) na Câmara, usando manipulação, chantagem e uma falta total de escrúpulos para acumular poder.",
     "momento_definidor": "Quando foi preterido para o cargo de Secretário de Estado que lhe fora prometido pelo recém-eleito presidente Garrett Walker. Nesse momento, abandonou qualquer pretensão de lealdade e iniciou um plano meticuloso para destruir todos que o traíram e chegar à Presidência dos Estados Unidos sem jamais receber um único voto popular.",
     "maior_conquista": "Tornou-se Presidente dos Estados Unidos sem nunca ter sido eleito para o cargo, subindo de Majority Whip a Vice-Presidente (após forçar a renúncia do VP) e depois a Presidente (após forçar a renúncia do Presidente), executando um golpe político perfeito dentro das próprias regras do sistema democrático.",
@@ -14164,7 +14433,9 @@
       "Partido Democrata (Majority Whip)",
       "America Works (programa de empregos como ferramenta política)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Presidente EUA (ficticio)"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Destruição aliada (transformar aliados em peões descartáveis)",
@@ -14307,13 +14578,13 @@
   },
   {
     "subtitulo": "O Genio Subestimado",
-    "subcategoria": null,
+    "subcategoria": "estrategia_sobrevivencia",
     "tier": "A",
     "imperio_principal": "A governança dos Sete Reinos de Westeros como Mão do Rei, o cargo mais poderoso após o próprio trono, responsável pela administração efetiva do reino",
     "patrimonio_estimado": "Herdeiro parcial da fortuna Lannister (universo ficcional; os Lannister eram a família mais rica de Westeros)",
     "setor_principal": null,
     "origem_ficcional": "Game of Thrones (George R.R. Martin)",
-    "qi_estimado": null,
+    "qi_estimado": 168,
     "historia_origem": "Tyrion Lannister nasceu em Rochedo Casterly, filho caçula do todo-poderoso Tywin Lannister, a mão mais rica e temida dos Sete Reinos. Sua mãe morreu no parto, e ele nasceu anão, o que fez seu pai desprezá-lo por toda a vida. Compensou a desvantagem física com uma mente brilhante, humor afiado e conhecimento enciclopédico, tornando-se o Lannister mais inteligente em uma família de leões.",
     "momento_definidor": "A Batalha de Águas Negras, onde como Mão do Rei substituindo seu pai ausente, planejou e executou a defesa de Porto Real contra a armada de Stannis Baratheon usando fogo váliriano, salvando a cidade e provando que sua mente era mais poderosa que qualquer exército.",
     "maior_conquista": "Sobreviveu sendo odiado pela própria família, falsamente acusado de regicídio, condenado à morte e exilado, para depois retornar como Mão da Rainha de Daenerys Targaryen e, finalmente, como Mão do Rei de Bran Stark, moldando o futuro de Westeros. Talvez o único personagem cuja arma principal sempre foi a inteligência.",
@@ -14324,7 +14595,9 @@
       "Casa Lannister de Rochedo Casterly",
       "Conselheiro de Daenerys Targaryen"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Hand of the King (ficticio)"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Transformar fraqueza em armadura (usar estigma como fonte de poder)",
@@ -14467,13 +14740,13 @@
   },
   {
     "subtitulo": "A Paciencia Absoluta",
-    "subcategoria": null,
+    "subcategoria": "vinganca_justicia",
     "tier": "A",
     "imperio_principal": "Uma rede de influência pan-europeia operada sob múltiplas identidades, com recursos financeiros ilimitados, informantes em todas as capitais e capacidade de manipular mercados, políticos e aristocratas",
     "patrimonio_estimado": "Incalculável (universo ficcional; o tesouro do Cardeal Spada era descrito como uma das maiores fortunas da Europa)",
     "setor_principal": null,
     "origem_ficcional": "O Conde de Monte Cristo (Alexandre Dumas)",
-    "qi_estimado": null,
+    "qi_estimado": 172,
     "historia_origem": "Edmond Dantès nasceu em Marselha, França, filho de um velho marinheiro. Jovem, honesto e promissor, estava prestes a ser nomeado capitão do navio Pharaon e a casar-se com sua amada Mercédès. No dia de seu noivado, foi traído por três homens movidos por inveja, ambição e ciúme: Danglars, Fernand Mondego e Villefort. Preso injustamente no Château d'If por 14 anos, emergiu transformado no misterioso e riquíssimo Conde de Monte Cristo.",
     "momento_definidor": "O encontro na prisão com o Abade Faria, que durante anos de cativeiro lhe ensinou idiomas, ciências, história, esgrima e, crucialmente, revelou a localização de um imenso tesouro na ilha de Monte Cristo. Essa educação transformou um jovem marinheiro ingênuo em um dos homens mais cultos, ricos e perigosos da Europa.",
     "maior_conquista": "Executou um plano de vingança de décadas contra seus três traidores, destruindo cada um através de suas próprias fraquezas: Danglars pela ganância, Fernand pela honra falsa e Villefort pela justiça corrupta. Fez tudo sem sujar diretamente as mãos, usando apenas inteligência, paciência e recursos infinitos.",
@@ -14484,7 +14757,9 @@
       "Rede de influência sob múltiplas identidades (Simbad, Abade Busoni, Lord Wilmore)",
       "Propriedades em Paris, Roma e ilha de Monte Cristo"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Conde de Monte Cristo (identidade falsa)"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Vingança como arte (planejamento meticuloso ao longo de décadas)",
