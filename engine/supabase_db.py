@@ -1,7 +1,11 @@
 """
 Persistência Supabase — Vila INTEIA na nuvem.
 
-Tabelas no Supabase (projeto conecta-2026):
+Config via env:
+    SUPABASE_VILA_URL  — https://<projeto>.supabase.co
+    SUPABASE_VILA_KEY  — anon key
+
+Tabelas:
     vila_desafios          — Desafios coletivos
     vila_fases             — Fases de cada desafio
     vila_contribuicoes     — Contribuições dos agentes
@@ -26,19 +30,20 @@ from urllib.error import URLError
 logger = logging.getLogger("vila-inteia.supabase")
 
 # Config do .env ou variáveis de ambiente
-SUPABASE_URL = os.getenv("SUPABASE_VILA_URL", "https://dvgbqbwipwegkndutvte.supabase.co")
+SUPABASE_URL = os.getenv("SUPABASE_VILA_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_VILA_KEY", "")
 
-# Carregar .env se key vazia
-if not SUPABASE_KEY:
+# Carregar .env se faltando
+if not SUPABASE_KEY or not SUPABASE_URL:
     for env_path in [".env", "vila-inteia/.env", os.path.join(os.path.dirname(__file__), "..", ".env")]:
         try:
             with open(env_path) as f:
                 for line in f:
-                    if line.startswith("SUPABASE_VILA_KEY="):
+                    if line.startswith("SUPABASE_VILA_KEY=") and not SUPABASE_KEY:
                         SUPABASE_KEY = line.split("=", 1)[1].strip()
-                        break
-            if SUPABASE_KEY:
+                    elif line.startswith("SUPABASE_VILA_URL=") and not SUPABASE_URL:
+                        SUPABASE_URL = line.split("=", 1)[1].strip()
+            if SUPABASE_KEY and SUPABASE_URL:
                 break
         except FileNotFoundError:
             continue

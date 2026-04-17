@@ -25,6 +25,7 @@ from .ferramentas_agente import ToolkitAgente, ferramentas_disponiveis_no_local,
 from .incentivos import MotorIncentivos
 from .oficinas import Workspace, OFICINAS, todas_oficinas
 from .helena_ceo import distribuir_tarefas, gerar_cobranca, avaliar_workspace
+from .colmeia import MotorColmeia
 
 # Import config: relativo (package mode) ou direto (standalone)
 try:
@@ -78,6 +79,9 @@ class SimulacaoVila:
         self.desafio: DesafioColetivo = DesafioColetivo()
         self.toolkit = ToolkitAgente()
         self.incentivos = MotorIncentivos()
+        self.colmeia = MotorColmeia.carregar(
+            os.path.join(config.diretorio_dados, "colmeia_estado.json")
+        )
         self._workspace: Optional[Workspace] = None
 
         # Logs e eventos (com limites para evitar memory leak em 24/7)
