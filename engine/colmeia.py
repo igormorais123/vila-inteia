@@ -525,6 +525,11 @@ class MotorColmeia:
             if self.inatividade.get(nome, 0) >= 30:
                 self.pontos[nome] = max(0, self.pontos.get(nome, 0) - 2)
 
+        # --- Seleção Natural: Evoluir genomas ---
+        # Roda a cada step para todos os NPCs com dados suficientes
+        eventos_evolucao = self.evoluir_genomas(step_atual)
+        eventos.extend(eventos_evolucao)
+
         return eventos
 
     def ranking(self) -> list[dict]:
@@ -665,10 +670,10 @@ class MotorColmeia:
                 # Calcular média das últimas 10 contribuições (baseline)
                 media_baseline = sum(historico[-10:]) / 10
 
-                # Encontrar critério mais fraco (na avaliação mais recente)
-                # Para simplificar, usaremos uma heurística: critério com peso maior e score menor
-                criterio_fraco = "concisao"  # default
-                score_minimo = 50
+                # Estratégia simples de seleção: escolher parâmetro aleatoriamente
+                # em futuras versões, pode analisar scores de critérios específicos se armazenados
+                criterios_possiveis = list(criterio_para_param.keys())
+                criterio_fraco = random.choice(criterios_possiveis)
 
                 # Selecionar parâmetro a mutar
                 param_target = criterio_para_param.get(criterio_fraco, "temperatura")
