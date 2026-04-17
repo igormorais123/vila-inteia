@@ -500,6 +500,25 @@ class SimulacaoVila:
             }
         # ========================================
 
+        # ========== MOTOR COLMEIA (Doutrina) ==========
+        nomes_ativos = [p.nome_exibicao for p in self.personas.values() if p.ativo]
+        eventos_colmeia = self.colmeia.step(self.step, nomes_ativos)
+        for evento in eventos_colmeia:
+            resumo_step["acoes"].append({
+                "agente_id": "colmeia",
+                "agente_nome": "Motor Colmeia",
+                "tipo": evento["tipo"],
+                "local": "campus",
+                "acao": evento["mensagem"],
+                "emoji": "🐝",
+                "mandamento": evento.get("mandamento"),
+            })
+        # Persistir estado da Colmeia periodicamente
+        if self.step % 10 == 0:
+            caminho_colmeia = os.path.join(config.diretorio_dados, "colmeia_estado.json")
+            self.colmeia.salvar(caminho_colmeia)
+        # ========================================
+
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:
             self.salvar()
