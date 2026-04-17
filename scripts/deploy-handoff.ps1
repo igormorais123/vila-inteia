@@ -55,11 +55,16 @@ $docsPrivados = @(
     "PLANO_REFORMA_VILA.md"
 )
 
-foreach ($padrao in $docsPrivados) {
-    Get-ChildItem -Path $repo -Filter $padrao -ErrorAction SilentlyContinue | ForEach-Object {
-        $destino = Join-Path $privado $_.Name
-        Move-Item -Path $_.FullName -Destination $destino -Force
-        Ok "movido: $($_.Name) -> vila-inteia-privado"
+$pastasVarredura = @($repo, (Join-Path $repo "docs"))
+foreach ($base in $pastasVarredura) {
+    if (-not (Test-Path $base)) { continue }
+    foreach ($padrao in $docsPrivados) {
+        Get-ChildItem -Path $base -Filter $padrao -ErrorAction SilentlyContinue | ForEach-Object {
+            $destino = Join-Path $privado $_.Name
+            Move-Item -Path $_.FullName -Destination $destino -Force
+            $rel = $_.FullName.Substring($repo.Length).TrimStart('\')
+            Ok "movido: $rel -> vila-inteia-privado"
+        }
     }
 }
 
@@ -196,13 +201,32 @@ CommitIfStaged "chore(seguranca): sanitiza URLs hardcoded e carregamento .env" @
     "engine/supabase_db.py", "teste_prompt_rico.py"
 )
 
-CommitIfStaged "docs: README + ARCHITECTURE + INTEGRATIONS + DEPLOY + ROADMAP + CONTRIBUTING" @(
+CommitIfStaged "docs: README + docs/ completo + CONTRIBUTING + CONSTITUICAO_VILA" @(
     "README.md",
+    "CONTRIBUTING.md",
+    "CONSTITUICAO_VILA.md",
+    "FRAMEWORK_INTERACOES.md",
+    "docs/ARCHITECTURE.md",
+    "docs/INTEGRATIONS.md",
+    "docs/DEPLOY.md",
+    "docs/ROADMAP.md",
+    "docs/FLUXO_DADOS.md",
+    "docs/EVOLUCAO_GENOMAS.md",
+    "docs/API_COLMEIA.md",
+    "docs/API_COLMEIA_QUICKSTART.md",
     "ARCHITECTURE.md",
     "INTEGRATIONS.md",
     "DEPLOY.md",
-    "ROADMAP.md",
-    "CONTRIBUTING.md"
+    "ROADMAP.md"
+)
+
+CommitIfStaged "feat(sql): migrations versionadas" @(
+    "sql/migrations"
+)
+
+CommitIfStaged "chore(scripts): script de handoff + utilitarios" @(
+    "scripts/deploy-handoff.ps1",
+    "scripts"
 )
 
 # Qualquer resto
