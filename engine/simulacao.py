@@ -165,6 +165,12 @@ class SimulacaoVila:
         for persona in todas:
             self.personas[persona.id] = persona
 
+            # Inicializar sistemas Colmeia para cada persona
+            self.colmeia.inicializar_npc(
+                persona.nome_exibicao,
+                persona.dados_consultor,
+            )
+
         # Configurar tempo inicial
         self.hora_atual = datetime.strptime(
             f"{config.data_inicio} {config.hora_inicio}",
@@ -250,6 +256,21 @@ class SimulacaoVila:
                 resumo_step["conversas"].append(resultado["conversa"])
                 self.conversas_recentes.append(resultado["conversa"])
                 self.stats["total_conversas"] += 1
+
+                # Registrar conversa no MotorColmeia para avaliação
+                conv = resultado["conversa"]
+                if conv.get("conteudo"):
+                    contexto_colmeia = {
+                        "tipo": "conversa",
+                        "local": conv.get("local", "desconhecido"),
+                        "topicos": conv.get("topicos", []),
+                    }
+                    self.colmeia.registrar_contribuicao(
+                        persona.nome_exibicao,
+                        conv["conteudo"],
+                        contexto_colmeia,
+                        self.step,
+                    )
 
             if resultado["tipo"] == "refletir":
                 self.stats["total_reflexoes"] += 1
@@ -437,6 +458,21 @@ class SimulacaoVila:
                         tipo="proposta",
                     )
                     self.desafio.registrar_contribuicao(contrib, self.step)
+
+                    # Registrar contribuição no MotorColmeia
+                    contexto_colmeia = {
+                        "tipo": "desafio_coletivo",
+                        "desafio_coletivo": True,
+                        "fase": fase.nome,
+                        "fase_id": fase.id,
+                    }
+                    self.colmeia.registrar_contribuicao(
+                        persona.nome_exibicao,
+                        contrib.conteudo,
+                        contexto_colmeia,
+                        self.step,
+                    )
+
                     self.incentivos.recompensar(
                         persona.id, "proposta_nova", self.step,
                         f"Contribuiu na fase '{fase.nome}'"

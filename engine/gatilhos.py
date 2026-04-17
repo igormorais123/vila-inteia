@@ -696,6 +696,29 @@ class MotorGatilhos:
         self.ultimo_debate_step = step
         self.posts_hoje += 1
 
+        # Registrar contribuições de ambos os participantes no MotorColmeia
+        if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+            contexto_debate = {
+                "tipo": "debate_rival",
+                "discordou": True,
+                "cross_categoria": persona_a.categoria != persona_b.categoria,
+                "tema": debate.get('titulo', '')[:100],
+            }
+            # Persona A contribuiu
+            self._sim_ref.colmeia.registrar_contribuicao(
+                persona_a.nome_exibicao,
+                debate['conteudo'][:500],
+                contexto_debate,
+                step,
+            )
+            # Persona B contribuiu
+            self._sim_ref.colmeia.registrar_contribuicao(
+                persona_b.nome_exibicao,
+                debate['conteudo'][:500],
+                contexto_debate,
+                step,
+            )
+
         # Agendar waves de comentários de espectadores
         self.fila_waves.append(PostAgendado(
             post_id=post.id,
@@ -738,6 +761,20 @@ class MotorGatilhos:
         self.ultimo_diabob_step = step
         self.posts_hoje += 1
 
+        # Registrar provocação de Diabob no MotorColmeia
+        if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+            contexto_diabob = {
+                "tipo": "provocacao",
+                "discordou": True,
+                "cross_categoria": True,  # Diabob sempre cross-categoria
+            }
+            self._sim_ref.colmeia.registrar_contribuicao(
+                self._diabob.nome_exibicao,
+                provocacao["conteudo"],
+                contexto_diabob,
+                step,
+            )
+
         # Jesus sempre responde ao Diabob
         if self._jesus:
             resposta = JesusCristoController.responder_diabob_ia(
@@ -747,6 +784,19 @@ class MotorGatilhos:
                 self.rede.comentar(
                     post.id, self._jesus, resposta
                 )
+
+                # Registrar resposta de Jesus no MotorColmeia
+                if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+                    contexto_jesus = {
+                        "tipo": "resposta_debate",
+                        "discordou": False,
+                    }
+                    self._sim_ref.colmeia.registrar_contribuicao(
+                        self._jesus.nome_exibicao,
+                        resposta,
+                        contexto_jesus,
+                        step,
+                    )
 
         logger.info(f"😈 Diabob provocou: {provocacao['titulo']}")
 
@@ -777,6 +827,19 @@ class MotorGatilhos:
 
         self.ultimo_jesus_step = step
         self.posts_hoje += 1
+
+        # Registrar parábola de Jesus no MotorColmeia
+        if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+            contexto_jesus = {
+                "tipo": "sabedoria",
+                "profundidade": 9,  # Parábolas têm alta profundidade
+            }
+            self._sim_ref.colmeia.registrar_contribuicao(
+                self._jesus.nome_exibicao,
+                parabola["conteudo"],
+                contexto_jesus,
+                step,
+            )
 
         logger.info(f"✝️ Jesus: {parabola['titulo']}")
 
@@ -816,6 +879,19 @@ class MotorGatilhos:
 
             self.rede.comentar(post.id, self._helena, texto)
             self.ultimo_helena_step = step
+
+            # Registrar intervenção de Helena no MotorColmeia
+            if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+                contexto_helena = {
+                    "tipo": "sintetizacao",
+                    "profundidade": 8,
+                }
+                self._sim_ref.colmeia.registrar_contribuicao(
+                    self._helena.nome_exibicao,
+                    texto,
+                    contexto_helena,
+                    step,
+                )
 
             logger.info(
                 f"🔍 Helena ({tipo_intervencao}): {post.titulo[:50]}"

@@ -400,6 +400,9 @@ class MotorColmeia:
         # Steps desde última contribuição {nome_exibicao: int}
         self.inatividade: dict[str, int] = {}
 
+        # Experimentos de evolução em andamento {nome: {"baseline": float, "genoma_candidato": GenomaNPC, "step_inicio": int}}
+        self.experimentos_evolucao: dict[str, dict] = {}
+
     def inicializar_npc(self, nome: str, dados_consultor: dict):
         """Inicializa sistemas da Colmeia para um NPC."""
         if nome not in self.genomas:
@@ -561,6 +564,149 @@ class MotorColmeia:
             "majores": sum(1 for p in self.pontos.values() if 201 <= p <= 500),
             "ranking_top5": self.ranking()[:5],
         }
+
+    # ============================================================
+    # EVOLUÇÃO DE GENOMAS — Seleção natural de parâmetros
+    # ============================================================
+
+    def obter_genoma(self, nome: str) -> GenomaNPC:
+        """
+        Retorna o genoma atual (possível mutado) de um NPC.
+
+        Se há um experimento em andamento, retorna o genoma candidato.
+        Caso contrário, retorna o genoma principal.
+
+        Este método é chamado pelo construtor de prompts para ajustar o comportamento do NPC.
+        """
+        if nome in self.experimentos_evolucao:
+            return self.experimentos_evolucao[nome]["genoma_candidato"]
+        return self.genomas.get(nome, GenomaNPC())
+
+    def evoluir_genomas(self, step_atual: int) -> list[dict]:
+        """
+        Loop evolutivo — roda quando há dados suficientes de um NPC.
+
+        Para cada NPC com 10+ notas no histórico:
+        1. Identifica critério mais fraco
+        2. Seleciona parâmetro genômico que poderia ajudar
+        3. Cria mutação candidata (delta pequeno: ±0.1 float, ±1 int)
+        4. Marca como "pending" — próximas 5 contribuições testam a mutação
+        5. Após 5 contribuições, compara média: se +2 melhor, aprova. Senão, reverte.
+
+        Retorna lista de eventos de evolução (aprovados, revertidos, iniciados).
+        """
+        eventos = []
+
+        # Mapeamento: critério fraco → parâmetro genômico
+        criterio_para_param = {
+            "concisao": "temperatura",      # temp baixa = mais conciso
+            "profundidade": "profundidade",  # direto
+            "originalidade": "contrarianism", # maior = mais original
+            "relevancia": "foco",            # maior foco = mais relevante
+            "acionabilidade": "iniciativa",  # maior iniciativa = mais ações
+        }
+
+        for nome, historico in self.historico.items():
+            # Critério 1: ter 10+ contribuições
+            if len(historico) < 10:
+                continue
+
+            # Verificar se já há experimento em andamento
+            if nome in self.experimentos_evolucao:
+                exp = self.experimentos_evolucao[nome]
+                steps_testados = step_atual - exp["step_inicio"]
+
+                # Critério 2: após 5 contribuições, comparar e decidir
+                if steps_testados >= 5:
+                    media_recente = sum(historico[-5:]) / 5
+                    baseline = exp["baseline"]
+
+                    # Se melhorou +2 ou mais, aprova a mutação
+                    if media_recente >= baseline + 2.0:
+                        self.genomas[nome] = exp["genoma_candidato"]
+                        self.genomas[nome].melhorias += 1
+                        eventos.append({
+                            "tipo": "evolucao_aprovada",
+                            "nome": nome,
+                            "param": exp.get("param_mutado", "?"),
+                            "baseline": round(baseline, 1),
+                            "novo_score": round(media_recente, 1),
+                            "geracao": self.genomas[nome].geracao,
+                        })
+                        logger.info(
+                            "Evolucao aprovada: %s (%s) %s → %s",
+                            nome,
+                            exp.get("param_mutado", "?"),
+                            round(baseline, 1),
+                            round(media_recente, 1)
+                        )
+                    else:
+                        # Reverte ao genoma anterior
+                        eventos.append({
+                            "tipo": "evolucao_revertida",
+                            "nome": nome,
+                            "param": exp.get("param_mutado", "?"),
+                            "baseline": round(baseline, 1),
+                            "novo_score": round(media_recente, 1),
+                        })
+                        logger.info(
+                            "Evolucao revertida: %s (%s) não melhorou (%.1f → %.1f)",
+                            nome,
+                            exp.get("param_mutado", "?"),
+                            baseline,
+                            media_recente
+                        )
+
+                    # Remove experimento independente de resultado
+                    del self.experimentos_evolucao[nome]
+
+            else:
+                # Nenhum experimento em andamento — iniciar um novo
+                # Calcular média das últimas 10 contribuições (baseline)
+                media_baseline = sum(historico[-10:]) / 10
+
+                # Encontrar critério mais fraco (na avaliação mais recente)
+                # Para simplificar, usaremos uma heurística: critério com peso maior e score menor
+                criterio_fraco = "concisao"  # default
+                score_minimo = 50
+
+                # Selecionar parâmetro a mutar
+                param_target = criterio_para_param.get(criterio_fraco, "temperatura")
+
+                # Criar mutação: delta pequeno e aleatório
+                delta = random.choice([-0.1, 0.1]) if param_target in (
+                    "temperatura", "iniciativa", "contrarianism", "foco"
+                ) else random.choice([-1, 1])
+
+                genoma_atual = self.genomas[nome]
+                genoma_candidato = genoma_atual.mutar(param_target, delta)
+
+                # Registrar experimento
+                self.experimentos_evolucao[nome] = {
+                    "baseline": media_baseline,
+                    "genoma_candidato": genoma_candidato,
+                    "genoma_anterior": genoma_atual,
+                    "param_mutado": param_target,
+                    "delta": delta,
+                    "step_inicio": step_atual,
+                }
+
+                eventos.append({
+                    "tipo": "evolucao_iniciada",
+                    "nome": nome,
+                    "param": param_target,
+                    "delta": delta,
+                    "baseline": round(media_baseline, 1),
+                })
+                logger.info(
+                    "Evolucao iniciada: %s (%s %+.2f) baseline=%.1f",
+                    nome,
+                    param_target,
+                    delta,
+                    media_baseline
+                )
+
+        return eventos
 
     # ============================================================
     # PERSISTÊNCIA
