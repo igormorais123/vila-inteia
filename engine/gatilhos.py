@@ -625,6 +625,8 @@ class MotorGatilhos:
         novos = self.rede.gerar_posts_autonomos(
             personas, hora_atual,
             chance=self._calcular_chance_espontaneo(hora_atual),
+            sim_ref=self._sim_ref,
+            step=step,
         )
         for post in novos:
             self.posts_hoje += 1
@@ -939,6 +941,20 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
 
             self.rede.comentar(post.id, self._sun_tzu, texto)
 
+            # Registrar intervenção de Sun Tzu no MotorColmeia
+            if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+                contexto_sun_tzu = {
+                    "tipo": "intervencao_estrategica",
+                    "profundidade": 10,  # Sun Tzu é máxima profundidade
+                    "acionabilidade": 9,
+                }
+                self._sim_ref.colmeia.registrar_contribuicao(
+                    self._sun_tzu.nome_exibicao,
+                    texto,
+                    contexto_sun_tzu,
+                    step,
+                )
+
             logger.info(f"Sun Tzu interveio em: {post.titulo[:40]}")
 
             return {
@@ -964,6 +980,20 @@ Sun Tzu observou o suficiente. Diga UMA coisa que mude tudo."""
 
         self.ultimo_sintese_step = step
         self.posts_hoje += 1
+
+        # Registrar síntese diária de Helena no MotorColmeia
+        if self._sim_ref and hasattr(self._sim_ref, 'colmeia'):
+            contexto_sintese = {
+                "tipo": "sintese_diaria",
+                "profundidade": 9,
+                "acionabilidade": 7,
+            }
+            self._sim_ref.colmeia.registrar_contribuicao(
+                self._helena.nome_exibicao,
+                sintese["conteudo"],
+                contexto_sintese,
+                step,
+            )
 
         logger.info("📊 Helena: Síntese do Dia publicada")
 
@@ -1041,6 +1071,21 @@ Máximo 3-4 frases com proposta CONCRETA e acionável."""
             tipo="proposta",
         )
         desafio.registrar_contribuicao(contrib, step)
+
+        # Registrar contribuição ao desafio no MotorColmeia
+        if hasattr(sim, 'colmeia'):
+            contexto_desafio = {
+                "tipo": "desafio_coletivo",
+                "desafio_coletivo": True,
+                "fase": fase.nome,
+                "fase_id": fase.id,
+            }
+            sim.colmeia.registrar_contribuicao(
+                contribuidor.nome_exibicao,
+                texto,
+                contexto_desafio,
+                step,
+            )
 
         # Recompensar via incentivos
         if hasattr(sim, 'incentivos'):

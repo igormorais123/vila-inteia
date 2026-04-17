@@ -6,8 +6,8 @@ import sys, os, json
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-os.environ["OMNIROUTE_URL"] = "https://api.inteia.com.br/api/v1/vila-inteia/chat"
-os.environ["OMNIROUTE_API_KEY"] = "dummy"
+os.environ.setdefault("OMNIROUTE_URL", os.getenv("OMNIROUTE_URL", "http://localhost:20128"))
+os.environ.setdefault("OMNIROUTE_API_KEY", os.getenv("OMNIROUTE_API_KEY", ""))
 
 from engine.ia_client import chamar_llm_conversa
 from engine.persona import Persona

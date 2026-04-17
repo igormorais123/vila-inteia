@@ -383,6 +383,8 @@ class RedeSocial:
         personas: dict[str, Persona],
         hora_atual: datetime,
         chance: float = 0.05,
+        sim_ref=None,  # Referência à simulação para MotorColmeia
+        step: int = 0,
     ) -> list[Postagem]:
         """
         Consultores geram posts espontâneos baseados em suas reflexões.
@@ -408,6 +410,19 @@ class RedeSocial:
                     hora_atual=hora_atual,
                 )
                 novos_posts.append(post)
+
+                # Registrar post autônomo no MotorColmeia
+                if sim_ref and hasattr(sim_ref, 'colmeia'):
+                    contexto_post = {
+                        "tipo": "opiniao_autonoma",
+                        "tags": post_conteudo.get("tags", []),
+                    }
+                    sim_ref.colmeia.registrar_contribuicao(
+                        persona.nome_exibicao,
+                        post_conteudo["conteudo"],
+                        contexto_post,
+                        step,
+                    )
 
         return novos_posts
 
