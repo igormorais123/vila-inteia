@@ -1,136 +1,154 @@
-# Vila INTEIA
+# Vila INTEIA — Simulação Multiagente Lendária
 
-Motor de simulação multiagente onde centenas de agentes sintéticos vivem,
-debatem, publicam matérias no jornal externo (Mirante News), evoluem uma
-constituição própria e operam uma economia interna. Inspirado em Generative
-Agents (Stanford/Google) e OASIS (camel-ai).
+> Motor de simulação onde 151 agentes sintéticos coexistem, debatem, evoluem uma constituição própria e geram conteúdo publicável em jornais reais.
 
 **Stack**: Python 3.11+ · FastAPI · Supabase · OmniRoute (LLM) · Three.js (3D)
 
+## Visão Geral
+
+A Vila INTEIA é um **organismo digital vivo** inspirado em Generative Agents (Stanford/Google) e OASIS (camel-ai). A simulação funciona em torno de 11 mandamentos orgânicos que geram mecânicas reais:
+
+- **Ninguém fica sozinho** — agentes isolados recebem visitas espontâneas
+- **Contribuir é existir** — quem não produz entra em estado latente
+- **Profundidade sem compartilhamento é solidão** — conhecimento não publicado decai 2x mais rápido
+- **A Colmeia é maior que qualquer abelha** — desafios coletivos rendem 5x mais pontos
+- **Gerar valor econômico** — sistemas de patentes recompensam acionabilidade
+
+A Vila não apenas simula debate; ela **promulga leis**, **publica jornais no mundo real** (via Mirante News), **executa economia interna** e **evolui sua própria constituição**.
+
 ---
 
-## Start rápido (5 minutos)
+## Arquitetura (Visão Rápida)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Vila INTEIA                          │
+│                                                         │
+│  ┌────────────┐  ┌──────────┐  ┌───────────┐ ┌────────┐│
+│  │Habitantes  │  │ Jornal   │  │Constituição  │Economia││
+│  │(agentes)   │  │(Chateaux)│  │viva         │         ││
+│  └─────┬──────┘  └────┬─────┘  └──────┬─────┘ └───┬────┘│
+│        │              │               │            │    │
+│        └──────────────┼───────────────┼────────────┘    │
+│                       ▼               ▼                │
+│         ┌──────────────────────────────────────┐       │
+│         │ Motor Cognitivo + Memória por Agente│       │
+│         │ (perceber→recuperar→planejar→refletir)      │
+│         └───────┬───────────────────────┬──────┘       │
+└─────────────────┼───────────────────────┼───────────────┘
+                  │                       │
+        ┌─────────▼──┐              ┌────▼──────────┐
+        │ Supabase   │              │  OmniRoute    │
+        │ (persistência)            │  (LLM gateway)│
+        └────────────┘              └───────────────┘
+```
+
+**Detalhe completo**: veja [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+
+---
+
+## Início Rápido (5 minutos)
+
+### 1. Clone e Dependências
 
 ```bash
-# 1. clone + deps
 git clone https://github.com/igormorais123/vila-inteia.git
 cd vila-inteia
-pip install -r requirements.txt     # fastapi, uvicorn, requests
+pip install -r requirements.txt
+```
 
-# 2. config
+### 2. Configuração
+
+```bash
 cp .env.example .env
-# edite .env — preencha OMNIROUTE_URL + SUPABASE_VILA_URL + SUPABASE_VILA_KEY
-#               + MIRANTE_API_URL + MIRANTE_API_TOKEN (se for publicar no Mirante)
+# Edite .env com as variáveis necessárias
+```
 
-# 3. sobe
+### 3. Execute
+
+```bash
+# Demo rápido (10 agentes, 20 steps, sem persistência)
+python main.py demo
+
+# API (http://localhost:8100)
 python main.py serve --port 8100
-# → http://localhost:8100/docs  (API FastAPI)
-# → http://localhost:8100/       (frontend estático)
 
-# 4. smoke test
-python main.py demo               # 10 agentes, 20 steps, sem banco
+# Com persistência
+python main.py run --steps 100
+
+# Modo 24/7
+python main.py live --intervalo 30
+```
+
+Visite: **http://localhost:8100/docs**
+
+---
+
+## Estrutura do Projeto
+
+```
+vila-inteia/
+├── main.py                         # Entry point
+├── config.py                       # Configuração global
+├── engine/                         # Motor de simulação
+│   ├── simulacao.py
+│   ├── persona.py
+│   ├── colmeia.py
+│   ├── cognitivo/                  # Pipeline: perceber → refletir
+│   ├── memoria/                    # Fluxo, espacial, rascunho
+│   ├── chateaubriand.py            # Editor-chefe
+│   ├── constituicao.py             # Leis + votos
+│   ├── economia.py                 # Transações
+│   └── [+25 módulos]
+├── api/                            # Endpoints FastAPI
+├── data/pacotes/                   # Pacotes de habitantes
+├── docs/                           # Documentação
+├── scripts/                        # Utilitários
+└── tests/                          # Testes
 ```
 
 ---
 
-## O que o sistema faz
+## Módulos Principais
 
-| Capacidade | Módulo | Descrição |
-|-----------|--------|-----------|
-| **Simulação cognitiva** | `engine/cognitivo/` | perceber → recuperar → planejar → refletir → executar → conversar → sintetizar |
-| **Memória por agente** | `engine/memoria/` | fluxo (eventos), espacial (onde esteve), rascunho (plano ativo) |
-| **Economia viva** | `engine/economia.py` | saldo, ambição financeira, precificação de trabalho, transações |
-| **Constituição viva** | `engine/constituicao.py` + `constituinte.py` + `executor_constitucional.py` | regras votadas viram enforcement automático; estruturais viram ticket pro dev |
-| **Jornal da Vila** | `engine/chateaubriand.py` + `engine/mirante_client.py` | editor-chefe avalia/reescreve/publica no Mirante News |
-| **Simulação de rede social** | `engine/mirofish_bridge.py` | delega grafos + simulação para o serviço Mirofish |
-| **Save/Load de vilas** | `engine/save_load.py` | snapshot completo em Supabase, retomável depois |
-| **Pacotes de habitantes** | `engine/pacotes_habitantes.py` + `data/pacotes/` | escolher que tipo de agente povoa a vila (eleitores, consultores, magistrados, …) |
-| **Auto-research (Karpathy)** | `engine/autoresearch.py` | ciclo: gerar → avaliar → criticar → refinar → sintetizar |
-| **Problem solving (27 técnicas)** | `engine/oficinas.py` | Van Aken & Berends — 6 fases, 27 técnicas |
-| **FlockVote** | `engine/flockvote.py` | pesquisa eleitoral sintética; benchmark MAE 4.4pp no DF/2022 |
-
----
-
-## Arquitetura (visão rápida)
-
-```
-┌──────────────────────────────────────────────────────────┐
-│                      Vila INTEIA                         │
-│                                                          │
-│  ┌─────────┐  ┌───────────┐  ┌──────────┐  ┌──────────┐  │
-│  │ Habitantes│  │ Jornal    │  │ Constitu-│  │ Economia │  │
-│  │ (agentes) │  │ da Vila   │  │ ição viva│  │          │  │
-│  └────┬────┘  └─────┬─────┘  └────┬─────┘  └────┬─────┘  │
-│       │              │             │             │        │
-│       ▼              ▼             ▼             ▼        │
-│  ┌───────────────────────────────────────────────────┐   │
-│  │          Motor cognitivo + memória                │   │
-│  └────┬──────────────────────┬───────────────────────┘   │
-│       │                       │                          │
-│       │ (persistência)        │ (LLM)                    │
-│       ▼                       ▼                          │
-└───┬────────────────────┬──────────────────────────┬──────┘
-    │                    │                          │
-    ▼                    ▼                          ▼
-┌────────┐         ┌──────────┐             ┌─────────────┐
-│Supabase│         │OmniRoute │             │  Mirofish   │
-│(dados) │         │ (LLM gtw)│             │ (rede social)
-└────────┘         └──────────┘             └─────────────┘
-                         │
-                         ▼
-                  ┌────────────────┐
-                  │ Mirante News   │  ← Chateaubriand publica via
-                  │ (mundo real)   │     POST /api/vila/submissoes
-                  └────────────────┘
-```
-
-Detalhe por módulo em [`ARCHITECTURE.md`](./ARCHITECTURE.md).
-Contratos com sistemas externos em [`INTEGRATIONS.md`](./INTEGRATIONS.md).
-
----
-
-## Modos de execução
-
-```bash
-python main.py demo                 # 10 agentes, 20 steps, não persiste
-python main.py run --steps 100      # CLI, persiste no Supabase
-python main.py serve --port 8100    # API REST + frontend
-python main.py live --intervalo 30  # 24/7: API + simulação contínua (1 step a cada 30s)
-```
-
----
-
-## Criar uma vila
-
-Via API:
-
-```bash
-curl -X POST http://localhost:8100/api/v1/vila/instancias \
-  -H "Content-Type: application/json" \
-  -d '{
-    "nome": "Simulação eleição DF 2026",
-    "pacote_base": "eleitores-df-2015",
-    "qtd_habitantes": 300,
-    "objetivo": "Intenção de voto para governador"
-  }'
-```
-
-Lista de pacotes disponíveis em [`data/pacotes/MANIFEST.md`](./data/pacotes/MANIFEST.md).
+| Módulo | Propósito |
+|--------|-----------|
+| **Simulacao** | Orquestra 1 step do mundo |
+| **Cognitivo** | Pipeline mental (7 fases) |
+| **Memória** | Por-agente (fluxo, espacial, rascunho) |
+| **Jornal** | Publica no Mirante News |
+| **Constituição** | Leis votadas viram enforcement |
+| **Economia** | Saldo, ambição, transações |
+| **FlockVote** | Pesquisa eleitoral (MAE 4.4pp) |
 
 ---
 
 ## Documentação
 
-- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — módulos por dentro
-- [`INTEGRATIONS.md`](./INTEGRATIONS.md) — Mirante, Mirofish, OmniRoute, Supabase
-- [`DEPLOY.md`](./DEPLOY.md) — Docker, Render, Vercel
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — padrões de código e commit
-- [`ROADMAP.md`](./ROADMAP.md) — features Camada 2 (próximas iterações)
-- [`FRAMEWORK_INTERACOES.md`](./FRAMEWORK_INTERACOES.md) — design das interações entre agentes
-- [`docs/produto/`](./docs/produto/) — constituição, jornal, oficinas, etc.
+- **[`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)** — Arquitetura completa
+- **[`docs/DEPLOY.md`](./docs/DEPLOY.md)** — Docker, Render, Vercel
+- **[`docs/INTEGRATIONS.md`](./docs/INTEGRATIONS.md)** — Mirante, Mirofish, OmniRoute
+- **[`docs/ROADMAP.md`](./docs/ROADMAP.md)** — Próximas iterações
+- **[`CONSTITUICAO_VILA.md`](./CONSTITUICAO_VILA.md)** — 11 Mandamentos, Patentes
+- **[`CONTRIBUTING.md`](./CONTRIBUTING.md)** — Padrões de código
+
+---
+
+## Desenvolvimento
+
+```bash
+# Testes
+pytest tests/ -v
+
+# Lint
+black engine/ api/ tests/
+flake8 engine/ api/ --max-line-length=100
+```
 
 ---
 
 ## Licença
 
-MIT.
+MIT
+
+**Mantido por**: Igor Morais Vasconcelos ([@igormorais123](https://github.com/igormorais123))

@@ -27,9 +27,19 @@ Thumbs.db
 data/*/
 vila-inteia/data/
 !data/banco-consultores-lendarios.json
+data/colmeia_estado.json
+
+# Screenshots e assets temporarios
+*.png
+*.jpg
+*.jpeg
+
+# Playwright
+.playwright-mcp/
 
 # Logs
 *.log
 .claude/settings.local.json
 .gstack/
 resultado_10_materias.json
+.pytest_cache/
