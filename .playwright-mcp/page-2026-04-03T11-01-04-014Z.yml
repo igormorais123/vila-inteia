@@ -1,0 +1,200 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: IA
+      - generic [ref=e7]:
+        - generic [ref=e8]: INTEIA
+        - generic [ref=e9]: Vila INTEIA — Think Tank Vivo
+    - generic [ref=e10]: Navegacao
+    - list [ref=e11]:
+      - listitem [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: 🌎
+        - generic [ref=e14]: Mapa
+      - listitem [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 🤵
+        - generic [ref=e17]: Agentes
+      - listitem [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 💬
+        - generic [ref=e20]: Conversas
+      - listitem [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 💡
+        - generic [ref=e23]: Sinteses
+      - listitem [ref=e24] [cursor=pointer]:
+        - generic [ref=e25]: 📊
+        - generic [ref=e26]: Stats
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - generic [ref=e29]: Simulacao
+        - generic [ref=e30]: 08:00
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - button "▶ Play" [ref=e33] [cursor=pointer]
+          - button "▶| Step" [ref=e34] [cursor=pointer]
+        - generic [ref=e35]:
+          - textbox "Injetar topico na Vila..." [ref=e36]
+          - button "Injetar Topico" [ref=e37] [cursor=pointer]
+    - generic [ref=e38]:
+      - button "Alternar tema" [ref=e39] [cursor=pointer]: ☾
+      - generic [ref=e40]: Powered by INTEIA
+      - button "Recolher menu" [ref=e41] [cursor=pointer]: «
+  - generic [ref=e42]:
+    - img [ref=e44]:
+      - generic [ref=e79] [cursor=pointer]:
+        - generic: 🏛
+        - generic: Agora Central
+        - generic: "1"
+      - generic [ref=e83] [cursor=pointer]:
+        - generic: 🏰
+        - generic: Torre de Estrat...
+        - generic: "3"
+      - generic [ref=e90] [cursor=pointer]:
+        - generic: 📚
+        - generic: Biblioteca Infi...
+        - generic: "2"
+      - generic [ref=e95] [cursor=pointer]:
+        - generic: ☕
+        - generic: Cafe dos Filoso...
+        - generic: "2"
+      - generic [ref=e101] [cursor=pointer]:
+        - generic: ⚔️
+        - generic: Arena de Debates
+        - generic: "2"
+      - generic [ref=e106] [cursor=pointer]:
+        - generic: 🌿
+        - generic: Jardim dos Visi...
+        - generic: "2"
+      - generic [ref=e111] [cursor=pointer]:
+        - generic: ⚖️
+        - generic: Tribunal da Raz...
+        - generic: "1"
+      - generic [ref=e115] [cursor=pointer]:
+        - generic: 🔬
+        - generic: Laboratorio de ...
+        - generic: "3"
+      - generic [ref=e122] [cursor=pointer]:
+        - generic: 🖼
+        - generic: Galeria dos Leg...
+      - generic [ref=e124] [cursor=pointer]:
+        - generic: 🛡
+        - generic: Sala de Guerra
+        - generic: "1"
+      - generic [ref=e128] [cursor=pointer]:
+        - generic: 🎤
+        - generic: Auditorio INTEIA
+        - generic: "1"
+      - generic [ref=e132] [cursor=pointer]:
+        - generic: 🎨
+        - generic: Atelie dos Arte...
+      - generic [ref=e134] [cursor=pointer]:
+        - generic: 🔭
+        - generic: Observatorio do...
+        - generic: "1"
+      - generic [ref=e138] [cursor=pointer]:
+        - generic: 🏠
+        - generic: Residencia Norte
+      - generic [ref=e140] [cursor=pointer]:
+        - generic: 🏠
+        - generic: Residencia Sul
+      - generic [ref=e142] [cursor=pointer]:
+        - generic: 🏠
+        - generic: Residencia Leste
+      - generic [ref=e144] [cursor=pointer]:
+        - generic: 🏠
+        - generic: Residencia Oeste
+      - generic [ref=e146] [cursor=pointer]:
+        - generic: 🍽
+        - generic: Refeitorio Cent...
+      - generic [ref=e148] [cursor=pointer]:
+        - generic: 🌅
+        - generic: Terraco Panoram...
+        - generic: "1"
+    - generic [ref=e152]:
+      - generic [ref=e153]:
+        - generic [ref=e154]: ⚡ Feed de Atividades
+        - generic [ref=e155]: 12 eventos
+      - generic [ref=e156]:
+        - generic [ref=e157]:
+          - generic [ref=e158]: 💡
+          - generic [ref=e159]:
+            - strong [ref=e160]: Nikola Tesla
+            - text: teve um insight sobre
+            - emphasis [ref=e161]: transmissao de energia quanrica
+            - text: no Laboratorio de Ideias
+          - generic [ref=e162]: 08:32
+        - generic [ref=e163]:
+          - generic [ref=e164]: 🤝
+          - generic [ref=e165]:
+            - strong [ref=e166]: Cleopatra
+            - text: iniciou negociacao com
+            - strong [ref=e167]: Elizabeth II
+            - text: no Terraco Panoramico
+          - generic [ref=e168]: 08:30
+        - generic [ref=e169]:
+          - generic [ref=e170]: 🔬
+          - generic [ref=e171]:
+            - strong [ref=e172]: Marie Curie
+            - text: publicou observacao sobre
+            - emphasis [ref=e173]: padroes eleitorais emergentes
+            - text: no Observatorio do Futuro
+          - generic [ref=e174]: 08:28
+        - generic [ref=e175]:
+          - generic [ref=e176]: 🎤
+          - generic [ref=e177]:
+            - strong [ref=e178]: Steve Jobs
+            - text: "iniciou keynote: \"Design como estrategia politica\" no Auditorio INTEIA"
+          - generic [ref=e179]: 08:25
+        - generic [ref=e180]:
+          - generic [ref=e181]: ☕
+          - generic [ref=e182]:
+            - strong [ref=e183]: Socrates
+            - text: e
+            - strong [ref=e184]: Freud
+            - text: debatem consciencia no Cafe dos Filosofos
+          - generic [ref=e185]: 08:23
+        - generic [ref=e186]:
+          - generic [ref=e187]: 🏰
+          - generic [ref=e188]:
+            - strong [ref=e189]: Angela Merkel
+            - text: convocou reuniao estrategica na Torre de Estrategia
+          - generic [ref=e190]: 08:20
+        - generic [ref=e191]:
+          - generic [ref=e192]: ⚔️
+          - generic [ref=e193]:
+            - strong [ref=e194]: Napoleon
+            - text: desafiou
+            - strong [ref=e195]: Aristoteles
+            - text: para debate formal na Arena de Debates
+          - generic [ref=e196]: 08:18
+        - generic [ref=e197]:
+          - generic [ref=e198]: 🛡
+          - generic [ref=e199]:
+            - strong [ref=e200]: Sun Tzu
+            - text: mapeou 3 cenarios de crise na Sala de Guerra
+          - generic [ref=e201]: 08:15
+        - generic [ref=e202]:
+          - generic [ref=e203]: 🌿
+          - generic [ref=e204]:
+            - strong [ref=e205]: Gandhi
+            - text: e
+            - strong [ref=e206]: Carl Jung
+            - text: meditam juntos no Jardim dos Visionarios
+          - generic [ref=e207]: 08:12
+        - generic [ref=e208]:
+          - generic [ref=e209]: 📚
+          - generic [ref=e210]:
+            - strong [ref=e211]: Marcus Aurelius
+            - text: anotou reflexao estoica na Biblioteca Infinita
+          - generic [ref=e212]: 08:10
+        - generic [ref=e213]:
+          - generic [ref=e214]: 🚀
+          - generic [ref=e215]:
+            - strong [ref=e216]: Elon Musk
+            - text: apresentou prototipo de interface IA no Laboratorio de Ideias
+          - generic [ref=e217]: 08:05
+        - generic [ref=e218]:
+          - generic [ref=e219]: 🏛
+          - generic [ref=e220]:
+            - text: Vila INTEIA iniciou novo ciclo de simulacao.
+            - strong [ref=e221]: 20 agentes
+            - text: ativos.
+          - generic [ref=e222]: 08:00

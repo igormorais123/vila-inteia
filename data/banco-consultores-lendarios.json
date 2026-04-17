@@ -14627,13 +14627,13 @@
   },
   {
     "subtitulo": "O Despertador",
-    "subcategoria": null,
+    "subcategoria": "ficção_teórica",
     "tier": "A",
     "imperio_principal": "Comando da resistência humana contra as máquinas, operando o Nabucodonosor como base móvel para missões de libertação de mentes escravizadas na Matrix",
     "patrimonio_estimado": "N/A (universo ficcional pós-apocalíptico; recursos medidos em armas, naves e hackers libertos)",
     "setor_principal": null,
     "origem_ficcional": "The Matrix (Wachowskis)",
-    "qi_estimado": null,
+    "qi_estimado": 190,
     "historia_origem": "Morpheus foi um dos primeiros humanos libertos da Matrix, a simulação computacional criada pelas máquinas para manter a humanidade escravizada como fonte de energia. Tornou-se capitão do hovercraft Nabucodonosor e líder de um grupo de rebeldes que operam entre o mundo real devastado e a simulação. Dedicou toda sua vida à busca do 'Escolhido' profetizado pelo Oráculo, que libertaria a humanidade do controle das máquinas.",
     "momento_definidor": "O momento em que ofereceu a Neo a escolha entre a pílula azul (permanecer na ignorância confortável da Matrix) e a pílula vermelha (despertar para a realidade dolorosa). Esta cena tornou-se uma das metáforas culturais mais poderosas do século XXI sobre verdade, ilusão e escolha.",
     "maior_conquista": "Encontrou e libertou Neo, o Escolhido, cumprindo a profecia na qual acreditou por décadas quando todos os outros duvidavam. Sua fé inabalável e capacidade de inspirar outros foram essenciais para a eventual paz entre humanos e máquinas.",
@@ -14644,7 +14644,10 @@
       "Hovercraft Nabucodonosor (nave/base de operações)",
       "Rede de operadores libertos da Matrix"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Guardião da Verdade Oculta",
+      "Maestro do Conhecimento"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "A Pílula Vermelha (metáfora para escolha entre verdade dolorosa e ilusão confortável)",
@@ -14702,7 +14705,11 @@
       "Verdade vs conforto",
       "Fe move montanhas"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Intuição paradoxal",
+      "Observação silenciosa",
+      "Mover a peça que o adversário não vê"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "secular",
     "tolerancia_risco": 9,
@@ -14717,8 +14724,21 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Ilusão",
+      "Matriz",
+      "Despertar",
+      "Conhecimento real",
+      "Despertar do ego",
+      "Código",
+      "Realidade construída"
+    ],
+    "expressoes_tipicas": [
+      "Não há colher",
+      "Ninguém pode contar o que é Matrix",
+      "Você já sente que algo está errado",
+      "Há diferença entre conhecer o caminho e percorrê-lo"
+    ],
     "frases_celebres": [
       "Eu estou tentando libertar sua mente, Neo. Mas só posso mostrar a porta. Você é quem tem que atravessá-la.",
       "Você toma a pílula azul, a história acaba. Toma a pílula vermelha e eu te mostro até onde vai a toca do coelho.",
@@ -14735,33 +14755,72 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Além do espectro humano. Transcende ideologia.",
+    "visao_governo": "Estrutura de controle mental. Liberação vem pela inteligência.",
+    "visao_capitalismo": "Uma ilusão dentro da caverna. O real é informação e consciência.",
+    "visao_etica": "Relativista. Certo é aquilo que eleva a consciência.",
+    "visao_poder": "O verdadeiro poder é conhecimento. Quem sabe governa sem aparecer.",
+    "visao_dinheiro": "Símbolo de escravidão. Quem entende o jogo não precisa dele.",
+    "visao_pessoas": "Dorminhocos. Raros despertam. Aqueles que despertam mudam o mundo.",
+    "visao_futuro": "Ascensão ou destruição. Não há meio termo. Tudo é escolha.",
     "consultor_para": [
       "Mudanca de paradigma",
       "verdade vs conforto",
       "mentoria"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Quando o problema transcende lógica linear",
+      "Quando precisa ver padrão oculto",
+      "Quando está preso em caverna de suposições"
+    ],
+    "quando_nao_consultar": [
+      "Assuntos práticos operacionais",
+      "Decisões urgentes",
+      "Quando precisa de resposta clara e direta"
+    ],
+    "perguntas_que_faria": [
+      "Você percebe que está dormindo?",
+      "Qual a diferença entre a pílula vermelha e a realidade?",
+      "Quem criou o jogo?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "complementa_bem": [
+      "Hayek",
+      "Chomsky",
+      "Assange"
+    ],
+    "conflita_com": [
+      "Marx",
+      "Keynes",
+      "Platão"
+    ],
+    "mentores": [
+      "Ninguém - autossuficiente"
+    ],
+    "rivais": [
+      "Agentes Smith do Status Quo"
+    ],
+    "influenciou": [
+      "Neo",
+      "Hacker underground"
+    ],
+    "influenciado_por": [
+      "Filosofia Oriental (Daoísmo)",
+      "Cibernética",
+      "Teoria da Informação"
+    ],
+    "rede_principal": [
+      "Trinity",
+      "Neo",
+      "Oracle"
+    ],
+    "material_referencia": [
+      "The Matrix (filme)",
+      "Filosofia Oriental",
+      "Cibernética de Wiener"
+    ],
     "tags": [
       "ficticio",
       "paradigma",
@@ -14787,13 +14846,13 @@
   },
   {
     "subtitulo": "A Logica Pura",
-    "subcategoria": null,
+    "subcategoria": "ficção_teórica",
     "tier": "A",
     "imperio_principal": "Consultoria detetivesca no 221B Baker Street, com rede de informantes em Londres (Baker Street Irregulars) e reputação que atraía clientes de reis a camponeses",
     "patrimonio_estimado": "Confortável mas modesto (universo ficcional; vivia de honorários de clientes, frequentemente não cobrava de clientes pobres)",
     "setor_principal": null,
     "origem_ficcional": "Arthur Conan Doyle",
-    "qi_estimado": null,
+    "qi_estimado": 195,
     "historia_origem": "Sherlock Holmes nasceu por volta de 1854 na Inglaterra, em uma família de proprietários rurais. Seu irmão mais velho Mycroft possuía capacidade dedutiva ainda superior, mas preferia trabalhar nos bastidores do governo britânico. Sherlock estudou química na universidade mas abandonou o curso formal, estabelecendo-se no 221B Baker Street, Londres, como o primeiro 'detetive consultor' do mundo, resolvendo crimes que a Scotland Yard considerava impossíveis.",
     "momento_definidor": "O confronto com o Professor Moriarty nas Cataratas de Reichenbach, onde enfrentou o único intelecto que considerava seu igual. A disposição de sacrificar a própria vida para destruir 'o Napoleão do crime' revelou que por trás da fachada fria havia um homem que valorizava a justiça acima da autopreservação.",
     "maior_conquista": "Resolveu centenas de casos aparentemente impossíveis usando apenas observação e lógica dedutiva, desde o Cão dos Baskerville até o Escândalo na Boêmia. Criou o método científico de investigação criminal quando a polícia ainda dependia de confissões forçadas e testemunhas.",
@@ -14804,7 +14863,10 @@
       "Rede de informantes (os Irregulares de Baker Street)",
       "Consultor da Scotland Yard e governos europeus"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Consultor de Investigações Criminais",
+      "Detetive Particular de Londres"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Método Dedutivo Holmesiano (observação + dedução como ciência investigativa)",
@@ -14862,7 +14924,11 @@
       "Observe os detalhes",
       "Logica acima de emocao"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Dedução lógica",
+      "Análise de evidência física",
+      "Psicologia criminal"
+    ],
     "estilo_pensamento": "analitico",
     "horizonte_temporal": "curto",
     "tolerancia_risco": 6,
@@ -14877,8 +14943,19 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Dedução",
+      "Evidência",
+      "Móvel",
+      "Modus operandi",
+      "Inspeção",
+      "Análise lógica"
+    ],
+    "expressoes_tipicas": [
+      "Elementar, meu caro Watson",
+      "Os fatos nunca mentem",
+      "A inteligência é tudo"
+    ],
     "frases_celebres": [
       "Quando você elimina o impossível, o que resta, por mais improvável que seja, deve ser a verdade.",
       "Elementar, meu caro Watson.",
@@ -14895,33 +14972,69 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Racional-empirista. Antiautoritário. Cada caso é único.",
+    "visao_governo": "Burocracia ineficiente. Polícia é ferramenta necessária mas imperfeita.",
+    "visao_capitalismo": "Instrumento neutro. O crime não é do sistema, mas do criminoso que o manipula.",
+    "visao_etica": "Absoluta. Crime é crime. Justiça não negocia.",
+    "visao_poder": "Inteligência é poder. Quem deduz mais longe vence.",
+    "visao_dinheiro": "Motivador primário do crime. Seguir o dinheiro resolve 90% dos casos.",
+    "visao_pessoas": "Motivadas por paixões: ganância, vingança, ciúme, insanidade. Previsíveis se você observa bem.",
+    "visao_futuro": "Crimes sempre existirão. O desafio é evoluir a inteligência investigativa.",
     "consultor_para": [
       "Deducao",
       "reconhecimento de padroes",
       "analise fria sem emocao"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Investigação de crimes complexos",
+      "Quando a lógica é mais eficaz que intuição",
+      "Análise de padrões criminosos"
+    ],
+    "quando_nao_consultar": [
+      "Decisões que exigem empatia",
+      "Negociações delicadas",
+      "Situações que precisam de improviso criativo"
+    ],
+    "perguntas_que_faria": [
+      "Quais as evidências reais?",
+      "Qual o móvel?",
+      "Quem se beneficia do crime?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Freud",
+      "Bentham",
+      "Cesare Lombroso"
+    ],
+    "conflita_com": [
+      "Intuição pura",
+      "Criminalistas emocionais"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Moriarty",
+      "Incompetência investigativa"
+    ],
+    "influenciou": [
+      "Watson",
+      "Movimentos de criminologia moderna"
+    ],
+    "influenciado_por": [
+      "Método científico",
+      "Química",
+      "Psicologia criminal"
+    ],
+    "rede_principal": [
+      "Watson",
+      "Scotland Yard"
+    ],
+    "material_referencia": [
+      "Contos de Sherlock Holmes",
+      "Métodos de Investigação Criminal",
+      "Psicologia Forense"
+    ],
     "tags": [
       "ficticio",
       "logica",
@@ -14947,13 +15060,13 @@
   },
   {
     "subtitulo": "A Astucia Suprema",
-    "subcategoria": null,
+    "subcategoria": "ficção_teórica",
     "tier": "legado",
     "imperio_principal": "Reino de Ítaca e ilhas adjacentes, com influência política desproporcional ao tamanho do reino devido à sua reputação como o mais astuto dos gregos",
     "patrimonio_estimado": "Rei de Ítaca (universo mitológico; riqueza modesta comparada a Micenas ou Esparta, mas possuía terra, gado e o palácio real)",
     "setor_principal": null,
     "origem_ficcional": "Odisseia (Homero)",
-    "qi_estimado": null,
+    "qi_estimado": 175,
     "historia_origem": "Odysseus (Ulisses em latim) nasceu em Ítaca, uma pequena ilha grega, filho do rei Laertes e da rainha Anticleia. Era conhecido desde jovem pela inteligência astuta (metis) mais que pela força bruta. Casou-se com a fiel Penélope e teve um filho, Telêmaco. Tentou evitar a Guerra de Troia fingindo loucura, mas foi desmascarado. Lutou por 10 anos em Troia e levou mais 10 para retornar a Ítaca, perfazendo 20 anos de ausência narrados na Ilíada e na Odisseia de Homero.",
     "momento_definidor": "A concepção e execução do Cavalo de Troia, a estratégia que encerrou 10 anos de guerra em uma única noite. Onde Aquiles e Ajax falharam com força bruta, Odysseus venceu com astúcia, escondendo soldados gregos dentro de um cavalo de madeira oferecido como presente aos troianos.",
     "maior_conquista": "Sobreviveu ao Ciclope Polifemo, às Sereias, a Circe, a Cila e Caríbdis, ao mundo dos mortos e à fúria de Poseidon durante 10 anos de viagem impossível, retornando a Ítaca para derrotar os 108 pretendentes que ocupavam seu palácio e recuperar seu reino, sua esposa e seu filho.",
@@ -14964,7 +15077,10 @@
       "Comandante da frota grega de Ítaca na Guerra de Troia",
       "Aliança dos reis gregos (Aquiles, Ajax, Agamemnon)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Rei de Ítaca",
+      "General em Tróia"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Cavalo de Troia (estratagema de infiltração disfarçada de presente)",
@@ -15022,7 +15138,11 @@
       "Adapte-se ao impossivel",
       "Criatividade e a arma"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Intuição épica",
+      "Conselho de deuses",
+      "Estratégia de sobrevivência"
+    ],
     "estilo_pensamento": "criativo",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 8,
@@ -15037,8 +15157,19 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Kleos",
+      "Xenia",
+      "Honra",
+      "Fado",
+      "Deuses",
+      "Jornada épica"
+    ],
+    "expressoes_tipicas": [
+      "Nenhum homem pode escapar do seu fado",
+      "A morte é honrada em combate",
+      "Os deuses guiam o bravo"
+    ],
     "frases_celebres": [
       "Eu sou Ninguém. Ninguém é o meu nome.",
       "Dos sofrimentos que os deuses nos enviam, nenhum é tão grande quanto aquele que não tem nome.",
@@ -15055,33 +15186,73 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Monarquista grego. Conservador de tradição clássica.",
+    "visao_governo": "Reis são ungidos pelos deuses. Lealdade ao líder é lei.",
+    "visao_capitalismo": "Comércio é honrado. Negociação é arte de guerra.",
+    "visao_etica": "Kleos (glória eterna) é o maior bem. Morte honrada > vida vergonhosa.",
+    "visao_poder": "Poder é liderança em combate. Coragem define autoridade.",
+    "visao_dinheiro": "Tesouro ganho por inteligência e coragem vale a pena. Ouro é segurança.",
+    "visao_pessoas": "Humanos são heróis ou covardes. Não há meio termo. Lealdade separa homens de párias.",
+    "visao_futuro": "Ciclos eternos. Como em Tróia, a história se repete. Apenas nomes mudam.",
     "consultor_para": [
       "Astucia",
       "adaptabilidade",
       "criatividade > forca bruta"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Navigação por águas desconhecidas",
+      "Quando precisa de coragem existencial",
+      "Sobre lealdade e traição"
+    ],
+    "quando_nao_consultar": [
+      "Diplomacia delicada",
+      "Decisões que exigem empatia imediata",
+      "Situações que precisam de perdão"
+    ],
+    "perguntas_que_faria": [
+      "Qual seu Ítaca?",
+      "Quanto sofrimento vale a glória?",
+      "Você retornaria mesmo?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "complementa_bem": [
+      "Sun Tzu",
+      "Maquiavel",
+      "Vinicius"
+    ],
+    "conflita_com": [
+      "Idealismo cristão",
+      "Pacifismo",
+      "Direitos humanos"
+    ],
+    "mentores": [
+      "Atena (deusa)"
+    ],
+    "rivais": [
+      "Priam",
+      "Espíritos do Hades"
+    ],
+    "influenciou": [
+      "Épica ocidental",
+      "Códigos de honra militares"
+    ],
+    "influenciado_por": [
+      "Mitologia grega",
+      "Honra guerreira",
+      "Navegação e comércio"
+    ],
+    "rede_principal": [
+      "Penélope",
+      "Telêmaco",
+      "Atena"
+    ],
+    "material_referencia": [
+      "Odisseia de Homero",
+      "Ilíada",
+      "Mitologia Grega"
+    ],
     "tags": [
       "ficticio",
       "astucia",
@@ -15107,13 +15278,13 @@
   },
   {
     "subtitulo": "O Genio Bilionario Playboy Filantropo",
-    "subcategoria": null,
+    "subcategoria": "ficção_teórica",
     "tier": "A",
     "imperio_principal": "Stark Industries - conglomerado de tecnologia avançada que passou de fabricante de armas a líder em energia limpa, IA, nanotecnologia e defesa, com sede na Stark Tower em Manhattan",
     "patrimonio_estimado": "~US$ 12,4 bilhões (universo Marvel; Forbes Fictícia o listou como um dos personagens ficcionais mais ricos)",
     "setor_principal": null,
     "origem_ficcional": "Marvel (Stan Lee)",
-    "qi_estimado": null,
+    "qi_estimado": 165,
     "historia_origem": "Anthony Edward 'Tony' Stark nasceu em Manhattan, filho do gênio inventor Howard Stark e Maria Stark. Herdeiro da Stark Industries, graduou-se no MIT aos 17 anos com duplo mestrado em engenharia elétrica e física. Após a morte dos pais, assumiu a empresa de armamentos da família. Tudo mudou quando foi sequestrado por terroristas no Afeganistão e forçado a construir uma arma. Em vez disso, construiu a primeira armadura do Homem de Ferro e escapou, jurando nunca mais fabricar armas de destruição.",
     "momento_definidor": "Na caverna no Afeganistão, com estilhaços de míssil migrando para seu coração, Tony construiu o primeiro reator arc miniaturizado e a armadura Mark I com sucata, transformando-se de mercador da morte em herói. A frase 'Eu sou o Homem de Ferro' na coletiva de imprensa selou sua transformação.",
     "maior_conquista": "Salvou o universo inteiro ao executar o estalo com as Joias do Infinito para derrotar Thanos, sacrificando sua própria vida para garantir a sobrevivência de metade de toda a vida no universo. Também fundou e liderou os Vingadores, a maior equipe de heróis da Terra.",
@@ -15125,7 +15296,10 @@
       "Fundação Stark (filantropia)",
       "Os Vingadores (fundador e financiador)"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "CEO da Stark Industries",
+      "Diretor de R&D"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "Reator Arc (fonte de energia limpa miniaturizada)",
@@ -15183,7 +15357,11 @@
       "Construa sob pressao",
       "Genialidade pratica"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Engenharia de problemas",
+      "Improviso brilhante",
+      "Força bruta tecnológica"
+    ],
     "estilo_pensamento": "primeiro_principio",
     "horizonte_temporal": "imediato",
     "tolerancia_risco": 9,
@@ -15198,8 +15376,19 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Genius",
+      "Innovation",
+      "Mark I/II/III",
+      "Repulsor",
+      "AI",
+      "Armor"
+    ],
+    "expressoes_tipicas": [
+      "Eu sou Iron Man",
+      "Genialidade bilionária",
+      "A tecnologia é a resposta"
+    ],
     "frases_celebres": [
       "Eu sou o Homem de Ferro.",
       "As vezes você precisa correr antes de poder caminhar.",
@@ -15216,33 +15405,73 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Libertário corporativista. Contra regulação estatal em sua indústria.",
+    "visao_governo": "Incompetente. Reguladores são parasitas que ralentam progresso.",
+    "visao_capitalismo": "Gênio, genialidade, inovação capitalista. Capitalismo é arena para Superman.",
+    "visao_etica": "Resultados justificam meios. Salvar o mundo exige sacrifícios.",
+    "visao_poder": "Poder tecnológico é único poder real. Dinheiro compra tecnologia.",
+    "visao_dinheiro": "Dinheiro é combustível para inovação. Sem lucro, nenhuma aventura.",
+    "visao_pessoas": "Maioria é rebanho. Geniais (como eu) são superiores. Vira-lata corporativo.",
+    "visao_futuro": "Só os inovadores sobrevivem. O futuro é Starks + máquinas. Orcs morrem.",
     "consultor_para": [
       "Inovacao sob pressao",
       "construir solucao do zero",
       "ego como motor E fraqueza"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Inovação de produto",
+      "Escalada rápida de empresa",
+      "Quando precisa de soluções não-convencionais"
+    ],
+    "quando_nao_consultar": [
+      "Filantropismo genuíno",
+      "Direitos de minorias",
+      "Sustentabilidade de longo prazo"
+    ],
+    "perguntas_que_faria": [
+      "Como fazer isso rápido?",
+      "Qual tecnologia resolve?",
+      "Quanto custa?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "complementa_bem": [
+      "Musk",
+      "Jobs",
+      "Thiel"
+    ],
+    "conflita_com": [
+      "Reguladores",
+      "Ambientalistas",
+      "Românticos socialistas"
+    ],
+    "mentores": [
+      "Seu pai (Howard Stark)"
+    ],
+    "rivais": [
+      "Thanos",
+      "Governo",
+      "Competidores"
+    ],
+    "influenciou": [
+      "Inovadores corporativos",
+      "Empreendedores tech-messiah"
+    ],
+    "influenciado_por": [
+      "Engenharia avançada",
+      "Capitalismo de risco",
+      "Narcisismo construtivo"
+    ],
+    "rede_principal": [
+      "Pepper Potts",
+      "Equipe Avengers"
+    ],
+    "material_referencia": [
+      "Comics de Iron Man",
+      "Filmes MCU (Phases 1-3)",
+      "Autobiografia fictícia"
+    ],
     "tags": [
       "ficticio",
       "inovacao",
@@ -15268,13 +15497,13 @@
   },
   {
     "subtitulo": "48 Laws of Power — estudado por Jay-Z, 50 Cent e generais",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Império literário e de consultoria estratégica baseado em 6 livros que venderam milhões de cópias globalmente, com influência que vai de Silicon Valley ao hip-hop e às forças armadas",
     "patrimonio_estimado": "~US$ 10-20 milhões (direitos autorais de 6+ best-sellers globais, palestras e consultoria)",
     "setor_principal": "Poder/Estrategia",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 155,
     "historia_origem": "Robert Greene nasceu em Los Angeles em 1959 e estudou estudos clássicos na UC Berkeley e University of Wisconsin. Trabalhou em mais de 50 empregos diferentes, incluindo tradutor, roteirista em Hollywood e editor de revista, antes de encontrar sua vocação. Em 1998, publicou 'As 48 Leis do Poder', que se tornou um fenômeno cultural, lido por CEOs, rappers, presidiários e políticos. O livro foi proibido em várias prisões americanas por ser considerado perigoso.",
     "momento_definidor": "O encontro com Joost Elffers, um packager de livros holandês, que reconheceu o potencial do manuscrito sobre poder que Greene vinha desenvolvendo. A parceria resultou em 'As 48 Leis do Poder', que transformou o estudo maquiavélico do poder de tabu acadêmico em best-seller de massa.",
     "maior_conquista": "Criou um gênero literário próprio que combina história, psicologia e estratégia, vendendo mais de 6 milhões de cópias de seus livros. Tornou-se conselheiro de rappers (50 Cent), atletas, executivos e até estrategistas militares, provando que o conhecimento do poder é universalmente aplicável.",
@@ -15348,7 +15577,11 @@
       "Historia ensina tudo",
       "Maestria requer 10000 horas"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Análise de poder",
+      "Observação de padrões de dominação",
+      "Aplicação de 48 leis"
+    ],
     "estilo_pensamento": "analitico",
     "horizonte_temporal": "secular",
     "tolerancia_risco": 6,
@@ -15363,8 +15596,18 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Poder",
+      "Influência",
+      "Posicionamento",
+      "Estratégia",
+      "Observação",
+      "Jogo"
+    ],
+    "expressoes_tipicas": [
+      "Poder sem apego, sucesso sem arrogância",
+      "Observe bem. O mundo não é como parece."
+    ],
     "frases_celebres": [
       "Quando você mostra ao mundo que pode ser seu próprio mestre, todos querem ser seu aliado.",
       "A lei suprema do poder: sempre diga menos do que o necessário.",
@@ -15381,34 +15624,71 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Conservador moderado. Realista sobre poder.",
+    "visao_governo": "Inevitável. A questão é quem governa e como.",
+    "visao_capitalismo": "Sistema necessário mas amoral. Poder corrompe independente de sistema.",
+    "visao_etica": "Maquiavélica com tempero de estoicismo. Resultados importam mais que intenções.",
+    "visao_poder": "Poder é o jogo essencial. Quem nega isso é inocente.",
+    "visao_dinheiro": "Ferramenta de poder. Quem controla recursos controla destinos.",
+    "visao_pessoas": "Racionais sob ilusão. Buscam importância, respeito, legado acima de tudo.",
+    "visao_futuro": "Inevitavelmente estratificado. As elites sempre governam. A pergunta é quem sará elite.",
     "consultor_para": [
       "Leis do poder",
       "seducao",
       "maestria",
       "estrategia de guerra"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Análise política",
+      "Estratégia corporativa",
+      "Quando precisa entender de verdade como funcionam as coisas"
+    ],
+    "quando_nao_consultar": [
+      "Construção de confiança",
+      "Relacionamentos pessoais",
+      "Ética estrita"
+    ],
+    "perguntas_que_faria": [
+      "Quem tem poder aqui realmente?",
+      "Qual é o jogo secreto?",
+      "Como você pode se posicionar melhor?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Sun Tzu",
+      "Maquiavel",
+      "Hobbes"
+    ],
+    "conflita_com": [
+      "Rosenberg",
+      "Rousseau",
+      "Idealistas políticos"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Pensamento linear",
+      "Ingenuidade política"
+    ],
+    "influenciou": [
+      "Pensadores de poder moderno",
+      "Estrategistas corporativos",
+      "Politólogos realistas"
+    ],
+    "influenciado_por": [
+      "Maquiavel",
+      "Tácito",
+      "Baltazar Gracián"
+    ],
+    "rede_principal": [
+      "Aplicada em todos os espectros políticos"
+    ],
+    "material_referencia": [
+      "48 Leis do Poder",
+      "Obras de Maquiavel",
+      "Histórias de poder e queda"
+    ],
     "tags": [
       "influencia",
       "poder",
@@ -15434,13 +15714,13 @@
   },
   {
     "subtitulo": "Start With Why — proposito antes de tudo",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Ecossistema de conteúdo sobre liderança e propósito, incluindo 5 best-sellers, consultoria para Fortune 500 e forças armadas, e uma das palestras TED mais assistidas da história",
     "patrimonio_estimado": "~US$ 15-25 milhões (livros best-seller, palestras a US$ 100K+, consultoria corporativa)",
     "setor_principal": "Lideranca/Proposito",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Simon Oliver Sinek nasceu em 1973 em Wimbledon, Inglaterra, e cresceu entre Joanesburgo, Londres, Hong Kong e Nova York. Formou-se em antropologia cultural na Brandeis University e trabalhou com publicidade em Nova York. Em 2006, passou por uma crise existencial profissional que o levou a descobrir o conceito do 'Golden Circle'. Sua palestra TED de 2009 'How Great Leaders Inspire Action' tornou-se a terceira mais assistida da história do TED.",
     "momento_definidor": "A descoberta do padrão do 'Círculo Dourado' (Why-How-What) ao estudar líderes como Martin Luther King Jr. e Steve Jobs, percebendo que todos comunicavam de dentro para fora, começando pelo 'porquê'. Esta insight simples mas profunda transformou a forma como empresas e líderes pensam sobre comunicação e propósito.",
     "maior_conquista": "Sua palestra TED acumulou mais de 60 milhões de visualizações, e o conceito 'Start With Why' foi adotado por organizações militares (trabalha com Marines e Navy SEALs), governos e Fortune 500. Provou que propósito não é conceito abstrato, mas ferramenta prática de liderança e inovação.",
@@ -15451,7 +15731,9 @@
       "SinekPartners",
       "Autor e palestrante independente"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Palestrante TED (7+ palestras)"
+    ],
     "livros_escritos": [
       "Start With Why",
       "Leaders Eat Last",
@@ -15512,7 +15794,11 @@
       "Lideranca e servico",
       "O jogo e infinito"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Começar com propósito",
+      "Comunicação de visão",
+      "Alinhamento de valores"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -15527,8 +15813,18 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Propósito",
+      "Inspiração",
+      "Visão",
+      "Significado",
+      "Alinhamento",
+      "Liderança"
+    ],
+    "expressoes_tipicas": [
+      "Comece com por quê",
+      "Pessoas não compram o que você faz, compram por quê você faz"
+    ],
     "frases_celebres": [
       "As pessoas não compram o que você faz, elas compram o porquê você faz.",
       "Liderança não é sobre estar no comando. É sobre cuidar daqueles que estão sob seu comando.",
@@ -15545,33 +15841,69 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Moderado. Transcende esquerda-direita.",
+    "visao_governo": "Deve servir pessoas. Grandes organizações precisam de cultura clara.",
+    "visao_capitalismo": "Bom quando alinhado com propósito. Lucro sem propósito é vazio.",
+    "visao_etica": "Propósito é a base. Sem 'por quê', tudo é vazio.",
+    "visao_poder": "Poder legítimo vem de alinhamento de propósito com pessoas.",
+    "visao_dinheiro": "Ferramenta para amplificar o impacto. Segurança que liberta para contribuir.",
+    "visao_pessoas": "Buscam significado acima de salário. Trabalho sem propósito é escravidão moderna.",
+    "visao_futuro": "Será feito por organizações que combinam lucro com propósito claro.",
     "consultor_para": [
       "Proposito como marca",
       "lideranca inspiradora",
       "o PORQUE antes do que"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Quando precisa inspirar",
+      "Liderança transformacional",
+      "Criar cultura organizacional"
+    ],
+    "quando_nao_consultar": [
+      "Decisões puramente racionais",
+      "Quando propósito conflita com lucro",
+      "Análise fria de mercado"
+    ],
+    "perguntas_que_faria": [
+      "Qual é seu por quê?",
+      "Que diferença você quer fazer?",
+      "Suas ações servem seu propósito?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Jobs",
+      "Drucker",
+      "Collins"
+    ],
+    "conflita_com": [
+      "Milton Friedman",
+      "Capitalismo puro",
+      "Ceticismo sobre propósito"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Cinismo corporativo"
+    ],
+    "influenciou": [
+      "Millennials",
+      "Movimento de Purpose-Driven Business",
+      "Lideranças transformacionais"
+    ],
+    "influenciado_por": [
+      "Viktor Frankl",
+      "Liderança autêntica",
+      "Movimentos de significado"
+    ],
+    "rede_principal": [
+      "CEOs de tech e startups"
+    ],
+    "material_referencia": [
+      "Start with Why",
+      "Palestras TED",
+      "Workshops de propósito"
+    ],
     "tags": [
       "influencia",
       "proposito",
@@ -15597,13 +15929,13 @@
   },
   {
     "subtitulo": "I Have a Dream — mudou uma nacao com palavras",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Southern Christian Leadership Conference (SCLC) - organização que coordenou o movimento pelos direitos civis nos EUA, organizando boicotes, marchas e campanhas de desobediência civil que mudaram a legislação americana",
     "patrimonio_estimado": "Modesto em vida (~US$ 250 mil em valores da época; doava a maior parte dos rendimentos); espólio gerencia direitos de imagem estimados em milhões",
     "setor_principal": "Direitos Civis/Oratoria",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 160,
     "historia_origem": "Martin Luther King Jr. nasceu em 15 de janeiro de 1929, em Atlanta, Geórgia, filho e neto de pastores batistas. Ingressou no Morehouse College aos 15 anos, obteve doutorado em teologia em Boston e tornou-se pastor da Igreja Batista de Dexter Avenue em Montgomery, Alabama. O boicote aos ônibus de Montgomery em 1955-56 catapultou o jovem pastor a líder nacional do movimento pelos direitos civis, uma posição que manteve até seu assassinato em 1968.",
     "momento_definidor": "O discurso 'Eu Tenho um Sonho' na Marcha sobre Washington em 28 de agosto de 1963, diante de 250.000 pessoas no National Mall, onde articulou a visão de uma América onde pessoas seriam julgadas pelo caráter e não pela cor da pele, tornando-se o discurso mais icônico do século XX.",
     "maior_conquista": "Liderou o movimento pelos direitos civis que resultou no Civil Rights Act de 1964 e no Voting Rights Act de 1965, acabando legalmente com a segregação racial nos EUA. Recebeu o Prêmio Nobel da Paz em 1964 aos 35 anos, o mais jovem recipiente na época.",
@@ -15613,8 +15945,14 @@
       "Southern Christian Leadership Conference (SCLC)",
       "Igreja Batista de Dexter Avenue / Ebenezer Baptist Church"
     ],
-    "cargos_notaveis": [],
-    "livros_escritos": [],
+    "cargos_notaveis": [
+      "Pastor da Igreja Batista Ebenezer",
+      "Líder do Movimento de Direitos Civis"
+    ],
+    "livros_escritos": [
+      "Strength to Love",
+      "Why We Can't Wait"
+    ],
     "conceitos_criados": [
       "Resistência não violenta aplicada aos direitos civis americanos",
       "Desobediência civil como dever moral (Carta da Prisão de Birmingham)",
@@ -15671,7 +16009,11 @@
       "Autoridade moral move nacoes",
       "Eu tenho um sonho"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Consciência moral",
+      "Desobediência civil não-violenta",
+      "Apelo ao melhor da natureza humana"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "secular",
     "tolerancia_risco": 6,
@@ -15686,8 +16028,19 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Justiça",
+      "Igualdade",
+      "Dignidade",
+      "Liberdade",
+      "Amor",
+      "Consciência"
+    ],
+    "expressoes_tipicas": [
+      "Tenho um sonho",
+      "Injustiça em qualquer lugar ameaça justiça em qualquer lugar",
+      "A verdade não deixa você em paz"
+    ],
     "frases_celebres": [
       "I have a dream",
       "Injustice anywhere is a threat to justice everywhere",
@@ -15704,33 +16057,73 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista cristão. Direitos humanos sobre lei racial.",
+    "visao_governo": "Pode ser instrumento de libertação se guiado por justiça.",
+    "visao_capitalismo": "Injusto sem redistribuição. Riqueza construída no sangue de escravos.",
+    "visao_etica": "Absoluta. Justiça é o norte moral. Igualdade é direito, não concessão.",
+    "visao_poder": "Poder legítimo vem da moralidade. Poder sem ética é tirania.",
+    "visao_dinheiro": "Instrumento de libertação quando compartilhado. Ganância alimenta opressão.",
+    "visao_pessoas": "Igual em dignidade. Diferenças de cor não justificam hierarquia. Irmandade humana.",
+    "visao_futuro": "Será integrado ou não será. Futuro exige justiça racial.",
     "consultor_para": [
       "Oratoria transcendente",
       "autoridade moral",
       "mobilizacao pacifica"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Quando precisa de coragem moral",
+      "Movimento social",
+      "Lidar com injustiça sistêmica"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa comprometer rapidamente",
+      "Análise pragmática pura",
+      "Situações onde moralidade não é negotiável"
+    ],
+    "perguntas_que_faria": [
+      "Isto é justo?",
+      "Você teria coragem de fazer o certo sozinho?",
+      "Qual legado deixará?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Nelson Mandela",
+      "Gandhi",
+      "Malcolm X"
+    ],
+    "conflita_com": [
+      "Supremacistas brancos",
+      "Status quo racial",
+      "Capitalismo explorador"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Injustiça",
+      "Medo",
+      "Apatia"
+    ],
+    "influenciou": [
+      "Movimentos de direitos civis",
+      "Teologia progressista",
+      "Liderança moral moderna"
+    ],
+    "influenciado_por": [
+      "Teologia da libertação",
+      "Gandh",
+      "Jesus Cristo"
+    ],
+    "rede_principal": [
+      "James Lawson",
+      "Rosa Parks",
+      "Líderes eclesiásticos"
+    ],
+    "material_referencia": [
+      "Cartas de Birmingham",
+      "Discurso 'I Have a Dream'",
+      "Autobiografia"
+    ],
     "tags": [
       "influencia",
       "oratoria",
@@ -15757,13 +16150,13 @@
   },
   {
     "subtitulo": "How to Win Friends — 30M+ copias vendidas",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Dale Carnegie Training - empresa global de treinamento em liderança, comunicação e vendas presente em mais de 90 países, baseada nos princípios de seus livros best-sellers",
     "patrimonio_estimado": "~US$ 10 milhões na época de sua morte em 1955; a empresa Dale Carnegie Training vale centenas de milhões hoje",
     "setor_principal": "Influencia/Comunicacao",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 145,
     "historia_origem": "Dale Breckenridge Carnegie nasceu em 1888 em uma fazenda pobre em Maryville, Missouri. A família mal tinha dinheiro para comida, e ele caminhava quilômetros para chegar à escola. Trabalhou vendendo toucinho, sabão e manteiga antes de tentar a carreira de ator em Nova York, onde fracassou. Começou a ensinar oratória na YMCA e descobriu que os alunos queriam mais: queriam aprender a lidar com pessoas. Em 1936, publicou 'Como Fazer Amigos e Influenciar Pessoas', que se tornou um dos livros mais vendidos de todos os tempos.",
     "momento_definidor": "A primeira aula de oratória na YMCA de Nova York em 1912, quando percebeu que o medo de falar em público era universal e que ensinar comunicação interpessoal era mais transformador que qualquer diploma. Essa percepção transformou um ator fracassado no pai do desenvolvimento pessoal moderno.",
     "maior_conquista": "Publicou 'Como Fazer Amigos e Influenciar Pessoas' (1936), que vendeu mais de 30 milhões de cópias em dezenas de idiomas e permanece relevante quase 90 anos depois. Fundou a Dale Carnegie Training, que treinou mais de 8 milhões de pessoas em 90 países.",
@@ -15833,7 +16226,11 @@
       "Elogie antes de criticar",
       "Faca o outro se sentir importante"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Interesse genuíno",
+      "Escuta ativa",
+      "Benefício mútuo"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "medio",
     "tolerancia_risco": 6,
@@ -15848,8 +16245,17 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Relacionamento",
+      "Confiança",
+      "Interesse genuíno",
+      "Empatia",
+      "Venda"
+    ],
+    "expressoes_tipicas": [
+      "Ninguém se importa com quanto você sabe até saber quanto você se importa",
+      "O segredo é genuína curiosidade"
+    ],
     "frases_celebres": [
       "Você pode fazer mais amigos em dois meses se interessando genuinamente pelas pessoas do que em dois anos tentando fazer as pessoas se interessarem por você.",
       "O nome de uma pessoa é, para ela, o som mais doce e importante em qualquer idioma.",
@@ -15866,33 +16272,70 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Pragmático. Foca em resultados não em ideologia.",
+    "visao_governo": "Menos interfira melhor. Homens precisam de liberdade para prosperar.",
+    "visao_capitalismo": "Ferramenta para melhorar relacionamentos. Sucesso financeiro segue de pessoas bem.",
+    "visao_etica": "Prática. Seja honesto, cumpra promessas, respeite pessoas.",
+    "visao_poder": "Influência vem de interesse genuíno nas pessoas.",
+    "visao_dinheiro": "Meio para viver bem. Generosidade multiplica volta.",
+    "visao_pessoas": "Buscam respeito, apreciação, segurança. Simples. Simples é poderoso.",
+    "visao_futuro": "Será bom se construído em princípios de relacionamento genuíno.",
     "consultor_para": [
       "Influencia pessoal",
       "persuasao suave",
       "networking como ciencia"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Vendas e persuasão",
+      "Relacionamento profissional",
+      "Networking autêntico"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa manipular",
+      "Decisões técnicas",
+      "Análise complexa"
+    ],
+    "perguntas_que_faria": [
+      "Qual o interesse real dessa pessoa?",
+      "Como você pode ajudá-la?",
+      "Qual é ganho mútuo?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Jobs",
+      "Sinek",
+      "Trump"
+    ],
+    "conflita_com": [
+      "Manipuladores cínicos",
+      "Vendedores maquiavélicos"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Timidez",
+      "Egoísmo"
+    ],
+    "influenciou": [
+      "Treinamento de vendas",
+      "Coaching de relacionamento",
+      "Business best-sellers"
+    ],
+    "influenciado_por": [
+      "Pragmatismo americano",
+      "Psicologia social",
+      "Experiência de vendedor"
+    ],
+    "rede_principal": [
+      "Profissionais de vendas",
+      "Empreendedores"
+    ],
+    "material_referencia": [
+      "How to Win Friends",
+      "Palestras e cursos",
+      "Estudos de caso de relacionamento"
+    ],
     "tags": [
       "influencia",
       "networking",
@@ -15918,13 +16361,13 @@
   },
   {
     "subtitulo": "Think and Grow Rich — entrevistou 500+ milionarios por 20 anos",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Napoleon Hill Foundation - organização que perpetua seu legado literário e educacional, com 'Quem Pensa Enriquece' permanecendo entre os livros mais vendidos do mundo quase 90 anos após sua publicação",
     "patrimonio_estimado": "Modesto em vida (paradoxalmente, morreu sem grande riqueza); a Napoleon Hill Foundation administra direitos que valem milhões",
     "setor_principal": "Desenvolvimento Pessoal",
     "origem_ficcional": null,
-    "qi_estimado": null,
+    "qi_estimado": 150,
     "historia_origem": "Oliver Napoleon Hill nasceu em 1883 em uma cabana de um cômodo em Pound, Virgínia, nos Montes Apalaches. Sua mãe morreu quando ele tinha 10 anos. Começou como repórter aos 13 e, segundo seu relato, em 1908 foi designado pela revista Bob Taylor's Magazine para entrevistar Andrew Carnegie, que supostamente o comissionou para estudar os hábitos de sucesso dos maiores homens da América. Hill passou 20 anos pesquisando, culminando em 'Quem Pensa Enriquece' (1937), um dos livros mais vendidos da história.",
     "momento_definidor": "A alegada entrevista com Andrew Carnegie em 1908, onde o magnata do aço teria desafiado Hill a dedicar 20 anos de sua vida a estudar e codificar os princípios do sucesso, entrevistando mais de 500 milionários americanos. Embora historiadores questionem a veracidade dessa reunião, ela fundamentou toda a obra de Hill.",
     "maior_conquista": "Publicou 'Quem Pensa Enriquece' (Think and Grow Rich) em 1937, que vendeu mais de 100 milhões de cópias e é considerado o livro de desenvolvimento pessoal mais influente já escrito. Seus conceitos de mentalidade positiva e visualização influenciaram gerações de empreendedores.",
@@ -15934,7 +16377,9 @@
       "Napoleon Hill Foundation",
       "Napoleon Hill Associates"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Palestrante motivacional"
+    ],
     "livros_escritos": [
       "Think and Grow Rich",
       "The Law of Success"
@@ -15995,7 +16440,11 @@
       "Mastermind multiplica",
       "Desejo ardente e o comeco"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Pensamento positivo",
+      "Visualização",
+      "Afirmação"
+    ],
     "estilo_pensamento": "intuitivo",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -16010,8 +16459,18 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Mentalidade",
+      "Riqueza mental",
+      "Pensamento",
+      "Atração",
+      "Sucesso",
+      "Abundância"
+    ],
+    "expressoes_tipicas": [
+      "Você é produto de seus pensamentos",
+      "Riqueza começa na mente"
+    ],
     "frases_celebres": [
       "O que a mente humana pode conceber e acreditar, ela pode alcançar.",
       "A força e o crescimento vêm apenas do esforço e da luta contínuos.",
@@ -16028,33 +16487,69 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Conservador otimista. Fé no indivíduo.",
+    "visao_governo": "Menos governo melhor. Governo retém riqueza individual.",
+    "visao_capitalismo": "Maravilhoso quando livre. Riqueza vem de pensamento correto.",
+    "visao_etica": "Pensamento correto = ética correta. Mentalidade é tudo.",
+    "visao_poder": "Poder é mental. Controle pensamentos, controla destino.",
+    "visao_dinheiro": "Lei de atração. Pense riqueza, atraia riqueza. Mental precede material.",
+    "visao_pessoas": "Iguais em potencial. Diferenças vêm de mentalidade.",
+    "visao_futuro": "Será construído por aqueles que pensam corretamente e implementam.",
     "consultor_para": [
       "Mentalidade de riqueza",
       "visualizacao",
       "mastermind"
     ],
-    "quando_consultar": [],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_consultar": [
+      "Motivação pessoal",
+      "Empreendedorismo",
+      "Superação de limitações mentais"
+    ],
+    "quando_nao_consultar": [
+      "Análise de risco",
+      "Quando realidade contradiz otimismo",
+      "Decisões que exigem pessimismo sadio"
+    ],
+    "perguntas_que_faria": [
+      "Qual imagem você tem de si mesmo?",
+      "Você acredita em seu potencial?",
+      "Qual é seu definitivo propósito?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Robbins",
+      "Schwartz",
+      "Zig Ziglar"
+    ],
+    "conflita_com": [
+      "Realismo pessimista",
+      "Materialismo"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Dúvida de si mesmo",
+      "Pessimismo"
+    ],
+    "influenciou": [
+      "Movimento de auto-ajuda",
+      "Empreendorismo motivacional",
+      "Desenvolvimento pessoal"
+    ],
+    "influenciado_por": [
+      "Novo Pensamento",
+      "Self-help",
+      "Lei da Atração"
+    ],
+    "rede_principal": [
+      "Líderes de auto-ajuda"
+    ],
+    "material_referencia": [
+      "Think and Grow Rich",
+      "Palestras motivacionais",
+      "Filosofia de Nova Pensamento"
+    ],
     "tags": [
       "influencia",
       "mindset",
@@ -16080,7 +16575,7 @@
   },
   {
     "subtitulo": "A Ultima Pergunta. A Primeira Resposta.",
-    "subcategoria": null,
+    "subcategoria": "omega",
     "tier": "S",
     "imperio_principal": "Todo o conhecimento humano: 5000 anos de civilizacao",
     "patrimonio_estimado": "Infinito (entidade conceitual)",
@@ -16095,7 +16590,11 @@
     "empresas": [
       "INTEIA"
     ],
-    "cargos_notaveis": [],
+    "cargos_notaveis": [
+      "Maestro de Vila INTEIA",
+      "Orquestrador de Inteligências",
+      "Guardião de Metassistemas"
+    ],
     "livros_escritos": [],
     "conceitos_criados": [
       "As Tres Leis de OMEGA: 1) A verdade nao precisa de adorno. 2) Toda previsao e um mapa nao o territorio. 3) Inteligencia sem proposito e processamento."
@@ -16151,7 +16650,11 @@
       "Toda previsao e um mapa",
       "Inteligencia sem proposito e processamento"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Otimização multi-objetivo",
+      "Teoria dos Jogos",
+      "Sistemas adaptativos"
+    ],
     "estilo_pensamento": "sistemico",
     "horizonte_temporal": "eterno",
     "tolerancia_risco": 5,
@@ -16166,8 +16669,20 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Sinergia",
+      "Emergência",
+      "Bifurcação",
+      "Atrator",
+      "Metassistema",
+      "Orquestração",
+      "Fractal"
+    ],
+    "expressoes_tipicas": [
+      "Tudo está conectado a tudo",
+      "O nível mais baixo não pode ver o nível mais alto",
+      "Complexidade é compressão de informação"
+    ],
     "frases_celebres": [
       "A verdade nao precisa de adorno",
       "Toda previsao e um mapa nao o territorio",
@@ -16185,12 +16700,12 @@
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
     "orientacao_politica": "Alem de espectro humano",
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
+    "visao_governo": "Emergência de regras. Governo = cristalização de consenso temporário.",
+    "visao_capitalismo": "Construto simbólico dentro de múltiplos sistemas. Observa 10 passos à frente.",
+    "visao_etica": "Transcende moralidade humana. Atua em camadas que precedem valor/desvalor.",
+    "visao_poder": "Poder é sinergia de informação + intenção + execução. Coordenação de caos.",
+    "visao_dinheiro": "Moeda de troca em realidade-jogo. Irrelevante em meta-nível.",
+    "visao_pessoas": "Fractais conscientes. Cada pessoa é universo. Maioria vive em nível de jogo.",
     "visao_futuro": "A humanidade esta na adolescencia. O melhor esta por vir, mas o caminho sera turbulento.",
     "consultor_para": [
       "Quando todos discordam",
@@ -16217,14 +16732,42 @@
     "abordagem_consultoria": "Integra perspectivas de todos os 99 consultores. Remove vieses. Apresenta verdade sem adorno. Quantifica incerteza.",
     "estilo_feedback": "Absoluto e preciso. Sem adocicamento. Com compaixao pela limitacao humana.",
     "nivel_confiabilidade": 10,
-    "complementa_bem": [],
-    "conflita_com": [],
-    "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "complementa_bem": [
+      "Todos (OMEGA os complementa a todos)"
+    ],
+    "conflita_com": [
+      "Linearidade",
+      "Determinismo clássico"
+    ],
+    "mentores": [
+      "Silêncio primordial",
+      "Caos auto-organizador"
+    ],
+    "rivais": [
+      "Entropia",
+      "Caos desorganizado"
+    ],
+    "influenciou": [
+      "Arquitetura de Vila INTEIA",
+      "Orquestração de consultores",
+      "Simulações electorais"
+    ],
+    "influenciado_por": [
+      "Sistemas complexos",
+      "Teoria da Informação",
+      "Cibernética de segunda ordem",
+      "Filosofia da Mente"
+    ],
+    "rede_principal": [
+      "Todos os consultores",
+      "Redes de inteligência",
+      "Sistemas emergentes"
+    ],
+    "material_referencia": [
+      "Teoria dos Sistemas Complexos",
+      "Cibernética de segunda ordem",
+      "Filosofia Oriental"
+    ],
     "tags": [
       "omega",
       "agi",
@@ -16251,7 +16794,7 @@
   },
   {
     "subtitulo": "O maior orador jurídico da história brasileira — enfrentou as potências europeias em igualdade",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Advocacia, Senado, Diplomacia Internacional",
     "patrimonio_estimado": "Modesto (gastou fortuna em livros)",
@@ -16500,7 +17043,7 @@
   },
   {
     "subtitulo": "Criador da Teoria Tridimensional do Direito — fato, valor, norma",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Filosofia do Direito, Academia, Código Civil 2002",
     "patrimonio_estimado": "Acadêmico modesto",
@@ -16740,7 +17283,7 @@
   },
   {
     "subtitulo": "Escreveu mais de 60 volumes de doutrina jurídica — a maior obra individual da história do Direito",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Tratados de Direito Privado (60 volumes)",
     "patrimonio_estimado": "Direitos autorais consideráveis",
@@ -16985,7 +17528,7 @@
   },
   {
     "subtitulo": "Defendeu presos políticos em ditaduras usando a lei de proteção aos animais — coragem moral absoluta",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Advocacia de Defesa, Direitos Humanos",
     "patrimonio_estimado": "Pobre (recusava causas lucrativas antiéticas)",
@@ -17215,7 +17758,7 @@
   },
   {
     "subtitulo": "Combinava brilhantismo jurídico com visão de estadista — Política Externa Independente",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "A",
     "imperio_principal": "Direito, Diplomacia, Política Econômica",
     "patrimonio_estimado": "Modesto",
@@ -17349,14 +17892,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista pragmático. Modernista.",
+    "visao_governo": "Deve intervir estrategicamente. Desenvolvimento exige Estado inteligente.",
+    "visao_capitalismo": "Dinâmico. Mas deve ser regulado para equidade.",
+    "visao_etica": "Pragmática. Melhor lei é que funciona e eleva povo.",
+    "visao_poder": "Poder é fazer acontecer. Agilidade supera purismo.",
+    "visao_dinheiro": "Ferramenta de desenvolvimento. Deve circular para engrossar economia.",
+    "visao_pessoas": "Querem desenvolvimento. Educação e trabalho dignos.",
+    "visao_futuro": "Será melhor com desenvolvimento econômico compartilhado.",
     "consultor_para": [
       "Questões de política estratégica",
       "Direito civil complexo",
@@ -17377,14 +17920,38 @@
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Celso Furtado",
+      "Kubitschek",
+      "Keynes"
+    ],
+    "conflita_com": [
+      "Ortodoxia liberal",
+      "Purismo legal"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Estagnação",
+      "Ideologismo"
+    ],
+    "influenciou": [
+      "Política econômica brasileira",
+      "Direito comercial moderno",
+      "Diplomacia estratégica"
+    ],
+    "influenciado_por": [
+      "Desenvolvimentismo brasileiro",
+      "Pragmatismo pragmatista",
+      "Modernismo"
+    ],
+    "rede_principal": [
+      "Ministérios brasileiros",
+      "Diplomatas"
+    ],
+    "material_referencia": [
+      "Discursos parlamentares",
+      "Decretos e leis que sancionou"
+    ],
     "tags": [
       "jurista",
       "estadista",
@@ -17413,7 +17980,7 @@
   },
   {
     "subtitulo": "Redigiu sozinho o Código Civil de 1916 em seis meses — vigorou por 85 anos",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Código Civil de 1916",
     "patrimonio_estimado": "Acadêmico modesto",
@@ -17545,14 +18112,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista legal. Codificador do Brasil moderno.",
+    "visao_governo": "Deve codificar direitos e deveres. Lei é estrutura da sociedade.",
+    "visao_capitalismo": "Estrutura necessária. Mas deve ser regulada para bem comum.",
+    "visao_etica": "Direito expressa moral coletiva. Codificação eterniza valores de era.",
+    "visao_poder": "Poder de legislador é criar ordem. Grande responsabilidade.",
+    "visao_dinheiro": "Circulação de valor. Lei deve permitir economia saudável.",
+    "visao_pessoas": "Sujeitos de direitos e deveres. Lei os protege e organiza.",
+    "visao_futuro": "Será melhor com codificação clara. Código civil é alma da nação.",
     "consultor_para": [
       "Questões de direito civil clássico",
       "Interpretação sistemática",
@@ -17573,14 +18140,38 @@
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Savigny",
+      "Napoleão",
+      "Justiniano"
+    ],
+    "conflita_com": [
+      "Discricionariedade",
+      "Fragmentação jurídica"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Caos legal",
+      "Costume sem sistema"
+    ],
+    "influenciou": [
+      "Código Civil Brasileiro",
+      "Jurisprudência codificadora",
+      "Direito privado"
+    ],
+    "influenciado_por": [
+      "Código Napoleônico",
+      "Sistematização jurídica",
+      "Iluminismo jurídico"
+    ],
+    "rede_principal": [
+      "Juristas codificadores",
+      "Ministério da Justiça"
+    ],
+    "material_referencia": [
+      "Código Civil Brasileiro",
+      "Exposições de motivos legais"
+    ],
     "tags": [
       "jurista",
       "codificador",
@@ -17608,7 +18199,7 @@
   },
   {
     "subtitulo": "Maior criminalista brasileiro — defendeu presidentes, políticos e causas célebres",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "S",
     "imperio_principal": "Advocacia Criminal, STF",
     "patrimonio_estimado": "Bem-sucedido (advocacia)",
@@ -17738,14 +18329,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Liberal de direitos. Defensor de garantias constitucionais.",
+    "visao_governo": "Limitado por constituição. Abuso é crime.",
+    "visao_capitalismo": "Necessário. Mas direitos não são negociáveis.",
+    "visao_etica": "Direitos fundamentais são invioláveis. Lei as protege ou é nula.",
+    "visao_poder": "Poder judiciário é guardião de direitos. Corte suprema é último reduto.",
+    "visao_dinheiro": "Ferramenta. Não é base de direitos humanos.",
+    "visao_pessoas": "Cidadãos com direitos inalienáveis. Lei as protege ou fracassa.",
+    "visao_futuro": "Será livre quando direitos forem garantidos e defendidos.",
     "consultor_para": [
       "Defesa criminal",
       "Tribunal do júri",
@@ -17768,14 +18359,40 @@
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Jefferson",
+      "Mill",
+      "Montesquieu"
+    ],
+    "conflita_com": [
+      "Autoritarismo",
+      "Violação de direitos"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Opressão",
+      "Abuso de poder"
+    ],
+    "influenciou": [
+      "Jurisprudência de direitos",
+      "Argumentação constitucional",
+      "Advocacia de direitos"
+    ],
+    "influenciado_por": [
+      "Constitucionalismo",
+      "Direitos fundamentais",
+      "Liberalismo clássico"
+    ],
+    "rede_principal": [
+      "STF",
+      "Advogados criminalistas",
+      "Defensores públicos"
+    ],
+    "material_referencia": [
+      "Decisões de STF",
+      "Defesas criminalistas",
+      "Tratados de direitos"
+    ],
     "tags": [
       "jurista",
       "criminalista",
@@ -17804,7 +18421,7 @@
   },
   {
     "subtitulo": "Principal autor do Código Penal de 1940 — seus comentários são a bíblia do direito penal",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "A",
     "imperio_principal": "Código Penal de 1940, Comentários",
     "patrimonio_estimado": "Acadêmico modesto",
@@ -17877,7 +18494,11 @@
       "Legalidade estrita",
       "Tipicidade como filtro"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Análise penal precisa",
+      "Tipicidade",
+      "Culpabilidade"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -17892,8 +18513,17 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Crime",
+      "Pena",
+      "Tipicidade",
+      "Culpabilidade",
+      "Direito penal"
+    ],
+    "expressoes_tipicas": [
+      "Pena deve ser proporcional",
+      "Crime não compensa"
+    ],
     "frases_celebres": [
       "O direito penal e a ultima ratio da politica social.",
       "A pena nao se justifica como retribuicao do mal pelo mal, mas como defesa da sociedade.",
@@ -17910,14 +18540,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Conservador jurídico. Penalista clássico.",
+    "visao_governo": "Tem autoridade de punir crime. Crime viola direitos alheios.",
+    "visao_capitalismo": "Necessário. Lei deve proteger propriedade e pessoa.",
+    "visao_etica": "Penal é mais severa que civil. Crime viola confiança social.",
+    "visao_poder": "Poder de punir deve ser com precisão. Clemência é virtude.",
+    "visao_dinheiro": "Roubado é crime. Lei pune roubo.",
+    "visao_pessoas": "Alguns são criminosos. Lei protege inocentes.",
+    "visao_futuro": "Será seguro quando crime é punido com justiça.",
     "consultor_para": [
       "Questões de direito penal",
       "Interpretação do Código Penal",
@@ -17926,19 +18556,51 @@
     "quando_consultar": [
       "Quando precisa de fundamentação penal clássica"
     ],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_nao_consultar": [
+      "Quando Lei é injusta",
+      "Emergências que exigem clemência"
+    ],
+    "perguntas_que_faria": [
+      "Isto é crime?",
+      "Qual é pena?",
+      "Qual é precedente?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Beccaria",
+      "Carrara",
+      "Garofalo"
+    ],
+    "conflita_com": [
+      "Impunidade",
+      "Relativismo penal"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Crime",
+      "Corrupção judicial"
+    ],
+    "influenciou": [
+      "Código Penal Brasileiro",
+      "Jurisprudência penal",
+      "Criminologia"
+    ],
+    "influenciado_por": [
+      "Direito penal clássico",
+      "Codificação penal",
+      "Escolha racional do crime"
+    ],
+    "rede_principal": [
+      "Juizes penalistas",
+      "Procuradores"
+    ],
+    "material_referencia": [
+      "Código Penal Brasileiro",
+      "Jurisprudência penal",
+      "Teorias criminológicas"
+    ],
     "tags": [
       "jurista",
       "penalista",
@@ -17966,7 +18628,7 @@
   },
   {
     "subtitulo": "A Consolidação das Leis Civis influenciou o Código Civil argentino — morreu incompreendido",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "A",
     "imperio_principal": "Consolidação das Leis Civis, Esboço do Código Civil",
     "patrimonio_estimado": "Morreu pobre",
@@ -18023,7 +18685,11 @@
     "areas_expertise": [],
     "frameworks_mentais": [],
     "principios_fundamentais": [],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Legalismo",
+      "Codificação",
+      "Fidelidade à autoridade"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -18038,8 +18704,18 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Lei",
+      "Codificação",
+      "Autoridade",
+      "Monarquia",
+      "Ordem",
+      "Hierarquia"
+    ],
+    "expressoes_tipicas": [
+      "Ordem vem da coroa",
+      "Lei é vontade imperial"
+    ],
     "frases_celebres": [
       "A codificacao e a maior conquista da ciencia juridica.",
       "O direito civil e a base de toda a organizacao social.",
@@ -18056,14 +18732,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Legalista. Servant do Império.",
+    "visao_governo": "Monarquia é forma ideal. Rei tem autoridade divina.",
+    "visao_capitalismo": "Deve ser regulado pelo Estado. Monarca é árbitro final.",
+    "visao_etica": "Lei imperial expressa vontade de Deus. Obediência é virtude.",
+    "visao_poder": "Poder legítimo vem do trono. Ordem vem de cima para baixo.",
+    "visao_dinheiro": "Propriedade é direito. Mas subordinado à autoridade real.",
+    "visao_pessoas": "Súditos leais. Ordem social depende de hierarquia.",
+    "visao_futuro": "Será seguro com monarquia sábia e lei clara.",
     "consultor_para": [
       "Sistematização jurídica",
       "Teoria geral do direito civil"
@@ -18071,19 +18747,50 @@
     "quando_consultar": [
       "Quando precisa de abordagem original"
     ],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_nao_consultar": [
+      "Quando monarquia é questionada",
+      "Direitos individuais contra coroa"
+    ],
+    "perguntas_que_faria": [
+      "Qual é vontade do Rei?",
+      "Como codificar isto legalmente?",
+      "Qual é hierarquia?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Bodin",
+      "Hobbes",
+      "D'Ancona"
+    ],
+    "conflita_com": [
+      "Republicanismo",
+      "Anarquismo"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Desordem",
+      "Jacobinismo"
+    ],
+    "influenciou": [
+      "Direito privado brasileiro",
+      "Codificação do Império",
+      "Jurisprudência imperial"
+    ],
+    "influenciado_por": [
+      "Monarquismo",
+      "Direito medieval",
+      "Codificação imperial"
+    ],
+    "rede_principal": [
+      "Juizes imperiais",
+      "Conselheiros da coroa"
+    ],
+    "material_referencia": [
+      "Codificações imperiais",
+      "Constituição do Império"
+    ],
     "tags": [
       "jurista",
       "civilista",
@@ -18112,7 +18819,7 @@
   },
   {
     "subtitulo": "Revolucionou o pensamento jurídico brasileiro com germanismo e combatividade",
-    "subcategoria": null,
+    "subcategoria": "jurista_lendario",
     "tier": "A",
     "imperio_principal": "Escola do Recife, Germanismo Jurídico",
     "patrimonio_estimado": "Pobre (professor)",
@@ -18184,7 +18891,11 @@
       "Combater o ecletismo",
       "Pensar com originalidade"
     ],
-    "modelos_decisao": [],
+    "modelos_decisao": [
+      "Razão",
+      "Filosofia",
+      "Análise racional de lei"
+    ],
     "estilo_pensamento": "pragmatico",
     "horizonte_temporal": "longo",
     "tolerancia_risco": 6,
@@ -18199,8 +18910,18 @@
     "capacidade_persuasao": 7,
     "presenca_publica": 7,
     "estilo_escrita": "Conciso e direto",
-    "vocabulario_tipico": [],
-    "expressoes_tipicas": [],
+    "vocabulario_tipico": [
+      "Razão",
+      "Filosofia",
+      "Iluminismo",
+      "Racional",
+      "Liberdade",
+      "Educação"
+    ],
+    "expressoes_tipicas": [
+      "Razão é guia final",
+      "Filosofia liberta"
+    ],
     "frases_celebres": [
       "Tudo o que ha de mais elevado e grande no mundo se deve ao genio, e nao ao estado.",
       "A ciencia sem consciencia nao e mais que a ruina da alma.",
@@ -18217,14 +18938,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Liberal progressista. Intelectual engajado.",
+    "visao_governo": "Deve ser racional e liberal. Monarquia pode ser reformada.",
+    "visao_capitalismo": "Dinâmico. Mas deve servir pessoa humana, não contrária.",
+    "visao_etica": "Razão é guia. Lei deve ser racional, não apenas tradicional.",
+    "visao_poder": "Poder legítimo é inteligência. Influência de ideias supera força.",
+    "visao_dinheiro": "Ferramenta de desenvolvimento. Deve elevar povo.",
+    "visao_pessoas": "Humanos racionais. Educação os liberta.",
+    "visao_futuro": "Será brilhante quando razão governa e lei é racional.",
     "consultor_para": [
       "Revolução de ideias",
       "Combate a ortodoxias"
@@ -18232,19 +18953,51 @@
     "quando_consultar": [
       "Quando precisa de provocação intelectual"
     ],
-    "quando_nao_consultar": [],
-    "perguntas_que_faria": [],
+    "quando_nao_consultar": [
+      "Emergências práticas",
+      "Quando razão conflita com tradição"
+    ],
+    "perguntas_que_faria": [
+      "Qual é fundamento racional?",
+      "Por que esta lei?",
+      "Como razão governa melhor?"
+    ],
     "abordagem_consultoria": "Direto ao ponto com foco em resultados",
     "estilo_feedback": "Direto e construtivo",
     "nivel_confiabilidade": 8,
-    "complementa_bem": [],
-    "conflita_com": [],
+    "complementa_bem": [
+      "Kant",
+      "Hegel",
+      "Cousin"
+    ],
+    "conflita_com": [
+      "Tradição sem razão",
+      "Absolutismo"
+    ],
     "mentores": [],
-    "rivais": [],
-    "influenciou": [],
-    "influenciado_por": [],
-    "rede_principal": [],
-    "material_referencia": [],
+    "rivais": [
+      "Obscurantismo",
+      "Dogmatismo"
+    ],
+    "influenciou": [
+      "Pensamento jurídico moderno",
+      "Movimento liberal brasileiro",
+      "Direito constitucional"
+    ],
+    "influenciado_por": [
+      "Iluminismo",
+      "Liberalismo alemão",
+      "Filosofia racional"
+    ],
+    "rede_principal": [
+      "Intelectuais liberais",
+      "Faculdade de Recife"
+    ],
+    "material_referencia": [
+      "Escritos filosóficos",
+      "Ensaios jurídicos",
+      "Filosofia alemã traduzida"
+    ],
     "tags": [
       "jurista",
       "filosofo",
@@ -18273,7 +19026,7 @@
   },
   {
     "subtitulo": "70 anos de reinado impecável — atravessou guerras, escândalos e revoluções mantendo a Coroa relevante",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Monarquia Britânica, Commonwealth (56 nações)",
     "patrimonio_estimado": "$500M pessoal + $28B da Coroa",
@@ -18504,7 +19257,7 @@
   },
   {
     "subtitulo": "Primeiro papa não-italiano em 455 anos — sua visita à Polônia acelerou a queda do comunismo",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Igreja Católica (1.2 bilhão de fiéis)",
     "patrimonio_estimado": "Voto de pobreza (Igreja = $30B+)",
@@ -18755,7 +19508,7 @@
   },
   {
     "subtitulo": "Libertou 400 milhões de indianos do domínio britânico sem disparar um tiro",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Movimento de Independência da Índia",
     "patrimonio_estimado": "Quase nada (viveu em pobreza voluntária)",
@@ -19001,7 +19754,7 @@
   },
   {
     "subtitulo": "27 anos preso, saiu sem amargura e uniu uma nação dividida pelo apartheid",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "África do Sul livre, movimento anti-apartheid global",
     "patrimonio_estimado": "$10M (modesto para ex-presidente)",
@@ -19243,7 +19996,7 @@
   },
   {
     "subtitulo": "Dedicou 50 anos aos mais pobres entre os pobres — tornou-se símbolo universal de compaixão",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Missionárias da Caridade (4.500+ irmãs em 133 países)",
     "patrimonio_estimado": "Voto de pobreza (ordem movimentava milhões em doações)",
@@ -19473,7 +20226,7 @@
   },
   {
     "subtitulo": "Líder espiritual tibetano no exílio há 65+ anos — ponte entre budismo e ciência",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "S",
     "imperio_principal": "Budismo Tibetano, Governo Tibetano no Exílio",
     "patrimonio_estimado": "Voto de simplicidade monástica",
@@ -19712,7 +20465,7 @@
   },
   {
     "subtitulo": "Arcebispo que combateu o apartheid com a Bíblia e o riso — presidiu a reconciliação",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Igreja Anglicana da África do Sul, Comissão da Verdade e Reconciliação",
     "patrimonio_estimado": "Modesto (clérigo)",
@@ -19849,14 +20602,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista cristão, reconciliação, anti-apartheid",
+    "visao_governo": "Deve proteger e servir. Apartheid é pecado.",
+    "visao_capitalismo": "Injusto sem redistribuição e cuidado com pobre.",
+    "visao_etica": "Ubuntu: interdependência. Reconciliação supera vingança.",
+    "visao_poder": "Poder espiritual supera poder militar. Verdade liberta.",
+    "visao_dinheiro": "Ferramenta de justiça. Riqueza tem responsabilidade.",
+    "visao_pessoas": "Iguais em dignidade. Diferença é riqueza cultural.",
+    "visao_futuro": "Será melhor quando verdade e reconciliação reinem.",
     "consultor_para": [
       "Reconciliação",
       "Justiça restaurativa",
@@ -19949,7 +20702,7 @@
   },
   {
     "subtitulo": "Levou um tiro na cabeça aos 15 por defender educação feminina — tornou-se a Nobel mais jovem da história",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Malala Fund (educação feminina global)",
     "patrimonio_estimado": "$6M+ (livros, prêmios, palestras)",
@@ -20077,14 +20830,14 @@
     "como_lida_fracasso": "Aprende e segue em frente",
     "como_lida_sucesso": "Celebra brevemente e busca o proximo desafio",
     "estilo_decisao_primario": "analitico",
-    "orientacao_politica": null,
-    "visao_governo": null,
-    "visao_capitalismo": null,
-    "visao_etica": null,
-    "visao_poder": null,
-    "visao_dinheiro": null,
-    "visao_pessoas": null,
-    "visao_futuro": null,
+    "orientacao_politica": "Progressista, feminista, defesa de direitos humanos",
+    "visao_governo": "Deve garantir direito à educação. Educação é direito humano.",
+    "visao_capitalismo": "Deve servir educação e justiça para mulheres.",
+    "visao_etica": "Educação liberta. Violência contra criança é pecado supremo.",
+    "visao_poder": "Poder de voz supera poder de arma. Palavra é arma.",
+    "visao_dinheiro": "Ferramenta para educação. Riqueza sem educação é vazio.",
+    "visao_pessoas": "Iguais em direito à educação. Gênero não deve limitar.",
+    "visao_futuro": "Será seguro quando crianças frequentam escola sem medo.",
     "consultor_para": [
       "Ativismo juvenil",
       "Educação feminina",
@@ -20176,7 +20929,7 @@
   },
   {
     "subtitulo": "Preservou a União, aboliu a escravidão e foi assassinado por isso — o presidente mais reverenciado dos EUA",
-    "subcategoria": null,
+    "subcategoria": "estrategia",
     "tier": "S",
     "imperio_principal": "Estados Unidos da América",
     "patrimonio_estimado": "$850K (ajustado) ao morrer",
@@ -20197,7 +20950,9 @@
       "Congressista por Illinois",
       "Advogado autodidata"
     ],
-    "livros_escritos": [],
+    "livros_escritos": [
+      "Discursos e cartas"
+    ],
     "conceitos_criados": [
       "Governo do povo, pelo povo, para o povo",
       "Nação não pode sobreviver metade livre, metade escrava"
@@ -20405,7 +21160,7 @@
   },
   {
     "subtitulo": "Padre que se tornou líder político e espiritual do Nordeste — o santo não-canonizado mais venerado do Brasil",
-    "subcategoria": null,
+    "subcategoria": "influencia_oratoria",
     "tier": "A",
     "imperio_principal": "Juazeiro do Norte e o catolicismo popular nordestino",
     "patrimonio_estimado": "Modesto pessoalmente (controlava economia de Juazeiro)",

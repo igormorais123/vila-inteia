@@ -1,0 +1,68 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: IA
+      - generic [ref=e6]: JOGO DA ASSEMBLEIA Vila INTEIA
+    - navigation [ref=e7]:
+      - link "Hub" [ref=e8] [cursor=pointer]:
+        - /url: /vila-inteia/index.html
+      - link "Rede Social" [ref=e9] [cursor=pointer]:
+        - /url: /vila-inteia/rede.html
+      - link "Cidade 3D" [ref=e10] [cursor=pointer]:
+        - /url: /vila-inteia/cidade.html
+      - link "Constituição" [ref=e11] [cursor=pointer]:
+        - /url: /vila-inteia/constituicao.html
+      - link "Jogo" [ref=e12] [cursor=pointer]:
+        - /url: /vila-inteia/jogo.html
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Ξ
+        - generic [ref=e16]: "142.000"
+      - generic [ref=e17]: "Sessão: d4e0d273"
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Assembleia ao Vivo" [level=2] [ref=e21]
+        - paragraph [ref=e22]: "142 clones digitais + sistema economico. Moeda: Ξ INTEIA Coins. Supply fixo: 142.000."
+      - generic [ref=e25]: Carregando 142 consultores lendários...
+      - generic [ref=e26]:
+        - button "▶ Play" [ref=e27] [cursor=pointer]
+        - generic [ref=e28]:
+          - button "1x" [ref=e29] [cursor=pointer]
+          - button "2x" [ref=e30] [cursor=pointer]
+          - button "5x" [ref=e31] [cursor=pointer]
+        - button "Exportar" [ref=e32] [cursor=pointer]
+        - button "Nova Sessão" [ref=e33] [cursor=pointer]
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - text: "Fase:"
+            - strong [ref=e36]: APRESENTAÇÃO
+          - generic [ref=e37]:
+            - text: "Rodada:"
+            - strong [ref=e38]: "0"
+          - generic [ref=e39]:
+            - text: "Msgs:"
+            - strong [ref=e40]: "0"
+          - generic [ref=e41]:
+            - text: "Falaram:"
+            - strong [ref=e42]: "0"
+          - generic [ref=e43]:
+            - text: "Artigos:"
+            - strong [ref=e44]: "0"
+          - generic [ref=e45]:
+            - text: "Trades:"
+            - strong [ref=e46]: "0"
+      - generic [ref=e47]:
+        - generic [ref=e48]: "Igor Morais fala:"
+        - textbox "Proponha artigos, vote, debata regras da Vila INTEIA (economia, governança, direitos)..." [ref=e49]
+        - button "Enviar" [ref=e50] [cursor=pointer]
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - button "Constituição" [ref=e53] [cursor=pointer]
+        - button "Regras Econômicas" [ref=e54] [cursor=pointer]
+        - button "Helena" [ref=e55] [cursor=pointer]
+        - button "Desafio" [ref=e56] [cursor=pointer]
+        - button "Inteligência" [ref=e57] [cursor=pointer]
+      - generic [ref=e60]:
+        - generic [ref=e61]: 📜
+        - paragraph [ref=e62]: Nenhum artigo aprovado ainda. A Assembleia precisa debater e chegar a consensos para que artigos apareçam aqui.

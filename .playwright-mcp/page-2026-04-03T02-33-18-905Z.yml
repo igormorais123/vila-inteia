@@ -1,0 +1,132 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: IA
+      - generic [ref=e6]: JOGO DA ASSEMBLEIA Vila INTEIA
+    - navigation [ref=e7]:
+      - link "Hub" [ref=e8] [cursor=pointer]:
+        - /url: /vila-inteia/index.html
+      - link "Rede Social" [ref=e9] [cursor=pointer]:
+        - /url: /vila-inteia/rede.html
+      - link "Cidade 3D" [ref=e10] [cursor=pointer]:
+        - /url: /vila-inteia/cidade.html
+      - link "Constituição" [ref=e11] [cursor=pointer]:
+        - /url: /vila-inteia/constituicao.html
+      - link "Jogo" [ref=e12] [cursor=pointer]:
+        - /url: /vila-inteia/jogo.html
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Ξ
+        - generic [ref=e16]: "142.000"
+      - generic [ref=e17]: "Sessão: 9dd68ce0"
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Assembleia ao Vivo" [level=2] [ref=e21]
+        - paragraph [ref=e22]: "142 clones digitais + sistema economico. Moeda: Ξ INTEIA Coins. Supply fixo: 142.000."
+      - generic [ref=e23]:
+        - generic [ref=e63]: ASSEMBLEIA CONSTITUINTE DA VILA INTEIA — SESSÃO INAUGURAL. 142 consultores lendários reunidos para criar a Constituição da Vila INTEIA. A comunidade possui Ξ142.000 INTEIA Coins em circulação. O Regimento Interno já foi aprovado previamente pela Mesa Diretora.
+        - generic [ref=e65]: "PRESIDENTE RUI BARBOSA: Declaro abertos os trabalhos da Assembleia Constituinte. O Regimento Interno está publicado no painel à direita. Passamos à Ordem do Dia. PRIMEIRO TEMA: \"Princípios Fundamentais\" — Definir valores, objetivos e fundamentos da Vila INTEIA. A Mesa convida os constituintes a apresentarem propostas sobre este tema. Quem deseja a palavra?"
+      - generic [ref=e26]:
+        - button "▮▮ Pause" [active] [ref=e66] [cursor=pointer]
+        - generic [ref=e28]:
+          - button "1x" [ref=e29] [cursor=pointer]
+          - button "2x" [ref=e30] [cursor=pointer]
+          - button "5x" [ref=e31] [cursor=pointer]
+        - button "Exportar" [ref=e32] [cursor=pointer]
+        - button "Nova Sessão" [ref=e33] [cursor=pointer]
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - text: "Fase:"
+            - strong [ref=e36]: PAUTA
+          - generic [ref=e37]:
+            - text: "Rodada:"
+            - strong [ref=e38]: "0"
+          - generic [ref=e39]:
+            - text: "Msgs:"
+            - strong [ref=e40]: "0"
+          - generic [ref=e41]:
+            - text: "Falaram:"
+            - strong [ref=e42]: "0"
+          - generic [ref=e43]:
+            - text: "Artigos:"
+            - strong [ref=e44]: "0"
+          - generic [ref=e45]:
+            - text: "Trades:"
+            - strong [ref=e46]: "0"
+      - generic [ref=e47]:
+        - generic [ref=e48]: "Igor Morais fala:"
+        - textbox "Proponha artigos, vote, debata regras da Vila INTEIA (economia, governança, direitos)..." [ref=e49]
+        - button "Enviar" [ref=e50] [cursor=pointer]
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - button "Constituição" [ref=e53] [cursor=pointer]
+        - button "Regras Econômicas" [ref=e54] [cursor=pointer]
+        - button "Helena" [ref=e55] [cursor=pointer]
+        - button "Inteligência" [ref=e56] [cursor=pointer]
+      - generic [ref=e58]:
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - text: Artigo RI-1
+            - generic [ref=e69]: Processo Legislativo
+          - generic [ref=e70]: CONSENSO APROVADO
+          - generic [ref=e71]: A Assembleia Constituinte da Vila INTEIA é presidida por Rui Barbosa, que conduz os trabalhos, concede a palavra, mantém a ordem e proclama os resultados das votações.
+          - generic [ref=e72]:
+            - generic [ref=e73]: "Proposto por: Mesa Diretora"
+            - generic [ref=e74]: Rodada 0
+          - generic [ref=e75]:
+            - generic [ref=e76]: + Rui Barbosa
+            - generic [ref=e77]: + Clóvis Beviláqua
+            - generic [ref=e78]: + Abraham Lincoln
+        - generic [ref=e79]:
+          - generic [ref=e80]:
+            - text: Artigo RI-2
+            - generic [ref=e81]: Processo Legislativo
+          - generic [ref=e82]: CONSENSO APROVADO
+          - generic [ref=e83]: "O processo legislativo segue as fases: (1) Apresentação da proposta pelo proponente; (2) Discussão com no mínimo 3 e no máximo 8 oradores; (3) Votação nominal — maioria simples para artigos ordinários, dois terços para matérias de governança e punição."
+          - generic [ref=e84]:
+            - generic [ref=e85]: "Proposto por: Mesa Diretora"
+            - generic [ref=e86]: Rodada 0
+          - generic [ref=e87]:
+            - generic [ref=e88]: + Rui Barbosa
+            - generic [ref=e89]: + Clóvis Beviláqua
+            - generic [ref=e90]: + Abraham Lincoln
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - text: Artigo RI-3
+            - generic [ref=e93]: Processo Legislativo
+          - generic [ref=e94]: CONSENSO APROVADO
+          - generic [ref=e95]: Cada deliberação trata de UMA proposta por vez. Emendas são aceitas durante a fase de discussão e votadas como substitutivos antes da proposta original.
+          - generic [ref=e96]:
+            - generic [ref=e97]: "Proposto por: Mesa Diretora"
+            - generic [ref=e98]: Rodada 0
+          - generic [ref=e99]:
+            - generic [ref=e100]: + Rui Barbosa
+            - generic [ref=e101]: + Clóvis Beviláqua
+            - generic [ref=e102]: + Abraham Lincoln
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - text: Artigo RI-4
+            - generic [ref=e105]: Processo Legislativo
+          - generic [ref=e106]: CONSENSO APROVADO
+          - generic [ref=e107]: Qualquer constituinte pode requerer destaque, questão de ordem ou pedir vista. O Presidente decide questões de ordem. Obstrução deliberada é punida com perda da palavra por 5 rodadas.
+          - generic [ref=e108]:
+            - generic [ref=e109]: "Proposto por: Mesa Diretora"
+            - generic [ref=e110]: Rodada 0
+          - generic [ref=e111]:
+            - generic [ref=e112]: + Rui Barbosa
+            - generic [ref=e113]: + Clóvis Beviláqua
+            - generic [ref=e114]: + Abraham Lincoln
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - text: Artigo RI-5
+            - generic [ref=e117]: Processo Legislativo
+          - generic [ref=e118]: CONSENSO APROVADO
+          - generic [ref=e119]: O Regimento Interno pode ser alterado pela Assembleia por maioria de dois terços, mediante proposta fundamentada.
+          - generic [ref=e120]:
+            - generic [ref=e121]: "Proposto por: Mesa Diretora"
+            - generic [ref=e122]: Rodada 0
+          - generic [ref=e123]:
+            - generic [ref=e124]: + Rui Barbosa
+            - generic [ref=e125]: + Clóvis Beviláqua
+            - generic [ref=e126]: + Abraham Lincoln

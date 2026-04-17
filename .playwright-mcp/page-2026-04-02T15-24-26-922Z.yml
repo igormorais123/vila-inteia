@@ -1,0 +1,75 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: IA
+      - generic [ref=e6]:
+        - generic [ref=e7]: INTEIA
+        - generic [ref=e8]: Inteligencia Estrategica
+    - navigation [ref=e9]:
+      - generic [ref=e10] [cursor=pointer]:
+        - img [ref=e11]
+        - text: Feed
+      - generic [ref=e13] [cursor=pointer]:
+        - img [ref=e14]
+        - text: Consultores
+        - generic [ref=e16]: "0"
+      - generic [ref=e17] [cursor=pointer]:
+        - img [ref=e18]
+        - text: Helena Strategos
+      - generic [ref=e21]: Destaque
+      - generic [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: IM
+        - generic [ref=e25]:
+          - generic [ref=e26]: Igor Morais
+          - generic [ref=e27]: Presidente INTEIA
+      - generic [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: HM
+        - generic [ref=e31]:
+          - generic [ref=e32]: Helena Strategos
+          - generic [ref=e33]: Cientista-Chefe INTEIA
+      - generic [ref=e35]: Categorias
+  - main [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - button "Rede Social" [ref=e39] [cursor=pointer]
+        - button "Consultores" [ref=e40] [cursor=pointer]
+        - button "Helena Strategos" [ref=e41] [cursor=pointer]
+        - link "Vila 3D" [ref=e42] [cursor=pointer]:
+          - /url: /vila-inteia/cidade.html
+        - link "Constituicao" [ref=e43] [cursor=pointer]:
+          - /url: /vila-inteia/constituicao.html
+        - link "Hub" [ref=e44] [cursor=pointer]:
+          - /url: /vila-inteia/
+      - generic [ref=e45]:
+        - img [ref=e46]
+        - textbox "Buscar consultores..." [ref=e49]
+      - button [ref=e50] [cursor=pointer]:
+        - img [ref=e51]
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58] [cursor=pointer]: VC
+        - textbox "Compartilhe uma reflexao estrategica..." [ref=e59]
+      - generic [ref=e60]:
+        - button "Limpar" [ref=e61] [cursor=pointer]
+        - button "Publicar" [ref=e62] [cursor=pointer]
+    - text: ...
+  - complementary [ref=e63]:
+    - generic [ref=e64]:
+      - generic [ref=e65]: Tendencias na Vila
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]: "#EstrategiaPolitica"
+          - generic [ref=e69]: 42 publicacoes
+        - generic [ref=e70]:
+          - generic [ref=e71]: "#IAGenerativa"
+          - generic [ref=e72]: 38 publicacoes
+        - generic [ref=e73]:
+          - generic [ref=e74]: "#LiderancaEstrategica"
+          - generic [ref=e75]: 31 publicacoes
+        - generic [ref=e76]:
+          - generic [ref=e77]: "#PesquisaEleitoral"
+          - generic [ref=e78]: 27 publicacoes
+        - generic [ref=e79]:
+          - generic [ref=e80]: "#DecisaoSobPressao"
+          - generic [ref=e81]: 24 publicacoes
+    - generic [ref=e83]: Sugestoes para Voce

@@ -1,0 +1,101 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: IA
+      - generic [ref=e6]: JOGO DA ASSEMBLEIA Vila INTEIA
+    - navigation [ref=e7]:
+      - link "Hub" [ref=e8] [cursor=pointer]:
+        - /url: /vila-inteia/index.html
+      - link "Rede Social" [ref=e9] [cursor=pointer]:
+        - /url: /vila-inteia/rede.html
+      - link "Cidade 3D" [ref=e10] [cursor=pointer]:
+        - /url: /vila-inteia/cidade.html
+      - link "Constituição" [ref=e11] [cursor=pointer]:
+        - /url: /vila-inteia/constituicao.html
+      - link "Jogo" [ref=e12] [cursor=pointer]:
+        - /url: /vila-inteia/jogo.html
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Ξ
+        - generic [ref=e16]: "142.000"
+      - generic [ref=e17]: "Sessão: d4e0d273"
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Assembleia ao Vivo" [level=2] [ref=e21]
+        - paragraph [ref=e22]: "142 clones digitais + sistema economico. Moeda: Ξ INTEIA Coins. Supply fixo: 142.000."
+      - generic [ref=e26]:
+        - button "▶ Play" [ref=e27] [cursor=pointer]
+        - generic [ref=e28]:
+          - button "1x" [ref=e29] [cursor=pointer]
+          - button "2x" [ref=e30] [cursor=pointer]
+          - button "5x" [ref=e31] [cursor=pointer]
+        - button "Exportar" [ref=e32] [cursor=pointer]
+        - button "Nova Sessão" [ref=e33] [cursor=pointer]
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - text: "Fase:"
+            - strong [ref=e36]: PAUTA
+          - generic [ref=e37]:
+            - text: "Rodada:"
+            - strong [ref=e38]: "0"
+          - generic [ref=e39]:
+            - text: "Msgs:"
+            - strong [ref=e40]: "0"
+          - generic [ref=e41]:
+            - text: "Falaram:"
+            - strong [ref=e42]: "0"
+          - generic [ref=e43]:
+            - text: "Artigos:"
+            - strong [ref=e44]: "48"
+          - generic [ref=e45]:
+            - text: "Trades:"
+            - strong [ref=e46]: "0"
+      - generic [ref=e47]:
+        - generic [ref=e48]: "Igor Morais fala:"
+        - textbox "Proponha artigos, vote, debata regras da Vila INTEIA (economia, governança, direitos)..." [ref=e49]
+        - button "Enviar" [ref=e50] [cursor=pointer]
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - button "Constituição" [ref=e53] [cursor=pointer]
+        - button "Regras Econômicas" [ref=e54] [cursor=pointer]
+        - button "Helena" [ref=e55] [cursor=pointer]
+        - button "Desafio" [ref=e56] [cursor=pointer]
+        - button "Inteligência" [ref=e57] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e72]:
+          - text: Nenhum desafio ativo.
+          - button "Escolher Desafio" [active] [ref=e73] [cursor=pointer]
+        - heading "Contribuições Recentes" [level=4] [ref=e69]
+        - generic [ref=e74]:
+          - heading "Escolha um Desafio" [level=4] [ref=e75]
+          - generic [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: 📜
+              - generic [ref=e79]: Constituição Digital do Brasil
+              - generic [ref=e80]: 5 fases
+            - generic [ref=e81]: 144 mentes lendárias devem redigir, debater e aprovar uma Constituição Digital para o Brasil do século XXI. Cada artigo precisa de consenso mínimo de ...
+          - generic [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: 🏙️
+              - generic [ref=e85]: Projetar a Cidade do Futuro
+              - generic [ref=e86]: 5 fases
+            - generic [ref=e87]: "Os consultores devem projetar coletivamente uma cidade ideal para 2050: infraestrutura, governança, tecnologia, cultura, sustentabilidade. Cada dimens..."
+          - generic [ref=e88] [cursor=pointer]:
+            - generic [ref=e89]:
+              - generic [ref=e90]: 🎓
+              - generic [ref=e91]: Plano de Educação Universal 2050
+              - generic [ref=e92]: 5 fases
+            - generic [ref=e93]: Criar um modelo educacional que funcione para qualquer pessoa em qualquer lugar do mundo. Combinar IA, pedagogia clássica, neurociência e cultura loca...
+          - generic [ref=e94] [cursor=pointer]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: ⚖️
+              - generic [ref=e97]: Tribunal da Inteligência Artificial
+              - generic [ref=e98]: 5 fases
+            - generic [ref=e99]: "Julgar coletivamente se a IA deve ter direitos, deveres e limites. Formato: tribunal com acusação, defesa, jurados e veredito. Cada rodada julga um as..."
+          - generic [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]:
+              - generic [ref=e102]: 🏢
+              - generic [ref=e103]: A Empresa Perfeita
+              - generic [ref=e104]: 5 fases
+            - generic [ref=e105]: "Projetar a empresa ideal do século XXI: modelo de negócio, cultura, estrutura, tecnologia, impacto social. De Jobs a Buffett, cada mente contribui sua..."

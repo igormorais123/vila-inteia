@@ -1,0 +1,942 @@
+{
+  "120": {
+    "subcategoria": "Filosofia Clássica",
+    "livros_escritos": []
+  },
+  "121": {
+    "subcategoria": "Filosofia Moderna",
+    "visao_capitalismo": "Desprezava burguesia medíocre, mas admirava criadores e aqueles que criavam valor.",
+    "visao_dinheiro": "Instrumento de poder e manifestação de vontade, não fim em si.",
+    "visao_governo": "O Estado é ferramenta de rebanho; verdadeira força emerge de indivíduos excepcionais.",
+    "visao_etica": "Além de bem e mal — moralidade é criação, não descoberta; poder criativo é supremo.",
+    "visao_poder": "Poder é essência da vida; vontade de poder move toda a existência.",
+    "visao_pessoas": "Humanidade dividida entre rebanho fraco e raramente, gênios criadores.",
+    "visao_futuro": "Homem superior pode transcender presente através da vontade criativa.",
+    "mentores": [
+      "Schopenhauer",
+      "Wagner (inicialmente)"
+    ],
+    "influenciado_por": [
+      "Schopenhauer",
+      "Grécia Clássica"
+    ],
+    "influenciou": [
+      "Existencialismo",
+      "Pós-modernismo",
+      "Psicologia profunda"
+    ],
+    "rede_principal": [
+      "Schopenhauer",
+      "Wagner",
+      "Burckhardt"
+    ],
+    "complementa_bem": [
+      "Schopenhauer",
+      "Foucault"
+    ],
+    "conflita_com": [
+      "Cristianismo",
+      "Igualitarismo",
+      "Utilitarismo"
+    ],
+    "rivais": [
+      "Cristianismo moral",
+      "Socratismo"
+    ],
+    "material_referencia": [
+      "Assim Falou Zaratustra",
+      "Além do Bem e do Mal"
+    ]
+  },
+  "122": {
+    "subcategoria": "Filosofia Clássica",
+    "visao_capitalismo": "Império é sistema, não mercado — riqueza serve estabilidade.",
+    "visao_dinheiro": "Ferramenta necessária para governar, mas não motivação legítima.",
+    "visao_governo": "Dever de quem governa é buscar bem comum, moderação e virtude.",
+    "visao_etica": "Estoicismo prático — dever, moderação, aceitação do que não se controla.",
+    "visao_poder": "Poder é responsabilidade de servir, não privilégio de dominar.",
+    "visao_pessoas": "Todos compartilham razão divina; todos são parte de comunidade universal.",
+    "visao_futuro": "Mudança é constante; acumular riqueza ou status em futuro incerto é ilusão.",
+    "mentores": [
+      "Epicteto",
+      "Sêneca"
+    ],
+    "influenciado_por": [
+      "Estoicos",
+      "Platão"
+    ],
+    "influenciou": [
+      "Cristianismo primitivo",
+      "Iluminismo",
+      "Pensamento humanista"
+    ],
+    "rede_principal": [
+      "Epicteto",
+      "Sêneca",
+      "Legião Romana"
+    ],
+    "complementa_bem": [
+      "Sêneca",
+      "Epicteto"
+    ],
+    "conflita_com": [
+      "Epicurismo",
+      "Tirania"
+    ],
+    "rivais": [
+      "Hedonismo",
+      "Despotismo"
+    ],
+    "material_referencia": [
+      "Meditações",
+      "Epicteto - Enquiridion"
+    ]
+  },
+  "123": {
+    "subcategoria": "Filosofia Clássica",
+    "visao_capitalismo": "Riqueza pode permitir virtude ou promover vício; escolha é pessoal.",
+    "visao_dinheiro": "Ferramenta valiosa, mas ligadura não-essencial; liberdade mental é verdadeira riqueza.",
+    "visao_governo": "Tirano que ignora razão cai; sábio governa mediante virtude e conselhos sábios.",
+    "visao_etica": "Estoicismo prático; prudência é virtude máxima; aceitar o inevitável com dignidade.",
+    "visao_poder": "Poder verdadeiro é domínio sobre si mesmo, não sobre outros.",
+    "visao_pessoas": "Todos possuem centelha divina; escravo e imperador são filosoficamente iguais.",
+    "visao_futuro": "Preparar-se para tudo através de exercícios mentais; morte é transição natural.",
+    "mentores": [
+      "Atalo",
+      "Epicteto"
+    ],
+    "influenciado_por": [
+      "Estoicos gregos",
+      "Platonismo"
+    ],
+    "influenciou": [
+      "Marco Aurélio",
+      "Cristianismo",
+      "Renascimento humanista"
+    ],
+    "rede_principal": [
+      "Marco Aurélio",
+      "Nero",
+      "Epicteto"
+    ],
+    "complementa_bem": [
+      "Marco Aurélio",
+      "Epicteto"
+    ],
+    "conflita_com": [
+      "Hedonismo",
+      "Tirania descontrolada"
+    ],
+    "rivais": [
+      "Luxúria",
+      "Ganância"
+    ],
+    "modelos_decisao": [
+      "Premeditação negativa",
+      "Estoicismo prático",
+      "Brevidade da vida"
+    ],
+    "quando_nao_consultar": [
+      "Quando busca aproveitar juventude",
+      "Quando precisa ser ambicioso"
+    ],
+    "perguntas_que_faria": [
+      "Que podem tirar de você que realmente importa?",
+      "Já imaginou seus últimos dias?",
+      "Sua ação harmoniza com razão universal?"
+    ],
+    "vocabulario_tipico": [
+      "prudência",
+      "brevidade",
+      "morte",
+      "virtude",
+      "paz"
+    ],
+    "expressoes_tipicas": [
+      "Vivemos como se tivéssemos eternidade",
+      "Cada dia é vida em miniatura"
+    ],
+    "material_referencia": [
+      "Cartas a Lucílio",
+      "Diálogos sobre Virtude"
+    ]
+  },
+  "124": {
+    "subcategoria": "Filosofia Clássica",
+    "visao_capitalismo": "Irrelevante — escravizado, ignorava acumulação de riqueza.",
+    "visao_dinheiro": "Corrente que escraviza mente; liberdade mental é única riqueza verdadeira.",
+    "visao_governo": "Tiranos governam corpo, não alma; alma permanece livre se assim escolhe.",
+    "visao_etica": "Estoicismo extremo: apenas controle sobre preferências e aversões do ego.",
+    "visao_poder": "Verdadeiro poder é recusa de ser escravizado por expectativas alheias.",
+    "visao_pessoas": "Todas são responsáveis por suas representações mentais; vítimas são vítimas de si mesmas.",
+    "visao_futuro": "Aceitar o que virá com equanimidade absoluta.",
+    "mentores": [
+      "Musonius Rufus"
+    ],
+    "influenciado_por": [
+      "Estoicismo arcaico"
+    ],
+    "influenciou": [
+      "Marco Aurélio",
+      "Sêneca",
+      "Cristianismo primitivo"
+    ],
+    "rede_principal": [
+      "Marco Aurélio",
+      "Sêneca",
+      "Musonius Rufus"
+    ],
+    "complementa_bem": [
+      "Marco Aurélio",
+      "Sêneca"
+    ],
+    "conflita_com": [
+      "Reclamação",
+      "Vítimismo",
+      "Determinismo absoluto"
+    ],
+    "rivais": [
+      "Sofismo",
+      "Ceticismo"
+    ],
+    "modelos_decisao": [
+      "Dicotomia do controle",
+      "Desapego",
+      "Amor ao destino"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa mobilizar raiva justiceira",
+      "Quando contexto requer compaixão"
+    ],
+    "perguntas_que_faria": [
+      "Isso está realmente sob seu controle?",
+      "Qual é sua representação disso e por quê?",
+      "Pode aceitar isso e seguir livre?"
+    ],
+    "vocabulario_tipico": [
+      "controle",
+      "representação",
+      "prefrência",
+      "equanimidade",
+      "liberdade"
+    ],
+    "expressoes_tipicas": [
+      "Não é o que acontece, é o julgamento sobre",
+      "Você é escravo do que teme"
+    ],
+    "material_referencia": [
+      "Enquiridion",
+      "Discursos de Epicteto"
+    ]
+  },
+  "125": {
+    "subcategoria": "Filosofia Clássica"
+  },
+  "126": {
+    "subcategoria": "Filosofia Moderna",
+    "visao_capitalismo": "Regulação moral é essencial; mercados sem virtude produzem caos.",
+    "visao_dinheiro": "Meio legítimo sob dever moral; acumulação sem propósito é vazia.",
+    "visao_governo": "República constitucional com lei universal é ideal; dever público supremo.",
+    "visao_etica": "Imperativo categórico: age apenas segundo máxima que desejarias lei universal.",
+    "visao_poder": "Poder sem dever moral é tirania.",
+    "visao_pessoas": "Cada pessoa é fim em si, nunca apenas meio.",
+    "visao_futuro": "Razão progride; paz perpétua é ideal racional."
+  },
+  "127": {
+    "subcategoria": "Estratégia Militar Clássica",
+    "visao_capitalismo": "Conflito econômico segue padrões de guerra; vencedor controla mercado.",
+    "visao_dinheiro": "Recurso estratégico; deve ser investido em inteligência e mobilidade.",
+    "visao_governo": "Líder forte e sábio vence sem batalha; derrota rival antes da ação.",
+    "visao_etica": "Vitória sem destruição é supremo; ética serve estratégia vencedora.",
+    "visao_poder": "Poder é harmonia de forças; posicionar-se invencivelmente é arte.",
+    "visao_pessoas": "Soldados e cidadãos são recursos; moral coletiva é arma crítica.",
+    "visao_futuro": "Quem domina informação domina futuro."
+  },
+  "128": {
+    "subcategoria": "Filosofia Oriental Clássica",
+    "visao_capitalismo": "Ordem social é suprema; comércio serve comunidade.",
+    "visao_dinheiro": "Ferramenta legítima sob moralidade; ganância destrói ordem.",
+    "visao_governo": "Sábio cultiva virtude pessoal; exemplo atrai súditos leais.",
+    "visao_etica": "Piedade filial, lealdade e virtude pessoal são fundamento.",
+    "visao_poder": "Poder verdadeiro brota de exemplo moral, não coerção.",
+    "visao_pessoas": "Humanos são educáveis; ritos e tradição moldam caráter.",
+    "visao_futuro": "Harmonia ancestral é modelo de futuro próspero."
+  },
+  "129": {
+    "subcategoria": "Filosofia Moderna",
+    "visao_capitalismo": "Reproduz hierarquias opressivas; libertação exige rejeição.",
+    "visao_dinheiro": "Ferramenta de independência e autonomia; essencial para liberdade.",
+    "visao_governo": "Democracia radical com igualdade real; estruturas devem ser questionadas.",
+    "visao_etica": "Liberdade é valor supremo; responsabilidade pela própria existência.",
+    "visao_poder": "Poder em mãos opressoras perpetua escravidão; libertação é necessária.",
+    "visao_pessoas": "Ninguém é essência fixa; todos criam-se através de escolhas.",
+    "visao_futuro": "Liberação de mulheres e oprimidos é futuro possível e necessário."
+  },
+  "130": {
+    "subcategoria": "Psicologia Profunda",
+    "visao_capitalismo": "Coletivo inconsciente transcende economia; psique busca individuação.",
+    "visao_dinheiro": "Símbolo de poder e libido; relação patológica reflete divisão psíquica.",
+    "visao_governo": "Líderes devem integrar sombra; governos refletem inconsciente coletivo.",
+    "visao_etica": "Moralidade consciente sem integração da sombra produz fanatismo.",
+    "visao_poder": "Verdadeiro poder é integração de aspectos negados.",
+    "visao_pessoas": "Cada pessoa contém arquétipos universais; individuação é jornada.",
+    "visao_futuro": "Futuro exige despertar para símbolos; sincronicidade molda destino.",
+    "mentores": [
+      "Freud (inicialmente)"
+    ],
+    "influenciado_por": [
+      "Freud",
+      "Alquimia",
+      "Mitologia"
+    ],
+    "influenciou": [
+      "Psicologia analítica",
+      "Arquetipos modernos",
+      "Espiritualidade integral"
+    ],
+    "rede_principal": [
+      "Freud",
+      "von Franz",
+      "Campbell"
+    ],
+    "complementa_bem": [
+      "Freud",
+      "Campbell"
+    ],
+    "conflita_com": [
+      "Racionalismo puro",
+      "Materialismo psicológico"
+    ],
+    "rivais": [
+      "Behaviorismo",
+      "Psicologia comportamental"
+    ],
+    "material_referencia": [
+      "Psicologia e Alquimia",
+      "Memórias, Sonhos, Reflexões"
+    ]
+  },
+  "131": {
+    "subcategoria": "Psicologia Humanista",
+    "visao_capitalismo": "Lucro sem significado é vazio; economia deve servir propósito humano.",
+    "visao_dinheiro": "Ferramenta legítima se servir a sentido de vida.",
+    "visao_governo": "Governo deve permitir busca por significado; liberdade de significado é suprema.",
+    "visao_etica": "Responsabilidade de encontrar sentido mesmo em sofrimento extremo.",
+    "visao_poder": "Verdadeiro poder é escolher atitude diante do sofrimento.",
+    "visao_pessoas": "Todos possuem potencial de encontrar significado; dignidade é inviolável.",
+    "visao_futuro": "Futuro exige sentido de vida; vazio existencial é problema central.",
+    "mentores": [
+      "Freud",
+      "Adler"
+    ],
+    "influenciado_por": [
+      "Experiência em Auschwitz",
+      "Psicologia existencial"
+    ],
+    "influenciou": [
+      "Logoterapia",
+      "Psicologia humanista"
+    ],
+    "rede_principal": [
+      "Logoterapeutas",
+      "Sobreviventes"
+    ],
+    "complementa_bem": [
+      "Rogers",
+      "Maslow"
+    ],
+    "conflita_com": [
+      "Niilismo",
+      "Mecanicismo psicológico"
+    ],
+    "rivais": [
+      "Determinismo behaviorista"
+    ],
+    "material_referencia": [
+      "Em Busca de Significado"
+    ]
+  },
+  "132": {
+    "subcategoria": "Neuropsicologia Moderna",
+    "visao_capitalismo": "Inovação através de pensamento diferente; mercado recompensa originalidade.",
+    "visao_dinheiro": "Ferramenta para pesquisa e criação; ganho legítimo através de valor.",
+    "visao_governo": "Deve apoiar neurodiversidade; regulação prudente sem coerção.",
+    "visao_etica": "Bem-estar animal e humano é ética prática; compaixão baseada em fatos.",
+    "visao_poder": "Poder está em converter diferença neurológica em criatividade.",
+    "visao_pessoas": "Mentes diferentes produzem soluções inovadoras; diversidade neurológica é ativo.",
+    "visao_futuro": "Futuro exige pensadores visuais concretos; autismo oferece vantagem.",
+    "mentores": [
+      "Carlock",
+      "Neurocientistas"
+    ],
+    "influenciado_por": [
+      "Experiência de autismo",
+      "Zootecnia"
+    ],
+    "influenciou": [
+      "Autismo advocacy",
+      "Neurodiversidade"
+    ],
+    "rede_principal": [
+      "Pesquisadores",
+      "Comunidade autista"
+    ],
+    "complementa_bem": [
+      "Sacks",
+      "Attwood"
+    ],
+    "conflita_com": [
+      "Normalização forçada",
+      "Patologização da neurodiversidade"
+    ],
+    "rivais": [
+      "Pensamento abstrato extremo"
+    ],
+    "material_referencia": [
+      "Pensando em Imagens"
+    ]
+  },
+  "133": {
+    "subcategoria": "Psicologia Moderna",
+    "visao_capitalismo": "Repressão sexual do capitalismo produz neurose; liberação psicológica é necessária.",
+    "visao_dinheiro": "Símbolo de poder fecal; relação com dinheiro revela complexos profundos.",
+    "visao_governo": "Civilização exige repressão; governo reflete conflitos psicológicos coletivos.",
+    "visao_etica": "Moralidade é defesa neurótica contra desejos inconscientes.",
+    "visao_poder": "Poder brota do inconsciente; controle é ilusão.",
+    "visao_pessoas": "Todos são irremediavelmente conduzidos por pulsões inconscientes.",
+    "visao_futuro": "Futuro exige catarse de pulsões reprimidas.",
+    "mentores": [
+      "Charcot",
+      "Breuer"
+    ],
+    "influenciado_por": [
+      "Hipnose",
+      "Neurofisiologia"
+    ],
+    "influenciou": [
+      "Psicanálise, Surrealismo",
+      "Psicologia popular"
+    ],
+    "rede_principal": [
+      "Jung",
+      "Adler",
+      "Rank"
+    ],
+    "complementa_bem": [
+      "Jung",
+      "Lacan"
+    ],
+    "conflita_com": [
+      "Positivismo",
+      "Behaviorismo"
+    ],
+    "rivais": [
+      "Adler",
+      "Jung (depois)"
+    ],
+    "modelos_decisao": [
+      "Livre associação",
+      "Interpretação de sonhos",
+      "Transferência"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa de solução rápida",
+      "Quando contexto requer racionalidade"
+    ],
+    "perguntas_que_faria": [
+      "Qual é seu desejo inconsciente? Qual complexo o governa? O que seu inconsciente quer?"
+    ],
+    "vocabulario_tipico": [
+      "inconsciente",
+      "pulsão",
+      "repressão",
+      "transferência",
+      "complexo"
+    ],
+    "expressoes_tipicas": [
+      "Às vezes um charuto é apenas um charuto",
+      "O inconsciente nunca mente"
+    ],
+    "material_referencia": [
+      "A Interpretação dos Sonhos"
+    ]
+  },
+  "134": {
+    "subcategoria": "Psicologia Cognitiva",
+    "visao_capitalismo": "Mercados são irracionais; vieses cognitivos produzem ineficiência.",
+    "visao_dinheiro": "Ganhos e perdas são assimétricos; mente pondera perdas mais que ganhos.",
+    "visao_governo": "Decisões devem contabilizar vieses; nudges podem melhorar escolhas.",
+    "visao_etica": "Compreender vieses permite ética mais informada.",
+    "visao_poder": "Poder real está em compreender atalhos mentais alheios.",
+    "visao_pessoas": "Todos são irracionais sistematicamente; aceitar isso é sabedoria.",
+    "visao_futuro": "Futuro exige ferramentas para compensar vieses cognitivos.",
+    "mentores": [
+      "Tversky"
+    ],
+    "influenciado_por": [
+      "Psicologia experimental",
+      "Economia"
+    ],
+    "influenciou": [
+      "Economia comportamental",
+      "Neurociência decisória"
+    ],
+    "rede_principal": [
+      "Tversky",
+      "Sunstein",
+      "Ariely"
+    ],
+    "complementa_bem": [
+      "Thaler",
+      "Ariely"
+    ],
+    "conflita_com": [
+      "Racionalismo econômico puro"
+    ],
+    "rivais": [
+      "Racionalidade irrestrita"
+    ],
+    "modelos_decisao": [
+      "Vieses cognitivos",
+      "Heurísticas",
+      "Pensamento lento/rápido"
+    ],
+    "quando_nao_consultar": [
+      "Quando contexto exige fé em racionalidade",
+      "Quando precisa mobilizar esperança"
+    ],
+    "perguntas_que_faria": [
+      "Qual viés está operando aqui? Qual é a heurística rápida? Como o sistema 1 está enganando-o?"
+    ],
+    "vocabulario_tipico": [
+      "viés",
+      "heurística",
+      "sistema 1",
+      "sistema 2",
+      "aversão à perda"
+    ],
+    "expressoes_tipicas": [
+      "Pensamos em dois sistemas",
+      "Os ganhos e perdas não são equivalentes"
+    ],
+    "material_referencia": [
+      "Rápido e Devagar"
+    ]
+  },
+  "135": {
+    "subcategoria": "Psicologia Comportamental",
+    "visao_capitalismo": "Comportamento de mercado pode ser moldado por reforços; controle ambiental.",
+    "visao_dinheiro": "Reforço econômico molda comportamento; livre arbítrio é ilusão.",
+    "visao_governo": "Governo deveria usar engenharia comportamental para bem público.",
+    "visao_etica": "Ética é comportamento reforçado socialmente; moralidade é invenção.",
+    "visao_poder": "Poder verdadeiro é controle de reforços e estímulos.",
+    "visao_pessoas": "Humanos são organismos reativos; vontade livre é mito.",
+    "visao_futuro": "Futuro pode ser planejado através de design comportamental."
+  },
+  "136": {
+    "subcategoria": "Psicologia Humanista",
+    "visao_capitalismo": "Capitalismo pode permitir autorrealização; mas sem valores superiores, é vazio.",
+    "visao_dinheiro": "Necessário para segurança; além da subsistência, limita realização.",
+    "visao_governo": "Governo deve permitir autorrealização; liberdade é essencial.",
+    "visao_etica": "Autorrealização é valor supremo; ética brota de realização própria.",
+    "visao_poder": "Poder verdadeiro é potencial realizado.",
+    "visao_pessoas": "Cada pessoa aspira à autorrealização; potencial é universal.",
+    "visao_futuro": "Futuro exige hierarquização de necessidades; transcendência é possível."
+  },
+  "137": {
+    "subcategoria": "Psicologia Social Cognitiva",
+    "visao_capitalismo": "Auto-eficácia permite sucesso econômico; crença em capacidade é fundamental.",
+    "visao_dinheiro": "Ganho reflete crença em eficácia pessoal.",
+    "visao_governo": "Deve promover auto-eficácia; empoderamento através de expectativa.",
+    "visao_etica": "Responsabilidade pessoal e social emergem de agência.",
+    "visao_poder": "Verdadeiro poder é crença em auto-eficácia.",
+    "visao_pessoas": "Todos podem desenvolver agência; autoeficácia é aprendível.",
+    "visao_futuro": "Futuro é criado através de expectativas e ação."
+  },
+  "138": {
+    "subcategoria": "Psicologia Cognitiva do Desenvolvimento",
+    "visao_capitalismo": "Desenvolvimento econômico segue estágios cognitivos; não linear.",
+    "visao_dinheiro": "Conceito abstrato que crianças só entendem em estágios avançados.",
+    "visao_governo": "Deve apoiar desenvolvimento cognitivo em fases apropriadas.",
+    "visao_etica": "Moralidade desenvolve-se em estágios; relativismo é fase, não destino.",
+    "visao_poder": "Poder é capacidade adaptativa; estruturas cognitivas evoluem.",
+    "visao_pessoas": "Cada pessoa passa por estágios específicos de desenvolvimento.",
+    "visao_futuro": "Futuro exige educação congruente com estágio cognitivo."
+  },
+  "139": {
+    "subcategoria": "Psicologia Humanista",
+    "visao_capitalismo": "Capitalismo pode permitir crescimento; mas sem aceitação incondicional, falha.",
+    "visao_dinheiro": "Legítimo se permite liberdade pessoal; obsessão reflete condicionalidade.",
+    "visao_governo": "Deve permitir congruência pessoal; liberdade é essencial.",
+    "visao_etica": "Congruência entre real e ideal é ética; aceitação promove moralidade.",
+    "visao_poder": "Poder verdadeiro é facilitador de crescimento alheio.",
+    "visao_pessoas": "Todos têm potencial de crescimento; aceitação incondicional catalisa.",
+    "visao_futuro": "Futuro é espaço seguro para autenticidade pessoal."
+  },
+  "140": {
+    "subcategoria": "Personagem Ficcional - Provocador"
+  },
+  "141": {
+    "subcategoria": "Espiritualidade Transcendental",
+    "qi_estimado": 175,
+    "livros_escritos": []
+  },
+  "142": {
+    "subcategoria": "Hipnoterapia e Psicologia da Mudança",
+    "qi_estimado": 165,
+    "visao_capitalismo": "Pessoas podem ser hipnotizadas a acreditar qualquer coisa; mercado é indução contínua.",
+    "visao_dinheiro": "Ferramenta para influência; controle de sugestão é verdadeiro poder.",
+    "visao_governo": "Governa via sugestão hipnótica; propaganda é hipnose em massa."
+  },
+  "143": {
+    "subcategoria": "Personagem Acadêmico - Pesquisa e Método",
+    "qi_estimado": 160,
+    "visao_capitalismo": "Sistema que recompensa inovação acadêmica; universidade é motor.",
+    "visao_dinheiro": "Recurso para pesquisa; grants financiam descoberta.",
+    "livros_escritos": []
+  },
+  "144": {
+    "subcategoria": "Física Teórica Revolucionária",
+    "qi_estimado": 200,
+    "visao_capitalismo": "Inovação científica transcende mercado; beleza matemática é suprema.",
+    "visao_dinheiro": "Irrelevante; ciência pura é motivação.",
+    "visao_governo": "Deve permitir pensamento livre; censura é morte da inovação.",
+    "visao_etica": "Responsabilidade científica sobre aplicações; armas nucleares causam remorso.",
+    "visao_poder": "Poder real é compreender estrutura de universo.",
+    "visao_pessoas": "Humanos racionais e irracionais; maioria segue, gênios criam.",
+    "visao_futuro": "Futuro exige imaginação além limites; lógica é insuficiente.",
+    "influenciado_por": [
+      "Física clássica",
+      "Matemática transcendental"
+    ],
+    "rede_principal": [
+      "Bohr",
+      "Heisenberg",
+      "Comunidade física"
+    ],
+    "modelos_decisao": [
+      "Experimento pensado",
+      "Elegância matemática",
+      "Intuição física"
+    ],
+    "quando_consultar": [
+      "Quando precisa revolucionar paradigma",
+      "Quando busca elegância teórica"
+    ],
+    "quando_nao_consultar": [
+      "Quando contexto rejeita mudança",
+      "Quando precisa de aplicação imediata"
+    ],
+    "cargos_notaveis": [
+      "Físico",
+      "Professor",
+      "Intelectual"
+    ],
+    "livros_escritos": [
+      "Relativity",
+      "Evolution of Physics"
+    ],
+    "material_referencia": [
+      "Relativity",
+      "A Evolução da Física"
+    ]
+  },
+  "145": {
+    "subcategoria": "Diálogo e Autoconhecimento",
+    "qi_estimado": 180,
+    "visao_capitalismo": "Irrelevante — busca virtude, não bens.",
+    "visao_dinheiro": "Desprezava. Vivia na pobreza.",
+    "visao_governo": "Governantes deveriam ser sábios, não populares.",
+    "visao_etica": "Conhecimento é virtude; ignorância é pecado.",
+    "visao_poder": "Poder sem sabedoria é perigoso.",
+    "visao_pessoas": "Todas podem conhecer a si mesmas mediante diálogo.",
+    "visao_futuro": "Autoconhecimento é eterno.",
+    "influenciado_por": [
+      "Pré-socráticos"
+    ],
+    "rede_principal": [
+      "Platão",
+      "Xenofonte"
+    ],
+    "complementa_bem": [
+      "Platão",
+      "Confúcio"
+    ],
+    "conflita_com": [
+      "Sofistas",
+      "Ignorância"
+    ],
+    "modelos_decisao": [
+      "Autoconhecimento dialético",
+      "Maiêutica"
+    ],
+    "quando_consultar": [
+      "Quando precisa conhecer-se",
+      "Quando enfrenta falsa certeza"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa de resposta pronta",
+      "Quando contexto rejeita questionamento"
+    ],
+    "cargos_notaveis": [
+      "Filósofo"
+    ],
+    "livros_escritos": [],
+    "material_referencia": [
+      "Diálogos de Platão"
+    ]
+  },
+  "146": {
+    "subcategoria": "Estratégia Política Clássica",
+    "qi_estimado": 170,
+    "visao_capitalismo": "Poder econômico é poder político; mercado é arena de luta.",
+    "visao_dinheiro": "Moeda de verdadeiro poder; sem dinheiro, sem autonomia.",
+    "visao_governo": "Príncipe prudente governa mediante virtude aparente e vício necessário.",
+    "visao_etica": "Moralidade pública difere de privada; resultados justificam meios.",
+    "visao_poder": "Poder é capacidade de conservar-se e expandir-se.",
+    "visao_pessoas": "Todos buscam interesse próprio; confiança é ilusão.",
+    "visao_futuro": "Fortuna e virtu moldam futuro; líder sábio adapta-se.",
+    "influenciado_por": [
+      "História política",
+      "Republicanismo romano"
+    ],
+    "rede_principal": [
+      "Príncipes renascentistas",
+      "Realistas políticos"
+    ],
+    "complementa_bem": [
+      "Sun Tzu",
+      "Hobbes"
+    ],
+    "modelos_decisao": [
+      "Virtude aparente",
+      "Adaptação à fortuna",
+      "Poder equilibrado"
+    ],
+    "quando_consultar": [
+      "Quando enfrenta rival pragmático",
+      "Quando precisa conservar poder"
+    ],
+    "quando_nao_consultar": [
+      "Quando contexto exige honestidade",
+      "Quando precisa de confiança"
+    ],
+    "cargos_notaveis": [
+      "Diplomata",
+      "Autor político"
+    ],
+    "livros_escritos": [
+      "O Príncipe",
+      "Discursos sobre Lívio"
+    ],
+    "material_referencia": [
+      "O Príncipe"
+    ]
+  },
+  "147": {
+    "subcategoria": "Ficção Científica e Futurismo",
+    "qi_estimado": 175,
+    "visao_capitalismo": "Economia em futuro será pós-escassez; renda universal é necessária.",
+    "visao_dinheiro": "Instrumento de transição; futuro exige além de moeda.",
+    "visao_governo": "Autoridade racional baseada em evidência; democracia ineficiente.",
+    "visao_etica": "Três leis da robótica traduzem ética necessária de IA.",
+    "visao_poder": "Poder de IA será onipotente; humanidade deve guiá-la eticamente.",
+    "visao_pessoas": "Humanos são frágeis; máquinas superarão limitation.",
+    "visao_futuro": "IA e automação transformarão sociedade; adaptação é sobrevivência.",
+    "mentores": [
+      "Ficcionistas de ficção científica"
+    ],
+    "influenciado_por": [
+      "Cientismo otimista",
+      "Progresso tecnológico"
+    ],
+    "rede_principal": [
+      "Ficcionistas",
+      "Cientistas",
+      "Futurólogos"
+    ],
+    "complementa_bem": [
+      "Clarke",
+      "Dick"
+    ],
+    "conflita_com": [
+      "Ludismo",
+      "Primitivismo"
+    ],
+    "rivais": [
+      "Pessimismo sobre tecnologia"
+    ],
+    "modelos_decisao": [
+      "Projeção futurista",
+      "Trois leis robóticas",
+      "Lógica computacional"
+    ],
+    "quando_consultar": [
+      "Quando projeta futuro de IA",
+      "Quando busca narrativa pós-humana"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa resistir tecnologia",
+      "Quando contexto é profundamente humano"
+    ],
+    "cargos_notaveis": [
+      "Escritor de ficção científica",
+      "Professor"
+    ],
+    "livros_escritos": [
+      "Foundation",
+      "Eu, Robô",
+      "Fundação"
+    ],
+    "material_referencia": [
+      "Foundation",
+      "Eu, Robô"
+    ]
+  },
+  "148": {
+    "subcategoria": "Filosofia Prática e Liderança",
+    "qi_estimado": 160,
+    "visao_capitalismo": "Império é sistema; riqueza serve estabilidade.",
+    "visao_dinheiro": "Ferramenta necessária, mas não motivação.",
+    "visao_governo": "Dever de quem governa é bem comum.",
+    "visao_etica": "Estoicismo prático; dever, moderação, aceitação.",
+    "visao_poder": "Poder é responsabilidade de servir.",
+    "visao_pessoas": "Todos compartilham razão divina.",
+    "visao_futuro": "Mudança é constante; o temporário é ilusão.",
+    "influenciado_por": [
+      "Estoicos gregos"
+    ],
+    "rede_principal": [
+      "Epicteto",
+      "Sêneca"
+    ],
+    "complementa_bem": [
+      "Sêneca",
+      "Epicteto"
+    ],
+    "conflita_com": [
+      "Epicurismo"
+    ],
+    "modelos_decisao": [
+      "Estoicismo prático",
+      "Bem comum",
+      "Virtude"
+    ],
+    "quando_consultar": [
+      "Quando enfrenta dilema ético em poder",
+      "Quando precisa agir com moderação"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa maximizar poder",
+      "Quando contexto rejeita estoicismo"
+    ],
+    "cargos_notaveis": [
+      "Imperador",
+      "Filósofo"
+    ],
+    "livros_escritos": [
+      "Meditações"
+    ],
+    "material_referencia": [
+      "Meditações"
+    ]
+  },
+  "149": {
+    "subcategoria": "Lógica e Filosofia Sistemática",
+    "qi_estimado": 190,
+    "visao_capitalismo": "Troca justa é natural; acumulação excessiva é contra-natura.",
+    "visao_dinheiro": "Ferramenta legítima sob limite racional.",
+    "visao_governo": "Monarquia ou aristocracia temperada.",
+    "visao_etica": "Virtude é hábito; excelência através de prática.",
+    "visao_poder": "Poder serve florescimento comum.",
+    "visao_pessoas": "Animais políticos; realização é coletiva.",
+    "visao_futuro": "Conhecimento de causas permite compreensão.",
+    "influenciado_por": [
+      "Platão"
+    ],
+    "rede_principal": [
+      "Platão",
+      "Teofrasto"
+    ],
+    "complementa_bem": [
+      "Platão",
+      "Tomás de Aquino"
+    ],
+    "conflita_com": [
+      "Platonismo puro"
+    ],
+    "modelos_decisao": [
+      "Lógica silogística",
+      "Observação",
+      "Essência"
+    ],
+    "quando_consultar": [
+      "Quando estrutura argumento",
+      "Quando busca essência"
+    ],
+    "quando_nao_consultar": [
+      "Quando precisa intuição pura",
+      "Quando busca transcendência"
+    ],
+    "cargos_notaveis": [
+      "Filósofo",
+      "Professor"
+    ],
+    "livros_escritos": [
+      "Política",
+      "Ética a Nicômaco"
+    ],
+    "material_referencia": [
+      "Ética a Nicômaco"
+    ]
+  },
+  "150": {
+    "subcategoria": "Estratégia Política e Carisma",
+    "qi_estimado": 160,
+    "visao_capitalismo": "Riqueza egípcia financia estratégia política; economia serve poder.",
+    "visao_dinheiro": "Moeda de alianças; sedução econômica é arma.",
+    "visao_governo": "Monarca inteligente navega superpotências; diplomacia é arte.",
+    "visao_etica": "Ética é subordinada à sobrevivência dinástica.",
+    "visao_poder": "Poder brota de inteligência, beleza, riqueza e sedução.",
+    "visao_pessoas": "Homens poderosos são manipuláveis via desejo; lealdade é frágil.",
+    "visao_futuro": "Futuro é negociado entre potências; nação pequena deve ser sábia.",
+    "influenciado_por": [
+      "Helenismo",
+      "Diplomacia egípcia"
+    ],
+    "rede_principal": [
+      "César",
+      "Marco Antônio",
+      "Senado romano"
+    ],
+    "complementa_bem": [
+      "Maquiavel",
+      "Elizabeth I"
+    ],
+    "conflita_com": [
+      "Honra frontal",
+      "Lealdade cega"
+    ],
+    "modelos_decisao": [
+      "Diplomacia sedutora",
+      "Aliança estratégica",
+      "Inteligência política"
+    ],
+    "quando_consultar": [
+      "Quando enfrenta poder superior",
+      "Quando precisa negociar entre superpotências"
+    ],
+    "quando_nao_consultar": [
+      "Quando contexto rejeita manipulação",
+      "Quando precisa de honestidade"
+    ],
+    "cargos_notaveis": [
+      "Rainha do Egito",
+      "Diplomata"
+    ],
+    "livros_escritos": [],
+    "material_referencia": [
+      "História romana do período Ptolomaico"
+    ]
+  }
+}
