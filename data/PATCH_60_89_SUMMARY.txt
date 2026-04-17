@@ -1,0 +1,138 @@
+================================================================================
+PATCH CONSULTORES 60-89 - BANCO LENDARIOS
+================================================================================
+
+EXECUCAO: 2026-04-16
+SCRIPT: patch_60_89_final.py
+STATUS: CONCLUIDO COM SUCESSO
+
+================================================================================
+RESUMO OPERACIONAL
+================================================================================
+
+Consultores Patchados: 30 (índices 60-89)
+Campos Preenchidos: 291 campos totais
+Média de Campos por Consultor: 9.7 campos
+
+GRUPOS POR CATEGORIA:
+
+1. CONSULTORES DE MINDSET E NEGOCIO (60-71):
+   60 - Jason Fried (mindset/produtividade) - 21 campos
+   61 - Nassim Taleb (mindset/risco_incerteza) - 21 campos
+   62 - Jorge Paulo Lemann (br_business/imperio_brasileiro) - 21 campos
+   63 - Abilio Diniz (br_business/imperio_brasileiro) - 19 campos
+   64 - Silvio Santos (br_business/imperio_midia) - 21 campos
+   65 - Luiza Trajano (br_business/imperio_varejo) - 20 campos
+   66 - Gary Vee (mkt_digital/personal_branding) - 21 campos
+   67 - Seth Godin (mkt_digital/marketing_estrategico) - 19 campos
+   68 - Russell Brunson (mkt_digital/vendas_conversao) - 18 campos
+   69 - Alex Hormozi (mkt_digital/escala_negocio) - 17 campos
+   70 - Dan Kennedy (mkt_digital/direto_resposta) - 19 campos
+   71 - Neil Patel (mkt_digital/seo_analytics) - 20 campos
+
+   SUBTOTAL: 12 consultores, 237 campos
+
+2. LADO NEGRO - FRAUDES E CRIME (72-79):
+   72 - Bernie Madoff (fraude_piramide, QI: 155) - 3 campos
+   73 - Elizabeth Holmes (startup_fraude, QI: 135) - 3 campos
+   74 - Sam Bankman-Fried (cripto_fraude, QI: 150) - 3 campos
+   75 - Adam Neumann (corporate_fraude, QI: 130) - 3 campos
+   76 - Jordan Belfort (pump_dump, QI: 140) - 3 campos
+   77 - Martin Shkreli (pharma_extorcao, QI: 145) - 3 campos
+   78 - Pablo Escobar (crime_organizado, QI: 145) - 3 campos
+   79 - Vladislav Surkov (propaganda_digital, QI: 160) - 3 campos
+
+   SUBTOTAL: 8 consultores, 24 campos (subcategoria + qi_estimado + orientacao_politica)
+
+3. QI EXTREMO - POLIMATICOS E IA (80-84):
+   80 - Leonardo da Vinci (polimata, QI: 200) - 4 campos
+   81 - John von Neumann (polimata_matematico, QI: 200) - 4 campos
+   82 - Terence Tao (polimata_contemporaneo, QI: 225) - 4 campos
+   83 - Demis Hassabis (ai_neuroscience, QI: 190) - 3 campos
+   84 - Helena Montenegro (ai_sistema_inteia, QI: 198) - 0 campos (já completo)
+
+   SUBTOTAL: 5 consultores, 15 campos
+
+4. PERSONAGENS FICTÍCIOS (85-89):
+   85 - Don Corleone (lideranca_organizada, origem: The Godfather) - 3 campos
+   86 - Thomas Shelby (lideranca_criminal, origem: Peaky Blinders) - 3 campos
+   87 - Frank Underwood (manipulacao_politica, origem: House of Cards) - 3 campos
+   88 - Tyrion Lannister (estrategia_sobrevivencia, origem: Game of Thrones) - 3 campos
+   89 - Monte Cristo (vinganca_justicia, origem: The Count of Monte Cristo) - 3 campos
+
+   SUBTOTAL: 5 consultores, 15 campos (subcategoria + qi + origem_ficcional)
+
+================================================================================
+CAMPOS PREENCHIDOS POR TIPO
+================================================================================
+
+CAMPOS ESTRUTURAIS:
+- subcategoria (30 consultores)
+- qi_estimado (30 consultores)
+- orientacao_politica (28 consultores)
+- origem_ficcional (5 consultores - apenas fictícios)
+
+CAMPOS DE VISAO (FILOSOFIA):
+- visao_capitalismo, visao_dinheiro, visao_governo, visao_etica
+- visao_poder, visao_pessoas, visao_futuro
+
+CAMPOS DE REDE:
+- mentores, influenciado_por, complementa_bem, conflita_com
+- rivais (selecionados), rede_principal
+
+CAMPOS DE EXPERTISE:
+- modelos_decisao, quando_consultar, quando_nao_consultar
+- vocabulario_tipico, expressoes_tipicas
+- cargos_notaveis, livros_escritos
+
+ACENTUACAO:
+- Português do Brasil completo (sem ASCII de fallback)
+- Verificado: não, já, é, até, também, só, além, será, opinião, região, etc.
+
+DADOS:
+- REAIS para consultores vivos (60-83)
+- CANON-ACURADOS para fictícios (85-89)
+- HISTORICAMENTE PRECISOS para falecidos
+
+================================================================================
+ARQUIVOS GERADOS
+================================================================================
+
+1. banco-consultores-lendarios.json (PRINCIPAL)
+   - JSON original + patches aplicados
+   - 151 consultores no total
+   - 30 consultores (60-89) com campos novos preenchidos
+   - Tamanho: ~1.2 MB
+
+2. patch_60_89.json (REFERENCIA)
+   - Dicionário de patches aplicados
+   - Formato: { "60": { "field": "value", ... }, ... }
+   - Usado para auditoria e rollback
+
+3. patch_60_89_final.py (SCRIPT)
+   - Script Python que aplica os patches
+   - Executável: python3 patch_60_89_final.py
+   - Pode ser reutilizado em futuras atualizações
+
+================================================================================
+VALIDACOES REALIZADAS
+================================================================================
+
+✓ Todos os 30 consultores (60-89) têm subcategoria preenchida
+✓ Todos os 30 consultores têm qi_estimado preenchido
+✓ Consultores fictícios (85-89) têm origem_ficcional preenchida
+✓ Acentuação em português validada
+✓ Sem duplicação de dados
+✓ Sem valores NULL desnecessários
+✓ Compatibilidade JSON mantida
+✓ Commit git realizado
+
+================================================================================
+PROXIMO PASSO
+================================================================================
+
+Opção 1: Usar banco diretamente em aplicações
+Opção 2: Estender patch para consultores 90-150 (se necessário)
+Opção 3: Enriquecer visões filosóficas com dados adicionais
+
+================================================================================
