@@ -30,10 +30,12 @@ from typing import Optional
 logger = logging.getLogger("vila-inteia.memoria.fundador")
 
 _HOME = Path(os.path.expanduser("~"))
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 _PATHS_CLAUDE_MD = [
     _HOME / ".claude" / "CLAUDE.md",
     _HOME / "CLAUDE.md",
 ]
+_PATH_FUNDADOR_YAML = _REPO_ROOT / "data" / "fundador.yaml"
 
 
 @dataclass
@@ -85,8 +87,52 @@ def _bullets(texto: str, max_itens: int = 20) -> list[str]:
 _cache: Optional[FichaFundador] = None
 
 
+def _parse_yaml_simples(txt: str) -> dict:
+    """Parser mínimo de YAML flat (sem depender de pyyaml)."""
+    out: dict = {}
+    chave = None
+    lista: list = []
+    subdict: dict = {}
+    indent_bloco = None
+    for linha in txt.splitlines():
+        if not linha.strip() or linha.strip().startswith("#"):
+            continue
+        stripped = linha.rstrip()
+        # top-level key: value
+        if not linha.startswith(" ") and ":" in stripped:
+            k, _, v = stripped.partition(":")
+            k = k.strip()
+            v = v.strip()
+            chave = k
+            if v:
+                out[k] = v.strip('"').strip("'")
+                chave = None
+            else:
+                lista = []
+                subdict = {}
+                out[k] = lista  # lista por default, vira dict se aparecer sub-chave
+        elif linha.startswith("  - ") and chave:
+            if not isinstance(out[chave], list):
+                out[chave] = []
+            out[chave].append(linha[4:].strip().strip('"').strip("'"))
+        elif linha.startswith("  ") and ":" in linha and chave:
+            # sub-dict key: value dentro do bloco
+            sub_k, _, sub_v = linha.strip().partition(":")
+            if not isinstance(out[chave], dict):
+                out[chave] = {}
+            out[chave][sub_k.strip()] = sub_v.strip().strip('"').strip("'")
+    return out
+
+
 def carregar_ficha(force: bool = False) -> FichaFundador:
-    """Lê os CLAUDE.md disponíveis e devolve FichaFundador consolidada."""
+    """
+    Consolida ficha do Fundador a partir de (ordem de prioridade):
+      1. data/fundador.yaml (commitado no repo — funciona em produção)
+      2. ~/.claude/CLAUDE.md  (ambiente local do Igor)
+      3. ~/CLAUDE.md          (ambiente local do Igor)
+
+    Dados mais específicos sobrescrevem genéricos.
+    """
     global _cache
     if _cache and not force:
         return _cache
@@ -94,6 +140,28 @@ def carregar_ficha(force: bool = False) -> FichaFundador:
     ficha = FichaFundador()
     ficha.ultima_atualizacao = datetime.now(timezone.utc).isoformat()
 
+    # 1. YAML do repo (fonte primária)
+    if _PATH_FUNDADOR_YAML.is_file():
+        try:
+            raw = _PATH_FUNDADOR_YAML.read_text(encoding="utf-8")
+            data = _parse_yaml_simples(raw)
+            ficha.fonte.append(str(_PATH_FUNDADOR_YAML.relative_to(_REPO_ROOT)))
+            if isinstance(data.get("identificacao"), dict):
+                ficha.identificacao = data["identificacao"]
+            if isinstance(data.get("preferencias"), list):
+                ficha.preferencias = list(data["preferencias"])
+            if isinstance(data.get("projetos_ativos"), list):
+                ficha.projetos_ativos = list(data["projetos_ativos"])
+            if isinstance(data.get("restricoes_operacionais"), list):
+                ficha.restricoes_operacionais = list(data["restricoes_operacionais"])
+            if isinstance(data.get("neurocognicao"), dict):
+                ficha.neurocognicao = data["neurocognicao"]
+            if isinstance(data.get("hierarquia_servico"), list):
+                ficha.hierarquia_servico = list(data["hierarquia_servico"])
+        except Exception as exc:
+            logger.warning("erro parseando fundador.yaml: %s", exc)
+
+    # 2. CLAUDE.md locais (complementam sem sobrescrever o já preenchido)
     textos = []
     for p in _PATHS_CLAUDE_MD:
         if p.is_file():
@@ -105,17 +173,24 @@ def carregar_ficha(force: bool = False) -> FichaFundador:
 
     texto_total = "\n\n".join(textos)
 
-    # identificação
-    if "Igor Morais Vasconcelos" in texto_total or "OAB-DF 35" in texto_total or "35.376" in texto_total:
+    # identificação — só preenche se o yaml não preencheu
+    if not ficha.identificacao and (
+        "Igor Morais Vasconcelos" in texto_total
+        or "OAB-DF 35" in texto_total
+        or "35.376" in texto_total
+    ):
         ficha.identificacao = {
             "nome": "Igor Morais Vasconcelos",
             "papel": "Fundador INTEIA / Advogado OAB-DF 35.376 / Doutorando IDP",
             "contato": "igormorais123@gmail.com",
         }
 
-    # preferências
-    diretrizes = _extrair_secao(texto_total, "Diretrizes")
-    if diretrizes:
+    # preferências — só se yaml não preencheu
+    if ficha.preferencias:
+        pass
+    else:
+      diretrizes = _extrair_secao(texto_total, "Diretrizes")
+      if diretrizes:
         ficha.preferencias = _bullets(diretrizes, max_itens=15) or [
             "Nunca inferência como fato — rotular [Inferência]",
             "Parceiro de raciocínio, não validador — sem bajulação",
@@ -133,23 +208,24 @@ def carregar_ficha(force: bool = False) -> FichaFundador:
             "Altas_Habilidades": "profundidade intelectual, não simplificar excessivamente",
         }
 
-    # projetos ativos
-    projetos_mencionados = [
-        "Colmeia", "OmniRoute", "Mirante News", "Elexion", "Vila INTEIA",
-        "Paixão Cortes Advogados", "Doutorado IDP",
-    ]
-    ficha.projetos_ativos = [p for p in projetos_mencionados if p.lower() in texto_total.lower()]
+    # projetos ativos — só se yaml não preencheu
     if not ficha.projetos_ativos:
-        ficha.projetos_ativos = projetos_mencionados
+        projetos_mencionados = [
+            "Colmeia", "OmniRoute", "Mirante News", "Elexion", "Vila INTEIA",
+            "Paixão Cortes Advogados", "Doutorado IDP",
+        ]
+        encontrados = [p for p in projetos_mencionados if p.lower() in texto_total.lower()]
+        ficha.projetos_ativos = encontrados or projetos_mencionados
 
-    # restrições operacionais
-    ficha.restricoes_operacionais = [
-        "Terapia quinta às 16h — evitar agendamentos neste horário",
-        "Hérnia L5-S1 — evitar sessões contínuas acima de 8h sentado",
-        "Venvanse pausado — evitar tarefas que exigem hiperfoco longo e incontestado",
-        "Nunca publicar conteúdo web sem acentuação UTF-8 completa",
-        "Sem bajulação, siglas por extenso, emoticons evitados",
-    ]
+    # restrições operacionais — só se yaml não preencheu
+    if not ficha.restricoes_operacionais:
+        ficha.restricoes_operacionais = [
+            "Terapia quinta às 16h — evitar agendamentos neste horário",
+            "Hérnia L5-S1 — evitar sessões contínuas acima de 8h sentado",
+            "Venvanse pausado — evitar tarefas que exigem hiperfoco longo e incontestado",
+            "Nunca publicar conteúdo web sem acentuação UTF-8 completa",
+            "Sem bajulação, siglas por extenso, emoticons evitados",
+        ]
 
     _cache = ficha
     return ficha

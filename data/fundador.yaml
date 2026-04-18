@@ -1,0 +1,70 @@
+# Ficha do Fundador — commitada no repo para funcionar em produção
+# (resolve GAP E5 da auditoria). Sempre fonte primária. Se ~/.claude/CLAUDE.md
+# estiver disponível (ambiente local do Igor), sobrescreve parcialmente.
+
+identificacao:
+  nome: Igor Morais Vasconcelos
+  papel: "Fundador INTEIA · Advogado OAB-DF 35.376 · Doutorando IDP (#1) · Assessor SEEDF"
+  email: igormorais123@gmail.com
+  idade: 41
+
+preferencias:
+  - "Nunca inferência como fato — rotular [Inferência]"
+  - "Parceiro de raciocínio, não validador — sem bajulação"
+  - "Direto ao ponto, voz ativa, sem superlativos"
+  - "Apontar falhas no raciocínio, trazer pontos cegos"
+  - "Autonomia total — não pedir confirmação para executar o que já foi decidido"
+  - "Português brasileiro sempre"
+  - "UTF-8 com acentuação completa em tudo que for publicado"
+  - "Terminologia técnica em inglês quando já for termo consolidado (skill, harness, trace)"
+
+neurocognicao:
+  TEA_Grau_1: "Comunicação direta, sistemas previsíveis, mínimo de metáfora social"
+  TDAH: "Tarefas de 15 a 30 minutos, estrutura externa, lembretes, Venvanse pausado atualmente"
+  Altas_Habilidades: "Profundidade intelectual, não simplificar excessivamente, abordar complexidade real"
+
+projetos_ativos:
+  - Colmeia v6 / ONIR
+  - OmniRoute Gateway
+  - Mirante News
+  - Vila INTEIA
+  - Elexion
+  - "Copilot jurídico Paixão Cortes Advogados (60 advogados, R$ 6k/mês)"
+  - "Dossiê eleitoral Jorge Everton · Deputado Estadual RR 2026"
+  - "Doutorado IDP — IA aplicada + Psicologia Organizacional"
+
+restricoes_operacionais:
+  - "Terapia quinta às 16h — evitar agendamentos neste horário"
+  - "Hérnia L5-S1 — evitar sessões contínuas acima de 8 horas sentado"
+  - "Nunca publicar conteúdo web sem acentuação UTF-8 completa"
+  - "Sem bajulação, siglas por extenso quando houver ambiguidade"
+  - "Não criar features sem consumidor identificado (FUNCIONAL §7 princípio 2)"
+
+hierarquia_servico:
+  - Fundador
+  - INTEIA
+  - Colmeia
+  - Cliente
+
+contexto_ambiente:
+  stack_preferida:
+    - "Python 3.11+ · FastAPI · Supabase · OmniRoute"
+    - "Three.js para 3D · HTML estático quando possível"
+    - "MCP para integrações agent-tool, A2A para agent-agent"
+  pc_local: "Ryzen 9 7900, 64 GB RAM, RTX 3060 Ti, Windows 11"
+  plano_apify: "STARTER US$ 29/mês (conta inteia) — usar com moderação"
+
+clientes_e_casos:
+  paixao_cortes:
+    descricao: "Escritório com 60 advogados, R$ 6k/mês em copilot jurídico"
+    prioridade: alta
+    contato: "Igor direto"
+  jorge_everton:
+    descricao: "Deputado Estadual RR 2026, entrega de dossiê semanal"
+    prioridade: media
+    skill_responsavel: dossie-semanal-rr
+
+marcadores_temporais:
+  "2026-01-20": "Batismo do ONIR como IA que sonha; Colmeia v6"
+  "2026-03-14": "Lançamento Mirante News"
+  "2026-04-17": "Aplicação do harness-architect à Vila INTEIA"
