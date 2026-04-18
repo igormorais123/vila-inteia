@@ -1,0 +1,29 @@
+[capability]
+id = "supabase.snapshot_vila"
+version = "1.0.0"
+descricao = "Persiste o estado completo da simulação no Supabase (tabela vila_snapshots). Permite rollback determinístico de qualquer step. Usado automaticamente a cada N steps (configurável) e sob demanda em operações críticas."
+
+[args]
+vila_nome = { tipo = "str", obrigatorio = true }
+step = { tipo = "int", obrigatorio = true }
+motivo = { tipo = "str", obrigatorio = false, default = "automatico", enum = ["automatico","manual","pre_migration","pre_rollback"] }
+incluir_traces = { tipo = "bool", obrigatorio = false, default = false }
+
+[permission]
+rate_limit = "1 por minuto por vila"
+exige_permissao_escrita = true
+registra_em_vila_traces = true
+
+[lifecycle]
+estados = ["iniciado","serializando","escrevendo","concluido","erro"]
+timeout_padrao_s = 60
+
+[output.sucesso]
+snapshot_id = "uuid"
+tamanho_bytes = "int"
+tabelas_persistidas = "list[str]"
+duracao_ms = "int"
+
+[output.falha]
+razao = "enum:timeout|limite_tamanho|erro_supabase|vila_inexistente"
+detalhe = "str"

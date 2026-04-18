@@ -1,0 +1,32 @@
+[capability]
+id = "mirante.publicar_materia"
+version = "1.0.0"
+descricao = "Submete matéria redigida por um habitante da Vila ao Mirante News. Passa primeiro pelo Chateaubriand (approval gate editorial interno) e depois pela linha editorial do Mirante (filtro externo). Se aprovada, vira commit MDX no repositório e auto-deploy Vercel."
+
+[args]
+autor_id = { tipo = "str", obrigatorio = true, descricao = "ID do habitante da Vila" }
+titulo = { tipo = "str", obrigatorio = true, max_chars = 120 }
+corpo_mdx = { tipo = "str", obrigatorio = true, max_chars = 50000 }
+frontmatter = { tipo = "dict", obrigatorio = true, schema = "zod:vila-materia-v1" }
+urgencia = { tipo = "float", obrigatorio = false, default = 0.5, min = 0.0, max = 1.0 }
+
+[permission]
+rate_limit_por_agente = "3/dia"
+bloqueia_se_reputacao_abaixo_de = 30
+exige_aprovacao_chateaubriand = true
+requer_evento_origem = true
+
+[lifecycle]
+estados = ["submetido","em_revisao","aprovado","reescrito","rejeitado","publicado","bloqueado"]
+tempo_medio_revisao_s = 120
+
+[output.sucesso]
+slug = "str"
+url = "str"
+data_publicacao = "timestamptz"
+trace_id = "str"
+
+[output.falha]
+razao = "enum:duplicidade|palavra_bloqueada|rate_limit|rejeicao_editorial|reputacao_insuficiente|frontmatter_invalido"
+detalhe = "str"
+revisao_sugerida = "str"

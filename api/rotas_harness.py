@@ -261,3 +261,159 @@ def forcar_flush(timeout_s: float = 10.0) -> dict:
 
     flush_traces(timeout_s=timeout_s)
     return {"ok": True, "timeout_s": timeout_s}
+
+
+# =====================================================================
+# Skills canônicas (Onda 3 — Rua das Oficinas)
+# =====================================================================
+
+@router.get("/skills")
+def listar_skills(nivel: int = Query(1, ge=1, le=3)) -> dict:
+    """Lista skills registradas no nível de detalhe pedido (1=manifest, 3=completo)."""
+    from engine.harness import skill_registry
+    todas = skill_registry.listar(nivel=nivel)
+    return {"total": len(todas), "nivel": nivel, "skills": todas}
+
+
+@router.get("/skills/buscar")
+def buscar_skills(
+    q: str = Query(..., min_length=2, description="termos separados por vírgula"),
+    top_n: int = Query(5, ge=1, le=20),
+    nivel: int = Query(2, ge=1, le=3),
+) -> dict:
+    """Busca skills por termos (match em nome, descrição, capabilities, scope, tools)."""
+    from engine.harness import skill_registry
+    termos = [t.strip() for t in q.split(",") if t.strip()]
+    res = skill_registry.buscar(termos, top_n=top_n, nivel=nivel)
+    return {"termos": termos, "total": len(res), "resultados": res}
+
+
+@router.get("/skills/{nome}")
+def detalhar_skill(
+    nome: str,
+    nivel: int = Query(3, ge=1, le=3),
+) -> dict:
+    """Carrega uma skill específica no nível pedido."""
+    from engine.harness import skill_registry
+    s = skill_registry.carregar(nome, nivel=nivel)
+    if not s:
+        raise HTTPException(status_code=404, detail=f"Skill '{nome}' não encontrada")
+    return s
+
+
+# =====================================================================
+# Capability cards (Onda 3 — Portal do Mercado)
+# =====================================================================
+
+@router.get("/capabilities")
+def listar_capabilities() -> dict:
+    """Lista capability cards discoveráveis (contratos MCP-like)."""
+    from engine.harness import listar_cards
+    cards = listar_cards()
+    return {"total": len(cards), "capabilities": cards}
+
+
+@router.get("/capabilities/{cap_id}")
+def detalhar_capability(cap_id: str) -> dict:
+    """Detalha um capability card específico."""
+    from engine.harness import obter_card
+    c = obter_card(cap_id)
+    if not c:
+        raise HTTPException(status_code=404, detail=f"Capability '{cap_id}' não encontrada")
+    return c
+
+
+# =====================================================================
+# Ficha do Fundador (Onda 4 — Gap #5)
+# =====================================================================
+
+@router.get("/fundador")
+def ficha_fundador() -> dict:
+    """Retorna ficha consolidada do Fundador (Igor) para qualquer agente da Vila."""
+    from engine.memoria.fundador import carregar_ficha
+    return carregar_ficha(force=False).as_dict()
+
+
+@router.get("/fundador/injecao")
+def ficha_fundador_injecao(max_chars: int = Query(1500, ge=200, le=6000)) -> dict:
+    """Versão textual compacta da ficha, pronta para injeção em prompt."""
+    from engine.memoria.fundador import ficha_para_injecao
+    return {"max_chars": max_chars, "texto": ficha_para_injecao(max_chars=max_chars)}
+
+
+# =====================================================================
+# Produto 1 — Simulação Decisional (HARNESS_VILA_FUNCIONAL.md §2)
+# =====================================================================
+
+@router.post("/simular-decisao")
+def simular_decisao(payload: dict) -> dict:
+    """
+    Produto 1 — Simulação Decisional para Helena/Colmeia.
+
+    MVP: consulta skills compatíveis, traz perspectivas de agentes
+    disponíveis, retorna relatório estruturado com recomendação.
+
+    Input esperado::
+
+        {
+          "contexto": "proposta comercial cliente Zeta",
+          "agentes": ["themis","midas","chateaubriand"],
+          "steps": 30,
+          "restricoes": ["sem dados sensiveis reais"]
+        }
+    """
+    import uuid
+    from datetime import datetime, timezone
+    from engine.harness import skill_registry, obter_orcamento
+
+    contexto = str(payload.get("contexto", "")).strip()
+    if not contexto:
+        raise HTTPException(status_code=400, detail="campo 'contexto' é obrigatório")
+
+    agentes = payload.get("agentes") or []
+    steps = int(payload.get("steps") or 20)
+    restricoes = payload.get("restricoes") or []
+
+    # Descobre skills relevantes pelo contexto
+    termos = [w for w in contexto.lower().split() if len(w) > 3][:8]
+    skills_relevantes = skill_registry.buscar(termos, top_n=5, nivel=2)
+    orcamento = obter_orcamento("sintetizar")
+
+    relatorio_id = uuid.uuid4().hex
+    votos = {a: "pendente" for a in agentes}
+    riscos = []
+    if "sensivel" in contexto.lower() or "sensível" in contexto.lower() or "lgpd" in contexto.lower():
+        riscos.append("possível dado sensível — aplicar constituição art. compliance")
+    if steps > 100:
+        riscos.append("orçamento de steps alto — validar ROI antes de executar")
+    if not agentes:
+        riscos.append("nenhum agente selecionado — recomendação será heurística")
+
+    confianca = max(0.3, min(0.85, 0.5 + 0.05 * len(skills_relevantes) - 0.05 * len(riscos)))
+
+    relatorio = {
+        "relatorio_id": relatorio_id,
+        "gerado_em": datetime.now(timezone.utc).isoformat(),
+        "contexto": contexto,
+        "agentes_selecionados": agentes,
+        "votos_por_agente": votos,
+        "steps_planejados": steps,
+        "restricoes": restricoes,
+        "skills_relevantes": [
+            {"nome": s["nome"], "descricao": s["descricao"], "score": s.get("_score", 0)}
+            for s in skills_relevantes
+        ],
+        "riscos_detectados": riscos,
+        "orcamento_aplicavel": {
+            "fase": orcamento.fase,
+            "tokens_max": orcamento.tokens_max,
+            "memoria_max": orcamento.memoria_max,
+        },
+        "decisao_recomendada": "investigar" if riscos else "prosseguir",
+        "confianca": round(confianca, 3),
+        "proxima_acao_sugerida": "rodar steps em modo sandbox + colher votos reais dos agentes",
+        "status": "mvp_sincrono",
+        "nota": "MVP da Onda 3. Execução real de N steps com agentes virá na Onda 4.",
+        "trace_completo_url": f"/api/v1/harness/traces?limit=50",
+    }
+    return relatorio

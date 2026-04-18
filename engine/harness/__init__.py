@@ -23,6 +23,8 @@ from .orcamento import (
     registrar_consumo,
     relatorio_orcamentos,
 )
+from . import skill_registry
+from .protocolos import CapabilityCard, listar_cards, obter_card
 
 __all__ = [
     "TraceEvent", "trace_fase", "flush_traces", "habilitado",

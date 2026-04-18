@@ -1,0 +1,33 @@
+[capability]
+id = "omniroute.completar"
+version = "1.0.0"
+descricao = "Completa um prompt via OmniRoute Gateway. Roteia entre GPT, Gemma, Claude e outros de acordo com disponibilidade e custo. Todas as chamadas da Vila ao LLM passam por aqui."
+
+[args]
+mensagens = { tipo = "list", obrigatorio = true, schema = "openai:chat.completions.messages" }
+modelo = { tipo = "str", obrigatorio = false, default = "auto", enum = ["auto","gpt-5-4","gpt-5-4-mini","claude-opus-4-7","gemma-4","deepseek"] }
+max_tokens = { tipo = "int", obrigatorio = false, default = 500 }
+temperature = { tipo = "float", obrigatorio = false, default = 0.7, min = 0.0, max = 2.0 }
+orcamento_tokens = { tipo = "int", obrigatorio = false, descricao = "Teto vindo de engine/harness/orcamento.py" }
+
+[permission]
+rate_limit_global = "60 chamadas/min"
+bloqueia_se = "orcamento_tokens == 0"
+emite_trace = true
+registra_consumo = true
+
+[lifecycle]
+estados = ["submetido","em_inferencia","concluido","timeout","erro"]
+timeout_padrao_s = 30
+
+[output.sucesso]
+conteudo = "str"
+modelo_usado = "str"
+tokens_prompt = "int"
+tokens_saida = "int"
+custo_usd = "float"
+latencia_ms = "int"
+
+[output.falha]
+razao = "enum:timeout|rate_limit|erro_provedor|schema_invalido|orcamento_exaurido"
+detalhe = "str"
