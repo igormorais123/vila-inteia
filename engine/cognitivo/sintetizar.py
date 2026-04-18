@@ -18,8 +18,10 @@ if TYPE_CHECKING:
     from ..persona import Persona
 
 from ..memoria.fluxo import NoMemoria
+from ..harness import trace_fase
 
 
+@trace_fase("sintetizar")
 def sintetizar(
     personas: dict[str, "Persona"],
     topico: str,
