@@ -17,8 +17,10 @@ if TYPE_CHECKING:
     from ..persona import Persona
 
 from ..memoria.fluxo import NoMemoria
+from ..harness import trace_fase
 
 
+@trace_fase("refletir")
 def refletir(
     persona: Persona,
     hora_atual: datetime,

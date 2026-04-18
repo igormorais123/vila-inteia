@@ -14,8 +14,10 @@ if TYPE_CHECKING:
     from ..persona import Persona
 
 from ..campus import obter_local, obter_conexoes
+from ..harness import trace_fase
 
 
+@trace_fase("perceber")
 def perceber(
     persona: Persona,
     mundo: Any,

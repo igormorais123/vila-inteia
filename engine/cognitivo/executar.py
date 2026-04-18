@@ -19,10 +19,12 @@ if TYPE_CHECKING:
     from ..persona import Persona
 
 from ..campus import obter_local, calcular_distancia
+from ..harness import trace_fase
 
 logger = logging.getLogger("vila-inteia.executar")
 
 
+@trace_fase("executar")
 def executar(
     persona: Persona,
     hora_atual: datetime,

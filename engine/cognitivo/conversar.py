@@ -19,7 +19,10 @@ from typing import Any, TYPE_CHECKING
 if TYPE_CHECKING:
     from ..persona import Persona
 
+from ..harness import trace_fase
 
+
+@trace_fase("conversar")
 def conversar(
     persona: Persona,
     percepcoes: list[dict],

@@ -14,5 +14,18 @@ Módulos:
 """
 
 from .observabilidade import TraceEvent, trace_fase, flush_traces, habilitado
+from .orcamento import (
+    Orcamento,
+    ORCAMENTO_POR_FASE,
+    obter_orcamento,
+    estimar_tokens,
+    caber_ou_resumir,
+    registrar_consumo,
+    relatorio_orcamentos,
+)
 
-__all__ = ["TraceEvent", "trace_fase", "flush_traces", "habilitado"]
+__all__ = [
+    "TraceEvent", "trace_fase", "flush_traces", "habilitado",
+    "Orcamento", "ORCAMENTO_POR_FASE", "obter_orcamento", "estimar_tokens",
+    "caber_ou_resumir", "registrar_consumo", "relatorio_orcamentos",
+]

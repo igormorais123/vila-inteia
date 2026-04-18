@@ -112,6 +112,7 @@ def modo_serve(args):
         from api.rotas_vila import router
         from api.rotas_rede_social import router as rede_router
         from api.rotas_colmeia import router as colmeia_router
+        from api.rotas_harness import router as harness_router
     except ImportError as e:
         print(f"Erro: {e}")
         print("Instale as dependencias: pip install -r requirements.txt")
@@ -133,6 +134,7 @@ def modo_serve(args):
     app.include_router(router)
     app.include_router(rede_router)
     app.include_router(colmeia_router)
+    app.include_router(harness_router)
 
     # Servir frontend estatico
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
@@ -206,6 +208,7 @@ def modo_live(args):
         from api.rotas_vila import router, obter_simulacao
         from api.rotas_rede_social import router as rede_router
         from api.rotas_colmeia import router as colmeia_router
+        from api.rotas_harness import router as harness_router
     except ImportError as e:
         print(f"Erro: {e}")
         sys.exit(1)
@@ -223,6 +226,7 @@ def modo_live(args):
     app.include_router(router)
     app.include_router(rede_router)
     app.include_router(colmeia_router)
+    app.include_router(harness_router)
 
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
     if os.path.exists(frontend_dir):

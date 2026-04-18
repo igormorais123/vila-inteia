@@ -22,6 +22,7 @@ from ..campus import (
     obter_local, obter_todos_locais, locais_abertos,
     obter_conexoes, residencia_para_categoria,
 )
+from ..harness import trace_fase
 
 
 # Planos-base por período do dia
@@ -199,6 +200,7 @@ def gerar_plano_diario(persona: Persona, hora_atual: datetime) -> list[PlanoItem
     return plano
 
 
+@trace_fase("planejar")
 def planejar(
     persona: Persona,
     contexto: dict,
