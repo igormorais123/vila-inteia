@@ -13,7 +13,10 @@ Módulos:
     policy_engine   — Constituição como policy runtime (Onda 4, futuro)
 """
 
-from .observabilidade import TraceEvent, trace_fase, flush_traces, habilitado
+from .observabilidade import (
+    TraceEvent, trace_fase, trace_contexto, flush_traces, habilitado,
+    acumular_usage,
+)
 from .orcamento import (
     Orcamento,
     ORCAMENTO_POR_FASE,

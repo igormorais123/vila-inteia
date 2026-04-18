@@ -83,6 +83,90 @@ _queue: "queue.Queue[TraceEvent]" = queue.Queue(maxsize=_QUEUE_MAX)
 _stop = threading.Event()
 _flush_thread: Optional[threading.Thread] = None
 _current_parent = threading.local()   # trace_id ativo por thread (para causal chain)
+_current_usage = threading.local()    # acumulador de tokens/custo da fase corrente
+
+
+def acumular_usage(tokens: int = 0, custo_usd: float = 0.0) -> None:
+    """Chamado pelo ia_client após cada chamada LLM. O @trace_fase lê e zera."""
+    pilha = getattr(_current_usage, "pilha", None)
+    if not pilha:
+        return
+    topo = pilha[-1]
+    topo["tokens"] += int(tokens or 0)
+    topo["custo"] += float(custo_usd or 0.0)
+
+
+class trace_contexto:
+    """
+    Context manager que abre um TraceEvent de escopo (fase='step' por ex)
+    e deixa os traces internos pendurados via causal_parent.
+
+    Uso::
+
+        with trace_contexto("step", agente_id=p.id, step=self.step):
+            p.perceber(...); p.planejar(...); ...
+    """
+
+    def __init__(self, fase: str, agente_id: str = "desconhecido", step: int = 0,
+                 metadata: Optional[dict] = None):
+        self.fase = fase
+        self.agente_id = agente_id
+        self.step = step
+        self.metadata = metadata or {}
+        self.trace_id: Optional[str] = None
+        self._parent: Optional[str] = None
+        self._inicio = None
+        self._resultado = "sucesso"
+
+    def __enter__(self):
+        if not _ENABLED:
+            return self
+        _ensure_writer()
+        self.trace_id = uuid.uuid4().hex
+        self._parent = getattr(_current_parent, "id", None)
+        _current_parent.id = self.trace_id
+        pilha = getattr(_current_usage, "pilha", None)
+        if pilha is None:
+            pilha = []
+            _current_usage.pilha = pilha
+        pilha.append({"tokens": 0, "custo": 0.0})
+        self._inicio = datetime.now(timezone.utc)
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        if not _ENABLED:
+            return False
+        if exc_type is not None:
+            self._resultado = "falha"
+        fim = datetime.now(timezone.utc)
+        try:
+            pilha = getattr(_current_usage, "pilha", [])
+            usage = pilha.pop() if pilha else {"tokens": 0, "custo": 0.0}
+            ev = TraceEvent(
+                trace_id=self.trace_id,
+                step=self.step,
+                agente_id=self.agente_id,
+                fase=self.fase,
+                inicio=self._inicio.isoformat(),
+                fim=fim.isoformat(),
+                duracao_ms=int((fim - self._inicio).total_seconds() * 1000),
+                inputs_hash=_safe_hash(self.metadata),
+                outputs_hash="escopo",
+                causal_parent=self._parent,
+                tokens_consumidos=usage["tokens"],
+                custo_usd=usage["custo"],
+                resultado=self._resultado,
+                metadata=self.metadata,
+            )
+            try:
+                _queue.put_nowait(ev)
+            except queue.Full:
+                logger.warning("vila_traces queue cheia — contexto descartado")
+        except Exception as exc:
+            logger.debug("erro ao emitir trace de contexto: %s", exc)
+        finally:
+            _current_parent.id = self._parent
+        return False
 
 
 def _supabase_insert_bulk(eventos: list[dict]) -> bool:
@@ -217,6 +301,11 @@ def trace_fase(
             trace_id = uuid.uuid4().hex
             parent = getattr(_current_parent, "id", None)
             _current_parent.id = trace_id
+            pilha = getattr(_current_usage, "pilha", None)
+            if pilha is None:
+                pilha = []
+                _current_usage.pilha = pilha
+            pilha.append({"tokens": 0, "custo": 0.0})
 
             inicio = datetime.now(timezone.utc)
             resultado = "sucesso"
@@ -230,8 +319,14 @@ def trace_fase(
             finally:
                 fim = datetime.now(timezone.utc)
                 try:
-                    tokens = capturar_tokens(saida) if capturar_tokens and saida else 0
-                    custo = capturar_custo(saida) if capturar_custo and saida else 0.0
+                    pilha_usage = getattr(_current_usage, "pilha", [])
+                    usage_auto = pilha_usage.pop() if pilha_usage else {"tokens": 0, "custo": 0.0}
+                    tokens = capturar_tokens(saida) if capturar_tokens and saida else usage_auto["tokens"]
+                    custo = capturar_custo(saida) if capturar_custo and saida else usage_auto["custo"]
+                    # propaga para a fase pai (se houver)
+                    if pilha_usage:
+                        pilha_usage[-1]["tokens"] += usage_auto["tokens"]
+                        pilha_usage[-1]["custo"] += usage_auto["custo"]
                     ev = TraceEvent(
                         trace_id=trace_id,
                         step=_extrair_step(args, kwargs),

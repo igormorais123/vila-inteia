@@ -21,6 +21,21 @@ from typing import Optional
 
 logger = logging.getLogger("vila-inteia.ia")
 
+# Preço por 1M tokens (aprox Haiku/OmniRoute médio). Ajustável via env.
+_PRECO_IN_PER_MTOK = float(os.getenv("VILA_PRECO_IN_USD_MTOK", "0.25"))
+_PRECO_OUT_PER_MTOK = float(os.getenv("VILA_PRECO_OUT_USD_MTOK", "1.25"))
+
+
+def _reportar_usage(tokens_in: int, tokens_out: int) -> None:
+    """Envia usage para o harness (shadow-safe)."""
+    try:
+        from .harness.observabilidade import acumular_usage
+        tokens = int(tokens_in or 0) + int(tokens_out or 0)
+        custo = (tokens_in * _PRECO_IN_PER_MTOK + tokens_out * _PRECO_OUT_PER_MTOK) / 1_000_000
+        acumular_usage(tokens=tokens, custo_usd=custo)
+    except Exception:
+        pass
+
 # Default via env var — sem host privado hardcoded
 _DEFAULT_OMNIROUTE_URL = "http://localhost:20128"
 
@@ -203,6 +218,15 @@ def _chamar_openai(client, modelo, msgs, system_prompt, max_tokens, temp) -> Opt
         )
         if resp and resp.choices and resp.choices[0].message:
             texto = resp.choices[0].message.content
+            try:
+                u = getattr(resp, "usage", None)
+                if u:
+                    _reportar_usage(
+                        getattr(u, "prompt_tokens", 0) or 0,
+                        getattr(u, "completion_tokens", 0) or 0,
+                    )
+            except Exception:
+                pass
             return texto.strip() if texto else None
         return None
     except Exception as e:
@@ -225,6 +249,15 @@ def _chamar_anthropic(client, modelo, msgs, system_prompt, max_tokens, temp) -> 
         resp = client.messages.create(**kwargs)
         if resp and resp.content:
             texto = resp.content[0].text
+            try:
+                u = getattr(resp, "usage", None)
+                if u:
+                    _reportar_usage(
+                        getattr(u, "input_tokens", 0) or 0,
+                        getattr(u, "output_tokens", 0) or 0,
+                    )
+            except Exception:
+                pass
             return texto.strip() if texto else None
         return None
     except Exception as e:

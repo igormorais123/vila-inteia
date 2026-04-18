@@ -234,12 +234,19 @@ class SimulacaoVila:
             if not persona.ativo:
                 continue
 
-            # Executar ciclo cognitivo
-            resultado = persona.mover(
-                mundo=self,
-                personas=self.personas,
-                hora_atual=self.hora_atual,
-            )
+            # Executar ciclo cognitivo sob contexto de trace (causal chain das 7 fases)
+            from engine.harness import trace_contexto
+            with trace_contexto(
+                "step",
+                agente_id=persona.id,
+                step=self.step,
+                metadata={"hora": self.hora_atual.strftime("%Y-%m-%d %H:%M")},
+            ):
+                resultado = persona.mover(
+                    mundo=self,
+                    personas=self.personas,
+                    hora_atual=self.hora_atual,
+                )
 
             # Registrar ação
             acao_resumo = {
@@ -308,6 +315,23 @@ class SimulacaoVila:
 
         # Avançar tempo
         self.hora_atual += timedelta(seconds=config.segundos_por_step)
+
+        # Heartbeats dos agentes vivos (Helena, Efesto) — dispara conforme intervalo
+        try:
+            from engine.agentes_vivos import scheduler as _sched_vivos
+            hbs = _sched_vivos.rodar_ciclo_se_devido(step=self.step, sim=self) or []
+            for hb in hbs or []:
+                resumo_step["acoes"].append({
+                    "agente_id": hb.agente,
+                    "agente_nome": hb.agente,
+                    "tipo": "heartbeat",
+                    "local": "inteia",
+                    "acao": f"{hb.resultado} · {len(hb.acoes)} ações",
+                    "emoji": "🫀",
+                })
+        except Exception as exc:
+            import logging
+            logging.getLogger("vila-inteia.simulacao").debug("scheduler vivos falhou: %s", exc)
 
         # Verificar se deve gerar síntese coletiva
         if self.step % 10 == 0 and config.topicos_ativos:
