@@ -55,7 +55,10 @@ class ThrottleConfig:
         self._timestamps.append(time.time())
 
 
-_throttle = ThrottleConfig()
+# Throttle respeitando env VILA_LLM_RPM (default 50, reduzir pra Gemini free=8)
+_throttle = ThrottleConfig(
+    max_por_minuto=int(os.getenv("VILA_LLM_RPM", "50"))
+)
 _provider = None  # "omniroute", "anthropic"
 _client = None
 _client_fallback = None  # Anthropic como fallback
@@ -67,13 +70,17 @@ _CIRCUIT_THRESHOLD = 5  # falhas antes de abrir circuito
 _CIRCUIT_COOLDOWN = 120  # segundos com circuito aberto
 
 
+_GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
+
 def _detectar_provider():
-    """OmniRoute PRIMEIRO (custo zero). Anthropic só como fallback."""
+    """Prioridade: OmniRoute > Gemini (AI Studio) > Anthropic fallback."""
     global _provider, _client, _client_fallback
 
     omniroute_key = os.getenv("OMNIROUTE_API_KEY", "")
     omniroute_url = os.getenv("OMNIROUTE_URL", _DEFAULT_OMNIROUTE_URL)
     claude_key = os.getenv("CLAUDE_API_KEY", "")
+    gemini_key = os.getenv("GEMINI_API_KEY", "")
 
     # PRIORIDADE 1: OmniRoute (custo zero)
     if omniroute_key:
@@ -86,6 +93,20 @@ def _detectar_provider():
             )
             _provider = "omniroute"
             logger.info(f"Vila IA: OmniRoute ({omniroute_url}) — custo zero")
+        except ImportError:
+            logger.warning("Vila IA: openai SDK não instalado")
+
+    # PRIORIDADE 2: Gemini via AI Studio (OpenAI-compatible endpoint)
+    if _client is None and gemini_key:
+        try:
+            from openai import OpenAI
+            _client = OpenAI(
+                api_key=gemini_key,
+                base_url=_GEMINI_BASE_URL,
+                timeout=30.0,
+            )
+            _provider = "gemini"
+            logger.info("Vila IA: Google AI Studio (Gemini) via OpenAI-compat")
         except ImportError:
             logger.warning("Vila IA: openai SDK não instalado")
 
@@ -121,13 +142,21 @@ def _modelo(alias: str) -> str:
             "analise": "osa-elite",
             "sintese": "osa-specialist",
         }.get(alias, "BestFREE")
-    else:
-        # Anthropic direto
+    if _provider == "gemini":
+        # gemini-2.5-flash-lite é único com quota free confiável em AI Studio
+        # Override via env GEMINI_MODEL pra conta paga
+        modelo_gemini = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
         return {
-            "rapido": "claude-haiku-4-5-20251001",
-            "analise": "claude-sonnet-4-20250514",
-            "sintese": "claude-haiku-4-5-20251001",
-        }.get(alias, "claude-haiku-4-5-20251001")
+            "rapido": modelo_gemini,
+            "analise": modelo_gemini,
+            "sintese": modelo_gemini,
+        }.get(alias, modelo_gemini)
+    # Anthropic direto
+    return {
+        "rapido": "claude-haiku-4-5-20251001",
+        "analise": "claude-sonnet-4-20250514",
+        "sintese": "claude-haiku-4-5-20251001",
+    }.get(alias, "claude-haiku-4-5-20251001")
 
 
 MODELO_RAPIDO = "rapido"
@@ -170,7 +199,8 @@ def chamar_llm(
     global _circuit_falhas, _circuit_aberto_ate
     circuito_ok = time.time() > _circuit_aberto_ate
 
-    if c and _provider == "omniroute" and circuito_ok:
+    # OmniRoute ou Gemini (ambos via OpenAI-compatible)
+    if c and _provider in ("omniroute", "gemini") and circuito_ok:
         resultado = _chamar_openai(c, modelo_real, msgs_user, system_prompt, max_tokens, temperatura)
         if resultado:
             _throttle.registrar()
@@ -179,7 +209,7 @@ def chamar_llm(
         _circuit_falhas += 1
         if _circuit_falhas >= _CIRCUIT_THRESHOLD:
             _circuit_aberto_ate = time.time() + _CIRCUIT_COOLDOWN
-            logger.warning(f"Circuit breaker ABERTO — OmniRoute falhou {_circuit_falhas}x, pausa de {_CIRCUIT_COOLDOWN}s")
+            logger.warning(f"Circuit breaker ABERTO — provider {_provider} falhou {_circuit_falhas}x, pausa de {_CIRCUIT_COOLDOWN}s")
             _circuit_falhas = 0
 
     # Tentativa 2: Anthropic fallback
