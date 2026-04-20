@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Vila INTEIA v3: causalidade, event-sourcing e cockpit unificado</title>
+<style>
+  @page { size: A4; margin: 20mm 22mm;
+    @bottom-center { content: "Vila INTEIA v3 — p. " counter(page) "/" counter(pages);
+      font-family: Georgia, serif; font-size: 9pt; color: #666; } }
+  html { font-family: Georgia, serif; font-size: 10.5pt; color: #1a1a1a; }
+  body { line-height: 1.45; margin: 0; text-align: justify; hyphens: auto; }
+  h1 { font-family: sans-serif; font-size: 18pt; margin: 0 0 4pt 0; line-height: 1.15; }
+  .subtitle { font-size: 12pt; color: #444; margin-bottom: 14pt; }
+  .authors { font-size: 10pt; color: #444; margin-bottom: 3pt; }
+  .affil { font-size: 9pt; color: #666; margin-bottom: 18pt; }
+  h2 { font-family: sans-serif; font-size: 13pt; margin: 16pt 0 6pt 0; border-bottom: 1px solid #ddd; padding-bottom: 3pt; }
+  h3 { font-family: sans-serif; font-size: 11pt; margin: 10pt 0 4pt 0; color: #333; }
+  p { margin: 0 0 6pt 0; }
+  .abstract { background: #f7f7f7; padding: 10pt 14pt; border-left: 3px solid #d69e2e; margin: 14pt 0; font-size: 9.5pt; }
+  .abstract-title { font-family: sans-serif; font-weight: bold; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5pt; color: #555; margin-bottom: 4pt; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 9pt; }
+  pre { background: #f4f4f4; padding: 8pt 10pt; border-radius: 3px; line-height: 1.35; page-break-inside: avoid; }
+  code { background: #f0f0f0; padding: 1px 4px; border-radius: 2px; }
+  .eq { font-style: italic; text-align: center; margin: 8pt 0; font-size: 11pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 8pt 0; }
+  th, td { border: 1px solid #ccc; padding: 4pt 7pt; text-align: left; }
+  th { background: #f2f2f2; font-family: sans-serif; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.3pt; }
+  .section-no { color: #d69e2e; margin-right: 6pt; font-weight: bold; }
+  .box { border: 1px solid #ccc; padding: 8pt 12pt; margin: 10pt 0; background: #fafafa; font-size: 9.5pt; }
+</style>
+</head>
+<body>
+
+<h1>Vila INTEIA v3: causalidade, event-sourcing e cockpit unificado</h1>
+<div class="subtitle">Continuação — Ondas 22 a 33: infraestrutura de simulador-plataforma</div>
+
+<div class="authors">Pedro Afonso Malheiros · Igor Morais Vasconcelos</div>
+<div class="affil">INTEIA Ltda. · Mirante News · Colmeia · abril de 2026</div>
+
+<div class="abstract">
+<div class="abstract-title">Resumo</div>
+<p>Nesta terceira parte reportamos as Ondas 22 a 33 da Vila INTEIA, que transformam a plataforma de uma simulação auto-contida em uma <strong>infraestrutura de simulador</strong> com ferramentas externas, ponto de entrada causal e artefato UI único. Destacamos: (i) orquestrador multi-plataforma social (Twitter/Reddit/LinkedIn/TikTok-like) com spillover probabilístico calibrado; (ii) GraphRAG vivo no pipeline cognitivo real; (iii) quatro datasets de backtest históricos (Vision Pro 2024, Americanas 2023, impeachment Dilma 2016, TikTok viral 2024) totalizando 50 eventos; (iv) tuner de thresholds do classificador via grid search maximizando entropia; (v) SSE stream de eventos psico-históricos; (vi) causalidade à la Pearl (do-calculus, counterfactuals, ATE); (vii) comparativo A/B com conclusões automáticas; (viii) CLI <code>vila-cli</code> para consulta HTTP; (ix) event-sourcing JSONL append-only; (x) cockpit unificado single-pane-of-glass. Todos os 298 testes passam em CI ao longo de dez <em>pull requests</em> sequenciais.</p>
+</div>
+
+<h2><span class="section-no">1</span>Motivação</h2>
+<p>As versões v1 e v2 do artigo estabeleceram os fundamentos matemáticos e o ciclo asimoviano. Esta versão v3 foca em <strong>infraestrutura</strong>: transformar os módulos de modelagem em ferramentas operacionais usáveis sem conhecimento profundo do código-fonte. O objetivo declarado é que um novo analista ou parceiro possa, em menos de 5 minutos, rodar uma simulação, consultar seu estado via CLI ou browser, e produzir um relatório exportável.</p>
+
+<h2><span class="section-no">2</span>Orquestrador multi-plataforma (Onda 22)</h2>
+<p>A Onda 7 havia introduzido quatro classes estilo plataforma social sem integrá-las. A Onda 22 cria o <code>OrquestradorPlataformas</code> que:</p>
+<ol>
+<li>registra cada habitante automaticamente nas quatro plataformas com nomes adaptados (<code>@handle</code> TikTok, <code>u/user</code> Reddit, full name LinkedIn, base Twitter);</li>
+<li>permite postar numa origem com <em>spillover</em> probabilístico para as outras com taxas calibradas (twitter→reddit 0.3, tiktok→twitter 0.5, etc.);</li>
+<li>agrega estatísticas cross-platform (top-3 posts virais por plataforma, pares origem→destino mais frequentes).</li>
+</ol>
+
+<h2><span class="section-no">3</span>GraphRAG real no cognitivo (Onda 23)</h2>
+<p>A Onda 6 construiu <code>GrafoConhecimento</code> mas não o conectava ao pipeline. A Onda 23 adiciona hook em <code>engine/simulacao.py</code>: após cada conversa, o texto passa por <code>indexar_texto(GRAFO_GLOBAL, texto)</code>, extraindo entidades e co-ocorrências. O <code>engine/cognitivo/recuperar.py</code> passa a consultar <code>GRAFO_GLOBAL.buscar_por_rotulo(persona.nome) → vizinhos 2-hops</code> e anexa conhecimento relacional ao contexto.</p>
+
+<h2><span class="section-no">4</span>Datasets históricos expandidos (Onda 24)</h2>
+<p>O <em>seed</em> original tinha 10 eventos (eleição SP 2024). A Onda 24 adiciona quatro datasets:</p>
+
+<table>
+<thead><tr><th>Dataset</th><th>Eventos</th><th>Domínio</th></tr></thead>
+<tbody>
+<tr><td>lancamento_apple_vpro_2024</td><td>10</td><td>Lançamento de produto tech (Vision Pro)</td></tr>
+<tr><td>americanas_crise_2023</td><td>10</td><td>Escândalo contábil / recuperação judicial</td></tr>
+<tr><td>impeachment_dilma_2016</td><td>10</td><td>Crise política brasileira</td></tr>
+<tr><td>tiktok_viral_2024</td><td>10</td><td>Viralização + geopolítica de plataforma</td></tr>
+</tbody>
+</table>
+
+<p>Total acumulado: 5 datasets × 10 = 50 eventos históricos calibrados com <em>priors</em> realistas. O endpoint <code>/api/v1/psicohistoria/backtest-comparativo</code> roda os cinco em paralelo e retorna Brier, log-loss, accuracy e <em>calibration curves</em> por dataset.</p>
+
+<h2><span class="section-no">5</span>Tuner de thresholds (Onda 25)</h2>
+<p>A descoberta mais reveladora das simulações reais (relatada em v2) foi que a Vila visita apenas 2 dos 8 estados canônicos (87.3% <em>expansao</em>, 12.7% <em>equilibrio</em>). A hipótese mais provável era que os <em>thresholds</em> do classificador (20 contribuições, 70% ativos, 0.60 polarização, etc.) estão mal calibrados.</p>
+
+<p>A Onda 25 implementa <code>grid_search_thresholds</code>: varre 4×4×4×4 combinações de (contribs_min, ativos_frac_min, cf_min, cf_max), avalia cada uma pela <em>entropia de Shannon normalizada</em> da distribuição resultante de estados, e retorna os <em>thresholds</em> que maximizam diversidade.</p>
+
+<div class="eq">H<sub>norm</sub>(P) = −Σ p<sub>i</sub> log₂ p<sub>i</sub> / log₂ 8</div>
+
+<p>H<sub>norm</sub> = 0 significa distribuição concentrada num único estado (o baseline atual); H<sub>norm</sub> = 1 significa distribuição uniforme sobre os 8 estados.</p>
+
+<h2><span class="section-no">6</span>Stream SSE (Onda 26)</h2>
+<p>O endpoint <code>GET /api/v1/psicohistoria/stream</code> expõe os três eventos principais em tempo real via <em>Server-Sent Events</em>:</p>
+<ul>
+<li><code>event: estado</code> — emitido quando o step avança</li>
+<li><code>event: mule</code> — emitido quando o detector identifica anomalia</li>
+<li><code>event: calibracao</code> — emitido quando o auto-calibrador recalibra a matriz</li>
+</ul>
+<p>O cliente (browser ou CLI) se conecta uma vez e recebe eventos conforme ocorrem. O <code>polling</code> interno é 0.5s; o <em>timeout</em> da conexão é 5 minutos (para liberar recursos se o cliente desconectar abruptamente).</p>
+
+<h2><span class="section-no">7</span>Causalidade à la Pearl (Onda 28)</h2>
+
+<p>O módulo <code>engine/causalidade/pearl.py</code> implementa três operações canônicas de inferência causal sobre cadeias de Markov:</p>
+
+<h3>7.1 Intervenção (do-operator)</h3>
+<div class="eq">M<sup>do(X=i)</sup>[i,:] = e<sub>i</sub> (self-loop absorvente)</div>
+<p>Força a cadeia a permanecer no estado <em>i</em>, bloqueando seu fluxo natural. Útil para responder &quot;e se a Vila estivesse presa em <em>polarizacao</em>?&quot;.</p>
+
+<h3>7.2 Counterfactuals</h3>
+<p>Dada uma trajetória factual <code>[s₀, s₁, ..., sₜ, ...]</code>, calcula qual seria a trajetória sob <code>sₜ = y</code> (contra-fatual) em vez do valor observado. Mede a divergência TV entre os dois futuros após N passos, respondendo &quot;se Diabob não provocasse no step T, o consenso teria emergido?&quot;.</p>
+
+<h3>7.3 Average Treatment Effect</h3>
+<div class="eq">ATE(tratamento, controle, outcome, horizonte) = P(Y<sub>t+H</sub>|do(X=T)) − P(Y<sub>t+H</sub>|do(X=C))</div>
+<p>Quantifica causalmente o impacto de escolher o estado de <em>tratamento</em> versus o de <em>controle</em> em termos da probabilidade do <em>outcome</em> depois de <em>H</em> passos. Positivo = tratamento aumenta prob outcome; negativo = reduz.</p>
+
+<h2><span class="section-no">8</span>Comparativo A/B (Onda 29)</h2>
+<p>O <code>engine/comparativo/</code> fornece <code>rodar_comparativo(run_a, run_b)</code> que ingere duas <em>runs</em> exportadas (via Onda 20 replay) e retorna:</p>
+<ul>
+<li>Resumos agregados de cada run (distribuição de estados, estado final, n Mules)</li>
+<li>Métricas comparativas (KL divergence, TV distance, overlap)</li>
+<li>Conclusões automáticas em linguagem natural (&quot;Runs similares: KL baixo&quot;, &quot;Estados finais divergem&quot;, &quot;Baixa sobreposição — dinâmicas distintas&quot;)</li>
+</ul>
+
+<h2><span class="section-no">9</span>CLI (Onda 30)</h2>
+
+<p><code>scripts/vila_cli.py</code> expõe oito subcomandos HTTP:</p>
+
+<pre>
+vila-cli trajetoria --janela 50
+vila-cli recomendacao
+vila-cli calibrar --metodo laplace --alpha 0.1
+vila-cli backtest --dataset tiktok_viral_2024
+vila-cli export-run --arquivo /tmp/run.json
+vila-cli mules
+vila-cli stats
+vila-cli comparativo
+</pre>
+
+<p>Conecta-se a qualquer Vila HTTP remota via <code>--url</code>. Trata backend offline graciosamente. Sem dependências além da biblioteca padrão.</p>
+
+<h2><span class="section-no">10</span>Event-sourcing (Onda 31)</h2>
+<p>O módulo <code>engine/event_log.py</code> escreve cada evento importante (step, mule, calibração, mudança de estado, desafio concluído) como uma linha JSON append-only em arquivo JSONL. Benefícios:</p>
+<ol>
+<li>Auditoria completa: nenhum evento é sobrescrito</li>
+<li>Replay determinístico: o <code>ler_eventos(arquivo)</code> reconstitui a ordem exata</li>
+<li>Compressão trivial: <code>gzip vila_events.jsonl</code> reduz ~10×</li>
+<li>Análise offline: <code>jq '.tipo == &quot;mule&quot;' vila_events.jsonl</code> ou pandas</li>
+</ol>
+
+<h2><span class="section-no">11</span>Cockpit unificado (Onda 32)</h2>
+<p>O <code>frontend/cockpit.html</code> consolida os oito <em>painéis</em> distribuídos pelas páginas anteriores em um único <em>single-pane-of-glass</em> com layout de cabine de avião:</p>
+
+<div class="box">
+<pre>
+┌─ topbar: step · estado · links para outras páginas ──────┐
+├──────────┬───────────────────────────────────────────────┤
+│ sidebar  │  main-area                                    │
+│ métricas │  ┌─ tabs: timeline · stream · backtest ·────┐│
+│ Helena   │  │  links                                    ││
+│ sistema  │  └───────────────────────────────────────────┘│
+│          │  ┌─ distribuição │ Mules recentes ──────────┐│
+│          │  └───────────────────────────────────────────┘│
+└──────────┴───────────────────────────────────────────────┘
+</pre>
+</div>
+
+<p>Polling a 2 segundos, stream SSE em uma das <em>tabs</em>. Renderização em &lt; 100KB sem <em>framework</em> além do próprio navegador.</p>
+
+<h2><span class="section-no">12</span>Resultados acumulados</h2>
+<p>Após Ondas 5-33, o projeto possui:</p>
+
+<table>
+<thead><tr><th>Categoria</th><th>Número</th></tr></thead>
+<tbody>
+<tr><td>Pull Requests mergeados</td><td>10</td></tr>
+<tr><td>Testes em CI</td><td>298</td></tr>
+<tr><td>Módulos engine</td><td>18</td></tr>
+<tr><td>Endpoints API</td><td>44+</td></tr>
+<tr><td>Páginas UI</td><td>11</td></tr>
+<tr><td>MCP tools</td><td>7</td></tr>
+<tr><td>Datasets backtest</td><td>5 (50 eventos)</td></tr>
+<tr><td>Ondas implementadas</td><td>29 (5-10, 10.2, 11-33)</td></tr>
+</tbody>
+</table>
+
+<h2><span class="section-no">13</span>Conclusão</h2>
+<p>A Vila INTEIA agora é uma plataforma de simulação completa com observabilidade, persistência, inferência causal, CLI, event-sourcing e UI cockpit. A versão v3 materializa a tese central da série: é possível construir um simulador de realidade tão capaz quanto MiroFish (OASIS + Zep + GraphRAG) usando apenas bibliotecas científicas padrão do ecossistema Python, mantendo cobertura de testes formais (298 casos) e fundamentação matemática explícita em cada componente.</p>
+
+<p>As próximas direções são primariamente de escala: migração para Ray Actors distribuídos (esqueleto pronto na Onda 9), integração com vLLM local para custo-zero de LLM real, e publicação como <em>open-source</em> comunitário.</p>
+
+<div style="margin-top: 24pt; padding-top: 8pt; border-top: 1px dashed #999; font-size: 8.5pt; color: #555;">
+Artigo v3 — Ondas 22-33. Compila via WeasyPrint a partir de HTML.<br>
+Versões anteriores: vila_inteia_artigo.pdf (v1, Ondas 5-10), vila_inteia_artigo_v2_ondas_11_a_20.pdf.
+</div>
+
+</body>
+</html>
