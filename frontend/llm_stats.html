@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — LLM Stats</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 960px) { .grid-2 { grid-template-columns: 1fr; } }
+    .kpi-big { font-size: var(--text-3xl); font-weight: var(--weight-semi); color: var(--amber); font-variant-numeric: tabular-nums; }
+    .kpi-label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5pt; }
+    .row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; font-family: var(--font-mono); font-size: var(--text-sm); border-bottom: 1px dashed var(--border-subtle); }
+    .row:last-child { border-bottom: none; }
+    .row .label { color: var(--text-muted); }
+    .row .val { color: var(--text-primary); }
+    .row .val.amber { color: var(--amber); }
+    .status-ok { color: var(--success); }
+    .status-err { color: var(--danger); }
+    .tag { display: inline-block; padding: 2px 8px; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 999px; font-family: var(--font-mono); font-size: 11px; }
+    .tag.amber { border-color: var(--amber); color: var(--amber); }
+    .action-bar { display: flex; gap: var(--space-3); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">LLM Stats</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">
+          polling 2s · provider <span id="provider-tag" class="tag amber">—</span>
+        </p>
+      </div>
+      <nav class="u-hstack" style="gap: var(--space-4);">
+        <a href="/cockpit.html" class="u-muted">cockpit</a>
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <div class="grid-2">
+      <div class="panel">
+        <h2 class="panel__title">💾 Cache LRU</h2>
+        <div id="cache-content"></div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel__title">💰 Budget USD</h2>
+        <div id="budget-content"></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <h2 class="panel__title">🔥 Tier Gate</h2>
+        <div id="tier-content"></div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel__title">🔌 Provider</h2>
+        <div id="provider-content"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 class="panel__title">Ações</h2>
+      <div class="action-bar">
+        <button id="btn-limpar-cache" class="btn">Limpar cache</button>
+        <button id="btn-resetar-budget" class="btn btn--danger">Resetar budget</button>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { api, toast } from '/js/core.js';
+
+    function row(label, val, amber = false) {
+      return `<div class="row"><span class="label">${label}</span><span class="val ${amber ? 'amber' : ''}">${val}</span></div>`;
+    }
+
+    async function tick() {
+      try {
+        const s = await api.get('/api/v1/llm/stats');
+
+        // Provider
+        const p = s.provider || {};
+        document.getElementById('provider-tag').textContent = p.ativo || '—';
+        document.getElementById('provider-content').innerHTML = `
+          ${row('Ativo', p.ativo || '—', true)}
+          ${row('Client OK', p.client_ok ? '✓' : '✗')}
+          ${row('Fallback Anthropic', p.fallback_ok ? '✓' : '—')}
+          ${row('Circuit aberto', p.circuit_aberto ? 'sim' : 'não')}
+          ${row('Falhas consec.', p.circuit_falhas ?? 0)}
+        `;
+
+        // Cache
+        const c = s.cache || {};
+        document.getElementById('cache-content').innerHTML = `
+          <div class="kpi-big">${c.size ?? 0}</div>
+          <div class="kpi-label">entradas / ${c.capacity ?? 500}</div>
+          ${row('Hits', c.hits ?? 0, true)}
+          ${row('Misses', c.misses ?? 0)}
+          ${row('Hit rate', c.hit_rate != null ? (c.hit_rate * 100).toFixed(1) + '%' : '—', true)}
+          ${row('TTL', (c.ttl_segundos ?? 0) + 's')}
+        `;
+
+        // Budget
+        const b = s.budget || {};
+        document.getElementById('budget-content').innerHTML = `
+          <div class="kpi-big">$${(b.total_usd ?? 0).toFixed(4)}</div>
+          <div class="kpi-label">${b.limite_usd ? 'de $' + b.limite_usd.toFixed(2) : 'sem limite'}</div>
+          ${row('N chamadas', b.n_chamadas ?? 0, true)}
+          ${row('Tokens in', (b.total_tokens_in ?? 0).toLocaleString())}
+          ${row('Tokens out', (b.total_tokens_out ?? 0).toLocaleString())}
+          ${row('Exausto', b.exausto ? '⚠️ sim' : 'não')}
+        `;
+
+        // Tier
+        const t = s.tier || {};
+        const frac = t.n_total > 0 ? (t.n_hot / t.n_total * 100).toFixed(1) + '%' : '—';
+        document.getElementById('tier-content').innerHTML = `
+          <div class="kpi-big">${t.n_hot ?? 0}</div>
+          <div class="kpi-label">hot / ${t.n_total ?? 0} total (${frac})</div>
+          ${row('Ativo', t.ativo ? 'sim' : 'não')}
+          ${row('Fração hot', ((t.fracao_hot ?? 0) * 100).toFixed(1) + '%')}
+          ${row('Rotate steps', t.rotate_steps ?? 0)}
+          ${row('Última rotação', 'step ' + (t.step_ultima_rotacao ?? 0))}
+        `;
+      } catch (e) {
+        document.getElementById('provider-tag').textContent = 'offline';
+      }
+    }
+
+    document.getElementById('btn-limpar-cache').addEventListener('click', async () => {
+      const r = await api.post('/api/v1/llm/cache/limpar', {});
+      toast(`${r.limpas} entradas limpas`, { level: 'success' });
+      tick();
+    });
+
+    document.getElementById('btn-resetar-budget').addEventListener('click', async () => {
+      if (!confirm('Zerar budget? Stats históricos perdidos.')) return;
+      await api.post('/api/v1/llm/budget/resetar', {});
+      toast('Budget zerado', { level: 'info' });
+      tick();
+    });
+
+    tick();
+    setInterval(tick, 2000);
+  </script>
+</body>
+</html>
