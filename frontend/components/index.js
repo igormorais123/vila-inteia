@@ -2,7 +2,7 @@
  * Import-barrel dos Web Components da Vila.
  * Uma página importa esse arquivo e tem todos os custom elements registrados.
  *
- *   <script type="module" src="/frontend/components/index.js"></script>
+ *   <script type="module" src="/components/index.js"></script>
  */
 
 import './vila-agent-card.js';

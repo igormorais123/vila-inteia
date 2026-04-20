@@ -1,7 +1,7 @@
 /*
  * Vila INTEIA — JS core (Onda 10).
  * fetch wrapper, SSE client, event bus, toast. Zero deps.
- * import { api, bus, sse, toast } from '/frontend/js/core.js';
+ * import { api, bus, sse, toast } from '/js/core.js';
  */
 
 /* ------------------------------------------------------------------ */

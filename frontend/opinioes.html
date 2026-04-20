@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vila INTEIA — Opinion Dynamics</title>
-  <link rel="stylesheet" href="/frontend/css/tokens.css">
-  <link rel="stylesheet" href="/frontend/css/base.css">
-  <link rel="stylesheet" href="/frontend/css/components.css">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
   <style>
     .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-5); }
     .page-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
@@ -118,9 +118,9 @@
     </section>
   </main>
 
-  <script type="module" src="/frontend/components/index.js"></script>
+  <script type="module" src="/components/index.js"></script>
   <script type="module">
-    import { api, toast } from '/frontend/js/core.js';
+    import { api, toast } from '/js/core.js';
 
     /* Histograma SVG minimalista */
     function renderHist(selector, valores, cor = 'var(--amber)') {

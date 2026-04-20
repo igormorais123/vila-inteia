@@ -1,6 +1,6 @@
 /*
  * Vila INTEIA — wrappers tipados para /api/v1/*.
- * import { vila, colmeia, harness, rede, vivos } from '/frontend/js/api.js';
+ * import { vila, colmeia, harness, rede, vivos } from '/js/api.js';
  */
 
 import { api } from './core.js';
