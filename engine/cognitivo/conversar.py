@@ -314,6 +314,14 @@ def _gerar_conversa_ia(
     Gera conversa via LLM (OmniRoute/Haiku 4.5).
     Retorna None se LLM indisponível → chamador usa heurística.
     """
+    # Onda 64/65: tier gate — só top N% agentes chamam LLM
+    try:
+        from ..llm_tier_gate import TIER_GATE_GLOBAL
+        if not TIER_GATE_GLOBAL.pode_chamar_llm(persona.id):
+            return None
+    except Exception:
+        pass
+
     from ..ia_client import chamar_llm_conversa, MODELO_RAPIDO
 
     nome_a = persona.nome_exibicao
