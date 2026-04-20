@@ -146,4 +146,43 @@ def endpoint_metrics() -> str:
     except Exception as e:
         linhas.append(f"# mcp error: {e}")
 
+    # Onda 64: LLM subsistemas
+    try:
+        from engine.ia_cache import CACHE_GLOBAL
+        s = CACHE_GLOBAL.stats()
+        linhas.append(_formatar_metric("vila_llm_cache_size", s["size"],
+            help_text="Entradas no cache LLM"))
+        linhas.append(_formatar_metric("vila_llm_cache_hits", s["hits"],
+            help_text="Hits no cache LLM", metric_type="counter"))
+        linhas.append(_formatar_metric("vila_llm_cache_misses", s["misses"],
+            help_text="Misses no cache LLM", metric_type="counter"))
+        linhas.append(_formatar_metric("vila_llm_cache_hit_rate", s["hit_rate"],
+            help_text="Taxa de acerto do cache LLM"))
+    except Exception as e:
+        linhas.append(f"# cache error: {e}")
+
+    try:
+        from engine.budget_tracker import BUDGET_GLOBAL
+        s = BUDGET_GLOBAL.stats()
+        linhas.append(_formatar_metric("vila_llm_budget_usd", s["total_usd"],
+            help_text="Total USD gasto em LLM"))
+        linhas.append(_formatar_metric("vila_llm_calls_total", s["n_chamadas"],
+            help_text="Chamadas LLM totais", metric_type="counter"))
+        linhas.append(_formatar_metric("vila_llm_tokens_in_total", s["total_tokens_in"],
+            help_text="Tokens de input acumulados", metric_type="counter"))
+        linhas.append(_formatar_metric("vila_llm_tokens_out_total", s["total_tokens_out"],
+            help_text="Tokens de output acumulados", metric_type="counter"))
+    except Exception as e:
+        linhas.append(f"# budget error: {e}")
+
+    try:
+        from engine.llm_tier_gate import TIER_GATE_GLOBAL
+        s = TIER_GATE_GLOBAL.stats()
+        linhas.append(_formatar_metric("vila_llm_tier_hot", s["n_hot"],
+            help_text="Número de agentes em hot tier"))
+        linhas.append(_formatar_metric("vila_llm_tier_total", s["n_total"],
+            help_text="Total de agentes registrados no tier gate"))
+    except Exception as e:
+        linhas.append(f"# tier error: {e}")
+
     return "\n".join(linhas) + "\n"
