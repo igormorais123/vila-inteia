@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Game Theory Lab</title>
+  <link rel="stylesheet" href="/frontend/css/tokens.css">
+  <link rel="stylesheet" href="/frontend/css/base.css">
+  <link rel="stylesheet" href="/frontend/css/components.css">
+  <style>
+    .page {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-5);
+      display: grid;
+      gap: var(--space-5);
+    }
+    .page-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .page-header h1 { font-size: var(--text-2xl); }
+    .page-header p { margin-top: var(--space-2); color: var(--text-muted); font-size: var(--text-sm); }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+    @media (max-width: 1024px) {
+      .grid-2col { grid-template-columns: 1fr; }
+      .grid-3col { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .grid-3col { grid-template-columns: 1fr; }
+    }
+    .control-row {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <h1>Game Theory Lab</h1>
+        <p>Equilíbrios, mecanismos, coalizões — Onda 10</p>
+      </div>
+      <nav aria-label="voltar">
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <section class="panel" aria-labelledby="metricas-title">
+      <div class="panel__header">
+        <h2 id="metricas-title" class="panel__title">Métricas gerais</h2>
+      </div>
+      <div class="grid-3col" id="metricas-root"></div>
+    </section>
+
+    <section class="grid-2col">
+      <div class="panel" aria-labelledby="pd-title">
+        <div class="panel__header">
+          <h2 id="pd-title" class="panel__title">Prisoner's Dilemma (jogo base)</h2>
+          <span class="badge badge--amber">2×2</span>
+        </div>
+        <vila-payoff-matrix
+          titulo="Payoff (Jogador A, Jogador B)"
+          payoffs-a='[[3,0],[5,1]]'
+          payoffs-b='[[3,5],[0,1]]'
+          nash='[[1,1]]'
+          labels-a='["Cooperar","Trair"]'
+          labels-b='["Cooperar","Trair"]'
+        ></vila-payoff-matrix>
+        <p class="u-muted" style="margin-top: var(--space-4); font-size: var(--text-sm);">
+          NE puro único: (Trair, Trair). Pareto-dominado por (Cooperar, Cooperar).
+          Tit-for-tat em jogos iterados resolve a tragédia.
+        </p>
+      </div>
+
+      <div class="panel" aria-labelledby="sh-title">
+        <div class="panel__header">
+          <h2 id="sh-title" class="panel__title">Stag Hunt (coordenação)</h2>
+          <span class="badge badge--amber">2×2</span>
+        </div>
+        <vila-payoff-matrix
+          titulo="Caçar cervo exige confiança mútua"
+          payoffs-a='[[4,0],[3,3]]'
+          payoffs-b='[[4,3],[0,3]]'
+          nash='[[0,0],[1,1]]'
+          labels-a='["Cervo","Lebre"]'
+          labels-b='["Cervo","Lebre"]'
+        ></vila-payoff-matrix>
+        <p class="u-muted" style="margin-top: var(--space-4); font-size: var(--text-sm);">
+          2 NE puros: (Cervo, Cervo) Pareto-ótimo, (Lebre, Lebre) risk-dominant.
+          Focal point de Schelling determina qual.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="ipd-title">
+      <div class="panel__header">
+        <h2 id="ipd-title" class="panel__title">Torneio iterado (Axelrod-style)</h2>
+        <div class="control-row">
+          <label for="rodadas">Rodadas:</label>
+          <input id="rodadas" class="input" type="number" value="100" min="10" max="1000" style="width: 100px;">
+          <button id="rodar-torneio" class="btn btn--primary">Simular</button>
+        </div>
+      </div>
+      <table class="table" id="tabela-torneio">
+        <thead>
+          <tr>
+            <th>Estratégia A</th>
+            <th>Estratégia B</th>
+            <th class="u-right">Payoff A</th>
+            <th class="u-right">Payoff B</th>
+            <th class="u-right">Vencedor</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel" aria-labelledby="replicator-title">
+      <div class="panel__header">
+        <h2 id="replicator-title" class="panel__title">Replicator Dynamics</h2>
+      </div>
+      <p class="u-muted" style="font-size: var(--text-sm);">
+        Evolução de frequências populacionais por seleção natural. Estratégias com fitness
+        acima da média crescem; abaixo, decaem. Dominated strategies desaparecem; ESS emerge.
+      </p>
+      <div id="replicator-preview" style="margin-top: var(--space-4);"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/frontend/components/index.js"></script>
+  <script type="module">
+    import { bus, toast, fmt } from '/frontend/js/core.js';
+
+    /* Métricas demo */
+    const root = document.getElementById('metricas-root');
+    const metricas = [
+      { label: 'NE encontrados',       valor: 17,     unit: 'jogos',   trend: 'subindo',  points: [4,6,8,11,14,17] },
+      { label: 'Shapley Gini',         valor: '0,23', unit: '',        trend: 'descendo', points: [0.41,0.35,0.30,0.27,0.25,0.23] },
+      { label: 'Polarização',          valor: '0,31', unit: '',        trend: 'estavel',  points: [0.33,0.30,0.31,0.32,0.30,0.31] },
+      { label: 'Cascatas detectadas',  valor: 4,      unit: '/100 steps', trend: 'subindo', points: [1,1,2,3,4,4] },
+      { label: 'ESS em vigor',         valor: 'Hawk-Dove', unit: '',   trend: 'estavel',  points: [] },
+      { label: 'Coordination rate',    valor: '78%',  unit: '',        trend: 'subindo',  points: [55,60,65,70,74,78] },
+    ];
+    root.innerHTML = metricas.map(m =>
+      `<vila-metric-line label="${m.label}" valor="${m.valor}" unit="${m.unit}" trend="${m.trend}" points='${JSON.stringify(m.points)}'></vila-metric-line>`
+    ).join('');
+
+    /* Torneio iterado — simulação client-side pura (espelha engine/game_theory/jogos_repetidos) */
+    const strategias = {
+      'tit-for-tat': (h) => h.opp.length ? h.opp[h.opp.length - 1] : 1,
+      'sempre-cooperar': () => 1,
+      'sempre-trair': () => 0,
+      'grim-trigger': (h) => h.opp.includes(0) ? 0 : 1,
+      'tit-for-two-tats': (h) => (h.opp.slice(-2).every(x => x === 0) && h.opp.length >= 2) ? 0 : 1,
+    };
+
+    function rodada(stratA, stratB, rodadas) {
+      let pa = 0, pb = 0;
+      const histA = { me: [], opp: [] }, histB = { me: [], opp: [] };
+      const pay = [[3,3],[0,5],[5,0],[1,1]]; // CC, CT, TC, TT
+      for (let i = 0; i < rodadas; i++) {
+        const a = stratA(histA), b = stratB(histB);
+        const idx = (a === 1 && b === 1) ? 0 : (a === 1 && b === 0) ? 1 : (a === 0 && b === 1) ? 2 : 3;
+        pa += pay[idx][0]; pb += pay[idx][1];
+        histA.me.push(a); histA.opp.push(b);
+        histB.me.push(b); histB.opp.push(a);
+      }
+      return [pa, pb];
+    }
+
+    document.getElementById('rodar-torneio').addEventListener('click', () => {
+      const rodadas = parseInt(document.getElementById('rodadas').value, 10) || 100;
+      const nomes = Object.keys(strategias);
+      const rows = [];
+      for (let i = 0; i < nomes.length; i++) {
+        for (let j = i; j < nomes.length; j++) {
+          const [pa, pb] = rodada(strategias[nomes[i]], strategias[nomes[j]], rodadas);
+          const venc = pa > pb ? 'A' : pb > pa ? 'B' : 'empate';
+          rows.push({ a: nomes[i], b: nomes[j], pa, pb, venc });
+        }
+      }
+      const tbody = document.querySelector('#tabela-torneio tbody');
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.a}</td>
+          <td>${r.b}</td>
+          <td class="u-right u-mono">${r.pa}</td>
+          <td class="u-right u-mono">${r.pb}</td>
+          <td class="u-right">${r.venc}</td>
+        </tr>
+      `).join('');
+      toast(`${rows.length} partidas simuladas`, { level: 'success' });
+    });
+
+    /* Replicator preview */
+    const repRoot = document.getElementById('replicator-preview');
+    repRoot.innerHTML = `
+      <pre style="font-size: var(--text-xs); line-height: 1.4;">
+Populacao inicial: [0.50, 0.50]
+Payoff matrix:     [[3, 3], [1, 1]]
+
+Iteração 0:  A=0.500  B=0.500
+Iteração 1:  A=0.556  B=0.444
+Iteração 2:  A=0.610  B=0.390
+Iteração 5:  A=0.763  B=0.237
+Iteração 10: A=0.938  B=0.062
+Iteração 20: A=0.999  B=0.001
+Convergiu: estratégia B eliminada (dominada).
+      </pre>
+    `;
+  </script>
+</body>
+</html>

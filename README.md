@@ -2,7 +2,9 @@
 
 > Motor de simulação onde 151 agentes sintéticos coexistem, debatem, evoluem uma constituição própria e geram conteúdo publicável em jornais reais.
 
-**Stack**: Python 3.11+ · FastAPI · Supabase · OmniRoute (LLM) · Three.js (3D)
+**Stack**: Python 3.11+ · FastAPI · Supabase · OmniRoute (LLM) · Three.js (3D) · NumPy · SciPy · NetworkX · NashPy
+
+**Onda 10 (2026-04)**: fundamentos matemáticos formais — game theory, opinion dynamics, simulação avançada. Ver [`docs/PLANO_ONDA10_GAME_THEORY.md`](./docs/PLANO_ONDA10_GAME_THEORY.md).
 
 ## Visão Geral
 

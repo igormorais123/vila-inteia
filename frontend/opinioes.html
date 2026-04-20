@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Opinion Dynamics</title>
+  <link rel="stylesheet" href="/frontend/css/tokens.css">
+  <link rel="stylesheet" href="/frontend/css/base.css">
+  <link rel="stylesheet" href="/frontend/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-5); }
+    .page-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+    .page-header h1 { font-size: var(--text-2xl); }
+    .page-header p { color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-2); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    @media (max-width: 960px) { .two-col { grid-template-columns: 1fr; } }
+    .control-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4); }
+    .control-row label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .slider { width: 160px; }
+    #histograma-root, #serie-root { width: 100%; height: 220px; }
+    .legend-item { display: inline-flex; align-items: center; gap: var(--space-2); margin-right: var(--space-4); font-size: var(--text-xs); color: var(--text-muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <h1>Opinion Dynamics</h1>
+        <p>DeGroot consenso · Deffuant-Weisbuch polarização · Bikhchandani cascatas</p>
+      </div>
+      <nav><a href="/" class="u-muted">← Vila</a></nav>
+    </header>
+
+    <section class="panel" aria-labelledby="deffuant-title">
+      <div class="panel__header">
+        <h2 id="deffuant-title" class="panel__title">Deffuant-Weisbuch · Bounded Confidence</h2>
+        <span class="badge badge--amber">simulação ao vivo</span>
+      </div>
+      <div class="control-row">
+        <label>ε (confiança):</label>
+        <input id="epsilon-slider" class="slider" type="range" min="0.05" max="0.95" step="0.05" value="0.3">
+        <span id="epsilon-val" class="u-mono">0.30</span>
+
+        <label>μ (velocidade):</label>
+        <input id="mu-slider" class="slider" type="range" min="0.05" max="0.50" step="0.05" value="0.5">
+        <span id="mu-val" class="u-mono">0.50</span>
+
+        <label>n agentes:</label>
+        <input id="n-agentes" class="input" type="number" value="40" min="10" max="200" style="width: 80px;">
+
+        <label>passos:</label>
+        <input id="passos" class="input" type="number" value="3000" min="500" max="20000" step="500" style="width: 90px;">
+
+        <button id="rodar-deffuant" class="btn btn--primary">Rodar</button>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="u-muted" style="margin-bottom: var(--space-2);">Distribuição inicial</div>
+          <svg id="hist-inicial" width="100%" height="180" role="img" aria-label="Histograma de crenças inicial"></svg>
+        </div>
+        <div>
+          <div class="u-muted" style="margin-bottom: var(--space-2);">Distribuição final</div>
+          <svg id="hist-final" width="100%" height="180" role="img" aria-label="Histograma de crenças final"></svg>
+        </div>
+      </div>
+
+      <div class="u-hstack" style="margin-top: var(--space-4); justify-content: space-between;">
+        <div class="legend-item">
+          <span class="legend-dot" style="background: var(--amber);"></span>
+          <span>cada barra = 1 agente em [0, 1]</span>
+        </div>
+        <div id="polar-indicator" class="u-mono u-amber"></div>
+      </div>
+    </section>
+
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">DeGroot · Consenso Linear</h2>
+        </div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Cada agente atualiza sua crença como média ponderada dos outros pela
+          matriz de confiança W. Se W é estocástica, irredutível e aperiódica,
+          todos convergem ao mesmo valor.
+        </p>
+        <button id="rodar-degroot" class="btn">Simular 5 agentes</button>
+        <table class="table" id="tabela-degroot" style="margin-top: var(--space-3); display: none;">
+          <thead>
+            <tr>
+              <th>Agente</th>
+              <th class="u-right">Inicial</th>
+              <th class="u-right">Step 1</th>
+              <th class="u-right">Step 5</th>
+              <th class="u-right">Final</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Bikhchandani · Information Cascade</h2>
+        </div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Agentes observam decisões públicas + sinal privado. Se maioria pública
+          for clara, ignoram sinal próprio. Cascata pode ser <em>incorreta</em>.
+        </p>
+        <div class="control-row">
+          <label>sinais (0/1):</label>
+          <input id="sinais" class="input" type="text" value="1,0,1,1,1,0,0,0,1,0" style="width: 200px;">
+          <button id="rodar-cascata" class="btn">Simular</button>
+        </div>
+        <div id="cascata-resultado" style="margin-top: var(--space-3); font-size: var(--text-sm);"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/frontend/components/index.js"></script>
+  <script type="module">
+    import { api, toast } from '/frontend/js/core.js';
+
+    /* Histograma SVG minimalista */
+    function renderHist(selector, valores, cor = 'var(--amber)') {
+      const svg = document.querySelector(selector);
+      const w = svg.clientWidth || 500;
+      const h = 180;
+      svg.innerHTML = '';
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      const bins = 20;
+      const contagem = new Array(bins).fill(0);
+      for (const v of valores) {
+        const idx = Math.min(bins - 1, Math.max(0, Math.floor(v * bins)));
+        contagem[idx]++;
+      }
+      const maxC = Math.max(...contagem, 1);
+      const bw = w / bins;
+      contagem.forEach((c, i) => {
+        const bh = (c / maxC) * (h - 20);
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', i * bw + 1);
+        rect.setAttribute('y', h - bh);
+        rect.setAttribute('width', bw - 2);
+        rect.setAttribute('height', bh);
+        rect.setAttribute('fill', cor);
+        svg.appendChild(rect);
+      });
+      // Eixo x
+      const axis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      axis.setAttribute('x1', 0); axis.setAttribute('y1', h - 1);
+      axis.setAttribute('x2', w); axis.setAttribute('y2', h - 1);
+      axis.setAttribute('stroke', 'var(--border-subtle)');
+      svg.appendChild(axis);
+    }
+
+    /* Deffuant */
+    function gerarCrencasInicial(n, seed = 42) {
+      // Uniform em [0, 1]
+      const r = [];
+      let s = seed;
+      for (let i = 0; i < n; i++) {
+        s = (s * 1103515245 + 12345) & 0x7fffffff;
+        r.push((s % 10000) / 10000);
+      }
+      return r;
+    }
+
+    function renderizarInicial() {
+      const n = parseInt(document.getElementById('n-agentes').value, 10);
+      const inicial = gerarCrencasInicial(n);
+      renderHist('#hist-inicial', inicial);
+      return inicial;
+    }
+    let inicialCache = renderizarInicial();
+    document.getElementById('n-agentes').addEventListener('change', () => { inicialCache = renderizarInicial(); });
+
+    const epsSlider = document.getElementById('epsilon-slider');
+    const muSlider = document.getElementById('mu-slider');
+    const epsVal = document.getElementById('epsilon-val');
+    const muVal = document.getElementById('mu-val');
+    epsSlider.addEventListener('input', () => { epsVal.textContent = parseFloat(epsSlider.value).toFixed(2); });
+    muSlider.addEventListener('input', () => { muVal.textContent = parseFloat(muSlider.value).toFixed(2); });
+
+    document.getElementById('rodar-deffuant').addEventListener('click', async () => {
+      try {
+        const res = await api.post('/api/v1/gametheory/deffuant', {
+          crencas_inicial: inicialCache,
+          epsilon: parseFloat(epsSlider.value),
+          mu: parseFloat(muSlider.value),
+          passos: parseInt(document.getElementById('passos').value, 10),
+          seed: 42,
+        });
+        renderHist('#hist-final', res.final);
+        document.getElementById('polar-indicator').textContent =
+          `Polarização: ${res.polarization_index.toFixed(3)}`;
+        toast('Deffuant concluído', { level: 'success' });
+      } catch (e) {
+        toast('Erro: ' + e.message, { level: 'danger' });
+        console.error(e);
+      }
+    });
+
+    /* DeGroot demo */
+    document.getElementById('rodar-degroot').addEventListener('click', async () => {
+      const W = [
+        [0.4, 0.2, 0.2, 0.1, 0.1],
+        [0.2, 0.4, 0.2, 0.1, 0.1],
+        [0.1, 0.2, 0.4, 0.2, 0.1],
+        [0.1, 0.1, 0.2, 0.4, 0.2],
+        [0.1, 0.1, 0.2, 0.2, 0.4],
+      ];
+      const inicial = [0.1, 0.3, 0.5, 0.7, 0.9];
+      // Step 1
+      const step1 = W.map((row) => row.reduce((s, w, j) => s + w * inicial[j], 0));
+      // Step 5
+      let cur = inicial.slice();
+      for (let k = 0; k < 5; k++) cur = W.map((row) => row.reduce((s, w, j) => s + w * cur[j], 0));
+      const step5 = cur;
+      // Final
+      const res = await api.post('/api/v1/gametheory/degroot', {
+        crencas_inicial: inicial, W, max_iter: 1000,
+      });
+      const tbody = document.querySelector('#tabela-degroot tbody');
+      tbody.innerHTML = inicial.map((v, i) => `
+        <tr>
+          <td>Agente ${i}</td>
+          <td class="u-right u-mono">${v.toFixed(3)}</td>
+          <td class="u-right u-mono">${step1[i].toFixed(3)}</td>
+          <td class="u-right u-mono">${step5[i].toFixed(3)}</td>
+          <td class="u-right u-mono u-amber">${res.final[i].toFixed(3)}</td>
+        </tr>
+      `).join('');
+      document.getElementById('tabela-degroot').style.display = 'table';
+      toast(`DeGroot convergiu em ${res.iteracoes} iterações`, { level: 'success' });
+    });
+
+    /* Cascata */
+    document.getElementById('rodar-cascata').addEventListener('click', async () => {
+      const raw = document.getElementById('sinais').value;
+      const sinais = raw.split(',').map(s => parseInt(s.trim(), 10)).filter(n => n === 0 || n === 1);
+      if (sinais.length === 0) { toast('Sinais inválidos', { level: 'warn' }); return; }
+      const res = await api.post('/api/v1/gametheory/cascata', { sinais, prior: 0.5, precisao: 0.7, seed: 42 });
+      const el = document.getElementById('cascata-resultado');
+      const decor = res.decisoes.map((d, i) =>
+        `<span style="padding: 3px 8px; border: 1px solid ${d === 1 ? 'var(--info)' : 'var(--amber)'}; color: ${d === 1 ? 'var(--info)' : 'var(--amber)'}; border-radius: 999px; margin-right: 4px; font-family: var(--font-mono);">${d}</span>`
+      ).join('');
+      el.innerHTML = `
+        <div style="margin-bottom: var(--space-2);">${decor}</div>
+        <div class="u-muted">Cascata formada: <strong class="u-amber">${res.cascata_formada ? 'sim, a partir do agente ' + res.posicao_cascata : 'não'}</strong></div>
+        <div class="u-muted">Decisão final: <strong>${res.decisao_final}</strong></div>
+      `;
+    });
+  </script>
+</body>
+</html>
