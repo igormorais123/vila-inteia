@@ -196,8 +196,17 @@ def chamar_llm(
 ) -> Optional[str]:
     """
     Chamada SÍNCRONA ao LLM.
-    Tenta OmniRoute → se falhar → tenta Anthropic fallback → se falhar → None.
+    Pipeline: budget → cache → throttle → provider primary → fallback → None.
     """
+    # Onda 64: budget check antes de tudo
+    try:
+        from engine.budget_tracker import BUDGET_GLOBAL
+        if not BUDGET_GLOBAL.pode_chamar():
+            logger.debug("Budget USD esgotou — pulando LLM")
+            return None
+    except Exception:
+        pass
+
     c = _ensure_client()
 
     if not _throttle.pode_chamar():
@@ -218,7 +227,21 @@ def chamar_llm(
 
     modelo_real = _modelo(modelo)
 
-    # Tentativa 1: OmniRoute (com circuit breaker)
+    # Onda 64: cache lookup (só determinístico se temp baixa)
+    cache_disponivel = temperatura <= 0.3
+    chave_cache = None
+    if cache_disponivel:
+        try:
+            from engine.ia_cache import CACHE_GLOBAL, cache_chave
+            user_texto = msgs_user[0]["content"] if msgs_user else ""
+            chave_cache = cache_chave(system_prompt, user_texto, modelo_real)
+            hit = CACHE_GLOBAL.get(chave_cache)
+            if hit is not None:
+                return hit
+        except Exception:
+            chave_cache = None
+
+    # Tentativa 1: provider primary (com circuit breaker)
     global _circuit_falhas, _circuit_aberto_ate
     circuito_ok = time.time() > _circuit_aberto_ate
 
@@ -228,6 +251,14 @@ def chamar_llm(
         if resultado:
             _throttle.registrar()
             _circuit_falhas = 0  # Reset
+            # Onda 64: budget + cache put
+            _registrar_uso(modelo_real, msgs_user, system_prompt, resultado)
+            if chave_cache:
+                try:
+                    from engine.ia_cache import CACHE_GLOBAL
+                    CACHE_GLOBAL.put(chave_cache, resultado)
+                except Exception:
+                    pass
             return resultado
         _circuit_falhas += 1
         if _circuit_falhas >= _CIRCUIT_THRESHOLD:
@@ -245,9 +276,29 @@ def chamar_llm(
         resultado = _chamar_anthropic(_client_fallback, modelo_ant, msgs_user, system_prompt, max_tokens, temperatura)
         if resultado:
             _throttle.registrar()
+            _registrar_uso(modelo_ant, msgs_user, system_prompt, resultado)
+            if chave_cache:
+                try:
+                    from engine.ia_cache import CACHE_GLOBAL
+                    CACHE_GLOBAL.put(chave_cache, resultado)
+                except Exception:
+                    pass
             return resultado
 
     return None
+
+
+def _registrar_uso(modelo: str, msgs_user: list[dict], system_prompt: str, resposta: str) -> None:
+    """Registra tokens + custo aproximado no budget tracker."""
+    try:
+        from engine.budget_tracker import BUDGET_GLOBAL
+        # Estimativa ~4 chars/token
+        texto_in = system_prompt + "".join(m.get("content", "") for m in msgs_user)
+        tokens_in = max(1, len(texto_in) // 4)
+        tokens_out = max(1, len(resposta) // 4)
+        BUDGET_GLOBAL.registrar(modelo, tokens_in, tokens_out)
+    except Exception:
+        pass
 
 
 def _chamar_openai(client, modelo, msgs, system_prompt, max_tokens, temp) -> Optional[str]:

@@ -114,6 +114,26 @@ def endpoint_health() -> dict:
     except Exception as e:
         resultado["subsistemas"]["mcp"] = {"status": "erro", "msg": str(e)}
 
+    # Onda 64: LLM provider + cache + budget + tier
+    try:
+        from engine import ia_client
+        from engine.ia_cache import CACHE_GLOBAL
+        from engine.budget_tracker import BUDGET_GLOBAL
+        from engine.llm_tier_gate import TIER_GATE_GLOBAL
+        # Força detecção se ainda não houve
+        ia_client._ensure_client()
+        resultado["subsistemas"]["ia_client"] = {
+            "status": "ok",
+            "provider": ia_client._provider,
+            "client_ok": ia_client._client is not None,
+            "circuit_aberto": ia_client._circuit_aberto_ate > __import__("time").time(),
+        }
+        resultado["subsistemas"]["llm_cache"] = {"status": "ok", **CACHE_GLOBAL.stats()}
+        resultado["subsistemas"]["llm_budget"] = {"status": "ok", **BUDGET_GLOBAL.stats()}
+        resultado["subsistemas"]["llm_tier"] = {"status": "ok", **TIER_GATE_GLOBAL.stats()}
+    except Exception as e:
+        resultado["subsistemas"]["ia_client"] = {"status": "erro", "msg": str(e)}
+
     # Overall ok
     erros = [k for k, v in resultado["subsistemas"].items() if v.get("status") == "erro"]
     resultado["ok"] = len(erros) == 0
