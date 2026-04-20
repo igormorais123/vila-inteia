@@ -134,6 +134,10 @@ def modo_serve(args):
             from api.rotas_grafo import router as grafo_router
         except ImportError:
             grafo_router = None
+        try:
+            from api.rotas_metrics import router as metrics_router
+        except ImportError:
+            metrics_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         print("Instale as dependencias: pip install -r requirements.txt")
@@ -167,6 +171,8 @@ def modo_serve(args):
         app.include_router(health_router)
     if grafo_router is not None:
         app.include_router(grafo_router)
+    if metrics_router is not None:
+        app.include_router(metrics_router)
 
     # Servir frontend estatico
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
@@ -262,6 +268,10 @@ def modo_live(args):
             from api.rotas_grafo import router as grafo_router
         except ImportError:
             grafo_router = None
+        try:
+            from api.rotas_metrics import router as metrics_router
+        except ImportError:
+            metrics_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         sys.exit(1)
@@ -291,6 +301,8 @@ def modo_live(args):
         app.include_router(health_router)
     if grafo_router is not None:
         app.include_router(grafo_router)
+    if metrics_router is not None:
+        app.include_router(metrics_router)
 
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
     if os.path.exists(frontend_dir):
