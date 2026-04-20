@@ -290,3 +290,65 @@ def endpoint_public_goods(req: PublicGoodsReq):
         "payoffs_individuais": r.payoffs_individuais,
         "eficiencia": r.eficiencia,
     }
+
+
+# =====================================================
+# Crenças numéricas — Tracker global (integração real Onda 10)
+# =====================================================
+
+@router.get("/crencas/topicos")
+def endpoint_crencas_topicos():
+    from engine.cognitivo.crenca import TRACKER_GLOBAL
+    return {"topicos": sorted(TRACKER_GLOBAL.topicos_rastreados())}
+
+
+@router.get("/crencas/{topico}/distribuicao")
+def endpoint_crencas_distribuicao(topico: str):
+    from engine.cognitivo.crenca import TRACKER_GLOBAL
+    return TRACKER_GLOBAL.distribuicao(topico)
+
+
+@router.get("/crencas/{topico}/snapshot")
+def endpoint_crencas_snapshot(topico: str, step: int = 0):
+    from engine.cognitivo.crenca import TRACKER_GLOBAL
+    s = TRACKER_GLOBAL.snapshot(step=step, topico=topico)
+    return {
+        "step": s.step,
+        "topico": s.topico,
+        "valor_medio": s.valor_medio,
+        "polarizacao": s.polarizacao,
+        "n_agentes": s.n_agentes,
+    }
+
+
+@router.get("/crencas/{topico}/historico")
+def endpoint_crencas_historico(topico: str):
+    from engine.cognitivo.crenca import TRACKER_GLOBAL
+    h = TRACKER_GLOBAL.historico(topico)
+    return [
+        {
+            "step": s.step,
+            "valor_medio": s.valor_medio,
+            "polarizacao": s.polarizacao,
+            "n_agentes": s.n_agentes,
+        }
+        for s in h
+    ]
+
+
+class InicializarCrencasReq(BaseModel):
+    agentes: list[str]
+    topico: str
+    valor_default: float = 0.5
+    valores_por_agente: dict[str, float] = {}
+
+
+@router.post("/crencas/inicializar")
+def endpoint_crencas_inicializar(req: InicializarCrencasReq):
+    from engine.cognitivo.crenca import TRACKER_GLOBAL
+    for a in req.agentes:
+        TRACKER_GLOBAL.inicializar_agente(
+            a, req.topico,
+            req.valores_por_agente.get(a, req.valor_default),
+        )
+    return {"ok": True, "n_agentes": len(req.agentes), "topico": req.topico}
