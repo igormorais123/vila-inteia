@@ -128,7 +128,7 @@ def _detectar_provider():
             _client = OpenAI(
                 api_key=omniroute_key,
                 base_url=f"{omniroute_url}/v1",
-                timeout=30.0,
+                timeout=float(os.getenv("VILA_LLM_TIMEOUT_S","10")),
             )
             _provider = "omniroute"
             logger.info(f"Vila IA: OmniRoute ({omniroute_url}) — custo zero")
@@ -142,7 +142,7 @@ def _detectar_provider():
             _client = OpenAI(
                 api_key=groq_key,
                 base_url=_GROQ_BASE_URL,
-                timeout=30.0,
+                timeout=float(os.getenv("VILA_LLM_TIMEOUT_S","10")),
             )
             _provider = "groq"
             logger.info("Vila IA: Groq via OpenAI-compat (free tier)")
@@ -156,7 +156,7 @@ def _detectar_provider():
             _client = OpenAI(
                 api_key=gemini_key,
                 base_url=_GEMINI_BASE_URL,
-                timeout=30.0,
+                timeout=float(os.getenv("VILA_LLM_TIMEOUT_S","10")),
             )
             _provider = "gemini"
             logger.info("Vila IA: Google AI Studio (Gemini) via OpenAI-compat")
@@ -167,7 +167,7 @@ def _detectar_provider():
     if claude_key and os.getenv("IA_ALLOW_API_FALLBACK", "false").lower() == "true":
         try:
             import anthropic
-            _client_fallback = anthropic.Anthropic(api_key=claude_key, timeout=30.0)
+            _client_fallback = anthropic.Anthropic(api_key=claude_key, timeout=float(os.getenv("VILA_LLM_TIMEOUT_S","10")))
             logger.info("Vila IA: Anthropic fallback preparado")
         except ImportError:
             pass
