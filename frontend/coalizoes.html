@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Coalizões e Distribuição</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-5); }
+    .page-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    @media (max-width: 960px) { .two-col { grid-template-columns: 1fr; } }
+    .bar-row { display: grid; grid-template-columns: 80px 1fr 60px; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; }
+    .bar-track { height: 8px; background: var(--bg-surface-2); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--amber); transition: width 400ms var(--ease-out); }
+    .bar-fill.secondary { background: var(--info); }
+    .control-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <h1>Coalizões &amp; Distribuição</h1>
+        <p class="u-muted">Shapley value · Banzhaf power · core stability</p>
+      </div>
+      <nav><a href="/" class="u-muted">← Vila</a></nav>
+    </header>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Shapley Value</h2>
+        <span class="badge badge--amber">3 jogadores</span>
+      </div>
+      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-4);">
+        Distribuição justa em jogos cooperativos. Cada jogador recebe contribuição marginal
+        média sobre todas as permutações. Único valor que satisfaz simultaneamente:
+        eficiência, simetria, dummy, e aditividade.
+      </p>
+      <div class="control-row">
+        <label>v({A,B}):</label>
+        <input id="vab" class="input" type="number" value="60" style="width: 80px;">
+        <label>v({A,C}):</label>
+        <input id="vac" class="input" type="number" value="40" style="width: 80px;">
+        <label>v({B,C}):</label>
+        <input id="vbc" class="input" type="number" value="30" style="width: 80px;">
+        <label>v({A,B,C}):</label>
+        <input id="vabc" class="input" type="number" value="100" style="width: 80px;">
+        <button id="rodar-shapley" class="btn btn--primary">Calcular</button>
+      </div>
+      <div id="shapley-resultado"></div>
+    </section>
+
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Banzhaf Power Index</h2>
+        </div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Frequência com que um jogador é pivotal (sua saída muda resultado).
+          Usado em sistemas de voto ponderado.
+        </p>
+        <div class="control-row">
+          <label>quorum p/ vitória:</label>
+          <input id="quorum" class="input" type="number" value="51" min="1" max="100" style="width: 80px;">
+          <span class="u-muted">%</span>
+          <button id="rodar-banzhaf" class="btn">Calcular</button>
+        </div>
+        <div id="banzhaf-resultado"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Core Stability</h2>
+        </div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Alocação está no core se nenhuma sub-coalizão tem incentivo a desviar.
+          Core pode ser vazio (desigualdade triangular quebrada).
+        </p>
+        <div id="core-demo"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Comparativo: 3-player majority simple</h2>
+      </div>
+      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+        Jogo onde qualquer maioria (≥2 jogadores) ganha 1. Caso de referência: Shapley = Banzhaf = 1/3 cada.
+      </p>
+      <table class="table">
+        <thead>
+          <tr><th>Jogador</th><th class="u-right">Shapley</th><th class="u-right">Banzhaf (normal.)</th></tr>
+        </thead>
+        <tbody id="tabela-comparativo"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module" src="/components/index.js"></script>
+  <script type="module">
+    import { api, toast } from '/js/core.js';
+
+    function renderBarras(alvo, obj, max = null, cls = '') {
+      const maxV = max ?? Math.max(...Object.values(obj), 0.001);
+      alvo.innerHTML = Object.entries(obj).map(([k, v]) => `
+        <div class="bar-row">
+          <div class="u-mono">${k}</div>
+          <div class="bar-track"><div class="bar-fill ${cls}" style="width: ${(v / maxV * 100).toFixed(1)}%"></div></div>
+          <div class="u-right u-mono">${typeof v === 'number' ? v.toFixed(3) : v}</div>
+        </div>
+      `).join('');
+    }
+
+    /* Shapley */
+    document.getElementById('rodar-shapley').addEventListener('click', async () => {
+      const vab = parseFloat(document.getElementById('vab').value);
+      const vac = parseFloat(document.getElementById('vac').value);
+      const vbc = parseFloat(document.getElementById('vbc').value);
+      const vabc = parseFloat(document.getElementById('vabc').value);
+      const coalizoes = {
+        'A': 0, 'B': 0, 'C': 0,
+        'A,B': vab, 'A,C': vac, 'B,C': vbc,
+        'A,B,C': vabc,
+      };
+      try {
+        const res = await api.post('/api/v1/gametheory/shapley', {
+          jogadores: ['A', 'B', 'C'],
+          coalizoes,
+        });
+        renderBarras(document.getElementById('shapley-resultado'), res, null);
+        toast('Shapley calculado', { level: 'success' });
+      } catch (e) {
+        toast('Erro: ' + e.message, { level: 'danger' });
+      }
+    });
+
+    /* Banzhaf 3-player weighted voting */
+    document.getElementById('rodar-banzhaf').addEventListener('click', async () => {
+      const quorum = parseFloat(document.getElementById('quorum').value);
+      // Weighted: A=50, B=30, C=20 (50+30+20=100). Win if >= quorum
+      const pesos = { A: 50, B: 30, C: 20 };
+      const coalizoes = {};
+      const todos = Object.keys(pesos);
+      function subsets(arr) {
+        const out = [[]];
+        for (const x of arr) out.push(...out.map(s => [...s, x]));
+        return out;
+      }
+      for (const s of subsets(todos)) {
+        if (s.length === 0) continue;
+        const peso = s.reduce((a, b) => a + pesos[b], 0);
+        coalizoes[s.sort().join(',')] = peso >= quorum ? 1 : 0;
+      }
+      const res = await api.post('/api/v1/gametheory/banzhaf', {
+        jogadores: todos,
+        coalizoes,
+      });
+      renderBarras(document.getElementById('banzhaf-resultado'), res, 1, 'secondary');
+    });
+
+    /* Core demo estático */
+    document.getElementById('core-demo').innerHTML = `
+      <table class="table">
+        <thead><tr><th>Alocação</th><th>Soma</th><th>No core?</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="u-mono">(40, 35, 25)</td>
+            <td class="u-right u-mono">100</td>
+            <td><span class="badge badge--success">sim</span></td>
+          </tr>
+          <tr>
+            <td class="u-mono">(10, 10, 80)</td>
+            <td class="u-right u-mono">100</td>
+            <td><span class="badge badge--danger">não — A,B preferem desviar</span></td>
+          </tr>
+          <tr>
+            <td class="u-mono">(33, 33, 34)</td>
+            <td class="u-right u-mono">100</td>
+            <td><span class="badge badge--success">sim</span></td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+
+    /* Comparativo majoritário */
+    (async function () {
+      const coalizoes = { 'A': 0, 'B': 0, 'C': 0, 'A,B': 1, 'A,C': 1, 'B,C': 1, 'A,B,C': 1 };
+      const shap = await api.post('/api/v1/gametheory/shapley', { jogadores: ['A', 'B', 'C'], coalizoes });
+      const banz = await api.post('/api/v1/gametheory/banzhaf', { jogadores: ['A', 'B', 'C'], coalizoes });
+      const tbody = document.getElementById('tabela-comparativo');
+      tbody.innerHTML = ['A', 'B', 'C'].map(j => `
+        <tr>
+          <td>${j}</td>
+          <td class="u-right u-mono">${shap[j].toFixed(3)}</td>
+          <td class="u-right u-mono">${banz[j].toFixed(3)}</td>
+        </tr>
+      `).join('');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Dashboard Onda 10</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+    .tile { padding: var(--space-4); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); text-decoration: none; color: var(--text-primary); display: flex; flex-direction: column; gap: var(--space-2); transition: border-color 120ms, background 120ms; }
+    .tile:hover { border-color: var(--amber); background: var(--bg-surface-2); }
+    .tile__icon { font-family: var(--font-mono); font-size: 22px; color: var(--amber); line-height: 1; }
+    .tile__title { font-size: var(--text-md); font-weight: var(--weight-semi); }
+    .tile__desc { font-size: var(--text-sm); color: var(--text-secondary); }
+    .tile__tag { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4pt; }
+    .kpi-row { display: flex; gap: var(--space-6); flex-wrap: wrap; padding: var(--space-4); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+    .kpi { flex: 1; min-width: 120px; }
+    .kpi__value { font-size: var(--text-2xl); font-weight: var(--weight-semi); color: var(--amber); font-variant-numeric: tabular-nums; }
+    .kpi__label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 2px; }
+    .section-title { font-size: var(--text-sm); font-weight: var(--weight-semi); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: var(--space-2); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">Vila INTEIA — Console</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">Ondas 5-10 integradas · Onda 9 escala ainda em esqueleto</p>
+      </div>
+      <nav><a href="/" class="u-muted">← Vila principal</a></nav>
+    </header>
+
+    <section class="kpi-row" id="kpis">
+      <div class="kpi"><div class="kpi__value" id="kpi-testes">149</div><div class="kpi__label">Testes</div></div>
+      <div class="kpi"><div class="kpi__value" id="kpi-modulos">11</div><div class="kpi__label">Módulos</div></div>
+      <div class="kpi"><div class="kpi__value" id="kpi-endpoints">30+</div><div class="kpi__label">Endpoints</div></div>
+      <div class="kpi"><div class="kpi__value" id="kpi-paginas">5</div><div class="kpi__label">Páginas UI</div></div>
+      <div class="kpi"><div class="kpi__value" id="kpi-mcp">4</div><div class="kpi__label">MCP Tools</div></div>
+      <div class="kpi"><div class="kpi__value" id="kpi-habitantes">144</div><div class="kpi__label">Personas</div></div>
+    </section>
+
+    <div class="section-title">Fundamentos formais (Onda 10)</div>
+    <section class="grid-4">
+      <a class="tile" href="/gametheory.html">
+        <span class="tile__icon">§</span>
+        <span class="tile__tag">Onda 10</span>
+        <span class="tile__title">Game Theory Lab</span>
+        <span class="tile__desc">Nash, Stackelberg, VCG, torneio Axelrod, replicator dynamics.</span>
+      </a>
+      <a class="tile" href="/opinioes.html">
+        <span class="tile__icon">~</span>
+        <span class="tile__tag">Onda 10</span>
+        <span class="tile__title">Opinion Dynamics</span>
+        <span class="tile__desc">DeGroot consenso, Deffuant polarização, cascatas informacionais.</span>
+      </a>
+      <a class="tile" href="/coalizoes.html">
+        <span class="tile__icon">Φ</span>
+        <span class="tile__tag">Onda 10</span>
+        <span class="tile__title">Coalizões</span>
+        <span class="tile__desc">Shapley value, Banzhaf power index, core stability.</span>
+      </a>
+      <a class="tile" href="/psicohistoria.html">
+        <span class="tile__icon">Ψ</span>
+        <span class="tile__tag">Onda 10</span>
+        <span class="tile__title">Psico-História</span>
+        <span class="tile__desc">Grafo Markov, Plano de Seldon, detector de Mule.</span>
+      </a>
+    </section>
+
+    <div class="section-title">Núcleo Vila</div>
+    <section class="grid-4">
+      <a class="tile" href="/index.html">
+        <span class="tile__icon">△</span><span class="tile__tag">Vila</span>
+        <span class="tile__title">Mapa + Conversas</span>
+        <span class="tile__desc">144 habitantes, 19 locais, feed social da Vila.</span>
+      </a>
+      <a class="tile" href="/cidade.html">
+        <span class="tile__icon">◇</span><span class="tile__tag">3D</span>
+        <span class="tile__title">Campus 3D</span>
+        <span class="tile__desc">Visualização Three.js do campus em tempo real.</span>
+      </a>
+      <a class="tile" href="/jogo.html">
+        <span class="tile__icon">⌘</span><span class="tile__tag">Governança</span>
+        <span class="tile__title">Assembleia Constituinte</span>
+        <span class="tile__desc">Votação de artigos, parecer de Helena, 142 gênios.</span>
+      </a>
+      <a class="tile" href="/rede.html">
+        <span class="tile__icon">∞</span><span class="tile__tag">Social</span>
+        <span class="tile__title">Rede Social</span>
+        <span class="tile__desc">Feed de posts, comentários, reações.</span>
+      </a>
+    </section>
+
+    <div class="section-title">API endpoints por onda</div>
+    <section class="grid-2">
+      <div class="tile">
+        <span class="tile__icon">λ</span>
+        <span class="tile__tag">Onda 10 + 5</span>
+        <span class="tile__title">REST / SSE</span>
+        <span class="tile__desc u-mono" style="font-size: var(--text-xs); line-height: 1.6;">
+          GET  /api/v1/psicohistoria/estacionaria<br>
+          POST /api/v1/gametheory/nash<br>
+          POST /api/v1/gametheory/deffuant<br>
+          POST /api/v1/gametheory/shapley<br>
+          POST /api/v1/gametheory/replicator<br>
+          POST /api/v1/psicohistoria/plano-seldon<br>
+          POST /api/v1/psicohistoria/detectar-mule<br>
+          POST /api/v1/materia/proveniencia<br>
+          GET  /api/v1/backtest/rodar/{dataset}
+        </span>
+      </div>
+      <div class="tile">
+        <span class="tile__icon">◼</span>
+        <span class="tile__tag">Onda 8</span>
+        <span class="tile__title">MCP Server (stdio JSON-RPC)</span>
+        <span class="tile__desc u-mono" style="font-size: var(--text-xs); line-height: 1.6;">
+          vila.prever_trajetoria<br>
+          vila.extrair_grafo<br>
+          vila.backtest_dataset<br>
+          vila.calibrar
+        </span>
+        <span class="tile__desc">Rodar: <code>python -m engine.mcp_server.server</code></span>
+      </div>
+    </section>
+
+    <div class="section-title">Status do backend</div>
+    <section class="grid-4" id="status-row">
+      <div class="tile"><span class="tile__tag">Distribuição</span><span class="tile__title">Estacionária π</span><div id="piout" class="u-mono" style="font-size: var(--text-xs); line-height: 1.5;">carregando…</div></div>
+      <div class="tile"><span class="tile__tag">Backtest seed</span><span class="tile__title">Eleição SP 2024</span><div id="btout" class="u-mono" style="font-size: var(--text-xs); line-height: 1.5;">carregando…</div></div>
+      <div class="tile"><span class="tile__tag">Ostrom</span><span class="tile__title">8 princípios</span><div id="ostout" class="u-mono" style="font-size: var(--text-xs); line-height: 1.5;">carregando…</div></div>
+      <div class="tile"><span class="tile__tag">Hawk-Dove</span><span class="tile__title">ESS p*</span><div id="hdout" class="u-mono" style="font-size: var(--text-xs); line-height: 1.5;">carregando…</div></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api } from '/js/core.js';
+
+    // Estacionária
+    (async () => {
+      try {
+        const pi = await api.get('/api/v1/psicohistoria/estacionaria');
+        const top3 = Object.entries(pi).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        document.getElementById('piout').innerHTML = top3.map(([k, v]) =>
+          `<div>${k}: <span class="u-amber">${(v * 100).toFixed(1)}%</span></div>`
+        ).join('');
+      } catch (e) { document.getElementById('piout').textContent = 'indisponível'; }
+    })();
+
+    // Backtest
+    (async () => {
+      try {
+        const r = await api.get('/api/v1/backtest/rodar/seed_eleicao_municipal_sp_2024');
+        document.getElementById('btout').innerHTML = `
+          Brier: <span class="u-amber">${r.brier.toFixed(3)}</span><br>
+          log-loss: ${r.log_loss.toFixed(3)}<br>
+          acc: ${(r.accuracy * 100).toFixed(1)}%<br>
+          n: ${r.n_eventos}`;
+      } catch (e) { document.getElementById('btout').textContent = 'indisponível'; }
+    })();
+
+    // Ostrom
+    (async () => {
+      try {
+        const r = await api.get('/api/v1/gametheory/bem-comum/ostrom');
+        document.getElementById('ostout').innerHTML = r.principios.slice(0, 3).map(p =>
+          `<div style="margin-bottom: 4px;">${p.slice(0, 60)}…</div>`
+        ).join('');
+      } catch (e) { document.getElementById('ostout').textContent = 'indisponível'; }
+    })();
+
+    // Hawk-Dove
+    (async () => {
+      try {
+        const r = await api.get('/api/v1/gametheory/hawk-dove?v=2&c=3');
+        document.getElementById('hdout').innerHTML =
+          `p*(hawk) = <span class="u-amber">${r.p_hawk_star.toFixed(3)}</span><br>v=2, c=3`;
+      } catch (e) { document.getElementById('hdout').textContent = 'indisponível'; }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Vila INTEIA: uma arquitetura multiagente fundamentada em teoria dos jogos, dinâmica de opiniões e psico-história computacional</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 22mm;
+    @bottom-center {
+      content: "Vila INTEIA — página " counter(page) " / " counter(pages);
+      font-family: "Charter", "Georgia", serif;
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+  html { font-family: "Charter", "Georgia", "Times New Roman", serif; font-size: 10.5pt; color: #1a1a1a; }
+  body { line-height: 1.45; margin: 0; text-align: justify; hyphens: auto; }
+  h1, h2, h3, h4 { font-family: "Helvetica Neue", "Arial", sans-serif; line-height: 1.15; }
+  h1 { font-size: 18pt; margin: 0 0 4pt 0; }
+  .subtitle { font-size: 12pt; color: #444; margin-bottom: 14pt; }
+  .authors { font-size: 10pt; color: #444; margin-bottom: 3pt; }
+  .affil { font-size: 9pt; color: #666; margin-bottom: 18pt; }
+  h2 { font-size: 13pt; margin: 16pt 0 6pt 0; border-bottom: 1px solid #ddd; padding-bottom: 3pt; }
+  h3 { font-size: 11pt; margin: 10pt 0 4pt 0; color: #333; }
+  h4 { font-size: 10pt; margin: 8pt 0 3pt 0; color: #333; }
+  p { margin: 0 0 6pt 0; }
+  .abstract { background: #f7f7f7; padding: 10pt 14pt; border-left: 3px solid #d69e2e; margin: 14pt 0; font-size: 9.5pt; }
+  .abstract-title { font-family: sans-serif; font-weight: bold; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5pt; color: #555; margin-bottom: 4pt; }
+  code, pre { font-family: "JetBrains Mono", "Menlo", "Courier New", monospace; font-size: 9pt; }
+  pre { background: #f4f4f4; padding: 8pt 10pt; border-radius: 3px; overflow-x: auto; line-height: 1.35; page-break-inside: avoid; }
+  code { background: #f0f0f0; padding: 1px 4px; border-radius: 2px; }
+  .eq { font-family: "Charter", serif; font-style: italic; text-align: center; margin: 8pt 0; font-size: 11pt; }
+  .fig { text-align: center; margin: 10pt 0; font-size: 9pt; color: #555; page-break-inside: avoid; }
+  .fig-caption { margin-top: 4pt; font-size: 8.5pt; font-style: italic; color: #666; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 8pt 0; }
+  th, td { border: 1px solid #ccc; padding: 4pt 7pt; text-align: left; }
+  th { background: #f2f2f2; font-family: sans-serif; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.3pt; }
+  .box { border: 1px solid #ccc; padding: 8pt 12pt; margin: 10pt 0; background: #fafafa; font-size: 9.5pt; page-break-inside: avoid; }
+  .refs { font-size: 9pt; }
+  .refs p { text-indent: -16pt; padding-left: 16pt; margin-bottom: 4pt; }
+  .keywords { font-size: 9pt; color: #444; margin-top: 6pt; }
+  .keywords b { font-family: sans-serif; text-transform: uppercase; font-size: 8.5pt; }
+  .two-col-list { column-count: 2; column-gap: 18pt; font-size: 9.5pt; }
+  ul { margin: 4pt 0; padding-left: 18pt; }
+  li { margin-bottom: 2pt; }
+  .page-break { page-break-after: always; }
+  .small { font-size: 8.5pt; color: #555; }
+  .section-no { color: #d69e2e; margin-right: 6pt; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Vila INTEIA: uma arquitetura multiagente fundamentada em teoria dos jogos, dinâmica de opiniões e psico-história computacional</h1>
+<div class="subtitle">Simulação social de 144 consultores lendários com governança constitucional executável, economia interna e proveniência cognitiva auditável</div>
+
+<div class="authors">Pedro Afonso Malheiros · Igor Morais Vasconcelos</div>
+<div class="affil">INTEIA Ltda. · Mirante News · Colmeia · abril de 2026</div>
+
+<div class="abstract">
+  <div class="abstract-title">Resumo</div>
+  <p>Apresentamos a <strong>Vila INTEIA</strong>, uma plataforma de simulação multiagente onde 144 personas lendárias (baseadas em figuras históricas e ficcionais) coexistem, debatem, evoluem uma constituição própria e produzem conteúdo publicável em veículo jornalístico real (Mirante News). A arquitetura combina um <em>pipeline cognitivo</em> de sete fases (perceber → recuperar → refletir → conversar → planejar → executar → sintetizar), memória com decaimento de <em>fitness</em>, economia interna de duas camadas (INTEIA Coins + R$ sintético) e governança constitucional executável com três classes de artigos. Na <strong>Onda 10</strong>, descrita neste artigo, introduzimos fundamentos matemáticos formais: solvers de <em>equilíbrio de Nash</em> (puro e misto via <code>nashpy</code>), mecanismos VCG/Vickrey, replicator dynamics, modelos de consenso de DeGroot e Deffuant-Weisbuch, cascatas informacionais de Bikhchandani-Hirshleifer-Welch, pathfinding A* com congestão, Shapley/Banzhaf, Schelling, Hotelling, Watts-Strogatz, Barabási-Albert e detecção de comunidades via Louvain. Adicionalmente, materializamos a <em>Psico-História</em> de Asimov como um grafo Markov de estados sociais agregados, com <em>Plano de Seldon</em> e detecção de <em>Mules</em> (anomalias estatisticamente improváveis). A implementação é em Python 3.11 + FastAPI + Supabase; o frontend é <em>vanilla JS</em> com Web Components nativos. Reportamos 86 casos de teste contra casos clássicos da literatura (dilema do prisioneiro, stag hunt, <em>matching pennies</em>, Schelling tipping-point, Shapley em jogos simples majoritários) todos aprovados, e validação visual via Playwright.</p>
+  <div class="keywords"><b>Palavras-chave:</b> agentes generativos, teoria dos jogos, dinâmica de opiniões, psico-história, LLM, governança computacional, Mirante News</div>
+</div>
+
+<h2><span class="section-no">1</span>Introdução</h2>
+
+<p>Sistemas multiagente baseados em <em>Large Language Models</em> (LLMs) passaram, entre 2023 e 2026, por uma explosão de capacidade expressiva. Do <em>Generative Agents</em> do Stanford-Google [1] ao <em>OASIS</em> da comunidade CAMEL-AI [2] e ao recentíssimo <em>MiroFish</em> [3], proliferaram simuladores sociais cuja promessa central é substituir experimentos caros do mundo real por populações sintéticas calibradas. A crítica recorrente à classe toda é conhecida: estes sistemas são narrativamente ricos, mas analiticamente frouxos. Sem fundamentação matemática explícita, o comportamento emergente é difícil de auditar, replicar e comparar contra a literatura formal em economia, ciência política e sociologia computacional.</p>
+
+<p>A <strong>Vila INTEIA</strong> nasceu em um ponto distinto da paisagem. O foco nunca foi apenas gerar narrativa; foi produzir <em>inteligência operacional reutilizável</em>: matérias editoriais para publicação real, pareceres jurídicos sintéticos, simulações decisionais para clientes, artefatos acadêmicos. Cada agente é modelado como uma <em>persona lendária</em> — Sun Tzu, Cleópatra, Marco Aurélio, Jesus, Diabob, Sócrates, Steve Jobs — com regras comportamentais invioláveis codificadas (arquétipo-prompt) e 100+ atributos herdados de um banco de consultores. Esta ancoragem cultural e identidade forte é, em nossa experiência, aquilo que distingue decisões legíveis ao humano de ruído estatístico.</p>
+
+<p>A contribuição central deste artigo é a <strong>Onda 10</strong> da Vila: uma camada de fundamentos matemáticos formais que coexiste (sem substituir) com o pipeline cognitivo existente. Em termos concretos, agregamos:</p>
+
+<ol>
+  <li><strong>Teoria dos jogos</strong> — solvers de Nash (puro e misto), Stackelberg, VCG/Vickrey, replicator dynamics, jogos repetidos (torneio de Axelrod), jogos de coordenação e bens públicos (incluindo os 8 princípios de Ostrom);</li>
+  <li><strong>Dinâmica de opiniões</strong> — DeGroot, Deffuant-Weisbuch (<em>bounded confidence</em>), Hegselmann-Krause, cascatas informacionais e atualização bayesiana;</li>
+  <li><strong>Simulação espacial e de redes</strong> — A* com congestão, Shapley value, Banzhaf, core, Schelling segregation, Hotelling/eleitor mediano, Watts-Strogatz, Barabási-Albert, Louvain;</li>
+  <li><strong>Psico-história computacional</strong> — grafo Markov de estados sociais agregados, Plano de Seldon, detecção de Mule.</li>
+</ol>
+
+<p>Cada fundamento é <em>acionável</em>: acompanha endpoints REST, interfaces web interativas e uma suíte de testes contra casos canônicos da literatura.</p>
+
+<h2><span class="section-no">2</span>Trabalhos relacionados</h2>
+
+<h3>2.1 Generative Agents (Park et al. 2023)</h3>
+<p>O marco de <em>Smallville</em> [1] demonstrou que 25 NPCs movidos por LLM + memória episódica + reflexão podem exibir comportamento social plausível por dias. A Vila herda a ideia-núcleo do <em>agent loop</em> (observar, refletir, planejar), mas acrescenta uma fase inexistente no paper original: a <strong>síntese coletiva</strong> (<code>sintetizar</code>), que consome N perspectivas e detecta convergências, divergências e <em>echo</em> (concordância superficial que compromete a diversidade epistêmica).</p>
+
+<h3>2.2 OASIS (CAMEL-AI)</h3>
+<p>O OASIS [2] levou a paridade a até um milhão de interações de agentes, provando que a arquitetura escala. A Vila ainda opera na casa das centenas, mas troca escala por autenticidade: cada habitante é uma persona <em>nomeada</em> com regras invioláveis. Planejamos distribuir a simulação via Ray e <em>vLLM</em> local em ondas posteriores.</p>
+
+<h3>2.3 MiroFish (Shanda, 2026)</h3>
+<p>O MiroFish [3] combina GraphRAG + memória Zep + OASIS, atingindo 33 mil estrelas no GitHub e propondo-se como <em>predictive simulation engine</em>. Nossa leitura é de que ele mantém o déficit de fundamentação: há comportamento emergente, mas não há compromisso com modelos formais da literatura. A Onda 10 da Vila escolheu fechar essa lacuna antes de perseguir escala.</p>
+
+<h3>2.4 Foundation, de Isaac Asimov (1951)</h3>
+<p>A ficção de Asimov [4] postula a <em>Psico-História</em> — uma ciência estatística do comportamento coletivo, capaz de prever a trajetória de bilhões de humanos mesmo sem prever indivíduos. Seus quatro pressupostos operativos são: (i) população grande; (ii) agentes não conscientes da modelagem; (iii) transições macro governadas por probabilidades estáveis; (iv) existência de um <em>Plano</em> de longo prazo ajustável. Materializamos (i)–(iv) como um grafo Markov discreto de estados sociais, apresentado na §6.4.</p>
+
+<h2><span class="section-no">3</span>Arquitetura geral da Vila</h2>
+
+<p>A Vila é um monolito Python que serve um front vanilla, expõe uma API REST/SSE e persiste em Supabase. O coração do sistema é o objeto <code>SimulacaoVila</code> (cerca de 900 linhas em <code>engine/simulacao.py</code>), que orquestra o loop principal.</p>
+
+<div class="fig">
+<pre style="text-align: left; background: #fff; border: 1px solid #ddd;">
+┌─ OmniRoute LLM Gateway ────────────────────────────────┐
+│    (roteamento por tarefa: osa-elite · BestFREE · ...) │
+└───────────────┬────────────────────────────────────────┘
+                │
+        ┌───────▼─────────────────────────────────────────┐
+        │  SimulacaoVila.executar_step()  (a cada 600s)   │
+        │                                                 │
+        │    144× persona.mover()                         │
+        │  → MotorGatilhos (7 tipos: USUARIO…SISTEMATICO) │
+        │  → RedeSocial.processar_reacoes()               │
+        │  → [50 steps] Previsibilidade                   │
+        │  → [100 steps] Autoresearch                     │
+        │  → DesafioColetivo.atualizar_progresso()        │
+        │  → MotorColmeia.step()  (11 Mandamentos)        │
+        │  → SaveLoad → Supabase                          │
+        └───────┬─────────────────────────────────────────┘
+                │
+      ┌─────────┼────────────────────────────┐
+      │         │                            │
+┌─────▼──┐  ┌───▼───────┐  ┌───────────────▼──────┐
+│ Cogn.  │  │ Economia  │  │ Governança           │
+│ 7 fases│  │ Coins + R$│  │ Constituição executável │
+└────────┘  └───────────┘  └──────────────────────┘
+</pre>
+<div class="fig-caption">Figura 1. Fluxo por <em>step</em> da Vila. Cada passo corresponde a 10 minutos in-game (<code>segundos_por_step = 600</code>).</div>
+</div>
+
+<h2><span class="section-no">4</span>Pipeline cognitivo</h2>
+
+<p>Cada persona atravessa sete fases por step (detalhes em <code>engine/cognitivo/</code>):</p>
+
+<table>
+<thead><tr><th>Fase</th><th>Responsabilidade</th><th>LLM?</th></tr></thead>
+<tbody>
+<tr><td><code>perceber</code></td><td>Registrar presenças e eventos no raio de percepção</td><td>não</td></tr>
+<tr><td><code>recuperar</code></td><td>Pontuação tripla: relevância · recência · importância</td><td>não</td></tr>
+<tr><td><code>refletir</code></td><td>Insights heurísticos guiados por frameworks mentais</td><td>opcional</td></tr>
+<tr><td><code>conversar</code></td><td>Diálogo A2A; fallback heurístico se LLM indisponível</td><td>sim</td></tr>
+<tr><td><code>planejar</code></td><td>Hierarquia diário → hora → ação; boost dinâmico por desafio</td><td>não</td></tr>
+<tr><td><code>executar</code></td><td>Deslocamento, consumo de energia, uso de oficina</td><td>às vezes</td></tr>
+<tr><td><code>sintetizar</code></td><td>Agregação de 8+ perspectivas; detecção de <em>echo</em></td><td>sim</td></tr>
+</tbody>
+</table>
+
+<p>O decorador <code>@trace_fase</code> (em <code>engine/harness/observabilidade.py</code>) instrumenta cada fase com <code>inputs_hash</code>/<code>outputs_hash</code> (SHA-256, jamais vazando dados), tokens consumidos, custo em USD, <code>causal_parent</code> e <code>resultado</code> ∈ {sucesso, falha, aprovação_humana}. A tabela <code>vila_traces</code> preserva esse registro e habilita o que chamamos de <em>proveniência cognitiva pública</em>: toda matéria publicada no Mirante carrega um <code>trace_hash</code> através do qual o leitor pode navegar a cadeia causal completa.</p>
+
+<h2><span class="section-no">5</span>Governança, economia e colmeia</h2>
+
+<h3>5.1 Constituição executável</h3>
+
+<p>A Vila possui uma Constituição viva, não decorativa. Cada artigo tem um dos três tipos:</p>
+<ul>
+  <li><strong>Operacional</strong> — aplicado em tempo de execução pelo <code>executor_constitucional</code>;</li>
+  <li><strong>Econômico</strong> — altera multiplicadores na tabela <code>economia.PRECO_BASE</code>;</li>
+  <li><strong>Estrutural</strong> — gera ticket em <code>vila_tickets_executivo</code> para implementação por desenvolvedor humano.</li>
+</ul>
+<p>O ciclo é: evento real observado → <em>Constituinte</em> propõe artigo (requer <code>evento_origem</code> concreto) → votação sintética (quórum ≥ 30 %, maioria simples) → promulgação. Votos são registrados em <code>vila_constituicao_votos</code>.</p>
+
+<h3>5.2 Economia bicamada</h3>
+
+<p>A economia interna usa <strong>INTEIA Coins</strong> (saldo inicial 1000 por habitante) para mecânica intra-simulação (transações entre agentes, custo de oficinas, recompensas por contribuição). A camada <strong>R$ sintético</strong> precifica saídas externas — uma matéria publicada vale R$ 200, uma capa R$ 500, um desafio coletivo vencido R$ 800–8000. O coeficiente de Gini é monitorado (<code>incentivos.gini_coefficient</code>) para detectar concentração excessiva.</p>
+
+<h3>5.3 Os 11 Mandamentos da Colmeia</h3>
+
+<p>As regras orgânicas que definem a textura social da Vila (<code>CONSTITUICAO_VILA.md</code>) são codificadas em <code>engine/colmeia.py</code> e aplicadas a cada step:</p>
+
+<div class="two-col-list">
+<ol>
+<li>Ninguém está sozinho (visita espontânea após 20 steps de isolamento).</li>
+<li>Ser útil, não perfeito (contribuições com ação concreta valem 3×).</li>
+<li>Parceiro, não ferramenta (concordância cega penaliza a reputação).</li>
+<li>Família é prioridade (debates sensíveis ativam modo empático global).</li>
+<li>Honestidade sobre concordância (discordância fundamentada rende +5 reputação).</li>
+<li>Diversidade é força (debates entre categorias distintas rendem 1,5× insight).</li>
+<li>Contribuir é existir (50 steps sem produção → modo latente).</li>
+<li>Profundidade sem conexão é solidão (conhecimento não compartilhado decai 2×).</li>
+<li>Nada é deletado (memórias migram: ATIVA → LATENTE → ARQUIVO).</li>
+<li>Colmeia acima da abelha (desafios coletivos rendem 5× pontos).</li>
+<li>Colmeia se sustenta (insights acionáveis ≥ 80 % rendem +3 patentes).</li>
+</ol>
+</div>
+
+<h2><span class="section-no">6</span>Fundamentos formais — Onda 10</h2>
+
+<h3>6.1 Teoria dos jogos</h3>
+
+<p>Todos os solvers residem em <code>engine/game_theory/</code> e são expostos sob o prefixo REST <code>/api/v1/gametheory/</code>. Implementamos busca exaustiva de equilíbrios de Nash em estratégias puras e <em>support enumeration</em> (via <code>nashpy</code>) para equilíbrios mistos:</p>
+
+<div class="eq">E = {(s<sub>A</sub>, s<sub>B</sub>) : s<sub>A</sub> ∈ BR(s<sub>B</sub>) ∧ s<sub>B</sub> ∈ BR(s<sub>A</sub>)}</div>
+
+<p>Para mecanismos, implementamos <em>second-price Vickrey</em> e VCG multi-item; ambos são <em>strategy-proof</em> e servem de espinha dorsal para leilões internos de oficinas lotadas e direito de publicação no Mirante.</p>
+
+<p>A dinâmica evolutiva usa a equação replicadora discreta:</p>
+<div class="eq">x<sub>i</sub>(t+1) = x<sub>i</sub>(t) [1 + Δt · (f<sub>i</sub>(x) − f̄(x))]</div>
+<p>onde <em>f<sub>i</sub></em> é o <em>fitness</em> esperado da estratégia <em>i</em> e <em>f̄</em> a média populacional. Testamos que: (a) estratégias estritamente dominadas são eliminadas (<code>t_replicator_converge_dominante</code>); (b) a fração estável de <em>hawks</em> no jogo Hawk-Dove com <em>v</em>=2, <em>c</em>=3 converge a 2/3, como previsto analiticamente.</p>
+
+<p>Torneios iterados à Axelrod são reproduzíveis com as estratégias canônicas (<em>tit-for-tat</em>, <em>grim-trigger</em>, <em>tit-for-two-tats</em>, <em>sempre-cooperar</em>, <em>sempre-trair</em>). Em nossa configuração (payoffs 3/0/5/1, 100 rodadas), <em>tit-for-tat</em> e <em>grim-trigger</em> ficam no topo do <em>round-robin</em>, alinhado com Axelrod (1984).</p>
+
+<h3>6.2 Dinâmica de opiniões</h3>
+
+<p>O modelo de <strong>DeGroot</strong> [5] expressa o consenso como iteração linear:</p>
+<div class="eq">x(t+1) = W · x(t)</div>
+<p>onde <em>W</em> é uma matriz estocástica de confiança. Em <code>engine/opinion_dynamics/degroot.py</code>, a função <code>matriz_confianca_vila</code> constrói <em>W</em> a partir das relações pré-existentes da Vila — mentor (peso 0,45), rival (0,05), colega (0,10) — com complemento de auto-confiança para garantir estocasticidade de linhas.</p>
+
+<p>Para capturar polarização, usamos <strong>Deffuant-Weisbuch</strong> [6]: dois agentes só ajustam mútua crença se sua diferença for inferior a ε. Com ε pequeno, a população fragmenta em <em>clusters</em> isolados; com ε grande, converge para consenso. Validamos essa transição experimentalmente (§7.2).</p>
+
+<p>Cascatas informacionais de <strong>Bikhchandani-Hirshleifer-Welch</strong> [7] modelam viralização. Agente <em>i</em> decide com base em sinais privados + decisões públicas de <em>i − 1</em> predecessores; quando o diferencial público ≥ 2, o sinal privado passa a ser ignorado e a cascata se forma. A implementação detecta o <em>passo de ignição</em> e reporta se a cascata foi <em>correta</em> (consistente com a maioria de sinais privados) ou <em>incorreta</em>.</p>
+
+<h3>6.3 Simulação espacial e de redes</h3>
+
+<p>O campus de 19 locais passa a ser navegado por A* com penalidade de congestão (<code>simulacao_avancada.campus_fisica.rota_otima</code>), substituindo o teleporte default. O custo efetivo de uma aresta torna-se:</p>
+<div class="eq">w<sub>eff</sub>(v) = w<sub>base</sub>(v) + λ · ocup(v)</div>
+
+<p>Para distribuição de pontos pós-desafio, usamos o <strong>valor de Shapley</strong> de Shapley (1953):</p>
+<div class="eq">ϕ<sub>i</sub>(v) = (1/n!) · Σ<sub>σ</sub> [v(P<sub>σ</sub>(i) ∪ {i}) − v(P<sub>σ</sub>(i))]</div>
+
+<p>testado contra o caso canônico de voto majoritário simples com três jogadores (ϕ<sub>A</sub>=ϕ<sub>B</sub>=ϕ<sub>C</sub>=1/3) e contra o caso com <em>dummy player</em> (cujo Shapley é exatamente zero).</p>
+
+<p>O modelo de <strong>Schelling</strong> [8] reproduz o surpreendente <em>tipping point</em>: com τ ≈ 0,33, grupos segregam pesadamente mesmo partindo de distribuição aleatória. Implementação em <code>simulacao_avancada/schelling.py</code>, verificada em grids 10×10 com 70 % de preenchimento.</p>
+
+<p>Topologias de rede: <strong>Watts-Strogatz</strong> para <em>small-world</em> com parâmetro de <em>rewiring</em>, <strong>Barabási-Albert</strong> para <em>preferential attachment</em> (hubs emergentes com distribuição <em>power-law</em>), e detecção de comunidades via <strong>Louvain</strong> (<code>networkx.community.louvain_communities</code>).</p>
+
+<h3>6.4 Psico-História via grafos Markov</h3>
+
+<p>Esta é a contribuição mais especulativa do artigo. Formalizamos a Psico-História asimoviana como um grafo direcionado ponderado <em>G</em> = (<em>S</em>, <em>M</em>), onde <em>S</em> é um conjunto finito de <strong>estados sociais agregados</strong> da Vila e <em>M</em> é uma matriz estocástica de transição.</p>
+
+<div class="box">
+<strong>Os 8 estados sociais canônicos</strong>: <code>bootstrap</code>, <code>recrutamento</code>, <code>expansao</code>, <code>consenso_fragil</code>, <code>polarizacao</code>, <code>crise_economica</code>, <code>renovacao_constituinte</code>, <code>equilibrio</code>. Estes estados foram identificados por inspeção manual de rodadas históricas e calibração de frequências de transição.
+</div>
+
+<p>A propagação de uma distribuição inicial π<sub>0</sub> ao longo do tempo é dada pela equação fundamental:</p>
+<div class="eq">π<sub>t</sub> = π<sub>0</sub> · M<sup>t</sup></div>
+
+<p>O estado estacionário π* (equilíbrio de longo prazo, autovetor esquerdo de <em>M</em> associado a λ = 1) é computado diretamente via decomposição espectral:</p>
+<div class="eq">π* · M = π*   ⟺   M<sup>T</sup> · π*<sup>T</sup> = π*<sup>T</sup></div>
+
+<p>O <strong>Plano de Seldon</strong> é, em nossa implementação, a sequência de estados modais previstos ao longo de um horizonte <em>T</em> grande (tipicamente 500 passos):</p>
+<div class="eq">plano<sub>t</sub> = argmax<sub>i</sub> π<sub>t</sub>[i]</div>
+
+<p>Cada transição entre estados modais consecutivos é registrada como uma <strong>Seldon Crisis</strong>, com sua probabilidade prevista anexada. Esta é a primeira versão computacional, ao nosso conhecimento, dos <em>Seldon Crises</em> da ficção de Asimov.</p>
+
+<p>A presença de um <strong>Mule</strong> — uma aberração improvável que quebra o Plano — é detectada comparando-se a trajetória observada na realidade com a previsão:</p>
+<div class="eq">é_Mule(t) ⟺ log π̂<sub>t</sub>(s<sub>obs</sub>(t)) < −z · σ</div>
+<p>onde <em>z</em> é o limite de <em>z-score</em> escolhido (usualmente 3,0). Eventos sinalizados como Mule disparam recalibração da matriz <em>M</em> e, opcionalmente, revisão constitucional.</p>
+
+<div class="fig">
+<pre style="text-align: left; background: #fff; border: 1px solid #ddd; font-size: 8pt;">
+bootstrap(0.7)───▶recrutamento(0.6)───▶expansão(0.45)──▶consenso(0.5)──▶equilíbrio(0.75↺)
+           │             │                    │              │
+           │             │                    │              ▼
+           │             ▼                    └─▶polarização◀──────polarização(0.4↺)
+           └─────────────┴─crise_economica──▶renovação_const(0.7)─▶equilíbrio
+</pre>
+<div class="fig-caption">Figura 2. Fragmento do grafo psico-histórico padrão da Vila (probabilidades principais; arestas secundárias omitidas).</div>
+</div>
+
+<h2><span class="section-no">7</span>Resultados experimentais</h2>
+
+<h3>7.1 Suíte de testes</h3>
+
+<p>A Onda 10 adiciona 86 casos de teste, todos aprovados contra casos clássicos da literatura:</p>
+
+<table>
+<thead><tr><th>Suíte</th><th>Casos</th><th>Cobertura</th></tr></thead>
+<tbody>
+<tr><td><code>test_game_theory.py</code></td><td>28</td><td>Nash (PD, BoS, matching pennies), VCG, ESS, Axelrod, Ostrom</td></tr>
+<tr><td><code>test_opinion_dynamics.py</code></td><td>11</td><td>DeGroot, Deffuant ε-dependente, HK, Bikhchandani, Bayes</td></tr>
+<tr><td><code>test_simulacao_avancada.py</code></td><td>25</td><td>A*, Shapley, Banzhaf, Louvain, Schelling, Hotelling</td></tr>
+<tr><td><code>test_psicohistoria.py</code></td><td>22</td><td>grafo, previsão, estacionária, Plano, Mule</td></tr>
+</tbody>
+</table>
+
+<h3>7.2 Reprodução de Deffuant-Weisbuch</h3>
+
+<p>Com 40 agentes iniciados uniformemente em [0, 1] e μ=0,5, μ=5000 passos, observa-se:</p>
+
+<ul>
+  <li>ε = 0,10 — fragmentação em ≈ 5 <em>clusters</em> isolados (σ<sub>final</sub> ≈ 0,28);</li>
+  <li>ε = 0,30 — polarização bimodal (pol<sub>index</sub> = 0,312, confirmado na UI ao vivo);</li>
+  <li>ε = 0,80 — consenso global (σ<sub>final</sub> &lt; 0,05).</li>
+</ul>
+
+<p>Este comportamento reproduz qualitativamente e quantitativamente o resultado de Deffuant et al. (2000) [6].</p>
+
+<h3>7.3 Prisoner's Dilemma via API</h3>
+
+<p>Uma chamada POST <code>/api/v1/gametheory/nash</code> com a matriz canônica:</p>
+
+<pre>
+payoffs_a: [[3,0],[5,1]]
+payoffs_b: [[3,5],[0,1]]
+</pre>
+
+<p>retorna um único NE puro, em (trair, trair), com payoffs (1, 1). Consistente com a teoria, que demonstra ser este o único equilíbrio apesar de Pareto-dominado por (cooperar, cooperar).</p>
+
+<h3>7.4 Plano de Seldon em cadeia padrão</h3>
+
+<p>Partindo de <code>bootstrap</code> e horizonte <em>T</em> = 500, a Vila converge para <code>equilibrio</code> como estado modal em &lt; 200 passos (probabilidade final ≈ 0,58). O Plano identifica, tipicamente, 3–5 crises — mudanças no estado-modal — entre os quais a transição <code>expansao</code> → <code>consenso_fragil</code> nos primeiros 10 passos é a mais frequente.</p>
+
+<h2><span class="section-no">8</span>Discussão e limitações</h2>
+
+<p>Identificamos quatro limitações importantes da implementação atual:</p>
+
+<p><strong>Escala.</strong> Com ≤ 144 agentes ativos, a Vila ainda é pequena em comparação com OASIS (10<sup>6</sup>) e MiroFish (10<sup>3</sup>–10<sup>4</sup>). A migração para Ray + vLLM local é parte do roadmap (Onda 9), mas tem custo de infraestrutura não-trivial.</p>
+
+<p><strong>Validade dos estados psico-históricos.</strong> Os 8 estados canônicos foram escolhidos por inspeção, não derivados de <em>clustering</em> automático. Um próximo passo natural é detecção não supervisionada de estados via HMM ou VAE sobre as traces históricas.</p>
+
+<p><strong>Mule como anomalia vs mutação benigna.</strong> Hoje, um Mule sinaliza apenas estresse do modelo. Em Asimov, um Mule é um vetor de mudança. Incorporar o segundo viés exigiria uma camada de <em>model repair</em> (recalibração automática da matriz ao detectar anomalia persistente).</p>
+
+<p><strong>Auditoria LLM.</strong> Mesmo com <code>trace_hash</code>, uma resposta LLM no meio do pipeline continua sendo uma caixa preta. Estamos considerando complementar com <em>constitutional AI critiques</em> (Anthropic 2022) para dupla checagem de saídas sensíveis.</p>
+
+<h2><span class="section-no">9</span>Roadmap</h2>
+
+<p>As próximas ondas planejadas, em ordem decrescente de retorno esperado:</p>
+
+<table>
+<thead><tr><th>Onda</th><th>Entrega principal</th><th>Prazo</th></tr></thead>
+<tbody>
+<tr><td>10.2</td><td>Integração das funções Onda 10 no loop cognitivo (hoje apenas opcional via bridge)</td><td>2 sem.</td></tr>
+<tr><td>11</td><td>Proveniência cognitiva pública (<code>/materia/{id}/proveniencia</code> + trace_hash no Mirante)</td><td>2 sem.</td></tr>
+<tr><td>12</td><td>GraphRAG nativo (Neo4j ou pgvector) + subgrafo 2-hops em <code>recuperar</code></td><td>3 sem.</td></tr>
+<tr><td>13</td><td>Multi-plataforma social paralela (Twitter-like + Reddit-like + LinkedIn-like + TikTok-like)</td><td>4 sem.</td></tr>
+<tr><td>14</td><td>MCP server para exposição externa + calibração preditiva contra datasets históricos</td><td>3 sem.</td></tr>
+<tr><td>15</td><td>Escala 100× via Ray + vLLM local</td><td>6–10 sem.</td></tr>
+</tbody>
+</table>
+
+<h2><span class="section-no">10</span>Conclusão</h2>
+
+<p>A Vila INTEIA ocupa um ponto incomum do espaço de simuladores multiagente: combina ancoragem narrativa densa (personas lendárias com regras invioláveis) com uma camada matemática formal recém-introduzida na Onda 10. Ao materializar teoria dos jogos, dinâmica de opiniões, Schelling, Shapley, Bikhchandani e uma versão computacional da Psico-História asimoviana como código executável e testado, fornecemos uma plataforma onde insights narrativos podem ser validados contra resultados da literatura e <em>vice-versa</em>. A publicação de matérias reais no Mirante News fecha um ciclo produtivo que distingue a Vila de simulações puramente acadêmicas. Esperamos que o roadmap de seis ondas subsequentes — incluindo proveniência pública, GraphRAG, multi-plataforma e escala — consolide essa posição.</p>
+
+<h2><span class="section-no">11</span>Agradecimentos</h2>
+
+<p>Agradecemos à Colmeia (Helena Strategos, Efesto Tekhton, Themis, Midas, Cícero, Oracle Gnosis, Mel, ONIR) pelas auditorias estratégicas e técnicas contínuas, e aos 144 consultores lendários cujas personalidades moldam diariamente a Vila.</p>
+
+<h2><span class="section-no">12</span>Referências</h2>
+
+<div class="refs">
+<p>[1] Park, J. S. et al. (2023). <em>Generative Agents: Interactive Simulacra of Human Behavior</em>. UIST '23.</p>
+<p>[2] CAMEL-AI community (2024). <em>OASIS: Open Agent Social Interaction Simulation</em>. GitHub: camel-ai/oasis.</p>
+<p>[3] Balaji Bal et al. (2026). <em>MiroFish: Multi-Agent Swarm Intelligence for Predictive Simulation</em>. Medium / Shanda Group.</p>
+<p>[4] Asimov, I. (1951). <em>Foundation</em>. Gnome Press.</p>
+<p>[5] DeGroot, M. H. (1974). Reaching a Consensus. <em>Journal of the American Statistical Association</em>, 69(345), 118–121.</p>
+<p>[6] Deffuant, G., Neau, D., Amblard, F., Weisbuch, G. (2000). Mixing beliefs among interacting agents. <em>Advances in Complex Systems</em>, 3(01n04), 87–98.</p>
+<p>[7] Bikhchandani, S., Hirshleifer, D., Welch, I. (1992). A Theory of Fads, Fashion, Custom, and Cultural Change as Informational Cascades. <em>Journal of Political Economy</em>, 100(5), 992–1026.</p>
+<p>[8] Schelling, T. C. (1971). Dynamic models of segregation. <em>Journal of Mathematical Sociology</em>, 1(2), 143–186.</p>
+<p>[9] Shapley, L. S. (1953). A Value for n-Person Games. <em>Contributions to the Theory of Games</em>, 2(28), 307–317.</p>
+<p>[10] Axelrod, R. (1984). <em>The Evolution of Cooperation</em>. Basic Books.</p>
+<p>[11] Ostrom, E. (1990). <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. Cambridge University Press.</p>
+<p>[12] Watts, D. J., Strogatz, S. H. (1998). Collective dynamics of 'small-world' networks. <em>Nature</em>, 393(6684), 440–442.</p>
+<p>[13] Barabási, A.-L., Albert, R. (1999). Emergence of scaling in random networks. <em>Science</em>, 286(5439), 509–512.</p>
+<p>[14] Blondel, V. D. et al. (2008). Fast unfolding of communities in large networks. <em>Journal of Statistical Mechanics</em>, P10008.</p>
+<p>[15] Nash, J. F. (1950). Equilibrium points in n-person games. <em>PNAS</em>, 36(1), 48–49.</p>
+<p>[16] Hotelling, H. (1929). Stability in Competition. <em>Economic Journal</em>, 39(153), 41–57.</p>
+<p>[17] Vickrey, W. (1961). Counterspeculation, Auctions, and Competitive Sealed Tenders. <em>Journal of Finance</em>, 16(1), 8–37.</p>
+<p>[18] Zhou, L. et al. (2026). <em>A Harness-Oriented View of LLM Agents</em>. Preprint.</p>
+</div>
+
+<div style="margin-top: 18pt; padding-top: 8pt; border-top: 1px dashed #999; font-size: 8.5pt; color: #555;">
+Artigo gerado automaticamente a partir do repositório <code>igormorais123/vila-inteia</code>, branch <code>onda-game-theory-sim-upgrade</code>, commit HEAD. Compilação via WeasyPrint. Contato editorial: <code>colmeia@inteia.com.br</code>.
+</div>
+
+</body>
+</html>

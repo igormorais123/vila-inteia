@@ -4,3 +4,10 @@ pydantic>=2.0.0
 openai>=1.0.0
 anthropic>=0.25.0
 httpx>=0.25.0
+
+# Onda 10 — game theory + opinion dynamics + sim avançada
+numpy>=1.24
+scipy>=1.11
+networkx>=3.1
+nashpy>=0.0.38
+# axelrod>=4.13        # opcional — lib de iterated games com 200+ strategies

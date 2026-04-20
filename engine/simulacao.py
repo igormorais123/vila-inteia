@@ -279,6 +279,24 @@ class SimulacaoVila:
                         self.step,
                     )
 
+                # Onda 10: atualiza crenças numéricas via Deffuant-Weisbuch.
+                # Opcional — não falha se módulo indisponível.
+                try:
+                    from engine.cognitivo.crenca import TRACKER_GLOBAL
+                    parceiro_id = conv.get("parceiro") or conv.get("parceiro_id")
+                    topicos = conv.get("topicos") or []
+                    if parceiro_id and topicos:
+                        for topico in topicos[:3]:
+                            TRACKER_GLOBAL.atualizar_apos_conversa(
+                                agente_id=persona.id,
+                                parceiro_id=parceiro_id,
+                                topico=topico,
+                                influencia=0.25,
+                                epsilon=0.45,
+                            )
+                except Exception:
+                    pass
+
             if resultado["tipo"] == "refletir":
                 self.stats["total_reflexoes"] += 1
 

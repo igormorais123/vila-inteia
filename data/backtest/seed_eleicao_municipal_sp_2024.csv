@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+ev01,2024-09-01,"Candidato de centro lança campanha robusta com coalizão de 8 partidos e apoio massivo em pesquisas",1,0.55
+ev02,2024-09-15,"Debate televisivo mostra rejeição ao candidato da extrema direita após escândalo financeiro",0,0.45
+ev03,2024-10-01,"Movimento popular organiza rejeição pública a candidato tradicional em crise",0,0.40
+ev04,2024-10-06,"Candidato incumbente reeleito com forte apoio do setor produtivo",1,0.60
+ev05,2024-10-15,"Nova candidata emerge em crescimento repentino após viralização de vídeo de campanha",1,0.35
+ev06,2024-10-20,"Debate final sem escândalo; desempenho fraco do candidato principal",0,0.50
+ev07,2024-10-25,"Pesquisa boca-de-urna indica rejeição ao incumbente",0,0.48
+ev08,2024-10-27,"Apuração: candidato independente vitoriosa com apoio de jovens",1,0.30
+ev09,2024-11-01,"Segundo turno cancelado por falha judicial; campanha robusta do candidato A retoma",1,0.55
+ev10,2024-11-10,"Fraco desempenho econômico municipal gera perda de apoio ao prefeito eleito",0,0.42

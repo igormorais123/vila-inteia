@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Psico-História</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-5); }
+    .page-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+    .page-header h1 { font-size: var(--text-2xl); }
+    .page-header p { color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-2); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    @media (max-width: 960px) { .two-col { grid-template-columns: 1fr; } }
+    .control-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4); }
+    #traj-chart { width: 100%; height: 260px; }
+    #crise-list li { padding: var(--space-2) 0; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: var(--text-sm); }
+    #crise-list li:last-child { border-bottom: none; }
+    .mule-event { padding: var(--space-2); border-left: 2px solid var(--danger); margin-bottom: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); background: rgba(248, 113, 113, 0.05); }
+    .state-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: var(--text-xs); margin-right: var(--space-1); margin-bottom: var(--space-1); }
+    .state-pill.active { border-color: var(--amber); color: var(--amber); background: rgba(214, 158, 46, 0.08); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <h1>Psico-História</h1>
+        <p>Grafo de estados sociais · Plano de Seldon · Detector de Mule</p>
+      </div>
+      <nav><a href="/" class="u-muted">← Vila</a></nav>
+    </header>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Previsão de trajetória</h2>
+        <span class="badge badge--amber">Markov process</span>
+      </div>
+      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+        Equações de Seldon simuladas: a partir de estado inicial, computamos
+        distribuição de probabilidade entre 8 estados sociais da Vila ao longo
+        de N passos. Trajetória = πₜ @ M, onde M é matriz estocástica calibrada.
+      </p>
+      <div class="control-row">
+        <label>estado inicial:</label>
+        <select id="estado-inicial" class="select" style="width: 200px;">
+          <option value="bootstrap" selected>bootstrap</option>
+          <option value="recrutamento">recrutamento</option>
+          <option value="expansao">expansao</option>
+          <option value="consenso_fragil">consenso_fragil</option>
+          <option value="polarizacao">polarizacao</option>
+          <option value="crise_economica">crise_economica</option>
+          <option value="renovacao_constituinte">renovacao_constituinte</option>
+          <option value="equilibrio">equilibrio</option>
+        </select>
+        <label>passos:</label>
+        <input id="passos" class="input" type="number" value="100" min="10" max="1000" style="width: 90px;">
+        <button id="rodar-prev" class="btn btn--primary">Prever</button>
+      </div>
+      <svg id="traj-chart" viewBox="0 0 800 260" role="img" aria-label="Trajetória"></svg>
+      <div id="prev-summary" class="u-muted" style="font-size: var(--text-sm);"></div>
+    </section>
+
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">Plano de Seldon</h2></div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Horizonte longo + identificação de "crises" (mudanças no estado mais provável).
+        </p>
+        <div class="control-row">
+          <label>horizonte:</label>
+          <input id="horizonte" class="input" type="number" value="500" min="50" max="5000" style="width: 90px;">
+          <button id="rodar-plano" class="btn">Gerar Plano</button>
+        </div>
+        <div id="plano-meta" class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);"></div>
+        <ul id="crise-list" style="list-style: none; padding: 0; margin: 0;"></ul>
+      </div>
+
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">Detector de Mule</h2></div>
+        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+          Eventos de probabilidade anômala (outliers que quebram o Plano).
+          Entre trajetória real (sequência de estados observados):
+        </p>
+        <div class="control-row">
+          <input id="traj-real" class="input" type="text" value="bootstrap,equilibrio,equilibrio,equilibrio" style="flex: 1; min-width: 200px;">
+          <button id="rodar-mule" class="btn">Detectar</button>
+        </div>
+        <div id="mule-resultado"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header"><h2 class="panel__title">Distribuição estacionária</h2></div>
+      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+        π tal que π @ M = π. Equilíbrio de longuíssimo prazo da Vila.
+      </p>
+      <div id="estacionaria-resultado"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api, toast } from '/js/core.js';
+
+    const cores = ['#d69e2e', '#60a5fa', '#4ade80', '#f87171', '#a78bfa', '#fbbf24', '#f472b6', '#94a3b8'];
+
+    function renderTraj(svg, traj, estadosOrdem) {
+      svg.innerHTML = '';
+      const w = 800, h = 260, padL = 40, padB = 30, padT = 10, padR = 10;
+      const T = traj.length;
+      const n = estadosOrdem.length;
+      const xStep = (w - padL - padR) / Math.max(1, T - 1);
+      // Eixos
+      const axisX = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      axisX.setAttribute('x1', padL); axisX.setAttribute('y1', h - padB);
+      axisX.setAttribute('x2', w - padR); axisX.setAttribute('y2', h - padB);
+      axisX.setAttribute('stroke', 'rgba(160, 168, 184, 0.3)');
+      svg.appendChild(axisX);
+      // Ticks Y
+      [0, 0.25, 0.5, 0.75, 1].forEach((y) => {
+        const yy = padT + (1 - y) * (h - padT - padB);
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.setAttribute('x', 6); lbl.setAttribute('y', yy + 3);
+        lbl.setAttribute('fill', 'rgba(160, 168, 184, 0.7)');
+        lbl.setAttribute('font-size', '10');
+        lbl.textContent = y;
+        svg.appendChild(lbl);
+      });
+      // Uma linha por estado
+      for (let s = 0; s < n; s++) {
+        let d = '';
+        for (let t = 0; t < T; t++) {
+          const x = padL + t * xStep;
+          const y = padT + (1 - traj[t][s]) * (h - padT - padB);
+          d += (t === 0 ? 'M' : 'L') + `${x.toFixed(1)},${y.toFixed(1)} `;
+        }
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', cores[s % cores.length]);
+        path.setAttribute('stroke-width', '1.5');
+        svg.appendChild(path);
+      }
+      // Legenda
+      estadosOrdem.forEach((nome, i) => {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('transform', `translate(${padL + (i % 4) * 180}, ${h - 12 + Math.floor(i / 4) * 14})`);
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('r', '3'); dot.setAttribute('fill', cores[i % cores.length]);
+        g.appendChild(dot);
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', 8); txt.setAttribute('y', 4);
+        txt.setAttribute('fill', 'rgba(232, 236, 244, 0.8)');
+        txt.setAttribute('font-size', '10');
+        txt.textContent = nome;
+        g.appendChild(txt);
+        svg.appendChild(g);
+      });
+    }
+
+    document.getElementById('rodar-prev').addEventListener('click', async () => {
+      const res = await api.post('/api/v1/psicohistoria/prever', {
+        estado_inicial: document.getElementById('estado-inicial').value,
+        passos: parseInt(document.getElementById('passos').value, 10),
+      });
+      renderTraj(document.getElementById('traj-chart'), res.trajetoria, res.estados_ordem);
+      document.getElementById('prev-summary').innerHTML = `
+        estado mais provável ao final: <strong class="u-amber">${res.estado_provavel_final}</strong>
+        com probabilidade <strong>${res.probabilidade_final.toFixed(3)}</strong>.
+      `;
+    });
+
+    document.getElementById('rodar-plano').addEventListener('click', async () => {
+      const res = await api.post('/api/v1/psicohistoria/plano-seldon', {
+        estado_inicial: document.getElementById('estado-inicial').value,
+        horizonte: parseInt(document.getElementById('horizonte').value, 10),
+      });
+      document.getElementById('plano-meta').innerHTML = `
+        destino: <strong class="u-amber">${res.destino_provavel}</strong>
+        (prob ${res.probabilidade_destino.toFixed(3)}).
+        ${res.crises.length} crises previstas.
+      `;
+      document.getElementById('crise-list').innerHTML = res.crises.map(c => `
+        <li>
+          <span class="u-mono">step ${c.passo}</span>
+          <span>${c.antes} → <span class="u-amber">${c.depois}</span></span>
+          <span class="u-mono u-muted">p=${c.probabilidade.toFixed(3)}</span>
+        </li>
+      `).join('');
+    });
+
+    document.getElementById('rodar-mule').addEventListener('click', async () => {
+      const raw = document.getElementById('traj-real').value;
+      const trajReal = raw.split(',').map(s => s.trim()).filter(Boolean);
+      const res = await api.post('/api/v1/psicohistoria/detectar-mule', {
+        trajetoria_real: trajReal,
+        estado_inicial: trajReal[0] || 'bootstrap',
+        z_score: 2.0,
+      });
+      const el = document.getElementById('mule-resultado');
+      if (res.n_mules === 0) {
+        el.innerHTML = `<div class="u-muted">Nenhuma anomalia — trajetória consistente com Plano.</div>`;
+      } else {
+        el.innerHTML = res.mules.map(m => `
+          <div class="mule-event">
+            <strong>passo ${m.passo}</strong> · z=${m.z_score.toFixed(2)} · ${m.descricao}
+          </div>
+        `).join('');
+      }
+    });
+
+    /* Estacionária — carrega ao montar */
+    (async function() {
+      const pi = await api.get('/api/v1/psicohistoria/estacionaria');
+      const el = document.getElementById('estacionaria-resultado');
+      const ordem = Object.entries(pi).sort((a, b) => b[1] - a[1]);
+      el.innerHTML = ordem.map(([estado, p]) => `
+        <div style="display: grid; grid-template-columns: 180px 1fr 60px; align-items: center; gap: 12px; padding: 6px 0;">
+          <div class="u-mono" style="font-size: 13px;">${estado}</div>
+          <div style="height: 6px; background: var(--bg-surface-2); border-radius: 999px; overflow: hidden;">
+            <div style="width: ${(p * 100).toFixed(1)}%; height: 100%; background: var(--amber);"></div>
+          </div>
+          <div class="u-right u-mono" style="font-size: 12px;">${(p * 100).toFixed(1)}%</div>
+        </div>
+      `).join('');
+    })();
+  </script>
+</body>
+</html>

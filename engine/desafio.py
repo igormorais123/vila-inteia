@@ -147,6 +147,9 @@ class DesafioColetivo:
     agentes_participantes: set = field(default_factory=set)
     _contribuicoes_recentes: list[Contribuicao] = field(default_factory=list)
 
+    # Onda 10: distribuição Shapley calculada ao concluir
+    shapley_final: dict = field(default_factory=dict)
+
     @property
     def fase_atual(self) -> Optional[FaseDesafio]:
         if 0 <= self.fase_atual_idx < len(self.fases):
@@ -253,6 +256,34 @@ class DesafioColetivo:
         # Desafio concluído?
         if self.fase_atual_idx >= len(self.fases):
             self.status = "concluido"
+            # Onda 10: distribuição Shapley por contribuições aprovadas
+            self._calcular_shapley_final()
+
+    def _calcular_shapley_final(self):
+        """Calcula Shapley value para contribuintes (Onda 10 integration)."""
+        try:
+            from engine.simulacao_avancada.coalizoes import shapley_value
+            # Coleta contribuições aprovadas por autor
+            contrib_por_autor: dict[str, int] = {}
+            for fase in self.fases:
+                for entrega in fase.entregas:
+                    if entrega.status == "aprovada":
+                        for c in entrega.contribuicoes:
+                            contrib_por_autor[c.autor_id] = contrib_por_autor.get(c.autor_id, 0) + 1
+            if not contrib_por_autor:
+                return
+            # Top-8 para viabilizar O(n!) do Shapley
+            autores = sorted(contrib_por_autor.items(), key=lambda x: -x[1])[:8]
+            jogadores = [a for a, _ in autores]
+            counts = dict(autores)
+
+            def v(coal: frozenset) -> float:
+                # Valor = soma de contribuições dos membros (super-aditivo simples)
+                return float(sum(counts[j] for j in coal))
+
+            self.shapley_final = shapley_value(jogadores, v)
+        except Exception:
+            self.shapley_final = {}
 
     def _avancar_fase(self, step: int):
         """Avança para a próxima fase."""
