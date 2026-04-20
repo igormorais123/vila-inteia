@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Vila INTEIA — Grafo Conhecimento</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    #graph-svg { width: 100%; height: 600px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); cursor: grab; }
+    .controls { display: flex; gap: var(--space-3); align-items: center; }
+    .stat-row { display: grid; grid-template-columns: 140px 1fr; padding: 4px 0; font-family: var(--font-mono); font-size: var(--text-sm); border-bottom: 1px dashed var(--border-subtle); }
+    .stat-row .label { color: var(--text-muted); }
+    .stat-row .val { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">Grafo de Conhecimento</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">Onda 38 · entidades e relações extraídas de conversas</p>
+      </div>
+      <nav class="u-hstack" style="gap: var(--space-4);">
+        <a href="/cockpit.html" class="u-muted">cockpit</a>
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <div class="panel">
+      <div class="controls">
+        <label>limite nós:</label>
+        <input id="limite" class="input" type="number" value="100" min="10" max="500" style="width: 90px;">
+        <button id="btn-carregar" class="btn btn--primary">Carregar grafo</button>
+        <button id="btn-refresh" class="btn">Atualizar</button>
+        <span id="stats-inline" class="u-muted" style="margin-left: auto;">—</span>
+      </div>
+    </div>
+
+    <div class="panel" style="padding: 0;">
+      <svg id="graph-svg"></svg>
+    </div>
+
+    <div class="panel">
+      <h2 class="panel__title">Top 10 nós por grau</h2>
+      <div id="top-nodes"></div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { api } from '/js/core.js';
+
+    async function carregar() {
+      const limite = parseInt(document.getElementById('limite').value, 10);
+      const data = await api.get(`/api/v1/grafo/export?limite_nos=${limite}`);
+      const stats = await api.get('/api/v1/grafo/stats');
+
+      document.getElementById('stats-inline').textContent =
+        `${data.n_total_nos} nós · ${data.n_total_arestas} arestas · exibindo ${data.nodes.length}`;
+
+      document.getElementById('top-nodes').innerHTML = stats.top_10_nos_por_grau.map(n => `
+        <div class="stat-row">
+          <span class="label">${n.rotulo}</span>
+          <span class="val">grau ${n.grau}</span>
+        </div>
+      `).join('') || '<p class="u-muted">sem dados</p>';
+
+      desenhar(data.nodes, data.links);
+    }
+
+    // Force-directed puro sem D3 (simulação leve)
+    function desenhar(nodes, links) {
+      const svg = document.getElementById('graph-svg');
+      svg.innerHTML = '';
+      const W = svg.clientWidth || 800;
+      const H = 600;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+      // Posições iniciais aleatórias
+      const pos = {};
+      for (const n of nodes) {
+        pos[n.id] = {
+          x: W / 2 + (Math.random() - 0.5) * W * 0.6,
+          y: H / 2 + (Math.random() - 0.5) * H * 0.6,
+          vx: 0, vy: 0,
+        };
+      }
+
+      // Force-directed simulado em N iterações
+      const ITER = 150;
+      const REPULSAO = 400;
+      const ATRACAO = 0.02;
+      const AMORT = 0.85;
+
+      for (let it = 0; it < ITER; it++) {
+        // Repulsão nó-nó
+        for (const a of nodes) {
+          for (const b of nodes) {
+            if (a.id === b.id) continue;
+            const dx = pos[a.id].x - pos[b.id].x;
+            const dy = pos[a.id].y - pos[b.id].y;
+            const d2 = dx*dx + dy*dy + 0.01;
+            const f = REPULSAO / d2;
+            pos[a.id].vx += dx / Math.sqrt(d2) * f;
+            pos[a.id].vy += dy / Math.sqrt(d2) * f;
+          }
+        }
+        // Atração via arestas
+        for (const l of links) {
+          if (!pos[l.source] || !pos[l.target]) continue;
+          const dx = pos[l.target].x - pos[l.source].x;
+          const dy = pos[l.target].y - pos[l.source].y;
+          pos[l.source].vx += dx * ATRACAO;
+          pos[l.source].vy += dy * ATRACAO;
+          pos[l.target].vx -= dx * ATRACAO;
+          pos[l.target].vy -= dy * ATRACAO;
+        }
+        // Update + amortecer
+        for (const n of nodes) {
+          pos[n.id].x += pos[n.id].vx;
+          pos[n.id].y += pos[n.id].vy;
+          pos[n.id].vx *= AMORT;
+          pos[n.id].vy *= AMORT;
+          // Clamp
+          pos[n.id].x = Math.max(20, Math.min(W - 20, pos[n.id].x));
+          pos[n.id].y = Math.max(20, Math.min(H - 20, pos[n.id].y));
+        }
+      }
+
+      // Render arestas
+      const NS = 'http://www.w3.org/2000/svg';
+      for (const l of links) {
+        if (!pos[l.source] || !pos[l.target]) continue;
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', pos[l.source].x); line.setAttribute('y1', pos[l.source].y);
+        line.setAttribute('x2', pos[l.target].x); line.setAttribute('y2', pos[l.target].y);
+        line.setAttribute('stroke', 'rgba(160, 168, 184, 0.25)');
+        line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+      }
+      // Render nós
+      for (const n of nodes) {
+        const g = document.createElementNS(NS, 'g');
+        g.setAttribute('transform', `translate(${pos[n.id].x}, ${pos[n.id].y})`);
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('r', '4');
+        c.setAttribute('fill', 'var(--amber)');
+        c.setAttribute('stroke', 'var(--bg-root)');
+        c.setAttribute('stroke-width', '1');
+        g.appendChild(c);
+        const t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', '6'); t.setAttribute('y', '3');
+        t.setAttribute('fill', 'var(--text-secondary)');
+        t.setAttribute('font-size', '10');
+        t.textContent = n.label.slice(0, 20);
+        g.appendChild(t);
+        svg.appendChild(g);
+      }
+    }
+
+    document.getElementById('btn-carregar').addEventListener('click', carregar);
+    document.getElementById('btn-refresh').addEventListener('click', carregar);
+    carregar();
+  </script>
+</body>
+</html>
