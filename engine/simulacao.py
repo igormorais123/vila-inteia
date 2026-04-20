@@ -688,6 +688,32 @@ class SimulacaoVila:
                 f"psicohistoria hook falhou: {type(_e_onda11).__name__}: {_e_onda11}"
             )
 
+        # Onda 34: event-sourcing JSONL
+        try:
+            from engine.event_log import EVENT_LOG_GLOBAL, Evento
+            estado_atual = resumo_step.get("estado_psico", "?")
+            EVENT_LOG_GLOBAL.escrever(Evento(
+                tipo="step", step=self.step,
+                payload={
+                    "estado": estado_atual,
+                    "n_conversas": len(resumo_step.get("conversas", [])),
+                    "n_insights": len(resumo_step.get("insights", [])),
+                },
+            ))
+            mules = resumo_step.get("mules_detectados", [])
+            for m in mules:
+                EVENT_LOG_GLOBAL.escrever(Evento(
+                    tipo="mule", step=self.step,
+                    payload=m if isinstance(m, dict) else {"info": str(m)},
+                ))
+            recal = resumo_step.get("recalibracao")
+            if recal:
+                EVENT_LOG_GLOBAL.escrever(Evento(
+                    tipo="calibracao", step=self.step, payload=recal,
+                ))
+        except Exception:
+            pass
+
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:
             self.salvar()
