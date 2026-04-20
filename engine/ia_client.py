@@ -16,6 +16,7 @@ from __future__ import annotations
 import os
 import time
 import logging
+import threading
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -59,6 +60,42 @@ class ThrottleConfig:
 _throttle = ThrottleConfig(
     max_por_minuto=int(os.getenv("VILA_LLM_RPM", "50"))
 )
+
+# Onda 68: cap por step — limite hard de chamadas LLM dentro de single step
+_VILA_LLM_MAX_POR_STEP = int(os.getenv("VILA_LLM_MAX_POR_STEP", "10"))
+_step_counter_lock = threading.Lock()
+_step_atual_id = -1
+_chamadas_no_step = 0
+
+
+def reset_step_counter(step_id: int) -> None:
+    """Reset contador ao mudar step. Caller (simulacao) invoca."""
+    global _step_atual_id, _chamadas_no_step
+    with _step_counter_lock:
+        if step_id != _step_atual_id:
+            _step_atual_id = step_id
+            _chamadas_no_step = 0
+
+
+def _consumir_step_slot() -> bool:
+    """Tenta consumir 1 slot. False se step esgotou."""
+    global _chamadas_no_step
+    with _step_counter_lock:
+        if _chamadas_no_step >= _VILA_LLM_MAX_POR_STEP:
+            return False
+        _chamadas_no_step += 1
+        return True
+
+
+def stats_step_atual() -> dict:
+    with _step_counter_lock:
+        return {
+            "step_id": _step_atual_id,
+            "chamadas_no_step": _chamadas_no_step,
+            "max_por_step": _VILA_LLM_MAX_POR_STEP,
+        }
+
+
 _provider = None  # "omniroute", "anthropic"
 _client = None
 _client_fallback = None  # Anthropic como fallback
@@ -208,6 +245,11 @@ def chamar_llm(
         pass
 
     c = _ensure_client()
+
+    # Onda 68: cap por step — protege step de timeout
+    if not _consumir_step_slot():
+        logger.debug("Cap step atingido — pulando chamada LLM")
+        return None
 
     if not _throttle.pode_chamar():
         logger.debug("Throttle atingido — pulando chamada LLM")

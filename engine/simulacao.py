@@ -227,6 +227,12 @@ class SimulacaoVila:
             TIER_GATE_GLOBAL.talvez_rotacionar(self.step)
         except Exception:
             pass
+        # Onda 68: reset cap LLM por step (previne timeout)
+        try:
+            from engine.ia_client import reset_step_counter
+            reset_step_counter(self.step)
+        except Exception:
+            pass
         resumo_step = {
             "step": self.step,
             "hora": self.hora_atual.strftime("%Y-%m-%d %H:%M"),
