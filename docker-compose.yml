@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  vila:
+    build: .
+    container_name: vila-inteia-app
+    ports:
+      - "8100:10000"
+    environment:
+      - PORT=10000
+      - OMNIROUTE_URL=${OMNIROUTE_URL:-}
+      - OMNIROUTE_API_KEY=${OMNIROUTE_API_KEY:-}
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY:-}
+      - SUPABASE_VILA_URL=${SUPABASE_VILA_URL:-}
+      - SUPABASE_VILA_KEY=${SUPABASE_VILA_KEY:-}
+      - VILA_TRACE_ENABLED=${VILA_TRACE_ENABLED:-1}
+      - VILA_BUDGET_TRACK=${VILA_BUDGET_TRACK:-1}
+    volumes:
+      - vila-data:/app/data
+      - vila-events:/app/data/events
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:10000/api/v1/vila/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  mcp-server:
+    build: .
+    container_name: vila-inteia-mcp
+    command: python -m engine.mcp_server.server
+    stdin_open: true
+    tty: true
+    depends_on:
+      - vila
+    environment:
+      - VILA_URL=http://vila:10000
+    restart: unless-stopped
+
+volumes:
+  vila-data:
+  vila-events:
