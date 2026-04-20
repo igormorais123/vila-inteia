@@ -137,3 +137,89 @@ registrar(
     },
     _h_calibrar,
 )
+
+
+# ========== Ondas 13-18 tools ==========
+
+def _h_recomendacao_estrategica() -> dict:
+    from engine.psicohistoria.decision_helper import recomendar_acao
+    r = recomendar_acao()
+    return {
+        "estado_atual": r.estado_atual,
+        "destino_previsto": r.destino_previsto,
+        "urgencia": r.urgencia,
+        "acao_recomendada": r.acao_recomendada,
+        "justificativa": r.justificativa,
+        "crises_proximas": r.crises_proximas,
+    }
+
+
+def _h_calibrar_online(metodo: str = "laplace", alpha: float = 0.1) -> dict:
+    from engine.psicohistoria.calibracao_online import calibrar, perplexity
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    from engine.psicohistoria.grafo_eventos import construir_grafo_vila
+    traj = RASTREADOR_GLOBAL.trajetoria.estados
+    if len(traj) < 2:
+        return {"erro": "trajetória insuficiente", "n_steps": len(traj)}
+    r = calibrar(traj, metodo=metodo, alpha=alpha)
+    g = construir_grafo_vila()
+    return {
+        "n_transicoes": r.n_transicoes,
+        "cobertura_pct": r.cobertura_pct,
+        "perplexity_original": perplexity(traj, r.matriz_original, g),
+        "perplexity_calibrada": perplexity(traj, r.matriz_calibrada, g),
+    }
+
+
+def _h_hmm_descobrir(k: int = 8) -> dict:
+    from engine.psicohistoria.hmm_estados import descobrir_estados
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    metricas = [
+        {
+            "n_conversas": m.n_conversas, "n_reflexoes": m.n_reflexoes,
+            "n_agentes_ativos": m.n_agentes_ativos, "n_agentes_latentes": m.n_agentes_latentes,
+            "polarizacao_media": m.polarizacao_media, "gini_economia": m.gini_economia,
+            "propostas_constituintes_ativas": m.propostas_constituintes_ativas,
+            "contribuicoes_ao_desafio": m.contribuicoes_ao_desafio,
+        }
+        for m in RASTREADOR_GLOBAL.trajetoria.metricas_por_step
+    ]
+    if len(metricas) < k:
+        return {"erro": "steps insuficientes", "n_steps": len(metricas)}
+    r = descobrir_estados(metricas, k=k)
+    return {
+        "k": r.k, "iteracoes": r.iteracoes, "inercia": r.inercia,
+        "clusters": [{"id": e.id, "n": e.n_membros, "rotulo": e.rotulo_auto}
+                     for e in r.estados_latentes],
+    }
+
+
+registrar(
+    "vila.recomendacao_estrategica",
+    "Onda 16: recomendação baseada em posição no Plano de Seldon",
+    {"type": "object", "properties": {}},
+    _h_recomendacao_estrategica,
+)
+
+registrar(
+    "vila.calibrar_online",
+    "Onda 13: recalibra matriz Markov a partir da trajetória real",
+    {
+        "type": "object",
+        "properties": {
+            "metodo": {"type": "string", "enum": ["mle", "laplace", "ewma"], "default": "laplace"},
+            "alpha": {"type": "number", "default": 0.1},
+        },
+    },
+    _h_calibrar_online,
+)
+
+registrar(
+    "vila.hmm_descobrir",
+    "Onda 15: descobre K estados latentes via K-Means + HMM smoothing",
+    {
+        "type": "object",
+        "properties": {"k": {"type": "integer", "default": 8}},
+    },
+    _h_hmm_descobrir,
+)

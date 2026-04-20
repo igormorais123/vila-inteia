@@ -658,6 +658,20 @@ class SimulacaoVila:
                 ))
             except Exception:
                 pass
+            # Onda 18: auto-calibrador periódico (a cada 50 steps)
+            try:
+                from engine.psicohistoria.auto_calibrador import AUTO_CALIBRADOR_GLOBAL
+                reg = AUTO_CALIBRADOR_GLOBAL.talvez_calibrar(
+                    self.step, RASTREADOR_GLOBAL.trajetoria.estados
+                )
+                if reg:
+                    resumo_step["recalibracao"] = {
+                        "step": reg.step,
+                        "ganho_perplexity": reg.perplexity_antes - reg.perplexity_depois,
+                        "cobertura_pct": reg.cobertura_pct,
+                    }
+            except Exception:
+                pass
         except Exception as _e_onda11:
             # Log mas não quebra fluxo
             import logging
