@@ -204,3 +204,98 @@ def endpoint_mules_detectados():
         "n_mules": len(RASTREADOR_GLOBAL.trajetoria.mules_detectados),
         "mules_recentes": RASTREADOR_GLOBAL.trajetoria.mules_detectados[-20:],
     }
+
+
+# =====================================================
+# Ondas 13-16 — Calibração, HMM, recomendação, persistência
+# =====================================================
+
+class CalibReq(BaseModel):
+    metodo: str = "laplace"
+    alpha: float = 0.1
+
+
+@router.post("/calibrar")
+def endpoint_calibrar(req: CalibReq):
+    """Recalibra matriz M a partir da trajetória real observada (Onda 13)."""
+    from engine.psicohistoria.calibracao_online import calibrar, perplexity
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    from engine.psicohistoria.grafo_eventos import construir_grafo_vila
+    traj = RASTREADOR_GLOBAL.trajetoria.estados
+    if len(traj) < 2:
+        return {"erro": "trajetória insuficiente", "n_steps": len(traj)}
+    r = calibrar(traj, metodo=req.metodo, alpha=req.alpha)
+    g = construir_grafo_vila()
+    pp_orig = perplexity(traj, r.matriz_original, g)
+    pp_cal = perplexity(traj, r.matriz_calibrada, g)
+    return {
+        "n_transicoes": r.n_transicoes,
+        "estados_observados": r.estados_observados,
+        "cobertura_pct": r.cobertura_pct,
+        "divergencia_frobenius": r.divergencia_frobenius,
+        "perplexity_original": pp_orig,
+        "perplexity_calibrada": pp_cal,
+        "matriz_calibrada": r.matriz_calibrada.tolist(),
+    }
+
+
+@router.get("/hmm/descobrir")
+def endpoint_hmm(k: int = 8, smoothing: int = 3):
+    """Descobre K estados latentes não-supervisionados (Onda 15)."""
+    from engine.psicohistoria.hmm_estados import descobrir_estados
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    metricas = [
+        {
+            "n_conversas": m.n_conversas,
+            "n_reflexoes": m.n_reflexoes,
+            "n_agentes_ativos": m.n_agentes_ativos,
+            "n_agentes_latentes": m.n_agentes_latentes,
+            "polarizacao_media": m.polarizacao_media,
+            "gini_economia": m.gini_economia,
+            "propostas_constituintes_ativas": m.propostas_constituintes_ativas,
+            "contribuicoes_ao_desafio": m.contribuicoes_ao_desafio,
+        }
+        for m in RASTREADOR_GLOBAL.trajetoria.metricas_por_step
+    ]
+    if len(metricas) < k:
+        return {"erro": "steps insuficientes", "n_steps": len(metricas), "k_solicitado": k}
+    r = descobrir_estados(metricas, k=k, smoothing_janela=smoothing)
+    return {
+        "k": r.k,
+        "iteracoes": r.iteracoes,
+        "inercia": r.inercia,
+        "labels_por_step": r.labels_por_step,
+        "estados_latentes": [
+            {"id": e.id, "n_membros": e.n_membros,
+             "rotulo_auto": e.rotulo_auto,
+             "centroide": e.centroide.tolist()}
+            for e in r.estados_latentes
+        ],
+    }
+
+
+@router.get("/recomendacao")
+def endpoint_recomendacao():
+    """Recomendação estratégica via Plano de Seldon (Onda 16)."""
+    from engine.psicohistoria.decision_helper import recomendar_acao
+    r = recomendar_acao()
+    return {
+        "estado_atual": r.estado_atual,
+        "destino_previsto": r.destino_previsto,
+        "urgencia": r.urgencia,
+        "acao_recomendada": r.acao_recomendada,
+        "justificativa": r.justificativa,
+        "crises_proximas": r.crises_proximas,
+    }
+
+
+@router.get("/persistencia/stats")
+def endpoint_persistencia_stats():
+    from engine.psicohistoria.persistencia import PERSISTENCIA_GLOBAL
+    return PERSISTENCIA_GLOBAL.stats()
+
+
+@router.post("/persistencia/flush")
+def endpoint_persistencia_flush():
+    from engine.psicohistoria.persistencia import PERSISTENCIA_GLOBAL
+    return {"flushed": PERSISTENCIA_GLOBAL.flush()}

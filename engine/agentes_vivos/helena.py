@@ -102,6 +102,21 @@ class HelenaStrategos(AgenteVivo):
         metricas["parecer"] = parecer
         acoes_exec.append("gera_parecer_estrategico")
 
+        # 8. Onda 16: consulta Plano de Seldon para recomendação estratégica
+        try:
+            from engine.psicohistoria.decision_helper import relatorio_estrategico_helena
+            rel_psico = relatorio_estrategico_helena()
+            metricas["psico_historia"] = rel_psico
+            acoes_exec.append("consulta_plano_seldon")
+            if rel_psico.get("urgencia") in ("alta", "crítica"):
+                alertas.append(
+                    f"PSICO-HISTÓRIA {rel_psico['urgencia'].upper()}: "
+                    f"{rel_psico['recomendacao']} (estado={rel_psico['estado']}, "
+                    f"destino={rel_psico['destino']})"
+                )
+        except Exception as e:
+            metricas["psico_historia_erro"] = str(e)
+
         return metricas, acoes_exec, alertas
 
     def _gerar_parecer(self, harness: dict, okrs: dict, alertas: list[str]) -> str:

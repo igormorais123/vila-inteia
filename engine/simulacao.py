@@ -642,6 +642,22 @@ class SimulacaoVila:
                 mules = RASTREADOR_GLOBAL.detectar_mules_recentes(janela=20, z_score=2.5)
                 if mules:
                     resumo_step["mules_detectados"] = mules
+            # Onda 14: persiste em Supabase (fire-and-forget, batched)
+            try:
+                from engine.psicohistoria.persistencia import (
+                    PERSISTENCIA_GLOBAL, RegistroPsico,
+                )
+                PERSISTENCIA_GLOBAL.adicionar(RegistroPsico(
+                    vila_id=getattr(self, "vila_id", "default"),
+                    step=self.step,
+                    estado=estado_atual,
+                    polarizacao=metricas.polarizacao_media,
+                    gini=metricas.gini_economia,
+                    n_ativos=metricas.n_agentes_ativos,
+                    n_latentes=metricas.n_agentes_latentes,
+                ))
+            except Exception:
+                pass
         except Exception as _e_onda11:
             # Log mas não quebra fluxo
             import logging
