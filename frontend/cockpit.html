@@ -102,6 +102,7 @@
           <button class="tab active" data-tab="timeline">Timeline</button>
           <button class="tab" data-tab="stream">Stream Live</button>
           <button class="tab" data-tab="backtest">Backtest</button>
+          <button class="tab" data-tab="llm">LLM</button>
           <button class="tab" data-tab="links">Páginas</button>
         </div>
 
@@ -122,6 +123,33 @@
           </table>
         </div>
 
+        <div class="tab-content" data-tab="llm">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px;">
+            <div>
+              <div class="metric__label">Provider</div>
+              <div id="llm-provider" class="metric__value amber">—</div>
+            </div>
+            <div>
+              <div class="metric__label">Cache hit rate</div>
+              <div id="llm-cache-hit" class="metric__value">—</div>
+            </div>
+            <div>
+              <div class="metric__label">Budget USD</div>
+              <div id="llm-budget" class="metric__value">$0.0000</div>
+            </div>
+            <div>
+              <div class="metric__label">Hot tier</div>
+              <div id="llm-tier" class="metric__value">—</div>
+            </div>
+          </div>
+          <table class="table">
+            <tbody id="llm-tbody"></tbody>
+          </table>
+          <div style="margin-top: 8px;">
+            <a href="/llm_stats.html" class="u-muted" style="font-size: 12px;">→ detalhes completos</a>
+          </div>
+        </div>
+
         <div class="tab-content" data-tab="links">
           <div class="grid-2">
             <a href="/psicohistoria.html" class="btn">Psico-História (teoria)</a>
@@ -132,6 +160,8 @@
             <a href="/opinioes.html" class="btn">Opinion Dynamics</a>
             <a href="/coalizoes.html" class="btn">Coalizões</a>
             <a href="/dashboard.html" class="btn">Dashboard geral</a>
+            <a href="/llm_stats.html" class="btn">LLM Stats</a>
+            <a href="/grafo.html" class="btn">Grafo Conhecimento</a>
           </div>
         </div>
       </div>
@@ -250,6 +280,35 @@
       } catch (e) {
         document.getElementById('topbar-status').textContent = 'backend offline';
       }
+
+      // LLM stats (Onda 67)
+      try {
+        const llm = await api.get('/api/v1/llm/stats');
+        const p = llm.provider || {};
+        const c = llm.cache || {};
+        const b = llm.budget || {};
+        const t = llm.tier || {};
+        document.getElementById('llm-provider').textContent = p.ativo || '—';
+        document.getElementById('llm-cache-hit').textContent =
+          c.hit_rate != null ? (c.hit_rate * 100).toFixed(1) + '%' : '—';
+        document.getElementById('llm-budget').textContent =
+          '$' + (b.total_usd || 0).toFixed(4);
+        document.getElementById('llm-tier').textContent =
+          `${t.n_hot || 0} / ${t.n_total || 0}`;
+
+        const rows = [
+          ['Chamadas LLM', b.n_chamadas || 0],
+          ['Tokens in', (b.total_tokens_in || 0).toLocaleString()],
+          ['Tokens out', (b.total_tokens_out || 0).toLocaleString()],
+          ['Cache hits', c.hits || 0],
+          ['Cache misses', c.misses || 0],
+          ['Circuit aberto', p.circuit_aberto ? 'sim' : 'não'],
+          ['Fallback Anthropic', p.fallback_ok ? '✓' : '—'],
+        ];
+        document.getElementById('llm-tbody').innerHTML = rows.map(([k, v]) =>
+          `<tr><td>${k}</td><td class="u-right u-mono">${v}</td></tr>`
+        ).join('');
+      } catch (e) {}
     }
 
     // Stream via SSE
