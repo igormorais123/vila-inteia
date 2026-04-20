@@ -71,16 +71,18 @@ _CIRCUIT_COOLDOWN = 120  # segundos com circuito aberto
 
 
 _GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+_GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
 
 def _detectar_provider():
-    """Prioridade: OmniRoute > Gemini (AI Studio) > Anthropic fallback."""
+    """Prioridade: OmniRoute > Groq > Gemini > Anthropic fallback."""
     global _provider, _client, _client_fallback
 
     omniroute_key = os.getenv("OMNIROUTE_API_KEY", "")
     omniroute_url = os.getenv("OMNIROUTE_URL", _DEFAULT_OMNIROUTE_URL)
     claude_key = os.getenv("CLAUDE_API_KEY", "")
     gemini_key = os.getenv("GEMINI_API_KEY", "")
+    groq_key = os.getenv("GROQ_API_KEY", "")
 
     # PRIORIDADE 1: OmniRoute (custo zero)
     if omniroute_key:
@@ -96,7 +98,21 @@ def _detectar_provider():
         except ImportError:
             logger.warning("Vila IA: openai SDK não instalado")
 
-    # PRIORIDADE 2: Gemini via AI Studio (OpenAI-compatible endpoint)
+    # PRIORIDADE 2: Groq (free tier generoso — 30 rpm, sem limite diário agressivo)
+    if _client is None and groq_key:
+        try:
+            from openai import OpenAI
+            _client = OpenAI(
+                api_key=groq_key,
+                base_url=_GROQ_BASE_URL,
+                timeout=30.0,
+            )
+            _provider = "groq"
+            logger.info("Vila IA: Groq via OpenAI-compat (free tier)")
+        except ImportError:
+            logger.warning("Vila IA: openai SDK não instalado")
+
+    # PRIORIDADE 3: Gemini via AI Studio (OpenAI-compatible endpoint)
     if _client is None and gemini_key:
         try:
             from openai import OpenAI
@@ -151,6 +167,13 @@ def _modelo(alias: str) -> str:
             "analise": modelo_gemini,
             "sintese": modelo_gemini,
         }.get(alias, modelo_gemini)
+    if _provider == "groq":
+        # Groq free tier: Llama 3.3 70B (análise), Llama 3.1 8B (rápido)
+        return {
+            "rapido": os.getenv("GROQ_MODEL_RAPIDO", "llama-3.1-8b-instant"),
+            "analise": os.getenv("GROQ_MODEL_ANALISE", "llama-3.3-70b-versatile"),
+            "sintese": os.getenv("GROQ_MODEL_SINTESE", "llama-3.1-8b-instant"),
+        }.get(alias, "llama-3.1-8b-instant")
     # Anthropic direto
     return {
         "rapido": "claude-haiku-4-5-20251001",
@@ -199,8 +222,8 @@ def chamar_llm(
     global _circuit_falhas, _circuit_aberto_ate
     circuito_ok = time.time() > _circuit_aberto_ate
 
-    # OmniRoute ou Gemini (ambos via OpenAI-compatible)
-    if c and _provider in ("omniroute", "gemini") and circuito_ok:
+    # OmniRoute, Groq ou Gemini (todos via OpenAI-compatible)
+    if c and _provider in ("omniroute", "groq", "gemini") and circuito_ok:
         resultado = _chamar_openai(c, modelo_real, msgs_user, system_prompt, max_tokens, temperatura)
         if resultado:
             _throttle.registrar()
