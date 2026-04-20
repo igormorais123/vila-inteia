@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+tk01,2024-03-15,"Challenge #GracieUSA viraliza — 2M videos em 3 dias apoio massivo",1,0.65
+tk02,2024-04-02,"Backlash contra creator tóxico — rejeição rápida e perda de engajamento",0,0.55
+tk03,2024-05-10,"Música brasileira 'Brabo' entra top global — crescimento exponencial",1,0.70
+tk04,2024-06-20,"TikTok ban votado no Senado americano — escândalo geopolítico",1,0.75
+tk05,2024-07-04,"CEO testemunha Congresso — campanha robusta de PR",0,0.40
+tk06,2024-08-15,"Creator fund reduzido 30% — creators migram para YouTube Shorts",1,0.50
+tk07,2024-09-05,"Algoritmo For You atualizado, engajamento cai 12% em média — rejeição usuários",1,0.55
+tk08,2024-10-20,"Trend 'Demure' viraliza — 50M videos em 1 semana apoio massivo",1,0.72
+tk09,2024-11-10,"Venda US operations negociada com Oracle — vitória da oposição ao ban",0,0.45
+tk10,2024-12-31,"Revenue 2024 cresce 40% YoY — forte desempenho apesar das turbulências",1,0.60

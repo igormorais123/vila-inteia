@@ -19,8 +19,12 @@ from engine.plataformas.twitter_like import TwitterLike
 from engine.plataformas.reddit_like import RedditLike
 from engine.plataformas.linkedin_like import LinkedInLike
 from engine.plataformas.tiktok_like import TikTokLike
+from engine.plataformas.orquestrador import (
+    OrquestradorPlataformas, ORQUESTRADOR_GLOBAL, EstatisticasPlataforma,
+)
 
 __all__ = [
     "Post", "Reacao", "PlataformaSocial", "PerfilPlataforma",
     "TwitterLike", "RedditLike", "LinkedInLike", "TikTokLike",
+    "OrquestradorPlataformas", "ORQUESTRADOR_GLOBAL", "EstatisticasPlataforma",
 ]

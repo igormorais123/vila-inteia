@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+vpro01,2024-02-02,"Apple lança Vision Pro com forte marketing Super Bowl e campanha robusta",1,0.60
+vpro02,2024-02-15,"Early adopters publicam reviews entusiasmadas em redes sociais",1,0.55
+vpro03,2024-03-01,"Devolutions sobem 15% após primeiro mês — reclamações de conforto e peso",0,0.45
+vpro04,2024-04-10,"Desenvolvedores queixam de restrições da App Store VisionOS",0,0.40
+vpro05,2024-05-20,"Apple reduz produção Vision Pro 50% — demanda fraca pós-hype inicial",0,0.35
+vpro06,2024-06-15,"WWDC 2024 — Apple anuncia evolução fraca do VisionOS, mercado desapontado",0,0.30
+vpro07,2024-08-01,"Vision Pro 2 rumor delayed para 2027 — perda de momentum",0,0.25
+vpro08,2024-10-10,"Vendas Vision Pro Q3 abaixo do esperado, Apple reavalia estratégia AR/VR",0,0.30
+vpro09,2024-11-20,"Enterprise adoption cresce em áreas médicas e engenharia — nicho apoio massivo",1,0.40
+vpro10,2024-12-31,"Balanço fraco ano 1: vendas 500k unidades vs projeção 1M — rejeição moderada",0,0.35
