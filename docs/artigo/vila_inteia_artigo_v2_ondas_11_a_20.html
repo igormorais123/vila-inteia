@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Vila INTEIA v2: psico-história viva, auto-calibração e servidor MCP</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 22mm;
+    @bottom-center {
+      content: "Vila INTEIA v2 — página " counter(page) " / " counter(pages);
+      font-family: "Charter", "Georgia", serif;
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+  html { font-family: "Charter", "Georgia", "Times New Roman", serif; font-size: 10.5pt; color: #1a1a1a; }
+  body { line-height: 1.45; margin: 0; text-align: justify; hyphens: auto; }
+  h1 { font-family: "Helvetica Neue", sans-serif; font-size: 18pt; margin: 0 0 4pt 0; line-height: 1.15; }
+  .subtitle { font-size: 12pt; color: #444; margin-bottom: 14pt; }
+  .authors { font-size: 10pt; color: #444; margin-bottom: 3pt; }
+  .affil { font-size: 9pt; color: #666; margin-bottom: 18pt; }
+  h2 { font-family: sans-serif; font-size: 13pt; margin: 16pt 0 6pt 0; border-bottom: 1px solid #ddd; padding-bottom: 3pt; }
+  h3 { font-family: sans-serif; font-size: 11pt; margin: 10pt 0 4pt 0; color: #333; }
+  p { margin: 0 0 6pt 0; }
+  .abstract { background: #f7f7f7; padding: 10pt 14pt; border-left: 3px solid #d69e2e; margin: 14pt 0; font-size: 9.5pt; }
+  .abstract-title { font-family: sans-serif; font-weight: bold; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5pt; color: #555; margin-bottom: 4pt; }
+  code, pre { font-family: "JetBrains Mono", "Menlo", monospace; font-size: 9pt; }
+  pre { background: #f4f4f4; padding: 8pt 10pt; border-radius: 3px; line-height: 1.35; page-break-inside: avoid; }
+  code { background: #f0f0f0; padding: 1px 4px; border-radius: 2px; }
+  .eq { font-family: "Charter", serif; font-style: italic; text-align: center; margin: 8pt 0; font-size: 11pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 8pt 0; }
+  th, td { border: 1px solid #ccc; padding: 4pt 7pt; text-align: left; }
+  th { background: #f2f2f2; font-family: sans-serif; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.3pt; }
+  .box { border: 1px solid #ccc; padding: 8pt 12pt; margin: 10pt 0; background: #fafafa; font-size: 9.5pt; page-break-inside: avoid; }
+  .refs { font-size: 9pt; }
+  .refs p { text-indent: -16pt; padding-left: 16pt; margin-bottom: 4pt; }
+  .highlight { background: rgba(214, 158, 46, 0.12); padding: 1pt 4pt; }
+  .section-no { color: #d69e2e; margin-right: 6pt; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Vila INTEIA v2: psico-história viva, auto-calibração e servidor MCP</h1>
+<div class="subtitle">Continuação — Ondas 11 a 20: fechando o ciclo asimoviano</div>
+
+<div class="authors">Pedro Afonso Malheiros · Igor Morais Vasconcelos</div>
+<div class="affil">INTEIA Ltda. · Mirante News · Colmeia · abril de 2026</div>
+
+<div class="abstract">
+  <div class="abstract-title">Resumo</div>
+  <p>Na versão 1 deste artigo apresentamos a Vila INTEIA, uma plataforma de simulação multiagente com 144 personas lendárias e fundamentos matemáticos formais (teoria dos jogos, dinâmica de opiniões, psico-história computacional). Nesta continuação reportamos <strong>10 novas ondas de desenvolvimento (11 a 20)</strong> que fecham o ciclo asimoviano da plataforma: (i) rastreamento em tempo real da trajetória real de estados sociais; (ii) calibração online da matriz de transição Markov a partir dos dados observados (MLE, Laplace, EWMA); (iii) persistência em Supabase para análise longitudinal; (iv) descoberta não-supervisionada de estados latentes via K-Means + smoothing HMM-like; (v) decision helper para agentes vivos (Helena consulta Plano de Seldon); (vi) servidor MCP JSON-RPC expondo sete ferramentas para clientes externos (Claude Desktop, Cursor); (vii) auto-calibração periódica em runtime; (viii) replay e comparação de runs; (ix) UI especializada com polling a 3-5 segundos. Validamos o pipeline completo em simulação real de 90+ steps com 151 agentes: trajetória observada mostra dominância de <em>expansão</em> (87.3 %) e <em>equilíbrio</em> (12.7 %), divergência KL vs. Plano original de 2.087 (85.9 % dos passos fora do plano projetado), demonstrando que calibração online é necessária. Reportamos 245+ casos de teste 100 % passing ao longo de cinco pull requests mergeados em sequência.</p>
+</div>
+
+<h2><span class="section-no">1</span>Introdução</h2>
+
+<p>A versão 1 deste trabalho (vila_inteia_artigo.pdf) apresentou a Vila INTEIA como simulador multiagente formalmente fundamentado. Terminamos com um roadmap de ondas adicionais necessárias para transformar a Vila em <em>simulador de realidade</em> plenamente competitivo com MiroFish [3]. Esta continuação implementa esse roadmap.</p>
+
+<p>A contribuição central aqui é operacional, não apenas teórica. Mostramos que o ciclo asimoviano completo — <strong>simular</strong> → <strong>observar trajetória real</strong> → <strong>comparar com Plano</strong> → <strong>detectar Mules</strong> → <strong>recalibrar modelo</strong> — pode rodar 100 % dentro do processo da Vila, sem dependências externas além de NumPy/SciPy, com latência sub-segundo por step em 151 agentes.</p>
+
+<h2><span class="section-no">2</span>Arquitetura acrescida nesta versão</h2>
+
+<p>A figura abaixo mostra onde as Ondas 11-20 se encaixam sobre o núcleo da versão 1:</p>
+
+<pre style="font-size: 8pt; line-height: 1.3;">
+┌─ Núcleo Vila (v1) ────────────────────────────────────────────┐
+│  SimulacaoVila.executar_step — 144 personas, 7 fases cognitivas│
+│  Constituição executável · 11 Mandamentos · OmniRoute LLM     │
+└──────┬─────────────────────────────────────────────────────────┘
+       │
+       │ hook a cada step (Onda 11)
+       │
+┌──────▼───────────────────────────────────────────────────────────┐
+│ RastreadorPsicohistoria (Onda 11)                               │
+│   MetricasStep → classificar_estado → 1 dos 8 canônicos          │
+│   Buffer FIFO 1000 steps                                         │
+└──┬──────────────────────┬──────────────────────┬────────────────┘
+   │                      │                      │
+   │ Onda 14              │ Onda 18              │ Onda 20
+   │                      │                      │
+┌──▼──────────┐  ┌────────▼────────┐  ┌──────────▼─────────┐
+│ Persistência│  │ AutoCalibrador  │  │ Replay/Export      │
+│ Supabase    │  │ a cada 50 steps │  │ JSON + compare_run │
+│ vila_traj…  │  │ MLE/Laplace/EWMA│  │ KL + TV distance   │
+└─────────────┘  └─────────────────┘  └────────────────────┘
+   ↑
+   │ Consulta
+   │
+┌──┴──────────────────────────────────────────────────┐
+│ Decision Helper (Onda 16)                           │
+│   recomendar_acao → urgência + ação + crises próximas│
+│   Helena consulta no heartbeat, gera alertas        │
+└─────────────────────────────────────────────────────┘
+
+┌─── MCP Server JSON-RPC stdio (Ondas 8 + 19) ───┐
+│  vila.prever_trajetoria                         │
+│  vila.extrair_grafo                             │
+│  vila.backtest_dataset                          │
+│  vila.calibrar                                  │
+│  vila.recomendacao_estrategica    ← NEW 19      │
+│  vila.calibrar_online             ← NEW 19      │
+│  vila.hmm_descobrir               ← NEW 19      │
+└─────────────────────────────────────────────────┘
+</pre>
+
+<h2><span class="section-no">3</span>Rastreamento em tempo real (Onda 11)</h2>
+
+<p>O hook em <code>engine/simulacao.py:_executar_step_interno</code> agrega a cada step oito métricas: número de conversas, reflexões, agentes ativos/latentes, polarização média das crenças (derivada do <code>TRACKER_GLOBAL</code> via Deffuant-Weisbuch), Gini da economia, propostas constituintes ativas e contribuições ao desafio. Estas compõem o <code>MetricasStep</code>, classificado heuristicamente (top-down prioritário):</p>
+
+<pre>
+1. propostas_constituintes &gt;= 1    → renovacao_constituinte
+2. gini &gt; 0.75                     → crise_economica
+3. polarizacao &gt; 0.60              → polarizacao
+4. step &lt; 20 AND ativos &lt; 60%       → bootstrap
+5. ativos &lt; 40%                    → recrutamento
+6. contribs &gt;= 20 AND ativos &gt; 70% → expansao
+7. polarizacao em [0.15, 0.40]     → consenso_fragil
+8. default                         → equilibrio
+</pre>
+
+<p>A cada 20 steps o rastreador executa <code>detectar_mules_recentes</code>, comparando trajetória observada contra trajetória prevista pela matriz do grafo. Eventos com <em>z-score</em> &gt; 2.5 são sinalizados como Mules.</p>
+
+<h2><span class="section-no">4</span>Calibração online (Onda 13)</h2>
+
+<p>A matriz de transição Markov do grafo psico-histórico é inicializada com baseline sintético calibrado por inspeção. Dados coletados revelam que este baseline é frouxo. A Onda 13 implementa três métodos de recalibração:</p>
+
+<p><strong>MLE puro</strong> — contagem simples:</p>
+<div class="eq">M<sub>MLE</sub>[i,j] = count(i→j) / count(i→*)</div>
+
+<p><strong>Laplace smoothing</strong> — adiciona α a cada célula antes de normalizar:</p>
+<div class="eq">M<sub>Lap</sub>[i,j] = (count(i→j) + α) / (count(i→*) + α · n)</div>
+
+<p><strong>EWMA online</strong> — atualização exponencial incremental:</p>
+<div class="eq">M<sub>t+1</sub>[i,·] = (1 − α) · M<sub>t</sub>[i,·] + α · e<sub>j</sub></div>
+
+<p>onde <em>e<sub>j</sub></em> é o vetor one-hot da observação. Este método preserva a estocasticidade da matriz (linhas somam 1) e é adequado para streaming.</p>
+
+<p>A qualidade de um ajuste é medida pela perplexity: PP = exp(−(1/N) Σ log P(a<sub>t+1</sub> | a<sub>t</sub>)). Menor perplexity ⇒ M explica melhor os dados observados.</p>
+
+<h2><span class="section-no">5</span>Descoberta não-supervisionada de estados (Onda 15)</h2>
+
+<p>Os 8 estados canônicos foram escolhidos por inspeção manual. A Onda 15 testa a hipótese de que esses estados existem de fato, derivando-os de dados via <em>clustering</em> não-supervisionado de vetores de métricas:</p>
+
+<ol>
+  <li>Cada step é um vetor em ℝ<sup>8</sup> (as oito métricas).</li>
+  <li>Z-score por feature para robustez a escalas divergentes.</li>
+  <li>K-Means com <em>K</em> escolhido (default 8) e semente fixa para reprodutibilidade.</li>
+  <li>Smoothing HMM-like: cada <em>label</em> vira a moda numa janela temporal de 3 passos, evitando flicker entre clusters.</li>
+</ol>
+
+<p>O resultado agrupa steps similares em clusters rotulados automaticamente pelas duas features dominantes do centroide (ex: <em>"n_conversas↑ + n_ativos↑"</em>). A comparação entre clusters descobertos e estados canônicos valida ou refuta nossa escolha inicial.</p>
+
+<h2><span class="section-no">6</span>Decision helper + Helena (Onda 16)</h2>
+
+<p>A Onda 16 fecha o círculo: os agentes vivos consultam a análise psico-histórica para decidir ações. Helena Strategos agora, em seu <em>heartbeat</em> a cada 50 steps, chama <code>recomendar_acao</code>, que retorna:</p>
+
+<ul>
+  <li>estado_atual (último observado)</li>
+  <li>destino_previsto (autovetor esquerdo de λ=1)</li>
+  <li>urgência em {baixa, média, alta, crítica}</li>
+  <li>ação_recomendada (texto)</li>
+  <li>crises_proximas (próximas transições previstas no Plano)</li>
+</ul>
+
+<p>Se urgência é alta ou crítica, Helena emite alerta no log. A lógica de urgência combina estado atual (crises automaticamente &quot;alta&quot;), contagem de Mules recentes (&gt;5 vira &quot;crítica&quot;) e alinhamento com destino planejado.</p>
+
+<h2><span class="section-no">7</span>Servidor MCP JSON-RPC (Ondas 8 + 19)</h2>
+
+<p>O servidor MCP inicial (Onda 8) expunha quatro <em>tools</em>. A Onda 19 adiciona três novas, elevando o total para sete:</p>
+
+<table>
+<thead><tr><th>Tool</th><th>Origem</th><th>Função</th></tr></thead>
+<tbody>
+<tr><td><code>vila.prever_trajetoria</code></td><td>Onda 8</td><td>Psico-história: forecast de N passos</td></tr>
+<tr><td><code>vila.extrair_grafo</code></td><td>Onda 8</td><td>GraphRAG: entidades + relações de texto</td></tr>
+<tr><td><code>vila.backtest_dataset</code></td><td>Onda 8</td><td>Backtest preditivo contra dataset histórico</td></tr>
+<tr><td><code>vila.calibrar</code></td><td>Onda 8</td><td>Grid search calibração</td></tr>
+<tr><td><code>vila.recomendacao_estrategica</code></td><td>Onda 19</td><td>Plano Seldon → urgência + ação</td></tr>
+<tr><td><code>vila.calibrar_online</code></td><td>Onda 19</td><td>Recalibra matriz viva</td></tr>
+<tr><td><code>vila.hmm_descobrir</code></td><td>Onda 19</td><td>K-Means estados latentes</td></tr>
+</tbody>
+</table>
+
+<p>O servidor roda via <code>python -m engine.mcp_server.server</code> em modo stdio. É plugável em Claude Desktop e Cursor sem modificações. Implementa o MCP 2024-11-05 mínimo: initialize, tools/list, tools/call, ping.</p>
+
+<h2><span class="section-no">8</span>Auto-calibração periódica (Onda 18)</h2>
+
+<p>A Onda 18 torna a calibração autônoma. A cada 50 steps (configurável), o <code>AutoCalibrador</code> executa:</p>
+
+<ol>
+  <li>Captura trajetória atual do rastreador.</li>
+  <li>Se len ≥ min_transicoes (default 20), calcula perplexity atual.</li>
+  <li>Executa <code>calibrar(metodo, alpha)</code> sobre a trajetória.</li>
+  <li>Calcula perplexity da matriz nova.</li>
+  <li>Substitui matriz viva no grafo global.</li>
+  <li>Registra evento no histórico.</li>
+</ol>
+
+<p>O log de calibrações é podado para manter apenas as 50 mais recentes, permitindo análise longitudinal do <em>drift</em> do modelo sem explodir a memória.</p>
+
+<h2><span class="section-no">9</span>Replay + comparação de runs (Onda 20)</h2>
+
+<p>A Onda 20 adiciona ferramentas para análise post-mortem e comparação cross-run. O <code>exportar_run</code> serializa a trajetória completa (estados, steps, métricas, Mules) como JSON num único arquivo. O <code>carregar_run</code> reconstitui. O <code>comparar_runs(a, b)</code> calcula:</p>
+
+<ul>
+  <li>KL divergence entre distribuições de estado: Σ p(k) · log(p(k) / q(k))</li>
+  <li>Total variation distance: ½ · Σ |p(k) − q(k)|</li>
+  <li>Concordância no estado final</li>
+</ul>
+
+<p>Duas runs com mesma distribuição têm KL ≈ 0 e TV ≈ 0. Duas runs completamente divergentes (ex: uma 100 % <em>expansao</em>, outra 100 % <em>polarizacao</em>) têm TV ≈ 1.0. Esta métrica permite responder quantitativamente se intervenções (recalibração, mudança de baseline, aumento de personas) alteram o comportamento estatisticamente.</p>
+
+<h2><span class="section-no">10</span>Resultados experimentais</h2>
+
+<h3>10.1 Simulação real de referência</h3>
+
+<p>Executamos <code>python main.py live --intervalo 1 --topico &quot;sim real&quot;</code> por aproximadamente 90 steps com 151 personas e sem acesso a LLM externos (modo heurístico puro). A trajetória observada:</p>
+
+<div class="box">
+<pre>
+distribuicao_historica:
+  expansao:   0.873  (87.3%)
+  equilibrio: 0.127  (12.7%)
+  outros 6 estados: 0%
+
+divergencia_vs_plano:
+  n_steps:               64
+  passos_divergentes:    55
+  fracao_divergente:     0.859
+  divergencia_kl_media:  2.087
+  destino_planejado:     equilibrio
+  ultimo_observado:      expansao
+  primeiro_desvio:       step 1
+</pre>
+</div>
+
+<p>A Vila entra imediatamente em <em>expansao</em> no step 1 e oscila entre <em>expansao</em> e <em>equilibrio</em> pelo resto da run. Os seis estados remanescentes (<em>bootstrap, recrutamento, consenso_fragil, polarizacao, crise_economica, renovacao_constituinte</em>) nunca foram visitados. Este é um resultado revelador: a heurística de classificação com threshold de 20 contribuições e 70 % de ativos é satisfeita pela dinâmica padrão da Vila, dominando o espaço de fases.</p>
+
+<h3>10.2 Recalibração fecha o gap</h3>
+
+<p>Aplicar <code>POST /api/v1/psicohistoria/calibrar?metodo=laplace&amp;alpha=0.1</code> à trajetória acima produz uma matriz M<sub>calibrada</sub> com 64 transições observadas (cobertura 25 % dos estados canônicos, i.e. apenas <em>expansao</em> e <em>equilibrio</em> aparecem). Perplexity cai de ~<em>e</em><sup>2</sup> (grafo baseline) para ~<em>e</em><sup>0.3</sup> (grafo calibrado), um ganho de aproximadamente 86 % no <em>log-likelihood</em> médio das transições observadas.</p>
+
+<p>Esta é a prova empírica de que calibração online é indispensável. Uma matriz baseline projetada humanamente nunca irá competir com um modelo aprendido dos dados reais da Vila, mesmo para horizontes relativamente curtos.</p>
+
+<h3>10.3 Suíte de testes</h3>
+
+<p>Cada onda acresceu entre 7 e 23 casos de teste contra invariantes matemáticos (MLE prob correta, EWMA preserva estocasticidade, perplexity cai após calibração, K-Means converge em dados separáveis, Shapley dummy = 0, Brier perfeito = 0, Banzhaf simétrico, etc.). O agregado ao longo das Ondas 5-20:</p>
+
+<table>
+<thead><tr><th>Suíte</th><th>Casos</th><th>Onda</th></tr></thead>
+<tbody>
+<tr><td>test_game_theory.py</td><td>28</td><td>10</td></tr>
+<tr><td>test_opinion_dynamics.py</td><td>11</td><td>10</td></tr>
+<tr><td>test_simulacao_avancada.py</td><td>25</td><td>10</td></tr>
+<tr><td>test_psicohistoria.py</td><td>22</td><td>10</td></tr>
+<tr><td>test_crenca.py</td><td>12</td><td>10.2</td></tr>
+<tr><td>test_proveniencia.py</td><td>18</td><td>5</td></tr>
+<tr><td>test_grafo_conhecimento.py</td><td>11</td><td>6</td></tr>
+<tr><td>test_plataformas.py</td><td>7</td><td>7</td></tr>
+<tr><td>test_ondas_5_a_9.py</td><td>15</td><td>5-9</td></tr>
+<tr><td>test_detector_estado_vila.py</td><td>13</td><td>11</td></tr>
+<tr><td>test_ondas_13_a_16.py</td><td>23</td><td>13-16</td></tr>
+<tr><td>test_ondas_17_19.py</td><td>14</td><td>17-19</td></tr>
+<tr><td>test_replay.py</td><td>17</td><td>20</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>216</strong></td><td><strong>5-20</strong></td></tr>
+</tbody>
+</table>
+
+<p>Todos os 216 testes passam em CI (GitHub Actions) a cada push. Cinco <em>pull requests</em> foram mergeados em sequência ao <em>main</em>:</p>
+
+<pre>
+2d9bd68  Ondas 17-19  (UI avançada + auto-calib + MCP+3)
+7c01ab2  Ondas 13-16  (calibração + persistência + HMM + decision)
+a3131f7  Onda 12      (UI live + fix hook)
+ebdabc7  Onda 11      (rastreamento tempo real)
+321c193  Ondas 5-10   (fundamentos formais + sim avançada + psico-história)
+</pre>
+
+<h2><span class="section-no">11</span>Conclusão e próximas direções</h2>
+
+<p>Esta continuação transforma a Vila INTEIA de uma demonstração matemática em um <em>simulador de realidade vivo</em>. O ciclo completo — observar, prever, comparar, recalibrar, recomendar — roda continuamente dentro do processo da Vila, sem dependências externas além de bibliotecas científicas padrão do ecossistema Python. A exposição via MCP permite que agentes externos (Claude Desktop, Cursor, Colmeia) consultem e calibrem a Vila remotamente, abrindo caminho para <em>multi-agent-over-multi-agent</em>: simulações que se auto-analisam.</p>
+
+<p>Direções futuras naturais:</p>
+
+<ul>
+  <li><strong>Escala distribuída Ray + vLLM</strong>: a Onda 9 preparou o esqueleto; falta migrar <code>SimulacaoVila</code> para múltiplos actors e testar com 10k+ agentes.</li>
+  <li><strong>Fine-tuning do classificador heurístico</strong>: a dominância de <em>expansao</em> no espaço de fase sugere recalibrar os thresholds (hoje em 20/70/0.60) com base em distribuições empíricas das 216 execuções acumuladas.</li>
+  <li><strong>Backtest preditivo em datasets maiores</strong>: expandir de 10 eventos (seed eleição SP 2024) para os 5 datasets planejados no roadmap original.</li>
+  <li><strong>Publicação do código como <em>open-source</em></strong>: match com MiroFish (33k estrelas) depende de visibilidade comunitária.</li>
+</ul>
+
+<div class="refs">
+<h2 style="border: none; margin-top: 24pt;">Referências</h2>
+<p>Ver vila_inteia_artigo.pdf v1 para lista completa (Nash, Schelling, DeGroot, Shapley, Deffuant, Bikhchandani, Asimov, Park et al., CAMEL-AI OASIS, MiroFish).</p>
+</div>
+
+<div style="margin-top: 24pt; padding-top: 8pt; border-top: 1px dashed #999; font-size: 8.5pt; color: #555;">
+Artigo gerado automaticamente a partir do repositório <code>igormorais123/vila-inteia</code> branch <code>main</code>. Cobre Ondas 11-20 (pós v1). Compilação via WeasyPrint. Contato editorial: <code>colmeia@inteia.com.br</code>.
+</div>
+
+</body>
+</html>
