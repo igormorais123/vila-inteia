@@ -8,6 +8,52 @@ escolhe o primeiro disponível nesta ordem:
 3. **Anthropic Claude** (pago) — `CLAUDE_API_KEY` + `IA_ALLOW_API_FALLBACK=true`
 4. **Heurístico** (sem LLM) se nenhum configurado
 
+## Groq (free tier generoso — **recomendado p/ dev**)
+
+Groq tem endpoint OpenAI-compatible com **30 rpm free tier** e inference
+ultra-rápida (Llama 3.3 70B em ~300 tok/s). Melhor opção grátis pra rodar
+Vila live sem gastar.
+
+### Setup
+
+Obter chave em <https://console.groq.com/keys>.
+
+```bash
+echo "GROQ_API_KEY=gsk_..." >> ~/.vila_env
+chmod 600 ~/.vila_env
+```
+
+Rodar:
+
+```bash
+set -a; . ~/.vila_env; set +a
+export VILA_LLM_RPM="25"     # abaixo do limite 30
+export VILA_LLM_TIER="on"    # só 5% personas chamam LLM
+export PYTHONPATH=.
+python main.py live --port 8100 --intervalo 3 --topico "tema"
+```
+
+### Modelos padrão
+
+| Alias Vila | Modelo Groq | Contexto | Free tier |
+|---|---|---|---|
+| `rapido` | `llama-3.1-8b-instant` | 131k | ✓ |
+| `analise` | `llama-3.3-70b-versatile` | 131k | ✓ |
+| `sintese` | `llama-3.1-8b-instant` | 131k | ✓ |
+
+Override via env:
+- `GROQ_MODEL_RAPIDO=mixtral-8x7b-32768`
+- `GROQ_MODEL_ANALISE=llama-3.3-70b-versatile`
+- `GROQ_MODEL_SINTESE=gemma2-9b-it`
+
+### Rate limits free tier
+
+- 30 requests/min (por modelo)
+- 14,400 requests/dia
+- Tokens: 6k rpm input, 12k rpm output
+
+Vila respeita via `VILA_LLM_RPM` e circuit breaker.
+
 ## Gemini (Google AI Studio)
 
 Obter chave em <https://aistudio.google.com/>.
