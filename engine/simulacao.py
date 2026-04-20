@@ -297,6 +297,15 @@ class SimulacaoVila:
                 except Exception:
                     pass
 
+                # Onda 23: indexa texto da conversa no GrafoConhecimento
+                try:
+                    from engine.memoria.grafo import GRAFO_GLOBAL, indexar_texto
+                    texto = conv.get("conteudo") or ""
+                    if texto and len(texto) > 20:
+                        indexar_texto(GRAFO_GLOBAL, texto)
+                except Exception:
+                    pass
+
             if resultado["tipo"] == "refletir":
                 self.stats["total_reflexoes"] += 1
 

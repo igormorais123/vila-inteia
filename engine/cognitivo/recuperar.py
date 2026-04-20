@@ -108,6 +108,27 @@ def recuperar(
         for r in contexto["reflexoes_recentes"][:3]:
             linhas.append(f"  - {r.descricao[:100]}")
 
+    # Onda 23: GraphRAG — consulta subgrafo de conhecimento (2-hops) do nome da persona
+    try:
+        from engine.memoria.grafo import GRAFO_GLOBAL
+        nome_slug = persona.nome_exibicao.lower().replace(" ", "_")
+        resultados_grafo = GRAFO_GLOBAL.buscar_por_rotulo(persona.nome_exibicao)
+        if resultados_grafo:
+            no_id = resultados_grafo[0].id
+            vizinhos_ids = GRAFO_GLOBAL.vizinhos(no_id, hops=2)
+            if vizinhos_ids:
+                linhas.append("Conhecimentos do grafo (2-hops):")
+                for vid in list(vizinhos_ids)[:5]:
+                    n = GRAFO_GLOBAL.nos.get(vid)
+                    if n:
+                        linhas.append(f"  - {n.rotulo} ({n.tipo})")
+                contexto["grafo_conhecimento"] = {
+                    "origem": resultados_grafo[0].rotulo,
+                    "vizinhos_2hops": len(vizinhos_ids),
+                }
+    except Exception:
+        pass
+
     contexto["resumo_contexto"] = "\n".join(linhas)
 
     return contexto
