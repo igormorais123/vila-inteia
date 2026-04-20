@@ -597,6 +597,54 @@ class SimulacaoVila:
             self.colmeia.salvar(caminho_colmeia)
         # ========================================
 
+        # Onda 11: rastreamento psico-histórico em tempo real (opcional).
+        try:
+            from engine.psicohistoria.detector_estado_vila import (
+                RASTREADOR_GLOBAL, MetricasStep,
+            )
+            ativos = [p for p in self.personas.values() if p.ativo]
+            latentes = [p for p in self.personas.values() if not p.ativo]
+            polar = 0.0
+            try:
+                from engine.cognitivo.crenca import TRACKER_GLOBAL
+                for tp in TRACKER_GLOBAL.topicos_rastreados():
+                    s = TRACKER_GLOBAL.snapshot(self.step, tp)
+                    polar = max(polar, s.polarizacao)
+            except Exception:
+                pass
+            gini = 0.0
+            try:
+                gini = self.incentivos.gini_coefficient() if hasattr(self, "incentivos") else 0.0
+            except Exception:
+                pass
+            props_const = 0
+            try:
+                props_const = len([a for a in getattr(self, "_artigos_ativos", []) if a])
+            except Exception:
+                pass
+            metricas = MetricasStep(
+                step=self.step,
+                n_conversas=n_conversas,
+                n_reflexoes=len(resumo_step.get("insights", [])),
+                n_agentes_ativos=len(ativos),
+                n_agentes_latentes=len(latentes),
+                total_agentes=len(self.personas),
+                polarizacao_media=polar,
+                gini_economia=gini,
+                propostas_constituintes_ativas=props_const,
+                contribuicoes_ao_desafio=self.stats.get("total_conversas", 0) - (self.stats.get("_conversas_anterior", 0) or 0),
+            )
+            self.stats["_conversas_anterior"] = self.stats.get("total_conversas", 0)
+            estado_atual = RASTREADOR_GLOBAL.registrar_step(metricas)
+            resumo_step["estado_psico"] = estado_atual
+            # A cada 20 steps, rodar detector de Mule
+            if self.step % 20 == 0 and self.step > 0:
+                mules = RASTREADOR_GLOBAL.detectar_mules_recentes(janela=20, z_score=2.5)
+                if mules:
+                    resumo_step["mules_detectados"] = mules
+        except Exception:
+            pass
+
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:
             self.salvar()
