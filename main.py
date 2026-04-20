@@ -156,6 +156,13 @@ def modo_serve(args):
         allow_headers=["*"],
     )
 
+    # Onda 49: auth + rate limit middleware
+    try:
+        from engine.auth import middleware_auth_rate
+        app.middleware("http")(middleware_auth_rate)
+    except Exception:
+        pass
+
     app.include_router(router)
     app.include_router(rede_router)
     app.include_router(colmeia_router)
@@ -286,6 +293,12 @@ def modo_live(args):
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    # Onda 49: auth + rate limit
+    try:
+        from engine.auth import middleware_auth_rate
+        app.middleware("http")(middleware_auth_rate)
+    except Exception:
+        pass
     app.include_router(router)
     app.include_router(rede_router)
     app.include_router(colmeia_router)
