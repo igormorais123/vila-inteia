@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Psico-História Avançada (Ondas 13-16)</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 960px) { .two-col { grid-template-columns: 1fr; } }
+    .matriz-cell { font-family: var(--font-mono); font-size: 10px; padding: 4px; text-align: center; min-width: 36px; }
+    .matriz-cell.strong { background: rgba(214, 158, 46, 0.25); color: var(--amber); }
+    .matriz-cell.medium { background: rgba(214, 158, 46, 0.1); }
+    .hmm-cluster { display: grid; grid-template-columns: 40px 1fr 60px; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border-subtle); align-items: center; }
+    .hmm-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .urg-alta { color: var(--danger); font-weight: 600; }
+    .urg-critica { color: var(--danger); font-weight: 700; text-decoration: underline; }
+    .urg-media { color: var(--warn); }
+    .urg-baixa { color: var(--success); }
+    .control-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-3); }
+    .output-block { font-family: var(--font-mono); font-size: 12px; white-space: pre-wrap; line-height: 1.5; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">Psico-História Avançada</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">Ondas 13-16: calibração · HMM · recomendação · persistência</p>
+      </div>
+      <nav class="u-hstack" style="gap: var(--space-4);">
+        <a href="/psico_live.html" class="u-muted">ao vivo</a>
+        <a href="/psicohistoria.html" class="u-muted">teoria</a>
+        <a href="/dashboard.html" class="u-muted">dashboard</a>
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Recomendação estratégica (Onda 16)</h2>
+        <span class="badge badge--amber">polling 5s</span>
+      </div>
+      <div id="rec-estado" class="u-mono" style="font-size: var(--text-md); margin-bottom: var(--space-3);">
+        carregando...
+      </div>
+      <div id="rec-justificativa" class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);"></div>
+      <div id="rec-crises"></div>
+    </section>
+
+    <section class="two-col">
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Calibração online (Onda 13)</h2>
+        </div>
+        <div class="control-row">
+          <label>método:</label>
+          <select id="calib-metodo" class="select" style="width: 140px;">
+            <option value="laplace" selected>laplace</option>
+            <option value="mle">mle</option>
+            <option value="ewma">ewma</option>
+          </select>
+          <label>α:</label>
+          <input id="calib-alpha" class="input" type="number" value="0.1" step="0.05" min="0" max="1" style="width: 80px;">
+          <button id="btn-calibrar" class="btn btn--primary">Calibrar</button>
+        </div>
+        <div id="calib-resultado" class="output-block">aguardando calibração...</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">HMM estados latentes (Onda 15)</h2>
+        </div>
+        <div class="control-row">
+          <label>K:</label>
+          <input id="hmm-k" class="input" type="number" value="4" min="2" max="16" style="width: 60px;">
+          <label>smoothing:</label>
+          <input id="hmm-smooth" class="input" type="number" value="3" min="1" max="10" style="width: 60px;">
+          <button id="btn-hmm" class="btn">Descobrir</button>
+        </div>
+        <div id="hmm-resultado" class="output-block">aguardando descoberta...</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Matriz de transição calibrada</h2>
+      </div>
+      <div id="matriz-container" style="overflow-x: auto;">
+        <div class="u-muted">execute calibração para ver matriz</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Persistência Supabase (Onda 14)</h2>
+      </div>
+      <div id="persist-stats" class="output-block">carregando...</div>
+      <button id="btn-flush" class="btn" style="margin-top: var(--space-3);">Flush manual</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api, toast } from '/js/core.js';
+
+    const ESTADOS = [
+      'bootstrap', 'recrutamento', 'expansao', 'consenso_fragil',
+      'polarizacao', 'crise_economica', 'renovacao_constituinte', 'equilibrio',
+    ];
+
+    async function atualizarRecomendacao() {
+      try {
+        const r = await api.get('/api/v1/psicohistoria/recomendacao');
+        const urg = r.urgencia || 'baixa';
+        const cls = urg === 'crítica' ? 'urg-critica' : `urg-${urg.replace('é', 'e')}`;
+        document.getElementById('rec-estado').innerHTML = `
+          Estado: <strong class="u-amber">${r.estado_atual}</strong> → destino: <strong>${r.destino_previsto}</strong>
+          · urgência: <span class="${cls}">${urg}</span>
+          <div style="margin-top: 6px;">Ação: ${r.acao_recomendada}</div>
+        `;
+        document.getElementById('rec-justificativa').textContent = r.justificativa;
+        if (r.crises_proximas && r.crises_proximas.length) {
+          document.getElementById('rec-crises').innerHTML = `
+            <div class="u-muted" style="font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Próximas crises</div>
+            ` + r.crises_proximas.map(c =>
+              `<div class="output-block" style="padding: 4px 0;">passo ${c.passo}: ${c.antes} → <span class="u-amber">${c.depois}</span> (p=${c.probabilidade.toFixed(3)})</div>`
+            ).join('');
+        }
+      } catch (e) {
+        document.getElementById('rec-estado').textContent = 'backend offline';
+      }
+    }
+
+    function renderMatriz(M) {
+      const n = M.length;
+      let html = '<table><thead><tr><th></th>';
+      for (const e of ESTADOS.slice(0, n)) {
+        html += `<th class="matriz-cell u-muted">${e.slice(0, 4)}</th>`;
+      }
+      html += '</tr></thead><tbody>';
+      for (let i = 0; i < n; i++) {
+        html += `<tr><th class="u-muted" style="padding: 4px 8px; font-size: 10px;">${(ESTADOS[i] || i).slice(0, 8)}</th>`;
+        for (let j = 0; j < n; j++) {
+          const v = M[i][j];
+          const cls = v > 0.5 ? 'strong' : v > 0.15 ? 'medium' : '';
+          html += `<td class="matriz-cell ${cls}">${v > 0.01 ? v.toFixed(2) : '·'}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+      document.getElementById('matriz-container').innerHTML = html;
+    }
+
+    document.getElementById('btn-calibrar').addEventListener('click', async () => {
+      try {
+        const r = await api.post('/api/v1/psicohistoria/calibrar', {
+          metodo: document.getElementById('calib-metodo').value,
+          alpha: parseFloat(document.getElementById('calib-alpha').value),
+        });
+        if (r.erro) {
+          document.getElementById('calib-resultado').textContent = `Erro: ${r.erro} (n_steps=${r.n_steps})`;
+          return;
+        }
+        document.getElementById('calib-resultado').innerHTML = `
+n_transições:        ${r.n_transicoes}
+estados_observados:  ${r.estados_observados.join(', ')}
+cobertura:           ${r.cobertura_pct.toFixed(1)}%
+div. Frobenius:      ${r.divergencia_frobenius.toFixed(4)}
+perplexity original: ${r.perplexity_original.toFixed(3)}
+perplexity calibr.:  ${r.perplexity_calibrada.toFixed(3)}
+ganho:               ${((r.perplexity_original - r.perplexity_calibrada) / r.perplexity_original * 100).toFixed(1)}%
+        `;
+        renderMatriz(r.matriz_calibrada);
+        toast('Calibração concluída', { level: 'success' });
+      } catch (e) {
+        toast('Erro: ' + e.message, { level: 'danger' });
+      }
+    });
+
+    document.getElementById('btn-hmm').addEventListener('click', async () => {
+      try {
+        const k = parseInt(document.getElementById('hmm-k').value, 10);
+        const s = parseInt(document.getElementById('hmm-smooth').value, 10);
+        const r = await api.get(`/api/v1/psicohistoria/hmm/descobrir?k=${k}&smoothing=${s}`);
+        if (r.erro) {
+          document.getElementById('hmm-resultado').textContent = `Erro: ${r.erro}`;
+          return;
+        }
+        const cores = ['#d69e2e', '#60a5fa', '#4ade80', '#f87171', '#a78bfa', '#fbbf24', '#f472b6', '#94a3b8'];
+        let html = `<div style="margin-bottom: 8px;">K=${r.k} · iterações=${r.iteracoes} · inércia=${r.inercia.toFixed(2)}</div>`;
+        html += '<div class="u-muted" style="font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Clusters</div>';
+        for (const e of r.estados_latentes) {
+          html += `
+            <div class="hmm-cluster">
+              <span class="hmm-dot" style="background: ${cores[e.id % cores.length]};"></span>
+              <span>${e.rotulo_auto}</span>
+              <span class="u-right u-mono">${e.n_membros} steps</span>
+            </div>
+          `;
+        }
+        document.getElementById('hmm-resultado').innerHTML = html;
+        toast('HMM descobriu ' + r.k + ' clusters', { level: 'success' });
+      } catch (e) {
+        toast('Erro: ' + e.message, { level: 'danger' });
+      }
+    });
+
+    async function atualizarPersist() {
+      try {
+        const s = await api.get('/api/v1/psicohistoria/persistencia/stats');
+        document.getElementById('persist-stats').innerHTML = `
+buffer_atual:     ${s.buffer_atual}
+total_flushed:    ${s.total_flushed}
+supabase_ativo:   ${s.supabase_ativo ? 'sim' : 'NÃO (SUPABASE_VILA_KEY não configurada)'}
+tabela:           ${s.tabela}
+        `;
+      } catch (e) {
+        document.getElementById('persist-stats').textContent = 'offline';
+      }
+    }
+
+    document.getElementById('btn-flush').addEventListener('click', async () => {
+      const r = await api.post('/api/v1/psicohistoria/persistencia/flush', {});
+      toast(`Flush: ${r.flushed} registros`, { level: 'info' });
+      atualizarPersist();
+    });
+
+    atualizarRecomendacao();
+    atualizarPersist();
+    setInterval(atualizarRecomendacao, 5000);
+    setInterval(atualizarPersist, 10000);
+  </script>
+</body>
+</html>
