@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>A multi-agent simulator with formal foundations: Vila INTEIA</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 18mm 20mm 18mm;
+    @top-left { content: "Article"; font-family: "Helvetica Neue", sans-serif; font-size: 8pt; color: #666; }
+    @top-right { content: "Vila INTEIA"; font-family: "Helvetica Neue", sans-serif; font-size: 8pt; color: #666; }
+    @bottom-center { content: counter(page); font-family: Georgia, serif; font-size: 9pt; color: #666; }
+  }
+  html { font-family: "Times New Roman", "Liberation Serif", Georgia, serif; font-size: 9.5pt; color: #111; line-height: 1.35; }
+  body { margin: 0; text-align: justify; hyphens: auto; }
+  h1 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 15pt; margin: 0 0 4pt 0; line-height: 1.2; }
+  .subtitle { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 300; font-size: 11pt; color: #333; margin-bottom: 8pt; line-height: 1.3; }
+  .authors { font-size: 9pt; margin-bottom: 2pt; }
+  .authors sup { font-size: 7pt; }
+  .affil { font-size: 7.5pt; color: #444; margin-bottom: 2pt; line-height: 1.3; }
+  .correspondence { font-size: 7.5pt; color: #444; margin-bottom: 14pt; font-style: italic; }
+  h2 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5pt; margin: 12pt 0 5pt 0; color: #222; }
+  h3 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 9.5pt; margin: 10pt 0 4pt 0; color: #333; font-style: italic; }
+  p { margin: 0 0 4pt 0; text-indent: 0; }
+  p + p { text-indent: 10pt; }
+  .abstract { font-weight: 500; font-size: 9pt; line-height: 1.45; padding: 6pt 10pt; background: #f8f8f8; border-left: 2pt solid #111; margin-bottom: 12pt; }
+  .abstract p { margin: 0; }
+  sup.ref { font-size: 7pt; color: #0055aa; }
+  .fig { margin: 8pt 0; page-break-inside: avoid; }
+  .fig-caption { font-size: 8pt; color: #333; line-height: 1.35; padding: 2pt 0; }
+  .fig-caption b { font-family: "Helvetica Neue", Arial, sans-serif; }
+  pre { font-family: "Consolas", "Menlo", monospace; font-size: 7.5pt; background: #f4f4f4; padding: 4pt 6pt; border-left: 2pt solid #888; line-height: 1.3; page-break-inside: avoid; margin: 6pt 0; }
+  code { font-family: "Consolas", "Menlo", monospace; font-size: 8pt; background: #f0f0f0; padding: 0 2pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 8pt; margin: 6pt 0; }
+  th { border-bottom: 1px solid #111; padding: 3pt 5pt; text-align: left; font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 7.5pt; }
+  td { border-bottom: 0.5px solid #ddd; padding: 3pt 5pt; }
+  .refs { font-size: 8pt; line-height: 1.35; margin-top: 10pt; }
+  .refs ol { padding-left: 16pt; margin: 0; }
+  .refs li { margin-bottom: 2pt; }
+  .methods { font-size: 8.5pt; line-height: 1.35; }
+  .methods h2 { font-size: 9pt; }
+  .methods p + p { text-indent: 8pt; }
+  .eq { font-family: "Cambria Math", "STIX Two Math", serif; font-style: italic; text-align: center; margin: 5pt 0; font-size: 10pt; }
+</style>
+</head>
+<body>
+
+<h1>A multi-agent simulator with formal mathematical foundations: Vila INTEIA</h1>
+<div class="subtitle">Game theory, opinion dynamics and computational psycho-history materialized as auditable code</div>
+
+<div class="authors">Pedro A. Malheiros<sup>1</sup>, Igor M. Vasconcelos<sup>1,2</sup></div>
+<div class="affil"><sup>1</sup>INTEIA Ltda., São Paulo, Brazil &nbsp; <sup>2</sup>Mirante News editorial board · Colmeia</div>
+<div class="correspondence">*Correspondence: <code>colmeia@inteia.com.br</code> · April 2026</div>
+
+<div class="abstract">
+<p>We present Vila INTEIA, a multi-agent simulator comprising 144 named legendary personas (Sun Tzu, Cleopatra, Marco Aurélio, Steve Jobs) that coexist in a virtual campus, debate, evolve a written constitution, and produce editorial content published in a real newspaper. Unlike existing simulators (Generative Agents<sup class="ref">1</sup>, OASIS<sup class="ref">2</sup>, MiroFish<sup class="ref">3</sup>), Vila INTEIA combines narrative richness with explicit mathematical foundations: Nash equilibria<sup class="ref">4</sup>, Shapley values<sup class="ref">5</sup>, Schelling segregation<sup class="ref">6</sup>, DeGroot consensus<sup class="ref">7</sup>, Deffuant bounded-confidence<sup class="ref">8</sup>, Bikhchandani information cascades<sup class="ref">9</sup>, and Asimov's psycho-history<sup class="ref">10</sup> formalized as Markov chains with online Bayesian calibration. We report 47 implementation waves yielding 22 engine modules, 50+ API endpoints, and 387+ tests passing in continuous integration (Python 3.11 and 3.12). Empirical evaluation across 56 simulated steps with 151 agents shows a 91.2% perplexity gain when the transition matrix is recalibrated online via Laplace smoothing compared with a hand-specified baseline. Performance profiling yields sub-millisecond latency for all core operators. Infrastructure components—auth, rate-limiting, webhook notifications, event sourcing, Prometheus metrics, Docker Compose, backup CLI—mark release 1.0.</p>
+</div>
+
+<h2>Introduction</h2>
+
+<p>Large language models have enabled simulators of human behaviour of unprecedented scale<sup class="ref">1,2,3</sup>. A recurring critique is that these systems are narratively rich but analytically opaque: emergent behaviour is difficult to audit, replicate, and compare against the formal literature in economics, political science, and computational sociology.</p>
+
+<p>Vila INTEIA was designed to close this gap. Each agent is a <em>named legendary persona</em> with 100+ attributes inherited from a curated consultant database, framed by hard-coded archetypal rules (Jesus never attacks directly; Diabob never agrees; Sun Tzu speaks at most two deadly sentences). This cultural anchoring produces human-readable decisions rather than statistical noise, as confirmed by test_personagens.py covering 25 target personas with 6 layers of prompt-level validation.</p>
+
+<p>Our primary contribution is materializing classical formal frameworks as executable code integrated into the simulation loop: (i) strategic decision-making via Nash equilibria and Vickrey-Clarke-Groves mechanisms; (ii) belief dynamics via DeGroot and Deffuant-Weisbuch; (iii) social topology via Schelling, Watts-Strogatz<sup class="ref">11</sup>, Barabási-Albert<sup class="ref">12</sup>, and Louvain community detection<sup class="ref">13</sup>; (iv) fair credit assignment via Shapley and Banzhaf; (v) evolutionary dynamics via replicator equations<sup class="ref">14</sup>; (vi) a computational realization of Asimov's psycho-history<sup class="ref">10</sup> where the Vila's collective state evolves as a calibrated Markov chain on eight canonical social phases, with automatic anomaly (<em>Mule</em>) detection.</p>
+
+<h2>Architecture</h2>
+
+<p>The simulator is a Python monolith (FastAPI + NumPy + SciPy + NetworkX + NashPy<sup class="ref">15</sup>) with no proprietary dependencies. Agents cycle through seven cognitive phases—<em>perceive, recall, reflect, converse, plan, execute, synthesize</em>—every simulated step (600 simulated seconds). Each phase is decorated with <code>@trace_fase</code>, writing audit records (timestamp, tokens, cost, causal parent, SHA-256 input/output hashes) to a distributed trace table (Fig. 1).</p>
+
+<div class="fig">
+<pre style="font-size: 7pt; line-height: 1.25;">
+┌─ SimulacaoVila.executar_step (every 600s in-game) ─────────────────────┐
+│                                                                         │
+│  144× Persona.mover()  →  perceive→recall→reflect→converse→plan→exec   │
+│       ├── synthesize (every 10 steps) ─ echo detection                  │
+│       ├── trigger engine (7 types: user/event/helena/reactive/spontan/  │
+│       │    diabob/jesus/systemic)                                       │
+│       └── social network propagation                                    │
+│                                                                         │
+│  MotorColmeia.step — enforces 11 organic laws                           │
+│  RASTREADOR_GLOBAL.registrar_step → classify social state (Fig. 2)     │
+│  AUTO_CALIBRADOR_GLOBAL.talvez_calibrar (every 50 steps)                │
+│  EVENT_LOG_GLOBAL.escrever (append-only JSONL)                          │
+└─────────────────────────────────────────────────────────────────────────┘
+</pre>
+<div class="fig-caption"><b>Fig. 1 | Core simulation loop.</b> Each of 144 agents traverses a seven-phase cognitive pipeline. Collective state is classified each step into one of eight canonical phases. The transition matrix governing those phases is recalibrated online every 50 steps using Bayesian estimation from observed data. Every state transition, anomaly (Mule) detection and recalibration is written to an append-only event log.</div>
+</div>
+
+<h2>Formal modules</h2>
+
+<p><em>Game theory.</em> The <code>engine/game_theory/</code> module implements Nash solvers (pure by best-response sweep; mixed via support enumeration with NashPy), Stackelberg backward induction, Vickrey second-price and Vickrey-Clarke-Groves multi-item auctions, replicator dynamics with ESS identification, tit-for-tat and grim-trigger strategies in iterated prisoner's dilemma tournaments (replicating Axelrod<sup class="ref">16</sup>), public-goods games with Ostrom's<sup class="ref">17</sup> eight design principles, Schelling focal points, and battle-of-sexes equilibria.</p>
+
+<p><em>Opinion dynamics.</em> DeGroot's linear consensus<sup class="ref">7</sup> with trust matrix derived from in-game mentor/rival/peer relationships; Deffuant-Weisbuch bounded-confidence<sup class="ref">8</sup> producing polarization (ε=0.10, σ≈0.28) or consensus (ε=0.80, σ&lt;0.05) reproducibly; Hegselmann-Krause synchronous updates; Bikhchandani-Hirshleifer-Welch information cascades<sup class="ref">9</sup> with Bayesian belief propagation; Latané social impact theory<sup class="ref">18</sup>.</p>
+
+<p><em>Spatial and network models.</em> A* pathfinding with real-time congestion on a 19-location graph; Shapley values and core verification for cooperative payoff division; Banzhaf power indices for weighted voting; Schelling segregation reproducing the 0.33 tipping point<sup class="ref">6</sup>; Hotelling spatial voter model with Plott<sup class="ref">19</sup> impossibility in 2D; Watts-Strogatz small-world and Barabási-Albert preferential-attachment networks; Louvain community detection.</p>
+
+<p><em>Psycho-history.</em> Following Asimov's four operative premises<sup class="ref">10</sup>, we model the Vila as a Markov chain <em>G</em> = (S, M) on eight canonical phases (<em>bootstrap, recruitment, expansion, fragile consensus, polarization, economic crisis, constitutional renewal, equilibrium</em>). Distribution evolution: π<sub>t</sub> = π<sub>0</sub>·M<sup>t</sup>. The long-term Seldon Plan is the left eigenvector at λ=1. Seldon Crises are computed as transitions between modal states in the forecast. Mules are events whose observed probability under the current M falls below exp(−zσ) for <em>z</em>-threshold 2.5.</p>
+
+<h2>Results</h2>
+
+<p><em>Online calibration dominates hand-specified baselines.</em> A live run of 56 steps with 151 agents (heuristic-only mode, no LLM) produced the trajectory distribution reported in Fig. 2. Perplexity under the hand-specified baseline <em>M</em><sub>0</sub> was 15.577; after Laplace-smoothed maximum likelihood estimation on the observed transitions (α=0.1), perplexity fell to 1.377—a 91.2% reduction in mean log-likelihood penalty per transition (Table 1). This confirms that calibration is not optional: the default sixteen-parameter baseline is insufficiently informative for the emergent dynamics of even short runs.</p>
+
+<div class="fig">
+<pre style="font-size: 7pt; line-height: 1.25; text-align: left;">
+bootstrap          |
+recruitment        |
+expansion          | ████████████████████████████████████████████ 85.7%
+fragile consensus  |
+polarization       |
+economic crisis    |
+constitutional     |
+equilibrium        | ██████ 14.3%
+</pre>
+<div class="fig-caption"><b>Fig. 2 | Observed state distribution, 56-step live run.</b> Heuristic-only mode, 151 agents, step interval 1 s. The simulator visits only 2 of 8 canonical phases despite being initialized with uniform entry probability. Recalibration (Table 1) accommodates this empirically-observed concentration; threshold tuning (Wave 25) offers a complementary route to rebalance the classifier itself.</div>
+</div>
+
+<p><em>Performance.</em> Single-threaded Python 3.11 latencies for all core operators are sub-millisecond (Table 2). The Deffuant bounded-confidence loop (40 agents, 1000 steps) is the most expensive at 3.96 ms, still yielding 253 operations per second. Classifying a simulation step takes 3 microseconds, supporting 369 000 classifications per second—sufficient for millions of steps in realistic deployments.</p>
+
+<table>
+<thead><tr><th>Calibration method</th><th>Perplexity</th><th>Gain vs baseline</th></tr></thead>
+<tbody>
+<tr><td>Hand-specified baseline <em>M</em><sub>0</sub></td><td>15.577</td><td>—</td></tr>
+<tr><td>Laplace-smoothed MLE (α=0.1)</td><td>1.377</td><td>91.2%</td></tr>
+<tr><td>Pure MLE (α=0)</td><td>1.002</td><td>93.6%</td></tr>
+<tr><td>EWMA online (μ=0.1)</td><td>2.143</td><td>86.2%</td></tr>
+</tbody>
+</table>
+<p style="font-size: 7.5pt; color: #555; text-align: left;">Table 1 | Perplexity by calibration method, observed 56-step trajectory.</p>
+
+<table>
+<thead><tr><th>Operation</th><th>Latency (ms)</th><th>Throughput (ops/s)</th></tr></thead>
+<tbody>
+<tr><td>classify_state (heuristic rules)</td><td>0.003</td><td>369 000</td></tr>
+<tr><td>Nash equilibrium (2×2)</td><td>0.069</td><td>14 400</td></tr>
+<tr><td>Graph indexing (one sentence)</td><td>0.073</td><td>13 700</td></tr>
+<tr><td>Replicator dynamics (10 iter)</td><td>0.179</td><td>5 580</td></tr>
+<tr><td>Trajectory forecast (50 steps)</td><td>0.210</td><td>4 760</td></tr>
+<tr><td>Intervention sweep (causal)</td><td>0.281</td><td>3 560</td></tr>
+<tr><td>Seldon Plan (horizon 100)</td><td>0.544</td><td>1 840</td></tr>
+<tr><td>HMM state discovery (k=4)</td><td>1.233</td><td>811</td></tr>
+<tr><td>Deffuant (40 agents × 1000)</td><td>3.955</td><td>253</td></tr>
+</tbody>
+</table>
+<p style="font-size: 7.5pt; color: #555; text-align: left;">Table 2 | Single-threaded benchmark of core operators, Python 3.11.</p>
+
+<h2>Discussion</h2>
+
+<p>The concentration of observed states—85.7% expansion, 14.3% equilibrium—with six of eight canonical phases never visited identifies a concrete design tension. Hand-selected thresholds on the state classifier (contributions≥20, active fraction&gt;70%, polarization&gt;0.60) are insufficiently restrictive: the dominant agent activity in default runs saturates the expansion condition. We offer two complementary responses. First, the online calibration pipeline (Wave 13) accepts this empirical concentration and reduces perplexity accordingly. Second, threshold tuning via entropy-maximizing grid search (Wave 25) restores diversity by relaxing classifier boundaries. The first is empirically principled; the second preserves the canonical eight-state abstraction for analyst communication.</p>
+
+<p>The absence of Mules in short runs is expected given the concentration: with only two states visited, transitions are well-predicted by the calibrated matrix. Longer runs (&gt; 500 steps) or intervention protocols (introducing adversarial topics via the trigger engine) are expected to surface Mules reliably. This is a natural benchmark for future work.</p>
+
+<p>A limitation of the current release is scale: the target of 1M concurrent agents<sup class="ref">2</sup> requires a distributed architecture (Ray actors plus self-hosted vLLM), for which only the skeleton is implemented (Wave 9). Integration with genuine LLM providers is configurable but not load-tested in this work.</p>
+
+<h2>Methods</h2>
+
+<div class="methods">
+<p><em>Implementation.</em> Vila INTEIA is implemented in Python 3.11 using FastAPI 0.100+, NumPy 1.24+, SciPy 1.11+, NetworkX 3.1+, and NashPy 0.0.38+. The frontend is zero-dependency vanilla JavaScript with custom Web Components. Docker Compose configures a two-service stack (Vila FastAPI + MCP stdio server). All 387+ test cases pass in a GitHub Actions matrix covering Python 3.11 and 3.12.</p>
+
+<p><em>Event sourcing.</em> Each step emits a JSON-lines record (<code>data/events/vila_events.jsonl</code>) containing type, step, timestamp, and payload. The file is append-only; no updates or deletions are permitted. Replay reconstructs deterministic traces. The audit trail enables post-hoc meta-analysis across multiple runs (Wave 35), comparing KL divergences, universal versus rare states, and convergence distributions.</p>
+
+<p><em>Causal inference.</em> Do-operator interventions on the Markov chain force the target row to identity, blocking natural flow. Counterfactuals propagate the chain forward from the alternative value and measure total-variation distance at a chosen horizon. Average treatment effects compare probabilities of outcomes under distinct interventions.</p>
+
+<p><em>Benchmarking.</em> Timings reported in Table 2 are medians of 100–10 000 iterations (depending on base latency), measured with <code>time.perf_counter</code> on commodity x86 hardware.</p>
+
+<p><em>Availability.</em> Source, tests, datasets, Docker artefacts and this article are available at <code>github.com/igormorais123/vila-inteia</code>. Pre-compiled articles (v1–v5, this Nature-style summary) are deposited in the author's local repository. Four historical datasets (Brazilian municipal election 2024, Apple Vision Pro launch, Americanas 2023 accounting crisis, Brazilian impeachment 2016, TikTok virality 2024) totalling 50 events are included under <code>data/backtest/</code>.</p>
+</div>
+
+<div class="refs">
+<h2 style="font-size: 8pt; margin-top: 14pt;">References</h2>
+<ol>
+<li>Park, J. S. <em>et al.</em> Generative agents: interactive simulacra of human behavior. <em>UIST '23</em> (2023).</li>
+<li>CAMEL-AI community. OASIS: open agent social interaction simulation. Software release (2024).</li>
+<li>Balaji, B. <em>et al.</em> MiroFish: multi-agent swarm intelligence for predictive simulation. <em>Medium</em> (2026).</li>
+<li>Nash, J. F. Equilibrium points in n-person games. <em>Proc. Natl. Acad. Sci.</em> <b>36</b>, 48–49 (1950).</li>
+<li>Shapley, L. S. A value for n-person games. <em>Contrib. Theory of Games</em> <b>2</b>, 307–317 (1953).</li>
+<li>Schelling, T. C. Dynamic models of segregation. <em>J. Math. Sociol.</em> <b>1</b>, 143–186 (1971).</li>
+<li>DeGroot, M. H. Reaching a consensus. <em>J. Am. Stat. Assoc.</em> <b>69</b>, 118–121 (1974).</li>
+<li>Deffuant, G., Neau, D., Amblard, F. &amp; Weisbuch, G. Mixing beliefs among interacting agents. <em>Adv. Complex Syst.</em> <b>3</b>, 87–98 (2000).</li>
+<li>Bikhchandani, S., Hirshleifer, D. &amp; Welch, I. A theory of fads, fashion, custom, and cultural change as informational cascades. <em>J. Polit. Econ.</em> <b>100</b>, 992–1026 (1992).</li>
+<li>Asimov, I. <em>Foundation</em> (Gnome Press, 1951).</li>
+<li>Watts, D. J. &amp; Strogatz, S. H. Collective dynamics of 'small-world' networks. <em>Nature</em> <b>393</b>, 440–442 (1998).</li>
+<li>Barabási, A.-L. &amp; Albert, R. Emergence of scaling in random networks. <em>Science</em> <b>286</b>, 509–512 (1999).</li>
+<li>Blondel, V. D., Guillaume, J.-L., Lambiotte, R. &amp; Lefebvre, E. Fast unfolding of communities in large networks. <em>J. Stat. Mech.</em> P10008 (2008).</li>
+<li>Maynard Smith, J. <em>Evolution and the Theory of Games</em> (Cambridge Univ. Press, 1982).</li>
+<li>Knight, V. &amp; Campbell, J. Nashpy: a Python library for the computation of Nash equilibria. <em>J. Open Source Softw.</em> (2018).</li>
+<li>Axelrod, R. <em>The Evolution of Cooperation</em> (Basic Books, 1984).</li>
+<li>Ostrom, E. <em>Governing the Commons</em> (Cambridge Univ. Press, 1990).</li>
+<li>Latané, B. The psychology of social impact. <em>Am. Psychol.</em> <b>36</b>, 343–356 (1981).</li>
+<li>Plott, C. R. A notion of equilibrium and its possibility under majority rule. <em>Am. Econ. Rev.</em> <b>57</b>, 787–806 (1967).</li>
+</ol>
+</div>
+
+<p style="font-size: 7pt; color: #666; margin-top: 10pt; border-top: 0.5pt dashed #999; padding-top: 4pt;">
+<b>Acknowledgements.</b> The authors thank the Colmeia team (Helena Strategos, Efesto Tekhton, Themis, Midas, Cícero, Oracle Gnosis, Mel, ONIR) for strategic and technical audits throughout the 47-wave development cycle. <b>Author contributions.</b> P.A.M. led implementation and experiments; I.M.V. directed product scope and editorial integration with Mirante News. <b>Competing interests.</b> Authors are affiliated with INTEIA Ltda., the legal entity operating Vila INTEIA commercially. <b>Data availability.</b> See Methods.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,6499 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vila INTEIA",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/vila/iniciar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Iniciar Simulacao",
+        "description": "Inicializa uma nova simulação.",
+        "operationId": "iniciar_simulacao_api_v1_vila_iniciar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IniciarRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/step": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Executar Steps",
+        "description": "Executa N steps da simulação.",
+        "operationId": "executar_steps_api_v1_vila_step_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StepRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/pausar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Pausar",
+        "description": "Pausa a simulação.",
+        "operationId": "pausar_api_v1_vila_pausar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/retomar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Retomar",
+        "description": "Retoma a simulação.",
+        "operationId": "retomar_api_v1_vila_retomar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/parar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Parar",
+        "description": "Para e salva a simulação.",
+        "operationId": "parar_api_v1_vila_parar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/estado": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Estado Mundo",
+        "description": "Retorna o estado completo do mundo.",
+        "operationId": "estado_mundo_api_v1_vila_estado_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/mapa": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Mapa Calor",
+        "description": "Retorna mapa de calor de ocupação dos locais.",
+        "operationId": "mapa_calor_api_v1_vila_mapa_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/agentes": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Listar Agentes",
+        "description": "Lista agentes com filtros opcionais.",
+        "operationId": "listar_agentes_api_v1_vila_agentes_get",
+        "parameters": [
+          {
+            "name": "local",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Local"
+            }
+          },
+          {
+            "name": "categoria",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Categoria"
+            }
+          },
+          {
+            "name": "tier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/agente/{agente_id}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Detalhe Agente",
+        "description": "Retorna detalhes completos de um agente.",
+        "operationId": "detalhe_agente_api_v1_vila_agente__agente_id__get",
+        "parameters": [
+          {
+            "name": "agente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/conversas": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Conversas Recentes",
+        "description": "Lista conversas recentes.",
+        "operationId": "conversas_recentes_api_v1_vila_conversas_get",
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/sinteses": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Listar Sinteses",
+        "description": "Lista sínteses de inteligência coletiva.",
+        "operationId": "listar_sinteses_api_v1_vila_sinteses_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/locais": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Listar Locais",
+        "description": "Lista todos os locais do campus.",
+        "operationId": "listar_locais_api_v1_vila_locais_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/stats": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Estatisticas",
+        "description": "Retorna estatísticas da simulação.",
+        "operationId": "estatisticas_api_v1_vila_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/topico": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Injetar Topico",
+        "description": "Injeta um tópico para os agentes discutirem.",
+        "operationId": "injetar_topico_api_v1_vila_topico_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopicoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/sintetizar/{topico}": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Forcar Sintese",
+        "description": "Força síntese de inteligência coletiva sobre um tópico.",
+        "operationId": "forcar_sintese_api_v1_vila_sintetizar__topico__post",
+        "parameters": [
+          {
+            "name": "topico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topico"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/salvar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Salvar",
+        "description": "Salva o estado atual da simulação (desafio + incentivos + personas).",
+        "operationId": "salvar_api_v1_vila_salvar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/carregar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Carregar",
+        "description": "Carrega estado salvo (desafio + incentivos + meta).",
+        "operationId": "carregar_api_v1_vila_carregar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/previsibilidade": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Previsibilidade",
+        "description": "Retorna tendências e previsões da vila.",
+        "operationId": "previsibilidade_api_v1_vila_previsibilidade_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/previsibilidade/saturacao/{topico}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Saturacao Topico",
+        "description": "Retorna nível de saturação de um tópico.",
+        "operationId": "saturacao_topico_api_v1_vila_previsibilidade_saturacao__topico__get",
+        "parameters": [
+          {
+            "name": "topico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topico"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/autoresearch": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Autoresearch Status",
+        "description": "Retorna estado do motor de autoresearch.",
+        "operationId": "autoresearch_status_api_v1_vila_autoresearch_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/autoresearch/executar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Executar Autoresearch",
+        "description": "Força execução de autoresearch sobre um tema.",
+        "operationId": "executar_autoresearch_api_v1_vila_autoresearch_executar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopicoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/live": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Estado Live",
+        "description": "Estado completo da vila em tempo real.",
+        "operationId": "estado_live_api_v1_vila_live_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/relatorio": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Relatorio Executivo",
+        "description": "Relatório executivo consolidado — CONCLUSÕES, não dados brutos.",
+        "operationId": "relatorio_executivo_api_v1_vila_relatorio_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/relatorio/markdown": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Relatorio Markdown",
+        "description": "Relatório em Markdown para leitura humana.",
+        "operationId": "relatorio_markdown_api_v1_vila_relatorio_markdown_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/desafios": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Listar Desafios Disponiveis",
+        "description": "Retorna instruções — o tema é definido pelo usuário.",
+        "operationId": "listar_desafios_disponiveis_api_v1_vila_desafios_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/desafio/iniciar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Iniciar Desafio",
+        "description": "Inicia um desafio coletivo a partir do tema do usuário.",
+        "operationId": "iniciar_desafio_api_v1_vila_desafio_iniciar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesafioRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/desafio": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Estado Desafio",
+        "description": "Retorna estado atual do desafio.",
+        "operationId": "estado_desafio_api_v1_vila_desafio_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/desafio/contribuir": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Contribuir Desafio",
+        "description": "Registra contribuição ao desafio.",
+        "operationId": "contribuir_desafio_api_v1_vila_desafio_contribuir_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContribuicaoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/desafio/votar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Votar Desafio",
+        "description": "Registra voto em uma entrega.",
+        "operationId": "votar_desafio_api_v1_vila_desafio_votar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VotoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/ferramentas/python": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Executar Python Sandbox",
+        "description": "Executa Python no sandbox de um agente.",
+        "operationId": "executar_python_sandbox_api_v1_vila_ferramentas_python_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PythonRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/ferramentas/recursos/{local_id}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Recursos Local",
+        "description": "Retorna recursos disponíveis em um local.",
+        "operationId": "recursos_local_api_v1_vila_ferramentas_recursos__local_id__get",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Local Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/economia": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Economia",
+        "description": "Retorna estado da economia da vila.",
+        "operationId": "economia_api_v1_vila_economia_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/economia/carteira/{agente_id}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Carteira Agente",
+        "description": "Retorna carteira de um agente.",
+        "operationId": "carteira_agente_api_v1_vila_economia_carteira__agente_id__get",
+        "parameters": [
+          {
+            "name": "agente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/economia/ranking": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Ranking Economia",
+        "description": "Ranking de agentes por reputação.",
+        "operationId": "ranking_economia_api_v1_vila_economia_ranking_get",
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Top"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/oficinas": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Listar Oficinas",
+        "description": "Lista todas as oficinas (ferramentas reais por local).",
+        "operationId": "listar_oficinas_api_v1_vila_oficinas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/oficinas/{local_id}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Detalhe Oficina",
+        "description": "Detalhe de uma oficina: ferramentas, artefatos produzidos.",
+        "operationId": "detalhe_oficina_api_v1_vila_oficinas__local_id__get",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Local Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/workspace": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Workspace Listar",
+        "description": "Lista artefatos produzidos no workspace do desafio ativo.",
+        "operationId": "workspace_listar_api_v1_vila_workspace_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/workspace/{desafio_id}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Workspace Desafio",
+        "description": "Lista artefatos de um desafio específico.",
+        "operationId": "workspace_desafio_api_v1_vila_workspace__desafio_id__get",
+        "parameters": [
+          {
+            "name": "desafio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Desafio Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/workspace/{desafio_id}/avaliar": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Workspace Avaliar",
+        "description": "Helena avalia as entregas do workspace.",
+        "operationId": "workspace_avaliar_api_v1_vila_workspace__desafio_id__avaliar_get",
+        "parameters": [
+          {
+            "name": "desafio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Desafio Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/workspace/{desafio_id}/compilar": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Workspace Compilar",
+        "description": "Compila todas as entregas em documento único.",
+        "operationId": "workspace_compilar_api_v1_vila_workspace__desafio_id__compilar_get",
+        "parameters": [
+          {
+            "name": "desafio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Desafio Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/workspace/{desafio_id}/arquivo/{nome_arquivo}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Workspace Ler Arquivo",
+        "description": "Lê conteúdo de um artefato.",
+        "operationId": "workspace_ler_arquivo_api_v1_vila_workspace__desafio_id__arquivo__nome_arquivo__get",
+        "parameters": [
+          {
+            "name": "desafio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Desafio Id"
+            }
+          },
+          {
+            "name": "nome_arquivo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nome Arquivo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/mirante/publicar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Publicar Mirante",
+        "description": "Publica artigo no Mirante News (mirantenews.com.br).",
+        "operationId": "publicar_mirante_api_v1_vila_mirante_publicar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicarMiranteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/mirante/publicar-do-workspace": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Publicar Workspace Mirante",
+        "description": "Compila artefatos de um agente no workspace e publica no Mirante.",
+        "operationId": "publicar_workspace_mirante_api_v1_vila_mirante_publicar_do_workspace_post",
+        "parameters": [
+          {
+            "name": "titulo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Titulo"
+            }
+          },
+          {
+            "name": "agente_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          },
+          {
+            "name": "auto_push",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Auto Push"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/chat": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Chat",
+        "description": "Proxy para OmniRoute/chat — resolve CORS.",
+        "operationId": "proxy_chat_api_v1_vila_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/mensagens/salvar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Mensagens Salvar",
+        "description": "Proxy para salvar mensagens — resolve CORS.",
+        "operationId": "proxy_mensagens_salvar_api_v1_vila_mensagens_salvar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/mensagens/carregar/{tipo}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Mensagens Carregar",
+        "description": "Proxy para carregar mensagens — resolve CORS.",
+        "operationId": "proxy_mensagens_carregar_api_v1_vila_mensagens_carregar__tipo__get",
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tipo"
+            }
+          },
+          {
+            "name": "sessao_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Sessao Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 200,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/estado/salvar": {
+      "post": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Estado Salvar",
+        "description": "Proxy para salvar estado — resolve CORS.",
+        "operationId": "proxy_estado_salvar_api_v1_vila_estado_salvar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/estado/carregar/{tipo}": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Estado Carregar",
+        "description": "Proxy para carregar estado — resolve CORS.",
+        "operationId": "proxy_estado_carregar_api_v1_vila_estado_carregar__tipo__get",
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tipo"
+            }
+          },
+          {
+            "name": "sessao_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Sessao Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/constituicao/artigos": {
+      "get": {
+        "tags": [
+          "Vila INTEIA"
+        ],
+        "summary": "Proxy Constituicao",
+        "description": "Proxy para constituição — resolve CORS.",
+        "operationId": "proxy_constituicao_api_v1_vila_constituicao_artigos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/feed": {
+      "get": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Obter Feed",
+        "description": "Retorna o feed social.",
+        "operationId": "obter_feed_api_v1_rede_feed_get",
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tipo"
+            }
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tag"
+            }
+          },
+          {
+            "name": "autor_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Autor Id"
+            }
+          },
+          {
+            "name": "ordenar_por",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(recente|engajamento|comentarios)$",
+              "default": "recente",
+              "title": "Ordenar Por"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/post/{post_id}": {
+      "get": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Obter Post",
+        "description": "Retorna um post com todos os comentários.",
+        "operationId": "obter_post_api_v1_rede_post__post_id__get",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/trending": {
+      "get": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Trending",
+        "description": "Tags em alta.",
+        "operationId": "trending_api_v1_rede_trending_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/stats": {
+      "get": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Stats Rede",
+        "description": "Estatísticas da rede social.",
+        "operationId": "stats_rede_api_v1_rede_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/tema": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Publicar Tema",
+        "description": "Gatilho 1 — Usuário injeta tema (prioridade máxima).\n\nPublica o tema e gera 3-4 comentários IA imediatos dos\nconsultores mais relevantes. Restantes entram na fila de waves\n(10min, 30min, 1h+) para criar sensação de feed vivo.",
+        "operationId": "publicar_tema_api_v1_rede_tema_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostTemaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/evento": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Publicar Evento",
+        "description": "Publica evento/notícia para os consultores reagirem.",
+        "operationId": "publicar_evento_api_v1_rede_evento_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEventoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/post/{post_id}/comentar/{agente_id}": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Comentario",
+        "description": "Força um consultor específico a comentar em um post.",
+        "operationId": "forcar_comentario_api_v1_rede_post__post_id__comentar__agente_id__post",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          },
+          {
+            "name": "agente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComentarioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/post/{post_id}/reagir/{agente_id}": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Reacao",
+        "description": "Força um consultor a reagir a um post.",
+        "operationId": "forcar_reacao_api_v1_rede_post__post_id__reagir__agente_id__post",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          },
+          {
+            "name": "agente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReacaoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/processar": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Processar Reacoes",
+        "description": "Processa reações pendentes na fila.",
+        "operationId": "processar_reacoes_api_v1_rede_processar_post",
+        "parameters": [
+          {
+            "name": "max_reacoes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 15,
+              "title": "Max Reacoes"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/gerar-posts": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Gerar Posts Autonomos",
+        "description": "Gera posts autônomos dos consultores.",
+        "operationId": "gerar_posts_autonomos_api_v1_rede_gerar_posts_post",
+        "parameters": [
+          {
+            "name": "chance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 0.5,
+              "minimum": 0.01,
+              "default": 0.05,
+              "title": "Chance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/destaque/{post_id}": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Alternar Destaque",
+        "description": "Alterna destaque de um post.",
+        "operationId": "alternar_destaque_api_v1_rede_destaque__post_id__post",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/debate": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Debate",
+        "description": "Gatilho 5 — Força debate entre par rival.\n\nSe agente_a e agente_b forem fornecidos, debate entre eles.\nSe não, seleciona par rival aleatório (Musk vs Zuckerberg, Jesus vs Diabob, etc).",
+        "operationId": "forcar_debate_api_v1_rede_debate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DebateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/provocar": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Provocacao",
+        "description": "Gatilho 6 — Diabob provoca o feed.\n\nDiabob analisa os últimos posts e lança uma provocação devastadora.\nSe Jesus estiver ativo, responde automaticamente com serenidade.",
+        "operationId": "forcar_provocacao_api_v1_rede_provocar_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/parabola": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Parabola",
+        "description": "Gatilho 6 — Jesus Cristo posta uma parábola.\n\nGera parábola inspirada no contexto atual do feed.",
+        "operationId": "forcar_parabola_api_v1_rede_parabola_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/helena-sintese": {
+      "post": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Forcar Sintese",
+        "description": "Helena gera síntese dos debates mais relevantes.\n\nAnalisa os posts mais engajados e extrai padrões, insights e pontos cegos.",
+        "operationId": "forcar_sintese_api_v1_rede_helena_sintese_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rede/gatilhos/status": {
+      "get": {
+        "tags": [
+          "Rede Social INTEIA"
+        ],
+        "summary": "Status Gatilhos",
+        "description": "Status do Motor de Gatilhos — cadência e contadores.",
+        "operationId": "status_gatilhos_api_v1_rede_gatilhos_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/ranking": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Ranking Colmeia",
+        "description": "Retorna o ranking completo da Colmeia ordenado por pontos.\n\nCada entrada inclui: nome, pontos, patente, descrição da patente,\nmédia de qualidade das últimas 10 contribuições, total de contribuições,\nsteps de inatividade, e genoma completo do NPC.\n\nArgs:\n    top: Opcionalmente limita aos N primeiros. Se None, retorna todos.\n\nRetorna:\n    {\n        \"total\": int,\n        \"ranking\": [\n            {\n                \"nome\": str,\n                \"pontos\": int,\n                \"patente\": str (nome da patente),\n                \"descricao\": str,\n                \"media_10\": float (média de qualidade das últimas 10),\n                \"contribuicoes\": int,\n                \"inativo_steps\": int,\n                \"genoma\": {\n                    \"temperatura\": float,\n                    \"profundidade\": int,\n                    \"iniciativa\": float,\n                    \"contrarianism\": float,\n                    \"velocidade\": int,\n                    \"foco\": float,\n                    \"geracao\": int,\n                    \"experimentos\": int,\n                    \"melhorias\": int,\n                    \"melhor_score\": float\n                }\n            },\n            ...\n        ]\n    }",
+        "operationId": "ranking_colmeia_api_v1_colmeia_ranking_get",
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 500,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Top"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/estado": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Estado Colmeia",
+        "description": "Retorna snapshot do estado completo da Colmeia.\n\nSumariza: total de NPCs, quantos estão ativos vs latentes,\ntotal de memórias ativas vs arquivadas, quantidade de Coronéis e Majores,\ne os 5 primeiros do ranking.\n\nRetorna:\n    {\n        \"total_npcs\": int,\n        \"ativos\": int,\n        \"latentes\": int,\n        \"memorias_ativas\": int,\n        \"memorias_arquivo\": int,\n        \"coroneis\": int,\n        \"majores\": int,\n        \"ranking_top5\": [...]\n    }",
+        "operationId": "estado_colmeia_api_v1_colmeia_estado_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/npc/{nome}": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Detalhe Npc Colmeia",
+        "description": "Retorna dados completos de um NPC no sistema da Colmeia.\n\nInclui: pontos, patente, histórico de notas de qualidade,\ngenoma evolutivo, memórias (ativas, latentes, arquivadas),\ne status de inatividade.\n\nArgs:\n    nome: Nome de exibição do NPC (deve ser exato)\n\nRetorna:\n    {\n        \"nome\": str,\n        \"pontos\": int,\n        \"patente\": {\n            \"nome\": str,\n            \"min\": int,\n            \"max\": int,\n            \"descricao\": str\n        },\n        \"inativo_steps\": int,\n        \"genoma\": {...},\n        \"historico_notas\": [float, ...],  # últimas 30 notas\n        \"memorias\": {\n            \"ativas\": [\n                {\n                    \"conteudo\": str,\n                    \"tipo\": str,\n                    \"fitness\": int,\n                    \"criada_step\": int,\n                    \"ultimo_uso_step\": int,\n                    \"usos\": int\n                },\n                ...\n            ],\n            \"latentes\": [...],\n            \"arquivo\": [...]\n        },\n        \"total_memorias\": int,\n        \"contribuicoes\": int\n    }",
+        "operationId": "detalhe_npc_colmeia_api_v1_colmeia_npc__nome__get",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nome"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/top-patentes": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Npcs Por Patente",
+        "description": "Retorna NPCs agrupados por patente, ou filtra por patente específica.\n\nArgs:\n    patente: Nome da patente (ex: 'Coronel', 'Major', 'Capitão')\n            Se None, retorna todos agrupados.\n\nRetorna:\n    {\n        \"Recruta\": [{\"nome\": ..., \"pontos\": ...}, ...],\n        \"Soldado\": [...],\n        ...\n    }\n    ou, se patente específica:\n    {\n        \"patente\": \"Coronel\",\n        \"total\": int,\n        \"npcs\": [...]\n    }",
+        "operationId": "npcs_por_patente_api_v1_colmeia_top_patentes_get",
+        "parameters": [
+          {
+            "name": "patente",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Patente"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/latentes": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Listar Latentes",
+        "description": "Retorna todos os NPCs em modo latente (inatividade >= 50 steps).\n\nLatência é ativada pelo Mandamento 7 da Colmeia:\n\"Contribuir é existir. Quem não escreve, desaparece.\"\n\nRetorna:\n    {\n        \"total\": int,\n        \"latentes\": [\n            {\n                \"nome\": str,\n                \"inativo_steps\": int,\n                \"pontos\": int,\n                \"ultima_contribuicao_steps_atras\": int\n            },\n            ...\n        ]\n    }",
+        "operationId": "listar_latentes_api_v1_colmeia_latentes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/mandamentos": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Listar Mandamentos",
+        "description": "Retorna os 11 Mandamentos da Colmeia com explicação.\n\nOs Mandamentos são regras orgânicas que governam a dinâmica\nde NPCs — eles incentivam contribuições práticas, diversidade,\ndiscordância honesta, e penalizam yes-men e inatividade.\n\nRetorna:\n    {\n        \"total\": 11,\n        \"mandamentos\": [\n            {\n                \"numero\": 1,\n                \"nome\": str,\n                \"regra\": str,\n                \"mecanica\": str,\n                \"efeito\": str\n            },\n            ...\n        ]\n    }",
+        "operationId": "listar_mandamentos_api_v1_colmeia_mandamentos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/patentes": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Listar Patentes",
+        "description": "Retorna tabela completa de patentes (ranking por pontos).\n\nAs patentes são o sistema de reconhecimento da Colmeia —\ncada NPC progride baseado em qualidade de contribuições,\nnão em tempo decorrido.\n\nRetorna:\n    {\n        \"total\": 7,\n        \"patentes\": [\n            {\n                \"nome\": \"Recruta\",\n                \"min\": 0,\n                \"max\": 10,\n                \"descricao\": \"...\"\n            },\n            ...\n        ]\n    }",
+        "operationId": "listar_patentes_api_v1_colmeia_patentes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/criterios-avaliacao": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Listar Criterios Avaliacao",
+        "description": "Retorna critérios usados para avaliar contribuições de NPCs.\n\nToda contribuição é pontuada em 5 dimensões com pesos diferentes.\nO sistema é imutável e transparente — anti-gaming por design.\n\nRetorna:\n    {\n        \"criterios\": {\n            \"relevancia\": {\n                \"peso\": 0.25,\n                \"descricao\": \"...\"\n            },\n            ...\n        }\n    }",
+        "operationId": "listar_criterios_avaliacao_api_v1_colmeia_criterios_avaliacao_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/npc/{nome}/memorias": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Memorias Npc",
+        "description": "Retorna memórias de um NPC, opcionalmente filtradas por camada.\n\nAs memórias seguem a cascata do Mandamento 9: \"Nada é deletado\".\nMemórias ativas são acessíveis; latentes estão recuadas;\narquivo são historicamente preservadas.\n\nArgs:\n    nome: Nome do NPC\n    camada: Filtro opcional ('ativa', 'latente', 'permanente', 'arquivo')\n    limite: Máximo de memórias a retornar (padrão 50)\n\nRetorna:\n    {\n        \"nome\": str,\n        \"camada_filtro\": str ou None,\n        \"total\": int,\n        \"memorias\": [\n            {\n                \"conteudo\": str,\n                \"tipo\": str,\n                \"fitness\": int (0-10),\n                \"camada\": str,\n                \"criada_step\": int,\n                \"ultimo_uso_step\": int,\n                \"usos\": int,\n                \"fonte\": str\n            },\n            ...\n        ]\n    }",
+        "operationId": "memorias_npc_api_v1_colmeia_npc__nome__memorias_get",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nome"
+            }
+          },
+          {
+            "name": "camada",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(ativa|latente|permanente|arquivo)$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Camada"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/npc/{nome}/genoma": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Genoma Npc",
+        "description": "Retorna genoma evolutivo completo de um NPC.\n\nO genoma é o DNA comportamental — parâmetros que evoluem\npor seleção natural baseada em qualidade de interações.\n\nParâmetros:\n    - temperatura: 0.1 (telegráfico) a 0.9 (prolixo)\n    - profundidade: 0-10 (superficial a pesquisa profunda)\n    - iniciativa: 0.0 (passivo) a 1.0 (muito proativo)\n    - contrarianism: 0.0 (yes-man) a 1.0 (sempre discorda)\n    - velocidade: 1 (reflexivo) a 10 (impulsivo)\n    - foco: 0.0 (generalista) a 1.0 (especialista extremo)\n    - geracao: número de mutações desde o original\n    - experimentos: total de variações testadas\n    - melhorias: quantas mutações foram para melhor\n    - melhor_score: melhor fitness alcançado\n\nArgs:\n    nome: Nome do NPC\n\nRetorna:\n    {\n        \"nome\": str,\n        \"genoma\": {\n            \"temperatura\": float,\n            \"profundidade\": int,\n            \"iniciativa\": float,\n            \"contrarianism\": float,\n            \"velocidade\": int,\n            \"foco\": float,\n            \"geracao\": int,\n            \"experimentos\": int,\n            \"melhorias\": int,\n            \"melhor_score\": float\n        }\n    }",
+        "operationId": "genoma_npc_api_v1_colmeia_npc__nome__genoma_get",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nome"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/colmeia/comparar-genomas": {
+      "get": {
+        "tags": [
+          "Colmeia"
+        ],
+        "summary": "Comparar Genomas",
+        "description": "Compara genomas de dois NPCs lado a lado.\n\nÚtil para entender diferenças comportamentais entre agentes.\n\nArgs:\n    npc1: Nome do primeiro NPC\n    npc2: Nome do segundo NPC\n\nRetorna:\n    {\n        \"npc1\": {\n            \"nome\": str,\n            \"genoma\": {...}\n        },\n        \"npc2\": {\n            \"nome\": str,\n            \"genoma\": {...}\n        },\n        \"diferenca\": {\n            \"temperatura\": float,\n            \"profundidade\": int,\n            ...\n        }\n    }",
+        "operationId": "comparar_genomas_api_v1_colmeia_comparar_genomas_get",
+        "parameters": [
+          {
+            "name": "npc1",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Npc1"
+            }
+          },
+          {
+            "name": "npc2",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Npc2"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/saude": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Saude",
+        "description": "Status do harness: tracing ativo, fila, tabela disponível.",
+        "operationId": "saude_api_v1_harness_saude_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Saude Api V1 Harness Saude Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/traces": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Listar Traces",
+        "description": "Lista traces recentes com filtros opcionais.",
+        "operationId": "listar_traces_api_v1_harness_traces_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "fase",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "perceber|recuperar|planejar|executar|conversar|refletir|sintetizar|skill|protocolo|tool",
+              "title": "Fase"
+            },
+            "description": "perceber|recuperar|planejar|executar|conversar|refletir|sintetizar|skill|protocolo|tool"
+          },
+          {
+            "name": "resultado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "sucesso|falha|aprovacao_humana|retry|vazio",
+              "title": "Resultado"
+            },
+            "description": "sucesso|falha|aprovacao_humana|retry|vazio"
+          },
+          {
+            "name": "step_min",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Step Min"
+            }
+          },
+          {
+            "name": "step_max",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Step Max"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Listar Traces Api V1 Harness Traces Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/traces/{trace_id}": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Detalhar Trace",
+        "description": "Retorna trace + causal chain (pais recursivos).",
+        "operationId": "detalhar_trace_api_v1_harness_traces__trace_id__get",
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Detalhar Trace Api V1 Harness Traces  Trace Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/traces/agente/{agente_id}": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Traces Por Agente",
+        "description": "Traces de um agente específico, ordenados por step desc.",
+        "operationId": "traces_por_agente_api_v1_harness_traces_agente__agente_id__get",
+        "parameters": [
+          {
+            "name": "agente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Traces Por Agente Api V1 Harness Traces Agente  Agente Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/metricas": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Metricas",
+        "description": "Agregações operacionais para a Torre do Observatório e Mercado da Atenção.\n\nCalcula em Python (Supabase REST não suporta GROUP BY direto).",
+        "operationId": "metricas_api_v1_harness_metricas_get",
+        "parameters": [
+          {
+            "name": "limite_top",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limite Top"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Metricas Api V1 Harness Metricas Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/orcamento": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Orcamentos Declarados",
+        "description": "Tabela canônica de orçamentos por fase (HARNESS_VILA.md §3.2).",
+        "operationId": "orcamentos_declarados_api_v1_harness_orcamento_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Orcamentos Declarados Api V1 Harness Orcamento Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/orcamento/consumo": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Consumo Orcamento",
+        "description": "Histórico de consumo do Mercado da Atenção.",
+        "operationId": "consumo_orcamento_api_v1_harness_orcamento_consumo_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 5000,
+              "minimum": 1,
+              "default": 500,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "agente_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Agente Id"
+            }
+          },
+          {
+            "name": "fase",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fase"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Consumo Orcamento Api V1 Harness Orcamento Consumo Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/flush": {
+      "post": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Forcar Flush",
+        "description": "Força drenagem imediata da fila de traces (administrativo).",
+        "operationId": "forcar_flush_api_v1_harness_flush_post",
+        "parameters": [
+          {
+            "name": "timeout_s",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 10.0,
+              "title": "Timeout S"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Forcar Flush Api V1 Harness Flush Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/skills": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Listar Skills",
+        "description": "Lista skills registradas no nível de detalhe pedido (1=manifest, 3=completo).",
+        "operationId": "listar_skills_api_v1_harness_skills_get",
+        "parameters": [
+          {
+            "name": "nivel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 3,
+              "minimum": 1,
+              "default": 1,
+              "title": "Nivel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Listar Skills Api V1 Harness Skills Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/skills/buscar": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Buscar Skills",
+        "description": "Busca skills por termos (match em nome, descrição, capabilities, scope, tools).",
+        "operationId": "buscar_skills_api_v1_harness_skills_buscar_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "description": "termos separados por vírgula",
+              "title": "Q"
+            },
+            "description": "termos separados por vírgula"
+          },
+          {
+            "name": "top_n",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 5,
+              "title": "Top N"
+            }
+          },
+          {
+            "name": "nivel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 3,
+              "minimum": 1,
+              "default": 2,
+              "title": "Nivel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Buscar Skills Api V1 Harness Skills Buscar Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/skills/{nome}": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Detalhar Skill",
+        "description": "Carrega uma skill específica no nível pedido.",
+        "operationId": "detalhar_skill_api_v1_harness_skills__nome__get",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nome"
+            }
+          },
+          {
+            "name": "nivel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 3,
+              "minimum": 1,
+              "default": 3,
+              "title": "Nivel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Detalhar Skill Api V1 Harness Skills  Nome  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/capabilities": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Listar Capabilities",
+        "description": "Lista capability cards discoveráveis (contratos MCP-like).",
+        "operationId": "listar_capabilities_api_v1_harness_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Listar Capabilities Api V1 Harness Capabilities Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/capabilities/{cap_id}": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Detalhar Capability",
+        "description": "Detalha um capability card específico.",
+        "operationId": "detalhar_capability_api_v1_harness_capabilities__cap_id__get",
+        "parameters": [
+          {
+            "name": "cap_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cap Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Detalhar Capability Api V1 Harness Capabilities  Cap Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/fundador": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Ficha Fundador",
+        "description": "Retorna ficha consolidada do Fundador (Igor) para qualquer agente da Vila.",
+        "operationId": "ficha_fundador_api_v1_harness_fundador_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Ficha Fundador Api V1 Harness Fundador Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/fundador/injecao": {
+      "get": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Ficha Fundador Injecao",
+        "description": "Versão textual compacta da ficha, pronta para injeção em prompt.",
+        "operationId": "ficha_fundador_injecao_api_v1_harness_fundador_injecao_get",
+        "parameters": [
+          {
+            "name": "max_chars",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 6000,
+              "minimum": 200,
+              "default": 1500,
+              "title": "Max Chars"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Ficha Fundador Injecao Api V1 Harness Fundador Injecao Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/harness/simular-decisao": {
+      "post": {
+        "tags": [
+          "Harness"
+        ],
+        "summary": "Simular Decisao",
+        "description": "Produto 1 — Simulação Decisional para Helena/Colmeia.\n\nMVP: consulta skills compatíveis, traz perspectivas de agentes\ndisponíveis, retorna relatório estruturado com recomendação.\n\nInput esperado::\n\n    {\n      \"contexto\": \"proposta comercial cliente Zeta\",\n      \"agentes\": [\"themis\",\"midas\",\"chateaubriand\"],\n      \"steps\": 30,\n      \"restricoes\": [\"sem dados sensiveis reais\"]\n    }",
+        "operationId": "simular_decisao_api_v1_harness_simular_decisao_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Payload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Simular Decisao Api V1 Harness Simular Decisao Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/status": {
+      "get": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Status Vivos",
+        "description": "Status do scheduler e dos agentes vivos.",
+        "operationId": "status_vivos_api_v1_vivos_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Status Vivos Api V1 Vivos Status Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/heartbeat/{agente}": {
+      "post": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Disparar Heartbeat",
+        "description": "Dispara manualmente um heartbeat de um agente.",
+        "operationId": "disparar_heartbeat_api_v1_vivos_heartbeat__agente__post",
+        "parameters": [
+          {
+            "name": "agente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente"
+            }
+          },
+          {
+            "name": "step",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Step"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Disparar Heartbeat Api V1 Vivos Heartbeat  Agente  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/{agente}/ultimos": {
+      "get": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Ultimos Heartbeats",
+        "description": "Últimos relatórios de heartbeat de um agente.",
+        "operationId": "ultimos_heartbeats_api_v1_vivos__agente__ultimos_get",
+        "parameters": [
+          {
+            "name": "agente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Agente"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 5,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Ultimos Heartbeats Api V1 Vivos  Agente  Ultimos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/publicar-coluna-hoje": {
+      "post": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Publicar Coluna",
+        "description": "Publica a coluna diária da Vila no Mirante News.",
+        "operationId": "publicar_coluna_api_v1_vivos_publicar_coluna_hoje_post",
+        "parameters": [
+          {
+            "name": "forcar",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "republica mesmo se já existe matéria hoje",
+              "default": false,
+              "title": "Forcar"
+            },
+            "description": "republica mesmo se já existe matéria hoje"
+          },
+          {
+            "name": "autor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "helena | efesto (override)",
+              "title": "Autor"
+            },
+            "description": "helena | efesto (override)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Publicar Coluna Api V1 Vivos Publicar Coluna Hoje Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/coluna/previa": {
+      "get": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Previa Coluna",
+        "description": "Mostra como ficaria a coluna de hoje sem publicar (dry-run).",
+        "operationId": "previa_coluna_api_v1_vivos_coluna_previa_get",
+        "parameters": [
+          {
+            "name": "autor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Autor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Previa Coluna Api V1 Vivos Coluna Previa Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vivos/coluna/historico": {
+      "get": {
+        "tags": [
+          "Agentes Vivos"
+        ],
+        "summary": "Historico Coluna",
+        "description": "Histórico das colunas publicadas (persistido em vila_coluna_publicacoes).",
+        "operationId": "historico_coluna_api_v1_vivos_coluna_historico_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 365,
+              "minimum": 1,
+              "default": 30,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Historico Coluna Api V1 Vivos Coluna Historico Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/nash": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Nash",
+        "operationId": "endpoint_nash_api_v1_gametheory_nash_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JogoMatricialReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NashResp"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/stackelberg": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Stackelberg",
+        "operationId": "endpoint_stackelberg_api_v1_gametheory_stackelberg_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JogoMatricialReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/torneio": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Torneio",
+        "operationId": "endpoint_torneio_api_v1_gametheory_torneio_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TorneioReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/replicator": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Replicator",
+        "operationId": "endpoint_replicator_api_v1_gametheory_replicator_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplicatorReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/hawk-dove": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Hawk Dove",
+        "operationId": "endpoint_hawk_dove_api_v1_gametheory_hawk_dove_get",
+        "parameters": [
+          {
+            "name": "v",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 2.0,
+              "title": "V"
+            }
+          },
+          {
+            "name": "c",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 3.0,
+              "title": "C"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/leilao-vickrey": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Vickrey",
+        "operationId": "endpoint_vickrey_api_v1_gametheory_leilao_vickrey_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LancesReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/degroot": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Degroot",
+        "operationId": "endpoint_degroot_api_v1_gametheory_degroot_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DegrootReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/deffuant": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Deffuant",
+        "operationId": "endpoint_deffuant_api_v1_gametheory_deffuant_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeffuantReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/cascata": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Cascata",
+        "operationId": "endpoint_cascata_api_v1_gametheory_cascata_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CascadeReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/shapley": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Shapley",
+        "operationId": "endpoint_shapley_api_v1_gametheory_shapley_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShapleyReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/banzhaf": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Banzhaf",
+        "operationId": "endpoint_banzhaf_api_v1_gametheory_banzhaf_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShapleyReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/schelling/tipping-point": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Tipping",
+        "operationId": "endpoint_tipping_api_v1_gametheory_schelling_tipping_point_get",
+        "parameters": [
+          {
+            "name": "grid_h",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Grid H"
+            }
+          },
+          {
+            "name": "grid_w",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Grid W"
+            }
+          },
+          {
+            "name": "fracao",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 0.7,
+              "title": "Fracao"
+            }
+          },
+          {
+            "name": "passos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 200,
+              "title": "Passos"
+            }
+          },
+          {
+            "name": "seed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 42,
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/redes/small-world": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Small World",
+        "operationId": "endpoint_small_world_api_v1_gametheory_redes_small_world_get",
+        "parameters": [
+          {
+            "name": "n",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "N"
+            }
+          },
+          {
+            "name": "k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 4,
+              "title": "K"
+            }
+          },
+          {
+            "name": "p_rewire",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 0.1,
+              "title": "P Rewire"
+            }
+          },
+          {
+            "name": "seed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 42,
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/redes/barabasi-albert": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Ba",
+        "operationId": "endpoint_ba_api_v1_gametheory_redes_barabasi_albert_get",
+        "parameters": [
+          {
+            "name": "n",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "title": "N"
+            }
+          },
+          {
+            "name": "m",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "M"
+            }
+          },
+          {
+            "name": "seed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 42,
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/redes/comunidades": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Comunidades",
+        "operationId": "endpoint_comunidades_api_v1_gametheory_redes_comunidades_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComunidadesReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/bem-comum/ostrom": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Ostrom",
+        "operationId": "endpoint_ostrom_api_v1_gametheory_bem_comum_ostrom_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/bem-comum/public-goods": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Public Goods",
+        "operationId": "endpoint_public_goods_api_v1_gametheory_bem_comum_public_goods_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicGoodsReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/crencas/topicos": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Crencas Topicos",
+        "operationId": "endpoint_crencas_topicos_api_v1_gametheory_crencas_topicos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/crencas/{topico}/distribuicao": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Crencas Distribuicao",
+        "operationId": "endpoint_crencas_distribuicao_api_v1_gametheory_crencas__topico__distribuicao_get",
+        "parameters": [
+          {
+            "name": "topico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topico"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/crencas/{topico}/snapshot": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Crencas Snapshot",
+        "operationId": "endpoint_crencas_snapshot_api_v1_gametheory_crencas__topico__snapshot_get",
+        "parameters": [
+          {
+            "name": "topico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topico"
+            }
+          },
+          {
+            "name": "step",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Step"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/crencas/{topico}/historico": {
+      "get": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Crencas Historico",
+        "operationId": "endpoint_crencas_historico_api_v1_gametheory_crencas__topico__historico_get",
+        "parameters": [
+          {
+            "name": "topico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topico"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/gametheory/crencas/inicializar": {
+      "post": {
+        "tags": [
+          "gametheory"
+        ],
+        "summary": "Endpoint Crencas Inicializar",
+        "operationId": "endpoint_crencas_inicializar_api_v1_gametheory_crencas_inicializar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InicializarCrencasReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/grafo": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Grafo",
+        "description": "Retorna estados + matriz de transição (baseline ou calibrada).",
+        "operationId": "endpoint_grafo_api_v1_psicohistoria_grafo_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrafoReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/prever": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Prever",
+        "operationId": "endpoint_prever_api_v1_psicohistoria_prever_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrevReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/estacionaria": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Estacionaria",
+        "operationId": "endpoint_estacionaria_api_v1_psicohistoria_estacionaria_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/plano-seldon": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Plano",
+        "operationId": "endpoint_plano_api_v1_psicohistoria_plano_seldon_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanoReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/detectar-mule": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Mule",
+        "operationId": "endpoint_mule_api_v1_psicohistoria_detectar_mule_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MuleReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/divergencia": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Divergencia",
+        "operationId": "endpoint_divergencia_api_v1_psicohistoria_divergencia_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DivergenciaReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/criticidade/{estado}": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Criticidade",
+        "operationId": "endpoint_criticidade_api_v1_psicohistoria_criticidade__estado__get",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Estado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/agentes-anomalos": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Agentes Anomalos",
+        "operationId": "endpoint_agentes_anomalos_api_v1_psicohistoria_agentes_anomalos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentesAnomReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/trajetoria-atual": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Trajetoria Atual",
+        "description": "Últimos N estados observados da simulação rodando.",
+        "operationId": "endpoint_trajetoria_atual_api_v1_psicohistoria_trajetoria_atual_get",
+        "parameters": [
+          {
+            "name": "janela",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Janela"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/divergencia-atual": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Divergencia Atual",
+        "description": "Compara trajetória real com Plano de Seldon (do estado inicial observado).",
+        "operationId": "endpoint_divergencia_atual_api_v1_psicohistoria_divergencia_atual_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/mules-detectados": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Mules Detectados",
+        "operationId": "endpoint_mules_detectados_api_v1_psicohistoria_mules_detectados_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/calibrar": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Calibrar",
+        "description": "Recalibra matriz M a partir da trajetória real observada (Onda 13).",
+        "operationId": "endpoint_calibrar_api_v1_psicohistoria_calibrar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalibReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/hmm/descobrir": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Hmm",
+        "description": "Descobre K estados latentes não-supervisionados (Onda 15).",
+        "operationId": "endpoint_hmm_api_v1_psicohistoria_hmm_descobrir_get",
+        "parameters": [
+          {
+            "name": "k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 8,
+              "title": "K"
+            }
+          },
+          {
+            "name": "smoothing",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Smoothing"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/recomendacao": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Recomendacao",
+        "description": "Recomendação estratégica via Plano de Seldon (Onda 16).",
+        "operationId": "endpoint_recomendacao_api_v1_psicohistoria_recomendacao_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/persistencia/stats": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Persistencia Stats",
+        "operationId": "endpoint_persistencia_stats_api_v1_psicohistoria_persistencia_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/persistencia/flush": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Persistencia Flush",
+        "operationId": "endpoint_persistencia_flush_api_v1_psicohistoria_persistencia_flush_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/tuner/grid-search": {
+      "post": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Tuner Grid Search",
+        "description": "Onda 25: grid search thresholds classificador sobre trajetória real.",
+        "operationId": "endpoint_tuner_grid_search_api_v1_psicohistoria_tuner_grid_search_post",
+        "parameters": [
+          {
+            "name": "n_grid",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 4,
+              "title": "N Grid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/stream": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Stream Eventos",
+        "description": "Onda 26: SSE stream de eventos psico em tempo real.",
+        "operationId": "endpoint_stream_eventos_api_v1_psicohistoria_stream_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/psicohistoria/backtest-comparativo": {
+      "get": {
+        "tags": [
+          "psicohistoria"
+        ],
+        "summary": "Endpoint Backtest Comparativo",
+        "description": "Onda 27: backtest em todos datasets + comparativo.",
+        "operationId": "endpoint_backtest_comparativo_api_v1_psicohistoria_backtest_comparativo_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/materia/proveniencia": {
+      "post": {
+        "tags": [
+          "proveniencia-backtest"
+        ],
+        "summary": "Endpoint Proveniencia",
+        "operationId": "endpoint_proveniencia_api_v1_materia_proveniencia_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProveReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/backtest/datasets": {
+      "get": {
+        "tags": [
+          "proveniencia-backtest"
+        ],
+        "summary": "Endpoint Listar Datasets",
+        "operationId": "endpoint_listar_datasets_api_v1_backtest_datasets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/backtest/rodar/{dataset}": {
+      "get": {
+        "tags": [
+          "proveniencia-backtest"
+        ],
+        "summary": "Endpoint Backtest",
+        "operationId": "endpoint_backtest_api_v1_backtest_rodar__dataset__get",
+        "parameters": [
+          {
+            "name": "dataset",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset"
+            }
+          },
+          {
+            "name": "n_sims",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "N Sims"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/vila/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Endpoint Health",
+        "description": "Snapshot agregado de todos subsistemas.",
+        "operationId": "endpoint_health_api_v1_vila_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Endpoint Health Api V1 Vila Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grafo/export": {
+      "get": {
+        "tags": [
+          "grafo"
+        ],
+        "summary": "Endpoint Export Grafo",
+        "description": "Export JSON D3-compatible {nodes, links}.",
+        "operationId": "endpoint_export_grafo_api_v1_grafo_export_get",
+        "parameters": [
+          {
+            "name": "limite_nos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 200,
+              "title": "Limite Nos"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/grafo/stats": {
+      "get": {
+        "tags": [
+          "grafo"
+        ],
+        "summary": "Endpoint Stats Grafo",
+        "operationId": "endpoint_stats_grafo_api_v1_grafo_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Endpoint Metrics",
+        "operationId": "endpoint_metrics_metrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AgentesAnomReq": {
+        "properties": {
+          "comportamentos": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Comportamentos"
+          },
+          "n_desvios": {
+            "type": "number",
+            "title": "N Desvios",
+            "default": 2.5
+          }
+        },
+        "type": "object",
+        "required": [
+          "comportamentos"
+        ],
+        "title": "AgentesAnomReq"
+      },
+      "CalibReq": {
+        "properties": {
+          "metodo": {
+            "type": "string",
+            "title": "Metodo",
+            "default": "laplace"
+          },
+          "alpha": {
+            "type": "number",
+            "title": "Alpha",
+            "default": 0.1
+          }
+        },
+        "type": "object",
+        "title": "CalibReq"
+      },
+      "CascadeReq": {
+        "properties": {
+          "sinais": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Sinais"
+          },
+          "prior": {
+            "type": "number",
+            "title": "Prior",
+            "default": 0.5
+          },
+          "precisao": {
+            "type": "number",
+            "title": "Precisao",
+            "default": 0.7
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 42
+          }
+        },
+        "type": "object",
+        "required": [
+          "sinais"
+        ],
+        "title": "CascadeReq"
+      },
+      "ComentarioRequest": {
+        "properties": {
+          "conteudo": {
+            "type": "string",
+            "title": "Conteudo"
+          },
+          "em_resposta_a": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Em Resposta A"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conteudo"
+        ],
+        "title": "ComentarioRequest"
+      },
+      "ComunidadesReq": {
+        "properties": {
+          "adjacencias": {
+            "additionalProperties": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Adjacencias"
+          }
+        },
+        "type": "object",
+        "required": [
+          "adjacencias"
+        ],
+        "title": "ComunidadesReq"
+      },
+      "ContribuicaoRequest": {
+        "properties": {
+          "agente_id": {
+            "type": "string",
+            "title": "Agente Id"
+          },
+          "conteudo": {
+            "type": "string",
+            "title": "Conteudo"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo",
+            "default": "proposta"
+          }
+        },
+        "type": "object",
+        "required": [
+          "agente_id",
+          "conteudo"
+        ],
+        "title": "ContribuicaoRequest"
+      },
+      "DebateRequest": {
+        "properties": {
+          "agente_a": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agente A"
+          },
+          "agente_b": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agente B"
+          },
+          "tema": {
+            "type": "string",
+            "title": "Tema",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "DebateRequest",
+        "description": "Força debate entre dois consultores específicos."
+      },
+      "DeffuantReq": {
+        "properties": {
+          "crencas_inicial": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Crencas Inicial"
+          },
+          "epsilon": {
+            "type": "number",
+            "title": "Epsilon",
+            "default": 0.3
+          },
+          "mu": {
+            "type": "number",
+            "title": "Mu",
+            "default": 0.5
+          },
+          "passos": {
+            "type": "integer",
+            "title": "Passos",
+            "default": 5000
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 42
+          }
+        },
+        "type": "object",
+        "required": [
+          "crencas_inicial"
+        ],
+        "title": "DeffuantReq"
+      },
+      "DegrootReq": {
+        "properties": {
+          "crencas_inicial": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Crencas Inicial"
+          },
+          "W": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "W"
+          },
+          "max_iter": {
+            "type": "integer",
+            "title": "Max Iter",
+            "default": 1000
+          }
+        },
+        "type": "object",
+        "required": [
+          "crencas_inicial",
+          "W"
+        ],
+        "title": "DegrootReq"
+      },
+      "DesafioRequest": {
+        "properties": {
+          "tema": {
+            "type": "string",
+            "title": "Tema",
+            "default": ""
+          },
+          "descricao": {
+            "type": "string",
+            "title": "Descricao",
+            "default": ""
+          },
+          "documento": {
+            "type": "string",
+            "title": "Documento",
+            "default": ""
+          },
+          "steps_por_fase": {
+            "type": "integer",
+            "title": "Steps Por Fase",
+            "default": 100
+          },
+          "desafio_id": {
+            "type": "string",
+            "title": "Desafio Id",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "DesafioRequest"
+      },
+      "DivergenciaReq": {
+        "properties": {
+          "trajetoria_real": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Trajetoria Real"
+          },
+          "estado_inicial": {
+            "type": "string",
+            "title": "Estado Inicial",
+            "default": "bootstrap"
+          },
+          "horizonte": {
+            "type": "integer",
+            "title": "Horizonte",
+            "default": 500
+          }
+        },
+        "type": "object",
+        "required": [
+          "trajetoria_real"
+        ],
+        "title": "DivergenciaReq"
+      },
+      "GrafoReq": {
+        "properties": {
+          "eventos": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eventos"
+          }
+        },
+        "type": "object",
+        "title": "GrafoReq"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InicializarCrencasReq": {
+        "properties": {
+          "agentes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Agentes"
+          },
+          "topico": {
+            "type": "string",
+            "title": "Topico"
+          },
+          "valor_default": {
+            "type": "number",
+            "title": "Valor Default",
+            "default": 0.5
+          },
+          "valores_por_agente": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Valores Por Agente",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "agentes",
+          "topico"
+        ],
+        "title": "InicializarCrencasReq"
+      },
+      "IniciarRequest": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "title": "Nome",
+            "default": "vila_inteia"
+          },
+          "max_agentes": {
+            "type": "integer",
+            "title": "Max Agentes",
+            "default": 140
+          }
+        },
+        "type": "object",
+        "title": "IniciarRequest"
+      },
+      "JogoMatricialReq": {
+        "properties": {
+          "payoffs_a": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Payoffs A",
+            "description": "matriz MxN"
+          },
+          "payoffs_b": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Payoffs B",
+            "description": "matriz MxN"
+          }
+        },
+        "type": "object",
+        "required": [
+          "payoffs_a",
+          "payoffs_b"
+        ],
+        "title": "JogoMatricialReq"
+      },
+      "LancesReq": {
+        "properties": {
+          "lances": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Lances"
+          },
+          "slots": {
+            "type": "integer",
+            "title": "Slots",
+            "default": 1
+          }
+        },
+        "type": "object",
+        "required": [
+          "lances"
+        ],
+        "title": "LancesReq"
+      },
+      "MuleReq": {
+        "properties": {
+          "trajetoria_real": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Trajetoria Real"
+          },
+          "estado_inicial": {
+            "type": "string",
+            "title": "Estado Inicial",
+            "default": "bootstrap"
+          },
+          "z_score": {
+            "type": "number",
+            "title": "Z Score",
+            "default": 3.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "trajetoria_real"
+        ],
+        "title": "MuleReq"
+      },
+      "NashResp": {
+        "properties": {
+          "ne_puros": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Ne Puros"
+          },
+          "ne_misto": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ne Misto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ne_puros"
+        ],
+        "title": "NashResp"
+      },
+      "PlanoReq": {
+        "properties": {
+          "estado_inicial": {
+            "type": "string",
+            "title": "Estado Inicial",
+            "default": "bootstrap"
+          },
+          "horizonte": {
+            "type": "integer",
+            "title": "Horizonte",
+            "default": 500
+          }
+        },
+        "type": "object",
+        "title": "PlanoReq"
+      },
+      "PostEventoRequest": {
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "conteudo": {
+            "type": "string",
+            "title": "Conteudo"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "titulo",
+          "conteudo"
+        ],
+        "title": "PostEventoRequest"
+      },
+      "PostTemaRequest": {
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "conteudo": {
+            "type": "string",
+            "title": "Conteudo",
+            "default": ""
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "titulo"
+        ],
+        "title": "PostTemaRequest"
+      },
+      "PrevReq": {
+        "properties": {
+          "estado_inicial": {
+            "type": "string",
+            "title": "Estado Inicial"
+          },
+          "passos": {
+            "type": "integer",
+            "title": "Passos",
+            "default": 50
+          },
+          "eventos": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eventos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "estado_inicial"
+        ],
+        "title": "PrevReq"
+      },
+      "ProveReq": {
+        "properties": {
+          "materia_id": {
+            "type": "string",
+            "title": "Materia Id"
+          },
+          "traces": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Traces"
+          },
+          "agentes_envolvidos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Agentes Envolvidos",
+            "default": []
+          },
+          "citacoes": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "title": "Citacoes",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "materia_id",
+          "traces"
+        ],
+        "title": "ProveReq"
+      },
+      "PublicGoodsReq": {
+        "properties": {
+          "dotacoes": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Dotacoes"
+          },
+          "contribuicoes": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Contribuicoes"
+          },
+          "mpcr": {
+            "type": "number",
+            "title": "Mpcr",
+            "default": 0.5
+          }
+        },
+        "type": "object",
+        "required": [
+          "dotacoes",
+          "contribuicoes"
+        ],
+        "title": "PublicGoodsReq"
+      },
+      "PublicarMiranteRequest": {
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "corpo": {
+            "type": "string",
+            "title": "Corpo"
+          },
+          "categoria": {
+            "type": "string",
+            "title": "Categoria",
+            "default": "Pesquisa IA"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags",
+            "default": []
+          },
+          "agente_id": {
+            "type": "string",
+            "title": "Agente Id",
+            "default": ""
+          },
+          "agente_nome": {
+            "type": "string",
+            "title": "Agente Nome",
+            "default": "Vila INTEIA"
+          },
+          "auto_push": {
+            "type": "boolean",
+            "title": "Auto Push",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "titulo",
+          "corpo"
+        ],
+        "title": "PublicarMiranteRequest"
+      },
+      "PythonRequest": {
+        "properties": {
+          "agente_id": {
+            "type": "string",
+            "title": "Agente Id"
+          },
+          "codigo": {
+            "type": "string",
+            "title": "Codigo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "agente_id",
+          "codigo"
+        ],
+        "title": "PythonRequest"
+      },
+      "ReacaoRequest": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo",
+            "default": "concordo"
+          }
+        },
+        "type": "object",
+        "title": "ReacaoRequest"
+      },
+      "ReplicatorReq": {
+        "properties": {
+          "populacao_inicial": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Populacao Inicial"
+          },
+          "payoffs": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Payoffs"
+          },
+          "max_iter": {
+            "type": "integer",
+            "title": "Max Iter",
+            "default": 500
+          }
+        },
+        "type": "object",
+        "required": [
+          "populacao_inicial",
+          "payoffs"
+        ],
+        "title": "ReplicatorReq"
+      },
+      "ShapleyReq": {
+        "properties": {
+          "jogadores": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Jogadores"
+          },
+          "coalizoes": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Coalizoes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "jogadores",
+          "coalizoes"
+        ],
+        "title": "ShapleyReq"
+      },
+      "StepRequest": {
+        "properties": {
+          "n_steps": {
+            "type": "integer",
+            "title": "N Steps",
+            "default": 1
+          }
+        },
+        "type": "object",
+        "title": "StepRequest"
+      },
+      "TopicoRequest": {
+        "properties": {
+          "topico": {
+            "type": "string",
+            "title": "Topico"
+          },
+          "importancia": {
+            "type": "integer",
+            "title": "Importancia",
+            "default": 8
+          }
+        },
+        "type": "object",
+        "required": [
+          "topico"
+        ],
+        "title": "TopicoRequest"
+      },
+      "TorneioReq": {
+        "properties": {
+          "estrategias": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Estrategias"
+          },
+          "rodadas": {
+            "type": "integer",
+            "title": "Rodadas",
+            "default": 200
+          }
+        },
+        "type": "object",
+        "required": [
+          "estrategias"
+        ],
+        "title": "TorneioReq"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VotoRequest": {
+        "properties": {
+          "agente_id": {
+            "type": "string",
+            "title": "Agente Id"
+          },
+          "entrega_id": {
+            "type": "string",
+            "title": "Entrega Id"
+          },
+          "favor": {
+            "type": "boolean",
+            "title": "Favor",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "agente_id",
+          "entrega_id"
+        ],
+        "title": "VotoRequest"
+      }
+    }
+  }
+}
