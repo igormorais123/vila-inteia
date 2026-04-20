@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Backtest Comparativo</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    @media (max-width: 900px) { .summary-grid { grid-template-columns: 1fr; } }
+    .ds-tile { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .ds-tile h3 { font-size: var(--text-md); color: var(--amber); margin-bottom: var(--space-2); }
+    .metric-row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; font-family: var(--font-mono); font-size: var(--text-sm); border-bottom: 1px dashed var(--border-subtle); }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-row .val { color: var(--amber); font-weight: var(--weight-semi); }
+    .brier-bar { height: 8px; background: var(--bg-surface-2); border-radius: 999px; overflow: hidden; margin-top: 6px; }
+    .brier-fill { height: 100%; transition: width 400ms; }
+    .good { background: var(--success); }
+    .ok { background: var(--warn); }
+    .bad { background: var(--danger); }
+    .calib-canvas { width: 100%; height: 80px; background: var(--bg-surface-2); border-radius: 4px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">Backtest Comparativo</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">Poder preditivo em 5 datasets históricos (Onda 27)</p>
+      </div>
+      <nav class="u-hstack" style="gap: var(--space-4);">
+        <a href="/dashboard.html" class="u-muted">dashboard</a>
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <div class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Executar todos datasets</h2>
+        <button id="btn-rodar" class="btn btn--primary">Rodar backtest completo</button>
+      </div>
+      <p class="u-muted" style="font-size: var(--text-sm);">
+        Brier: 0 = perfeito · 0.25 = chute aleatório · 1 = maximamente errado.
+        Accuracy: % decisões acertadas (threshold 0.5). Calibration: reliability diagram.
+      </p>
+    </div>
+
+    <section id="results" class="summary-grid"></section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Comparativo agregado</h2>
+      </div>
+      <table class="table" id="tabela-agregada">
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th class="u-right">N</th>
+            <th class="u-right">Brier</th>
+            <th class="u-right">Log-loss</th>
+            <th class="u-right">Accuracy</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api, toast } from '/js/core.js';
+
+    function klasse(brier) {
+      if (brier < 0.15) return 'good';
+      if (brier < 0.25) return 'ok';
+      return 'bad';
+    }
+
+    function renderCalib(canvas, calibration) {
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width = canvas.offsetWidth;
+      const h = canvas.height = 80;
+      ctx.clearRect(0, 0, w, h);
+      // diagonal ideal
+      ctx.strokeStyle = 'rgba(160, 168, 184, 0.3)';
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(w, 0); ctx.stroke();
+      ctx.setLineDash([]);
+      // pontos
+      if (!calibration || calibration.length === 0) return;
+      ctx.fillStyle = '#d69e2e';
+      for (const c of calibration) {
+        const x = c.prob_media * w;
+        const y = h - c.outcome_medio * h;
+        const r = Math.min(10, 3 + c.n * 0.3);
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    document.getElementById('btn-rodar').addEventListener('click', async () => {
+      toast('Rodando backtest em 5 datasets...', { level: 'info' });
+      try {
+        const r = await api.get('/api/v1/psicohistoria/backtest-comparativo');
+        const root = document.getElementById('results');
+        root.innerHTML = r.resultados.map(d => {
+          if (d.erro) return `<div class="ds-tile"><h3>${d.dataset}</h3><p class="u-muted">erro: ${d.erro}</p></div>`;
+          return `
+            <div class="ds-tile">
+              <h3>${d.dataset.replace(/_/g, ' ')}</h3>
+              <div class="metric-row"><span>N eventos</span><span class="val">${d.n_eventos}</span></div>
+              <div class="metric-row"><span>Brier</span><span class="val">${d.brier.toFixed(4)}</span></div>
+              <div class="brier-bar"><div class="brier-fill ${klasse(d.brier)}" style="width: ${Math.min(100, d.brier * 400).toFixed(1)}%"></div></div>
+              <div class="metric-row"><span>Log-loss</span><span class="val">${d.log_loss.toFixed(3)}</span></div>
+              <div class="metric-row"><span>Accuracy</span><span class="val">${(d.accuracy * 100).toFixed(1)}%</span></div>
+              <canvas class="calib-canvas" data-calib='${JSON.stringify(d.calibration)}'></canvas>
+            </div>
+          `;
+        }).join('');
+
+        // tabela
+        const tbody = document.querySelector('#tabela-agregada tbody');
+        tbody.innerHTML = r.resultados.filter(d => !d.erro).map(d => `
+          <tr>
+            <td>${d.dataset}</td>
+            <td class="u-right u-mono">${d.n_eventos}</td>
+            <td class="u-right u-mono">${d.brier.toFixed(4)}</td>
+            <td class="u-right u-mono">${d.log_loss.toFixed(3)}</td>
+            <td class="u-right u-mono">${(d.accuracy * 100).toFixed(1)}%</td>
+          </tr>
+        `).join('');
+
+        // render calibration curves
+        setTimeout(() => {
+          document.querySelectorAll('.calib-canvas').forEach(c => {
+            const calib = JSON.parse(c.dataset.calib);
+            renderCalib(c, calib);
+          });
+        }, 100);
+
+        toast(`${r.n_datasets} datasets avaliados`, { level: 'success' });
+      } catch (e) {
+        toast('Erro: ' + e.message, { level: 'danger' });
+      }
+    });
+  </script>
+</body>
+</html>

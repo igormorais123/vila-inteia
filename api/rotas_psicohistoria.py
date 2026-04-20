@@ -299,3 +299,98 @@ def endpoint_persistencia_stats():
 def endpoint_persistencia_flush():
     from engine.psicohistoria.persistencia import PERSISTENCIA_GLOBAL
     return {"flushed": PERSISTENCIA_GLOBAL.flush()}
+
+
+# =====================================================
+# Ondas 25-27
+# =====================================================
+
+@router.post("/tuner/grid-search")
+def endpoint_tuner_grid_search(n_grid: int = 4):
+    """Onda 25: grid search thresholds classificador sobre trajetória real."""
+    from engine.psicohistoria.tuner_classificador import grid_search_thresholds
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    metricas = RASTREADOR_GLOBAL.trajetoria.metricas_por_step
+    if len(metricas) < 10:
+        return {"erro": "métricas insuficientes", "n_steps": len(metricas)}
+    r = grid_search_thresholds(metricas, n_grid=n_grid)
+    return {
+        "n_testados": r.n_testados,
+        "entropia_default": r.entropia_default,
+        "entropia_otima": r.entropia_otima,
+        "ganho_pct": (r.entropia_otima - r.entropia_default) * 100,
+        "distribuicao_default": r.distribuicao_default,
+        "distribuicao_otima": r.distribuicao_otima,
+        "thresholds_otimos": {
+            "expansao_contribs_min": r.thresholds_otimos.expansao_contribs_min,
+            "expansao_ativos_frac_min": r.thresholds_otimos.expansao_ativos_frac_min,
+            "consenso_fragil_min": r.thresholds_otimos.consenso_fragil_min,
+            "consenso_fragil_max": r.thresholds_otimos.consenso_fragil_max,
+        },
+    }
+
+
+@router.get("/stream")
+async def endpoint_stream_eventos():
+    """Onda 26: SSE stream de eventos psico em tempo real."""
+    from fastapi.responses import StreamingResponse
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    from engine.psicohistoria.auto_calibrador import AUTO_CALIBRADOR_GLOBAL
+    import asyncio
+    import json
+
+    async def gen():
+        ultimo_step = -1
+        ultimo_n_mules = 0
+        ultima_n_calib = 0
+        for _ in range(600):
+            try:
+                estados = RASTREADOR_GLOBAL.trajetoria.estados
+                steps = RASTREADOR_GLOBAL.trajetoria.steps
+                mules = RASTREADOR_GLOBAL.trajetoria.mules_detectados
+                calibs = AUTO_CALIBRADOR_GLOBAL.historico()
+
+                if steps and steps[-1] > ultimo_step:
+                    ultimo_step = steps[-1]
+                    yield f"event: estado\ndata: {json.dumps({'step': steps[-1], 'estado': estados[-1]})}\n\n"
+
+                if len(mules) > ultimo_n_mules:
+                    for m in mules[ultimo_n_mules:]:
+                        yield f"event: mule\ndata: {json.dumps(m)}\n\n"
+                    ultimo_n_mules = len(mules)
+
+                if len(calibs) > ultima_n_calib:
+                    ultima = calibs[-1]
+                    yield f"event: calibracao\ndata: {json.dumps({'step': ultima.step, 'ganho': ultima.perplexity_antes - ultima.perplexity_depois})}\n\n"
+                    ultima_n_calib = len(calibs)
+
+                await asyncio.sleep(0.5)
+            except Exception as e:
+                yield f"event: error\ndata: {json.dumps({'msg': str(e)})}\n\n"
+                break
+
+    return StreamingResponse(gen(), media_type="text/event-stream")
+
+
+@router.get("/backtest-comparativo")
+def endpoint_backtest_comparativo():
+    """Onda 27: backtest em todos datasets + comparativo."""
+    from engine.backtest import rodar_backtest
+    from pathlib import Path
+    base = Path("data/backtest")
+    datasets = [p.stem for p in base.glob("*.csv")]
+    resultados = []
+    for d in datasets:
+        try:
+            r = rodar_backtest(d, n_sims=1)
+            resultados.append({
+                "dataset": r.dataset,
+                "n_eventos": r.n_eventos,
+                "brier": r.brier,
+                "log_loss": r.log_loss,
+                "accuracy": r.accuracy,
+                "calibration": r.calibration,
+            })
+        except Exception as e:
+            resultados.append({"dataset": d, "erro": str(e)})
+    return {"n_datasets": len(resultados), "resultados": resultados}
