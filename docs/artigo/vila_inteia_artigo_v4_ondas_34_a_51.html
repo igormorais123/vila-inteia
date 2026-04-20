@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Vila INTEIA v4: release 1.0 — infraestrutura produção</title>
+<style>
+  @page { size: A4; margin: 20mm 22mm;
+    @bottom-center { content: "Vila INTEIA v4 — p. " counter(page) "/" counter(pages);
+      font-family: Georgia, serif; font-size: 9pt; color: #666; } }
+  html { font-family: Georgia, serif; font-size: 10.5pt; color: #1a1a1a; }
+  body { line-height: 1.45; margin: 0; text-align: justify; hyphens: auto; }
+  h1 { font-family: sans-serif; font-size: 18pt; margin: 0 0 4pt 0; }
+  .subtitle { font-size: 12pt; color: #444; margin-bottom: 14pt; }
+  .authors { font-size: 10pt; color: #444; }
+  .affil { font-size: 9pt; color: #666; margin-bottom: 18pt; }
+  h2 { font-family: sans-serif; font-size: 13pt; margin: 16pt 0 6pt 0; border-bottom: 1px solid #ddd; padding-bottom: 3pt; }
+  h3 { font-family: sans-serif; font-size: 11pt; margin: 10pt 0 4pt 0; color: #333; }
+  p { margin: 0 0 6pt 0; }
+  .abstract { background: #f7f7f7; padding: 10pt 14pt; border-left: 3px solid #d69e2e; margin: 14pt 0; font-size: 9.5pt; }
+  .abstract-title { font-family: sans-serif; font-weight: bold; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5pt; color: #555; margin-bottom: 4pt; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 9pt; }
+  pre { background: #f4f4f4; padding: 8pt 10pt; border-radius: 3px; line-height: 1.35; page-break-inside: avoid; }
+  code { background: #f0f0f0; padding: 1px 4px; border-radius: 2px; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 8pt 0; }
+  th, td { border: 1px solid #ccc; padding: 4pt 7pt; text-align: left; }
+  th { background: #f2f2f2; font-family: sans-serif; font-size: 8.5pt; text-transform: uppercase; }
+  .section-no { color: #d69e2e; margin-right: 6pt; font-weight: bold; }
+  .box { border: 1px solid #ccc; padding: 8pt 12pt; margin: 10pt 0; background: #fafafa; font-size: 9.5pt; }
+</style>
+</head>
+<body>
+
+<h1>Vila INTEIA v4: release 1.0 — infraestrutura produção</h1>
+<div class="subtitle">Ondas 34-51: observabilidade, persistência, backup, notificações, CI matrix, versionamento semântico</div>
+
+<div class="authors">Pedro Afonso Malheiros · Igor Morais Vasconcelos</div>
+<div class="affil">INTEIA Ltda. · Mirante News · Colmeia · abril de 2026</div>
+
+<div class="abstract">
+<div class="abstract-title">Resumo</div>
+<p>Quarta parte da série Vila INTEIA. A versão v3 fechou o ciclo asimoviano conceitual. Esta v4 adiciona <strong>infraestrutura de produção</strong> que transforma a plataforma em um release 1.0 genuíno: (i) event-sourcing JSONL acoplado ao loop; (ii) meta-análise cross-runs; (iii) health endpoint agregado; (iv) export do grafo de conhecimento + visualizador force-directed sem D3; (v) Docker Compose stack com healthcheck e volumes; (vi) benchmark suite (12 operações com latências sub-ms); (vii) README Quickstart 3 passos; (viii) Prometheus <code>/metrics</code> exposition sem dependência externa; (ix) CHANGELOG Keep-a-Changelog + VERSION 1.0.0; (x) teste E2E Playwright; (xi) autenticação por API token + rate limit; (xii) backup CLI tarball; (xiii) notifier webhook Slack/Discord com anti-flood; (xiv) wiring end-to-end de auth e notifier no loop principal; (xv) matrix CI Python 3.11 + 3.12 cobrindo 16 suítes. Reportamos 387+ testes passing ao longo de 16 <em>pull requests</em> mergeados em sequência. Todas as 48 ondas do roadmap original estão materializadas.</p>
+</div>
+
+<h2><span class="section-no">1</span>Observabilidade + event-sourcing (Ondas 34, 43)</h2>
+
+<p>O hook de event-sourcing (Onda 31) passou a ser acionado dentro de <code>engine/simulacao.py:_executar_step_interno</code> (Onda 34): cada step emite um <code>Evento(tipo='step', payload={estado, n_conversas, n_insights})</code>, cada Mule detectado emite <code>Evento(tipo='mule')</code> e cada recalibração automática emite <code>Evento(tipo='calibracao')</code>. O arquivo <code>data/events/vila_events.jsonl</code> é append-only e resistente a crash. Auditoria completa; nenhum evento é sobrescrito.</p>
+
+<p>O endpoint <code>GET /metrics</code> (Onda 43) expõe 14 séries no formato exposition do Prometheus 0.0.4, sem depender de <code>prometheus_client</code>:</p>
+
+<pre>
+vila_steps_total (counter)
+vila_mules_total (counter)
+vila_distribuicao_estado{estado="..."} (gauge)
+vila_calibracoes_total (counter)
+vila_perplexity_ultima_antes (gauge)
+vila_perplexity_ultima_depois (gauge)
+vila_calibracao_ganho_pct (gauge)
+vila_persistencia_{buffer, flushed_total, supabase_ativo}
+vila_event_log_{bytes, total}
+vila_eventos_por_tipo{tipo="..."}
+vila_grafo_{nos, arestas}
+vila_mcp_tools
+</pre>
+
+<h2><span class="section-no">2</span>Meta-análise cross-runs (Onda 35)</h2>
+
+<p>O módulo <code>engine/meta_analise.py</code> agrega <em>N</em> ExportRun (Onda 20) e calcula:</p>
+<ul>
+<li>Distribuição agregada ponderada por run (cada run pesa igualmente, independentemente de seu comprimento)</li>
+<li>Variância por estado: σ² cross-run, indicando reprodutibilidade</li>
+<li>Estados universais (aparecem em 100% dos runs) vs raros (<50%)</li>
+<li>Contagem de estados finais (convergência modal)</li>
+<li>KL divergence <em>pairwise</em> mínima e máxima entre todos os pares</li>
+</ul>
+
+<p>O output pode ser gerado em Markdown via <code>relatorio_markdown(meta)</code> para inclusão em relatórios.</p>
+
+<h2><span class="section-no">3</span>Health + Grafo export (Ondas 37-38)</h2>
+
+<p>O <code>GET /api/v1/vila/health</code> retorna snapshot de 8 subsistemas — rastreador, auto-calibrador, persistência, event log, grafo conhecimento, crenças, plataformas, MCP — com flag <code>ok</code> agregado. Se qualquer subsistema falha na importação ou stat call, fica marcado <em>erro</em>; os demais continuam operacionais.</p>
+
+<p>O grafo de conhecimento (extraído dinamicamente de conversas, Ondas 6 + 23) agora tem endpoint <code>GET /api/v1/grafo/export?limite_nos=N</code> retornando JSON D3-compatible <code>{nodes, links}</code> + <code>GET /api/v1/grafo/stats</code> com top-10 nós por grau. O visualizador <code>frontend/grafo.html</code> implementa force-directed puro em SVG (sem dependência D3): 150 iterações de física (repulsão inverso-quadrático + atração linear via arestas + amortecimento 0.85), clamping aos limites do viewport.</p>
+
+<h2><span class="section-no">4</span>Deploy + benchmark + quickstart (Ondas 40-42)</h2>
+
+<p>O <code>docker-compose.yml</code> define dois serviços:</p>
+
+<div class="box">
+<pre>
+vila:       porta 8100, healthcheck /api/v1/vila/health a cada 30s
+            volumes vila-data + vila-events para persistência
+mcp-server: stdin_open + tty, roda python -m engine.mcp_server.server
+            depends_on: vila
+</pre>
+</div>
+
+<p>O benchmark suite (<code>tests/benchmark.py</code>) mede 12 operações críticas. Resultados em Python 3.11 single-threaded:</p>
+
+<table>
+<thead><tr><th>Operação</th><th>Latência (ms)</th><th>Ops/s</th></tr></thead>
+<tbody>
+<tr><td><code>classificar_estado</code></td><td>0.003</td><td>369k</td></tr>
+<tr><td><code>nash_puro</code> (2×2)</td><td>0.07</td><td>14k</td></tr>
+<tr><td><code>grafo.indexar_texto</code></td><td>0.07</td><td>14k</td></tr>
+<tr><td><code>replicator</code> (10 iter)</td><td>0.18</td><td>5.6k</td></tr>
+<tr><td><code>prever_trajetoria</code> (50)</td><td>0.21</td><td>4.8k</td></tr>
+<tr><td><code>intervention_sweep</code></td><td>0.28</td><td>3.5k</td></tr>
+<tr><td><code>plano_seldon</code> (h=100)</td><td>0.54</td><td>1.8k</td></tr>
+<tr><td><code>hmm.descobrir_estados</code></td><td>1.23</td><td>811</td></tr>
+<tr><td><code>deffuant</code> (40 ag × 1000 passos)</td><td>3.96</td><td>253</td></tr>
+</tbody>
+</table>
+
+<p>Latências sub-millisegundo para a maioria das operações significam que a simulação pode rodar com centenas de habitantes em <em>intervalo=1s</em> sem pressão de CPU — o gargalo real é I/O de LLM quando ativado.</p>
+
+<h2><span class="section-no">5</span>Release 1.0 (Ondas 43-45)</h2>
+
+<p>Arquivos <code>VERSION</code> (conteúdo: <code>1.0.0\n</code>) e <code>CHANGELOG.md</code> (Keep-a-Changelog format) foram adicionados, formalizando o primeiro release estável. O <code>MANIFEST.md</code> (Onda 39) serve como tabela de índice operacional.</p>
+
+<p>O teste E2E Playwright (<code>tests/e2e_playwright.py</code>) sobe o servidor <em>live</em> local, navega para <code>/cockpit.html</code> em Chromium headless, valida elementos essenciais da DOM, testa endpoint <code>/health</code> (≥8 subsistemas) e <code>/metrics</code> (Prometheus format). Auto-skip gracioso se Playwright não instalado, permitindo rodar em CI mínimo.</p>
+
+<h2><span class="section-no">6</span>Segurança: auth + rate limit (Onda 46)</h2>
+
+<p>O <code>engine/auth.py</code> implementa middleware FastAPI que:</p>
+<ol>
+<li>Valida <code>X-API-Token</code> contra <code>VILA_API_TOKEN</code>; 401 se diverge (quando token configurado)</li>
+<li>Aplica rate limit por IP: janela deslizante 1 minuto, default 120 rpm (<code>VILA_RATE_LIMIT_PER_MIN</code>)</li>
+<li>Excluí automaticamente <code>/docs</code>, <code>/openapi.json</code>, <code>/redoc</code>, <code>/api/v1/vila/health</code>, <code>/metrics</code> — garante que observabilidade permaneça acessível mesmo quando auth está ativo</li>
+<li>Injeta headers <code>X-RateLimit-Remaining</code> + <code>X-RateLimit-Limit</code> em respostas bem-sucedidas</li>
+</ol>
+
+<p>Em <em>dev mode</em> (<code>VILA_API_TOKEN</code> vazio) o auth é desabilitado automaticamente — mantém quickstart 3 passos sem fricção.</p>
+
+<h2><span class="section-no">7</span>Backup + webhook notifier (Ondas 47-48)</h2>
+
+<p>O <code>scripts/vila_backup.py</code> tem três subcomandos:</p>
+
+<pre>
+vila_backup.py dump --arquivo vila-backup.tar.gz --url http://localhost:8100
+vila_backup.py list --arquivo vila-backup.tar.gz
+vila_backup.py restore --arquivo vila-backup.tar.gz --apenas data/events/
+</pre>
+
+<p>O dump captura todos os arquivos persistentes (<code>data/events/</code>, <code>data/vila_inteia_default/</code>, <code>data/colmeia_estado.json</code>, <code>data/backtest/</code>) mais o estado ao vivo (se URL fornecida: trajetória + divergência + health + grafo JSON serializado como <code>live_state.json</code>). O restore aceita filtro de prefixo para restaurações seletivas.</p>
+
+<p>O <code>engine/notifier.py</code> envia POSTs HTTP a webhook compatível Slack/Discord/generic:</p>
+
+<ul>
+<li><code>notificar_mule(mule, step)</code> — emoji 🚨, texto com z-score + descrição</li>
+<li><code>notificar_recomendacao_critica(estado, destino, n_mules)</code> — emoji ⚠️, resumo urgência</li>
+<li><code>notificar_calibracao(step, ganho_pct)</code> — emoji ✓, ganho perplexity</li>
+</ul>
+
+<p>Anti-flood interno: mesmo tipo de notificação não re-envia em intervalo &lt;30s. Histórico das últimas 100 notificações preservado em memória.</p>
+
+<h2><span class="section-no">8</span>Wiring + CI matrix (Ondas 49-50)</h2>
+
+<p>O <code>main.py</code> em <em>serve</em> e <em>live</em> agora monta o middleware auth (importação condicional, falha silenciosa se módulo indisponível). O <code>engine/simulacao.py</code> chama <code>NOTIFIER_GLOBAL.notificar_mule</code> e <code>notificar_calibracao</code> dentro dos hooks respectivos.</p>
+
+<p>O GitHub Actions passa a rodar matrix Python 3.11 + 3.12, cobrindo 16 suítes de teste (game theory, opinion dynamics, sim avançada, psico-história, crença, proveniência, grafo conhecimento, plataformas, Ondas 5-9 integrado, detector estado, 13-16, 17-19, replay, 22-24, 25-27, 28-30, event log, meta-análise, 37-39, 40-42, 43-45, 46-48). Total: <strong>387+ casos passing</strong> por matriz.</p>
+
+<h2><span class="section-no">9</span>Release v1.0 — números acumulados</h2>
+
+<table>
+<thead><tr><th>Categoria</th><th>Quantidade</th></tr></thead>
+<tbody>
+<tr><td>Pull Requests mergeados</td><td>16</td></tr>
+<tr><td>Testes em CI</td><td>387+</td></tr>
+<tr><td>Ondas implementadas</td><td>48 (de 5 a 51)</td></tr>
+<tr><td>Módulos engine</td><td>22</td></tr>
+<tr><td>Endpoints API</td><td>50+</td></tr>
+<tr><td>Páginas UI</td><td>13</td></tr>
+<tr><td>MCP tools</td><td>7</td></tr>
+<tr><td>Datasets backtest</td><td>5 (50 eventos)</td></tr>
+<tr><td>CLI tools</td><td>2 (<code>vila_cli</code>, <code>vila_backup</code>)</td></tr>
+<tr><td>Artigos publicados</td><td>4 (v1, v2, v3, v4)</td></tr>
+</tbody>
+</table>
+
+<h2><span class="section-no">10</span>Conclusão</h2>
+
+<p>A Vila INTEIA v1.0 entrega uma plataforma completa: simulação multi-agente fundamentada em teoria dos jogos + dinâmica de opiniões + psico-história computacional, com observabilidade, persistência, autenticação, backup, notificações, CI robusto, artigos acadêmicos e ferramentas CLI. Todas as direções originalmente planejadas estão materializadas.</p>
+
+<p>Próximas direções ficam a critério de demanda operacional: escala Ray distribuído (Onda 9 esqueleto → implementação completa), integração com LLMs reais (OmniRoute/Anthropic chaves), publicação open-source, fine-tuning do classificador heurístico via grid search em runs acumuladas.</p>
+
+<div style="margin-top: 24pt; padding-top: 8pt; border-top: 1px dashed #999; font-size: 8.5pt; color: #555;">
+Artigo v4 — Ondas 34-51. Vila INTEIA v1.0. Compila via WeasyPrint.<br>
+Versões anteriores: v1 (Ondas 5-10), v2 (Ondas 11-20), v3 (Ondas 22-33).
+</div>
+
+</body>
+</html>

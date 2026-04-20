@@ -8,17 +8,21 @@ on:
 
 jobs:
   pytest-engine:
-    name: Engine tests
+    name: Engine tests (py ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
           cache: pip
 
       - name: Install dependencies
@@ -64,6 +68,58 @@ jobs:
       - name: Run Ondas 5-9 — integrado
         env: { PYTHONPATH: "." }
         run: python tests/test_ondas_5_a_9.py
+
+      - name: Run Onda 11 — detector estado
+        env: { PYTHONPATH: "." }
+        run: python tests/test_detector_estado_vila.py
+
+      - name: Run Ondas 13-16
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_13_a_16.py
+
+      - name: Run Ondas 17-19
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_17_19.py
+
+      - name: Run Onda 20 replay
+        env: { PYTHONPATH: "." }
+        run: python tests/test_replay.py
+
+      - name: Run Ondas 22-24
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_22_24.py
+
+      - name: Run Ondas 25-27
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_25_27.py
+
+      - name: Run Ondas 28-30
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_28_30.py
+
+      - name: Run Onda 31 event log
+        env: { PYTHONPATH: "." }
+        run: python tests/test_event_log.py
+
+      - name: Run Onda 35 meta-análise
+        env: { PYTHONPATH: "." }
+        run: python tests/test_meta_analise.py
+
+      - name: Run Ondas 37-39
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_37_39.py
+
+      - name: Run Ondas 40-42
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_40_42.py
+
+      - name: Run Ondas 43-45
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_43_45.py
+
+      - name: Run Ondas 46-48
+        env: { PYTHONPATH: "." }
+        run: python tests/test_ondas_46_48.py
 
   syntax-check:
     name: Python syntax check
