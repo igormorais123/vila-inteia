@@ -180,6 +180,13 @@ class SimulacaoVila:
         # Distribuir agentes pelos locais iniciais
         self._distribuir_inicial()
 
+        # Onda 64/65: inicializa tier gate LLM com IDs dos agentes
+        try:
+            from engine.llm_tier_gate import TIER_GATE_GLOBAL
+            TIER_GATE_GLOBAL.inicializar([p.id for p in self.personas.values()])
+        except Exception:
+            pass
+
         self.log(
             f"Simulação '{self.nome}' inicializada com "
             f"{len(self.personas)} agentes"
@@ -214,6 +221,12 @@ class SimulacaoVila:
     def _executar_step_interno(self) -> dict:
         """Execução real do step (protegida por lock)."""
         self.step += 1
+        # Onda 64/65: rotaciona hot tier periódico
+        try:
+            from engine.llm_tier_gate import TIER_GATE_GLOBAL
+            TIER_GATE_GLOBAL.talvez_rotacionar(self.step)
+        except Exception:
+            pass
         resumo_step = {
             "step": self.step,
             "hora": self.hora_atual.strftime("%Y-%m-%d %H:%M"),
