@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Cockpit Unificado</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    body { min-height: 100vh; }
+    .cockpit {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 48px 1fr;
+      height: 100vh;
+    }
+    .topbar {
+      grid-column: 1 / -1;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-5);
+      gap: var(--space-5);
+    }
+    .topbar__title { font-size: var(--text-md); font-weight: var(--weight-semi); color: var(--amber); }
+    .pulse-live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .sidebar {
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      overflow-y: auto;
+      padding: var(--space-4);
+    }
+    .sidebar__section { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5pt; margin: var(--space-4) 0 var(--space-2); }
+    .sidebar__section:first-child { margin-top: 0; }
+    .metric {
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .metric:last-child { border: none; }
+    .metric__label { font-size: var(--text-xs); color: var(--text-muted); }
+    .metric__value { font-family: var(--font-mono); color: var(--amber); font-weight: var(--weight-semi); }
+    .main-area { overflow-y: auto; padding: var(--space-4); display: grid; gap: var(--space-4); grid-auto-rows: min-content; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 1100px) { .grid-2 { grid-template-columns: 1fr; } }
+    #timeline-svg { width: 100%; height: 200px; background: var(--bg-surface-2); border-radius: 4px; }
+    .tab-bar { display: flex; gap: var(--space-2); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--space-3); }
+    .tab { padding: var(--space-2) var(--space-4); cursor: pointer; border: none; background: none; color: var(--text-muted); font-size: var(--text-sm); border-bottom: 2px solid transparent; transition: color 120ms, border-color 120ms; }
+    .tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .event-log { font-family: var(--font-mono); font-size: var(--text-xs); max-height: 180px; overflow-y: auto; background: var(--bg-surface-2); padding: var(--space-2); border-radius: 4px; }
+    .event { padding: 2px 4px; border-left: 2px solid var(--border-subtle); margin-bottom: 2px; }
+    .event.estado { border-left-color: var(--success); }
+    .event.mule { border-left-color: var(--danger); }
+    .event.calibracao { border-left-color: var(--amber); }
+    .urg-alta { color: var(--danger); font-weight: 600; }
+    .urg-critica { color: var(--danger); font-weight: 700; }
+    .urg-media { color: var(--warn); }
+    .urg-baixa { color: var(--success); }
+  </style>
+</head>
+<body>
+  <div class="cockpit">
+    <header class="topbar">
+      <div class="topbar__title">Vila INTEIA — Cockpit</div>
+      <div class="u-hstack" style="gap: var(--space-3);">
+        <span class="pulse-live"></span>
+        <span id="topbar-status" class="u-muted" style="font-size: var(--text-xs);">polling 2s</span>
+      </div>
+      <div class="u-hstack" style="margin-left: auto; gap: var(--space-4); font-size: var(--text-sm);">
+        <span id="topbar-step" class="u-mono u-amber">step —</span>
+        <span id="topbar-estado" class="u-mono">—</span>
+        <a href="/" class="u-muted">Vila</a>
+        <a href="/dashboard.html" class="u-muted">Dashboard</a>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="sidebar__section">Psico-História</div>
+      <div class="metric"><span class="metric__label">Estado</span><span id="m-estado" class="metric__value">—</span></div>
+      <div class="metric"><span class="metric__label">Destino</span><span id="m-destino" class="metric__value">—</span></div>
+      <div class="metric"><span class="metric__label">Steps</span><span id="m-steps" class="metric__value">0</span></div>
+      <div class="metric"><span class="metric__label">KL</span><span id="m-kl" class="metric__value">—</span></div>
+
+      <div class="sidebar__section">Recomendação Helena</div>
+      <div class="metric"><span class="metric__label">Urgência</span><span id="m-urg" class="metric__value">—</span></div>
+      <div style="font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-2);" id="m-acao">—</div>
+
+      <div class="sidebar__section">Sistema</div>
+      <div class="metric"><span class="metric__label">Mules</span><span id="m-mules" class="metric__value">0</span></div>
+      <div class="metric"><span class="metric__label">Calibrações</span><span id="m-calib" class="metric__value">0</span></div>
+      <div class="metric"><span class="metric__label">Supabase</span><span id="m-supa" class="metric__value">—</span></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="panel">
+        <div class="tab-bar">
+          <button class="tab active" data-tab="timeline">Timeline</button>
+          <button class="tab" data-tab="stream">Stream Live</button>
+          <button class="tab" data-tab="backtest">Backtest</button>
+          <button class="tab" data-tab="links">Páginas</button>
+        </div>
+
+        <div class="tab-content active" data-tab="timeline">
+          <svg id="timeline-svg" viewBox="0 0 800 200" aria-label="Timeline"></svg>
+          <div id="legend" class="u-muted" style="font-size: var(--text-xs); margin-top: var(--space-2);"></div>
+        </div>
+
+        <div class="tab-content" data-tab="stream">
+          <div id="stream-events" class="event-log"></div>
+        </div>
+
+        <div class="tab-content" data-tab="backtest">
+          <button id="btn-bt" class="btn btn--primary">Rodar backtest em todos datasets</button>
+          <table class="table" style="margin-top: var(--space-3);">
+            <thead><tr><th>Dataset</th><th class="u-right">Brier</th><th class="u-right">Acc</th></tr></thead>
+            <tbody id="bt-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="tab-content" data-tab="links">
+          <div class="grid-2">
+            <a href="/psicohistoria.html" class="btn">Psico-História (teoria)</a>
+            <a href="/psico_live.html" class="btn">Psico ao Vivo</a>
+            <a href="/psico_avancado.html" class="btn">Psico Avançado (calibração/HMM)</a>
+            <a href="/backtest.html" class="btn">Backtest Comparativo</a>
+            <a href="/gametheory.html" class="btn">Game Theory</a>
+            <a href="/opinioes.html" class="btn">Opinion Dynamics</a>
+            <a href="/coalizoes.html" class="btn">Coalizões</a>
+            <a href="/dashboard.html" class="btn">Dashboard geral</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h2 class="panel__title">Distribuição histórica</h2>
+          <div id="distrib" style="margin-top: var(--space-3);"></div>
+        </div>
+        <div class="panel">
+          <h2 class="panel__title">Mules recentes</h2>
+          <div id="mules-list" class="event-log"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { api } from '/js/core.js';
+
+    const CORES = {
+      bootstrap: '#94a3b8', recrutamento: '#60a5fa', expansao: '#4ade80',
+      consenso_fragil: '#fbbf24', polarizacao: '#f87171',
+      crise_economica: '#dc2626', renovacao_constituinte: '#a78bfa',
+      equilibrio: '#d69e2e',
+    };
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelector(`.tab-content[data-tab="${btn.dataset.tab}"]`).classList.add('active');
+      });
+    });
+
+    function renderTimeline(estados, steps) {
+      const svg = document.getElementById('timeline-svg');
+      svg.innerHTML = '';
+      if (!estados.length) return;
+      const W = 800, H = 200, padL = 100, padB = 10, padT = 10;
+      const ordem = Object.keys(CORES);
+      const rowH = (H - padT - padB) / ordem.length;
+      const colW = (W - padL) / Math.max(1, estados.length);
+
+      ordem.forEach((e, i) => {
+        const y = padT + i * rowH + rowH / 2;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', padL - 4); t.setAttribute('y', y + 3);
+        t.setAttribute('fill', 'var(--text-muted)');
+        t.setAttribute('font-size', '9');
+        t.setAttribute('text-anchor', 'end');
+        t.textContent = e.replace(/_/g, ' ');
+        svg.appendChild(t);
+      });
+
+      estados.forEach((e, i) => {
+        const idx = ordem.indexOf(e);
+        if (idx < 0) return;
+        const x = padL + i * colW + colW / 2;
+        const y = padT + idx * rowH + rowH / 2;
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 2.5);
+        c.setAttribute('fill', CORES[e] || 'var(--text-muted)');
+        svg.appendChild(c);
+      });
+    }
+
+    function renderDistrib(obj) {
+      const total = Object.values(obj).reduce((a, b) => a + b, 0) || 1;
+      const rows = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+      document.getElementById('distrib').innerHTML = rows.map(([k, v]) => `
+        <div style="display:grid;grid-template-columns:150px 1fr 50px;align-items:center;gap:10px;padding:4px 0;font-family:var(--font-mono);font-size:var(--text-xs);">
+          <div>${k}</div>
+          <div style="height:6px;background:var(--bg-surface-2);border-radius:999px;overflow:hidden;"><div style="width:${(v*100).toFixed(1)}%;height:100%;background:${CORES[k]||'var(--amber)'};"></div></div>
+          <div class="u-right">${(v*100).toFixed(1)}%</div>
+        </div>
+      `).join('') || '<p class="u-muted">sem dados</p>';
+    }
+
+    async function tick() {
+      try {
+        const traj = await api.get('/api/v1/psicohistoria/trajetoria-atual?janela=150');
+        const div = await api.get('/api/v1/psicohistoria/divergencia-atual');
+        const rec = await api.get('/api/v1/psicohistoria/recomendacao');
+        const mules = await api.get('/api/v1/psicohistoria/mules-detectados');
+        const persist = await api.get('/api/v1/psicohistoria/persistencia/stats');
+
+        document.getElementById('topbar-step').textContent = `step ${traj.n_steps_rastreados}`;
+        document.getElementById('topbar-estado').textContent = traj.ultimo_estado;
+        document.getElementById('m-estado').textContent = traj.ultimo_estado;
+        document.getElementById('m-destino').textContent = div.destino_planejado || '—';
+        document.getElementById('m-steps').textContent = traj.n_steps_rastreados;
+        document.getElementById('m-kl').textContent = div.divergencia_kl_media != null ? div.divergencia_kl_media.toFixed(2) : '—';
+        const urg = rec.urgencia || '—';
+        const urgEl = document.getElementById('m-urg');
+        urgEl.textContent = urg;
+        urgEl.className = 'metric__value urg-' + urg.replace('é', 'e');
+        document.getElementById('m-acao').textContent = rec.acao_recomendada || '—';
+        document.getElementById('m-mules').textContent = mules.n_mules;
+        document.getElementById('m-supa').textContent = persist.supabase_ativo ? 'on' : 'off';
+
+        renderTimeline(traj.estados, traj.steps);
+        renderDistrib(traj.distribuicao_historica);
+
+        if (mules.mules_recentes && mules.mules_recentes.length) {
+          document.getElementById('mules-list').innerHTML = mules.mules_recentes.slice(-10).map(m =>
+            `<div class="event mule">step ${m.passo || '?'} · z=${(m.z_score || 0).toFixed(2)} · ${(m.descricao || '').slice(0,70)}</div>`
+          ).join('');
+        } else {
+          document.getElementById('mules-list').innerHTML = '<div class="u-muted">Nenhum Mule detectado</div>';
+        }
+
+        document.getElementById('topbar-status').textContent = 'conectado · polling 2s';
+      } catch (e) {
+        document.getElementById('topbar-status').textContent = 'backend offline';
+      }
+    }
+
+    // Stream via SSE
+    let es = null;
+    function iniciarStream() {
+      if (es) es.close();
+      es = new EventSource('/api/v1/psicohistoria/stream');
+      const log = document.getElementById('stream-events');
+      const addEvent = (tipo, data) => {
+        const d = document.createElement('div');
+        d.className = `event ${tipo}`;
+        d.textContent = `[${tipo}] ${JSON.stringify(data).slice(0, 90)}`;
+        log.insertBefore(d, log.firstChild);
+        while (log.children.length > 30) log.removeChild(log.lastChild);
+      };
+      es.addEventListener('estado', (ev) => addEvent('estado', JSON.parse(ev.data)));
+      es.addEventListener('mule', (ev) => addEvent('mule', JSON.parse(ev.data)));
+      es.addEventListener('calibracao', (ev) => addEvent('calibracao', JSON.parse(ev.data)));
+    }
+
+    // Backtest
+    document.getElementById('btn-bt').addEventListener('click', async () => {
+      const r = await api.get('/api/v1/psicohistoria/backtest-comparativo');
+      document.getElementById('bt-tbody').innerHTML = r.resultados.map(d => {
+        if (d.erro) return `<tr><td>${d.dataset}</td><td colspan="2">erro</td></tr>`;
+        return `<tr><td>${d.dataset.replace(/_/g,' ')}</td><td class="u-right u-mono">${d.brier.toFixed(3)}</td><td class="u-right u-mono">${(d.accuracy*100).toFixed(1)}%</td></tr>`;
+      }).join('');
+    });
+
+    tick();
+    iniciarStream();
+    setInterval(tick, 2000);
+  </script>
+</body>
+</html>
