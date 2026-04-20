@@ -602,8 +602,8 @@ class SimulacaoVila:
             from engine.psicohistoria.detector_estado_vila import (
                 RASTREADOR_GLOBAL, MetricasStep,
             )
-            ativos = [p for p in self.personas.values() if p.ativo]
-            latentes = [p for p in self.personas.values() if not p.ativo]
+            ativos = [p for p in self.personas.values() if getattr(p, "ativo", True)]
+            latentes = [p for p in self.personas.values() if not getattr(p, "ativo", True)]
             polar = 0.0
             try:
                 from engine.cognitivo.crenca import TRACKER_GLOBAL
@@ -624,7 +624,7 @@ class SimulacaoVila:
                 pass
             metricas = MetricasStep(
                 step=self.step,
-                n_conversas=n_conversas,
+                n_conversas=len(resumo_step.get("conversas", [])),
                 n_reflexoes=len(resumo_step.get("insights", [])),
                 n_agentes_ativos=len(ativos),
                 n_agentes_latentes=len(latentes),
@@ -642,8 +642,12 @@ class SimulacaoVila:
                 mules = RASTREADOR_GLOBAL.detectar_mules_recentes(janela=20, z_score=2.5)
                 if mules:
                     resumo_step["mules_detectados"] = mules
-        except Exception:
-            pass
+        except Exception as _e_onda11:
+            # Log mas não quebra fluxo
+            import logging
+            logging.getLogger("vila.onda11").warning(
+                f"psicohistoria hook falhou: {type(_e_onda11).__name__}: {_e_onda11}"
+            )
 
         # Auto-save
         if self.step % config.auto_save_intervalo == 0:

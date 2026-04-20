@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Psico-História ao Vivo</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--success); margin-right: 6px; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-4); }
+    @media (max-width: 960px) { .grid-2 { grid-template-columns: 1fr; } }
+    #timeline { width: 100%; height: 260px; }
+    .state-cell { display: inline-block; width: 10px; height: 10px; margin: 1px; border-radius: 2px; }
+    .kpi { display: flex; align-items: baseline; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+    .kpi:last-child { border-bottom: none; }
+    .kpi__label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5pt; flex: 0 0 140px; }
+    .kpi__value { font-size: var(--text-md); font-weight: var(--weight-semi); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .kpi__value.amber { color: var(--amber); }
+    .mule-event { padding: var(--space-2) var(--space-3); border-left: 2px solid var(--danger); margin-bottom: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); background: rgba(248, 113, 113, 0.05); border-radius: 0 4px 4px 0; }
+    .distrib-row { display: grid; grid-template-columns: 160px 1fr 50px; align-items: center; gap: 10px; padding: 4px 0; font-family: var(--font-mono); font-size: var(--text-xs); }
+    .distrib-bar { height: 6px; background: var(--bg-surface-2); border-radius: 999px; overflow: hidden; }
+    .distrib-fill { height: 100%; background: var(--amber); }
+    .status-on { color: var(--success); }
+    .status-off { color: var(--text-muted); }
+    .info { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: var(--space-3); font-size: var(--text-sm); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1 style="font-size: var(--text-2xl);">Psico-História ao Vivo</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);">
+          <span id="pulse-indicator" class="pulse"></span>
+          <span id="pulse-label">polling a cada 3s</span>
+        </p>
+      </div>
+      <nav class="u-hstack" style="gap: var(--space-4);">
+        <a href="/psicohistoria.html" class="u-muted">teoria</a>
+        <a href="/dashboard.html" class="u-muted">dashboard</a>
+        <a href="/" class="u-muted">← Vila</a>
+      </nav>
+    </header>
+
+    <div class="info">
+      Esta página mostra a trajetória <strong>real observada</strong> da simulação em execução,
+      comparada contra o <strong>Plano de Seldon</strong> calculado analiticamente.
+      Mules (anomalias) são detectados automaticamente a cada 20 steps.
+      Requer <code>python main.py live</code> rodando no backend.
+    </div>
+
+    <section class="grid-2">
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Timeline de estados</h2>
+          <span id="badge-steps" class="badge badge--amber">0 steps</span>
+        </div>
+        <svg id="timeline" viewBox="0 0 800 260" role="img" aria-label="Timeline estados"></svg>
+        <div id="timeline-legenda" style="margin-top: 8px; font-size: 11px;"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__header">
+          <h2 class="panel__title">Métricas atuais</h2>
+        </div>
+        <div id="kpis">
+          <div class="kpi"><div class="kpi__label">Estado atual</div><div id="kpi-estado" class="kpi__value amber">—</div></div>
+          <div class="kpi"><div class="kpi__label">Destino planejado</div><div id="kpi-dest" class="kpi__value">—</div></div>
+          <div class="kpi"><div class="kpi__label">Divergência KL</div><div id="kpi-kl" class="kpi__value">—</div></div>
+          <div class="kpi"><div class="kpi__label">Frac. divergente</div><div id="kpi-fd" class="kpi__value">—</div></div>
+          <div class="kpi"><div class="kpi__label">Primeiro desvio</div><div id="kpi-fd-step" class="kpi__value">—</div></div>
+          <div class="kpi"><div class="kpi__label">Mules totais</div><div id="kpi-mules" class="kpi__value">0</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Distribuição histórica de estados</h2>
+      </div>
+      <div id="distrib"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel__header">
+        <h2 class="panel__title">Mules detectados</h2>
+      </div>
+      <div id="mules-list" class="u-muted" style="font-size: 13px;">
+        Nenhum Mule detectado ainda.
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { api } from '/js/core.js';
+
+    const CORES = {
+      bootstrap:              '#94a3b8',
+      recrutamento:           '#60a5fa',
+      expansao:               '#4ade80',
+      consenso_fragil:        '#fbbf24',
+      polarizacao:            '#f87171',
+      crise_economica:        '#dc2626',
+      renovacao_constituinte: '#a78bfa',
+      equilibrio:             '#d69e2e',
+    };
+
+    function renderTimeline(svg, estados, steps) {
+      svg.innerHTML = '';
+      const W = 800, H = 260, padL = 40, padB = 20, padT = 10;
+      if (estados.length === 0) {
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', W / 2); t.setAttribute('y', H / 2);
+        t.setAttribute('fill', 'var(--text-muted)');
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-size', '14');
+        t.textContent = 'Aguardando simulação rodar...';
+        svg.appendChild(t); return;
+      }
+
+      // Banda horizontal por estado (categoria ordinal)
+      const estadosOrdem = Object.keys(CORES);
+      const rowH = (H - padT - padB) / estadosOrdem.length;
+      const colW = (W - padL) / Math.max(1, estados.length);
+
+      // Grade de labels
+      estadosOrdem.forEach((e, i) => {
+        const y = padT + i * rowH + rowH / 2;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', padL - 4); t.setAttribute('y', y + 3);
+        t.setAttribute('fill', 'var(--text-muted)');
+        t.setAttribute('font-size', '9');
+        t.setAttribute('text-anchor', 'end');
+        t.textContent = e.replace(/_/g, ' ');
+        svg.appendChild(t);
+      });
+
+      // Pontos + linhas
+      let pathD = '';
+      estados.forEach((e, i) => {
+        const idx = estadosOrdem.indexOf(e);
+        const x = padL + i * colW + colW / 2;
+        const y = padT + idx * rowH + rowH / 2;
+        pathD += (i === 0 ? 'M' : 'L') + `${x.toFixed(1)},${y.toFixed(1)} `;
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 3);
+        c.setAttribute('fill', CORES[e] || 'var(--text-muted)');
+        svg.appendChild(c);
+      });
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathD);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'var(--amber)');
+      path.setAttribute('stroke-opacity', '0.4');
+      path.setAttribute('stroke-width', '1');
+      svg.insertBefore(path, svg.firstChild);
+    }
+
+    function renderDistrib(obj) {
+      const total = Object.values(obj).reduce((a, b) => a + b, 0) || 1;
+      const rows = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+      document.getElementById('distrib').innerHTML = rows.map(([k, v]) => `
+        <div class="distrib-row">
+          <div>${k}</div>
+          <div class="distrib-bar"><div class="distrib-fill" style="width: ${(v * 100).toFixed(1)}%; background: ${CORES[k] || 'var(--amber)'}"></div></div>
+          <div class="u-right">${(v * 100).toFixed(1)}%</div>
+        </div>
+      `).join('') || '<p class="u-muted">sem dados</p>';
+    }
+
+    async function tick() {
+      try {
+        const traj = await api.get('/api/v1/psicohistoria/trajetoria-atual?janela=100');
+        const div = await api.get('/api/v1/psicohistoria/divergencia-atual');
+        const mules = await api.get('/api/v1/psicohistoria/mules-detectados');
+
+        document.getElementById('badge-steps').textContent = `${traj.n_steps_rastreados} steps`;
+        document.getElementById('kpi-estado').textContent = traj.ultimo_estado;
+        renderTimeline(document.getElementById('timeline'), traj.estados, traj.steps);
+        renderDistrib(traj.distribuicao_historica);
+
+        document.getElementById('kpi-dest').textContent = div.destino_planejado || '—';
+        document.getElementById('kpi-kl').textContent = div.divergencia_kl_media != null ?
+          div.divergencia_kl_media.toFixed(3) : '—';
+        document.getElementById('kpi-fd').textContent = div.fracao_divergente != null ?
+          (div.fracao_divergente * 100).toFixed(1) + '%' : '—';
+        document.getElementById('kpi-fd-step').textContent = div.primeiro_desvio != null && div.primeiro_desvio >= 0 ?
+          `step ${div.primeiro_desvio}` : '—';
+
+        document.getElementById('kpi-mules').textContent = mules.n_mules;
+        if (mules.mules_recentes && mules.mules_recentes.length) {
+          document.getElementById('mules-list').innerHTML = mules.mules_recentes.map(m => `
+            <div class="mule-event">
+              passo ${m.passo_relativo} · z=${m.z_score.toFixed(2)} · ${m.descricao}
+            </div>
+          `).join('');
+        }
+
+        document.getElementById('pulse-label').textContent = 'conectado · polling 3s';
+      } catch (e) {
+        document.getElementById('pulse-label').textContent = 'backend offline — polling 3s';
+        console.error('polling error:', e);
+      }
+    }
+
+    tick();
+    setInterval(tick, 3000);
+  </script>
+</body>
+</html>
