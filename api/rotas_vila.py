@@ -32,13 +32,19 @@ _sim_lock = threading.Lock()
 
 
 def obter_simulacao() -> SimulacaoVila:
-    """Retorna a simulação ativa ou cria uma nova."""
+    """Retorna a simulação ativa ou cria uma nova.
+
+    Onda 73: env VILA_MAX_AGENTES limita N personas (default 140 = todos).
+    Pra rodar sim com LLM real menos lenta, usar 20-40.
+    """
     global simulacao
     if simulacao is None:
         with _sim_lock:
             if simulacao is None:
+                import os as _os
+                max_ag = int(_os.getenv("VILA_MAX_AGENTES", "140"))
                 simulacao = SimulacaoVila(nome="vila_inteia_default")
-                simulacao.inicializar()
+                simulacao.inicializar(max_agentes=max_ag)
     return simulacao
 
 
@@ -184,6 +190,71 @@ async def conversas_recentes(limite: int = Query(10, ge=1, le=50)):
     return {
         "total": len(sim.conversas_recentes),
         "conversas": sim.conversas_recentes[-limite:],
+    }
+
+
+@router.get("/conversas/llm-only")
+async def conversas_llm_only(limite: int = Query(20, ge=1, le=100)):
+    """
+    Lista conversas com 4+ turnos (heurística simples = 2-3 turnos).
+    Conversas LLM têm 4-5 turnos com conteúdo rico, heurísticas template
+    têm 3 turnos curtos com 'Como eu sempre digo: ...'.
+    """
+    sim = obter_simulacao()
+    convs = sim.conversas_recentes[-limite * 3:]   # filtra mais ampla
+    llm_convs = []
+    for c in convs:
+        turnos = c.get("turnos", [])
+        if len(turnos) >= 4:
+            # Filtra heurísticas com template
+            tem_template = any(
+                isinstance(t, list) and len(t) >= 2
+                and "Como eu sempre digo" in str(t[1])
+                for t in turnos
+            )
+            if not tem_template:
+                llm_convs.append({
+                    "parceiro_nome": c.get("parceiro_nome"),
+                    "tema": c.get("topico"),
+                    "tipo_relacao": c.get("tipo_relacao"),
+                    "local": c.get("local_id"),
+                    "n_turnos": len(turnos),
+                    "turnos": turnos,
+                })
+        if len(llm_convs) >= limite:
+            break
+    return {
+        "total_filtradas": len(llm_convs),
+        "conversas_llm": llm_convs,
+    }
+
+
+@router.get("/conversas/dialogo/{indice}")
+async def conversa_dialogo(indice: int):
+    """Retorna conversa N como diálogo formatado markdown."""
+    sim = obter_simulacao()
+    if indice >= len(sim.conversas_recentes) or indice < 0:
+        return {"erro": "índice fora do range"}
+    c = sim.conversas_recentes[indice]
+    linhas = [
+        f"# Conversa #{indice}",
+        "",
+        f"**{c.get('turnos', [['?',''], '?'])[0][0] if c.get('turnos') else '?'}** ↔ **{c.get('parceiro_nome', '?')}**",
+        f"",
+        f"- Tema: {c.get('topico', '')}",
+        f"- Relação: {c.get('tipo_relacao', '')}",
+        f"- Local: {c.get('local_id', '')}",
+        "",
+        "## Turnos",
+        "",
+    ]
+    for t in c.get("turnos", []):
+        if isinstance(t, list) and len(t) >= 2:
+            linhas.append(f"**{t[0]}**: {t[1]}")
+            linhas.append("")
+    return {
+        "markdown": "\n".join(linhas),
+        "raw": c,
     }
 
 
