@@ -32,23 +32,44 @@ from engine.backtest_acc import rodar_backtest_acc
 _KEYWORDS_POS = [
     "aprovada", "aprovado", "confirmad", "vitória", "vitoria",
     "supera", "atinge", "viralizar", "viral", "eleito",
+    "massivo", "robusta", "robusto", "forte",
 ]
 _KEYWORDS_NEG = [
     "rejeição", "rejeicao", "bloqueada", "bloqueado", "adiado",
     "fracasso", "cancelado", "queixa", "devolução", "devolucao",
-    "fraco", "fraca",
+    "fraco", "fraca", "cai", "despencam", "despencou",
 ]
 
+# Onda 145: bias base por categoria (mean prior de eventos do domínio)
+_BIAS_POR_CATEGORIA = {
+    "politica_br": 0.65,   # impeachment/eleições — outcomes 1 majoritários
+    "crypto": 0.70,        # 2024 bull market
+    "tech_launch": 0.45,   # launches com tração mista
+    "fintech_br": 0.70,    # PIX/Americanas outcomes 1 altos
+    "social_media": 0.60,  # mudanças geralmente efetivadas
+    "municipal_br": 0.50,  # mock synthetic — neutro
+    "geral": 0.55,
+}
 
-def _heuristica_prob(contexto: str) -> float:
-    """Mock heuristic: conta keywords pos/neg + modula around 0.5."""
+
+def _heuristica_prob(contexto: str, dataset_path: str = "") -> float:
+    """
+    Mock heuristic com bias per-domain + keyword modulation.
+    Onda 145: usa categorizar_dataset pra anchor bias base.
+    """
+    try:
+        from engine.persona_skill import categorizar_dataset
+        cat = categorizar_dataset(dataset_path)
+    except Exception:
+        cat = "geral"
+    base = _BIAS_POR_CATEGORIA.get(cat, 0.55)
+
     t = (contexto or "").lower()
     pos = sum(1 for kw in _KEYWORDS_POS if kw in t)
     neg = sum(1 for kw in _KEYWORDS_NEG if kw in t)
     score = pos - neg
-    # sigmoid-like clamp
-    p = 0.5 + 0.10 * score
-    return max(0.10, min(0.90, p))
+    p = base + 0.08 * score
+    return max(0.05, min(0.97, p))
 
 
 class _MockSim:
@@ -61,11 +82,14 @@ def _extract_contexto(pergunta: str) -> str:
     return m.group(1) if m else ""
 
 
+_CURRENT_DATASET_PATH: str = ""
+
+
 def llm_fn_mock(**kw):
     mensagens = kw.get("mensagens") or []
     pergunta = mensagens[-1].get("content", "") if mensagens else ""
     ctx = _extract_contexto(pergunta)
-    p = _heuristica_prob(ctx)
+    p = _heuristica_prob(ctx, _CURRENT_DATASET_PATH)
     return f"RACIOCÍNIO: heurística keyword. PROBABILIDADE FINAL: {int(p * 100)}%"
 
 
@@ -108,6 +132,8 @@ STACKS = {
 
 
 def rodar_um_dataset(path: str) -> dict:
+    global _CURRENT_DATASET_PATH
+    _CURRENT_DATASET_PATH = path
     resultados = {}
     for stack_nome, kwargs in STACKS.items():
         r = rodar_backtest_acc(
@@ -128,8 +154,18 @@ def rodar_um_dataset(path: str) -> dict:
 
 def main():
     dataset_filter = None
-    if len(sys.argv) > 1 and sys.argv[1] == "--dataset":
-        dataset_filter = sys.argv[2]
+    json_out = None
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--dataset" and i + 1 < len(args):
+            dataset_filter = args[i + 1]
+            i += 2
+        elif args[i] == "--json" and i + 1 < len(args):
+            json_out = args[i + 1]
+            i += 2
+        else:
+            i += 1
 
     pattern = "data/backtest/*.csv"
     all_paths = sorted(glob.glob(pattern))
@@ -156,6 +192,7 @@ def main():
 
     print("\n=== Agregado (média sobre datasets) ===")
     baseline = None
+    agregado_json = {}
     for stack in STACKS:
         vs = agg[stack]["brier_vila"]
         bs = agg[stack]["brier_blend"]
@@ -175,6 +212,18 @@ def main():
             f"brier_prior={sum(ps)/len(ps):.3f}  "
             f"acc={sum(acs)/len(acs):.2f}"
         )
+        agregado_json[stack] = {
+            "brier_vila_avg": sum(vs) / len(vs),
+            "brier_blend_avg": brier_blend_avg,
+            "brier_prior_avg": sum(ps) / len(ps),
+            "accuracy_avg": sum(acs) / len(acs),
+            "n_datasets": len(vs),
+        }
+
+    if json_out:
+        with open(json_out, "w", encoding="utf-8") as f:
+            json.dump({"agregado": agregado_json}, f, indent=2, ensure_ascii=False)
+        print(f"\n→ JSON salvo em {json_out}")
 
 
 if __name__ == "__main__":
