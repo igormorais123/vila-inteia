@@ -43,6 +43,8 @@ def main():
     parser.add_argument("--max-sem-melhoria", type=int, default=5)
     parser.add_argument("--no-groq", action="store_true", help="desabilita Groq (força fallback)")
     parser.add_argument("--resume", action="store_true", help="retoma de trace existente")
+    parser.add_argument("--sa-temp", type=float, default=0.0, help="simulated annealing temp inicial (0 = off)")
+    parser.add_argument("--sa-cooling", type=float, default=0.9, help="SA cooling factor")
     args = parser.parse_args()
 
     _load_env()
@@ -109,6 +111,8 @@ def main():
         trace_path=args.trace,
         max_eventos_por_dataset=args.max_eventos,
         resume=args.resume,
+        sa_temp_inicial=args.sa_temp,
+        sa_cooling=args.sa_cooling,
     )
 
     print("\n=== AutoResearch Resumo ===")

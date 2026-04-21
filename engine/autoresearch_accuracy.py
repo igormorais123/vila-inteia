@@ -216,9 +216,16 @@ def loop_autoresearch(
     max_eventos_por_dataset: int = 3,
     verbose: bool = True,
     resume: bool = False,
+    # Onda 168: simulated annealing
+    sa_temp_inicial: float = 0.0,
+    sa_cooling: float = 0.9,
 ) -> dict:
     """
     Loop Karpathy-style: propõe variações, roda, keep/revert.
+
+    Onda 168: se sa_temp_inicial > 0, ativa simulated annealing.
+    Accept worse com prob exp(-Δbrier / T). T decresce por sa_cooling
+    a cada iter. Escape local optima.
 
     Stop:
       - max_iteracoes atingido
@@ -275,10 +282,13 @@ def loop_autoresearch(
             print(f"[autoresearch] baseline brier={b_base} n={n_base}")
 
     best = base_exp
+    atual = base_exp  # Onda 168: current state (pode ≠ best em SA)
     sem_melhoria = 0
+    sa_T = sa_temp_inicial
 
     for i in range(iter_start, iter_start + max_iteracoes):
-        novo_config, delta = propor_variacao(best.config, historia, rng)
+        # Onda 168: propõe a partir de current state (atual), não só best
+        novo_config, delta = propor_variacao(atual.config, historia, rng)
         if not delta:
             if verbose:
                 print(f"[autoresearch] iter {i}: espaço esgotado, parando")
@@ -293,7 +303,18 @@ def loop_autoresearch(
             novo_config, datasets, sim, persona_ids, llm_fn,
             max_eventos_por_dataset=max_eventos_por_dataset,
         )
+        # kept tracks "melhorou sobre best" (para atualizar best global)
         kept = b_novo is not None and (best.metric is None or b_novo < best.metric)
+        # Onda 168: SA decide aceitação do movimento (atual pode shift mesmo se pior)
+        aceito_sa = kept
+        if sa_T > 0 and b_novo is not None and atual.metric is not None and not kept:
+            import math
+            delta_brier = b_novo - atual.metric
+            prob_aceitar = math.exp(-delta_brier / sa_T) if sa_T > 1e-9 else 0
+            if rng.random() < prob_aceitar:
+                aceito_sa = True
+                if verbose:
+                    print(f"[autoresearch] iter {i}: SA accept worse (T={sa_T:.4f}, Δ={delta_brier:.4f}, prob={prob_aceitar:.3f})")
         exp = Experiment(
             iteracao=i,
             config=novo_config,
@@ -315,7 +336,13 @@ def loop_autoresearch(
             if verbose:
                 print(f"[autoresearch] iter {i}: KEEP brier {best.metric:.4f}→{b_novo:.4f} (Δ-{delta_brier:.4f})")
             best = exp
+            atual = exp
             sem_melhoria = 0
+        elif aceito_sa:
+            if verbose:
+                print(f"[autoresearch] iter {i}: SA shift atual (brier {b_novo:.4f}, best unchanged {best.metric:.4f})")
+            atual = exp
+            sem_melhoria += 1
         else:
             if verbose:
                 b_str = f"{b_novo:.4f}" if b_novo else "None"
@@ -325,6 +352,10 @@ def loop_autoresearch(
                 if verbose:
                     print(f"[autoresearch] {sem_melhoria} iter sem melhoria, parando")
                 break
+
+        # Onda 168: cooling schedule
+        if sa_T > 0:
+            sa_T *= sa_cooling
 
     return {
         "n_iteracoes": len(historia) - 1,
@@ -336,4 +367,6 @@ def loop_autoresearch(
         "historia": [e.to_dict() for e in historia],
         "n_kept": sum(1 for e in historia if e.kept),
         "n_reverted": sum(1 for e in historia if not e.kept),
+        "sa_temp_final": sa_T,
+        "sa_usado": sa_temp_inicial > 0,
     }
