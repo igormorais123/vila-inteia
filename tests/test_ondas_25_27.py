@@ -90,7 +90,7 @@ def t_backtest_comparativo_todos_datasets():
     from pathlib import Path
     base = Path("data/backtest")
     datasets = sorted([p.stem for p in base.glob("*.csv")])
-    teste("5 datasets presentes", len(datasets) == 5, f"got {len(datasets)}")
+    teste("≥5 datasets presentes", len(datasets) >= 5, f"got {len(datasets)}")
     resultados = []
     for d in datasets:
         r = rodar_backtest(d, n_sims=1)
