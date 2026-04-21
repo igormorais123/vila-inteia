@@ -531,6 +531,7 @@ class BacktestAccRequest(BaseModel):
     prob_ceiling: float = 1.0  # Onda 143: hedge ceiling
     recency_decay: float = 1.0  # Onda 152/153: recency-weighted base_rate
     aplicar_calib_por_persona: bool = False  # Onda 156: per-persona calib
+    temp_por_persona: bool = False  # Onda 158: temperature por arquétipo
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -613,6 +614,7 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 prob_ceiling=req.prob_ceiling,
                 recency_decay=req.recency_decay,
                 aplicar_calib_por_persona=req.aplicar_calib_por_persona,
+                temp_por_persona=req.temp_por_persona,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds
