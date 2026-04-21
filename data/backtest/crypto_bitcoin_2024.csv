@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+btc01,2024-01-10,"SEC aprova ETF de Bitcoin spot — 11 ETFs autorizados simultaneamente",1,0.80
+btc02,2024-03-11,"Bitcoin atinge ATH 73k antes do halving — momentum altista",1,0.75
+btc03,2024-04-19,"Halving Bitcoin 4º evento — redução de emissão para 3.125 BTC por bloco",1,0.95
+btc04,2024-05-20,"ETF Ethereum spot aprovado pela SEC após pressão institucional",1,0.60
+btc05,2024-08-05,"Bitcoin crash -20% em dia único após yen carry-trade unwind",1,0.55
+btc06,2024-09-18,"Fed corta taxa 50bps — impulso risk-on para cripto",1,0.70
+btc07,2024-11-06,"Bitcoin supera 90k pós-eleição Trump — euforia pro-cripto",1,0.75
+btc08,2024-11-22,"Bitcoin supera 100k pela primeira vez na história",1,0.65
+btc09,2024-12-15,"Correção -15% após topo 108k — realização de lucros",1,0.50
+btc10,2024-12-30,"BTC fecha ano em 93k — ganho anual 120% vs S&P 23%",1,0.70

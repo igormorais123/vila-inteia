@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+tw01,2022-10-27,"Musk completa aquisição Twitter por 44 bilhões — assume controle",1,0.55
+tw02,2022-11-04,"Musk demite 50% do staff em 1 dia — corte de 3700 funcionários",1,0.65
+tw03,2022-11-19,"Blue checkmark vira pago 8 USD/mês — monetização de verificação",1,0.70
+tw04,2023-07-23,"Twitter rebrand para X — nova identidade visual",1,0.60
+tw05,2023-10-27,"Aniversário 1 ano X: receita publicitária despencou 50%",1,0.75
+tw06,2024-02-07,"Musk processa OpenAI por traição missão — disputa pública",1,0.50
+tw07,2024-05-15,"X lança 'Communities' espaços — tentativa concorrer Reddit",0,0.45
+tw08,2024-08-28,"Brasil suspende X por 40 dias após bater Moraes STF",1,0.65
+tw09,2024-10-08,"X volta no Brasil após pagar multas — restauração ordem",1,0.70
+tw10,2024-12-10,"xAI vale 50 bilhões em nova captação — spin-off AI",1,0.55
