@@ -67,6 +67,8 @@ def rodar_backtest_acc(
     aplicar_calib_por_persona: bool = False,
     # Onda 158: temperature por arquétipo
     temp_por_persona: bool = False,
+    # Onda 160: peso_vila override per-dataset
+    peso_vila_por_dataset: bool = False,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -83,6 +85,14 @@ def rodar_backtest_acc(
         peso_adaptativo as _peso_adapt,
         bayesian_blend_ensemble as _blend_ens,
     )
+    # Onda 160: peso_vila override per-dataset
+    peso_vila_base = peso_vila
+    if peso_vila_por_dataset:
+        try:
+            from engine.peso_vila_dataset import obter_peso_vila
+            peso_vila_base = obter_peso_vila(str(dataset_path), default=peso_vila)
+        except Exception:
+            pass
 
     eventos_raw = carregar_dataset(dataset_path)
     if max_eventos:
@@ -190,7 +200,7 @@ def rodar_backtest_acc(
 
         # Onda 125: Bayesian blend com base rate dos eventos anteriores
         p_blend = p_vila_cal
-        peso_usado = peso_vila
+        peso_usado = peso_vila_base
         if usar_bayesian_blend and p_vila_cal is not None:
             y_hist = [e["outcome_real"] for e in eventos_raw[:i]]
             br = base_rate_dataset(y_hist, decay=recency_decay)
@@ -263,6 +273,8 @@ def rodar_backtest_acc(
             "prob_floor": prob_floor,
             "prob_ceiling": prob_ceiling,
             "recency_decay": recency_decay,
+            "peso_vila_por_dataset": peso_vila_por_dataset,
+            "peso_vila_base_usado": peso_vila_base,
             "aplicar_platt": aplicar_platt,
         },
         "accuracy_vila_calibrada": acertos_vila / n_total if n_total else 0,
