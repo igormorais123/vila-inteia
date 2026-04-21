@@ -669,6 +669,22 @@ async def backtest_cv_holdout(
     return cv_holdout_platt(probs, ys, test_frac=test_frac, n_repeats=n_repeats)
 
 
+@router.get("/backtest/baselines")
+async def backtest_baselines():
+    """Onda 118: compara Vila vs baselines simples (base_rate, markov, exp_smooth, random)."""
+    from engine.baselines import comparar_baselines
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys, priors = [], [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"])
+                ys.append(e["outcome_real"])
+                priors.append(e.get("prob_prior", 0.5))
+    return comparar_baselines(probs, ys, priors=priors)
+
+
 @router.get("/backtest/platt-vs-isotonic")
 async def backtest_platt_vs_isotonic():
     """Onda 100: compara Platt vs isotonic no último backtest."""
