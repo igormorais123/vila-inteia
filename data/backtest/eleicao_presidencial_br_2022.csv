@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior
+pres01,2022-03-30,"Lula supera Bolsonaro por 15 pontos no 1º Datafolha pós-retorno elegível",1,0.65
+pres02,2022-07-20,"Convenção PT confirma Lula com Alckmin VP — chapa de centro",1,0.80
+pres03,2022-08-25,"Bolsonaro cresce no Nordeste após Auxílio Brasil R$600 — reaproxima",1,0.50
+pres04,2022-10-02,"1º turno: Lula 48.4% vs Bolsonaro 43.2% — resultado apertado fora prognóstico",1,0.75
+pres05,2022-10-16,"Debate 2º turno Band: Lula ataca Bolsonaro no SUS — Lula domina",1,0.55
+pres06,2022-10-28,"Missa Fátima Appy endossa Bolsonaro — tentativa último minuto",0,0.45
+pres07,2022-10-30,"Lula vence 2º turno 50.9% vs 49.1% — eleição mais apertada desde 1989",1,0.60
+pres08,2022-11-15,"Equipe transição divulga relatório déficit R$250bi — escalation crise",1,0.70
+pres09,2022-12-12,"PEC Transição aprovada R$145bi — acordo Congresso",1,0.65
+pres10,2023-01-08,"Atos golpistas em Brasília — invasão 3 Poderes domingo fatídico",1,0.40
