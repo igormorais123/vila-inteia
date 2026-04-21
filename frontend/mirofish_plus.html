@@ -35,6 +35,31 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 
 /* ===== MAIN GRID ===== */
 .main{display:grid;grid-template-columns:280px 1fr 360px;overflow:hidden;border-bottom:1px solid var(--border)}
+@media (max-width:1200px){
+  .main{grid-template-columns:220px 1fr 300px}
+}
+@media (max-width:900px){
+  .app{grid-template-rows:48px 1fr 1fr}
+  .main{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;overflow-y:auto;max-height:calc(100vh - 48px - 200px);}
+  .col-l, .col-r{max-height:35vh;border:none;border-bottom:1px solid var(--border)}
+  .col-c{min-height:40vh}
+  .bottom{grid-template-columns:1fr}
+  .bot-card{max-height:200px}
+  .top{flex-wrap:wrap;padding:8px;gap:8px;height:auto}
+  .top .kpi{font-size:11px}
+  .top .kpi-v{font-size:14px}
+  .drawer{width:100%;max-width:100vw}
+  .btn, .btn-sec{padding:8px 12px;font-size:13px;min-height:36px}
+  .chat-input{font-size:14px;min-height:36px}
+  .chat-send{min-height:36px}
+  #legend{font-size:9px}
+}
+@media (max-width:640px){
+  .top .brand{font-size:13px}
+  .top > *:not(.brand):not(#status):not(.btn){display:none}
+  .bot-row .l{min-width:90px}
+  .chat-box{margin-top:8px}
+}
 .col{overflow-y:auto;padding:12px;background:var(--surf)}
 .col-l{border-right:1px solid var(--border)}
 .col-r{border-left:1px solid var(--border);background:var(--surf)}
