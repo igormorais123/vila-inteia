@@ -5,8 +5,12 @@ Carrega coefs (a, b) de disk + aplica em qualquer prob raw.
 Self-calibrating Vila: após backtest, coefs salvos; runtime aplica.
 
 Path default: data/calibracao_platt.json
-Schema: {"a": float, "b": float, "n_amostras": int,
+Schema Platt: {"a": float, "b": float, "n_amostras": int,
           "fitado_em": iso_timestamp, "fonte": str}
+
+Onda 148: suporta isotonic mapping.
+Schema Isotonic: {"tipo": "isotonic", "mapping": [[raw, cal], ...],
+          "n_amostras": int, "fitado_em": iso_timestamp, "fonte": str}
 """
 
 from __future__ import annotations
@@ -81,16 +85,29 @@ def aplicar(
     prob_raw: float,
     path: str | Path | None = None,
 ) -> float:
-    """Aplica Platt se coefs existem. Senão retorna prob original."""
+    """
+    Aplica calibração se coefs existem. Senão retorna prob original.
+    Onda 148: Se tipo='isotonic', aplica mapping. Senão Platt default.
+    """
     coefs = carregar_coefs(path)
     if not coefs:
         return prob_raw
-    a = coefs["a"]
-    b = coefs["b"]
+    if coefs.get("tipo") == "isotonic":
+        try:
+            from engine.calibracao_stats import isotonic_aplicar
+            mapping = [(float(m[0]), float(m[1])) for m in coefs.get("mapping", [])]
+            return isotonic_aplicar(prob_raw, mapping)
+        except Exception as e:
+            logger.debug(f"isotonic aplicar falhou: {e}")
+            return prob_raw
+    # Default Platt
+    a = coefs.get("a")
+    b = coefs.get("b")
+    if a is None or b is None:
+        return prob_raw
     p = _clip(prob_raw)
     logit = math.log(p / (1 - p))
     z = a * logit + b
-    # sigmoid
     if z >= 0:
         ez = math.exp(-z)
         return 1.0 / (1.0 + ez)
@@ -105,18 +122,50 @@ def aplicar_varios(
     return [aplicar(p, path) for p in probs]
 
 
+def salvar_isotonic(
+    mapping: list[tuple[float, float]],
+    n_amostras: int,
+    fonte: str = "backtest",
+    path: str | Path | None = None,
+) -> Path:
+    """
+    Onda 148: persiste isotonic mapping em disk (JSON).
+    Mapping: lista ordenada de (prob_raw, prob_calibrada).
+    """
+    p = Path(path) if path else _DEFAULT_PATH
+    p.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "tipo": "isotonic",
+        "mapping": [[float(x), float(y)] for x, y in mapping],
+        "n_amostras": int(n_amostras),
+        "fitado_em": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "fonte": fonte,
+    }
+    p.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    global _CACHE, _CACHE_MTIME
+    _CACHE = payload
+    _CACHE_MTIME = p.stat().st_mtime
+    return p
+
+
 def status(path: str | Path | None = None) -> dict:
     """Retorna info legível pra endpoint /api/v1/vila/calibracao/status."""
     coefs = carregar_coefs(path)
     p = Path(path) if path else _DEFAULT_PATH
     if not coefs:
         return {"ativa": False, "path": str(p)}
-    return {
+    tipo = coefs.get("tipo", "platt")
+    out = {
         "ativa": True,
+        "tipo": tipo,
         "path": str(p),
-        "a": coefs["a"],
-        "b": coefs["b"],
-        "n_amostras": coefs["n_amostras"],
-        "fitado_em": coefs["fitado_em"],
+        "n_amostras": coefs.get("n_amostras"),
+        "fitado_em": coefs.get("fitado_em"),
         "fonte": coefs.get("fonte"),
     }
+    if tipo == "isotonic":
+        out["mapping_size"] = len(coefs.get("mapping", []))
+    else:
+        out["a"] = coefs.get("a")
+        out["b"] = coefs.get("b")
+    return out
