@@ -901,6 +901,53 @@ async def calibracao_aplicar(req: CalibracaoAplicarRequest):
     }
 
 
+@router.post("/calibracao/auto-fit")
+async def calibracao_auto_fit():
+    """
+    Onda 151: auto-fit melhor calibrador (Platt vs isotonic) a partir
+    do último backtest armazenado. Salva vencedor em calibracao_platt.json.
+    """
+    from engine.calibracao_auto import salvar_melhor_calibrador
+
+    if not _ULTIMO_BACKTEST or not _ULTIMO_BACKTEST.get("datasets"):
+        raise HTTPException(
+            400,
+            "nenhum backtest em memória — rode POST /backtest/rodar-acc ou /backtest/rodar antes",
+        )
+
+    probs: list[float] = []
+    ys: list[int] = []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        if "erro" in ds:
+            continue
+        for ev in ds.get("eventos", []):
+            p = ev.get("prob_vila_raw") or ev.get("prob_vila")
+            y = ev.get("outcome_real")
+            if p is None or y is None:
+                continue
+            probs.append(float(p))
+            ys.append(int(y))
+
+    if len(probs) < 5:
+        raise HTTPException(
+            400,
+            f"poucos pares ({len(probs)}); mínimo 5 pra fit",
+        )
+
+    r = salvar_melhor_calibrador(
+        probs, ys,
+        fonte=f"auto_fit_backtest_{len(probs)}ev",
+    )
+    return {
+        "vencedor": r["vencedor"],
+        "salvo_como": r.get("salvo_como"),
+        "brier_raw": r.get("brier_raw"),
+        "brier_platt": r["platt"]["brier"],
+        "brier_isotonic": r["isotonic"]["brier"],
+        "n_amostras": r["n_amostras"],
+    }
+
+
 @router.get("/godseye-stream")
 async def godseye_stream():
     """
