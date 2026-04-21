@@ -130,7 +130,10 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <span id="status" class="status">—</span>
     <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
     <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
-      <input type="checkbox" id="auto" checked> auto 15s
+      <input type="checkbox" id="sse" checked> SSE live
+    </label>
+    <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
+      <input type="checkbox" id="auto"> auto 30s
     </label>
   </header>
 
@@ -591,10 +594,40 @@ async function atualizarTudo(){
 
 function toggleAuto(){
   if(document.getElementById('auto').checked){
-    atualizarTudo();
-    autoTimer = setInterval(atualizarTudo, 15000);
+    autoTimer = setInterval(atualizarTudo, 30000);
   } else {
     clearInterval(autoTimer); autoTimer = null;
+  }
+}
+
+let sseSource = null;
+let sseDebounce = null;
+let sseLastStep = -1;
+function scheduleRefresh(){
+  if(sseDebounce) return;
+  sseDebounce = setTimeout(() => {
+    sseDebounce = null;
+    atualizarTudo();
+  }, 800);
+}
+
+function toggleSSE(){
+  if(document.getElementById('sse').checked){
+    try{
+      sseSource = new EventSource('/api/v1/vila/godseye-stream');
+      sseSource.addEventListener('step', e => {
+        try{ const d = JSON.parse(e.data); if(d.step !== sseLastStep){ sseLastStep = d.step; document.getElementById('k_step').textContent = d.step; scheduleRefresh(); } }catch(err){}
+      });
+      sseSource.addEventListener('conversa', e => scheduleRefresh());
+      sseSource.addEventListener('mule', e => {
+        try{ const d = JSON.parse(e.data); setStatus('🚨 MULE detectado: '+(d.tipo||'anomalia'), 'bad'); scheduleRefresh(); }catch(err){}
+      });
+      sseSource.addEventListener('keepalive', e => { /* noop */ });
+      sseSource.onerror = () => { setStatus('SSE desconectou; reabrindo...', 'bad'); if(sseSource){ sseSource.close(); sseSource = null; setTimeout(toggleSSE, 3000); } };
+      setStatus('SSE conectado', 'ok');
+    }catch(e){ console.error(e); }
+  } else {
+    if(sseSource){ sseSource.close(); sseSource = null; }
   }
 }
 
@@ -603,7 +636,12 @@ window.fecharDrawer = fecharDrawer;
 window.atualizarTudo = atualizarTudo;
 
 document.getElementById('auto').addEventListener('change', toggleAuto);
+document.getElementById('sse').addEventListener('change', toggleSSE);
 window.addEventListener('resize', () => desenharGrafo());
+
+// Initial load + SSE
+atualizarTudo();
+toggleSSE();
 toggleAuto();
 </script>
 </body>
