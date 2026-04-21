@@ -445,6 +445,29 @@ async def snapshot_ping():
     }
 
 
+@router.get("/calibracao/status")
+async def calibracao_status():
+    """Onda 97: status da calibração Platt runtime."""
+    from engine.calibracao_runtime import status
+    return status()
+
+
+class CalibracaoAplicarRequest(BaseModel):
+    probs: list[float]
+
+
+@router.post("/calibracao/aplicar")
+async def calibracao_aplicar(req: CalibracaoAplicarRequest):
+    """Onda 97: aplica Platt em lista de probs. Útil pra UI testar."""
+    from engine.calibracao_runtime import aplicar_varios, calibracao_ativa
+    ativa = calibracao_ativa()
+    return {
+        "ativa": ativa,
+        "probs_raw": req.probs,
+        "probs_calibradas": aplicar_varios(req.probs) if ativa else req.probs,
+    }
+
+
 @router.get("/godseye-stream")
 async def godseye_stream():
     """

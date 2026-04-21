@@ -156,12 +156,32 @@ def gerar_forecast(
 
     evidencias = _convs_llm_ricas(conversas_recentes or [], max_conv=3)
 
+    # Onda 97: aplicar calibração Platt se ativa
+    top_estados_calibrados = None
+    calibracao_info = None
+    try:
+        from engine.calibracao_runtime import calibracao_ativa, aplicar_varios, carregar_coefs
+        if calibracao_ativa():
+            probs_raw = [t["prob"] for t in top_estados]
+            probs_cal = aplicar_varios(probs_raw)
+            top_estados_calibrados = [
+                {**t, "prob_raw": t["prob"], "prob": pc}
+                for t, pc in zip(top_estados, probs_cal)
+            ]
+            coefs = carregar_coefs() or {}
+            calibracao_info = {
+                "ativa": True, "a": coefs.get("a"), "b": coefs.get("b"),
+                "n_amostras": coefs.get("n_amostras"),
+            }
+    except Exception:
+        pass
+
     payload = {
         "estado_atual": estado_atual,
         "n_steps_observados": n_steps,
         "distribuicao_observada": distribuicao_observada,
         "horizonte": horizonte,
-        "top_estados_horizonte": top_estados,
+        "top_estados_horizonte": top_estados_calibrados or top_estados,
         "entropia_inicial": entropia_inicial,
         "entropia_final": entropia_final,
         "convergindo": entropia_final < entropia_inicial,
@@ -169,6 +189,8 @@ def gerar_forecast(
         "n_mules_recentes": n_mules,
         "evidencias_llm": evidencias,
     }
+    if calibracao_info:
+        payload["calibracao"] = calibracao_info
 
     if com_narrativa:
         narrativa = _gerar_narrativa_llm(payload, llm_fn=llm_fn)
