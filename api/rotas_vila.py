@@ -291,6 +291,20 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/comunidades-personas")
+async def comunidades_personas(resolution: float = Query(1.0, ge=0.1, le=5.0)):
+    """
+    Onda 84: detecção de comunidades Louvain sobre grafo de conversas.
+    Identifica TRIBOS emergentes na Vila.
+    """
+    from engine.comunidades_personas import detectar_comunidades
+    sim = obter_simulacao()
+    return detectar_comunidades(
+        conversas=getattr(sim, "conversas_recentes", []),
+        resolution=resolution,
+    )
+
+
 @router.get("/influencia-personas")
 async def influencia_personas(top_n: int = Query(20, ge=1, le=144)):
     """
