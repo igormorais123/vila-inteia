@@ -53,6 +53,8 @@ def rodar_backtest_acc(
     # Onda 131: LLM-as-judge filter
     usar_judge_filter: bool = False,
     judge_threshold: float = 0.4,
+    # Onda 141: auto-select panel per-dataset se persona_ids None
+    auto_panel: bool = False,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -66,10 +68,26 @@ def rodar_backtest_acc(
     from engine.panel_debate import debate_panel
     from engine.bayesian_blend import bayesian_blend, base_rate_dataset, peso_adaptativo as _peso_adapt
 
-    persona_ids = persona_ids or ["CL001", "CL002", "CL007"]
     eventos_raw = carregar_dataset(dataset_path)
     if max_eventos:
         eventos_raw = eventos_raw[:max_eventos]
+
+    # Onda 141: auto-select panel per-domínio quando persona_ids None e auto_panel=True
+    panel_categoria = None
+    if persona_ids is None and auto_panel:
+        try:
+            from engine.persona_selector import selecionar_panel
+            personas_validas = set(getattr(sim, "personas", {}).keys()) if sim else None
+            sel = selecionar_panel(
+                dataset_name=str(dataset_path),
+                eventos_sample=eventos_raw[:3],
+                personas_validas=personas_validas,
+            )
+            persona_ids = sel["persona_ids"]
+            panel_categoria = sel["categoria"]
+        except Exception as e:
+            logger.debug(f"auto_panel falhou: {e}")
+    persona_ids = persona_ids or ["CL001", "CL002", "CL007"]
 
     resultados = []
     briers_vila = []
@@ -229,5 +247,6 @@ def rodar_backtest_acc(
             if _avg(briers_blend) and _avg(briers_prior) else None
         ),
         "persona_panel": persona_ids,
+        "panel_categoria_detectada": panel_categoria,
         "eventos": resultados,
     }
