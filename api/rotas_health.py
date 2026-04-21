@@ -20,6 +20,44 @@ from fastapi import APIRouter
 router = APIRouter(prefix="/api/v1/vila", tags=["health"])
 
 
+@router.get("/livez")
+def endpoint_livez() -> dict:
+    """Onda 108: K8s-style liveness probe. Always 200 unless process crashed."""
+    import time
+    return {"alive": True, "ts": int(time.time())}
+
+
+@router.get("/readyz")
+def endpoint_readyz():
+    """Onda 108: K8s-style readiness probe. 503 se sim não pronta."""
+    from fastapi.responses import JSONResponse
+    import time
+    checks = {}
+    all_ok = True
+    try:
+        from api.rotas_vila import simulacao
+        sim_ok = simulacao is not None and hasattr(simulacao, "step")
+        checks["simulacao"] = {"ok": sim_ok,
+                                "step": getattr(simulacao, "step", None) if sim_ok else None}
+        all_ok &= sim_ok
+    except Exception as e:
+        checks["simulacao"] = {"ok": False, "erro": str(e)[:80]}
+        all_ok = False
+    try:
+        from engine.ia_client import _provider
+        checks["llm"] = {"ok": _provider is not None, "provider": _provider}
+    except Exception as e:
+        checks["llm"] = {"ok": False, "erro": str(e)[:80]}
+    try:
+        from engine.calibracao_runtime import calibracao_ativa
+        checks["calibracao"] = {"ativa": calibracao_ativa()}
+    except Exception:
+        checks["calibracao"] = {"ativa": False}
+    status = 200 if all_ok else 503
+    return JSONResponse(status_code=status,
+                        content={"ready": all_ok, "checks": checks, "ts": int(time.time())})
+
+
 @router.get("/health")
 def endpoint_health() -> dict:
     """Snapshot agregado de todos subsistemas."""
