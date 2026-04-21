@@ -202,6 +202,21 @@ bootstrap                 | ▏ 0.2%
 
 <p><em>Murphy decomposition and isotonic comparison.</em> The Brier score admits Murphy's decomposition BS = Reliability − Resolution + Uncertainty. Vila's raw predictions show high reliability error (poor calibration) but positive resolution (discriminates between outcomes). Isotonic regression (PAV algorithm) provides a non-parametric alternative to Platt; on this sample the two methods produce similar ECE reduction but Platt generalises more robustly with limited data (Wave 100). Bootstrap 95% CI on skill score (n_boot = 1000) gives [+0.12, +0.74].</p>
 
+<h3 style="margin-top: 10pt;">Full-stack prediction upgrade (Waves 134–166)</h3>
+
+<p><em>Accuracy stack redesign.</em> A follow-up experiment programme (Waves 134–166) introduced a layered upgrade to the prediction pipeline without altering the underlying Markov/LLM substrate. The key interventions were: (i) an <code>outcome_framing</code> column added to every backtest CSV (Waves 135–136, 90 events rephrased into unambiguous SIM/NÃO questions); (ii) a seven-bucket semantic probability anchor injected into the chain-of-thought prefix to curb the LLM's default 50/70/80% clustering (Wave 138); (iii) a rejection-aware reasoning step forcing the agent to consider reversal/failure before answering (Wave 134); (iv) dispersion-aware adaptive <code>peso_vila</code> that penalises the Vila forecast when the panel disagrees beyond an Aumann-threshold (Wave 137); (v) ensemble Bayesian blend across weights {0.6, 0.7, 0.8} taking the median to reduce sensitivity to a single blend hyperparameter (Wave 147); (vi) an isotonic runtime calibrator selected automatically against Platt via brier comparison (Waves 148–150, 157); (vii) per-dataset <code>peso_vila</code> overrides, recency-weighted base rates, persona-aware temperature diversity and per-persona calibration schemes (Waves 152–158, 160); and (viii) hedge clipping to <code>[0.05, 0.95]</code> against confident-wrong errors (Wave 143).</p>
+
+<p><em>Live validation (Wave 154).</em> On three real datasets (<code>impeachment_dilma_2016</code>, <code>crypto_bitcoin_2024</code>, <code>eleicao_presidencial_br_2022</code>, 9 events, Groq <code>llama-4-scout-17b-16e-instruct</code>), the upgraded stack reached 9/9 accuracy, Vila Brier 0.073 against human-prior Brier 0.118 (skill score +0.38 vs prior). Per-dataset skill scores: impeachment +0.67, Brazilian presidential +0.29, Bitcoin −1.18—the latter negative because domain-expert priors already saturate on objective events (halving, ETF approval). The imp03 "failure mode" of the earlier Wave 133 run (Lula minister blocked, Vila had previously predicted 0.69 against real 0; Brier 0.47) is fully resolved: the new prompt elicits 0.20 and the blend keeps 0.34, yielding a correct binary decision and Brier 0.12. Model-family comparison on impeachment (Wave 163) shows Llama-4-Scout-17B (Brier 0.060) dominating Llama-3.3-70B-Versatile (0.122) and Qwen3-32B (0.209); larger parameter count did not improve calibration on Vila-style prompts.</p>
+
+<p><em>AutoResearch for hyperparameter discovery (Wave 159).</em> Inspired by Karpathy's autoresearch<sup class="ref">7</sup>, we implemented a keep-or-revert optimisation loop over the 14-parameter configuration space of <code>rodar_backtest_acc</code> (eight boolean flags, four continuous ranges, two discrete choices). Each iteration proposes a single-parameter variation, runs the backtest on a set of held-out datasets, and keeps the change if aggregated Brier improves (trace persisted append-only as JSONL for resumability across quota-interrupted sessions, Wave 161). The loop treats <code>brier_blend_final_avg</code> as the single-metric objective, mirroring the Karpathy design that forces fair comparison across architectural variations.</p>
+<pre># Usage: Karpathy-style overnight optimisation
+python scripts/autoresearch_vila.py \
+    --iter 100 \
+    --datasets impeachment_dilma_2016,eleicao_presidencial_br_2022,crypto_bitcoin_2024 \
+    --trace data/autoresearch_trace.jsonl \
+    --resume    # continues from last-best if trace exists</pre>
+<p>Convergence of the loop is bounded by the proposal space (14 parameters × typical-3 values ≈ 42 non-baseline configurations); the empirical run is expected to plateau within 20–30 iterations, preserving a full git-style history of accepted and reverted experiments. Conformal prediction intervals (Wave 162, Vovk et al.<sup class="ref">8</sup>) provide distribution-free 80–95% CIs on future predictions by caching absolute residuals from validation runs—no distributional assumption required on Vila's error.</p>
+
 <h2>Discussion</h2>
 
 <p>The most striking finding of the live LLM-driven run is the semantic coherence of the recovered communities (Table 2). The Buffett–Munger dyad emerges as a clique with edge density 1.0 from purely behavioural data—neither persona was hard-coded as the other's preferred dialogue partner. Likewise, the "aggressive strategy" cluster groups four canonical takeover artists (Trump, Ellison, Icahn, Murdoch) with two large-software CEOs (Benioff, Nadella). These structures recapitulate documented affinities in the public record without supervision; we read them as evidence that the persona archetype prompts (<code>engine/arquetipos.py</code>: <code>REGRAS_ESPECIAIS</code>) carry sufficient semantic signal to drive non-trivial graph structure.</p>
@@ -251,6 +266,9 @@ bootstrap                 | ▏ 0.2%
 <li>Latané, B. The psychology of social impact. <em>Am. Psychol.</em> <b>36</b>, 343–356 (1981).</li>
 <li>Plott, C. R. A notion of equilibrium and its possibility under majority rule. <em>Am. Econ. Rev.</em> <b>57</b>, 787–806 (1967).</li>
 <li>Pearl, J. <em>Causality: Models, Reasoning, and Inference</em>, 2nd ed. (Cambridge Univ. Press, 2009).</li>
+<li>Karpathy, A. autoresearch: AI agents running research on single-GPU nanochat training automatically. <em>github.com/karpathy/autoresearch</em> (2026).</li>
+<li>Vovk, V., Gammerman, A. &amp; Shafer, G. <em>Algorithmic Learning in a Random World</em> (Springer, 2005).</li>
+<li>Angelopoulos, A. N. &amp; Bates, S. A gentle introduction to conformal prediction and distribution-free uncertainty quantification. arXiv:2107.07511 (2022).</li>
 </ol>
 </div>
 
