@@ -316,6 +316,30 @@ async def persona_chat(req: PersonaChatRequest):
     )
 
 
+class PanelChatRequest(BaseModel):
+    persona_ids: list[str]
+    pergunta: str
+    max_tokens: int = 280
+    temperatura: float = 0.75
+    paralelo: bool = True
+
+
+@router.post("/panel-chat")
+async def panel_chat_endpoint(req: PanelChatRequest):
+    """
+    Onda 89: múltiplas personas respondem mesma pergunta em paralelo.
+    Ex: Musk + Buffett + Sun Tzu sobre 'como escalar startup?' → 3 respostas
+    lado-a-lado.
+    """
+    from engine.panel_chat import panel_chat as panel_fn
+    sim = obter_simulacao()
+    return panel_fn(
+        persona_ids=req.persona_ids, pergunta=req.pergunta, sim=sim,
+        max_tokens=req.max_tokens, temperatura=req.temperatura,
+        paralelo=req.paralelo,
+    )
+
+
 @router.get("/persona-chat/historico/{persona_id}")
 async def persona_chat_historico(persona_id: str):
     """Onda 86: retorna histórico de chat com uma persona."""
