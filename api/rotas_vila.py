@@ -203,13 +203,18 @@ async def conversas_llm_only(limite: int = Query(20, ge=1, le=100)):
     sim = obter_simulacao()
     convs = sim.conversas_recentes[-limite * 3:]   # filtra mais ampla
     llm_convs = []
+    PADROES_HEURISTICA = (
+        "Como eu sempre digo",
+        "Boa conversa. Devemos continuar",
+        "Essa é uma perspectiva válida. Mas considere também",
+        "Conte-me mais sobre sua visão",
+    )
     for c in convs:
         turnos = c.get("turnos", [])
         if len(turnos) >= 4:
-            # Filtra heurísticas com template
             tem_template = any(
-                isinstance(t, list) and len(t) >= 2
-                and "Como eu sempre digo" in str(t[1])
+                isinstance(t, (list, tuple)) and len(t) >= 2
+                and any(p in str(t[1]) for p in PADROES_HEURISTICA)
                 for t in turnos
             )
             if not tem_template:
