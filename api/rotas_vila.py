@@ -291,6 +291,29 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/super-intelligence")
+async def super_intelligence(
+    horizonte: int = Query(10, ge=1, le=100),
+    outcome_desejado: str = Query("equilibrio"),
+    com_sintese_llm: bool = Query(True),
+):
+    """
+    Onda 81: meta-endpoint que combina forecast + recomendacao + briefing LLM.
+    Single round-trip pra dashboard executivo Helena/Efesto.
+    """
+    from engine.super_intelligence import gerar_super_intelligence
+    sim = obter_simulacao()
+    try:
+        return gerar_super_intelligence(
+            horizonte=horizonte,
+            outcome_desejado=outcome_desejado,
+            conversas_recentes=getattr(sim, "conversas_recentes", []),
+            com_sintese_llm=com_sintese_llm,
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
 @router.get("/recomendacao-intervencao")
 async def recomendacao_intervencao(
     outcome_desejado: str = Query("equilibrio"),
