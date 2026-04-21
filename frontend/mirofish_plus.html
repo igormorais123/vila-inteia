@@ -258,6 +258,8 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
       </div>
       <div id="bt_status" style="font-size:11px;color:var(--txt3);margin-bottom:10px"></div>
       <div id="bt_result"></div>
+      <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Per-persona skill ranking</h3>
+      <div id="bt_persona_skill"></div>
       <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Reliability diagram</h3>
       <svg id="bt_reliability" width="100%" height="240" style="background:var(--surf2);border-radius:4px"></svg>
       <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Histórico</h3>
@@ -923,6 +925,28 @@ function renderBacktestResult(d){
     </table>`;
   document.getElementById('bt_result').innerHTML = html;
   renderReliabilityDiagram();
+  renderPersonaSkillTable();
+}
+
+async function renderPersonaSkillTable(){
+  const d = await fetchJSON('/api/v1/vila/backtest/persona-skill');
+  const div = document.getElementById('bt_persona_skill');
+  if(!d || !d.ranking || d.ranking.length === 0){
+    div.innerHTML = '<div class="empty">sem dados per-persona</div>';
+    return;
+  }
+  div.innerHTML = '<table style="width:100%;font-size:11px;border-collapse:collapse"><thead><tr style="border-bottom:1px solid var(--border);color:var(--amber)"><th style="text-align:left;padding:4px">#</th><th>Persona</th><th>n</th><th>Acc</th><th>Brier</th><th>Pmed</th></tr></thead><tbody>' +
+    d.ranking.slice(0,10).map((r,i) => {
+      const medal = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : i+1));
+      return `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:4px">${medal}</td>
+        <td>${escape(r.persona_nome || r.persona_id)}</td>
+        <td style="text-align:center">${r.n_validas}</td>
+        <td style="text-align:center">${(r.accuracy*100).toFixed(0)}%</td>
+        <td style="text-align:center">${r.brier_avg!=null?r.brier_avg.toFixed(3):'—'}</td>
+        <td style="text-align:center;color:var(--txt3)">${r.media_prob_emitida!=null?r.media_prob_emitida.toFixed(2):'—'}</td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
 }
 
 async function renderReliabilityDiagram(){

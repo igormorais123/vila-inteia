@@ -643,6 +643,16 @@ async def backtest_brier_decomp(n_bins: int = Query(10, ge=2, le=30)):
     return decompor(probs, ys, n_bins=n_bins)
 
 
+@router.get("/backtest/persona-skill")
+async def backtest_persona_skill():
+    """Onda 115: ranking individual das personas no último backtest.
+    Retorna top preditores (Bezos, Jobs, ...) por Brier + accuracy."""
+    from engine.persona_skill import analisar_skill_personas
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    return analisar_skill_personas(_ULTIMO_BACKTEST.get("datasets", []))
+
+
 @router.get("/backtest/platt-vs-isotonic")
 async def backtest_platt_vs_isotonic():
     """Onda 100: compara Platt vs isotonic no último backtest."""
