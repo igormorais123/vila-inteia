@@ -1,11 +1,11 @@
-evento_id,data,contexto,outcome_real,probabilidade_prior
-pix01,2020-02-19,"Banco Central anuncia PIX — sistema gratuito instantâneo 24/7",1,0.60
-pix02,2020-10-05,"Cadastro chaves PIX abre 05/10 — milhões usuários correm",1,0.75
-pix03,2020-11-16,"PIX entra em operação 16/11 — adesão em dia 1 acima esperado",1,0.80
-pix04,2020-12-31,"PIX transaciona R$105bi em 45 dias — adoção viral",1,0.70
-pix05,2021-03-15,"PIX supera DOC+TED em volume — fim era bancária antiga",1,0.65
-pix06,2021-08-12,"Quadrilhas usam PIX para extorsão instantânea — crime sobe",1,0.55
-pix07,2021-10-27,"BC limita PIX noturno R$1000 — tentativa combater crimes",1,0.50
-pix08,2022-04-30,"PIX atinge 130 milhões cadastros — 70% população bancarizada usa",1,0.85
-pix09,2023-03-20,"PIX Automático anunciado — débito recorrente via PIX",1,0.60
-pix10,2023-09-30,"PIX responde 60% transações brasileiras — domina market",1,0.75
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+pix01,2020-02-19,"Banco Central anuncia PIX — sistema gratuito instantâneo 24/7",1,0.60,"O Banco Central anunciará o PIX como sistema gratuito instantâneo 24/7?"
+pix02,2020-10-05,"Cadastro chaves PIX abre 05/10 — milhões usuários correm",1,0.75,"Cadastro de chaves PIX abrirá em outubro com adesão em massa?"
+pix03,2020-11-16,"PIX entra em operação 16/11 — adesão em dia 1 acima esperado",1,0.80,"O PIX entrará em operação em novembro com adesão acima do esperado no dia 1?"
+pix04,2020-12-31,"PIX transaciona R$105bi em 45 dias — adoção viral",1,0.70,"O PIX movimentará ≥R$100 bi nos primeiros 45 dias de operação?"
+pix05,2021-03-15,"PIX supera DOC+TED em volume — fim era bancária antiga",1,0.65,"O PIX superará DOC+TED em volume até março de 2021?"
+pix06,2021-08-12,"Quadrilhas usam PIX para extorsão instantânea — crime sobe",1,0.55,"Haverá crescimento relevante de crimes de extorsão via PIX?"
+pix07,2021-10-27,"BC limita PIX noturno R$1000 — tentativa combater crimes",1,0.50,"O BC imporá limite noturno ao PIX para combater crimes?"
+pix08,2022-04-30,"PIX atinge 130 milhões cadastros — 70% população bancarizada usa",1,0.85,"O PIX atingirá 130 milhões de cadastros até abril de 2022?"
+pix09,2023-03-20,"PIX Automático anunciado — débito recorrente via PIX",1,0.60,"O BC anunciará o PIX Automático (débito recorrente)?"
+pix10,2023-09-30,"PIX responde 60% transações brasileiras — domina market",1,0.75,"O PIX responderá por ≥60% das transações brasileiras?"
