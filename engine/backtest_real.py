@@ -70,6 +70,26 @@ def extrair_probabilidade(texto: str) -> float | None:
     return None
 
 
+def _build_few_shot_block(
+    exemplos: list[dict] | None,
+    n_max: int = 3,
+) -> str:
+    """Onda 121: injeta exemplos past-event+outcome pra calibrar LLM."""
+    if not exemplos:
+        return ""
+    linhas = ["\n\nExemplos passados com resultado real (calibre sua resposta):"]
+    for e in exemplos[:n_max]:
+        ctx = (e.get("contexto") or "")[:160]
+        out = e.get("outcome_real")
+        prior = e.get("probabilidade_prior", 0.5)
+        verdict = "ACONTECEU" if out == 1 else "NÃO ACONTECEU"
+        linhas.append(
+            f"- \"{ctx}\" → prior humano {int(prior*100)}%, real: {verdict}."
+        )
+    linhas.append("\nAgora o evento atual:")
+    return "\n".join(linhas)
+
+
 def consultar_panel(
     contexto: str,
     persona_ids: list[str],
@@ -77,20 +97,24 @@ def consultar_panel(
     llm_fn=None,
     paralelo: bool = False,
     sleep_entre_personas_s: float = 0.0,
+    few_shot_exemplos: list[dict] | None = None,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
     Retorna per-persona prob + agregado (média).
 
     paralelo=False (default) respeita rate limits TPM.
-    sleep_entre_personas_s: throttle adicional serial (default 0).
+    few_shot_exemplos: Onda 121 — lista de eventos passados com outcome
+      injetados no prompt pra calibrar LLM.
     """
     from engine.panel_chat import panel_chat
+    few_shot = _build_few_shot_block(few_shot_exemplos)
     pergunta = (
         f"Analise o seguinte evento: \"{contexto}\"\n\n"
         f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
         f"principal associado acontecer/ter acontecido? "
         f"Responda em 1-2 frases citando APENAS um número em %."
+        + few_shot
     )
     resp = panel_chat(
         persona_ids=persona_ids,
@@ -132,6 +156,7 @@ def rodar_backtest(
     llm_fn=None,
     max_eventos: int | None = None,
     sleep_entre_eventos_s: float = 0.0,
+    few_shot_k: int = 2,
 ) -> dict:
     """
     Roda backtest completo em 1 dataset.
@@ -157,7 +182,10 @@ def rodar_backtest(
     for i, ev in enumerate(eventos_raw):
         if i > 0 and sleep_entre_eventos_s > 0:
             _time.sleep(sleep_entre_eventos_s)
-        panel = consultar_panel(ev["contexto"], persona_ids, sim, llm_fn=llm_fn)
+        # Onda 121: walk-forward few-shot = últimos k eventos anteriores
+        exemplos = eventos_raw[max(0, i - few_shot_k):i] if few_shot_k > 0 else None
+        panel = consultar_panel(ev["contexto"], persona_ids, sim, llm_fn=llm_fn,
+                                 few_shot_exemplos=exemplos)
         p_vila = panel["prob_agregada"]
         p_prior = ev["probabilidade_prior"]
         y = ev["outcome_real"]
