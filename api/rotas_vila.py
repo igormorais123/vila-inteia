@@ -445,6 +445,153 @@ async def snapshot_ping():
     }
 
 
+class BacktestRequest(BaseModel):
+    dataset: Optional[str] = None
+    max_eventos: int = 3
+    personas: list[str] = ["CL001", "CL002", "CL007"]
+    sleep_entre_eventos_s: float = 4.0
+
+
+_ULTIMO_BACKTEST: dict = {}
+
+
+@router.post("/backtest/rodar")
+async def backtest_rodar(req: BacktestRequest):
+    """
+    Onda 99: roda backtest via REST (sync, pode demorar ~1-5min).
+    Se dataset fornecido: só esse. Senão: todos 5 datasets.
+    Salva em _ULTIMO_BACKTEST + /backtest/ultimo.
+    """
+    from engine.backtest_real import rodar_backtest, rodar_backtest_todos
+    from pathlib import Path as _P
+
+    class _Sim:
+        def __init__(self, ids):
+            import json as _j
+            from engine.persona import Persona
+            banco = _j.load(open("data/banco-consultores-lendarios.json"))
+            self.personas = {}
+            for p in banco:
+                if p["id"] in ids:
+                    self.personas[p["id"]] = Persona(p)
+    sim = _Sim(req.personas)
+
+    if req.dataset:
+        path = _P("data/backtest") / f"{req.dataset}.csv"
+        if not path.exists():
+            raise HTTPException(404, f"dataset {req.dataset} não existe")
+        r = rodar_backtest(path, sim, persona_ids=req.personas,
+                            max_eventos=req.max_eventos,
+                            sleep_entre_eventos_s=req.sleep_entre_eventos_s)
+        saida = {"agregado": None, "datasets": [r]}
+    else:
+        saida = rodar_backtest_todos(
+            base_dir="data/backtest", sim=sim, persona_ids=req.personas,
+            max_eventos_por_ds=req.max_eventos,
+            sleep_entre_eventos_s=req.sleep_entre_eventos_s,
+            sleep_entre_datasets_s=6.0,
+        )
+
+    # Calibração Platt
+    try:
+        from engine.calibracao_platt import avaliar_calibracao
+        from engine.calibracao_runtime import salvar_coefs
+        probs, ys = [], []
+        for ds in saida.get("datasets", []):
+            for e in ds.get("eventos", []):
+                if e.get("prob_vila") is not None:
+                    probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+        if len(probs) >= 5:
+            cal = avaliar_calibracao(probs, ys)
+            saida["calibracao_platt"] = {k: v for k, v in cal.items() if k != "probs_calibradas"}
+            salvar_coefs(cal["platt_a"], cal["platt_b"], cal["n"], fonte="backtest_endpoint")
+    except Exception as e:
+        saida["calibracao_erro"] = str(e)
+
+    import time as _t
+    saida["completado_em"] = int(_t.time())
+    global _ULTIMO_BACKTEST
+    _ULTIMO_BACKTEST = saida
+    return saida
+
+
+@router.get("/backtest/ultimo")
+async def backtest_ultimo():
+    """Onda 99: retorna último resultado cached."""
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True, "msg": "Nenhum backtest rodado ainda. POST /backtest/rodar"}
+    return _ULTIMO_BACKTEST
+
+
+@router.get("/backtest/reliability")
+async def backtest_reliability(n_bins: int = Query(10, ge=2, le=30)):
+    """Onda 101: reliability diagram do último backtest."""
+    from engine.reliability_diagram import reliability
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"])
+                ys.append(e["outcome_real"])
+    return reliability(probs, ys, n_bins=n_bins)
+
+
+@router.get("/backtest/bootstrap-ci")
+async def backtest_bootstrap_ci(n_boot: int = Query(1000, ge=100, le=10000)):
+    """Onda 100: bootstrap 95% CI para Brier + accuracy do último backtest."""
+    from engine.calibracao_stats import bootstrap_ci
+    from engine.calibracao_platt import brier
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+
+    def _acc(p, y):
+        return sum(int((pi >= 0.5) == (yi == 1)) for pi, yi in zip(p, y)) / max(len(p), 1)
+
+    return {
+        "n": len(probs),
+        "brier_ci": bootstrap_ci(brier, probs, ys, n_boot=n_boot),
+        "accuracy_ci": bootstrap_ci(_acc, probs, ys, n_boot=n_boot),
+    }
+
+
+@router.get("/backtest/platt-vs-isotonic")
+async def backtest_platt_vs_isotonic():
+    """Onda 100: compara Platt vs isotonic no último backtest."""
+    from engine.calibracao_stats import comparacao_platt_vs_isotonic
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    return comparacao_platt_vs_isotonic(probs, ys)
+
+
+@router.get("/backtest/datasets")
+async def backtest_datasets():
+    """Onda 99: lista datasets disponíveis + count eventos."""
+    from pathlib import Path as _P
+    import csv
+    base = _P("data/backtest")
+    out = []
+    for p in sorted(base.glob("*.csv")):
+        try:
+            with open(p) as f:
+                n = sum(1 for _ in csv.reader(f)) - 1
+            out.append({"nome": p.stem, "n_eventos": n, "path": str(p)})
+        except Exception:
+            pass
+    return {"datasets": out, "total": len(out)}
+
+
 @router.get("/calibracao/status")
 async def calibracao_status():
     """Onda 97: status da calibração Platt runtime."""
