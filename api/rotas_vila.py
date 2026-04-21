@@ -410,18 +410,18 @@ async def snapshot_download():
         estado = _serializar_simulacao(sim)
     except Exception as e:
         raise HTTPException(500, f"serializar falhou: {e}")
+    step_atual = getattr(sim, "step", 0)
     payload = {
         "vila_id": getattr(sim, "nome", "default"),
-        "step": getattr(sim, "step", 0),
+        "step": step_atual,
         "exportado_em": int(time.time()),
         "schema_version": 1,
         "estado": estado,
     }
+    filename = f"vila_snapshot_step{step_atual}.json"
     return JSONResponse(
         content=payload,
-        headers={
-            "Content-Disposition": f'attachment; filename="vila_snapshot_step{payload[\"step\"]}.json"',
-        },
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
 
 
