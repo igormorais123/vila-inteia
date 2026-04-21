@@ -154,6 +154,7 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <div class="spacer"></div>
     <span id="calib_status" class="status" title="Calibração Platt Onda 97">cal: —</span>
     <span id="status" class="status">—</span>
+    <button class="btn-sec btn" onclick="iniciarTour()" title="Tour guiado">?</button>
     <button class="btn-sec btn" onclick="abrirBacktestModal()">🎯 Backtest</button>
     <a class="btn-sec btn" href="/api/v1/vila/snapshot" download style="text-decoration:none">⬇ Snapshot</a>
     <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
@@ -1006,6 +1007,101 @@ window.atualizarTudo = atualizarTudo;
 document.getElementById('auto').addEventListener('change', toggleAuto);
 document.getElementById('sse').addEventListener('change', toggleSSE);
 window.addEventListener('resize', () => desenharGrafo());
+
+// ===== TOUR (Onda 113) =====
+const TOUR_STEPS = [
+  {sel: '.brand', title: 'God\'s Eye · Bem-vindo', text: 'Dashboard unificado da Vila INTEIA. Simulação multi-agente com 144 personas lendárias, Markov psico-histórico + LLM narrativa.'},
+  {sel: '.col-l', title: 'Top influenciadores', text: 'Ranking de personas por centrality score (degree + betweenness + eigenvector + PageRank). Clique qualquer persona para abrir drawer.'},
+  {sel: '.col-c', title: 'Grafo de conversas', text: 'Força-direcionado D3. Nós = personas, arestas = conversas, cor = comunidade Louvain. Toggle ◈/▣ pra alternar graph ↔ campus map.'},
+  {sel: '.col-r', title: 'Conversas LLM-rich live', text: 'Feed filtrado de conversas geradas por LLM (não templates). Atualiza via SSE.'},
+  {sel: '.bottom', title: 'Forecast + Recomendação + Briefing', text: 'Markov forecast próximos N steps, sweep multi-counterfactual pra outcome desejado, briefing executivo Helena/Efesto.'},
+  {sel: '#calib_status', title: 'Platt calibração', text: 'Coefs a, b aplicados runtime em forecasts para reduzir over-confidence (Onda 97). Atualizado por backtest.'},
+  {sel: 'button[onclick="abrirBacktestModal()"]', title: 'Backtest real', text: 'Roda Vila contra eventos históricos (impeachment, crypto, Apple...). Mede Brier skill vs prior humano. Abre modal com reliability diagram.'},
+];
+let _tour_idx = 0;
+
+function iniciarTour(){
+  _tour_idx = 0;
+  renderTour();
+}
+
+function fecharTour(){
+  document.getElementById('tour_overlay')?.remove();
+  document.getElementById('tour_spot')?.remove();
+  document.getElementById('tour_box')?.remove();
+  try { localStorage.setItem('vila_tour_visto', '1'); } catch(e){}
+}
+
+function renderTour(){
+  // Remove previous
+  document.getElementById('tour_overlay')?.remove();
+  document.getElementById('tour_spot')?.remove();
+  document.getElementById('tour_box')?.remove();
+
+  if(_tour_idx >= TOUR_STEPS.length){ fecharTour(); return; }
+  const step = TOUR_STEPS[_tour_idx];
+  const target = document.querySelector(step.sel);
+  if(!target){ _tour_idx++; return renderTour(); }
+  const rect = target.getBoundingClientRect();
+
+  // Overlay dark
+  const ov = document.createElement('div');
+  ov.id = 'tour_overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;pointer-events:none;transition:opacity .2s';
+  document.body.appendChild(ov);
+
+  // Spotlight around target
+  const spot = document.createElement('div');
+  spot.id = 'tour_spot';
+  const pad = 8;
+  spot.style.cssText = `position:fixed;z-index:201;pointer-events:none;
+    top:${rect.top - pad}px;left:${rect.left - pad}px;
+    width:${rect.width + pad*2}px;height:${rect.height + pad*2}px;
+    border:2px solid var(--amber);border-radius:6px;
+    box-shadow:0 0 0 9999px rgba(0,0,0,0.65);transition:all .3s`;
+  document.body.appendChild(spot);
+
+  // Floating box below target
+  const box = document.createElement('div');
+  box.id = 'tour_box';
+  const boxTop = Math.min(rect.bottom + 16, window.innerHeight - 200);
+  const boxLeft = Math.min(Math.max(rect.left, 20), window.innerWidth - 340);
+  box.style.cssText = `position:fixed;z-index:202;
+    top:${boxTop}px;left:${boxLeft}px;width:320px;
+    background:var(--surf);border:1px solid var(--amber);border-radius:8px;
+    padding:14px;box-shadow:0 8px 24px rgba(0,0,0,0.5);
+    font-family:'Inter',sans-serif`;
+  box.innerHTML = `
+    <div style="font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:.5pt">
+      Passo ${_tour_idx+1}/${TOUR_STEPS.length}
+    </div>
+    <h3 style="color:var(--amber);font-size:14px;margin:4px 0 8px 0">${escape(step.title)}</h3>
+    <div style="font-size:12px;color:var(--txt2);line-height:1.5">${escape(step.text)}</div>
+    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+      <button onclick="fecharTour()" style="background:transparent;border:1px solid var(--border);color:var(--txt3);padding:6px 12px;border-radius:4px;font-size:11px;cursor:pointer">Pular</button>
+      <button onclick="tourVoltar()" ${_tour_idx === 0 ? 'disabled' : ''} style="background:transparent;border:1px solid var(--border);color:var(--txt2);padding:6px 12px;border-radius:4px;font-size:11px;cursor:pointer;${_tour_idx === 0 ? 'opacity:0.3' : ''}">← Voltar</button>
+      <button onclick="tourAvancar()" style="background:var(--amber);color:#000;border:none;padding:6px 14px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">
+        ${_tour_idx === TOUR_STEPS.length - 1 ? 'Concluir' : 'Próximo →'}
+      </button>
+    </div>`;
+  document.body.appendChild(box);
+  target.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function tourAvancar(){ _tour_idx++; renderTour(); }
+function tourVoltar(){ if(_tour_idx > 0){ _tour_idx--; renderTour(); } }
+
+window.iniciarTour = iniciarTour;
+window.fecharTour = fecharTour;
+window.tourAvancar = tourAvancar;
+window.tourVoltar = tourVoltar;
+
+// Auto-start tour on first visit
+try {
+  if(!localStorage.getItem('vila_tour_visto')){
+    setTimeout(iniciarTour, 1500);
+  }
+} catch(e){}
 
 // Initial load + SSE
 atualizarTudo();
