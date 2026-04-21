@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from engine.calibracao_runtime import (
     salvar_coefs, carregar_coefs, aplicar, aplicar_varios,
-    calibracao_ativa, status,
+    calibracao_ativa, status, salvar_isotonic,
 )
 
 ok, fail = 0, 0
@@ -101,12 +101,52 @@ def t_status():
     os.unlink(p)
 
 
+def t_isotonic_roundtrip():
+    p = _tmppath()
+    os.unlink(p)
+    mapping = [(0.1, 0.05), (0.3, 0.20), (0.5, 0.45), (0.7, 0.75), (0.9, 0.92)]
+    salvar_isotonic(mapping, n_amostras=100, fonte="iso_test", path=p)
+    c = carregar_coefs(path=p, use_cache=False)
+    teste("tipo=isotonic", c["tipo"] == "isotonic")
+    teste("mapping size=5", len(c["mapping"]) == 5)
+    os.unlink(p)
+
+
+def t_isotonic_aplicar_interpolacao():
+    p = _tmppath()
+    os.unlink(p)
+    mapping = [(0.1, 0.05), (0.5, 0.45), (0.9, 0.92)]
+    salvar_isotonic(mapping, n_amostras=100, path=p)
+    # 0.5 → 0.45 (match exato)
+    teste("iso 0.5 → 0.45", abs(aplicar(0.5, path=p) - 0.45) < 1e-6)
+    # 0.3 interp entre 0.05 e 0.45 → 0.25
+    v = aplicar(0.3, path=p)
+    teste(f"iso 0.3 interp → ~0.25 (got {v:.3f})", abs(v - 0.25) < 0.01)
+    # Fora de range: clampa
+    teste("iso 0.0 → 0.05 (clamp lo)", abs(aplicar(0.0, path=p) - 0.05) < 1e-6)
+    teste("iso 1.0 → 0.92 (clamp hi)", abs(aplicar(1.0, path=p) - 0.92) < 1e-6)
+    os.unlink(p)
+
+
+def t_status_isotonic_reporta_mapping_size():
+    p = _tmppath()
+    os.unlink(p)
+    mapping = [(0.1, 0.1), (0.9, 0.9)]
+    salvar_isotonic(mapping, n_amostras=50, path=p)
+    s = status(p)
+    teste("status tipo=isotonic", s["tipo"] == "isotonic")
+    teste("status mapping_size=2", s["mapping_size"] == 2)
+    os.unlink(p)
+
+
 def main():
     print("=== test_calibracao_runtime ===")
     for fn in [t_salvar_carregar_roundtrip, t_carregar_path_inexistente,
                t_calibracao_ativa, t_aplicar_sem_coefs_retorna_raw,
                t_aplicar_identidade_a1_b0, t_aplicar_reduz_over_confidence,
-               t_aplicar_varios, t_status]:
+               t_aplicar_varios, t_status,
+               t_isotonic_roundtrip, t_isotonic_aplicar_interpolacao,
+               t_status_isotonic_reporta_mapping_size]:
         try: fn()
         except Exception as e:
             global fail; fail += 1

@@ -1,11 +1,11 @@
-evento_id,data,contexto,outcome_real,probabilidade_prior
-btc01,2024-01-10,"SEC aprova ETF de Bitcoin spot — 11 ETFs autorizados simultaneamente",1,0.80
-btc02,2024-03-11,"Bitcoin atinge ATH 73k antes do halving — momentum altista",1,0.75
-btc03,2024-04-19,"Halving Bitcoin 4º evento — redução de emissão para 3.125 BTC por bloco",1,0.95
-btc04,2024-05-20,"ETF Ethereum spot aprovado pela SEC após pressão institucional",1,0.60
-btc05,2024-08-05,"Bitcoin crash -20% em dia único após yen carry-trade unwind",1,0.55
-btc06,2024-09-18,"Fed corta taxa 50bps — impulso risk-on para cripto",1,0.70
-btc07,2024-11-06,"Bitcoin supera 90k pós-eleição Trump — euforia pro-cripto",1,0.75
-btc08,2024-11-22,"Bitcoin supera 100k pela primeira vez na história",1,0.65
-btc09,2024-12-15,"Correção -15% após topo 108k — realização de lucros",1,0.50
-btc10,2024-12-30,"BTC fecha ano em 93k — ganho anual 120% vs S&P 23%",1,0.70
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+btc01,2024-01-10,"SEC aprova ETF de Bitcoin spot — 11 ETFs autorizados simultaneamente",1,0.80,"A SEC aprovará múltiplos ETFs de Bitcoin spot em janeiro?"
+btc02,2024-03-11,"Bitcoin atinge ATH 73k antes do halving — momentum altista",1,0.75,"Bitcoin atingirá novo ATH (>69k) antes do halving?"
+btc03,2024-04-19,"Halving Bitcoin 4º evento — redução de emissão para 3.125 BTC por bloco",1,0.95,"O halving do Bitcoin (emissão 3.125 BTC/bloco) ocorrerá em abril?"
+btc04,2024-05-20,"ETF Ethereum spot aprovado pela SEC após pressão institucional",1,0.60,"A SEC aprovará ETF de Ethereum spot em maio?"
+btc05,2024-08-05,"Bitcoin crash -20% em dia único após yen carry-trade unwind",1,0.55,"Bitcoin sofrerá crash ≥15% em dia único em agosto?"
+btc06,2024-09-18,"Fed corta taxa 50bps — impulso risk-on para cripto",1,0.70,"O Fed cortará juros em 50bps em setembro?"
+btc07,2024-11-06,"Bitcoin supera 90k pós-eleição Trump — euforia pro-cripto",1,0.75,"Bitcoin ultrapassará 90k após eleição de Trump?"
+btc08,2024-11-22,"Bitcoin supera 100k pela primeira vez na história",1,0.65,"Bitcoin atingirá 100k pela primeira vez em 2024?"
+btc09,2024-12-15,"Correção -15% após topo 108k — realização de lucros",1,0.50,"Bitcoin sofrerá correção >10% após topo de 108k?"
+btc10,2024-12-30,"BTC fecha ano em 93k — ganho anual 120% vs S&P 23%",1,0.70,"Bitcoin fechará 2024 com ganho anual >100%?"

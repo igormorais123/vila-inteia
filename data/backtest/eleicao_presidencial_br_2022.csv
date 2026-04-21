@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+pres01,2022-03-30,"Lula supera Bolsonaro por 15 pontos no 1º Datafolha pós-retorno elegível",1,0.65,"Lula liderará Bolsonaro por ≥15 pontos no Datafolha de março?"
+pres02,2022-07-20,"Convenção PT confirma Lula com Alckmin VP — chapa de centro",1,0.80,"A chapa Lula/Alckmin será oficializada na convenção do PT?"
+pres03,2022-08-25,"Bolsonaro cresce no Nordeste após Auxílio Brasil R$600 — reaproxima",1,0.50,"Bolsonaro crescerá nas pesquisas do Nordeste após Auxílio Brasil R$600?"
+pres04,2022-10-02,"1º turno: Lula 48.4% vs Bolsonaro 43.2% — resultado apertado fora prognóstico",1,0.75,"Lula vencerá o 1º turno com vantagem menor que 10 pontos sobre Bolsonaro?"
+pres05,2022-10-16,"Debate 2º turno Band: Lula ataca Bolsonaro no SUS — Lula domina",1,0.55,"Lula será percebido como vencedor do debate da Band?"
+pres06,2022-10-28,"Missa Fátima Appy endossa Bolsonaro — tentativa último minuto",0,0.45,"O endosso de última hora reverterá o resultado da eleição a favor de Bolsonaro?"
+pres07,2022-10-30,"Lula vence 2º turno 50.9% vs 49.1% — eleição mais apertada desde 1989",1,0.60,"Lula vencerá o 2º turno da eleição presidencial?"
+pres08,2022-11-15,"Equipe transição divulga relatório déficit R$250bi — escalation crise",1,0.70,"A equipe de transição divulgará déficit de ~R$250 bi?"
+pres09,2022-12-12,"PEC Transição aprovada R$145bi — acordo Congresso",1,0.65,"A PEC Transição (R$145bi) será aprovada pelo Congresso?"
+pres10,2023-01-08,"Atos golpistas em Brasília — invasão 3 Poderes domingo fatídico",1,0.40,"Ocorrerá invasão golpista aos 3 Poderes em 8 de janeiro?"

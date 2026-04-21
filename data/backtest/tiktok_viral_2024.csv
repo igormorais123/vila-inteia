@@ -1,11 +1,11 @@
-evento_id,data,contexto,outcome_real,probabilidade_prior
-tk01,2024-03-15,"Challenge #GracieUSA viraliza — 2M videos em 3 dias apoio massivo",1,0.65
-tk02,2024-04-02,"Backlash contra creator tóxico — rejeição rápida e perda de engajamento",0,0.55
-tk03,2024-05-10,"Música brasileira 'Brabo' entra top global — crescimento exponencial",1,0.70
-tk04,2024-06-20,"TikTok ban votado no Senado americano — escândalo geopolítico",1,0.75
-tk05,2024-07-04,"CEO testemunha Congresso — campanha robusta de PR",0,0.40
-tk06,2024-08-15,"Creator fund reduzido 30% — creators migram para YouTube Shorts",1,0.50
-tk07,2024-09-05,"Algoritmo For You atualizado, engajamento cai 12% em média — rejeição usuários",1,0.55
-tk08,2024-10-20,"Trend 'Demure' viraliza — 50M videos em 1 semana apoio massivo",1,0.72
-tk09,2024-11-10,"Venda US operations negociada com Oracle — vitória da oposição ao ban",0,0.45
-tk10,2024-12-31,"Revenue 2024 cresce 40% YoY — forte desempenho apesar das turbulências",1,0.60
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+tk01,2024-03-15,"Challenge #GracieUSA viraliza — 2M videos em 3 dias apoio massivo",1,0.65,"Challenge #GracieUSA viralizará com 2M+ vídeos em 3 dias?"
+tk02,2024-04-02,"Backlash contra creator tóxico — rejeição rápida e perda de engajamento",0,0.55,"O backlash derrubará o creator tóxico em poucos dias?"
+tk03,2024-05-10,"Música brasileira 'Brabo' entra top global — crescimento exponencial",1,0.70,"A música brasileira 'Brabo' entrará no top global do TikTok?"
+tk04,2024-06-20,"TikTok ban votado no Senado americano — escândalo geopolítico",1,0.75,"O Senado americano votará a favor do ban do TikTok?"
+tk05,2024-07-04,"CEO testemunha Congresso — campanha robusta de PR",0,0.40,"A campanha de PR do CEO reverterá o sentimento anti-TikTok no Congresso?"
+tk06,2024-08-15,"Creator fund reduzido 30% — creators migram para YouTube Shorts",1,0.50,"O creator fund será reduzido em ~30%?"
+tk07,2024-09-05,"Algoritmo For You atualizado, engajamento cai 12% em média — rejeição usuários",1,0.55,"Update do algoritmo For You causará queda de ≥10% no engajamento?"
+tk08,2024-10-20,"Trend 'Demure' viraliza — 50M videos em 1 semana apoio massivo",1,0.72,"Trend 'Demure' atingirá 50M+ vídeos em 1 semana?"
+tk09,2024-11-10,"Venda US operations negociada com Oracle — vitória da oposição ao ban",0,0.45,"A venda das operações US do TikTok para Oracle será concretizada?"
+tk10,2024-12-31,"Revenue 2024 cresce 40% YoY — forte desempenho apesar das turbulências",1,0.60,"Receita do TikTok em 2024 crescerá ≥40% YoY?"

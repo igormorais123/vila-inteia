@@ -505,7 +505,139 @@ class BacktestRequest(BaseModel):
     sleep_entre_eventos_s: float = 4.0
 
 
+class BacktestAccRequest(BaseModel):
+    dataset: Optional[str] = None
+    max_eventos: int = 3
+    personas: list[str] = ["CL001", "CL002", "CL007"]
+    sleep_entre_eventos_s: float = 4.0
+    few_shot_k: int = 2
+    chain_of_thought: bool = True
+    usar_debate: bool = True
+    dispersao_threshold: float = 0.15
+    max_rounds: int = 2
+    usar_bayesian_blend: bool = True
+    peso_vila: float = 0.7
+    aplicar_platt: bool = True
+    pesos_skill_ranking: bool = False  # se True, usa persona-skill ranking
+    usar_conditional_personas: bool = False  # Onda 127: panel ideal por dataset categoria
+    usar_self_consistency: bool = False  # Onda 128+129: multi-sample median
+    n_samples_sc: int = 3
+    usar_adversarial: bool = False  # Onda 130: devil's advocate debias
+    usar_judge_filter: bool = False  # Onda 131: LLM judge filtra low-quality
+    judge_threshold: float = 0.4
+    usar_peso_adaptativo: bool = False  # Onda 137: dispersion-aware peso_vila
+    auto_panel: bool = False  # Onda 141: selecionar_panel auto se personas None
+    prob_floor: float = 0.0  # Onda 143: hedge floor
+    prob_ceiling: float = 1.0  # Onda 143: hedge ceiling
+    recency_decay: float = 1.0  # Onda 152/153: recency-weighted base_rate
+    aplicar_calib_por_persona: bool = False  # Onda 156: per-persona calib
+    temp_por_persona: bool = False  # Onda 158: temperature por arquétipo
+
+
 _ULTIMO_BACKTEST: dict = {}
+
+
+@router.post("/backtest/rodar-acc")
+async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
+    """Onda 126: full-stack accuracy backtest com 121+122+123+124+125+97."""
+    from engine.backtest_acc import rodar_backtest_acc
+    from pathlib import Path as _P
+
+    class _Sim:
+        def __init__(self, ids):
+            import json as _j
+            from engine.persona import Persona
+            banco = _j.load(open("data/banco-consultores-lendarios.json"))
+            self.personas = {}
+            for p in banco:
+                if p["id"] in ids:
+                    self.personas[p["id"]] = Persona(p)
+    sim = _Sim(req.personas)
+
+    pesos = None
+    if req.pesos_skill_ranking and _ULTIMO_BACKTEST:
+        try:
+            from engine.persona_skill import analisar_skill_personas
+            from engine.backtest_real import pesos_desde_ranking_skill
+            rk = analisar_skill_personas(_ULTIMO_BACKTEST.get("datasets", []))
+            pesos = pesos_desde_ranking_skill(rk["ranking"])
+        except Exception: pass
+
+    datasets_to_run = []
+    base_dir = _P("data/backtest")
+    if req.dataset:
+        path = base_dir / f"{req.dataset}.csv"
+        if not path.exists():
+            raise HTTPException(404, f"dataset {req.dataset} não existe")
+        datasets_to_run = [path]
+    else:
+        datasets_to_run = sorted(base_dir.glob("*.csv"))
+
+    out = {"datasets": []}
+    for ds in datasets_to_run:
+        try:
+            # Onda 127: conditional persona selection per dataset
+            personas_ds = req.personas
+            categoria_ds = None
+            if req.usar_conditional_personas:
+                try:
+                    from engine.persona_selector import selecionar_panel
+                    from engine.backtest_real import carregar_dataset
+                    sample = carregar_dataset(ds)[:3]
+                    sel = selecionar_panel(ds.stem, eventos_sample=sample,
+                                            personas_validas=set(sim.personas.keys()))
+                    if sel["persona_ids"]:
+                        personas_ds = sel["persona_ids"]
+                        categoria_ds = sel["categoria"]
+                except Exception: pass
+            r = rodar_backtest_acc(
+                ds, sim, persona_ids=personas_ds,
+                max_eventos=req.max_eventos,
+                sleep_entre_eventos_s=req.sleep_entre_eventos_s,
+                few_shot_k=req.few_shot_k,
+                pesos_persona=pesos,
+                chain_of_thought=req.chain_of_thought,
+                usar_debate=req.usar_debate,
+                dispersao_threshold=req.dispersao_threshold,
+                max_rounds=req.max_rounds,
+                usar_bayesian_blend=req.usar_bayesian_blend,
+                peso_vila=req.peso_vila,
+                aplicar_platt=req.aplicar_platt,
+                usar_self_consistency=req.usar_self_consistency,
+                n_samples_sc=req.n_samples_sc,
+                usar_adversarial=req.usar_adversarial,
+                usar_judge_filter=req.usar_judge_filter,
+                judge_threshold=req.judge_threshold,
+                usar_peso_adaptativo=req.usar_peso_adaptativo,
+                auto_panel=req.auto_panel,
+                prob_floor=req.prob_floor,
+                prob_ceiling=req.prob_ceiling,
+                recency_decay=req.recency_decay,
+                aplicar_calib_por_persona=req.aplicar_calib_por_persona,
+                temp_por_persona=req.temp_por_persona,
+            )
+            if categoria_ds:
+                r["categoria_detectada"] = categoria_ds
+                r["personas_selecionadas"] = personas_ds
+            out["datasets"].append(r)
+        except Exception as e:
+            out["datasets"].append({"dataset": str(ds), "erro": str(e)})
+
+    # Agregado
+    total_ev = sum(r.get("n_eventos", 0) for r in out["datasets"] if "erro" not in r)
+    if total_ev > 0:
+        ok_v = sum(r.get("accuracy_vila_calibrada", 0) * r.get("n_eventos", 0)
+                    for r in out["datasets"] if "erro" not in r)
+        ok_b = sum(r.get("accuracy_blend_final", 0) * r.get("n_eventos", 0)
+                    for r in out["datasets"] if "erro" not in r)
+        out["agregado"] = {
+            "n_eventos_total": total_ev,
+            "accuracy_vila_calibrada": ok_v / total_ev,
+            "accuracy_blend_final": ok_b / total_ev,
+        }
+    import time as _t
+    out["completado_em"] = int(_t.time())
+    return out
 
 
 @router.post("/backtest/rodar")
@@ -572,6 +704,14 @@ async def backtest_rodar(req: BacktestRequest, _=Depends(auth_e_rate)):
         saida["persistencia"] = _salvar_bt(saida)
     except Exception as e:
         saida["persistencia_erro"] = str(e)
+
+    # Onda 117: webhook alert se skill caiu abaixo limite
+    try:
+        skill = (saida.get("agregado") or {}).get("skill_brier_vs_prior_macro")
+        if skill is not None and skill < -0.3:
+            from engine.webhook_alerts import alerta_skill_negativo
+            alerta_skill_negativo(skill, limite=-0.3)
+    except Exception: pass
 
     return saida
 
@@ -653,6 +793,76 @@ async def backtest_persona_skill():
     return analisar_skill_personas(_ULTIMO_BACKTEST.get("datasets", []))
 
 
+@router.get("/backtest/cv-holdout")
+async def backtest_cv_holdout(
+    test_frac: float = Query(0.2, ge=0.1, le=0.5),
+    n_repeats: int = Query(10, ge=1, le=50),
+):
+    """Onda 114: repeated hold-out CV pra Platt. Train/test split.
+    Retorna brier_train/test avg + overfit_gap."""
+    from engine.cv_holdout import cv_holdout_platt
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    return cv_holdout_platt(probs, ys, test_frac=test_frac, n_repeats=n_repeats)
+
+
+@router.get("/comparison")
+async def comparison_simuladores():
+    """Onda 120: comparison matrix Vila vs Generative Agents, OASIS, MiroFish."""
+    from engine.comparison_table import build_comparison
+    return build_comparison()
+
+
+@router.get("/backtest/bayesian-blend")
+async def backtest_bayesian_blend(
+    peso_vila: float = Query(0.7, ge=0.0, le=1.0),
+):
+    """Onda 125: Bayesian blend Vila com base rate do dataset.
+    Aplica log-odds weighted mean. Retorna probs_original/blend + scores."""
+    from engine.bayesian_blend import blend_vetor, base_rate_dataset
+    from engine.calibracao_platt import brier as _brier
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    if len(probs) < 2:
+        return {"erro": "n<2"}
+    blend = blend_vetor(probs, ys, peso_vila=peso_vila)
+    return {
+        "n": len(probs),
+        "peso_vila": peso_vila,
+        "base_rate_final": base_rate_dataset(ys),
+        "brier_vila": _brier(probs, ys),
+        "brier_blend": _brier(blend, ys),
+        "melhoria_brier": _brier(probs, ys) - _brier(blend, ys),
+        "probs_blend": blend,
+    }
+
+
+@router.get("/backtest/baselines")
+async def backtest_baselines():
+    """Onda 118: compara Vila vs baselines simples (base_rate, markov, exp_smooth, random)."""
+    from engine.baselines import comparar_baselines
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys, priors = [], [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"])
+                ys.append(e["outcome_real"])
+                priors.append(e.get("prob_prior", 0.5))
+    return comparar_baselines(probs, ys, priors=priors)
+
+
 @router.get("/backtest/platt-vs-isotonic")
 async def backtest_platt_vs_isotonic():
     """Onda 100: compara Platt vs isotonic no último backtest."""
@@ -707,6 +917,73 @@ async def calibracao_aplicar(req: CalibracaoAplicarRequest):
     }
 
 
+@router.get("/calibracao/por-persona/status")
+async def calibracao_por_persona_status():
+    """Onda 156: status per-persona calibration."""
+    from engine.calibracao_por_persona import status
+    return status()
+
+
+@router.post("/calibracao/por-persona/auto-fit")
+async def calibracao_por_persona_auto_fit(min_amostras: int = 5):
+    """
+    Onda 156: fita calibrador per-persona a partir de _ULTIMO_BACKTEST.
+    Cada persona com >= min_amostras recebe próprio Platt/iso.
+    """
+    from engine.calibracao_por_persona import fitar_todas_personas
+    if not _ULTIMO_BACKTEST or not _ULTIMO_BACKTEST.get("datasets"):
+        raise HTTPException(400, "nenhum backtest em memória")
+    r = fitar_todas_personas(_ULTIMO_BACKTEST["datasets"], min_amostras=min_amostras)
+    return {"resumo": r, "n_personas_processadas": len(r)}
+
+
+@router.post("/calibracao/auto-fit")
+async def calibracao_auto_fit():
+    """
+    Onda 151: auto-fit melhor calibrador (Platt vs isotonic) a partir
+    do último backtest armazenado. Salva vencedor em calibracao_platt.json.
+    """
+    from engine.calibracao_auto import salvar_melhor_calibrador
+
+    if not _ULTIMO_BACKTEST or not _ULTIMO_BACKTEST.get("datasets"):
+        raise HTTPException(
+            400,
+            "nenhum backtest em memória — rode POST /backtest/rodar-acc ou /backtest/rodar antes",
+        )
+
+    probs: list[float] = []
+    ys: list[int] = []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        if "erro" in ds:
+            continue
+        for ev in ds.get("eventos", []):
+            p = ev.get("prob_vila_raw") or ev.get("prob_vila")
+            y = ev.get("outcome_real")
+            if p is None or y is None:
+                continue
+            probs.append(float(p))
+            ys.append(int(y))
+
+    if len(probs) < 5:
+        raise HTTPException(
+            400,
+            f"poucos pares ({len(probs)}); mínimo 5 pra fit",
+        )
+
+    r = salvar_melhor_calibrador(
+        probs, ys,
+        fonte=f"auto_fit_backtest_{len(probs)}ev",
+    )
+    return {
+        "vencedor": r["vencedor"],
+        "salvo_como": r.get("salvo_como"),
+        "brier_raw": r.get("brier_raw"),
+        "brier_platt": r["platt"]["brier"],
+        "brier_isotonic": r["isotonic"]["brier"],
+        "n_amostras": r["n_amostras"],
+    }
+
+
 @router.get("/godseye-stream")
 async def godseye_stream():
     """
@@ -746,6 +1023,11 @@ async def godseye_stream():
                     if len(mules) > ultimo_n_mules:
                         for m in mules[ultimo_n_mules:]:
                             yield f"event: mule\ndata: {_json.dumps(m)}\n\n"
+                            # Onda 117: webhook alert on new mule
+                            try:
+                                from engine.webhook_alerts import alerta_mule
+                                alerta_mule(m if isinstance(m, dict) else {"tipo": str(m)})
+                            except Exception: pass
                         ultimo_n_mules = len(mules)
 
                 tick += 1

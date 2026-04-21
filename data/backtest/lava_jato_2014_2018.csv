@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+lj01,2014-03-17,"PF deflagra Lava Jato — Alberto Youssef preso — caso chega Petrobras",1,0.75,"A operação Lava Jato alcançará diretamente a Petrobras?"
+lj02,2014-11-14,"Paulo Roberto Costa delata diretoria Petrobras — escândalo escala",1,0.85,"Paulo Roberto Costa fará delação sobre a diretoria da Petrobras?"
+lj03,2015-03-15,"Protestos anti-Dilma 1 milhão — Avenida Paulista lotada",1,0.65,"Protestos anti-Dilma atingirão 1 milhão de pessoas na Paulista?"
+lj04,2015-07-22,"Marcelo Odebrecht preso em casa SP — empreiteira maior cai",1,0.70,"Marcelo Odebrecht será preso preventivamente em 2015?"
+lj05,2016-03-04,"Lula conduzido coercitivamente pela PF — julgamento político",1,0.50,"Lula será conduzido coercitivamente pela PF?"
+lj06,2017-05-17,"Delação JBS pega Michel Temer em áudio — pós-gravado crise",1,0.60,"Delação JBS incluirá áudio gravado envolvendo Michel Temer?"
+lj07,2017-07-12,"Lula condenado triplex Guarujá por Moro — pena 9.5 anos",1,0.80,"Lula será condenado por Sergio Moro no caso do triplex do Guarujá?"
+lj08,2018-01-24,"TRF4 confirma condenação Lula — 2ª instância elimina elegibilidade",1,0.75,"TRF4 confirmará a condenação de Lula em 2ª instância?"
+lj09,2018-04-07,"Lula preso Curitiba após sentença final STF — último recurso negado",1,0.85,"Lula será preso em Curitiba após decisão final do STF?"
+lj10,2018-10-28,"Bolsonaro vence eleição 55% vs Haddad — ex-Lava Jato beneficiado",1,0.55,"Bolsonaro vencerá o 2º turno contra Haddad?"
