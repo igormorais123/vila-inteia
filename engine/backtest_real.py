@@ -42,32 +42,55 @@ def carregar_dataset(path: str | Path) -> list[dict]:
 
 _REGEX_PCT = re.compile(r"(\d{1,3})\s*%")
 _REGEX_DEC = re.compile(r"\b0\.(\d{1,4})\b")
+# Onda 123: format CoT "PROBABILIDADE FINAL: N%"
+_REGEX_FINAL = re.compile(
+    r"PROBABILIDADE\s+FINAL\s*[:：]\s*(\d{1,3})\s*%",
+    re.IGNORECASE,
+)
 
 
 def extrair_probabilidade(texto: str) -> float | None:
     """
     Extrai probabilidade (0-1) de texto livre.
-    Tenta:
-      - "70%" → 0.70
-      - "0.6" ou "0,6" → 0.6
-      - ignora se nenhum match ou fora [0,1].
+    Prioridade:
+      - "PROBABILIDADE FINAL: 70%" (Onda 123 CoT)
+      - "70%" primeiro match
+      - "0.6" ou "0,6"
+      - ignora fora [0,1].
     """
     if not texto:
         return None
     t = texto.replace(",", ".")
-    # %
+    m = _REGEX_FINAL.search(t)
+    if m:
+        v = int(m.group(1)) / 100.0
+        if 0 <= v <= 1:
+            return v
     m = _REGEX_PCT.search(t)
     if m:
         v = int(m.group(1)) / 100.0
         if 0 <= v <= 1:
             return v
-    # 0.xxx
     m = _REGEX_DEC.search(t)
     if m:
         v = float("0." + m.group(1))
         if 0 <= v <= 1:
             return v
     return None
+
+
+def _build_cot_prefix() -> str:
+    """Onda 123: chain-of-thought instruction."""
+    return (
+        "\n\nPense passo-a-passo antes de responder:\n"
+        "  1. Identifique os drivers principais (macro, micro, institucional).\n"
+        "  2. Liste fatores a favor e contra o outcome.\n"
+        "  3. Ajuste sua estimativa por base rates históricas similares.\n"
+        "  4. Confirme: você está over-confident? Ancorar em 40-80% se incerto.\n\n"
+        "Estrutura da resposta:\n"
+        "RACIOCÍNIO: <2-3 frases curtas>\n"
+        "PROBABILIDADE FINAL: <N%>"
+    )
 
 
 def _build_few_shot_block(
@@ -142,6 +165,7 @@ def consultar_panel(
     sleep_entre_personas_s: float = 0.0,
     few_shot_exemplos: list[dict] | None = None,
     pesos_persona: dict[str, float] | None = None,
+    chain_of_thought: bool = True,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
@@ -150,20 +174,32 @@ def consultar_panel(
     paralelo=False (default) respeita rate limits TPM.
     few_shot_exemplos: Onda 121 — eventos passados injetados no prompt.
     pesos_persona: Onda 122 — {persona_id: weight}. Vazio = média simples.
+    chain_of_thought: Onda 123 — pede raciocínio estruturado (default True).
     """
     from engine.panel_chat import panel_chat
     few_shot = _build_few_shot_block(few_shot_exemplos)
-    pergunta = (
-        f"Analise o seguinte evento: \"{contexto}\"\n\n"
-        f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
-        f"principal associado acontecer/ter acontecido? "
-        f"Responda em 1-2 frases citando APENAS um número em %."
-        + few_shot
-    )
+    if chain_of_thought:
+        pergunta = (
+            f"Analise o seguinte evento: \"{contexto}\"\n\n"
+            f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
+            f"principal associado acontecer/ter acontecido?"
+            + few_shot
+            + _build_cot_prefix()
+        )
+        max_tok = 250
+    else:
+        pergunta = (
+            f"Analise o seguinte evento: \"{contexto}\"\n\n"
+            f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
+            f"principal associado acontecer/ter acontecido? "
+            f"Responda em 1-2 frases citando APENAS um número em %."
+            + few_shot
+        )
+        max_tok = 120
     resp = panel_chat(
         persona_ids=persona_ids,
         pergunta=pergunta, sim=sim, llm_fn=llm_fn,
-        max_tokens=120, temperatura=0.4,
+        max_tokens=max_tok, temperatura=0.4,
         paralelo=paralelo,
     )
     per_persona = []
