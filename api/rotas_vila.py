@@ -396,6 +396,55 @@ async def predictive_power(janela: int = Query(100, ge=2, le=10000)):
     return avaliar_predictive_power(estados_observados=estados)
 
 
+@router.get("/snapshot")
+async def snapshot_download():
+    """
+    Onda 90: exporta state completo da sim como JSON download.
+    Use browser: href retorna Content-Disposition pra file dl.
+    """
+    from fastapi.responses import JSONResponse
+    from engine.save_load import _serializar_simulacao
+    import time
+    sim = obter_simulacao()
+    try:
+        estado = _serializar_simulacao(sim)
+    except Exception as e:
+        raise HTTPException(500, f"serializar falhou: {e}")
+    payload = {
+        "vila_id": getattr(sim, "nome", "default"),
+        "step": getattr(sim, "step", 0),
+        "exportado_em": int(time.time()),
+        "schema_version": 1,
+        "estado": estado,
+    }
+    return JSONResponse(
+        content=payload,
+        headers={
+            "Content-Disposition": f'attachment; filename="vila_snapshot_step{payload[\"step\"]}.json"',
+        },
+    )
+
+
+@router.post("/snapshot/ping")
+async def snapshot_ping():
+    """Health check: retorna step atual e tamanho estimado do snapshot."""
+    from engine.save_load import _serializar_simulacao
+    import json as _json
+    sim = obter_simulacao()
+    try:
+        estado = _serializar_simulacao(sim)
+        size = len(_json.dumps(estado, default=str))
+    except Exception as e:
+        return {"ok": False, "erro": str(e)}
+    return {
+        "ok": True,
+        "step": getattr(sim, "step", 0),
+        "tamanho_bytes_estimado": size,
+        "n_personas": len(getattr(sim, "personas", {})),
+        "n_conversas_buffer": len(getattr(sim, "conversas_recentes", [])),
+    }
+
+
 @router.get("/godseye-stream")
 async def godseye_stream():
     """
