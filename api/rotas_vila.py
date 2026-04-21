@@ -372,6 +372,58 @@ async def predictive_power(janela: int = Query(100, ge=2, le=10000)):
     return avaliar_predictive_power(estados_observados=estados)
 
 
+@router.get("/godseye-stream")
+async def godseye_stream():
+    """
+    Onda 87: SSE stream pra God's Eye dashboard.
+    Emite eventos:
+      - step: quando simulação avança um step
+      - conversa: quando nova conversa é criada
+      - mule: quando anomalia psico-histórica detectada
+      - keepalive: a cada ~10s
+    """
+    from fastapi.responses import StreamingResponse
+    import asyncio, json as _json
+
+    async def gen():
+        sim = obter_simulacao()
+        ultimo_step = -1
+        ultimo_n_conv = -1
+        ultimo_n_mules = 0
+        try:
+            from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+        except Exception:
+            RASTREADOR_GLOBAL = None
+        tick = 0
+        for _ in range(2400):   # ~20min cap
+            try:
+                if sim.step != ultimo_step:
+                    ultimo_step = sim.step
+                    yield f"event: step\ndata: {_json.dumps({'step': sim.step})}\n\n"
+
+                n_conv = len(getattr(sim, 'conversas_recentes', []))
+                if n_conv != ultimo_n_conv:
+                    ultimo_n_conv = n_conv
+                    yield f"event: conversa\ndata: {_json.dumps({'total': n_conv})}\n\n"
+
+                if RASTREADOR_GLOBAL is not None:
+                    mules = RASTREADOR_GLOBAL.trajetoria.mules_detectados
+                    if len(mules) > ultimo_n_mules:
+                        for m in mules[ultimo_n_mules:]:
+                            yield f"event: mule\ndata: {_json.dumps(m)}\n\n"
+                        ultimo_n_mules = len(mules)
+
+                tick += 1
+                if tick % 20 == 0:
+                    yield f"event: keepalive\ndata: {_json.dumps({'tick': tick})}\n\n"
+
+                await asyncio.sleep(0.5)
+            except Exception as e:
+                yield f"event: error\ndata: {_json.dumps({'msg': str(e)})}\n\n"
+                await asyncio.sleep(2)
+    return StreamingResponse(gen(), media_type="text/event-stream")
+
+
 @router.get("/super-intelligence")
 async def super_intelligence(
     horizonte: int = Query(10, ge=1, le=100),
