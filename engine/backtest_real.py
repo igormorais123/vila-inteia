@@ -204,6 +204,7 @@ def consultar_panel(
     chain_of_thought: bool = True,
     outcome_framing: str | None = None,
     aplicar_calib_por_persona: bool = False,
+    temp_por_persona: bool = False,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
@@ -248,6 +249,7 @@ def consultar_panel(
         pergunta=pergunta, sim=sim, llm_fn=llm_fn,
         max_tokens=max_tok, temperatura=0.4,
         paralelo=paralelo,
+        temp_por_persona=temp_por_persona,
     )
     per_persona = []
     for r in resp.get("respostas", []):

@@ -17,6 +17,28 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 
+# Onda 158: temperature por persona baseado em arquétipo cognitivo
+# - Analíticos/precisão: low temp (foco, determinismo)
+# - Visionários/exploradores: high temp (criatividade, variação)
+# - Equilibrados: mid temp
+_TEMP_POR_PERSONA: dict[str, float] = {
+    "CL001": 0.70,  # Musk — visionário, contrarian
+    "CL002": 0.50,  # Jobs — precision + design
+    "CL007": 0.55,  # Bezos — long-term probabilistic
+    "CL020": 0.30,  # Buffett — value, conservador
+    "CL021": 0.30,  # Munger — rational
+    "CL015": 0.45,  # Dalio — macro principles
+    "CL019": 0.55,  # Icahn — activist
+    "CL023": 0.65,  # Zuckerberg — move fast
+    "CL030": 0.45,  # Sun Tzu — strategy
+    "CL035": 0.35,  # Marco Aurélio — stoic
+}
+
+
+def _temp_para_persona(pid: str, default: float = 0.55) -> float:
+    return _TEMP_POR_PERSONA.get(pid, default)
+
+
 def _chat_uma(persona_id: str, pergunta: str, sim: Any, llm_fn=None,
                max_tokens: int = 280, temperatura: float = 0.75) -> dict:
     from engine.persona_chat import chat_com_persona
@@ -34,6 +56,7 @@ def panel_chat(
     max_tokens: int = 280,
     temperatura: float = 0.75,
     paralelo: bool = True,
+    temp_por_persona: bool = False,
 ) -> dict:
     """
     Executa chat_com_persona em N personas. Paralelo por default.
@@ -64,7 +87,9 @@ def panel_chat(
 
     def _tarefa(idx, pid):
         ti = time.monotonic()
-        r = _chat_uma(pid, pergunta, sim, llm_fn, max_tokens, temperatura)
+        # Onda 158: use arquétipo-aware temp se ativado
+        t = _temp_para_persona(pid, default=temperatura) if temp_por_persona else temperatura
+        r = _chat_uma(pid, pergunta, sim, llm_fn, max_tokens, t)
         dt = (time.monotonic() - ti) * 1000
         return idx, r, dt
 

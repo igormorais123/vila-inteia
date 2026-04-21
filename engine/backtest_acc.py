@@ -65,6 +65,8 @@ def rodar_backtest_acc(
     recency_decay: float = 1.0,
     # Onda 156: per-persona Platt antes da agregação
     aplicar_calib_por_persona: bool = False,
+    # Onda 158: temperature por arquétipo
+    temp_por_persona: bool = False,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -154,6 +156,7 @@ def rodar_backtest_acc(
                 chain_of_thought=chain_of_thought,
                 outcome_framing=ev.get("outcome_framing"),  # Onda 135
                 aplicar_calib_por_persona=aplicar_calib_por_persona,  # Onda 156
+                temp_por_persona=temp_por_persona,  # Onda 158
             )
 
         # Onda 131: LLM-as-judge filter — remove low-quality respostas antes agregar
