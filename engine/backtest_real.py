@@ -57,7 +57,7 @@ def extrair_probabilidade(texto: str) -> float | None:
     Extrai probabilidade (0-1) de texto livre.
     Prioridade:
       - "PROBABILIDADE FINAL: 70%" (Onda 123 CoT)
-      - "70%" primeiro match
+      - Onda 139: ÚLTIMO match "%" (conclusão > premissas na mid-response)
       - "0.6" ou "0,6"
       - ignora fora [0,1].
     """
@@ -69,11 +69,13 @@ def extrair_probabilidade(texto: str) -> float | None:
         v = int(m.group(1)) / 100.0
         if 0 <= v <= 1:
             return v
-    m = _REGEX_PCT.search(t)
-    if m:
-        v = int(m.group(1)) / 100.0
-        if 0 <= v <= 1:
-            return v
+    # Onda 139: pega último match (conclusão tipicamente no fim)
+    matches = _REGEX_PCT.findall(t)
+    if matches:
+        for raw in reversed(matches):
+            v = int(raw) / 100.0
+            if 0 <= v <= 1:
+                return v
     m = _REGEX_DEC.search(t)
     if m:
         v = float("0." + m.group(1))
