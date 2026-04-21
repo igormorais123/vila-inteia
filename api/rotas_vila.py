@@ -291,6 +291,27 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/counterfactual-narrativo")
+async def counterfactual_narrativo(
+    estado_alternativo: str = Query(..., description="Estado psico-histórico hipotético"),
+    horizonte: int = Query(10, ge=1, le=100),
+    com_narrativa: bool = Query(True),
+):
+    """
+    Onda 79: Pearl do-calculus counterfactual + ATE + narrativa LLM PT-BR.
+    'E se, no step atual, o estado fosse `estado_alternativo` em vez do observado?'
+    """
+    from engine.counterfactual_narrativo import gerar_counterfactual
+    try:
+        return gerar_counterfactual(
+            estado_alternativo=estado_alternativo,
+            horizonte=horizonte,
+            com_narrativa=com_narrativa,
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
 @router.get("/locais")
 async def listar_locais():
     """Lista todos os locais do campus."""
