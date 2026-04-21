@@ -519,6 +519,7 @@ class BacktestAccRequest(BaseModel):
     peso_vila: float = 0.7
     aplicar_platt: bool = True
     pesos_skill_ranking: bool = False  # se True, usa persona-skill ranking
+    usar_conditional_personas: bool = False  # Onda 127: panel ideal por dataset categoria
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -563,8 +564,22 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
     out = {"datasets": []}
     for ds in datasets_to_run:
         try:
+            # Onda 127: conditional persona selection per dataset
+            personas_ds = req.personas
+            categoria_ds = None
+            if req.usar_conditional_personas:
+                try:
+                    from engine.persona_selector import selecionar_panel
+                    from engine.backtest_real import carregar_dataset
+                    sample = carregar_dataset(ds)[:3]
+                    sel = selecionar_panel(ds.stem, eventos_sample=sample,
+                                            personas_validas=set(sim.personas.keys()))
+                    if sel["persona_ids"]:
+                        personas_ds = sel["persona_ids"]
+                        categoria_ds = sel["categoria"]
+                except Exception: pass
             r = rodar_backtest_acc(
-                ds, sim, persona_ids=req.personas,
+                ds, sim, persona_ids=personas_ds,
                 max_eventos=req.max_eventos,
                 sleep_entre_eventos_s=req.sleep_entre_eventos_s,
                 few_shot_k=req.few_shot_k,
@@ -577,6 +592,9 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 peso_vila=req.peso_vila,
                 aplicar_platt=req.aplicar_platt,
             )
+            if categoria_ds:
+                r["categoria_detectada"] = categoria_ds
+                r["personas_selecionadas"] = personas_ds
             out["datasets"].append(r)
         except Exception as e:
             out["datasets"].append({"dataset": str(ds), "erro": str(e)})
