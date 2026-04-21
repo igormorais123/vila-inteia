@@ -46,6 +46,11 @@ def rodar_backtest_acc(
     # Onda 129: self-consistency multi-sample
     usar_self_consistency: bool = False,
     n_samples_sc: int = 3,
+    # Onda 130: adversarial debias
+    usar_adversarial: bool = False,
+    # Onda 131: LLM-as-judge filter
+    usar_judge_filter: bool = False,
+    judge_threshold: float = 0.4,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -78,8 +83,17 @@ def rodar_backtest_acc(
 
         exemplos = eventos_raw[max(0, i - few_shot_k):i] if few_shot_k > 0 else None
 
-        # Onda 129: self-consistency multi-sample supersede debate/simple panel
-        if usar_self_consistency:
+        # Onda 130: adversarial debias supersede debate+SC se ativo
+        if usar_adversarial:
+            from engine.adversarial_prompt import panel_adversarial
+            panel = panel_adversarial(
+                contexto=ev["contexto"], persona_ids=persona_ids, sim=sim,
+                llm_fn=llm_fn, few_shot_exemplos=exemplos,
+                pesos_persona=pesos_persona,
+                chain_of_thought=chain_of_thought,
+            )
+        # Onda 129: self-consistency multi-sample
+        elif usar_self_consistency:
             from engine.self_consistency import consultar_panel_self_consistency
             panel = consultar_panel_self_consistency(
                 contexto=ev["contexto"], persona_ids=persona_ids, sim=sim,
@@ -105,6 +119,23 @@ def rodar_backtest_acc(
                 pesos_persona=pesos_persona,
                 chain_of_thought=chain_of_thought,
             )
+
+        # Onda 131: LLM-as-judge filter — remove low-quality respostas antes agregar
+        if usar_judge_filter and panel.get("per_persona"):
+            try:
+                from engine.llm_judge import filtrar_panel_por_qualidade
+                from engine.backtest_real import _agregar_ponderado
+                fj = filtrar_panel_por_qualidade(
+                    panel["per_persona"], ev["contexto"],
+                    llm_fn=llm_fn, threshold=judge_threshold,
+                )
+                if fj["per_persona_filtrado"]:
+                    panel["per_persona"] = fj["per_persona_filtrado"]
+                    panel["prob_agregada"] = _agregar_ponderado(
+                        fj["per_persona_filtrado"], pesos_persona,
+                    )
+                    panel["n_filtrados_judge"] = fj["n_filtrados_out"]
+            except Exception: pass
 
         p_vila_raw = panel.get("prob_agregada")
 
