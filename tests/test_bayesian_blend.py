@@ -82,6 +82,26 @@ def t_peso_adaptativo_range():
         teste(f"peso range 0.4-0.9 p={p} (got {w:.3f})", 0.4 <= w <= 0.9)
 
 
+def t_peso_adaptativo_dispersao_alta_penaliza():
+    # Onda 137: dispersão >0.3 reduz peso em 0.20
+    w_sem = peso_adaptativo(0.8)
+    w_com = peso_adaptativo(0.8, dispersao=0.35)
+    teste(f"disp 0.35 penaliza (sem={w_sem:.3f} com={w_com:.3f})",
+          w_com < w_sem - 0.15)
+
+
+def t_peso_adaptativo_dispersao_baixa_sem_efeito():
+    w_sem = peso_adaptativo(0.8)
+    w_com = peso_adaptativo(0.8, dispersao=0.08)
+    teste("disp 0.08 sem efeito", abs(w_sem - w_com) < 1e-6)
+
+
+def t_peso_adaptativo_dispersao_nao_viola_range():
+    # Mesmo com dispersão máxima + skill ruim, peso >= 0.4
+    w = peso_adaptativo(0.5, skill_historico=-0.3, dispersao=0.5)
+    teste(f"floor 0.4 mantido (got {w:.3f})", w >= 0.4)
+
+
 def main():
     print("=== test_bayesian_blend ===")
     for fn in [t_base_rate_vazio, t_base_rate_laplace,
@@ -91,7 +111,10 @@ def main():
                t_blend_vetor_walk_forward,
                t_peso_adaptativo_vila_confiante,
                t_peso_adaptativo_skill_ruim,
-               t_peso_adaptativo_range]:
+               t_peso_adaptativo_range,
+               t_peso_adaptativo_dispersao_alta_penaliza,
+               t_peso_adaptativo_dispersao_baixa_sem_efeito,
+               t_peso_adaptativo_dispersao_nao_viola_range]:
         try: fn()
         except Exception as e:
             global fail; fail += 1

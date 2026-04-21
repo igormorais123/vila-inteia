@@ -41,6 +41,8 @@ def rodar_backtest_acc(
     # Onda 125: Bayesian
     usar_bayesian_blend: bool = True,
     peso_vila: float = 0.7,
+    # Onda 137: peso adaptativo por confiança + dispersão
+    usar_peso_adaptativo: bool = False,
     # Onda 97: Platt runtime
     aplicar_platt: bool = True,
     # Onda 129: self-consistency multi-sample
@@ -62,7 +64,7 @@ def rodar_backtest_acc(
         carregar_dataset, extrair_probabilidade, brier,
     )
     from engine.panel_debate import debate_panel
-    from engine.bayesian_blend import bayesian_blend, base_rate_dataset
+    from engine.bayesian_blend import bayesian_blend, base_rate_dataset, peso_adaptativo as _peso_adapt
 
     persona_ids = persona_ids or ["CL001", "CL002", "CL007"]
     eventos_raw = carregar_dataset(dataset_path)
@@ -152,10 +154,18 @@ def rodar_backtest_acc(
 
         # Onda 125: Bayesian blend com base rate dos eventos anteriores
         p_blend = p_vila_cal
+        peso_usado = peso_vila
         if usar_bayesian_blend and p_vila_cal is not None:
             y_hist = [e["outcome_real"] for e in eventos_raw[:i]]
             br = base_rate_dataset(y_hist)
-            p_blend = bayesian_blend(p_vila_cal, br, peso_vila=peso_vila)
+            # Onda 137: peso adaptativo por confiança + dispersão panel
+            if usar_peso_adaptativo:
+                peso_usado = _peso_adapt(
+                    prob_vila=p_vila_cal,
+                    skill_historico=None,
+                    dispersao=panel.get("dispersao_inicial"),
+                )
+            p_blend = bayesian_blend(p_vila_cal, br, peso_vila=peso_usado)
 
         p_prior = ev["probabilidade_prior"]
         y = ev["outcome_real"]
@@ -180,6 +190,7 @@ def rodar_backtest_acc(
             "prob_vila_raw": p_vila_raw,
             "prob_vila_calibrada": p_vila_cal,
             "prob_blend_final": p_blend,
+            "peso_vila_usado": peso_usado,
             "acertou_blend": (p_blend is not None) and ((p_blend >= 0.5) == (y == 1)),
             "n_rounds_debate": panel.get("n_rounds", 1),
             "dispersao_inicial": panel.get("dispersao_inicial"),
@@ -201,6 +212,7 @@ def rodar_backtest_acc(
             "usar_debate": usar_debate,
             "usar_bayesian_blend": usar_bayesian_blend,
             "peso_vila": peso_vila,
+            "usar_peso_adaptativo": usar_peso_adaptativo,
             "aplicar_platt": aplicar_platt,
         },
         "accuracy_vila_calibrada": acertos_vila / n_total if n_total else 0,
