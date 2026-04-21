@@ -1,0 +1,481 @@
+{
+  "datasets": [
+    {
+      "dataset": "/home/pedroafonso/vila-inteia/data/backtest/impeachment_dilma_2016.csv",
+      "n_eventos": 3,
+      "configuracao": {
+        "few_shot_k": 2,
+        "pesos_persona": false,
+        "chain_of_thought": true,
+        "usar_debate": false,
+        "usar_bayesian_blend": true,
+        "peso_vila": 0.7,
+        "usar_peso_adaptativo": true,
+        "prob_floor": 0.05,
+        "prob_ceiling": 0.95,
+        "recency_decay": 0.9,
+        "aplicar_platt": false
+      },
+      "accuracy_vila_calibrada": 1.0,
+      "accuracy_blend_final": 1.0,
+      "brier_vila_calibrada_avg": 0.06009259259259259,
+      "brier_blend_final_avg": 0.10290503334673039,
+      "brier_prior_avg": 0.18083333333333332,
+      "skill_vila_vs_prior": 0.6676907322068613,
+      "skill_blend_vs_prior": 0.4309399077600162,
+      "persona_panel": [
+        "CL001",
+        "CL002",
+        "CL007"
+      ],
+      "panel_categoria_detectada": null,
+      "eventos": [
+        {
+          "evento_id": "imp01",
+          "data": "2015-12-02",
+          "contexto": "Cunha aceita pedido impeachment — abertura do processo",
+          "outcome_real": 1,
+          "prob_prior": 0.55,
+          "prob_vila_raw": 0.6833333333333332,
+          "prob_vila_calibrada": 0.6833333333333332,
+          "prob_blend_final": 0.6314385469904065,
+          "peso_vila_usado": 0.6733333333333332,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 3,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nO processo de impeachment depende de uma série de fatores institucionais e políticos, incluindo a decisão do presidente da Câmara dos Deputados, Rodrigo Cunha, e o apoio dos parlamentares. A aceitação do pedido de impeachment por Cunha é um passo crucial, mas não o único. Ainda é necessário que o processo seja votado no plenário da Câmara e, se aprovado, seguirá para o Senado.\n\nConsiderando o cenário político atual e a pressão por mudanças, é provável que o processo tenha apoio de uma parcela significativa dos deputados. No entanto, a incerteza política sempre traz variáveis imprevisíveis.\n\nPROBABILIDADE FINAL: 70%",
+              "prob_extraida": 0.7,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nConsiderando o contexto político tenso e a decisão da Cunha de aceitar o pedido de impeachment, é crucial analisar os drivers institucionais e políticos. A favor do impeachment, temos a base política de Cunha e o clima de desaprovação popular ao governo. No entanto, fatores como a resistência do governo, possíveis manobras jurídicas e a própria dinâmica do processo no Congresso Nacional podem influenciar o desfecho.\n\nPROBABILIDADE FINAL: 65%",
+              "prob_extraida": 0.65,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nConsiderando o contexto político atual e a decisão da Cunha de aceitar o pedido de impeachment, é crucial analisar os drivers institucionais e políticos. A abertura oficial do processo de impeachment depende de uma série de fatores, incluindo o apoio político e a conformidade com os procedimentos legais. \n\nDado que Cunha aceitou o pedido, isso indica um movimento significativo a favor do impeachment. No entanto, a complexidade do processo e as possíveis manobras políticas sugerem que o resultado não é certo.\n\nPROBABILIDADE FINAL: 70%",
+              "prob_extraida": 0.7,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "imp02",
+          "data": "2016-03-13",
+          "contexto": "Manifestações anti-governo com 3 milhões de pessoas — apoio massivo oposição",
+          "outcome_real": 1,
+          "prob_prior": 0.7,
+          "prob_vila_raw": 0.8000000000000002,
+          "prob_vila_calibrada": 0.8000000000000002,
+          "prob_blend_final": 0.7646510369310004,
+          "peso_vila_usado": 0.72,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 3,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA pressão pública exercida por manifestações com milhões de pessoas pode influenciar significativamente a decisão dos políticos, especialmente em um contexto de desgaste do governo. No entanto, a aceleração do impeachment também depende de fatores institucionais e da estratégia da oposição. Considerando o exemplo passado em que Cunha aceitou o pedido de impeachment após uma pressão similar, é provável que a pressão pública acelere o processo.\n\nPROBABILIDADE FINAL: 80%",
+              "prob_extraida": 0.8,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA pressão pública massiva de 3 milhões de pessoas pode influenciar significativamente a decisão política, especialmente se considerarmos que eventos semelhantes no passado já resultaram em mudanças políticas. No entanto, a resistência institucional e a complexidade do processo de impeachment podem frear ou atrasar a aceleração do processo. A história recente, como o evento anterior em que o pedido de impeachment foi aceito após uma pressão similar, sugere uma probabilidade alta.\n\nPROBABILIDADE FINAL: 80%",
+              "prob_extraida": 0.8,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA pressão pública massiva, como observado nas manifestações com 3 milhões de pessoas, tende a influenciar a decisão política, especialmente em um contexto já sensível como o impeachment. No entanto, a aceleração do impeachment também depende de fatores institucionais e da dinâmica política interna. \n\nConsiderando o exemplo passado em que a aceitação do pedido de impeachment por Cunha foi efetivada após uma pressão significativa, é razoável inferir que a pressão pública atual pode acelerar o processo.\n\nPROBABILIDADE FINAL: 80%",
+              "prob_extraida": 0.8,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "imp03",
+          "data": "2016-03-17",
+          "contexto": "Nomeação Lula ministro bloqueada por Gilmar Mendes — contestação",
+          "outcome_real": 0,
+          "prob_prior": 0.5,
+          "prob_vila_raw": 0.2,
+          "prob_vila_calibrada": 0.2,
+          "prob_blend_final": 0.34276583986446935,
+          "peso_vila_usado": 0.72,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 2,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA nomeação de Lula como ministro-chefe da Casa Civil enfrenta um obstáculo significativo com a contestação de Gilmar Mendes. Considerando a influência de Mendes no STF e a possibilidade de outras contestações legais, é improvável que Lula assuma o cargo sem uma disputa judicial prolongada. A incerteza jurídica e política aumentam a possibilidade de bloqueio.\n\nPROBABILIDADE FINAL: 20%",
+              "prob_extraida": 0.2,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA nomeação de Lula para o cargo de ministro-chefe da Casa Civil foi bloqueada por Gilmar Mendes, o que indica uma forte resistência institucional ao seu ingresso no governo. Considerando a decisão do STF e a pressão política, é improvável que Lula assuma o cargo sem uma reversão ou mudança significativa no cenário político. A contestação e o bloqueio sugerem um obstáculo quase intransponível no curto prazo.\n\nPROBABILIDADE FINAL: 20%",
+              "prob_extraida": 0.2,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: A nomeação de Lula enfrenta um obstáculo institucional forte com a decisão de Gilmar Mendes, o que reduz a probabilidade de efetivação imediata. Contudo, o apoio político",
+              "prob_extraida": null,
+              "erro": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "/home/pedroafonso/vila-inteia/data/backtest/crypto_bitcoin_2024.csv",
+      "n_eventos": 3,
+      "configuracao": {
+        "few_shot_k": 2,
+        "pesos_persona": false,
+        "chain_of_thought": true,
+        "usar_debate": false,
+        "usar_bayesian_blend": true,
+        "peso_vila": 0.7,
+        "usar_peso_adaptativo": true,
+        "prob_floor": 0.05,
+        "prob_ceiling": 0.95,
+        "recency_decay": 0.9,
+        "aplicar_platt": false
+      },
+      "accuracy_vila_calibrada": 1.0,
+      "accuracy_blend_final": 1.0,
+      "brier_vila_calibrada_avg": 0.060392592592592616,
+      "brier_blend_final_avg": 0.07614370308672316,
+      "brier_prior_avg": 0.034999999999999996,
+      "skill_vila_vs_prior": -0.7255026455026463,
+      "skill_blend_vs_prior": -1.1755343739063764,
+      "persona_panel": [
+        "CL001",
+        "CL002",
+        "CL007"
+      ],
+      "panel_categoria_detectada": null,
+      "eventos": [
+        {
+          "evento_id": "btc01",
+          "data": "2024-01-10",
+          "contexto": "SEC aprova ETF de Bitcoin spot — 11 ETFs autorizados simultaneamente",
+          "outcome_real": 1,
+          "prob_prior": 0.8,
+          "prob_vila_raw": 0.6833333333333332,
+          "prob_vila_calibrada": 0.6833333333333332,
+          "prob_blend_final": 0.6314385469904065,
+          "peso_vila_usado": 0.6733333333333332,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 3,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: \nA aprovação simultânea de 11 ETFs de Bitcoin spot pela SEC sugere uma mudança significativa na postura regulatória em relação às criptomoedas. No entanto, a volatilidade e a incerteza histórica em torno das decisões da SEC sobre ETFs de Bitcoin spot mantêm um nível de imprevisibilidade. A recente decisão pode indicar uma tendência de aprovação mais ampla.\n\nPROBABILIDADE FINAL: 75%",
+              "prob_extraida": 0.75,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "Olá, sou o Dr. Leonardo Silva, um economista e especialista em finanças. Estou aqui para compartilhar minhas reflexões sobre a probabilidade da SEC aprovar múltiplos ETFs de Bitcoin spot em janeiro.\n\nRACIOCÍNIO: A SEC já aprovou vários ETFs de Bitcoin spot nos últimos meses, o que sugere uma tendência de liberalização. Além disso, a demanda por investimentos em criptomoedas continua a crescer. No entanto, é importante considerar a possibilidade de rejeição ou reversão, especialmente em um ambiente de mercado volátil.\n\nPROBABILIDADE FINAL: 65%",
+              "prob_extraida": 0.65,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "Olá, eu sou o \"Giovanni\", um especialista em finanças e investimentos. Vamos analisar essa pergunta sobre a aprovação da SEC de múltiplos ETFs de Bitcoin spot em janeiro.\n\nRACIOCÍNIO: A SEC já havia aprovado o primeiro ETF de Bitcoin spot em outubro de 2021, e desde então, há um movimento crescente em direção à regulamentação de ativos digitais. Além disso, a SEC tem demonstrado uma abordagem mais flexível em relação à regulamentação de ETFs de ativos digitais. No entanto, é importante considerar a possibilidade de uma reação negativa de alguns investidores e reguladores, o que pode influenciar a decisão da SEC.\n\nPROBABILIDADE FINAL: 65%",
+              "prob_extraida": 0.65,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "btc02",
+          "data": "2024-03-11",
+          "contexto": "Bitcoin atinge ATH 73k antes do halving — momentum altista",
+          "outcome_real": 1,
+          "prob_prior": 0.75,
+          "prob_vila_raw": 0.72,
+          "prob_vila_calibrada": 0.72,
+          "prob_blend_final": 0.7045515813852139,
+          "peso_vila_usado": 0.688,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 1,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O impulso altista gerado pela aprovação de múltiplos ETFs e a expectativa histórica de valorização pré‑halving favorecem um novo recorde, mas a pressão de política monetária restritiva e possíveis choques regulatórios ainda podem frear o rally. Historicamente, a maioria dos ciclos de halving culminou em",
+              "prob_extraida": null,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "Olá, sou o Dr. Leonardo Silva, um economista e especialista em finanças. Estou aqui para compartilhar minhas reflexões sobre a probabilidade de Bitcoin atingir novo ATH antes do halving.\n\nRACIOCÍNIO: O Bitcoin já está em uma tendência altista, com um ATH recente de 73k. Além disso, o halving está próximo e é uma data importante para os investidores de criptomoedas. No entanto, é importante considerar a possibilidade de uma reversão de tendência, especialmente se os preços forem muito altos.\n\nPROBABILIDADE FINAL: 72%",
+              "prob_extraida": 0.72,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O impulso institucional (ETFs, entrada de fundos) e o ciclo de oferta‑demanda do halving dão força ao preço, mas a volatilidade macro‑econômica e a tendência de correções pós‑ATH ainda pesam. Historicamente,",
+              "prob_extraida": null,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "btc03",
+          "data": "2024-04-19",
+          "contexto": "Halving Bitcoin 4º evento — redução de emissão para 3.125 BTC por bloco",
+          "outcome_real": 1,
+          "prob_prior": 0.95,
+          "prob_vila_raw": 0.96,
+          "prob_vila_calibrada": 0.95,
+          "prob_blend_final": 0.927172830937563,
+          "peso_vila_usado": 0.7839999999999999,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 3,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O halving é um evento programado e previsto, com base na lógica do protocolo Bitcoin, que reduz a emissão de novos Bitcoins a cada 210.000 blocos. A data de abril é consistente com a cronologia histórica e não há indicações de alterações no protocolo.\n\nPROBABILIDADE FINAL: 95%",
+              "prob_extraida": 0.95,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "Olá, sou o Dr. Leonardo Silva, um economista e especialista em finanças. Estou aqui para compartilhar minhas reflexões sobre a probabilidade do halving do Bitcoin ocorrer em abril.\n\nRACIOCÍNIO: O halving do Bitcoin é um evento programado e previsto, com uma frequência de aproximadamente 4 anos. Embora haja incertezas sobre a data exata, a probabilidade de ocorrer em abril é alta, considerando a história passada do Bitcoin. Além disso, a comunidade de criptomoedas está preparada para o evento.\n\nPROBABILIDADE FINAL: 98%",
+              "prob_extraida": 0.98,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O halving é um evento programado e previsto, com uma data fixa de abril, baseada no tempo de processamento dos blocos da rede Bitcoin. A redução da emissão de Bitcoins é um fator importante para a valorização do ativo, e a história mostra que os halvings sempre ocorreram no prazo previsto.\n\nPROBABILIDADE FINAL: 95%",
+              "prob_extraida": 0.95,
+              "erro": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "/home/pedroafonso/vila-inteia/data/backtest/eleicao_presidencial_br_2022.csv",
+      "n_eventos": 3,
+      "configuracao": {
+        "few_shot_k": 2,
+        "pesos_persona": false,
+        "chain_of_thought": true,
+        "usar_debate": false,
+        "usar_bayesian_blend": true,
+        "peso_vila": 0.7,
+        "usar_peso_adaptativo": true,
+        "prob_floor": 0.05,
+        "prob_ceiling": 0.95,
+        "recency_decay": 0.9,
+        "aplicar_platt": false
+      },
+      "accuracy_vila_calibrada": 1.0,
+      "accuracy_blend_final": 1.0,
+      "brier_vila_calibrada_avg": 0.09839999999999999,
+      "brier_blend_final_avg": 0.10547197023525512,
+      "brier_prior_avg": 0.13749999999999998,
+      "skill_vila_vs_prior": 0.2843636363636364,
+      "skill_blend_vs_prior": 0.23293112556178086,
+      "persona_panel": [
+        "CL001",
+        "CL002",
+        "CL007"
+      ],
+      "panel_categoria_detectada": null,
+      "eventos": [
+        {
+          "evento_id": "pres01",
+          "data": "2022-03-30",
+          "contexto": "Lula supera Bolsonaro por 15 pontos no 1º Datafolha pós-retorno elegível",
+          "outcome_real": 1,
+          "prob_prior": 0.65,
+          "prob_vila_raw": 0.68,
+          "prob_vila_calibrada": 0.68,
+          "prob_blend_final": 0.6289325725044675,
+          "peso_vila_usado": 0.6719999999999999,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 2,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O Datafolha de março já mostrou Lula à frente de Bolsonaro por 15 pontos, sustentado por um cenário macro favorável ao PT (crescimento econômico moderado e baixa de desemprego) e pela fragilidade institucional do governo atual, enquanto Bolsonaro enfrenta desgaste por escândalos e falta de alianças. Contudo, a volatilidade do eleitorado e a possibilidade de reação negativa a políticas recentes ainda podem reduzir a margem, embora não pareçam suficientes para inverter a tendência.\n\nPROBABILIDADE FINAL: 68%",
+              "prob_extraida": 0.68,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O atual cenário macroeconômico ainda favorece Lula, enquanto Bolsonaro enfrenta desgaste institucional e judicial. Contudo, há risco de mobilização de base conservadora que pode reduzir a margem.  \n\nPROBABILIDADE FINAL: 68%",
+              "prob_extraida": 0.68,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "**RACIOCÍNIO:** Os principais drivers são a retomada da elegibilidade de Lula, a recuperação econômica moderada e a fraca performance de Bolsonaro nas últimas pesquisas; a favor, há o impulso de base e a ausência de escândalos graves, enquanto contra pesam a fadiga do",
+              "prob_extraida": null,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "pres02",
+          "data": "2022-07-20",
+          "contexto": "Convenção PT confirma Lula com Alckmin VP — chapa de centro",
+          "outcome_real": 1,
+          "prob_prior": 0.8,
+          "prob_vila_raw": 0.78,
+          "prob_vila_calibrada": 0.78,
+          "prob_blend_final": 0.7491174004832147,
+          "peso_vila_usado": 0.712,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 2,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: A decisão já foi anunciada por Lula e Alckmin, e a estrutura institucional do PT costuma ratificar a escolha do candidato e seu vice na convenção; ainda assim há margem para disputas internas ou pressões externas que poderiam atrasar ou modificar a formalização. Dado o histórico de consolidação de candidaturas após anúncios públicos,",
+              "prob_extraida": null,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O PT tem histórico de confirmar a candidatura na própria convenção, e a escolha de Alckmin como vice já foi anunciada oficialmente, sinalizando consenso interno. Apesar de eventuais disputas de bastidores, não há indícios de bloqueio institucional que impeça a oficialização.  \n\nPROBABILIDADE FINAL: 78%",
+              "prob_extraida": 0.78,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "**RACIOCÍNIO:** O PT tem tradição de oficializar a chapa na convenção, há consenso interno em torno de Lula e Alckmin e pouca oposição visível; o risco de bloqueio interno é limitado, embora facções mais à esquerda possam protestar.  \n\n**PROBABILIDADE FINAL:** 78%",
+              "prob_extraida": 0.78,
+              "erro": null
+            }
+          ]
+        },
+        {
+          "evento_id": "pres03",
+          "data": "2022-08-25",
+          "contexto": "Bolsonaro cresce no Nordeste após Auxílio Brasil R$600 — reaproxima",
+          "outcome_real": 1,
+          "prob_prior": 0.5,
+          "prob_vila_raw": 0.62,
+          "prob_vila_calibrada": 0.62,
+          "prob_blend_final": 0.6597312882186882,
+          "peso_vila_usado": 0.6479999999999999,
+          "acertou_blend": true,
+          "n_rounds_debate": 1,
+          "dispersao_inicial": null,
+          "n_respostas_validas": 1,
+          "per_persona": [
+            {
+              "persona_id": "CL001",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O Auxílio Brasil de R$ 600 pode melhorar a imagem de Bolsonaro",
+              "prob_extraida": null,
+              "erro": null
+            },
+            {
+              "persona_id": "CL002",
+              "persona_nome": "",
+              "resposta": "RACIOCÍNIO: O Auxílio de R$ 600 pode gerar um impulso pontual para Bolsonaro entre eleitores",
+              "prob_extraida": null,
+              "erro": null
+            },
+            {
+              "persona_id": "CL007",
+              "persona_nome": "",
+              "resposta": "**RACIOCÍNIO:** O Auxílio Brasil R$600 pode gerar um impulso de curto prazo para Bolsonaro, especialmente entre os mais pobres, que são uma base significativa do Nordeste; no entanto, a eficácia a longo prazo e a capacidade de Bolsonaro de manter essa vantagem são incertas.  \n\n**PROBABILIDADE FINAL:** 62%",
+              "prob_extraida": 0.62,
+              "erro": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pares_raw": [
+    [
+      0.6833333333333332,
+      1
+    ],
+    [
+      0.8000000000000002,
+      1
+    ],
+    [
+      0.2,
+      0
+    ],
+    [
+      0.6833333333333332,
+      1
+    ],
+    [
+      0.72,
+      1
+    ],
+    [
+      0.96,
+      1
+    ],
+    [
+      0.68,
+      1
+    ],
+    [
+      0.78,
+      1
+    ],
+    [
+      0.62,
+      1
+    ]
+  ],
+  "n_total": 9
+}
