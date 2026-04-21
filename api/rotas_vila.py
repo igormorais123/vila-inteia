@@ -669,6 +669,13 @@ async def backtest_cv_holdout(
     return cv_holdout_platt(probs, ys, test_frac=test_frac, n_repeats=n_repeats)
 
 
+@router.get("/comparison")
+async def comparison_simuladores():
+    """Onda 120: comparison matrix Vila vs Generative Agents, OASIS, MiroFish."""
+    from engine.comparison_table import build_comparison
+    return build_comparison()
+
+
 @router.get("/backtest/baselines")
 async def backtest_baselines():
     """Onda 118: compara Vila vs baselines simples (base_rate, markov, exp_smooth, random)."""
