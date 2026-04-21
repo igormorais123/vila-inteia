@@ -529,6 +529,7 @@ class BacktestAccRequest(BaseModel):
     auto_panel: bool = False  # Onda 141: selecionar_panel auto se personas None
     prob_floor: float = 0.0  # Onda 143: hedge floor
     prob_ceiling: float = 1.0  # Onda 143: hedge ceiling
+    recency_decay: float = 1.0  # Onda 152/153: recency-weighted base_rate
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -609,6 +610,7 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 auto_panel=req.auto_panel,
                 prob_floor=req.prob_floor,
                 prob_ceiling=req.prob_ceiling,
+                recency_decay=req.recency_decay,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds

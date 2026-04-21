@@ -61,6 +61,8 @@ def rodar_backtest_acc(
     # Onda 147: ensemble de pesos no bayesian blend (mediana robusta)
     usar_blend_ensemble: bool = False,
     blend_pesos: tuple = (0.6, 0.7, 0.8),
+    # Onda 152/153: recency-weighted base_rate
+    recency_decay: float = 1.0,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -185,7 +187,7 @@ def rodar_backtest_acc(
         peso_usado = peso_vila
         if usar_bayesian_blend and p_vila_cal is not None:
             y_hist = [e["outcome_real"] for e in eventos_raw[:i]]
-            br = base_rate_dataset(y_hist)
+            br = base_rate_dataset(y_hist, decay=recency_decay)
             # Onda 137: peso adaptativo por confiança + dispersão panel
             if usar_peso_adaptativo:
                 peso_usado = _peso_adapt(
@@ -254,6 +256,7 @@ def rodar_backtest_acc(
             "usar_peso_adaptativo": usar_peso_adaptativo,
             "prob_floor": prob_floor,
             "prob_ceiling": prob_ceiling,
+            "recency_decay": recency_decay,
             "aplicar_platt": aplicar_platt,
         },
         "accuracy_vila_calibrada": acertos_vila / n_total if n_total else 0,
