@@ -323,6 +323,11 @@ def chamar_llm(
         if _circuit_falhas >= _CIRCUIT_THRESHOLD:
             _circuit_aberto_ate = time.time() + _CIRCUIT_COOLDOWN
             logger.warning(f"Circuit breaker ABERTO — provider {_provider} falhou {_circuit_falhas}x, pausa de {_CIRCUIT_COOLDOWN}s")
+            # Onda 117: webhook alert on breaker open
+            try:
+                from engine.webhook_alerts import alerta_circuit_aberto
+                alerta_circuit_aberto(_provider or "?", _circuit_falhas)
+            except Exception: pass
             _circuit_falhas = 0
 
     # Tentativa 2: Anthropic fallback
