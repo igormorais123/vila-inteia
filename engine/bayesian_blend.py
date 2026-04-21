@@ -81,6 +81,28 @@ def blend_vetor(
     return out
 
 
+def bayesian_blend_ensemble(
+    prob_vila: float,
+    prior_base_rate: float,
+    pesos: Iterable[float] = (0.6, 0.7, 0.8),
+) -> float:
+    """
+    Onda 147: ensemble de blends com múltiplos peso_vila,
+    retorna mediana. Robustez: reduz sensibilidade à escolha de peso.
+
+    Se pesos=(0.7,) equivale a bayesian_blend(prob_vila, prior, 0.7).
+    """
+    probs = [bayesian_blend(prob_vila, prior_base_rate, peso_vila=w)
+             for w in pesos]
+    probs.sort()
+    n = len(probs)
+    if n == 0:
+        return prob_vila
+    if n % 2 == 1:
+        return probs[n // 2]
+    return (probs[n // 2 - 1] + probs[n // 2]) / 2
+
+
 def peso_adaptativo(
     prob_vila: float,
     skill_historico: float | None = None,

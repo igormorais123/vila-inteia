@@ -58,6 +58,9 @@ def rodar_backtest_acc(
     # Onda 143: prob floor/ceiling clip (hedge contra over-confident wrong)
     prob_floor: float = 0.0,
     prob_ceiling: float = 1.0,
+    # Onda 147: ensemble de pesos no bayesian blend (mediana robusta)
+    usar_blend_ensemble: bool = False,
+    blend_pesos: tuple = (0.6, 0.7, 0.8),
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -69,7 +72,11 @@ def rodar_backtest_acc(
         carregar_dataset, extrair_probabilidade, brier,
     )
     from engine.panel_debate import debate_panel
-    from engine.bayesian_blend import bayesian_blend, base_rate_dataset, peso_adaptativo as _peso_adapt
+    from engine.bayesian_blend import (
+        bayesian_blend, base_rate_dataset,
+        peso_adaptativo as _peso_adapt,
+        bayesian_blend_ensemble as _blend_ens,
+    )
 
     eventos_raw = carregar_dataset(dataset_path)
     if max_eventos:
@@ -186,7 +193,11 @@ def rodar_backtest_acc(
                     skill_historico=None,
                     dispersao=panel.get("dispersao_inicial"),
                 )
-            p_blend = bayesian_blend(p_vila_cal, br, peso_vila=peso_usado)
+            # Onda 147: ensemble blend (mediana) overrides single blend
+            if usar_blend_ensemble:
+                p_blend = _blend_ens(p_vila_cal, br, pesos=blend_pesos)
+            else:
+                p_blend = bayesian_blend(p_vila_cal, br, peso_vila=peso_usado)
 
         # Onda 143: aplicar floor/ceiling em prob Vila e blend (hedge)
         if prob_floor > 0 or prob_ceiling < 1:
