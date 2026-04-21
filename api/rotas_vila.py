@@ -278,6 +278,54 @@ async def listar_sinteses():
     }
 
 
+@router.get("/forecast-narrativo.pdf")
+async def forecast_narrativo_pdf(
+    horizonte: int = Query(10, ge=1, le=100),
+    com_narrativa: bool = Query(True),
+):
+    """Onda 105: forecast como PDF download."""
+    from fastapi.responses import Response
+    from engine.forecast_narrativo import gerar_forecast
+    from engine.pdf_export import html_forecast, render_pdf
+    sim = obter_simulacao()
+    payload = gerar_forecast(
+        conversas_recentes=getattr(sim, "conversas_recentes", []),
+        horizonte=horizonte, com_narrativa=com_narrativa,
+    )
+    html = html_forecast(payload)
+    pdf = render_pdf(html)
+    if pdf is None:
+        return Response(content=html, media_type="text/html",
+                        headers={"X-Weasyprint-Status": "unavailable"})
+    return Response(content=pdf, media_type="application/pdf",
+                    headers={"Content-Disposition": 'attachment; filename="vila_forecast.pdf"'})
+
+
+@router.get("/recomendacao-intervencao.pdf")
+async def recomendacao_pdf(
+    outcome_desejado: str = Query("equilibrio"),
+    horizonte: int = Query(20, ge=1, le=100),
+    com_recomendacao_llm: bool = Query(True),
+):
+    """Onda 105: recomendação como PDF download."""
+    from fastapi.responses import Response
+    from engine.recomendacao_intervencao import gerar_recomendacao
+    from engine.pdf_export import html_recomendacao, render_pdf
+    try:
+        payload = gerar_recomendacao(
+            outcome_desejado=outcome_desejado, horizonte=horizonte,
+            com_recomendacao_llm=com_recomendacao_llm,
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    html = html_recomendacao(payload)
+    pdf = render_pdf(html)
+    if pdf is None:
+        return Response(content=html, media_type="text/html")
+    return Response(content=pdf, media_type="application/pdf",
+                    headers={"Content-Disposition": 'attachment; filename="vila_recomendacao.pdf"'})
+
+
 @router.get("/forecast-narrativo")
 async def forecast_narrativo(
     horizonte: int = Query(10, ge=1, le=100),
