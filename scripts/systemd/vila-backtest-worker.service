@@ -1,0 +1,17 @@
+[Unit]
+Description=Vila INTEIA backtest worker (Onda 110)
+After=network.target
+
+[Service]
+Type=simple
+User=vila
+WorkingDirectory=/opt/vila-inteia
+EnvironmentFile=/opt/vila-inteia/.env
+ExecStart=/usr/bin/python3 scripts/backtest_worker.py --daemon --interval 21600 --max 3 --personas CL001,CL002,CL007
+Restart=on-failure
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
