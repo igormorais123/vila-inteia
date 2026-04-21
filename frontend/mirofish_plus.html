@@ -154,6 +154,7 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <div class="spacer"></div>
     <span id="calib_status" class="status" title="Calibração Platt Onda 97">cal: —</span>
     <span id="status" class="status">—</span>
+    <button class="btn-sec btn" onclick="abrirBacktestModal()">🎯 Backtest</button>
     <a class="btn-sec btn" href="/api/v1/vila/snapshot" download style="text-decoration:none">⬇ Snapshot</a>
     <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
     <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
@@ -230,6 +231,36 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <button class="drawer-x" onclick="fecharDrawer()">×</button>
   </div>
   <div class="drawer-body" id="dr_body">—</div>
+</div>
+
+<!-- BACKTEST MODAL (Onda 111) -->
+<div id="bt_modal" style="display:none;position:fixed;inset:0;background:rgba(10,14,26,0.85);z-index:100;justify-content:center;align-items:center;padding:20px">
+  <div style="background:var(--surf);border:1px solid var(--border);border-radius:8px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto">
+    <div style="padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <h2 style="color:var(--amber);font-size:16px">🎯 Backtest real-event</h2>
+      <button onclick="fecharBacktestModal()" style="background:transparent;border:none;color:var(--txt3);font-size:20px;cursor:pointer">×</button>
+    </div>
+    <div style="padding:16px">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+        <label style="font-size:11px;color:var(--txt3)">Dataset:
+          <select id="bt_dataset" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font:inherit;font-size:11px">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label style="font-size:11px;color:var(--txt3)">Max:
+          <input id="bt_max" type="number" value="3" min="1" max="10" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;width:60px;font:inherit">
+        </label>
+        <label style="font-size:11px;color:var(--txt3)">Personas:
+          <input id="bt_personas" type="text" value="CL001,CL002,CL007" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;width:180px;font:inherit;font-size:11px">
+        </label>
+        <button onclick="rodarBacktest()" id="bt_btn" style="background:var(--amber);color:#000;border:none;padding:6px 14px;border-radius:4px;font-weight:600;cursor:pointer">Rodar</button>
+      </div>
+      <div id="bt_status" style="font-size:11px;color:var(--txt3);margin-bottom:10px"></div>
+      <div id="bt_result"></div>
+      <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Histórico</h3>
+      <div id="bt_historico"></div>
+    </div>
+  </div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -774,6 +805,125 @@ function desenharCampus(){
   });
 }
 
+// ===== BACKTEST MODAL (Onda 111) =====
+async function abrirBacktestModal(){
+  document.getElementById('bt_modal').style.display = 'flex';
+  // Load datasets
+  const ds = await fetchJSON('/api/v1/vila/backtest/datasets');
+  const sel = document.getElementById('bt_dataset');
+  if(ds && ds.datasets){
+    sel.innerHTML = '<option value="">Todos (' + ds.total + ')</option>' +
+      ds.datasets.map(d => `<option value="${escape(d.nome)}">${escape(d.nome)} (${d.n_eventos}ev)</option>`).join('');
+  }
+  // Load history
+  await carregarHistoricoBacktest();
+}
+
+function fecharBacktestModal(){
+  document.getElementById('bt_modal').style.display = 'none';
+}
+
+async function carregarHistoricoBacktest(){
+  const h = await fetchJSON('/api/v1/vila/backtest/historico?limite=10');
+  const div = document.getElementById('bt_historico');
+  if(!h || !h.registros || h.registros.length === 0){
+    div.innerHTML = '<div class="empty">sem backtests rodados</div>';
+    return;
+  }
+  div.innerHTML = '<table style="width:100%;font-size:11px;border-collapse:collapse"><thead><tr style="border-bottom:1px solid var(--border);color:var(--amber)"><th style="text-align:left;padding:4px">data</th><th>n_ev</th><th>acc</th><th>brier</th><th>skill</th><th>platt</th></tr></thead><tbody>' +
+    h.registros.slice(0,10).map(r => {
+      const skill = r.skill;
+      const skillColor = skill > 0 ? 'var(--ok)' : (skill < 0 ? 'var(--bad)' : 'var(--txt3)');
+      return `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:4px;color:var(--txt3)">${escape((r.criado_em||'').slice(5,16))}</td>
+        <td style="text-align:center">${r.n_eventos??'—'}</td>
+        <td style="text-align:center">${r.accuracy_global!=null?(r.accuracy_global*100).toFixed(0)+'%':'—'}</td>
+        <td style="text-align:center">${r.brier_vila!=null?r.brier_vila.toFixed(3):'—'}</td>
+        <td style="text-align:center;color:${skillColor}">${skill!=null?(skill>=0?'+':'')+skill.toFixed(2):'—'}</td>
+        <td style="text-align:center;color:var(--txt3);font-size:10px">${r.platt_a!=null?r.platt_a.toFixed(2)+'/'+r.platt_b.toFixed(2):'—'}</td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+}
+
+async function rodarBacktest(){
+  const btn = document.getElementById('bt_btn');
+  const stat = document.getElementById('bt_status');
+  btn.disabled = true;
+  btn.textContent = '...';
+  stat.textContent = 'rodando backtest, pode demorar 30s-3min...';
+  stat.style.color = 'var(--amber)';
+  try{
+    const body = {
+      dataset: document.getElementById('bt_dataset').value || null,
+      max_eventos: parseInt(document.getElementById('bt_max').value),
+      personas: document.getElementById('bt_personas').value.split(',').map(s=>s.trim()).filter(Boolean),
+      sleep_entre_eventos_s: 5,
+    };
+    const r = await fetch('/api/v1/vila/backtest/rodar', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    if(!r.ok){
+      stat.textContent = 'Erro: ' + (d.detail || r.status);
+      stat.style.color = 'var(--bad)';
+      return;
+    }
+    stat.textContent = 'Completo · ' + new Date().toLocaleTimeString();
+    stat.style.color = 'var(--ok)';
+    renderBacktestResult(d);
+    await carregarHistoricoBacktest();
+  }catch(e){
+    stat.textContent = 'Erro: ' + e.message;
+    stat.style.color = 'var(--bad)';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Rodar';
+  }
+}
+
+function renderBacktestResult(d){
+  const ag = d.agregado || {};
+  const cal = d.calibracao_platt || {};
+  const html = `
+    <div style="background:var(--surf2);padding:10px;border-radius:4px;border-left:3px solid var(--amber);margin-bottom:10px">
+      <div style="font-size:11px;color:var(--amber);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5pt">Agregado</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+        <div><b>${ag.n_eventos_total || '—'}</b> ev</div>
+        <div>acc <b>${ag.accuracy_global!=null ? (ag.accuracy_global*100).toFixed(1)+'%' : '—'}</b></div>
+        <div>Brier <b>${ag.brier_vila_macro_avg!=null ? ag.brier_vila_macro_avg.toFixed(3) : '—'}</b></div>
+        <div>prior <b>${ag.brier_prior_macro_avg!=null ? ag.brier_prior_macro_avg.toFixed(3) : '—'}</b></div>
+        <div>skill <b style="color:${(ag.skill_brier_vs_prior_macro||0)>=0 ? 'var(--ok)' : 'var(--bad)'}">${ag.skill_brier_vs_prior_macro!=null ? (ag.skill_brier_vs_prior_macro>=0?'+':'')+ag.skill_brier_vs_prior_macro.toFixed(3) : '—'}</b></div>
+      </div>
+      ${cal.platt_a != null ? `
+      <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);font-size:11px;color:var(--txt2)">
+        Platt: a=<b>${cal.platt_a.toFixed(3)}</b> b=<b>${cal.platt_b.toFixed(3)}</b> · ECE ${cal.ece_antes.toFixed(3)} → <b>${cal.ece_depois.toFixed(3)}</b>
+      </div>` : ''}
+    </div>
+    <div style="font-size:11px;color:var(--amber);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5pt">Por dataset</div>
+    <table style="width:100%;font-size:11px;border-collapse:collapse">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--txt3)">
+        <th style="text-align:left;padding:4px">dataset</th><th>n</th><th>acc</th><th>brier</th><th>skill</th>
+      </tr></thead>
+      <tbody>
+      ${(d.datasets||[]).map(ds => {
+        const sk = ds.skill_brier_vs_prior;
+        return `<tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:4px">${escape((ds.dataset||'').split('/').pop().replace('.csv',''))}</td>
+          <td style="text-align:center">${ds.n_eventos||'—'}</td>
+          <td style="text-align:center">${ds.accuracy_vila!=null?(ds.accuracy_vila*100).toFixed(0)+'%':'—'}</td>
+          <td style="text-align:center">${ds.brier_vila_avg!=null?ds.brier_vila_avg.toFixed(3):'—'}</td>
+          <td style="text-align:center;color:${(sk||0)>=0?'var(--ok)':'var(--bad)'}">${sk!=null?(sk>=0?'+':'')+sk.toFixed(2):'—'}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table>`;
+  document.getElementById('bt_result').innerHTML = html;
+}
+
+window.abrirBacktestModal = abrirBacktestModal;
+window.fecharBacktestModal = fecharBacktestModal;
+window.rodarBacktest = rodarBacktest;
 window.setView = setView;
 window.abrirDrawer = abrirDrawer;
 window.fecharDrawer = fecharDrawer;
