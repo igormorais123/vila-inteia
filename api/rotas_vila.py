@@ -291,6 +291,18 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/predictive-power")
+async def predictive_power(janela: int = Query(100, ge=2, le=10000)):
+    """
+    Onda 82: Brier + log-loss + skill scores comparando Markov Vila vs
+    baselines (random, naive-last-state). Skill > 0 = Vila supera baseline.
+    """
+    from engine.predictive_power import avaliar_predictive_power
+    from engine.psicohistoria.detector_estado_vila import RASTREADOR_GLOBAL
+    estados = list(RASTREADOR_GLOBAL.trajetoria.estados[-janela:])
+    return avaliar_predictive_power(estados_observados=estados)
+
+
 @router.get("/super-intelligence")
 async def super_intelligence(
     horizonte: int = Query(10, ge=1, le=100),
