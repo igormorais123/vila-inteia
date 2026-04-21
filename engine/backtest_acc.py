@@ -118,6 +118,7 @@ def rodar_backtest_acc(
                 llm_fn=llm_fn, few_shot_exemplos=exemplos,
                 pesos_persona=pesos_persona,
                 chain_of_thought=chain_of_thought,
+                outcome_framing=ev.get("outcome_framing"),  # Onda 135
             )
 
         # Onda 131: LLM-as-judge filter — remove low-quality respostas antes agregar

@@ -25,7 +25,9 @@ PANEL_ESTRATEGICO_DEFAULT = ["CL001", "CL002", "CL007", "CL022"]
 
 
 def carregar_dataset(path: str | Path) -> list[dict]:
-    """Lê CSV de backtest. Retorna lista de eventos dict."""
+    """Lê CSV de backtest. Retorna lista de eventos dict.
+    Onda 135: aceita coluna opcional 'outcome_framing' para explicitar
+    pergunta (desambiguar contextos onde evento textual ≠ outcome_real)."""
     out = []
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -36,6 +38,7 @@ def carregar_dataset(path: str | Path) -> list[dict]:
                 "contexto": row["contexto"],
                 "outcome_real": int(row["outcome_real"]),
                 "probabilidade_prior": float(row["probabilidade_prior"]),
+                "outcome_framing": row.get("outcome_framing") or None,
             })
     return out
 
@@ -181,6 +184,7 @@ def consultar_panel(
     few_shot_exemplos: list[dict] | None = None,
     pesos_persona: dict[str, float] | None = None,
     chain_of_thought: bool = True,
+    outcome_framing: str | None = None,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
@@ -190,24 +194,33 @@ def consultar_panel(
     few_shot_exemplos: Onda 121 — eventos passados injetados no prompt.
     pesos_persona: Onda 122 — {persona_id: weight}. Vazio = média simples.
     chain_of_thought: Onda 123 — pede raciocínio estruturado (default True).
+    outcome_framing: Onda 135 — pergunta específica (ex: "Lula virou ministro?")
+                     substitui genérico quando fornecido; desambigua contexto.
     """
     from engine.panel_chat import panel_chat
     few_shot = _build_few_shot_block(few_shot_exemplos)
-    if chain_of_thought:
-        pergunta = (
+
+    # Onda 135: pergunta explícita pra desambiguar outcome
+    if outcome_framing:
+        pergunta_core = (
+            f"Contexto: \"{contexto}\"\n\n"
+            f"Pergunta específica: {outcome_framing}\n"
+            f"Qual a probabilidade (0% a 100%) da resposta ser SIM?"
+        )
+    else:
+        pergunta_core = (
             f"Analise o seguinte evento: \"{contexto}\"\n\n"
             f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
             f"principal associado acontecer/ter acontecido?"
-            + few_shot
-            + _build_cot_prefix()
         )
+
+    if chain_of_thought:
+        pergunta = pergunta_core + few_shot + _build_cot_prefix()
         max_tok = 250
     else:
         pergunta = (
-            f"Analise o seguinte evento: \"{contexto}\"\n\n"
-            f"Pergunta: qual a probabilidade (0% a 100%) do resultado "
-            f"principal associado acontecer/ter acontecido? "
-            f"Responda em 1-2 frases citando APENAS um número em %."
+            pergunta_core
+            + " Responda em 1-2 frases citando APENAS um número em %."
             + few_shot
         )
         max_tok = 120
@@ -281,7 +294,8 @@ def rodar_backtest(
         exemplos = eventos_raw[max(0, i - few_shot_k):i] if few_shot_k > 0 else None
         panel = consultar_panel(ev["contexto"], persona_ids, sim, llm_fn=llm_fn,
                                  few_shot_exemplos=exemplos,
-                                 pesos_persona=pesos_persona)
+                                 pesos_persona=pesos_persona,
+                                 outcome_framing=ev.get("outcome_framing"))
         p_vila = panel["prob_agregada"]
         p_prior = ev["probabilidade_prior"]
         y = ev["outcome_real"]
