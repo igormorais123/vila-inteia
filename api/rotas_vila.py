@@ -291,6 +291,21 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/influencia-personas")
+async def influencia_personas(top_n: int = Query(20, ge=1, le=144)):
+    """
+    Onda 83: ranking de influência baseado em grafo de conversas.
+    Centrality scores (degree, betweenness, eigenvector, pagerank).
+    Identifica os Primeiros Motores da Vila.
+    """
+    from engine.influencia_personas import ranking_influencia
+    sim = obter_simulacao()
+    return ranking_influencia(
+        conversas=getattr(sim, "conversas_recentes", []),
+        top_n=top_n,
+    )
+
+
 @router.get("/predictive-power")
 async def predictive_power(janela: int = Query(100, ge=2, le=10000)):
     """
