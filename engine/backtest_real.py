@@ -176,6 +176,7 @@ def rodar_backtest(
             "prob_vila": p_vila,
             "acertou_vila": acertou,
             "n_respostas_validas": panel["n_respostas_validas"],
+            "per_persona": panel["per_persona"],
         })
 
     n_resp = sum(1 for r in resultados if r["prob_vila"] is not None)
