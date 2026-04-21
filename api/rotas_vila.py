@@ -505,7 +505,97 @@ class BacktestRequest(BaseModel):
     sleep_entre_eventos_s: float = 4.0
 
 
+class BacktestAccRequest(BaseModel):
+    dataset: Optional[str] = None
+    max_eventos: int = 3
+    personas: list[str] = ["CL001", "CL002", "CL007"]
+    sleep_entre_eventos_s: float = 4.0
+    few_shot_k: int = 2
+    chain_of_thought: bool = True
+    usar_debate: bool = True
+    dispersao_threshold: float = 0.15
+    max_rounds: int = 2
+    usar_bayesian_blend: bool = True
+    peso_vila: float = 0.7
+    aplicar_platt: bool = True
+    pesos_skill_ranking: bool = False  # se True, usa persona-skill ranking
+
+
 _ULTIMO_BACKTEST: dict = {}
+
+
+@router.post("/backtest/rodar-acc")
+async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
+    """Onda 126: full-stack accuracy backtest com 121+122+123+124+125+97."""
+    from engine.backtest_acc import rodar_backtest_acc
+    from pathlib import Path as _P
+
+    class _Sim:
+        def __init__(self, ids):
+            import json as _j
+            from engine.persona import Persona
+            banco = _j.load(open("data/banco-consultores-lendarios.json"))
+            self.personas = {}
+            for p in banco:
+                if p["id"] in ids:
+                    self.personas[p["id"]] = Persona(p)
+    sim = _Sim(req.personas)
+
+    pesos = None
+    if req.pesos_skill_ranking and _ULTIMO_BACKTEST:
+        try:
+            from engine.persona_skill import analisar_skill_personas
+            from engine.backtest_real import pesos_desde_ranking_skill
+            rk = analisar_skill_personas(_ULTIMO_BACKTEST.get("datasets", []))
+            pesos = pesos_desde_ranking_skill(rk["ranking"])
+        except Exception: pass
+
+    datasets_to_run = []
+    base_dir = _P("data/backtest")
+    if req.dataset:
+        path = base_dir / f"{req.dataset}.csv"
+        if not path.exists():
+            raise HTTPException(404, f"dataset {req.dataset} não existe")
+        datasets_to_run = [path]
+    else:
+        datasets_to_run = sorted(base_dir.glob("*.csv"))
+
+    out = {"datasets": []}
+    for ds in datasets_to_run:
+        try:
+            r = rodar_backtest_acc(
+                ds, sim, persona_ids=req.personas,
+                max_eventos=req.max_eventos,
+                sleep_entre_eventos_s=req.sleep_entre_eventos_s,
+                few_shot_k=req.few_shot_k,
+                pesos_persona=pesos,
+                chain_of_thought=req.chain_of_thought,
+                usar_debate=req.usar_debate,
+                dispersao_threshold=req.dispersao_threshold,
+                max_rounds=req.max_rounds,
+                usar_bayesian_blend=req.usar_bayesian_blend,
+                peso_vila=req.peso_vila,
+                aplicar_platt=req.aplicar_platt,
+            )
+            out["datasets"].append(r)
+        except Exception as e:
+            out["datasets"].append({"dataset": str(ds), "erro": str(e)})
+
+    # Agregado
+    total_ev = sum(r.get("n_eventos", 0) for r in out["datasets"] if "erro" not in r)
+    if total_ev > 0:
+        ok_v = sum(r.get("accuracy_vila_calibrada", 0) * r.get("n_eventos", 0)
+                    for r in out["datasets"] if "erro" not in r)
+        ok_b = sum(r.get("accuracy_blend_final", 0) * r.get("n_eventos", 0)
+                    for r in out["datasets"] if "erro" not in r)
+        out["agregado"] = {
+            "n_eventos_total": total_ev,
+            "accuracy_vila_calibrada": ok_v / total_ev,
+            "accuracy_blend_final": ok_b / total_ev,
+        }
+    import time as _t
+    out["completado_em"] = int(_t.time())
+    return out
 
 
 @router.post("/backtest/rodar")
