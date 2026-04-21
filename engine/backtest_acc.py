@@ -43,6 +43,9 @@ def rodar_backtest_acc(
     peso_vila: float = 0.7,
     # Onda 97: Platt runtime
     aplicar_platt: bool = True,
+    # Onda 129: self-consistency multi-sample
+    usar_self_consistency: bool = False,
+    n_samples_sc: int = 3,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -75,8 +78,17 @@ def rodar_backtest_acc(
 
         exemplos = eventos_raw[max(0, i - few_shot_k):i] if few_shot_k > 0 else None
 
-        # Debate (ou panel simples se usar_debate=False)
-        if usar_debate:
+        # Onda 129: self-consistency multi-sample supersede debate/simple panel
+        if usar_self_consistency:
+            from engine.self_consistency import consultar_panel_self_consistency
+            panel = consultar_panel_self_consistency(
+                contexto=ev["contexto"], persona_ids=persona_ids, sim=sim,
+                llm_fn=llm_fn, few_shot_exemplos=exemplos,
+                pesos_persona=pesos_persona,
+                n_samples_por_persona=n_samples_sc,
+                chain_of_thought=chain_of_thought,
+            )
+        elif usar_debate:
             panel = debate_panel(
                 contexto=ev["contexto"], persona_ids=persona_ids, sim=sim,
                 llm_fn=llm_fn, few_shot_exemplos=exemplos,
