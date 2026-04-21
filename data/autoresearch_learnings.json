@@ -1,0 +1,57 @@
+{
+  "n_runs": 1,
+  "n_experiments": 6,
+  "por_param": {
+    "prob_ceiling": {
+      "kept": 0,
+      "reverted": 1,
+      "valores_kept": [],
+      "valores_reverted": [
+        0.85
+      ],
+      "score": 0.3333333333333333,
+      "n_total": 1
+    },
+    "usar_debate": {
+      "kept": 1,
+      "reverted": 0,
+      "valores_kept": [
+        true
+      ],
+      "valores_reverted": [],
+      "score": 0.6666666666666666,
+      "n_total": 1
+    },
+    "recency_decay": {
+      "kept": 0,
+      "reverted": 1,
+      "valores_kept": [],
+      "valores_reverted": [
+        0.8
+      ],
+      "score": 0.3333333333333333,
+      "n_total": 1
+    },
+    "chain_of_thought": {
+      "kept": 0,
+      "reverted": 1,
+      "valores_kept": [],
+      "valores_reverted": [
+        false
+      ],
+      "score": 0.3333333333333333,
+      "n_total": 1
+    },
+    "usar_blend_ensemble": {
+      "kept": 0,
+      "reverted": 1,
+      "valores_kept": [],
+      "valores_reverted": [
+        false
+      ],
+      "score": 0.3333333333333333,
+      "n_total": 1
+    }
+  },
+  "global_best_brier": 0.010250469703705984
+}
