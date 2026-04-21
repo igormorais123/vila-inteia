@@ -84,21 +84,29 @@ def blend_vetor(
 def peso_adaptativo(
     prob_vila: float,
     skill_historico: float | None = None,
+    dispersao: float | None = None,
 ) -> float:
     """
     Retorna peso_vila adaptativo:
     - Vila muito confiante (|prob - 0.5| > 0.3) + skill > 0 → peso alto 0.8-0.9
     - Vila incerta (|prob - 0.5| < 0.1) → peso baixo 0.5-0.6 (prior ajuda)
     - Skill negativo → peso baixo (prior confia-se mais)
+    - Onda 137: dispersão panel alta (Aumann violado) → peso baixo (trust prior)
     """
     base = 0.7
     certeza = abs(prob_vila - 0.5) * 2  # 0 = max incerteza, 1 = certeza
-    # Skill adjustment
     if skill_historico is not None:
         if skill_historico > 0.2:
             base += 0.1
         elif skill_historico < -0.2:
             base -= 0.15
-    # Certainty modulation
-    w = base + (certeza - 0.5) * 0.2  # range ~[-0.1, +0.1]
+    w = base + (certeza - 0.5) * 0.2
+    # Onda 137: penalidade por dispersão (range 0..0.5 típico; >0.2 = disagreement)
+    if dispersao is not None:
+        if dispersao > 0.3:
+            w -= 0.20
+        elif dispersao > 0.2:
+            w -= 0.10
+        elif dispersao > 0.15:
+            w -= 0.05
     return max(0.4, min(0.9, w))
