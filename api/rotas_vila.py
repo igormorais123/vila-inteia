@@ -525,6 +525,10 @@ class BacktestAccRequest(BaseModel):
     usar_adversarial: bool = False  # Onda 130: devil's advocate debias
     usar_judge_filter: bool = False  # Onda 131: LLM judge filtra low-quality
     judge_threshold: float = 0.4
+    usar_peso_adaptativo: bool = False  # Onda 137: dispersion-aware peso_vila
+    auto_panel: bool = False  # Onda 141: selecionar_panel auto se personas None
+    prob_floor: float = 0.0  # Onda 143: hedge floor
+    prob_ceiling: float = 1.0  # Onda 143: hedge ceiling
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -601,6 +605,10 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 usar_adversarial=req.usar_adversarial,
                 usar_judge_filter=req.usar_judge_filter,
                 judge_threshold=req.judge_threshold,
+                usar_peso_adaptativo=req.usar_peso_adaptativo,
+                auto_panel=req.auto_panel,
+                prob_floor=req.prob_floor,
+                prob_ceiling=req.prob_ceiling,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds
