@@ -210,11 +210,15 @@ async function fetchJSON(path){
 function escape(s){ return String(s).replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
 
 async function atualizarKPI(){
-  const e = await fetchJSON('/api/v1/vila/estado');
-  if(!e) return;
-  document.getElementById('k_step').textContent = e.step ?? '—';
-  document.getElementById('k_agentes').textContent = e.total_agentes ?? '—';
-  document.getElementById('k_conv').textContent = e.total_conversas ?? '—';
+  const [e, c] = await Promise.all([
+    fetchJSON('/api/v1/vila/estado'),
+    fetchJSON('/api/v1/vila/conversas?limite=1'),
+  ]);
+  if(e){
+    document.getElementById('k_step').textContent = e.step ?? '—';
+    document.getElementById('k_agentes').textContent = e.total_agentes ?? '—';
+  }
+  if(c) document.getElementById('k_conv').textContent = c.total ?? '—';
 }
 
 async function atualizarPersonas(){
@@ -319,15 +323,35 @@ function desenharGrafo(){
   svg.attr('viewBox', `0 0 ${W} ${H}`);
 
   const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(edges).id(d=>d.id).distance(80).strength(0.4))
-    .force('charge', d3.forceManyBody().strength(-180))
+    .force('link', d3.forceLink(edges).id(d=>d.id).distance(120).strength(0.5))
+    .force('charge', d3.forceManyBody().strength(-420))
     .force('center', d3.forceCenter(W/2, H/2))
-    .force('collide', d3.forceCollide().radius(d=>10+d.score*30));
+    .force('collide', d3.forceCollide().radius(d=>14+d.score*40).strength(0.9))
+    .force('x', d3.forceX(W/2).strength(0.04))
+    .force('y', d3.forceY(H/2).strength(0.04));
 
   const g = svg.append('g');
 
-  // Zoom
-  svg.call(d3.zoom().scaleExtent([0.3, 3]).on('zoom', e => g.attr('transform', e.transform)));
+  const zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => g.attr('transform', e.transform));
+  svg.call(zoom);
+
+  // Auto-fit after layout settles
+  setTimeout(() => {
+    try{
+      const bbox = g.node().getBBox();
+      const pad = 60;
+      const scale = Math.min(
+        (W - 2*pad) / Math.max(bbox.width, 1),
+        (H - 2*pad) / Math.max(bbox.height, 1),
+        1.6
+      );
+      const tx = W/2 - scale*(bbox.x + bbox.width/2);
+      const ty = H/2 - scale*(bbox.y + bbox.height/2);
+      svg.transition().duration(600).call(
+        zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale)
+      );
+    }catch(err){ /* bbox may fail before first tick */ }
+  }, 2200);
 
   const link = g.append('g').selectAll('line').data(edges).join('line')
     .attr('stroke', 'rgba(214,158,46,0.35)')
@@ -342,14 +366,20 @@ function desenharGrafo(){
       .on('end', (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
 
   node.append('circle')
-    .attr('r', d => 6 + d.score * 30)
+    .attr('r', d => 8 + d.score * 40)
     .attr('fill', d => d.com >= 0 ? COLORS[d.com % COLORS.length] : '#444')
-    .attr('stroke', '#0a0e1a').attr('stroke-width', 1.5);
+    .attr('stroke', '#0a0e1a').attr('stroke-width', 2)
+    .attr('opacity', 0.92)
+    .on('mouseover', function(){ d3.select(this).attr('stroke', '#f6e05e').attr('stroke-width', 3); })
+    .on('mouseout', function(){ d3.select(this).attr('stroke', '#0a0e1a').attr('stroke-width', 2); });
 
   node.append('text')
     .attr('text-anchor', 'middle').attr('dy', '.35em')
-    .attr('y', d => 6 + d.score*30 + 12)
-    .attr('fill', '#cbd5e1').attr('font-size', '10px').attr('font-family', 'Inter, sans-serif')
+    .attr('y', d => 8 + d.score*40 + 14)
+    .attr('fill', '#cbd5e1').attr('font-size', d => 10 + d.score*8 + 'px')
+    .attr('font-weight', d => d.score > 0.1 ? 600 : 400)
+    .attr('font-family', 'Inter, sans-serif')
+    .attr('pointer-events', 'none')
     .text(d => d.id);
 
   sim.on('tick', () => {
