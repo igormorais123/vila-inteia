@@ -59,19 +59,38 @@ volumes:
 
 ---
 
-## 3. Render
+## 3. Render (Auto via render.yaml — Onda 107)
 
 **Web Service** (Python):
 
 1. Conecta o repo `github.com/<org>/vila-inteia`
-2. Runtime: Python 3.11
-3. Build command: `pip install -r requirements.txt`
-4. Start command: `python main.py live --intervalo 30`
-5. Environment variables: copia do `.env` (NÃO subir `.env` no repo)
-6. Health check: `/api/v1/vila/live`
+2. Render detecta `render.yaml` automaticamente — todas envs + build + start configurados
+3. Set **secrets** via Dashboard → Environment:
+   - `GROQ_API_KEY` — obrigatório
+   - `OMNIROUTE_URL` + `OMNIROUTE_API_KEY` — opcional
+   - `CLAUDE_API_KEY` — opcional Anthropic fallback
+   - `SUPABASE_VILA_URL` + `SUPABASE_VILA_KEY` — opcional persistência
+   - `VILA_API_KEYS` — opcional gate endpoints custosos (Onda 103)
+4. Deploy automático no push `main`
+5. Health check: `/docs`
 
-Render reinicia o container quando deploya — por isso o estado vai todo para
-Supabase. Nada crítico em memória.
+**Non-secret envs já no `render.yaml`:**
+- `VILA_MAX_AGENTES=30`, `VILA_LLM_MAX_POR_STEP=4`, `VILA_LLM_TIMEOUT_S=6`
+- `VILA_LLM_TIER=on`, `VILA_HOT_FRACTION=0.33`
+- `GROQ_MODEL_RAPIDO=llama-3.1-8b-instant`
+- `GROQ_MODEL_CHAIN=openai/gpt-oss-120b,meta-llama/llama-4-scout-17b-16e-instruct`
+- `VILA_RATE_LIMIT_RPM=30`
+- `VILA_CALIB_PATH=data/calibracao_platt.json`
+
+**Verify deploy:**
+```bash
+curl https://YOUR-APP.onrender.com/api/v1/vila/estado
+curl https://YOUR-APP.onrender.com/docs      # Swagger UI
+# Open: https://YOUR-APP.onrender.com/mirofish_plus.html  (God's Eye)
+```
+
+Render reinicia o container quando deploya — estado efêmero em memória, use
+Supabase para persistência (vila_backtests, vila_snapshots).
 
 ---
 

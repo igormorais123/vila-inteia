@@ -9,6 +9,22 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: VILA_MAX_AGENTES
+        value: "30"
+      - key: VILA_LLM_MAX_POR_STEP
+        value: "4"
+      - key: VILA_LLM_TIMEOUT_S
+        value: "6"
+      - key: VILA_LLM_TIER
+        value: "on"
+      - key: VILA_HOT_FRACTION
+        value: "0.33"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL_RAPIDO
+        value: "llama-3.1-8b-instant"
+      - key: GROQ_MODEL_CHAIN
+        value: "openai/gpt-oss-120b,meta-llama/llama-4-scout-17b-16e-instruct"
       - key: OMNIROUTE_URL
         sync: false
       - key: OMNIROUTE_API_KEY
@@ -17,3 +33,13 @@ services:
         sync: false
       - key: IA_ALLOW_API_FALLBACK
         value: "false"
+      - key: SUPABASE_VILA_URL
+        sync: false
+      - key: SUPABASE_VILA_KEY
+        sync: false
+      - key: VILA_API_KEYS
+        sync: false
+      - key: VILA_RATE_LIMIT_RPM
+        value: "30"
+      - key: VILA_CALIB_PATH
+        value: "data/calibracao_platt.json"
