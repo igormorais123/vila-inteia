@@ -257,6 +257,8 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
       </div>
       <div id="bt_status" style="font-size:11px;color:var(--txt3);margin-bottom:10px"></div>
       <div id="bt_result"></div>
+      <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Reliability diagram</h3>
+      <svg id="bt_reliability" width="100%" height="240" style="background:var(--surf2);border-radius:4px"></svg>
       <h3 style="color:var(--amber);font-size:11px;margin:16px 0 6px 0;text-transform:uppercase;letter-spacing:.5pt">Histórico</h3>
       <div id="bt_historico"></div>
     </div>
@@ -919,6 +921,78 @@ function renderBacktestResult(d){
       </tbody>
     </table>`;
   document.getElementById('bt_result').innerHTML = html;
+  renderReliabilityDiagram();
+}
+
+async function renderReliabilityDiagram(){
+  const d = await fetchJSON('/api/v1/vila/backtest/reliability?n_bins=10');
+  const svg = d3.select('#bt_reliability');
+  svg.selectAll('*').remove();
+  if(!d || !d.bins || d.bins.length === 0){
+    svg.append('text').attr('x', '50%').attr('y', '50%')
+       .attr('text-anchor', 'middle').attr('fill', 'var(--txt3)')
+       .attr('font-size', '11px').text('Sem dados de backtest');
+    return;
+  }
+  const W = svg.node().clientWidth || 600;
+  const H = 240;
+  const pad = 30;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const xScale = v => pad + v * (W - 2*pad);
+  const yScale = v => H - pad - v * (H - 2*pad);
+
+  // Grid
+  const g = svg.append('g');
+  for(let i = 0; i <= 10; i++){
+    const v = i / 10;
+    g.append('line').attr('x1', xScale(v)).attr('x2', xScale(v))
+      .attr('y1', yScale(0)).attr('y2', yScale(1))
+      .attr('stroke', 'rgba(100,116,139,0.15)').attr('stroke-width', 0.5);
+    g.append('line').attr('y1', yScale(v)).attr('y2', yScale(v))
+      .attr('x1', xScale(0)).attr('x2', xScale(1))
+      .attr('stroke', 'rgba(100,116,139,0.15)').attr('stroke-width', 0.5);
+  }
+  // Perfect calibration diagonal
+  g.append('line').attr('x1', xScale(0)).attr('y1', yScale(0))
+    .attr('x2', xScale(1)).attr('y2', yScale(1))
+    .attr('stroke', 'rgba(214,158,46,0.4)').attr('stroke-width', 1)
+    .attr('stroke-dasharray', '4 3');
+  // Labels
+  g.append('text').attr('x', W/2).attr('y', H-4).attr('text-anchor','middle')
+    .attr('fill','var(--txt3)').attr('font-size','10px').text('Confidence (prob predita)');
+  g.append('text').attr('x', -H/2).attr('y', 10).attr('text-anchor','middle')
+    .attr('transform','rotate(-90)').attr('fill','var(--txt3)').attr('font-size','10px')
+    .text('Accuracy (freq real)');
+  // Y axis labels
+  for(let i = 0; i <= 5; i++){
+    const v = i / 5;
+    g.append('text').attr('x', pad - 4).attr('y', yScale(v) + 3).attr('text-anchor','end')
+      .attr('fill','var(--txt3)').attr('font-size','9px').text(v.toFixed(1));
+    g.append('text').attr('x', xScale(v)).attr('y', H - pad + 14).attr('text-anchor','middle')
+      .attr('fill','var(--txt3)').attr('font-size','9px').text(v.toFixed(1));
+  }
+
+  // Bins with data
+  const populated = d.bins.filter(b => b.n > 0);
+  // Line connecting bins
+  const line = d3.line()
+    .x(b => xScale(b.confidence || b.center))
+    .y(b => yScale(b.accuracy));
+  g.append('path').datum(populated)
+    .attr('d', line).attr('fill','none').attr('stroke','var(--amber)').attr('stroke-width', 2);
+  // Dots sized by n
+  const maxN = Math.max(...populated.map(b => b.n), 1);
+  g.selectAll('circle.bin').data(populated).join('circle').attr('class','bin')
+    .attr('cx', b => xScale(b.confidence || b.center))
+    .attr('cy', b => yScale(b.accuracy))
+    .attr('r', b => 3 + (b.n / maxN) * 5)
+    .attr('fill', b => Math.abs((b.confidence||b.center) - b.accuracy) > 0.1 ? 'var(--warn)' : 'var(--ok)')
+    .attr('stroke', '#0a0e1a').attr('stroke-width', 1)
+    .append('title').text(b => `bin ${b.center.toFixed(2)}: conf=${(b.confidence||b.center).toFixed(2)} acc=${b.accuracy.toFixed(2)} n=${b.n}`);
+
+  // Title
+  g.append('text').attr('x', pad).attr('y', 14).attr('fill','var(--amber)').attr('font-size','10px')
+    .text(`n=${d.n}, ${populated.length}/${d.n_bins} bins populados. Diagonal = calibração perfeita.`);
 }
 
 window.abrirBacktestModal = abrirBacktestModal;
