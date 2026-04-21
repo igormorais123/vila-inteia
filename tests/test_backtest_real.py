@@ -33,6 +33,13 @@ def t_extrair_percent():
     teste("fora de range → None ou valido",
            extrair_probabilidade("150%") is None or extrair_probabilidade("150%") <= 1)
     teste("0,6 → 0.6", abs(extrair_probabilidade("0,6") - 0.6) < 1e-9)
+    # Onda 139: quando múltiplos %, pegar último (conclusão) sem header FINAL
+    teste("últ match: 30% → 70%",
+          extrair_probabilidade("30% rejeição, mas 70% a favor") == 0.70)
+    teste("anchor scale não interfere",
+          extrair_probabilidade("0-10% impossível. Resposta: 85%") == 0.85)
+    teste("FINAL ainda prevalece",
+          extrair_probabilidade("30% 50% PROBABILIDADE FINAL: 75%") == 0.75)
 
 
 def t_brier_math():
