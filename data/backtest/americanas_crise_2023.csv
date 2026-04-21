@@ -1,11 +1,11 @@
-evento_id,data,contexto,outcome_real,probabilidade_prior
-amer01,2023-01-11,"Americanas divulga inconsistência contábil de R$20 bi — escândalo financeiro",1,0.80
-amer02,2023-01-12,"Ações despencam 77% em um dia — rejeição massiva do mercado",1,0.85
-amer03,2023-01-13,"Sergio Rial renuncia após 10 dias como CEO — perda de confiança",1,0.70
-amer04,2023-01-19,"Pedido de recuperação judicial protocolado — crise estrutural confirmada",1,0.75
-amer05,2023-02-15,"Bancos credores (BTG, Bradesco) processam Americanas em arbitragem",1,0.65
-amer06,2023-03-20,"Carlos Augusto Sicupira e trio 3G assumem culpa parcial — fraco esforço defensivo",0,0.45
-amer07,2023-05-10,"Aumento capital R$12 bi anunciado — campanha robusta de recuperação",0,0.35
-amer08,2023-08-01,"Plano recuperação aprovado assembleia credores — apoio massivo",1,0.55
-amer09,2023-11-15,"Receita cai 30% YoY, lojas fechando — perda de relevância competitiva",1,0.60
-amer10,2023-12-28,"Rival Magazine Luiza supera vendas natalinas — vitória concorrente rejeitada",1,0.58
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+amer01,2023-01-11,"Americanas divulga inconsistência contábil de R$20 bi — escândalo financeiro",1,0.80,"Americanas divulgará oficialmente inconsistência contábil de ~R$20 bi?"
+amer02,2023-01-12,"Ações despencam 77% em um dia — rejeição massiva do mercado",1,0.85,"As ações despencarão mais de 70% em um único dia?"
+amer03,2023-01-13,"Sergio Rial renuncia após 10 dias como CEO — perda de confiança",1,0.70,"Sergio Rial renunciará do cargo de CEO em menos de 2 semanas?"
+amer04,2023-01-19,"Pedido de recuperação judicial protocolado — crise estrutural confirmada",1,0.75,"Americanas protocolará pedido de recuperação judicial em janeiro?"
+amer05,2023-02-15,"Bancos credores (BTG, Bradesco) processam Americanas em arbitragem",1,0.65,"Bancos credores moverão arbitragem contra Americanas?"
+amer06,2023-03-20,"Carlos Augusto Sicupira e trio 3G assumem culpa parcial — fraco esforço defensivo",0,0.45,"O trio 3G (Sicupira, Lemann, Telles) assumirá culpa integral pelo escândalo?"
+amer07,2023-05-10,"Aumento capital R$12 bi anunciado — campanha robusta de recuperação",0,0.35,"O aumento de capital de R$12 bi será suficiente pra sanar a crise?"
+amer08,2023-08-01,"Plano recuperação aprovado assembleia credores — apoio massivo",1,0.55,"O plano de recuperação será aprovado pela assembleia de credores?"
+amer09,2023-11-15,"Receita cai 30% YoY, lojas fechando — perda de relevância competitiva",1,0.60,"Receita cairá ≥30% YoY no 3º trimestre?"
+amer10,2023-12-28,"Rival Magazine Luiza supera vendas natalinas — vitória concorrente rejeitada",1,0.58,"Magazine Luiza superará Americanas em vendas natalinas de 2023?"
