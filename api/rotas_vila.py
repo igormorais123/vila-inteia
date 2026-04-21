@@ -291,6 +291,27 @@ async def forecast_narrativo(
     )
 
 
+@router.get("/recomendacao-intervencao")
+async def recomendacao_intervencao(
+    outcome_desejado: str = Query("equilibrio"),
+    horizonte: int = Query(20, ge=1, le=100),
+    com_recomendacao_llm: bool = Query(True),
+):
+    """
+    Onda 80: sweep multi-counterfactual + LLM recomenda melhor ação.
+    Para cada estado psico-histórico, mede prob de atingir outcome em N steps.
+    """
+    from engine.recomendacao_intervencao import gerar_recomendacao
+    try:
+        return gerar_recomendacao(
+            outcome_desejado=outcome_desejado,
+            horizonte=horizonte,
+            com_recomendacao_llm=com_recomendacao_llm,
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
 @router.get("/counterfactual-narrativo")
 async def counterfactual_narrativo(
     estado_alternativo: str = Query(..., description="Estado psico-histórico hipotético"),
