@@ -530,6 +530,7 @@ class BacktestAccRequest(BaseModel):
     prob_floor: float = 0.0  # Onda 143: hedge floor
     prob_ceiling: float = 1.0  # Onda 143: hedge ceiling
     recency_decay: float = 1.0  # Onda 152/153: recency-weighted base_rate
+    aplicar_calib_por_persona: bool = False  # Onda 156: per-persona calib
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -611,6 +612,7 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 prob_floor=req.prob_floor,
                 prob_ceiling=req.prob_ceiling,
                 recency_decay=req.recency_decay,
+                aplicar_calib_por_persona=req.aplicar_calib_por_persona,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds
@@ -901,6 +903,26 @@ async def calibracao_aplicar(req: CalibracaoAplicarRequest):
         "probs_raw": req.probs,
         "probs_calibradas": aplicar_varios(req.probs) if ativa else req.probs,
     }
+
+
+@router.get("/calibracao/por-persona/status")
+async def calibracao_por_persona_status():
+    """Onda 156: status per-persona calibration."""
+    from engine.calibracao_por_persona import status
+    return status()
+
+
+@router.post("/calibracao/por-persona/auto-fit")
+async def calibracao_por_persona_auto_fit(min_amostras: int = 5):
+    """
+    Onda 156: fita calibrador per-persona a partir de _ULTIMO_BACKTEST.
+    Cada persona com >= min_amostras recebe próprio Platt/iso.
+    """
+    from engine.calibracao_por_persona import fitar_todas_personas
+    if not _ULTIMO_BACKTEST or not _ULTIMO_BACKTEST.get("datasets"):
+        raise HTTPException(400, "nenhum backtest em memória")
+    r = fitar_todas_personas(_ULTIMO_BACKTEST["datasets"], min_amostras=min_amostras)
+    return {"resumo": r, "n_personas_processadas": len(r)}
 
 
 @router.post("/calibracao/auto-fit")

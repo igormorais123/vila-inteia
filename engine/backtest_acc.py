@@ -63,6 +63,8 @@ def rodar_backtest_acc(
     blend_pesos: tuple = (0.6, 0.7, 0.8),
     # Onda 152/153: recency-weighted base_rate
     recency_decay: float = 1.0,
+    # Onda 156: per-persona Platt antes da agregação
+    aplicar_calib_por_persona: bool = False,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -151,6 +153,7 @@ def rodar_backtest_acc(
                 pesos_persona=pesos_persona,
                 chain_of_thought=chain_of_thought,
                 outcome_framing=ev.get("outcome_framing"),  # Onda 135
+                aplicar_calib_por_persona=aplicar_calib_por_persona,  # Onda 156
             )
 
         # Onda 131: LLM-as-judge filter — remove low-quality respostas antes agregar
