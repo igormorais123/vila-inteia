@@ -128,6 +128,14 @@ def main():
             print(f"  ECE antes              {cal['ece_antes']:.4f}")
             print(f"  ECE depois             {cal['ece_depois']:.4f}   Δ {cal['ece_antes']-cal['ece_depois']:+.4f}")
             saida["calibracao_platt"] = {k: v for k, v in cal.items() if k != "probs_calibradas"}
+            # Onda 97: persist coefs para runtime auto-calibração
+            try:
+                from engine.calibracao_runtime import salvar_coefs
+                p = salvar_coefs(cal["platt_a"], cal["platt_b"],
+                                  cal["n"], fonte="backtest_real")
+                print(f"\n[Onda 97] Platt coefs salvos: {p}")
+            except Exception as e:
+                print(f"(save coefs skip: {e})")
     except Exception as e:
         print(f"\n(calibração Platt skip: {e})")
 
