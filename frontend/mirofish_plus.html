@@ -146,9 +146,14 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
       <div id="personas_list"><div class="empty">carregando…</div></div>
     </aside>
 
-    <!-- CENTER: D3 graph -->
+    <!-- CENTER: view toggle (D3 graph | Campus map) -->
     <section class="col-c">
-      <svg id="graph"></svg>
+      <div style="position:absolute;top:12px;right:12px;z-index:20;display:flex;gap:4px;background:rgba(15,23,42,0.85);padding:4px;border-radius:6px;border:1px solid var(--border)">
+        <button id="view_graph_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('graph')">◈ Grafo</button>
+        <button id="view_campus_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('campus')">▣ Campus</button>
+      </div>
+      <svg id="graph" class="view-graph"></svg>
+      <svg id="campus" class="view-campus" style="display:none;width:100%;height:100%"></svg>
       <div class="graph-overlay" id="overlay">
         <div><b>Grafo de Conversas</b></div>
         <div style="margin-top:4px">Nós = personas. Arestas = conversas (espessura = quantidade).</div>
@@ -581,7 +586,7 @@ function fecharDrawer(){ document.getElementById('drawer').classList.remove('ope
 async function atualizarTudo(){
   setStatus('atualizando...', '');
   try{
-    await Promise.all([atualizarKPI(), atualizarConversas()]);
+    await Promise.all([atualizarKPI(), atualizarConversas(), atualizarEstado()]);
     await atualizarPersonas();
     await atualizarComunidades();
     await atualizarSuper();
@@ -631,6 +636,107 @@ function toggleSSE(){
   }
 }
 
+// ===== CAMPUS VIEW =====
+let currentView = 'graph';
+let estadoData = null;
+
+function setView(v){
+  currentView = v;
+  document.getElementById('graph').style.display = v === 'graph' ? 'block' : 'none';
+  document.getElementById('campus').style.display = v === 'campus' ? 'block' : 'none';
+  document.getElementById('overlay').innerHTML = v === 'graph'
+    ? '<div><b>Grafo de Conversas</b></div><div style="margin-top:4px">Nós = personas · Arestas = conversas · Cor = comunidade</div><div style="margin-top:4px;color:var(--txt3)">Click persona → drawer</div>'
+    : '<div><b>Mapa do Campus</b></div><div style="margin-top:4px">19 locais (círculos) · personas em cada um (dots coloridos por comunidade)</div><div style="margin-top:4px;color:var(--txt3)">Click persona → drawer</div>';
+  document.getElementById('view_graph_btn').style.background = v==='graph'?'var(--amber)':'transparent';
+  document.getElementById('view_graph_btn').style.color = v==='graph'?'#000':'var(--txt2)';
+  document.getElementById('view_campus_btn').style.background = v==='campus'?'var(--amber)':'transparent';
+  document.getElementById('view_campus_btn').style.color = v==='campus'?'#000':'var(--txt2)';
+  if(v === 'campus') desenharCampus();
+}
+
+async function atualizarEstado(){
+  estadoData = await fetchJSON('/api/v1/vila/estado');
+  if(currentView === 'campus') desenharCampus();
+}
+
+function desenharCampus(){
+  if(!estadoData) return;
+  const locais = estadoData.locais || [];
+  if(!locais.length) return;
+
+  // Persona → comunidade mapping
+  const persona2com = {};
+  (comunidadesData?.comunidades||[]).forEach(c=>{
+    c.personas.forEach(p => persona2com[p] = c.id);
+  });
+
+  const svg = d3.select('#campus');
+  svg.selectAll('*').remove();
+  const W = svg.node().clientWidth;
+  const H = svg.node().clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  const g = svg.append('g');
+  // Zoom
+  svg.call(d3.zoom().scaleExtent([0.5, 3]).on('zoom', e => g.attr('transform', e.transform)));
+
+  const pad = 50;
+  const toX = x => pad + x * (W - 2*pad);
+  const toY = y => pad + y * (H - 2*pad);
+
+  // Local circles
+  const loc = g.append('g').selectAll('g').data(locais).join('g')
+    .attr('transform', d => `translate(${toX(d.posicao_x||0.5)},${toY(d.posicao_y||0.5)})`);
+
+  loc.append('circle')
+    .attr('r', d => 16 + Math.min(30, (d.capacidade||20)*0.6))
+    .attr('fill', 'rgba(214,158,46,0.06)')
+    .attr('stroke', d => d.ocupacao > 0 ? 'var(--amber)' : 'rgba(100,116,139,0.3)')
+    .attr('stroke-width', 1.5)
+    .attr('stroke-dasharray', d => d.ocupacao > 0 ? '0' : '3 3');
+
+  loc.append('text')
+    .attr('text-anchor','middle').attr('y', d => -((16 + Math.min(30,(d.capacidade||20)*0.6)) + 6))
+    .attr('fill', 'var(--txt2)').attr('font-size', '10px').attr('font-family','Inter,sans-serif')
+    .attr('font-weight', 600)
+    .text(d => d.id);
+
+  loc.append('text')
+    .attr('text-anchor','middle').attr('y', d => (16 + Math.min(30,(d.capacidade||20)*0.6)) + 14)
+    .attr('fill', 'var(--txt3)').attr('font-size', '9px').attr('font-family','Inter,sans-serif')
+    .text(d => `${d.ocupacao}/${d.capacidade||'-'}`);
+
+  // Personas dentro do local (spiral layout)
+  locais.forEach(l => {
+    const ags = l.agentes || [];
+    if(!ags.length) return;
+    const cx = toX(l.posicao_x||0.5);
+    const cy = toY(l.posicao_y||0.5);
+    const radius = 16 + Math.min(30,(l.capacidade||20)*0.6);
+    ags.forEach((a, i) => {
+      const n = ags.length;
+      let px, py;
+      if(n === 1){ px = cx; py = cy; }
+      else {
+        const angle = (i / n) * 2 * Math.PI;
+        const r = radius * 0.55;
+        px = cx + Math.cos(angle) * r;
+        py = cy + Math.sin(angle) * r;
+      }
+      const com = persona2com[a.nome] ?? -1;
+      const cor = com >= 0 ? COLORS[com % COLORS.length] : '#64748b';
+      const ng = g.append('g')
+        .attr('transform', `translate(${px},${py})`)
+        .style('cursor', 'pointer')
+        .on('click', () => abrirDrawer(a.nome));
+      ng.append('circle').attr('r', 5).attr('fill', cor)
+        .attr('stroke', 'var(--bg)').attr('stroke-width', 1.2);
+      ng.append('title').text(`${a.nome} — ${a.acao||''}`);
+    });
+  });
+}
+
+window.setView = setView;
 window.abrirDrawer = abrirDrawer;
 window.fecharDrawer = fecharDrawer;
 window.atualizarTudo = atualizarTudo;
