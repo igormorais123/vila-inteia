@@ -95,6 +95,15 @@ STACKS = {
         usar_peso_adaptativo=True,
         aplicar_platt=False,
     ),
+    "full_hedge": dict(
+        chain_of_thought=True,
+        usar_debate=False,
+        usar_bayesian_blend=True,
+        usar_peso_adaptativo=True,
+        aplicar_platt=False,
+        prob_floor=0.05,
+        prob_ceiling=0.95,
+    ),
 }
 
 
@@ -146,15 +155,23 @@ def main():
         print()
 
     print("\n=== Agregado (média sobre datasets) ===")
+    baseline = None
     for stack in STACKS:
         vs = agg[stack]["brier_vila"]
         bs = agg[stack]["brier_blend"]
         ps = agg[stack]["brier_prior"]
         acs = agg[stack]["accuracy"]
+        brier_blend_avg = sum(bs) / len(bs)
+        delta = ""
+        if baseline is None:
+            baseline = brier_blend_avg
+        else:
+            pct = (brier_blend_avg - baseline) / baseline * 100
+            delta = f"  ({pct:+.1f}% vs minimal)"
         print(
             f"  {stack:16s} "
             f"brier_vila={sum(vs)/len(vs):.3f} ({len(vs)} ds)  "
-            f"brier_blend={sum(bs)/len(bs):.3f}  "
+            f"brier_blend={brier_blend_avg:.3f}{delta}  "
             f"brier_prior={sum(ps)/len(ps):.3f}  "
             f"acc={sum(acs)/len(acs):.2f}"
         )
