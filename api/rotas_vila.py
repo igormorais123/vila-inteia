@@ -573,6 +573,14 @@ async def backtest_rodar(req: BacktestRequest, _=Depends(auth_e_rate)):
     except Exception as e:
         saida["persistencia_erro"] = str(e)
 
+    # Onda 117: webhook alert se skill caiu abaixo limite
+    try:
+        skill = (saida.get("agregado") or {}).get("skill_brier_vs_prior_macro")
+        if skill is not None and skill < -0.3:
+            from engine.webhook_alerts import alerta_skill_negativo
+            alerta_skill_negativo(skill, limite=-0.3)
+    except Exception: pass
+
     return saida
 
 
@@ -754,6 +762,11 @@ async def godseye_stream():
                     if len(mules) > ultimo_n_mules:
                         for m in mules[ultimo_n_mules:]:
                             yield f"event: mule\ndata: {_json.dumps(m)}\n\n"
+                            # Onda 117: webhook alert on new mule
+                            try:
+                                from engine.webhook_alerts import alerta_mule
+                                alerta_mule(m if isinstance(m, dict) else {"tipo": str(m)})
+                            except Exception: pass
                         ultimo_n_mules = len(mules)
 
                 tick += 1
