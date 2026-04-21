@@ -4,7 +4,7 @@ from __future__ import annotations
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from engine.persona_skill import analisar_skill_personas
+from engine.persona_skill import analisar_skill_personas, categorizar_dataset
 
 ok, fail = 0, 0
 
@@ -79,11 +79,53 @@ def t_multi_datasets_agrega():
     teste("Musk agregou 2 datasets", musk["n_previsoes"] == 2)
 
 
+def t_categorizar_dataset():
+    teste("impeachment → politica_br",
+          categorizar_dataset("data/backtest/impeachment_dilma_2016.csv") == "politica_br")
+    teste("crypto_bitcoin → crypto",
+          categorizar_dataset("crypto_bitcoin_2024.csv") == "crypto")
+    teste("twitter_musk → social_media",
+          categorizar_dataset("twitter_musk_2022_2024") == "social_media")
+    teste("apple_vpro → tech_launch",
+          categorizar_dataset("lancamento_apple_vpro_2024") == "tech_launch")
+    teste("desconhecido → geral",
+          categorizar_dataset("foo_bar.csv") == "geral")
+
+
+def t_ranking_por_categoria():
+    ds = [
+        {"dataset": "data/backtest/impeachment_dilma_2016.csv",
+         "eventos": [_evt(1, [_p("CL001", "Musk", 0.9)])]},
+        {"dataset": "data/backtest/crypto_bitcoin_2024.csv",
+         "eventos": [_evt(1, [_p("CL001", "Musk", 0.5)])]},
+    ]
+    r = analisar_skill_personas(ds)
+    teste("tem ranking_por_categoria",
+          "ranking_por_categoria" in r)
+    rpc = r["ranking_por_categoria"]
+    teste("politica_br presente", "politica_br" in rpc)
+    teste("crypto presente", "crypto" in rpc)
+    # Musk melhor em política (brier 0.01) que crypto (brier 0.25)
+    musk_pol = rpc["politica_br"][0]
+    musk_cry = rpc["crypto"][0]
+    teste("Musk brier política < crypto",
+          musk_pol["brier_avg"] < musk_cry["brier_avg"])
+
+
+def t_categorizar_geral_para_desconhecido():
+    ds = [{"dataset": "random_dataset.csv",
+           "eventos": [_evt(1, [_p("CL001", "Musk", 0.7)])]}]
+    r = analisar_skill_personas(ds)
+    teste("geral presente", "geral" in r["ranking_por_categoria"])
+
+
 def main():
     print("=== test_persona_skill ===")
     for fn in [t_vazio, t_ignora_datasets_com_erro, t_agrega_eventos,
                t_prob_null_nao_conta_valida, t_ranking_por_brier,
-               t_multi_datasets_agrega]:
+               t_multi_datasets_agrega,
+               t_categorizar_dataset, t_ranking_por_categoria,
+               t_categorizar_geral_para_desconhecido]:
         try: fn()
         except Exception as e:
             global fail; fail += 1
