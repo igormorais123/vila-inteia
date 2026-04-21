@@ -75,10 +75,15 @@ def consultar_panel(
     persona_ids: list[str],
     sim: Any,
     llm_fn=None,
+    paralelo: bool = False,
+    sleep_entre_personas_s: float = 0.0,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
     Retorna per-persona prob + agregado (média).
+
+    paralelo=False (default) respeita rate limits TPM.
+    sleep_entre_personas_s: throttle adicional serial (default 0).
     """
     from engine.panel_chat import panel_chat
     pergunta = (
@@ -91,6 +96,7 @@ def consultar_panel(
         persona_ids=persona_ids,
         pergunta=pergunta, sim=sim, llm_fn=llm_fn,
         max_tokens=120, temperatura=0.4,
+        paralelo=paralelo,
     )
     probs = []
     per_persona = []
