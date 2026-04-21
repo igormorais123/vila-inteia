@@ -42,6 +42,7 @@ def main():
     parser.add_argument("--personas", default="CL001,CL002,CL007")
     parser.add_argument("--max-sem-melhoria", type=int, default=5)
     parser.add_argument("--no-groq", action="store_true", help="desabilita Groq (força fallback)")
+    parser.add_argument("--resume", action="store_true", help="retoma de trace existente")
     args = parser.parse_args()
 
     _load_env()
@@ -107,6 +108,7 @@ def main():
         seed=args.seed,
         trace_path=args.trace,
         max_eventos_por_dataset=args.max_eventos,
+        resume=args.resume,
     )
 
     print("\n=== AutoResearch Resumo ===")

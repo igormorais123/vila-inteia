@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from engine.autoresearch_accuracy import (
     _hash_config, propor_variacao, Experiment, PROPOSAL_SPACE,
+    carregar_trace, encontrar_best,
 )
 
 ok, fail = 0, 0
@@ -79,6 +80,63 @@ def t_experiment_to_dict():
     teste("to_dict tem kept", d["kept"] is True)
 
 
+def t_carregar_trace_vazio():
+    import tempfile
+    p = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False).name
+    os.unlink(p)
+    r = carregar_trace(p)
+    teste("trace inexistente → lista vazia", r == [])
+
+
+def t_carregar_trace_parse_jsonl():
+    import tempfile, json as _j
+    p = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False).name
+    with open(p, "w") as f:
+        f.write(_j.dumps({
+            "iteracao": 1, "config": {"a": 1}, "config_hash": "hash1",
+            "parent_hash": None, "proposal_delta": {},
+            "metric": 0.20, "n_eventos": 3, "kept": True,
+        }) + "\n")
+        f.write(_j.dumps({
+            "iteracao": 2, "config": {"a": 2}, "config_hash": "hash2",
+            "parent_hash": "hash1", "proposal_delta": {},
+            "metric": 0.15, "n_eventos": 3, "kept": True,
+        }) + "\n")
+        f.write("malformed\n")
+    r = carregar_trace(p)
+    teste("trace 2 valid (malformed skipped)", len(r) == 2)
+    teste("iter 1 parsed", r[0].iteracao == 1)
+    os.unlink(p)
+
+
+def t_encontrar_best():
+    h = [
+        Experiment(iteracao=0, config={}, config_hash="a", parent_hash=None,
+                   proposal_delta={}, metric=0.20, kept=True),
+        Experiment(iteracao=1, config={}, config_hash="b", parent_hash="a",
+                   proposal_delta={}, metric=0.15, kept=True),
+        Experiment(iteracao=2, config={}, config_hash="c", parent_hash="b",
+                   proposal_delta={}, metric=0.30, kept=False),
+    ]
+    best = encontrar_best(h)
+    teste("best iter=1 brier=0.15", best.iteracao == 1 and best.metric == 0.15)
+
+
+def t_encontrar_best_ignora_none():
+    h = [
+        Experiment(iteracao=0, config={}, config_hash="a", parent_hash=None,
+                   proposal_delta={}, metric=None, erro="LLM"),
+        Experiment(iteracao=1, config={}, config_hash="b", parent_hash=None,
+                   proposal_delta={}, metric=0.25, kept=True),
+    ]
+    best = encontrar_best(h)
+    teste("ignora metric=None", best.metric == 0.25)
+
+
+def t_encontrar_best_vazio():
+    teste("lista vazia → None", encontrar_best([]) is None)
+
+
 def main():
     print("=== test_autoresearch_accuracy ===")
     for fn in [t_hash_deterministico,
@@ -86,7 +144,12 @@ def main():
                t_propor_flag_toggle,
                t_propor_evita_duplicados,
                t_proposal_space_nao_vazio,
-               t_experiment_to_dict]:
+               t_experiment_to_dict,
+               t_carregar_trace_vazio,
+               t_carregar_trace_parse_jsonl,
+               t_encontrar_best,
+               t_encontrar_best_ignora_none,
+               t_encontrar_best_vazio]:
         try: fn()
         except Exception as e:
             global fail; fail += 1

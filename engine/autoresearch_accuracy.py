@@ -163,6 +163,46 @@ def rodar_experimento(
     return brier_avg, n_eventos_total
 
 
+def carregar_trace(trace_path: str | Path) -> list[Experiment]:
+    """
+    Onda 161: carrega trace JSONL existente como lista de Experiments.
+    Usado pra resume após quota interruption.
+    """
+    p = Path(trace_path)
+    if not p.exists():
+        return []
+    experiments = []
+    for line in p.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            d = json.loads(line)
+            experiments.append(Experiment(
+                iteracao=d.get("iteracao", 0),
+                config=d.get("config", {}),
+                config_hash=d.get("config_hash", ""),
+                parent_hash=d.get("parent_hash"),
+                proposal_delta=d.get("proposal_delta", {}),
+                metric=d.get("metric"),
+                n_eventos=d.get("n_eventos", 0),
+                kept=d.get("kept", False),
+                timestamp=d.get("timestamp", ""),
+                erro=d.get("erro"),
+            ))
+        except Exception:
+            continue
+    return experiments
+
+
+def encontrar_best(historia: list[Experiment]) -> Experiment | None:
+    """Retorna experiment com menor metric (ignora None/erros)."""
+    validos = [e for e in historia if e.metric is not None and e.erro is None]
+    if not validos:
+        return None
+    return min(validos, key=lambda e: e.metric)
+
+
 def loop_autoresearch(
     baseline_config: dict[str, Any],
     datasets: list[str],
@@ -175,6 +215,7 @@ def loop_autoresearch(
     trace_path: str | Path = "data/autoresearch_trace.jsonl",
     max_eventos_por_dataset: int = 3,
     verbose: bool = True,
+    resume: bool = False,
 ) -> dict:
     """
     Loop Karpathy-style: propõe variações, roda, keep/revert.
@@ -187,36 +228,56 @@ def loop_autoresearch(
     trace_path = Path(trace_path)
     trace_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Baseline
-    if verbose:
-        print(f"[autoresearch] rodando baseline...")
-    b_base, n_base = rodar_experimento(
-        baseline_config, datasets, sim, persona_ids, llm_fn,
-        max_eventos_por_dataset=max_eventos_por_dataset,
-    )
-    base_hash = _hash_config(baseline_config)
-    base_exp = Experiment(
-        iteracao=0,
-        config=baseline_config,
-        config_hash=base_hash,
-        parent_hash=None,
-        proposal_delta={},
-        metric=b_base,
-        n_eventos=n_base,
-        kept=True,
-        timestamp=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    )
-    historia: list[Experiment] = [base_exp]
+    # Onda 161: resume de trace existente
+    historia: list[Experiment] = []
+    base_exp: Experiment | None = None
+    b_base: float | None = None
+    n_base: int = 0
+    iter_start = 1
+
+    if resume and trace_path.exists():
+        historia = carregar_trace(trace_path)
+        if historia:
+            best_existente = encontrar_best(historia)
+            if best_existente is not None:
+                base_exp = best_existente
+                b_base = best_existente.metric
+                n_base = best_existente.n_eventos
+                iter_start = max(e.iteracao for e in historia) + 1
+                if verbose:
+                    print(f"[autoresearch] resume: {len(historia)} exps, "
+                          f"best brier={b_base} n={n_base} iter={best_existente.iteracao}")
+
+    if base_exp is None:
+        # Baseline fresh
+        if verbose:
+            print(f"[autoresearch] rodando baseline...")
+        b_base, n_base = rodar_experimento(
+            baseline_config, datasets, sim, persona_ids, llm_fn,
+            max_eventos_por_dataset=max_eventos_por_dataset,
+        )
+        base_hash = _hash_config(baseline_config)
+        base_exp = Experiment(
+            iteracao=0,
+            config=baseline_config,
+            config_hash=base_hash,
+            parent_hash=None,
+            proposal_delta={},
+            metric=b_base,
+            n_eventos=n_base,
+            kept=True,
+            timestamp=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        )
+        historia = [base_exp]
+        with open(trace_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(base_exp.to_dict(), default=str) + "\n")
+        if verbose:
+            print(f"[autoresearch] baseline brier={b_base} n={n_base}")
+
     best = base_exp
     sem_melhoria = 0
 
-    with open(trace_path, "a", encoding="utf-8") as f:
-        f.write(json.dumps(base_exp.to_dict(), default=str) + "\n")
-
-    if verbose:
-        print(f"[autoresearch] baseline brier={b_base} n={n_base}")
-
-    for i in range(1, max_iteracoes + 1):
+    for i in range(iter_start, iter_start + max_iteracoes):
         novo_config, delta = propor_variacao(best.config, historia, rng)
         if not delta:
             if verbose:
