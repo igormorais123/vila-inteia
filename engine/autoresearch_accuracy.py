@@ -129,32 +129,51 @@ def rodar_experimento(
     persona_ids: list[str],
     llm_fn=None,
     max_eventos_por_dataset: int = 3,
+    # Onda 172: timing robustness
+    sleep_entre_datasets_s: float = 5.0,
+    max_retries: int = 2,
+    retry_delay_s: float = 30.0,
 ) -> tuple[float | None, int]:
     """
     Executa rodar_backtest_acc em N datasets com config dada.
     Retorna (brier_blend_avg_ponderado, n_eventos_total).
+
+    Onda 172: sleep entre datasets + retry em rate limit 429.
     """
     from engine.backtest_acc import rodar_backtest_acc
+    import time as _time
 
     briers = []
     n_eventos_total = 0
-    for ds_path in datasets:
-        try:
-            r = rodar_backtest_acc(
-                dataset_path=ds_path,
-                sim=sim,
-                persona_ids=persona_ids,
-                llm_fn=llm_fn,
-                max_eventos=max_eventos_por_dataset,
-                **{k: v for k, v in config.items() if k != "max_eventos"},
-            )
-            b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
-            n = r.get("n_eventos", 0)
-            if b is not None and n > 0:
-                briers.append((b, n))
-                n_eventos_total += n
-        except Exception as e:
-            logger.debug(f"rodar_experimento {ds_path} falhou: {e}")
+    for idx, ds_path in enumerate(datasets):
+        if idx > 0 and sleep_entre_datasets_s > 0:
+            _time.sleep(sleep_entre_datasets_s)
+        tentativa = 0
+        while tentativa <= max_retries:
+            try:
+                r = rodar_backtest_acc(
+                    dataset_path=ds_path,
+                    sim=sim,
+                    persona_ids=persona_ids,
+                    llm_fn=llm_fn,
+                    max_eventos=max_eventos_por_dataset,
+                    **{k: v for k, v in config.items() if k != "max_eventos"},
+                )
+                b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
+                n = r.get("n_eventos", 0)
+                if b is not None and n > 0:
+                    briers.append((b, n))
+                    n_eventos_total += n
+                break
+            except Exception as e:
+                msg = str(e).lower()
+                if ("429" in msg or "rate limit" in msg or "quota" in msg) and tentativa < max_retries:
+                    logger.debug(f"rodar_experimento 429 retry {tentativa + 1}/{max_retries} após {retry_delay_s}s")
+                    _time.sleep(retry_delay_s)
+                    tentativa += 1
+                    continue
+                logger.debug(f"rodar_experimento {ds_path} falhou: {e}")
+                break
 
     if not briers:
         return None, 0
@@ -169,8 +188,9 @@ def loop_autoresearch(
     sim: Any,
     persona_ids: list[str],
     llm_fn=None,
-    max_iteracoes: int = 10,
-    max_sem_melhoria: int = 5,
+    # Onda 172: overnight defaults
+    max_iteracoes: int = 50,
+    max_sem_melhoria: int = 10,
     seed: int | None = None,
     trace_path: str | Path = "data/autoresearch_trace.jsonl",
     max_eventos_por_dataset: int = 3,

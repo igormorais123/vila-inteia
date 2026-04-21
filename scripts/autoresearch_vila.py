@@ -34,20 +34,25 @@ def _load_env():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--iter", type=int, default=10)
+    # Onda 172: overnight defaults — 50 iter, max-sem 10, bigger buffers
+    parser.add_argument("--iter", type=int, default=50)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--trace", default="data/autoresearch_trace.jsonl")
     parser.add_argument("--datasets", default="impeachment_dilma_2016,eleicao_presidencial_br_2022")
     parser.add_argument("--max-eventos", type=int, default=3)
     parser.add_argument("--personas", default="CL001,CL002,CL007")
-    parser.add_argument("--max-sem-melhoria", type=int, default=5)
+    parser.add_argument("--max-sem-melhoria", type=int, default=10)
     parser.add_argument("--no-groq", action="store_true", help="desabilita Groq (força fallback)")
+    parser.add_argument("--sleep-entre", type=float, default=15.0,
+                        help="segundos entre eventos (TPM-safe, default 15s)")
+    parser.add_argument("--llm-timeout", type=int, default=30,
+                        help="LLM timeout segundos (default 30s)")
     args = parser.parse_args()
 
     _load_env()
     if args.no_groq:
         os.environ["GROQ_API_KEY"] = ""
-    os.environ.setdefault("VILA_LLM_TIMEOUT_S", "15")
+    os.environ["VILA_LLM_TIMEOUT_S"] = str(args.llm_timeout)
     os.environ["PYTHONUNBUFFERED"] = "1"
 
     from engine.persona import Persona
@@ -74,9 +79,9 @@ def main():
         for d in args.datasets.split(",")
     ]
 
-    # Baseline = full stack Onda 153+
+    # Baseline = full stack Onda 153+ (Onda 172: sleep configurável)
     baseline = {
-        "sleep_entre_eventos_s": 2.0,
+        "sleep_entre_eventos_s": args.sleep_entre,
         "few_shot_k": 2,
         "chain_of_thought": True,
         "usar_debate": False,
