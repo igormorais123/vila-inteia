@@ -205,6 +205,8 @@ def consultar_panel(
     outcome_framing: str | None = None,
     aplicar_calib_por_persona: bool = False,
     temp_por_persona: bool = False,
+    usar_multi_model: bool = False,
+    modelos_ensemble: list[str] | None = None,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
@@ -244,13 +246,47 @@ def consultar_panel(
             + few_shot
         )
         max_tok = 120
-    resp = panel_chat(
-        persona_ids=persona_ids,
-        pergunta=pergunta, sim=sim, llm_fn=llm_fn,
-        max_tokens=max_tok, temperatura=0.4,
-        paralelo=paralelo,
-        temp_por_persona=temp_por_persona,
-    )
+    # Onda 166: se usar_multi_model, chama ensemble em vez de panel_chat default
+    if usar_multi_model:
+        from engine.multi_model_ensemble import chamar_ensemble_probs, MODELOS_GROQ_DIVERSE
+        mdls = modelos_ensemble or MODELOS_GROQ_DIVERSE
+        respostas = []
+        for pid in persona_ids:
+            persona_obj = (sim.personas.get(pid) if sim else None)
+            system_prompt = persona_obj.gerar_prompt_sistema() if persona_obj else ""
+            mensagens = [{"role": "user", "content": pergunta}]
+            r = chamar_ensemble_probs(
+                mensagens=mensagens,
+                modelos=mdls,
+                max_tokens=max_tok, temperatura=0.4,
+                system_prompt=system_prompt,
+            )
+            # Consolida em formato compatível com panel_chat
+            resp_unica = " | ".join(
+                f"[{r2.get('modelo')}] {(r2.get('resposta') or '')[:80]}"
+                for r2 in r["respostas"]
+            )
+            prob_mediana = r["median"]
+            respostas.append({
+                "persona_id": pid,
+                "persona_nome": getattr(persona_obj, "nome_exibicao", pid),
+                "resposta": (
+                    f"{resp_unica}\n\nPROBABILIDADE FINAL: "
+                    f"{int(prob_mediana * 100)}%" if prob_mediana is not None else resp_unica
+                ),
+                "erro": None if prob_mediana is not None else "ensemble sem probs válidas",
+                "ensemble_probs": r["probs"],
+                "ensemble_median": r["median"],
+            })
+        resp = {"respostas": respostas, "n_personas": len(persona_ids)}
+    else:
+        resp = panel_chat(
+            persona_ids=persona_ids,
+            pergunta=pergunta, sim=sim, llm_fn=llm_fn,
+            max_tokens=max_tok, temperatura=0.4,
+            paralelo=paralelo,
+            temp_por_persona=temp_por_persona,
+        )
     per_persona = []
     for r in resp.get("respostas", []):
         texto = r.get("resposta") or ""
