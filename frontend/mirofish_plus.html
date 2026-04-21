@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vila INTEIA — God's Eye (better than MiroFish)</title>
+<style>
+:root{
+  --amber:#d69e2e; --amber-l:#f6e05e; --amber-d:#b7791f;
+  --bg:#0a0e1a; --surf:#0f172a; --surf2:#1e293b; --surf3:#283548;
+  --border:rgba(100,116,139,.25); --border-a:rgba(214,158,46,.5);
+  --txt:#f8fafc; --txt2:#cbd5e1; --txt3:#64748b;
+  --ok:#22c55e; --warn:#eab308; --bad:#ef4444; --info:#3b82f6;
+  --c0:#d69e2e; --c1:#3b82f6; --c2:#22c55e; --c3:#a855f7; --c4:#ec4899; --c5:#06b6d4; --c6:#f97316; --c7:#eab308;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);overflow:hidden}
+.app{display:grid;grid-template-rows:48px 1fr 200px;height:100vh}
+
+/* ===== TOP STRIP ===== */
+.top{display:flex;align-items:center;gap:24px;padding:0 16px;background:var(--surf);border-bottom:1px solid var(--border);font-size:13px}
+.brand{font-weight:800;font-size:16px;color:var(--amber);letter-spacing:-.02em}
+.brand .v{color:var(--txt)}
+.kpi{display:flex;gap:6px;align-items:baseline}
+.kpi-l{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.5pt}
+.kpi-v{font-weight:600;color:var(--amber);font-variant-numeric:tabular-nums}
+.spacer{flex:1}
+.btn{background:var(--amber);color:#000;border:none;padding:6px 14px;border-radius:6px;font-weight:600;cursor:pointer;font-size:12px}
+.btn:hover{background:var(--amber-l)}
+.btn-sec{background:transparent;color:var(--txt2);border:1px solid var(--border)}
+.btn-sec:hover{border-color:var(--amber);color:var(--amber)}
+.status{padding:2px 8px;border-radius:3px;font-size:11px;background:var(--surf2);border:1px solid var(--border);color:var(--txt2)}
+.status.ok{color:var(--ok);border-color:var(--ok)}
+.status.bad{color:var(--bad);border-color:var(--bad)}
+
+/* ===== MAIN GRID ===== */
+.main{display:grid;grid-template-columns:280px 1fr 360px;overflow:hidden;border-bottom:1px solid var(--border)}
+.col{overflow-y:auto;padding:12px;background:var(--surf)}
+.col-l{border-right:1px solid var(--border)}
+.col-r{border-left:1px solid var(--border);background:var(--surf)}
+.col-c{background:var(--bg);position:relative;padding:0;overflow:hidden}
+
+/* ===== HEADERS ===== */
+h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:.6pt;margin:0 0 8px 0;font-weight:600}
+
+/* ===== PERSONA CARDS ===== */
+.persona-card{padding:8px 10px;background:var(--surf2);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.persona-card:hover{border-color:var(--amber);background:var(--surf3)}
+.persona-card.active{border-color:var(--amber);background:var(--surf3)}
+.persona-name{font-weight:600;font-size:12px;color:var(--txt)}
+.persona-meta{font-size:10px;color:var(--txt3);margin-top:2px;display:flex;gap:8px}
+.persona-meta span{display:inline-block}
+.persona-bar{height:3px;background:var(--surf3);border-radius:2px;margin-top:4px;overflow:hidden}
+.persona-bar-fill{height:100%;background:var(--amber);transition:width .3s}
+
+/* ===== GRAPH (CENTER) ===== */
+#graph{width:100%;height:100%;display:block}
+.graph-overlay{position:absolute;top:12px;left:12px;background:rgba(15,23,42,.85);padding:8px 12px;border-radius:6px;border:1px solid var(--border);font-size:11px;color:var(--txt2);max-width:280px}
+.graph-overlay b{color:var(--amber)}
+.legend{position:absolute;bottom:12px;right:12px;background:rgba(15,23,42,.85);padding:8px 12px;border-radius:6px;border:1px solid var(--border);font-size:10px;color:var(--txt2)}
+.legend-item{display:flex;align-items:center;gap:6px;margin:2px 0}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ===== CONVERSAS (RIGHT) ===== */
+.conv-card{padding:10px;background:var(--surf2);border-left:3px solid var(--amber);border-radius:4px;margin-bottom:8px;font-size:12px}
+.conv-head{font-weight:600;color:var(--amber);font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between}
+.conv-turn{color:var(--txt2);margin:3px 0;line-height:1.4}
+.conv-turn b{color:var(--txt);font-weight:600}
+
+/* ===== BOTTOM STRIP ===== */
+.bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);overflow:hidden}
+.bot-card{padding:12px 16px;background:var(--surf);overflow-y:auto}
+.bot-card h3{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:.6pt;margin:0 0 6px 0}
+.bot-row{display:flex;align-items:baseline;gap:8px;font-size:12px;margin:3px 0}
+.bot-row .l{color:var(--txt3);min-width:120px;font-size:11px}
+.bot-row .v{color:var(--txt);font-weight:600;font-variant-numeric:tabular-nums}
+.bot-bar{display:flex;align-items:center;gap:6px;margin:2px 0;font-size:11px}
+.bot-bar-label{width:90px;color:var(--txt2);font-size:10px}
+.bot-bar-fill{height:6px;background:var(--amber);border-radius:1px;min-width:1px;display:inline-block}
+.bot-bar-val{color:var(--txt3);min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.bot-narr{font-size:11px;color:var(--txt2);line-height:1.5;max-height:140px;overflow-y:auto;background:var(--surf2);padding:8px;border-radius:4px;border-left:2px solid var(--amber);white-space:pre-wrap}
+
+/* ===== DRAWER ===== */
+.drawer{position:fixed;top:48px;right:0;width:480px;height:calc(100vh - 48px);background:var(--surf);border-left:1px solid var(--border);z-index:50;transform:translateX(100%);transition:transform .25s ease;overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer-h{padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.drawer-h h2{font-size:18px;color:var(--amber);font-weight:700}
+.drawer-x{cursor:pointer;color:var(--txt3);font-size:24px;background:transparent;border:none}
+.drawer-x:hover{color:var(--amber)}
+.drawer-body{padding:16px}
+.drawer-body h4{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:.5pt;margin:14px 0 6px 0}
+.drawer-body .field{font-size:13px;color:var(--txt2);margin-bottom:4px}
+.drawer-body .field b{color:var(--txt)}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--txt3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--amber)}
+
+.empty{color:var(--txt3);font-style:italic;font-size:12px;padding:20px;text-align:center}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;background:var(--surf3);color:var(--txt2);font-size:10px;margin-right:4px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOP STRIP -->
+  <header class="top">
+    <div class="brand"><span class="v">VILA</span> INTEIA · <span style="color:#22c55e">God's Eye</span></div>
+    <div class="kpi"><span class="kpi-l">step</span><span class="kpi-v" id="k_step">—</span></div>
+    <div class="kpi"><span class="kpi-l">agentes</span><span class="kpi-v" id="k_agentes">—</span></div>
+    <div class="kpi"><span class="kpi-l">conv</span><span class="kpi-v" id="k_conv">—</span></div>
+    <div class="kpi"><span class="kpi-l">comun</span><span class="kpi-v" id="k_comun">—</span></div>
+    <div class="kpi"><span class="kpi-l">Q</span><span class="kpi-v" id="k_q">—</span></div>
+    <div class="spacer"></div>
+    <span id="status" class="status">—</span>
+    <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
+    <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
+      <input type="checkbox" id="auto" checked> auto 15s
+    </label>
+  </header>
+
+  <!-- MAIN AREA -->
+  <main class="main">
+
+    <!-- LEFT: Persona ranking -->
+    <aside class="col col-l">
+      <h3 class="section">Top Influenciadores</h3>
+      <div id="personas_list"><div class="empty">carregando…</div></div>
+    </aside>
+
+    <!-- CENTER: D3 graph -->
+    <section class="col-c">
+      <svg id="graph"></svg>
+      <div class="graph-overlay" id="overlay">
+        <div><b>Grafo de Conversas</b></div>
+        <div style="margin-top:4px">Nós = personas. Arestas = conversas (espessura = quantidade).</div>
+        <div style="margin-top:4px">Cor = comunidade Louvain. Tamanho = score de influência.</div>
+        <div style="margin-top:4px;color:var(--txt3)">Click persona → detalhes drawer →</div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </section>
+
+    <!-- RIGHT: Live conversation feed -->
+    <aside class="col col-r">
+      <h3 class="section">Conversas LLM-rich (live)</h3>
+      <div id="convs_list"><div class="empty">carregando…</div></div>
+    </aside>
+
+  </main>
+
+  <!-- BOTTOM: forecast + recomendacao + briefing -->
+  <footer class="bottom">
+    <div class="bot-card">
+      <h3>Forecast Markov (h=10)</h3>
+      <div class="bot-row"><span class="l">Estado atual:</span><span class="v" id="fc_estado">—</span></div>
+      <div class="bot-row"><span class="l">Mules:</span><span class="v" id="fc_mules">—</span></div>
+      <div class="bot-row"><span class="l">Entropia:</span><span class="v" id="fc_entropia">—</span></div>
+      <div id="fc_top" style="margin-top:6px"></div>
+    </div>
+
+    <div class="bot-card">
+      <h3>Recomendação Helena/Efesto</h3>
+      <div class="bot-row"><span class="l">Outcome:</span><span class="v" id="rec_outcome">equilibrio</span></div>
+      <div class="bot-row"><span class="l">Melhor int.:</span><span class="v" id="rec_melhor">—</span></div>
+      <div id="rec_top" style="margin-top:6px"></div>
+    </div>
+
+    <div class="bot-card">
+      <h3>Briefing Executivo (LLM)</h3>
+      <div class="bot-narr" id="briefing">aguardando primeira sintese…</div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-h">
+    <h2 id="dr_name">—</h2>
+    <button class="drawer-x" onclick="fecharDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="dr_body">—</div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const COLORS = ['#d69e2e','#3b82f6','#22c55e','#a855f7','#ec4899','#06b6d4','#f97316','#eab308'];
+let comunidadesData = null;
+let influenciaData = null;
+let convsData = null;
+let autoTimer = null;
+
+function setStatus(msg, cls=''){
+  const s = document.getElementById('status');
+  s.textContent = msg; s.className = 'status ' + cls;
+}
+
+async function fetchJSON(path){
+  try{
+    const r = await fetch(path);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.json();
+  }catch(e){
+    console.error(path, e);
+    return null;
+  }
+}
+
+function escape(s){ return String(s).replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+
+async function atualizarKPI(){
+  const e = await fetchJSON('/api/v1/vila/estado');
+  if(!e) return;
+  document.getElementById('k_step').textContent = e.step ?? '—';
+  document.getElementById('k_agentes').textContent = e.total_agentes ?? '—';
+  document.getElementById('k_conv').textContent = e.total_conversas ?? '—';
+}
+
+async function atualizarPersonas(){
+  influenciaData = await fetchJSON('/api/v1/vila/influencia-personas?top_n=30');
+  if(!influenciaData) return;
+  const lista = influenciaData.ranking || [];
+  const max = lista[0]?.score || 1;
+  document.getElementById('personas_list').innerHTML = lista.map(r=>`
+    <div class="persona-card" onclick="abrirDrawer('${escape(r.persona).replace(/'/g, '&apos;')}')">
+      <div class="persona-name">${escape(r.persona)}</div>
+      <div class="persona-meta">
+        <span>${r.n_conversas} conv</span>
+        <span>${r.n_parceiros_unicos} únicos</span>
+        <span style="color:var(--amber)">${r.score.toFixed(3)}</span>
+      </div>
+      <div class="persona-bar"><div class="persona-bar-fill" style="width:${(r.score/max*100).toFixed(1)}%"></div></div>
+    </div>
+  `).join('');
+}
+
+async function atualizarConversas(){
+  convsData = await fetchJSON('/api/v1/vila/conversas?limite=20');
+  if(!convsData) return;
+  const cs = (convsData.conversas || []).slice().reverse();
+  document.getElementById('convs_list').innerHTML = cs.length === 0
+    ? '<div class="empty">sem conversas ainda</div>'
+    : cs.map(c=>{
+      const turnos = (c.turnos || []).slice(0,4).map(t=>{
+        if(Array.isArray(t) && t.length>=2) return `<div class="conv-turn"><b>${escape(t[0])}:</b> ${escape(t[1].slice(0,180))}</div>`;
+        return '';
+      }).join('');
+      return `<div class="conv-card">
+        <div class="conv-head"><span>${escape(c.parceiro_nome||'?')}</span><span style="color:var(--txt3)">${(c.turnos||[]).length}t · ${escape(c.local_id||'')}</span></div>
+        <div style="font-size:10px;color:var(--txt3);margin-bottom:4px">tema: ${escape(c.topico||'')}</div>
+        ${turnos}
+      </div>`;
+    }).join('');
+}
+
+async function atualizarComunidades(){
+  comunidadesData = await fetchJSON('/api/v1/vila/comunidades-personas?resolution=1.0');
+  if(!comunidadesData) return;
+  document.getElementById('k_comun').textContent = comunidadesData.n_comunidades ?? '—';
+  document.getElementById('k_q').textContent = comunidadesData.modularidade?.toFixed(3) ?? '—';
+
+  // Legenda
+  const leg = (comunidadesData.comunidades||[]).map((c,i)=>{
+    const cor = COLORS[c.id % COLORS.length];
+    return `<div class="legend-item"><span class="legend-dot" style="background:${cor}"></span>Com ${c.id} (n=${c.tamanho})</div>`;
+  }).join('');
+  document.getElementById('legend').innerHTML = leg;
+
+  desenharGrafo();
+}
+
+function desenharGrafo(){
+  if(!comunidadesData || !influenciaData) return;
+
+  // Personas → comunidade
+  const persona2com = {};
+  (comunidadesData.comunidades||[]).forEach(c=>{
+    c.personas.forEach(p => persona2com[p] = c.id);
+  });
+
+  // Score map
+  const persona2score = {};
+  (influenciaData.ranking||[]).forEach(r => persona2score[r.persona] = r.score);
+
+  // Build nodes from union
+  const allPersonas = new Set([
+    ...(influenciaData.ranking||[]).map(r=>r.persona),
+    ...Object.keys(persona2com),
+  ]);
+
+  const nodes = Array.from(allPersonas).map(p=>({
+    id: p,
+    com: persona2com[p] ?? -1,
+    score: persona2score[p] ?? 0.01,
+  }));
+
+  // Build edges from conversas
+  const edges = [];
+  if(convsData){
+    const seen = {};
+    (convsData.conversas||[]).forEach(c=>{
+      const t0 = c.turnos?.[0];
+      if(!Array.isArray(t0) || t0.length<2) return;
+      const a = t0[0], b = c.parceiro_nome;
+      if(!a || !b || a===b) return;
+      if(!allPersonas.has(a) || !allPersonas.has(b)) return;
+      const key = [a,b].sort().join('::');
+      if(seen[key]){ seen[key]++; }
+      else { seen[key] = 1; edges.push({source:a, target:b, weight:1, key}); }
+    });
+    edges.forEach(e => e.weight = seen[e.key] || 1);
+  }
+
+  const svg = d3.select('#graph');
+  svg.selectAll('*').remove();
+  const W = svg.node().clientWidth;
+  const H = svg.node().clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(edges).id(d=>d.id).distance(80).strength(0.4))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d=>10+d.score*30));
+
+  const g = svg.append('g');
+
+  // Zoom
+  svg.call(d3.zoom().scaleExtent([0.3, 3]).on('zoom', e => g.attr('transform', e.transform)));
+
+  const link = g.append('g').selectAll('line').data(edges).join('line')
+    .attr('stroke', 'rgba(214,158,46,0.35)')
+    .attr('stroke-width', d => Math.min(4, 0.8 + d.weight*0.6));
+
+  const node = g.append('g').selectAll('g').data(nodes).join('g')
+    .style('cursor', 'pointer')
+    .on('click', (e,d) => abrirDrawer(d.id))
+    .call(d3.drag()
+      .on('start', (e,d) => { if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end', (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+  node.append('circle')
+    .attr('r', d => 6 + d.score * 30)
+    .attr('fill', d => d.com >= 0 ? COLORS[d.com % COLORS.length] : '#444')
+    .attr('stroke', '#0a0e1a').attr('stroke-width', 1.5);
+
+  node.append('text')
+    .attr('text-anchor', 'middle').attr('dy', '.35em')
+    .attr('y', d => 6 + d.score*30 + 12)
+    .attr('fill', '#cbd5e1').attr('font-size', '10px').attr('font-family', 'Inter, sans-serif')
+    .text(d => d.id);
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+async function atualizarSuper(){
+  const d = await fetchJSON('/api/v1/vila/super-intelligence?horizonte=10&outcome_desejado=equilibrio&com_sintese_llm=true');
+  if(!d) return;
+  const fc = d.forecast || {};
+  const rec = d.recomendacao || {};
+
+  document.getElementById('fc_estado').textContent = fc.estado_atual || '—';
+  document.getElementById('fc_mules').textContent = fc.n_mules_recentes ?? '—';
+  document.getElementById('fc_entropia').textContent =
+    `${(fc.entropia_inicial??0).toFixed(2)} → ${(fc.entropia_final??0).toFixed(2)}`;
+  document.getElementById('fc_top').innerHTML = (fc.top_estados_horizonte||[]).slice(0,4).map(t=>{
+    const pct = (t.prob*100).toFixed(1);
+    return `<div class="bot-bar">
+      <span class="bot-bar-label">${escape(t.estado)}</span>
+      <span class="bot-bar-fill" style="width:${pct*1.6}px"></span>
+      <span class="bot-bar-val">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  const m = rec.melhor_intervencao || {};
+  document.getElementById('rec_melhor').textContent = m.estado
+    ? `forçar ${m.estado} → ${(m.prob_outcome*100).toFixed(1)}%` : '—';
+  document.getElementById('rec_top').innerHTML = (rec.ranking||[]).slice(0,4).map(r=>{
+    const pct = (r.prob_outcome*100).toFixed(1);
+    return `<div class="bot-bar">
+      <span class="bot-bar-label">${escape(r.estado)}</span>
+      <span class="bot-bar-fill" style="width:${pct*1.6}px"></span>
+      <span class="bot-bar-val">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('briefing').textContent = d.briefing_executivo || '(LLM quota exhausted; aguardando reset)';
+}
+
+async function abrirDrawer(personaId){
+  const dr = document.getElementById('drawer');
+  document.getElementById('dr_name').textContent = personaId;
+  document.getElementById('dr_body').innerHTML = '<div class="empty">carregando…</div>';
+  dr.classList.add('open');
+
+  // Find ID via /agentes
+  const ags = await fetchJSON('/api/v1/vila/agentes');
+  if(!ags) return;
+  const ag = (ags.agentes||[]).find(a => a.nome === personaId);
+  if(!ag){
+    document.getElementById('dr_body').innerHTML = `<div class="empty">Persona não encontrada nas 144 ativas</div>`;
+    return;
+  }
+
+  const det = await fetchJSON(`/api/v1/vila/agente/${ag.id}`);
+  if(!det){ document.getElementById('dr_body').innerHTML = '<div class="empty">erro</div>'; return; }
+
+  // Conversas dela
+  const convsTxt = (convsData?.conversas||[])
+    .filter(c => c.parceiro_nome === personaId || (c.turnos?.[0]?.[0] === personaId))
+    .slice(-5).reverse();
+
+  document.getElementById('dr_body').innerHTML = `
+    <h4>Persona</h4>
+    <div class="field"><b>Nome:</b> ${escape(det.nome||personaId)}</div>
+    <div class="field"><b>ID:</b> ${escape(det.id||ag.id)}</div>
+    <div class="field"><b>Categoria:</b> ${escape(det.categoria||ag.categoria||'—')}</div>
+    <div class="field"><b>Tier:</b> ${escape(det.tier||ag.tier||'—')}</div>
+    <div class="field"><b>Ação:</b> ${escape(det.acao||ag.acao||'—')}</div>
+    <div class="field"><b>Local:</b> ${escape(det.local||ag.local||'—')}</div>
+
+    <h4>Influência</h4>
+    ${(()=>{
+      const r = (influenciaData?.ranking||[]).find(x=>x.persona===personaId);
+      if(!r) return '<div class="field">não rankeada</div>';
+      return `
+        <div class="field"><b>Score composto:</b> ${r.score.toFixed(4)}</div>
+        <div class="field"><b>Conversas:</b> ${r.n_conversas}</div>
+        <div class="field"><b>Parceiros únicos:</b> ${r.n_parceiros_unicos}</div>
+        <div class="field"><b>PageRank:</b> ${r.pagerank.toFixed(4)}</div>
+        <div class="field"><b>Betweenness:</b> ${r.betweenness_centrality.toFixed(4)}</div>
+        <div class="field"><b>Eigenvector:</b> ${r.eigenvector_centrality.toFixed(4)}</div>`;
+    })()}
+
+    <h4>Comunidade</h4>
+    ${(()=>{
+      const cid = (comunidadesData?.comunidades||[]).find(c=>c.personas.includes(personaId));
+      if(!cid) return '<div class="field">não atribuída</div>';
+      const cor = COLORS[cid.id % COLORS.length];
+      return `<div class="field"><span class="tag" style="background:${cor};color:#000">Com ${cid.id}</span> n=${cid.tamanho}, dens=${cid.densidade_interna.toFixed(2)}</div>
+        <div class="field" style="font-size:11px">${cid.personas.map(p=>p===personaId?`<b>${escape(p)}</b>`:escape(p)).join(', ')}</div>`;
+    })()}
+
+    <h4>Conversas recentes (5)</h4>
+    ${convsTxt.length === 0 ? '<div class="empty">sem conversas no buffer</div>' :
+      convsTxt.map(c=>{
+        const turnos = (c.turnos||[]).slice(0,4).map(t=>
+          Array.isArray(t)&&t.length>=2 ? `<div style="font-size:11px;color:var(--txt2);margin:2px 0"><b style="color:var(--txt)">${escape(t[0])}:</b> ${escape(t[1].slice(0,160))}</div>` : ''
+        ).join('');
+        return `<div style="margin-bottom:10px;padding:8px;background:var(--surf2);border-radius:4px;border-left:2px solid var(--amber)">
+          <div style="font-size:10px;color:var(--amber);margin-bottom:4px">↔ ${escape(c.parceiro_nome||'?')} · ${escape(c.topico||'')}</div>
+          ${turnos}
+        </div>`;
+      }).join('')}
+  `;
+}
+
+function fecharDrawer(){ document.getElementById('drawer').classList.remove('open'); }
+
+async function atualizarTudo(){
+  setStatus('atualizando...', '');
+  try{
+    await Promise.all([atualizarKPI(), atualizarConversas()]);
+    await atualizarPersonas();
+    await atualizarComunidades();
+    await atualizarSuper();
+    setStatus('ok · ' + new Date().toLocaleTimeString(), 'ok');
+  }catch(e){
+    setStatus('erro: '+e.message, 'bad');
+    console.error(e);
+  }
+}
+
+function toggleAuto(){
+  if(document.getElementById('auto').checked){
+    atualizarTudo();
+    autoTimer = setInterval(atualizarTudo, 15000);
+  } else {
+    clearInterval(autoTimer); autoTimer = null;
+  }
+}
+
+window.abrirDrawer = abrirDrawer;
+window.fecharDrawer = fecharDrawer;
+window.atualizarTudo = atualizarTudo;
+
+document.getElementById('auto').addEventListener('change', toggleAuto);
+window.addEventListener('resize', () => desenharGrafo());
+toggleAuto();
+</script>
+</body>
+</html>
