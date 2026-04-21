@@ -103,6 +103,34 @@ def main():
             else:
                 print(f"  {k:35s} {v}")
 
+    # Onda 93: aplicar Platt calibração ao agregado
+    try:
+        from engine.calibracao_platt import avaliar_calibracao
+        probs_raw, ys = [], []
+        for ds in saida.get("datasets", []):
+            if "erro" in ds: continue
+            for e in ds.get("eventos", []):
+                if e.get("prob_vila") is not None:
+                    probs_raw.append(e["prob_vila"])
+                    ys.append(e["outcome_real"])
+        if len(probs_raw) >= 5:
+            cal = avaliar_calibracao(probs_raw, ys)
+            print()
+            print("=" * 60)
+            print("CALIBRAÇÃO PLATT (Onda 93)")
+            print("=" * 60)
+            print(f"  n amostras             {cal['n']}")
+            print(f"  platt (a, b)           ({cal['platt_a']:.3f}, {cal['platt_b']:.3f})")
+            print(f"  Brier antes            {cal['brier_antes']:.4f}")
+            print(f"  Brier depois           {cal['brier_depois']:.4f}   Δ {cal['brier_antes']-cal['brier_depois']:+.4f}")
+            print(f"  Log-loss antes         {cal['log_loss_antes']:.4f}")
+            print(f"  Log-loss depois        {cal['log_loss_depois']:.4f}   Δ {cal['log_loss_antes']-cal['log_loss_depois']:+.4f}")
+            print(f"  ECE antes              {cal['ece_antes']:.4f}")
+            print(f"  ECE depois             {cal['ece_depois']:.4f}   Δ {cal['ece_antes']-cal['ece_depois']:+.4f}")
+            saida["calibracao_platt"] = {k: v for k, v in cal.items() if k != "probs_calibradas"}
+    except Exception as e:
+        print(f"\n(calibração Platt skip: {e})")
+
     if args.out:
         Path(args.out).write_text(json.dumps(saida, indent=2, ensure_ascii=False))
         print(f"\nJSON: {args.out}")
