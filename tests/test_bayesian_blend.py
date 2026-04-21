@@ -29,6 +29,23 @@ def t_base_rate_laplace():
     teste("10/10 Laplace1 ≈ 0.917", abs(base_rate_dataset([1]*10) - 11/12) < 1e-6)
 
 
+def t_base_rate_decay_unit_equiv_no_decay():
+    # decay=1.0 equivale ao comportamento default
+    y = [1, 0, 1, 1, 0]
+    teste("decay=1 igual default",
+          abs(base_rate_dataset(y) - base_rate_dataset(y, decay=1.0)) < 1e-9)
+
+
+def t_base_rate_decay_pondera_recentes():
+    # y=[0, 0, 0, 1, 1] — default 2/5 = 0.4 com Laplace vai pra 3/7 ≈ 0.43
+    # Com decay=0.5, últimos (1,1) dominam → deve ser maior que default
+    y = [0, 0, 0, 1, 1]
+    r_default = base_rate_dataset(y, decay=1.0)
+    r_decay = base_rate_dataset(y, decay=0.5)
+    teste(f"decay recenteiza (def={r_default:.3f}, dec={r_decay:.3f})",
+          r_decay > r_default)
+
+
 def t_logit_sigmoid_roundtrip():
     for p in [0.1, 0.3, 0.5, 0.7, 0.9]:
         z = _logit(p)
@@ -132,7 +149,9 @@ def main():
                t_peso_adaptativo_dispersao_baixa_sem_efeito,
                t_peso_adaptativo_dispersao_nao_viola_range,
                t_blend_ensemble_median,
-               t_blend_ensemble_peso_unico_equiv_blend]:
+               t_blend_ensemble_peso_unico_equiv_blend,
+               t_base_rate_decay_unit_equiv_no_decay,
+               t_base_rate_decay_pondera_recentes]:
         try: fn()
         except Exception as e:
             global fail; fail += 1

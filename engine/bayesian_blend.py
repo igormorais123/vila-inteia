@@ -35,14 +35,32 @@ def _sigmoid(z: float) -> float:
     return e / (1.0 + e)
 
 
-def base_rate_dataset(y_history: Iterable[int], laplace: float = 1.0) -> float:
-    """Laplace-smoothed base rate. Vazio → 0.5."""
+def base_rate_dataset(
+    y_history: Iterable[int],
+    laplace: float = 1.0,
+    decay: float = 1.0,
+) -> float:
+    """
+    Laplace-smoothed base rate. Vazio → 0.5.
+    Onda 152: decay ∈ (0, 1] dá peso maior aos eventos recentes
+    via exponential weighting. decay=1.0 = sem recency weight
+    (retrocompat). decay=0.9 = evento t-1 vale 0.9 do último.
+    """
     ys = list(y_history)
     n = len(ys)
     if n == 0:
         return 0.5
-    k = sum(ys)
-    return (k + laplace) / (n + 2 * laplace)
+    if decay >= 1.0:
+        k = sum(ys)
+        return (k + laplace) / (n + 2 * laplace)
+    # Pesos: último evento peso 1.0, antepenúltimo 0.9, etc.
+    pesos = [decay ** (n - 1 - i) for i in range(n)]
+    w_total = sum(pesos)
+    w_sucessos = sum(w * y for w, y in zip(pesos, ys))
+    # Aplica Laplace em "unidades efetivas"
+    n_eff = w_total
+    k_eff = w_sucessos
+    return (k_eff + laplace) / (n_eff + 2 * laplace)
 
 
 def bayesian_blend(
