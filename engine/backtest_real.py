@@ -79,18 +79,33 @@ def extrair_probabilidade(texto: str) -> float | None:
     return None
 
 
-def _build_cot_prefix() -> str:
-    """Onda 123: chain-of-thought instruction."""
-    return (
+def _build_cot_prefix(rejection_aware: bool = True) -> str:
+    """
+    Onda 123: chain-of-thought instruction.
+    Onda 134: rejection_aware adiciona step explícito pra considerar
+    cenários de rejeição/reversão (falha comum: Vila infla probabilidades
+    de sucesso em eventos onde outcome real foi rejeição social).
+    """
+    base = (
         "\n\nPense passo-a-passo antes de responder:\n"
         "  1. Identifique os drivers principais (macro, micro, institucional).\n"
         "  2. Liste fatores a favor e contra o outcome.\n"
         "  3. Ajuste sua estimativa por base rates históricas similares.\n"
-        "  4. Confirme: você está over-confident? Ancorar em 40-80% se incerto.\n\n"
-        "Estrutura da resposta:\n"
+        "  4. Confirme: você está over-confident? Ancorar em 40-80% se incerto.\n"
+    )
+    if rejection_aware:
+        base += (
+            "  5. ATENÇÃO: outcomes de REJEIÇÃO (bloqueio, fracasso, "
+            "reversão, backlash social) são frequentes e subvalorados. "
+            "Considere explicitamente: poderia o resultado ser NEGATIVO "
+            "ou INVERSO? Se sim, probabilidade < 50%.\n"
+        )
+    base += (
+        "\nEstrutura da resposta:\n"
         "RACIOCÍNIO: <2-3 frases curtas>\n"
         "PROBABILIDADE FINAL: <N%>"
     )
+    return base
 
 
 def _build_few_shot_block(
