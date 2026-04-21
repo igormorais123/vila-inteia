@@ -10,8 +10,13 @@ from __future__ import annotations
 import asyncio
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends, Request
 from pydantic import BaseModel
+
+try:
+    from ..engine.auth_middleware import auth_e_rate, rate_limit
+except (ImportError, ValueError):
+    from engine.auth_middleware import auth_e_rate, rate_limit
 
 try:
     from ..engine.simulacao import SimulacaoVila
@@ -299,7 +304,7 @@ class PersonaChatRequest(BaseModel):
 
 
 @router.post("/persona-chat")
-async def persona_chat(req: PersonaChatRequest):
+async def persona_chat(req: PersonaChatRequest, _=Depends(rate_limit)):
     """
     Onda 86: chat direto com persona lendária (Musk, Buffett, Sun Tzu, etc).
     LLM responde usando system prompt arquétipo profundo.
@@ -325,7 +330,7 @@ class PanelChatRequest(BaseModel):
 
 
 @router.post("/panel-chat")
-async def panel_chat_endpoint(req: PanelChatRequest):
+async def panel_chat_endpoint(req: PanelChatRequest, _=Depends(rate_limit)):
     """
     Onda 89: múltiplas personas respondem mesma pergunta em paralelo.
     Ex: Musk + Buffett + Sun Tzu sobre 'como escalar startup?' → 3 respostas
@@ -456,7 +461,7 @@ _ULTIMO_BACKTEST: dict = {}
 
 
 @router.post("/backtest/rodar")
-async def backtest_rodar(req: BacktestRequest):
+async def backtest_rodar(req: BacktestRequest, _=Depends(auth_e_rate)):
     """
     Onda 99: roda backtest via REST (sync, pode demorar ~1-5min).
     Se dataset fornecido: só esse. Senão: todos 5 datasets.
