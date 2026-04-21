@@ -230,10 +230,13 @@ def chamar_llm(
     max_tokens: int = 300,
     temperatura: float = 0.8,
     system_prompt: str = "",
+    bypass_step_cap: bool = False,
 ) -> Optional[str]:
     """
     Chamada SÍNCRONA ao LLM.
     Pipeline: budget → cache → throttle → provider primary → fallback → None.
+
+    bypass_step_cap=True: usado por endpoints API (não consome slot do step da sim).
     """
     # Onda 64: budget check antes de tudo
     try:
@@ -247,7 +250,8 @@ def chamar_llm(
     c = _ensure_client()
 
     # Onda 68: cap por step — protege step de timeout
-    if not _consumir_step_slot():
+    # Onda 78: bypass para chamadas API (não-step)
+    if not bypass_step_cap and not _consumir_step_slot():
         logger.debug("Cap step atingido — pulando chamada LLM")
         return None
 
