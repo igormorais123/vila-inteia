@@ -291,6 +291,46 @@ async def forecast_narrativo(
     )
 
 
+class PersonaChatRequest(BaseModel):
+    persona_id: str
+    pergunta: str
+    max_tokens: int = 350
+    temperatura: float = 0.75
+
+
+@router.post("/persona-chat")
+async def persona_chat(req: PersonaChatRequest):
+    """
+    Onda 86: chat direto com persona lendária (Musk, Buffett, Sun Tzu, etc).
+    LLM responde usando system prompt arquétipo profundo.
+    Mantém histórico in-memory (últimos 10 turnos por persona).
+    """
+    from engine.persona_chat import chat_com_persona
+    sim = obter_simulacao()
+    return chat_com_persona(
+        persona_id=req.persona_id,
+        pergunta=req.pergunta,
+        sim=sim,
+        max_tokens=req.max_tokens,
+        temperatura=req.temperatura,
+    )
+
+
+@router.get("/persona-chat/historico/{persona_id}")
+async def persona_chat_historico(persona_id: str):
+    """Onda 86: retorna histórico de chat com uma persona."""
+    from engine.persona_chat import historico_persona_public
+    return historico_persona_public(persona_id)
+
+
+@router.delete("/persona-chat/historico/{persona_id}")
+async def persona_chat_reset(persona_id: str):
+    """Onda 86: reseta histórico de chat com uma persona."""
+    from engine.persona_chat import resetar_historico
+    resetar_historico(persona_id)
+    return {"ok": True, "persona_id": persona_id}
+
+
 @router.get("/comunidades-personas")
 async def comunidades_personas(resolution: float = Query(1.0, ge=0.1, le=5.0)):
     """
