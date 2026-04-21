@@ -82,12 +82,17 @@ def extrair_probabilidade(texto: str) -> float | None:
     return None
 
 
-def _build_cot_prefix(rejection_aware: bool = True) -> str:
+def _build_cot_prefix(
+    rejection_aware: bool = True,
+    anchor_scale: bool = True,
+) -> str:
     """
     Onda 123: chain-of-thought instruction.
     Onda 134: rejection_aware adiciona step explícito pra considerar
     cenários de rejeição/reversão (falha comum: Vila infla probabilidades
     de sucesso em eventos onde outcome real foi rejeição social).
+    Onda 138: anchor_scale expõe escala de calibração explícita pra
+    reduzir viés do LLM em defaults 50%/70%/80%.
     """
     base = (
         "\n\nPense passo-a-passo antes de responder:\n"
@@ -102,6 +107,17 @@ def _build_cot_prefix(rejection_aware: bool = True) -> str:
             "reversão, backlash social) são frequentes e subvalorados. "
             "Considere explicitamente: poderia o resultado ser NEGATIVO "
             "ou INVERSO? Se sim, probabilidade < 50%.\n"
+        )
+    if anchor_scale:
+        base += (
+            "\nEscala de calibração (use valores variados, evite só 50/70/80):\n"
+            "   0-10%  = quase impossível (desastre, reversão, cisne negro)\n"
+            "  10-25% = improvável mas plausível\n"
+            "  25-45% = possível, evidência mista contra\n"
+            "  45-55% = genuinamente incerto (moeda)\n"
+            "  55-75% = provável, evidência mista a favor\n"
+            "  75-90% = muito provável\n"
+            "  90-99% = quase certo (precedente forte, lock-in)\n"
         )
     base += (
         "\nEstrutura da resposta:\n"
