@@ -676,6 +676,35 @@ async def comparison_simuladores():
     return build_comparison()
 
 
+@router.get("/backtest/bayesian-blend")
+async def backtest_bayesian_blend(
+    peso_vila: float = Query(0.7, ge=0.0, le=1.0),
+):
+    """Onda 125: Bayesian blend Vila com base rate do dataset.
+    Aplica log-odds weighted mean. Retorna probs_original/blend + scores."""
+    from engine.bayesian_blend import blend_vetor, base_rate_dataset
+    from engine.calibracao_platt import brier as _brier
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    if len(probs) < 2:
+        return {"erro": "n<2"}
+    blend = blend_vetor(probs, ys, peso_vila=peso_vila)
+    return {
+        "n": len(probs),
+        "peso_vila": peso_vila,
+        "base_rate_final": base_rate_dataset(ys),
+        "brier_vila": _brier(probs, ys),
+        "brier_blend": _brier(blend, ys),
+        "melhoria_brier": _brier(probs, ys) - _brier(blend, ys),
+        "probs_blend": blend,
+    }
+
+
 @router.get("/backtest/baselines")
 async def backtest_baselines():
     """Onda 118: compara Vila vs baselines simples (base_rate, markov, exp_smooth, random)."""
