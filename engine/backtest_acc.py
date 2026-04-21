@@ -55,6 +55,9 @@ def rodar_backtest_acc(
     judge_threshold: float = 0.4,
     # Onda 141: auto-select panel per-dataset se persona_ids None
     auto_panel: bool = False,
+    # Onda 143: prob floor/ceiling clip (hedge contra over-confident wrong)
+    prob_floor: float = 0.0,
+    prob_ceiling: float = 1.0,
 ) -> dict:
     """
     Full-stack accuracy backtest.
@@ -185,6 +188,13 @@ def rodar_backtest_acc(
                 )
             p_blend = bayesian_blend(p_vila_cal, br, peso_vila=peso_usado)
 
+        # Onda 143: aplicar floor/ceiling em prob Vila e blend (hedge)
+        if prob_floor > 0 or prob_ceiling < 1:
+            if p_vila_cal is not None:
+                p_vila_cal = max(prob_floor, min(prob_ceiling, p_vila_cal))
+            if p_blend is not None:
+                p_blend = max(prob_floor, min(prob_ceiling, p_blend))
+
         p_prior = ev["probabilidade_prior"]
         y = ev["outcome_real"]
 
@@ -231,6 +241,8 @@ def rodar_backtest_acc(
             "usar_bayesian_blend": usar_bayesian_blend,
             "peso_vila": peso_vila,
             "usar_peso_adaptativo": usar_peso_adaptativo,
+            "prob_floor": prob_floor,
+            "prob_ceiling": prob_ceiling,
             "aplicar_platt": aplicar_platt,
         },
         "accuracy_vila_calibrada": acertos_vila / n_total if n_total else 0,
