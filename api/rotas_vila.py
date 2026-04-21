@@ -520,6 +520,8 @@ class BacktestAccRequest(BaseModel):
     aplicar_platt: bool = True
     pesos_skill_ranking: bool = False  # se True, usa persona-skill ranking
     usar_conditional_personas: bool = False  # Onda 127: panel ideal por dataset categoria
+    usar_self_consistency: bool = False  # Onda 128+129: multi-sample median
+    n_samples_sc: int = 3
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -591,6 +593,8 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 usar_bayesian_blend=req.usar_bayesian_blend,
                 peso_vila=req.peso_vila,
                 aplicar_platt=req.aplicar_platt,
+                usar_self_consistency=req.usar_self_consistency,
+                n_samples_sc=req.n_samples_sc,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds
