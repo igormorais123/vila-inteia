@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from engine.bayesian_blend import (
     base_rate_dataset, bayesian_blend, blend_vetor, peso_adaptativo,
-    _logit, _sigmoid,
+    bayesian_blend_ensemble, _logit, _sigmoid,
 )
 
 ok, fail = 0, 0
@@ -96,6 +96,22 @@ def t_peso_adaptativo_dispersao_baixa_sem_efeito():
     teste("disp 0.08 sem efeito", abs(w_sem - w_com) < 1e-6)
 
 
+def t_blend_ensemble_median():
+    # Com pesos [0.6, 0.7, 0.8], mediana deve estar entre min/max do blend
+    p = bayesian_blend_ensemble(0.9, 0.3, pesos=(0.6, 0.7, 0.8))
+    minimo = min(bayesian_blend(0.9, 0.3, w) for w in (0.6, 0.7, 0.8))
+    maximo = max(bayesian_blend(0.9, 0.3, w) for w in (0.6, 0.7, 0.8))
+    teste(f"ensemble median em range [{minimo:.3f}, {maximo:.3f}]",
+          minimo <= p <= maximo)
+
+
+def t_blend_ensemble_peso_unico_equiv_blend():
+    # pesos=[0.7] deve igualar bayesian_blend com 0.7
+    p_ens = bayesian_blend_ensemble(0.8, 0.3, pesos=(0.7,))
+    p_b = bayesian_blend(0.8, 0.3, peso_vila=0.7)
+    teste("peso único = bayesian_blend", abs(p_ens - p_b) < 1e-9)
+
+
 def t_peso_adaptativo_dispersao_nao_viola_range():
     # Mesmo com dispersão máxima + skill ruim, peso >= 0.4
     w = peso_adaptativo(0.5, skill_historico=-0.3, dispersao=0.5)
@@ -114,7 +130,9 @@ def main():
                t_peso_adaptativo_range,
                t_peso_adaptativo_dispersao_alta_penaliza,
                t_peso_adaptativo_dispersao_baixa_sem_efeito,
-               t_peso_adaptativo_dispersao_nao_viola_range]:
+               t_peso_adaptativo_dispersao_nao_viola_range,
+               t_blend_ensemble_median,
+               t_blend_ensemble_peso_unico_equiv_blend]:
         try: fn()
         except Exception as e:
             global fail; fail += 1
