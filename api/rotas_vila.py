@@ -565,7 +565,22 @@ async def backtest_rodar(req: BacktestRequest, _=Depends(auth_e_rate)):
     saida["completado_em"] = int(_t.time())
     global _ULTIMO_BACKTEST
     _ULTIMO_BACKTEST = saida
+
+    # Onda 106: persist history
+    try:
+        from engine.backtest_history import salvar as _salvar_bt
+        saida["persistencia"] = _salvar_bt(saida)
+    except Exception as e:
+        saida["persistencia_erro"] = str(e)
+
     return saida
+
+
+@router.get("/backtest/historico")
+async def backtest_historico(limite: int = Query(20, ge=1, le=100)):
+    """Onda 106: histórico de backtests passados (Supabase ou local)."""
+    from engine.backtest_history import historico
+    return {"registros": historico(limite=limite)}
 
 
 @router.get("/backtest/ultimo")
