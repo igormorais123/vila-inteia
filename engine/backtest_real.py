@@ -203,6 +203,7 @@ def consultar_panel(
     pesos_persona: dict[str, float] | None = None,
     chain_of_thought: bool = True,
     outcome_framing: str | None = None,
+    aplicar_calib_por_persona: bool = False,
 ) -> dict:
     """
     Consulta panel estratégico sobre probabilidade de outcome=1.
@@ -252,13 +253,24 @@ def consultar_panel(
     for r in resp.get("respostas", []):
         texto = r.get("resposta") or ""
         p = extrair_probabilidade(texto)
-        per_persona.append({
+        p_cal = p
+        # Onda 156: aplica calibracao per-persona ANTES da agregação
+        if aplicar_calib_por_persona and p is not None:
+            try:
+                from engine.calibracao_por_persona import aplicar_persona
+                p_cal = aplicar_persona(r.get("persona_id"), p)
+            except Exception:
+                pass
+        entry = {
             "persona_id": r.get("persona_id"),
             "persona_nome": r.get("persona_nome"),
             "resposta": texto,
-            "prob_extraida": p,
+            "prob_extraida": p_cal,
             "erro": r.get("erro"),
-        })
+        }
+        if p_cal != p:
+            entry["prob_extraida_raw"] = p
+        per_persona.append(entry)
     agregado = _agregar_ponderado(per_persona, pesos_persona)
     n_validas = sum(1 for p in per_persona if p.get("prob_extraida") is not None)
     return {
