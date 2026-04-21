@@ -129,15 +129,19 @@ def rodar_experimento(
     persona_ids: list[str],
     llm_fn=None,
     max_eventos_por_dataset: int = 3,
+    metric: str = "brier",  # Onda 174: "brier" (min) ou "accuracy" (max via 1-acc)
 ) -> tuple[float | None, int]:
     """
     Executa rodar_backtest_acc em N datasets com config dada.
-    Retorna (brier_blend_avg_ponderado, n_eventos_total).
+
+    Onda 174: metric='accuracy' retorna 1-accuracy (pra manter lower=better
+    em loop_autoresearch que sempre procura minimizar).
     """
     from engine.backtest_acc import rodar_backtest_acc
 
-    briers = []
+    valores = []
     n_eventos_total = 0
+    acertos_total = 0
     for ds_path in datasets:
         try:
             r = rodar_backtest_acc(
@@ -148,19 +152,28 @@ def rodar_experimento(
                 max_eventos=max_eventos_por_dataset,
                 **{k: v for k, v in config.items() if k != "max_eventos"},
             )
-            b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
             n = r.get("n_eventos", 0)
-            if b is not None and n > 0:
-                briers.append((b, n))
-                n_eventos_total += n
+            if metric == "accuracy":
+                acc = r.get("accuracy_blend_final") or r.get("accuracy_vila_calibrada")
+                if acc is not None and n > 0:
+                    acertos_total += int(acc * n)
+                    n_eventos_total += n
+                    valores.append((1 - acc, n))
+            else:
+                b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
+                if b is not None and n > 0:
+                    valores.append((b, n))
+                    n_eventos_total += n
         except Exception as e:
             logger.debug(f"rodar_experimento {ds_path} falhou: {e}")
 
-    if not briers:
+    if not valores:
         return None, 0
-    w_total = sum(n for _, n in briers)
-    brier_avg = sum(b * n for b, n in briers) / w_total if w_total else None
-    return brier_avg, n_eventos_total
+    w_total = sum(n for _, n in valores)
+    metric_avg = sum(v * n for v, n in valores) / w_total if w_total else None
+    if metric == "accuracy":
+        logger.info(f"accuracy={acertos_total}/{n_eventos_total} = {1-metric_avg:.3f}")
+    return metric_avg, n_eventos_total
 
 
 def loop_autoresearch(
@@ -171,6 +184,7 @@ def loop_autoresearch(
     llm_fn=None,
     max_iteracoes: int = 10,
     max_sem_melhoria: int = 5,
+    metric: str = "brier",
     seed: int | None = None,
     trace_path: str | Path = "data/autoresearch_trace.jsonl",
     max_eventos_por_dataset: int = 3,
@@ -193,6 +207,7 @@ def loop_autoresearch(
     b_base, n_base = rodar_experimento(
         baseline_config, datasets, sim, persona_ids, llm_fn,
         max_eventos_por_dataset=max_eventos_por_dataset,
+        metric=metric,
     )
     base_hash = _hash_config(baseline_config)
     base_exp = Experiment(
@@ -214,7 +229,9 @@ def loop_autoresearch(
         f.write(json.dumps(base_exp.to_dict(), default=str) + "\n")
 
     if verbose:
-        print(f"[autoresearch] baseline brier={b_base} n={n_base}")
+        metric_label = "accuracy" if metric == "accuracy" else "brier"
+        display = (1 - b_base) if (metric == "accuracy" and b_base is not None) else b_base
+        print(f"[autoresearch] baseline {metric_label}={display} n={n_base}")
 
     for i in range(1, max_iteracoes + 1):
         novo_config, delta = propor_variacao(best.config, historia, rng)
@@ -231,6 +248,7 @@ def loop_autoresearch(
         b_novo, n_novo = rodar_experimento(
             novo_config, datasets, sim, persona_ids, llm_fn,
             max_eventos_por_dataset=max_eventos_por_dataset,
+            metric=metric,
         )
         kept = b_novo is not None and (best.metric is None or b_novo < best.metric)
         exp = Experiment(
