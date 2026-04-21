@@ -127,6 +127,7 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <div class="kpi"><span class="kpi-l">comun</span><span class="kpi-v" id="k_comun">—</span></div>
     <div class="kpi"><span class="kpi-l">Q</span><span class="kpi-v" id="k_q">—</span></div>
     <div class="spacer"></div>
+    <span id="calib_status" class="status" title="Calibração Platt Onda 97">cal: —</span>
     <span id="status" class="status">—</span>
     <a class="btn-sec btn" href="/api/v1/vila/snapshot" download style="text-decoration:none">⬇ Snapshot</a>
     <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
@@ -233,15 +234,26 @@ async function fetchJSON(path){
 function escape(s){ return String(s).replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
 
 async function atualizarKPI(){
-  const [e, c] = await Promise.all([
+  const [e, c, cal] = await Promise.all([
     fetchJSON('/api/v1/vila/estado'),
     fetchJSON('/api/v1/vila/conversas?limite=1'),
+    fetchJSON('/api/v1/vila/calibracao/status'),
   ]);
   if(e){
     document.getElementById('k_step').textContent = e.step ?? '—';
     document.getElementById('k_agentes').textContent = e.total_agentes ?? '—';
   }
   if(c) document.getElementById('k_conv').textContent = c.total ?? '—';
+  const cs = document.getElementById('calib_status');
+  if(cal && cal.ativa){
+    cs.textContent = `cal: a=${cal.a.toFixed(2)} b=${cal.b.toFixed(2)} n=${cal.n_amostras}`;
+    cs.className = 'status ok';
+    cs.title = `Platt ativa. Fonte: ${cal.fonte || '?'}. Fitado em ${cal.fitado_em || '?'}`;
+  } else {
+    cs.textContent = 'cal: off';
+    cs.className = 'status';
+    cs.title = 'Sem calibração Platt. Rode scripts/rodar_backtest_real.py pra fitar.';
+  }
 }
 
 async function atualizarPersonas(){
