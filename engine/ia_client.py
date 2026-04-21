@@ -291,21 +291,34 @@ def chamar_llm(
     global _circuit_falhas, _circuit_aberto_ate
     circuito_ok = time.time() > _circuit_aberto_ate
 
+    # Onda 91: multi-model fallback chain (ex: rate_limit em llama-4-scout → llama-3.3-70b → gpt-oss-120b)
+    # Env: GROQ_MODEL_CHAIN = "modelo1,modelo2,modelo3" (testa em ordem)
+    cadeia = [modelo_real]
+    if _provider == "groq":
+        chain_env = os.getenv("GROQ_MODEL_CHAIN", "")
+        if chain_env:
+            for m in chain_env.split(","):
+                m = m.strip()
+                if m and m not in cadeia:
+                    cadeia.append(m)
+
     # OmniRoute, Groq ou Gemini (todos via OpenAI-compatible)
     if c and _provider in ("omniroute", "groq", "gemini") and circuito_ok:
-        resultado = _chamar_openai(c, modelo_real, msgs_user, system_prompt, max_tokens, temperatura)
-        if resultado:
-            _throttle.registrar()
-            _circuit_falhas = 0  # Reset
-            # Onda 64: budget + cache put
-            _registrar_uso(modelo_real, msgs_user, system_prompt, resultado)
-            if chave_cache:
-                try:
-                    from engine.ia_cache import CACHE_GLOBAL
-                    CACHE_GLOBAL.put(chave_cache, resultado)
-                except Exception:
-                    pass
-            return resultado
+        for i, modelo_tentativa in enumerate(cadeia):
+            resultado = _chamar_openai(c, modelo_tentativa, msgs_user, system_prompt, max_tokens, temperatura)
+            if resultado:
+                if i > 0:
+                    logger.info(f"ia_client: fallback OK após {i} tentativas, modelo={modelo_tentativa}")
+                _throttle.registrar()
+                _circuit_falhas = 0
+                _registrar_uso(modelo_tentativa, msgs_user, system_prompt, resultado)
+                if chave_cache:
+                    try:
+                        from engine.ia_cache import CACHE_GLOBAL
+                        CACHE_GLOBAL.put(chave_cache, resultado)
+                    except Exception:
+                        pass
+                return resultado
         _circuit_falhas += 1
         if _circuit_falhas >= _CIRCUIT_THRESHOLD:
             _circuit_aberto_ate = time.time() + _CIRCUIT_COOLDOWN
