@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Super Intelligence (Onda 81)</title>
+  <style>
+    :root {
+      --bg: #0d0d10; --surf: #17171b; --surf2: #1d1d22;
+      --border: #2a2a30; --amber: #d69e2e; --muted: #7c7c82;
+      --text: #e6e6e8; --text2: #a9a9ae; --ok: #10b981; --warn: #f59e0b; --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 14px/1.5 'SF Mono', 'Menlo', monospace; background: var(--bg); color: var(--text); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 4px 0; font-size: 22px; color: var(--amber); }
+    .sub { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+    .controls { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    select, input, button {
+      background: var(--surf); color: var(--text); border: 1px solid var(--border);
+      padding: 8px 12px; border-radius: 6px; font: inherit;
+    }
+    button { cursor: pointer; background: var(--amber); color: #000; border-color: var(--amber); font-weight: 600; }
+    button:hover { opacity: 0.85; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--surf); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .card h2 { margin: 0 0 8px 0; font-size: 14px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.5pt; }
+    .kpi { font-size: 28px; font-weight: 600; color: var(--text); }
+    .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4pt; }
+    .kpi-row { display: flex; gap: 24px; margin-top: 8px; }
+    .bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; font-size: 12px; }
+    .bar-label { width: 180px; color: var(--text2); }
+    .bar-fill { height: 8px; background: var(--amber); border-radius: 2px; min-width: 2px; }
+    .bar-value { color: var(--muted); font-variant-numeric: tabular-nums; width: 60px; text-align: right; }
+    .briefing { background: var(--surf2); padding: 16px; border-radius: 6px; white-space: pre-wrap;
+                 font: 13px/1.6 ui-sans-serif, system-ui; color: var(--text); border-left: 3px solid var(--amber); }
+    .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+    .status { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px;
+              background: var(--surf2); border: 1px solid var(--border); }
+    .full { grid-column: 1/-1; }
+    details { margin-top: 8px; cursor: pointer; }
+    summary { color: var(--muted); font-size: 12px; }
+    pre { background: var(--bg); padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 11px; color: var(--text2); }
+    .empty { color: var(--muted); font-style: italic; }
+    .loading { color: var(--amber); animation: pulse 1.2s infinite; }
+    @keyframes pulse { 50% { opacity: 0.5; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vila INTEIA — Super Intelligence</h1>
+    <div class="sub">Onda 81 · Forecast Markov + Multi-CF Sweep + Briefing LLM unificado</div>
+
+    <div class="controls">
+      <label>Horizonte:
+        <select id="horizonte">
+          <option value="5">5 steps</option>
+          <option value="10" selected>10 steps</option>
+          <option value="20">20 steps</option>
+          <option value="50">50 steps</option>
+        </select>
+      </label>
+      <label>Outcome:
+        <select id="outcome">
+          <option value="equilibrio" selected>equilibrio</option>
+          <option value="expansao">expansao</option>
+          <option value="consenso_fragil">consenso_fragil</option>
+          <option value="renovacao_constituinte">renovacao_constituinte</option>
+          <option value="polarizacao">polarizacao</option>
+          <option value="crise_economica">crise_economica</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="llm_on" checked> LLM narrativa</label>
+      <button onclick="atualizar()">Atualizar agora</button>
+      <label><input type="checkbox" id="auto" checked> auto-refresh 30s</label>
+      <span id="status" class="status">—</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Estado atual + forecast</h2>
+        <div class="kpi-row">
+          <div><div class="kpi-label">Estado</div><div class="kpi" id="estado_atual">—</div></div>
+          <div><div class="kpi-label">Steps obs</div><div class="kpi" id="n_steps">—</div></div>
+          <div><div class="kpi-label">Mules</div><div class="kpi" id="n_mules">—</div></div>
+        </div>
+        <div id="top_estados" style="margin-top:16px"></div>
+        <div class="kpi-label" style="margin-top:12px">Entropia</div>
+        <div id="entropia" style="font-size:13px;color:var(--text2)">—</div>
+      </div>
+
+      <div class="card">
+        <h2>Recomendação Helena/Efesto</h2>
+        <div><span class="kpi-label">Outcome desejado</span></div>
+        <div class="kpi" id="outcome_kpi">—</div>
+        <div class="kpi-label" style="margin-top:12px">Melhor intervenção</div>
+        <div id="melhor" style="font-size:16px;color:var(--amber);margin-top:4px">—</div>
+        <div class="kpi-label" style="margin-top:12px">Top-5 ranking</div>
+        <div id="ranking" style="margin-top:4px"></div>
+      </div>
+
+      <div class="card full">
+        <h2>Briefing executivo (LLM)</h2>
+        <div class="briefing" id="briefing">
+          <span class="empty">Clique "Atualizar" para gerar briefing.</span>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Evidências LLM-rich</h2>
+        <div id="evidencias"><span class="empty">—</span></div>
+      </div>
+
+      <details class="full">
+        <summary>Raw payload JSON (debug)</summary>
+        <pre id="raw"></pre>
+      </details>
+    </div>
+  </div>
+
+<script>
+let autoTimer = null;
+
+function escape(s) { return String(s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+
+function render(d) {
+  const fc = d.forecast || {};
+  const rec = d.recomendacao || {};
+
+  document.getElementById('estado_atual').textContent = fc.estado_atual || '—';
+  document.getElementById('n_steps').textContent = fc.n_steps_observados ?? '—';
+  document.getElementById('n_mules').textContent = fc.n_mules_recentes ?? '—';
+
+  const top = fc.top_estados_horizonte || [];
+  document.getElementById('top_estados').innerHTML = top.map(t => {
+    const pct = (t.prob * 100).toFixed(1);
+    return `<div class="bar">
+      <div class="bar-label">${escape(t.estado)}</div>
+      <div class="bar-fill" style="width:${pct*2}px"></div>
+      <div class="bar-value">${pct}%</div>
+    </div>`;
+  }).join('');
+
+  const conv = fc.convergindo;
+  document.getElementById('entropia').innerHTML =
+    `${(fc.entropia_inicial ?? 0).toFixed(2)} → ${(fc.entropia_final ?? 0).toFixed(2)} bits ` +
+    `<span class="${conv ? 'ok' : 'warn'}">(${conv ? 'convergindo' : 'divergindo'})</span>`;
+
+  document.getElementById('outcome_kpi').textContent = rec.outcome_desejado || '—';
+  const melhor = rec.melhor_intervencao || {};
+  document.getElementById('melhor').textContent =
+    melhor.estado ? `forçar '${melhor.estado}' → ${(melhor.prob_outcome*100).toFixed(1)}% P(outcome)` : '—';
+
+  const rank = (rec.ranking || []).slice(0, 5);
+  document.getElementById('ranking').innerHTML = rank.map(r => {
+    const pct = (r.prob_outcome * 100).toFixed(1);
+    return `<div class="bar">
+      <div class="bar-label">${escape(r.estado)}</div>
+      <div class="bar-fill" style="width:${pct*2}px"></div>
+      <div class="bar-value">${pct}%</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('briefing').textContent = d.briefing_executivo ||
+    '(LLM não gerou briefing — quota/erro)';
+
+  const evid = fc.evidencias_llm || [];
+  document.getElementById('evidencias').innerHTML = evid.length === 0
+    ? '<span class="empty">Sem conversas LLM-rich ainda — sim precisa acumular steps.</span>'
+    : evid.map(e => `<div style="margin-bottom:12px;padding:8px;background:var(--surf2);border-radius:4px">
+        <div style="color:var(--amber);font-weight:600">${escape(e.parceiro)} · ${escape(e.tema)} · ${e.n_turnos}t</div>
+        <div style="color:var(--text2);font-size:12px;margin-top:4px">${escape(e.primeiro_turno)}</div>
+      </div>`).join('');
+
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+
+async function atualizar() {
+  const st = document.getElementById('status');
+  st.textContent = 'carregando...';
+  st.className = 'status loading';
+  const h = document.getElementById('horizonte').value;
+  const o = document.getElementById('outcome').value;
+  const llm = document.getElementById('llm_on').checked;
+  try {
+    const r = await fetch(`/api/v1/vila/super-intelligence?horizonte=${h}&outcome_desejado=${o}&com_sintese_llm=${llm}`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d = await r.json();
+    render(d);
+    st.textContent = `ok · ${new Date().toLocaleTimeString()}`;
+    st.className = 'status';
+  } catch (e) {
+    st.textContent = `erro: ${e.message}`;
+    st.className = 'status bad';
+  }
+}
+
+function toggleAuto() {
+  if (document.getElementById('auto').checked) {
+    atualizar();
+    autoTimer = setInterval(atualizar, 30000);
+  } else {
+    clearInterval(autoTimer); autoTimer = null;
+  }
+}
+
+document.getElementById('auto').addEventListener('change', toggleAuto);
+toggleAuto();
+</script>
+</body>
+</html>
