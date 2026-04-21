@@ -522,6 +522,9 @@ class BacktestAccRequest(BaseModel):
     usar_conditional_personas: bool = False  # Onda 127: panel ideal por dataset categoria
     usar_self_consistency: bool = False  # Onda 128+129: multi-sample median
     n_samples_sc: int = 3
+    usar_adversarial: bool = False  # Onda 130: devil's advocate debias
+    usar_judge_filter: bool = False  # Onda 131: LLM judge filtra low-quality
+    judge_threshold: float = 0.4
 
 
 _ULTIMO_BACKTEST: dict = {}
@@ -595,6 +598,9 @@ async def backtest_rodar_acc(req: BacktestAccRequest, _=Depends(auth_e_rate)):
                 aplicar_platt=req.aplicar_platt,
                 usar_self_consistency=req.usar_self_consistency,
                 n_samples_sc=req.n_samples_sc,
+                usar_adversarial=req.usar_adversarial,
+                usar_judge_filter=req.usar_judge_filter,
+                judge_threshold=req.judge_threshold,
             )
             if categoria_ds:
                 r["categoria_detectada"] = categoria_ds
