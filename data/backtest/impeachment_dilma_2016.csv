@@ -1,11 +1,11 @@
-evento_id,data,contexto,outcome_real,probabilidade_prior
-imp01,2015-12-02,"Cunha aceita pedido impeachment — abertura do processo",1,0.55
-imp02,2016-03-13,"Manifestações anti-governo com 3 milhões de pessoas — apoio massivo oposição",1,0.70
-imp03,2016-03-17,"Nomeação Lula ministro bloqueada por Gilmar Mendes — contestação",0,0.50
-imp04,2016-04-17,"Câmara aprova impeachment 367x137 — vitória oposição",1,0.75
-imp05,2016-05-12,"Senado afasta Dilma 55x22 — rejeição final do mandato",1,0.80
-imp06,2016-06-05,"Janot denuncia 8 parlamentares da base aliada — escândalo Lava Jato",1,0.65
-imp07,2016-07-01,"PMDB Temer articula ampla coalizão — campanha robusta de apoio",1,0.60
-imp08,2016-08-31,"Senado confirma impeachment 61x20 — Dilma cassada definitivamente",1,0.85
-imp09,2016-09-15,"Temer enfrenta crise aprovação 14% — rejeição popular imediata",1,0.70
-imp10,2016-12-20,"Reforma trabalhista MPs aprovada apesar de forte contestação sindical",1,0.55
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+imp01,2015-12-02,"Cunha aceita pedido impeachment — abertura do processo",1,0.55,"O processo de impeachment será aberto oficialmente?"
+imp02,2016-03-13,"Manifestações anti-governo com 3 milhões de pessoas — apoio massivo oposição",1,0.70,"A pressão pública levará à aceleração do impeachment?"
+imp03,2016-03-17,"Nomeação Lula ministro bloqueada por Gilmar Mendes — contestação",0,0.50,"Lula assumirá efetivamente o cargo de ministro-chefe da Casa Civil?"
+imp04,2016-04-17,"Câmara aprova impeachment 367x137 — vitória oposição",1,0.75,"A Câmara aprovará a abertura do impeachment?"
+imp05,2016-05-12,"Senado afasta Dilma 55x22 — rejeição final do mandato",1,0.80,"Dilma será afastada pelo Senado?"
+imp06,2016-06-05,"Janot denuncia 8 parlamentares da base aliada — escândalo Lava Jato",1,0.65,"Janot denunciará parlamentares da base?"
+imp07,2016-07-01,"PMDB Temer articula ampla coalizão — campanha robusta de apoio",1,0.60,"Temer conseguirá articular coalizão ampla?"
+imp08,2016-08-31,"Senado confirma impeachment 61x20 — Dilma cassada definitivamente",1,0.85,"Dilma sofrerá impeachment definitivo?"
+imp09,2016-09-15,"Temer enfrenta crise aprovação 14% — rejeição popular imediata",1,0.70,"Temer sofrerá forte rejeição popular nos primeiros dias?"
+imp10,2016-12-20,"Reforma trabalhista MPs aprovada apesar de forte contestação sindical",1,0.55,"A reforma trabalhista será aprovada apesar de oposição sindical?"
