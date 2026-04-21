@@ -273,6 +273,24 @@ async def listar_sinteses():
     }
 
 
+@router.get("/forecast-narrativo")
+async def forecast_narrativo(
+    horizonte: int = Query(10, ge=1, le=100),
+    com_narrativa: bool = Query(True),
+):
+    """
+    Onda 78: forecast Markov + evidências LLM + narrativa PT-BR opcional.
+    Combina trajetória psico-histórica observada com projeção e síntese narrativa.
+    """
+    from engine.forecast_narrativo import gerar_forecast
+    sim = obter_simulacao()
+    return gerar_forecast(
+        conversas_recentes=getattr(sim, "conversas_recentes", []),
+        horizonte=horizonte,
+        com_narrativa=com_narrativa,
+    )
+
+
 @router.get("/locais")
 async def listar_locais():
     """Lista todos os locais do campus."""
