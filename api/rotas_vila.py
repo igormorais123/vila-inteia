@@ -643,6 +643,24 @@ async def backtest_brier_decomp(n_bins: int = Query(10, ge=2, le=30)):
     return decompor(probs, ys, n_bins=n_bins)
 
 
+@router.get("/backtest/cv-holdout")
+async def backtest_cv_holdout(
+    test_frac: float = Query(0.2, ge=0.1, le=0.5),
+    n_repeats: int = Query(10, ge=1, le=50),
+):
+    """Onda 114: repeated hold-out CV pra Platt. Train/test split.
+    Retorna brier_train/test avg + overfit_gap."""
+    from engine.cv_holdout import cv_holdout_platt
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    return cv_holdout_platt(probs, ys, test_frac=test_frac, n_repeats=n_repeats)
+
+
 @router.get("/backtest/platt-vs-isotonic")
 async def backtest_platt_vs_isotonic():
     """Onda 100: compara Platt vs isotonic no último backtest."""
