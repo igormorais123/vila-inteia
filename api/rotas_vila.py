@@ -566,6 +566,20 @@ async def backtest_bootstrap_ci(n_boot: int = Query(1000, ge=100, le=10000)):
     }
 
 
+@router.get("/backtest/brier-decomp")
+async def backtest_brier_decomp(n_bins: int = Query(10, ge=2, le=30)):
+    """Onda 102: Murphy BS = Reliability − Resolution + Uncertainty decomposition."""
+    from engine.brier_decomp import decompor
+    if not _ULTIMO_BACKTEST:
+        return {"vazio": True}
+    probs, ys = [], []
+    for ds in _ULTIMO_BACKTEST.get("datasets", []):
+        for e in ds.get("eventos", []):
+            if e.get("prob_vila") is not None:
+                probs.append(e["prob_vila"]); ys.append(e["outcome_real"])
+    return decompor(probs, ys, n_bins=n_bins)
+
+
 @router.get("/backtest/platt-vs-isotonic")
 async def backtest_platt_vs_isotonic():
     """Onda 100: compara Platt vs isotonic no último backtest."""
