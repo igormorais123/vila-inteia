@@ -42,6 +42,14 @@ def main():
     parser.add_argument("--personas", default="CL001,CL002,CL007")
     parser.add_argument("--max-sem-melhoria", type=int, default=5)
     parser.add_argument("--no-groq", action="store_true", help="desabilita Groq (força fallback)")
+    parser.add_argument("--tournament", type=int, default=0,
+                        help="run N seeds tournament (0 = single)")
+    parser.add_argument("--llm-guided", action="store_true",
+                        help="usa LLM pra propor variações (Karpathy style)")
+    parser.add_argument("--update-program", action="store_true",
+                        help="append resultados ao docs/AUTORESEARCH_PROGRAM.md")
+    parser.add_argument("--git-commit", action="store_true",
+                        help="commit git per iter keep")
     args = parser.parse_args()
 
     _load_env()
@@ -53,6 +61,17 @@ def main():
     from engine.persona import Persona
     from engine.persona_chat import resetar_historico
     from engine.autoresearch_accuracy import loop_autoresearch
+    from engine.autoresearch_karpathy import (
+        loop_tournament, atualizar_program_md, git_commit_experiment,
+    )
+    if args.llm_guided:
+        # Monkey patch propor_variacao global pra usar LLM-guided
+        from engine import autoresearch_accuracy as _aa
+        from engine.autoresearch_karpathy import proposal_llm_guided
+        _orig_propor = _aa.propor_variacao
+        def _wrapped(cfg, hist, rng=None):
+            return proposal_llm_guided(cfg, hist, llm_fn=lambda: None)
+        _aa.propor_variacao = _wrapped
 
     banco_path = Path(__file__).resolve().parent.parent / "data" / "banco-consultores-lendarios.json"
     banco = json.load(open(banco_path))
@@ -97,17 +116,65 @@ def main():
     print(f"[autoresearch] baseline: {json.dumps(baseline)}")
     print()
 
-    resultado = loop_autoresearch(
-        baseline_config=baseline,
-        datasets=dataset_paths,
-        sim=sim,
-        persona_ids=persona_ids,
-        max_iteracoes=args.iter,
-        max_sem_melhoria=args.max_sem_melhoria,
-        seed=args.seed,
-        trace_path=args.trace,
-        max_eventos_por_dataset=args.max_eventos,
-    )
+    if args.tournament > 0:
+        # Tournament mode
+        resultado = loop_tournament(
+            baseline_config=baseline,
+            datasets=dataset_paths,
+            sim=sim,
+            persona_ids=persona_ids,
+            n_seeds=args.tournament,
+            max_iteracoes=args.iter,
+            max_sem_melhoria=args.max_sem_melhoria,
+            max_eventos_por_dataset=args.max_eventos,
+            trace_dir=str(Path(args.trace).parent / "tournament"),
+            verbose=True,
+        )
+        # Tournament returns different schema; compat
+        resultado = {
+            "n_iteracoes": args.iter * args.tournament,
+            "baseline_brier": None,
+            "best_brier": resultado.get("campeao_brier"),
+            "best_config": resultado.get("campeao_config", {}),
+            "best_iteracao": resultado.get("campeao_seed"),
+            "n_kept": None,
+            "n_reverted": None,
+            "tournament": resultado,
+        }
+    else:
+        resultado = loop_autoresearch(
+            baseline_config=baseline,
+            datasets=dataset_paths,
+            sim=sim,
+            persona_ids=persona_ids,
+            max_iteracoes=args.iter,
+            max_sem_melhoria=args.max_sem_melhoria,
+            seed=args.seed,
+            trace_path=args.trace,
+            max_eventos_por_dataset=args.max_eventos,
+        )
+
+    if args.update_program:
+        try:
+            atualizar_program_md(resultado)
+            print("[autoresearch] docs/AUTORESEARCH_PROGRAM.md atualizado")
+        except Exception as e:
+            print(f"[autoresearch] update_program falhou: {e}")
+
+    if args.git_commit and resultado.get("best_brier") is not None:
+        from engine.autoresearch_accuracy import Experiment, _hash_config
+        exp = Experiment(
+            iteracao=resultado.get("best_iteracao", 0),
+            config=resultado.get("best_config", {}),
+            config_hash=_hash_config(resultado.get("best_config", {})),
+            parent_hash=None,
+            proposal_delta={},
+            metric=resultado.get("best_brier"),
+            kept=True,
+        )
+        sha = git_commit_experiment(exp)
+        if sha:
+            print(f"[autoresearch] git commit {sha}")
 
     print("\n=== AutoResearch Resumo ===")
     print(f"N iterações: {resultado['n_iteracoes']}")
