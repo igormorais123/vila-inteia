@@ -122,6 +122,23 @@ def propor_variacao(
     return config_atual, {}
 
 
+# Onda 191: model pool rotation per iter (evita TPD burn single model)
+MODEL_POOL_DEFAULT = [
+    "meta-llama/llama-4-scout-17b-16e-instruct",  # 500k TPD
+    "openai/gpt-oss-120b",                          # 200k TPD
+    "llama-3.3-70b-versatile",                      # 100k TPD
+    "openai/gpt-oss-20b",                           # 500k TPD
+    "llama-3.1-8b-instant",                         # 500k TPD
+]
+
+
+def _set_active_model(modelo_id: str) -> None:
+    """Onda 191: rotate active Groq model via env."""
+    import os as _os
+    _os.environ["GROQ_MODEL_RAPIDO"] = modelo_id
+    _os.environ["GROQ_MODEL_CHAIN"] = modelo_id
+
+
 def rodar_experimento(
     config: dict[str, Any],
     datasets: list[str],
@@ -129,15 +146,28 @@ def rodar_experimento(
     persona_ids: list[str],
     llm_fn=None,
     max_eventos_por_dataset: int = 3,
+    detect_llm_offline: bool = True,
+    iter_idx: int = 0,
+    model_pool: list[str] | None = None,
 ) -> tuple[float | None, int]:
     """
     Executa rodar_backtest_acc em N datasets com config dada.
-    Retorna (brier_blend_avg_ponderado, n_eventos_total).
+
+    Onda 184: detect_llm_offline + skip honest.
+    Onda 191: model_pool rotates active model per iter (avoid TPD burn).
     """
     from engine.backtest_acc import rodar_backtest_acc
 
+    # Onda 191: rotate model per iter
+    if model_pool:
+        modelo_atual = model_pool[iter_idx % len(model_pool)]
+        _set_active_model(modelo_atual)
+        logger.info(f"iter {iter_idx} usa model {modelo_atual}")
+
     briers = []
     n_eventos_total = 0
+    n_eventos_com_prob_none = 0
+    n_eventos_total_attempted = 0
     for ds_path in datasets:
         try:
             r = rodar_backtest_acc(
@@ -148,13 +178,22 @@ def rodar_experimento(
                 max_eventos=max_eventos_por_dataset,
                 **{k: v for k, v in config.items() if k != "max_eventos"},
             )
-            b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
             n = r.get("n_eventos", 0)
+            n_eventos_total_attempted += n
+            for ev in r.get("eventos", []):
+                if ev.get("prob_vila_raw") is None and ev.get("prob_vila_calibrada") is None:
+                    n_eventos_com_prob_none += 1
+            b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
             if b is not None and n > 0:
                 briers.append((b, n))
                 n_eventos_total += n
         except Exception as e:
             logger.debug(f"rodar_experimento {ds_path} falhou: {e}")
+
+    # Onda 184: LLM offline detection
+    if detect_llm_offline and n_eventos_total_attempted > 0:
+        if n_eventos_com_prob_none / n_eventos_total_attempted > 0.5:
+            return None, 0
 
     if not briers:
         return None, 0
@@ -175,9 +214,13 @@ def loop_autoresearch(
     trace_path: str | Path = "data/autoresearch_trace.jsonl",
     max_eventos_por_dataset: int = 3,
     verbose: bool = True,
+    model_pool: list[str] | None = None,
 ) -> dict:
     """
     Loop Karpathy-style: propõe variações, roda, keep/revert.
+
+    Onda 191: model_pool rotates active model per iter. Default None
+    = use env model. Pass MODEL_POOL_DEFAULT pra rotation.
 
     Stop:
       - max_iteracoes atingido
@@ -187,12 +230,13 @@ def loop_autoresearch(
     trace_path = Path(trace_path)
     trace_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Baseline
+    # Baseline (iter 0 usa model_pool[0])
     if verbose:
         print(f"[autoresearch] rodando baseline...")
     b_base, n_base = rodar_experimento(
         baseline_config, datasets, sim, persona_ids, llm_fn,
         max_eventos_por_dataset=max_eventos_por_dataset,
+        iter_idx=0, model_pool=model_pool,
     )
     base_hash = _hash_config(baseline_config)
     base_exp = Experiment(
@@ -231,6 +275,7 @@ def loop_autoresearch(
         b_novo, n_novo = rodar_experimento(
             novo_config, datasets, sim, persona_ids, llm_fn,
             max_eventos_por_dataset=max_eventos_por_dataset,
+            iter_idx=i, model_pool=model_pool,
         )
         kept = b_novo is not None and (best.metric is None or b_novo < best.metric)
         exp = Experiment(
