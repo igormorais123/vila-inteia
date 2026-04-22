@@ -277,7 +277,25 @@ def loop_autoresearch(
             max_eventos_por_dataset=max_eventos_por_dataset,
             iter_idx=i, model_pool=model_pool,
         )
-        kept = b_novo is not None and (best.metric is None or b_novo < best.metric)
+        # Onda 184: b_novo=None = LLM offline. Marcar SKIP, não REVERT.
+        if b_novo is None:
+            exp = Experiment(
+                iteracao=i, config=novo_config, config_hash=novo_hash,
+                parent_hash=best.config_hash, proposal_delta=delta,
+                metric=None, n_eventos=0, kept=False,
+                timestamp=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                erro="LLM offline (skip, no fake brier)",
+            )
+            historia.append(exp)
+            with open(trace_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps(exp.to_dict(), default=str) + "\n")
+            if verbose:
+                print(f"[autoresearch] iter {i}: SKIP (LLM offline)")
+            import time as _t
+            _t.sleep(125)
+            continue
+
+        kept = best.metric is None or b_novo < best.metric
         exp = Experiment(
             iteracao=i,
             config=novo_config,
@@ -297,13 +315,15 @@ def loop_autoresearch(
         if kept:
             delta_brier = (best.metric or 0) - (b_novo or 0)
             if verbose:
-                print(f"[autoresearch] iter {i}: KEEP brier {best.metric:.4f}→{b_novo:.4f} (Δ-{delta_brier:.4f})")
+                old_str = f"{best.metric:.4f}" if best.metric is not None else "None"
+                print(f"[autoresearch] iter {i}: KEEP brier {old_str}→{b_novo:.4f} (Δ-{delta_brier:.4f})")
             best = exp
             sem_melhoria = 0
         else:
             if verbose:
-                b_str = f"{b_novo:.4f}" if b_novo else "None"
-                print(f"[autoresearch] iter {i}: REVERT brier={b_str} (best={best.metric:.4f})")
+                b_str = f"{b_novo:.4f}" if b_novo is not None else "None"
+                best_str = f"{best.metric:.4f}" if best.metric is not None else "None"
+                print(f"[autoresearch] iter {i}: REVERT brier={b_str} (best={best_str})")
             sem_melhoria += 1
             if sem_melhoria >= max_sem_melhoria:
                 if verbose:
