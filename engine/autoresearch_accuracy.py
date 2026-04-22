@@ -129,15 +129,22 @@ def rodar_experimento(
     persona_ids: list[str],
     llm_fn=None,
     max_eventos_por_dataset: int = 3,
+    metric: str = "brier",
+    detect_llm_offline: bool = True,
 ) -> tuple[float | None, int]:
     """
     Executa rodar_backtest_acc em N datasets com config dada.
-    Retorna (brier_blend_avg_ponderado, n_eventos_total).
+
+    Onda 184: detect_llm_offline=True detecta quando ALL probs são None
+    em todos eventos (LLM offline / circuit breaker aberto). Retorna
+    (None, 0) em vez de gravar brier=1.0 fake que mata loop.
     """
     from engine.backtest_acc import rodar_backtest_acc
 
-    briers = []
+    valores = []
     n_eventos_total = 0
+    n_eventos_com_prob_none = 0
+    n_eventos_total_attempted = 0
     for ds_path in datasets:
         try:
             r = rodar_backtest_acc(
@@ -148,19 +155,37 @@ def rodar_experimento(
                 max_eventos=max_eventos_por_dataset,
                 **{k: v for k, v in config.items() if k != "max_eventos"},
             )
-            b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
             n = r.get("n_eventos", 0)
-            if b is not None and n > 0:
-                briers.append((b, n))
-                n_eventos_total += n
+            n_eventos_total_attempted += n
+            # Onda 184: count events com prob_vila None (LLM offline indicator)
+            for ev in r.get("eventos", []):
+                if ev.get("prob_vila_raw") is None and ev.get("prob_vila_calibrada") is None:
+                    n_eventos_com_prob_none += 1
+            if metric == "accuracy":
+                acc = r.get("accuracy_blend_final") or r.get("accuracy_vila_calibrada")
+                if acc is not None and n > 0:
+                    n_eventos_total += n
+                    valores.append((1 - acc, n))
+            else:
+                b = r.get("brier_blend_final_avg") or r.get("brier_vila_calibrada_avg")
+                if b is not None and n > 0:
+                    valores.append((b, n))
+                    n_eventos_total += n
         except Exception as e:
             logger.debug(f"rodar_experimento {ds_path} falhou: {e}")
 
-    if not briers:
+    # Onda 184: LLM offline detection — se >50% events sem prob, abortar iter
+    if detect_llm_offline and n_eventos_total_attempted > 0:
+        ratio_none = n_eventos_com_prob_none / n_eventos_total_attempted
+        if ratio_none > 0.5:
+            logger.info(f"LLM offline detected: {n_eventos_com_prob_none}/{n_eventos_total_attempted} events sem prob. Skip.")
+            return None, 0
+
+    if not valores:
         return None, 0
-    w_total = sum(n for _, n in briers)
-    brier_avg = sum(b * n for b, n in briers) / w_total if w_total else None
-    return brier_avg, n_eventos_total
+    w_total = sum(n for _, n in valores)
+    metric_avg = sum(v * n for v, n in valores) / w_total if w_total else None
+    return metric_avg, n_eventos_total
 
 
 def loop_autoresearch(
@@ -231,8 +256,28 @@ def loop_autoresearch(
         b_novo, n_novo = rodar_experimento(
             novo_config, datasets, sim, persona_ids, llm_fn,
             max_eventos_por_dataset=max_eventos_por_dataset,
+            metric=metric,
         )
-        kept = b_novo is not None and (best.metric is None or b_novo < best.metric)
+        # Onda 184: b_novo=None = LLM offline. Marcar SKIP, não REVERT.
+        if b_novo is None:
+            exp = Experiment(
+                iteracao=i, config=novo_config, config_hash=novo_hash,
+                parent_hash=best.config_hash, proposal_delta=delta,
+                metric=None, n_eventos=0, kept=False,
+                timestamp=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                erro="LLM offline (skip, no fake brier)",
+            )
+            historia.append(exp)
+            with open(trace_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps(exp.to_dict(), default=str) + "\n")
+            if verbose:
+                print(f"[autoresearch] iter {i}: SKIP (LLM offline)")
+            # Sleep cooldown circuit breaker (120s) e tentar de novo se mais iter
+            import time as _t
+            _t.sleep(125)
+            continue
+
+        kept = best.metric is None or b_novo < best.metric
         exp = Experiment(
             iteracao=i,
             config=novo_config,
