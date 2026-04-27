@@ -1,0 +1,10 @@
+{"id": "amer01", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer02", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer03", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer04", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer05", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer06", "dataset": "americanas_crise_2023", "outcome_binario": 0, "p_outcome_mean": 0.44999999999999996, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "baixo", "is_leakage_alto": false, "erro": null}
+{"id": "amer07", "dataset": "americanas_crise_2023", "outcome_binario": 0, "p_outcome_mean": 0.44999999999999996, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "baixo", "is_leakage_alto": false, "erro": null}
+{"id": "amer08", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer09", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
+{"id": "amer10", "dataset": "americanas_crise_2023", "outcome_binario": 1, "p_outcome_mean": 0.55, "p_outcome_std": 0.0, "n_validas": 3, "leakage_classificado": "medio", "is_leakage_alto": false, "erro": null}
