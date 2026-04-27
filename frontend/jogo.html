@@ -474,10 +474,10 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
   <div class="main-body" role="main" aria-label="Corpo Vila Assembleia">
     <!-- PAINEL ASSEMBLEIA (ESQUERDO 60%) -->
     <div class="panel-assembly" role="region" aria-label="Painel Assembleia">
-      <div class="assembly-header">
+      <header class="assembly-header" role="banner">
         <h2>Assembleia ao Vivo</h2>
         <p>142 clones digitais + sistema economico. Moeda: &#926; INTEIA Coins. Supply fixo: 142.000.</p>
-      </div>
+      </header>
       <div class="assembly-feed" id="feed"></div>
 
       <!-- CONTROLES -->
@@ -512,7 +512,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
     </div>
 
     <!-- PAINEL DIREITO (TABS 40%) -->
-    <div class="panel-right">
+    <div class="panel-right" role="complementary" aria-label="Painel direito Vila">
       <div class="tabs-header">
         <button class="tab-btn active" onclick="switchTab('constitution',this)" aria-label="Aba Constituição">Constituição</button>
         <button class="tab-btn" onclick="switchTab('economy',this)" aria-label="Aba Regras Econômicas">Regras Econômicas</button>

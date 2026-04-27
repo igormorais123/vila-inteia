@@ -45,7 +45,7 @@
       </p>
       <div class="control-row">
         <label>estado inicial:</label>
-        <select id="estado-inicial" class="select" style="width: 200px;">
+        <select id="estado-inicial" class="select" aria-label="Estado inicial trajetória" style="width: 200px;">
           <option value="bootstrap" selected>bootstrap</option>
           <option value="recrutamento">recrutamento</option>
           <option value="expansao">expansao</option>
@@ -64,7 +64,7 @@
     </section>
 
     <section class="two-col">
-      <div class="panel">
+      <div class="panel" role="region" aria-label="Plano de Seldon">
         <div class="panel__header"><h2 class="panel__title">Plano de Seldon</h2></div>
         <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
           Horizonte longo + identificação de "crises" (mudanças no estado mais provável).
@@ -78,7 +78,7 @@
         <ul id="crise-list" style="list-style: none; padding: 0; margin: 0;"></ul>
       </div>
 
-      <div class="panel">
+      <div class="panel" role="region" aria-label="Detector de Mule">
         <div class="panel__header"><h2 class="panel__title">Detector de Mule</h2></div>
         <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
           Eventos de probabilidade anômala (outliers que quebram o Plano).
