@@ -1,0 +1,36 @@
+{
+  "modo": "dry_run",
+  "n_aprovados": 100,
+  "splits": {
+    "tune": 35,
+    "gate": 15,
+    "holdout": 50
+  },
+  "gate": {
+    "aceito": true,
+    "razao": "aceito: IC95% superior 0.0470 < 0.05 E p-valor 0.0210 < 0.1",
+    "brier_tune": 0.2797338111319687,
+    "brier_gate": 0.2453432962179281,
+    "delta_observado": -0.034390514914040604,
+    "ic_95_inferior": -0.10988868591745245,
+    "ic_95_superior": 0.04701293421654565,
+    "p_valor_unilateral": 0.021,
+    "n_iter": 2000,
+    "n_tune": 35,
+    "n_gate": 15
+  },
+  "skill_score": {
+    "skill_score_pontual": 0.11726883267636168,
+    "ic_95_inferior": -0.025619060221334446,
+    "ic_95_superior": 0.24103026789881998,
+    "exclui_zero": false,
+    "n_iter": 2000,
+    "n_modelo": 50,
+    "n_referencia": 50
+  },
+  "brier_avg": {
+    "tune": 0.2797338111319687,
+    "gate": 0.2453432962179281,
+    "holdout": 0.2714204138663377
+  }
+}
