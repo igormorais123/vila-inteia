@@ -39,18 +39,18 @@
       </div>
       <div class="control-row">
         <label>ε (confiança):</label>
-        <input id="epsilon-slider" class="slider" type="range" min="0.05" max="0.95" step="0.05" value="0.3">
+        <input id="epsilon-slider" class="slider" type="range" min="0.05" max="0.95" step="0.05" value="0.3" aria-label="Epsilon confiança">
         <span id="epsilon-val" class="u-mono">0.30</span>
 
         <label>μ (velocidade):</label>
-        <input id="mu-slider" class="slider" type="range" min="0.05" max="0.50" step="0.05" value="0.5">
+        <input id="mu-slider" class="slider" type="range" min="0.05" max="0.50" step="0.05" value="0.5" aria-label="Mu velocidade">
         <span id="mu-val" class="u-mono">0.50</span>
 
         <label>n agentes:</label>
-        <input id="n-agentes" class="input" type="number" value="40" min="10" max="200" style="width: 80px;">
+        <input id="n-agentes" class="input" type="number" value="40" min="10" max="200" style="width: 80px;" aria-label="Número de agentes">
 
         <label>passos:</label>
-        <input id="passos" class="input" type="number" value="3000" min="500" max="20000" step="500" style="width: 90px;">
+        <input id="passos" class="input" type="number" value="3000" min="500" max="20000" step="500" style="width: 90px;" aria-label="Número de passos">
 
         <button id="rodar-deffuant" class="btn btn--primary">Rodar</button>
       </div>
