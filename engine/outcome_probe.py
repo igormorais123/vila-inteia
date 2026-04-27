@@ -115,7 +115,8 @@ def _gerar_parafrases(
     msg = [{"role": "user", "content": PROMPT_PARAFRASEAR.format(
         n=n, pergunta=pergunta, framing=framing or pergunta
     )}]
-    out = chamar_llm(msg, modelo="rapido", max_tokens=400, temperatura=0.7)
+    out = chamar_llm(msg, modelo="rapido", max_tokens=400, temperatura=0.7,
+                     bypass_step_cap=True)
     if not out:
         return [pergunta] * n
     parafrases: list[str] = []
@@ -169,7 +170,8 @@ def probar_evento(
     probs_outcome: list[float] = []
     for pf in parafrases:
         msg = [{"role": "user", "content": PROMPT_PROBE.format(pergunta=pf)}]
-        out = chamar_llm(msg, modelo=modelo, max_tokens=80, temperatura=0.0)
+        out = chamar_llm(msg, modelo=modelo, max_tokens=80, temperatura=0.0,
+                         bypass_step_cap=True)
         p = extrair_probabilidade(out or "")
         respostas.append({"parafrase": pf, "resposta": out, "prob_extraida": p})
         if p is None:
