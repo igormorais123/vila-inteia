@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <style>
+.u-narrow{width: 60px;}
+.u-section-label-pa{font-size: 11px; text-transform: uppercase; margin-bottom: 6px;}
     .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
     .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
@@ -77,9 +79,9 @@
         </div>
         <div class="control-row">
           <label>K:</label>
-          <input id="hmm-k" class="input" type="number" value="4" min="2" max="16" style="width: 60px;">
+          <input id="hmm-k" class="input u-narrow" type="number" value="4" min="2" max="16">
           <label>smoothing:</label>
-          <input id="hmm-smooth" class="input" type="number" value="3" min="1" max="10" style="width: 60px;">
+          <input id="hmm-smooth" class="input u-narrow" type="number" value="3" min="1" max="10">
           <button id="btn-hmm" class="btn">Descobrir</button>
         </div>
         <div id="hmm-resultado" class="output-block">aguardando descoberta...</div>
@@ -125,7 +127,7 @@
         document.getElementById('rec-justificativa').textContent = r.justificativa;
         if (r.crises_proximas && r.crises_proximas.length) {
           document.getElementById('rec-crises').innerHTML = `
-            <div class="u-muted" style="font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Próximas crises</div>
+            <div class="u-muted u-section-label-pa">Próximas crises</div>
             ` + r.crises_proximas.map(c =>
               `<div class="output-block" style="padding: 4px 0;">passo ${c.passo}: ${c.antes} → <span class="u-amber">${c.depois}</span> (p=${c.probabilidade.toFixed(3)})</div>`
             ).join('');
@@ -192,7 +194,7 @@ ganho:               ${((r.perplexity_original - r.perplexity_calibrada) / r.per
         }
         const cores = ['#d69e2e', '#60a5fa', '#4ade80', '#f87171', '#a78bfa', '#fbbf24', '#f472b6', '#94a3b8'];
         let html = `<div style="margin-bottom: 8px;">K=${r.k} · iterações=${r.iteracoes} · inércia=${r.inercia.toFixed(2)}</div>`;
-        html += '<div class="u-muted" style="font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Clusters</div>';
+        html += '<div class="u-muted u-section-label-pa">Clusters</div>';
         for (const e of r.estados_latentes) {
           html += `
             <div class="hmm-cluster">
