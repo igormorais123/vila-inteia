@@ -41,6 +41,9 @@ data/colmeia_estado.json
 
 # Logs
 *.log
+
+# Autoresearch traces locais (não versionar — local experimental data)
+data/autoresearch_*.jsonl
 .claude/settings.local.json
 .gstack/
 resultado_10_materias.json

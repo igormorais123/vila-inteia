@@ -9,6 +9,7 @@
 | `vila-testes` | Como testar o sistema | Rodar testes, criar novos, depurar |
 | `vila-deploy` | Colocar em produção | Deploy Render, Docker, vars de ambiente |
 | `harness-vila` | Aplicação do framework Harness (Zhou 2026) na Vila: diagnóstico + plano de 4 ondas | Refatorar, discutir arquitetura, tocar `engine/cognitivo`, `engine/memoria`, oficinas, `chateaubriand`, `constituicao`, `ia_client` |
+| `vila-mirofish` | Pipeline Mirofish-style: corpus → grafo → sim → relatório (Onda 197) | Rodar `main.py mirofish`, hit `POST /api/v1/mirofish/run`, debugar pipeline, estender insights |
 
 ---
 
