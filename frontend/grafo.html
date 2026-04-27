@@ -2,12 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Vila INTEIA — Grafo Conhecimento</title>
   <link rel="stylesheet" href="/css/tokens.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <style>
     .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    @media (max-width: 768px) { .page { padding: var(--space-3); } }
     .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
     #graph-svg { width: 100%; height: 600px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); cursor: grab; }
     .controls { display: flex; gap: var(--space-3); align-items: center; }
@@ -33,8 +35,8 @@
       <div class="controls">
         <label>limite nós:</label>
         <input id="limite" aria-label="Limite nodes grafo" class="input" type="number" value="100" min="10" max="500" style="width: 90px;">
-        <button id="btn-carregar" class="btn btn--primary">Carregar grafo</button>
-        <button id="btn-refresh" class="btn">Atualizar</button>
+        <button id="btn-carregar" class="btn btn--primary" aria-label="Carregar grafo">Carregar grafo</button>
+        <button id="btn-refresh" class="btn" aria-label="Atualizar grafo">Atualizar</button>
         <span id="stats-inline" class="u-muted" style="margin-left: auto;">—</span>
       </div>
     </div>

@@ -99,11 +99,11 @@
     <main class="main-area">
       <div class="panel">
         <div class="tab-bar">
-          <button class="tab active" data-tab="timeline">Timeline</button>
-          <button class="tab" data-tab="stream">Stream Live</button>
-          <button class="tab" data-tab="backtest">Backtest</button>
-          <button class="tab" data-tab="llm">LLM</button>
-          <button class="tab" data-tab="links">Páginas</button>
+          <button class="tab active" data-tab="timeline" aria-label="Aba Timeline">Timeline</button>
+          <button class="tab" data-tab="stream" aria-label="Aba Stream Live">Stream Live</button>
+          <button class="tab" data-tab="backtest" aria-label="Aba Backtest">Backtest</button>
+          <button class="tab" data-tab="llm" aria-label="Aba LLM">LLM</button>
+          <button class="tab" data-tab="links" aria-label="Aba Páginas">Páginas</button>
         </div>
 
         <div class="tab-content active" data-tab="timeline">
@@ -116,7 +116,7 @@
         </div>
 
         <div class="tab-content" data-tab="backtest">
-          <button id="btn-bt" class="btn btn--primary">Rodar backtest em todos datasets</button>
+          <button id="btn-bt" class="btn btn--primary" aria-label="Rodar backtest em todos datasets">Rodar backtest em todos datasets</button>
           <table class="table" style="margin-top: var(--space-3);">
             <thead><tr><th>Dataset</th><th class="u-right">Brier</th><th class="u-right">Acc</th></tr></thead>
             <tbody id="bt-tbody"></tbody>
