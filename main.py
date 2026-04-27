@@ -275,7 +275,8 @@ def modo_mirofish(args):
         print(f"⚠  personas não carregadas por inicializar: {faltantes}")
         print("   recarregando direto do banco...")
         from engine.persona import Persona
-        banco = json.load(open(Path(__file__).parent / "data" / "banco-consultores-lendarios.json"))
+        with open(Path(__file__).parent / "data" / "banco-consultores-lendarios.json") as f:
+            banco = json.load(f)
         for p in banco:
             if p["id"] in faltantes:
                 sim.personas[p["id"]] = Persona(dados_consultor=p)

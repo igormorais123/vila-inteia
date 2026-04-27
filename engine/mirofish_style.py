@@ -224,6 +224,13 @@ def gerar_relatorio(
     skill_pct = (res.get("skill_brier_vs_prior") or 0) * 100
     bv = res.get("brier_vila_avg") or 0
     bp = res.get("brier_prior_avg") or 0
+    secao_datasets = (
+        f"Melhor dataset: {melhor['dataset']} ({100*melhor['acc']:.0f}% acc). "
+        f"Pior: {pior['dataset']} ({100*pior['acc']:.0f}% acc) — datasets com framings "
+        f"anti-contextuais degradam performance."
+        if (melhor and pior)
+        else "Sem dados de dataset agregados disponíveis."
+    )
     narrativa = (
         f"A Vila INTEIA, com panel estratégico de {len(persona_ids)} consultores lendários "
         f"({nomes}), previu {n_ev} eventos históricos em {len(per_dataset)} domínios distintos. "
@@ -233,9 +240,7 @@ def gerar_relatorio(
         f"Skill score (ganho vs prior) = {skill_pct:+.1f}%, indicando que o panel Vila "
         f"melhora sobre a intuição humana calibrada."
         f"\n\n"
-        f"Melhor dataset: {melhor['dataset']} ({100*melhor['acc']:.0f}% acc). "
-        f"Pior: {pior['dataset']} ({100*pior['acc']:.0f}% acc) — datasets com framings "
-        f"anti-contextuais degradam performance."
+        f"{secao_datasets}"
         f"\n\n"
         f"Divergência média entre personas = {div_media:.3f}. "
         f"Divergência alta sinaliza incerteza estrutural (potential alpha em mercados de previsão)."

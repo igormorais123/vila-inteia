@@ -7,14 +7,40 @@ API-compatible com fluxo Mirofish:
 
 Diferente de Mirofish original, que simula rede social, aqui Vila prevê eventos
 históricos em N datasets com panel de personas lendárias + calibração.
+
+Segurança: base_dir é validado contra ALLOWED_BASE_DIRS pra evitar path traversal.
 """
 
 from __future__ import annotations
+
+import os
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api/v1/mirofish", tags=["mirofish"])
+
+
+# Diretórios permitidos pra base_dir (evita path traversal e enum de FS)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+ALLOWED_BASE_DIRS = {
+    str((_REPO_ROOT / "data" / "backtest").resolve()),
+}
+
+
+def _validar_base_dir(base_dir: str) -> Path:
+    """Resolve base_dir e checa se está no allowlist. Levanta HTTPException 400 se não."""
+    try:
+        p = (_REPO_ROOT / base_dir).resolve() if not os.path.isabs(base_dir) else Path(base_dir).resolve()
+    except Exception:
+        raise HTTPException(400, f"base_dir inválido: {base_dir!r}")
+    if str(p) not in ALLOWED_BASE_DIRS:
+        raise HTTPException(
+            400,
+            f"base_dir não permitido. Use 'data/backtest' (allowlist: {sorted(ALLOWED_BASE_DIRS)})",
+        )
+    return p
 
 
 class RunRequest(BaseModel):
@@ -29,6 +55,8 @@ def endpoint_run(req: RunRequest):
     from engine.mirofish_style import pipeline_completo
     from api.rotas_vila import obter_simulacao
 
+    base_path = _validar_base_dir(req.base_dir)
+
     sim_ativa = obter_simulacao()
     if sim_ativa is None or not getattr(sim_ativa, "personas", None):
         raise HTTPException(503, "Simulação Vila não inicializada. POST /api/v1/vila/iniciar primeiro.")
@@ -38,7 +66,7 @@ def endpoint_run(req: RunRequest):
         raise HTTPException(400, f"personas não encontradas: {faltantes}")
 
     resultado = pipeline_completo(
-        base_dir=req.base_dir,
+        base_dir=str(base_path),
         dataset_glob=req.dataset_glob,
         persona_ids=req.persona_ids,
         sim=sim_ativa,
@@ -51,19 +79,21 @@ def endpoint_run(req: RunRequest):
 
 @router.get("/datasets")
 def endpoint_datasets(base_dir: str = "data/backtest"):
-    """Lista datasets disponíveis + n_eventos por arquivo."""
+    """Lista datasets disponíveis + n_eventos por arquivo (sem expor path absoluto)."""
     import glob
-    from pathlib import Path
     from engine.backtest_real import carregar_dataset
 
+    base_path = _validar_base_dir(base_dir)
+
     out = []
-    for f in sorted(glob.glob(f"{base_dir}/*.csv")):
+    for f in sorted(glob.glob(f"{base_path}/*.csv")):
         try:
             n = len(carregar_dataset(f))
         except Exception:
             n = None
-        out.append({"dataset": Path(f).stem, "n_eventos": n, "path": f})
-    return {"n_datasets": len(out), "datasets": out}
+        # Não expõe path absoluto — só stem (nome) e relative dentro do allowlist
+        out.append({"dataset": Path(f).stem, "n_eventos": n})
+    return {"n_datasets": len(out), "datasets": out, "base_dir": base_dir}
 
 
 @router.get("/info")
