@@ -1,0 +1,840 @@
+
+const COLORS = ['#d69e2e','#3b82f6','#22c55e','#a855f7','#ec4899','#06b6d4','#f97316','#eab308'];
+let comunidadesData = null;
+let influenciaData = null;
+let convsData = null;
+let autoTimer = null;
+
+function setStatus(msg, cls=''){
+  const s = document.getElementById('status');
+  s.textContent = msg; s.className = 'status ' + cls;
+}
+
+async function fetchJSON(path){
+  try{
+    const r = await fetch(path);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.json();
+  }catch(e){
+    console.error(path, e);
+    return null;
+  }
+}
+
+function escape(s){ return String(s).replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+
+async function atualizarKPI(){
+  const [e, c, cal] = await Promise.all([
+    fetchJSON('/api/v1/vila/estado'),
+    fetchJSON('/api/v1/vila/conversas?limite=1'),
+    fetchJSON('/api/v1/vila/calibracao/status'),
+  ]);
+  if(e){
+    document.getElementById('k_step').textContent = e.step ?? '—';
+    document.getElementById('k_agentes').textContent = e.total_agentes ?? '—';
+  }
+  if(c) document.getElementById('k_conv').textContent = c.total ?? '—';
+  const cs = document.getElementById('calib_status');
+  if(cal && cal.ativa){
+    cs.textContent = `cal: a=${cal.a.toFixed(2)} b=${cal.b.toFixed(2)} n=${cal.n_amostras}`;
+    cs.className = 'status ok';
+    cs.title = `Platt ativa. Fonte: ${cal.fonte || '?'}. Fitado em ${cal.fitado_em || '?'}`;
+  } else {
+    cs.textContent = 'cal: off';
+    cs.className = 'status';
+    cs.title = 'Sem calibração Platt. Rode scripts/rodar_backtest_real.py pra fitar.';
+  }
+}
+
+async function atualizarPersonas(){
+  influenciaData = await fetchJSON('/api/v1/vila/influencia-personas?top_n=30');
+  if(!influenciaData) return;
+  const lista = influenciaData.ranking || [];
+  const max = lista[0]?.score || 1;
+  document.getElementById('personas_list').innerHTML = lista.map(r=>`
+    <div class="persona-card" onclick="abrirDrawer('${escape(r.persona).replace(/'/g, '&apos;')}')">
+      <div class="persona-name">${escape(r.persona)}</div>
+      <div class="persona-meta">
+        <span>${r.n_conversas} conv</span>
+        <span>${r.n_parceiros_unicos} únicos</span>
+        <span style="color:var(--amber)">${r.score.toFixed(3)}</span>
+      </div>
+      <div class="persona-bar"><div class="persona-bar-fill" style="width:${(r.score/max*100).toFixed(1)}%"></div></div>
+    </div>
+  `).join('');
+}
+
+async function atualizarConversas(){
+  convsData = await fetchJSON('/api/v1/vila/conversas?limite=20');
+  if(!convsData) return;
+  const cs = (convsData.conversas || []).slice().reverse();
+  document.getElementById('convs_list').innerHTML = cs.length === 0
+    ? '<div class="empty">sem conversas ainda</div>'
+    : cs.map(c=>{
+      const turnos = (c.turnos || []).slice(0,4).map(t=>{
+        if(Array.isArray(t) && t.length>=2) return `<div class="conv-turn"><b>${escape(t[0])}:</b> ${escape(t[1].slice(0,180))}</div>`;
+        return '';
+      }).join('');
+      return `<div class="conv-card">
+        <div class="conv-head"><span>${escape(c.parceiro_nome||'?')}</span><span style="color:var(--txt3)">${(c.turnos||[]).length}t · ${escape(c.local_id||'')}</span></div>
+        <div style="font-size:10px;color:var(--txt3);margin-bottom:4px">tema: ${escape(c.topico||'')}</div>
+        ${turnos}
+      </div>`;
+    }).join('');
+}
+
+async function atualizarComunidades(){
+  comunidadesData = await fetchJSON('/api/v1/vila/comunidades-personas?resolution=1.0');
+  if(!comunidadesData) return;
+  document.getElementById('k_comun').textContent = comunidadesData.n_comunidades ?? '—';
+  document.getElementById('k_q').textContent = comunidadesData.modularidade?.toFixed(3) ?? '—';
+
+  // Legenda
+  const leg = (comunidadesData.comunidades||[]).map((c,i)=>{
+    const cor = COLORS[c.id % COLORS.length];
+    return `<div class="legend-item"><span class="legend-dot" style="background:${cor}"></span>Com ${c.id} (n=${c.tamanho})</div>`;
+  }).join('');
+  document.getElementById('legend').innerHTML = leg;
+
+  desenharGrafo();
+}
+
+function desenharGrafo(){
+  if(!comunidadesData || !influenciaData) return;
+
+  // Personas → comunidade
+  const persona2com = {};
+  (comunidadesData.comunidades||[]).forEach(c=>{
+    c.personas.forEach(p => persona2com[p] = c.id);
+  });
+
+  // Score map
+  const persona2score = {};
+  (influenciaData.ranking||[]).forEach(r => persona2score[r.persona] = r.score);
+
+  // Build nodes from union
+  const allPersonas = new Set([
+    ...(influenciaData.ranking||[]).map(r=>r.persona),
+    ...Object.keys(persona2com),
+  ]);
+
+  const nodes = Array.from(allPersonas).map(p=>({
+    id: p,
+    com: persona2com[p] ?? -1,
+    score: persona2score[p] ?? 0.01,
+  }));
+
+  // Build edges from conversas
+  const edges = [];
+  if(convsData){
+    const seen = {};
+    (convsData.conversas||[]).forEach(c=>{
+      const t0 = c.turnos?.[0];
+      if(!Array.isArray(t0) || t0.length<2) return;
+      const a = t0[0], b = c.parceiro_nome;
+      if(!a || !b || a===b) return;
+      if(!allPersonas.has(a) || !allPersonas.has(b)) return;
+      const key = [a,b].sort().join('::');
+      if(seen[key]){ seen[key]++; }
+      else { seen[key] = 1; edges.push({source:a, target:b, weight:1, key}); }
+    });
+    edges.forEach(e => e.weight = seen[e.key] || 1);
+  }
+
+  const svg = d3.select('#graph');
+  svg.selectAll('*').remove();
+  const W = svg.node().clientWidth;
+  const H = svg.node().clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(edges).id(d=>d.id).distance(120).strength(0.5))
+    .force('charge', d3.forceManyBody().strength(-420))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d=>14+d.score*40).strength(0.9))
+    .force('x', d3.forceX(W/2).strength(0.04))
+    .force('y', d3.forceY(H/2).strength(0.04));
+
+  const g = svg.append('g');
+
+  const zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => g.attr('transform', e.transform));
+  svg.call(zoom);
+
+  // Auto-fit after layout settles
+  setTimeout(() => {
+    try{
+      const bbox = g.node().getBBox();
+      const pad = 60;
+      const scale = Math.min(
+        (W - 2*pad) / Math.max(bbox.width, 1),
+        (H - 2*pad) / Math.max(bbox.height, 1),
+        1.6
+      );
+      const tx = W/2 - scale*(bbox.x + bbox.width/2);
+      const ty = H/2 - scale*(bbox.y + bbox.height/2);
+      svg.transition().duration(600).call(
+        zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale)
+      );
+    }catch(err){ /* bbox may fail before first tick */ }
+  }, 2200);
+
+  const link = g.append('g').selectAll('line').data(edges).join('line')
+    .attr('stroke', 'rgba(214,158,46,0.35)')
+    .attr('stroke-width', d => Math.min(4, 0.8 + d.weight*0.6));
+
+  const node = g.append('g').selectAll('g').data(nodes).join('g')
+    .style('cursor', 'pointer')
+    .on('click', (e,d) => abrirDrawer(d.id))
+    .call(d3.drag()
+      .on('start', (e,d) => { if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end', (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+  node.append('circle')
+    .attr('r', d => 8 + d.score * 40)
+    .attr('fill', d => d.com >= 0 ? COLORS[d.com % COLORS.length] : '#444')
+    .attr('stroke', '#0a0e1a').attr('stroke-width', 2)
+    .attr('opacity', 0.92)
+    .on('mouseover', function(){ d3.select(this).attr('stroke', '#f6e05e').attr('stroke-width', 3); })
+    .on('mouseout', function(){ d3.select(this).attr('stroke', '#0a0e1a').attr('stroke-width', 2); });
+
+  node.append('text')
+    .attr('text-anchor', 'middle').attr('dy', '.35em')
+    .attr('y', d => 8 + d.score*40 + 14)
+    .attr('fill', '#cbd5e1').attr('font-size', d => 10 + d.score*8 + 'px')
+    .attr('font-weight', d => d.score > 0.1 ? 600 : 400)
+    .attr('font-family', 'Inter, sans-serif')
+    .attr('pointer-events', 'none')
+    .text(d => d.id);
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+async function atualizarSuper(){
+  const d = await fetchJSON('/api/v1/vila/super-intelligence?horizonte=10&outcome_desejado=equilibrio&com_sintese_llm=true');
+  if(!d) return;
+  const fc = d.forecast || {};
+  const rec = d.recomendacao || {};
+
+  document.getElementById('fc_estado').textContent = fc.estado_atual || '—';
+  document.getElementById('fc_mules').textContent = fc.n_mules_recentes ?? '—';
+  document.getElementById('fc_entropia').textContent =
+    `${(fc.entropia_inicial??0).toFixed(2)} → ${(fc.entropia_final??0).toFixed(2)}`;
+  document.getElementById('fc_top').innerHTML = (fc.top_estados_horizonte||[]).slice(0,4).map(t=>{
+    const pct = (t.prob*100).toFixed(1);
+    return `<div class="bot-bar">
+      <span class="bot-bar-label">${escape(t.estado)}</span>
+      <span class="bot-bar-fill" style="width:${pct*1.6}px"></span>
+      <span class="bot-bar-val">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  const m = rec.melhor_intervencao || {};
+  document.getElementById('rec_melhor').textContent = m.estado
+    ? `forçar ${m.estado} → ${(m.prob_outcome*100).toFixed(1)}%` : '—';
+  document.getElementById('rec_top').innerHTML = (rec.ranking||[]).slice(0,4).map(r=>{
+    const pct = (r.prob_outcome*100).toFixed(1);
+    return `<div class="bot-bar">
+      <span class="bot-bar-label">${escape(r.estado)}</span>
+      <span class="bot-bar-fill" style="width:${pct*1.6}px"></span>
+      <span class="bot-bar-val">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('briefing').textContent = d.briefing_executivo || '(LLM quota exhausted; aguardando reset)';
+}
+
+async function abrirDrawer(personaId){
+  const dr = document.getElementById('drawer');
+  document.getElementById('dr_name').textContent = personaId;
+  document.getElementById('dr_body').innerHTML = '<div class="empty">carregando…</div>';
+  dr.classList.add('open');
+
+  // Find ID via /agentes
+  const ags = await fetchJSON('/api/v1/vila/agentes');
+  if(!ags) return;
+  const ag = (ags.agentes||[]).find(a => a.nome === personaId);
+  if(!ag){
+    document.getElementById('dr_body').innerHTML = `<div class="empty">Persona não encontrada nas 144 ativas</div>`;
+    return;
+  }
+
+  const det = await fetchJSON(`/api/v1/vila/agente/${ag.id}`);
+  if(!det){ document.getElementById('dr_body').innerHTML = '<div class="empty">erro</div>'; return; }
+
+  // Conversas dela
+  const convsTxt = (convsData?.conversas||[])
+    .filter(c => c.parceiro_nome === personaId || (c.turnos?.[0]?.[0] === personaId))
+    .slice(-5).reverse();
+
+  document.getElementById('dr_body').innerHTML = `
+    <h4>Persona</h4>
+    <div class="field"><b>Nome:</b> ${escape(det.nome||personaId)}</div>
+    <div class="field"><b>ID:</b> ${escape(det.id||ag.id)}</div>
+    <div class="field"><b>Categoria:</b> ${escape(det.categoria||ag.categoria||'—')}</div>
+    <div class="field"><b>Tier:</b> ${escape(det.tier||ag.tier||'—')}</div>
+    <div class="field"><b>Ação:</b> ${escape(det.acao||ag.acao||'—')}</div>
+    <div class="field"><b>Local:</b> ${escape(det.local||ag.local||'—')}</div>
+
+    <h4>Influência</h4>
+    ${(()=>{
+      const r = (influenciaData?.ranking||[]).find(x=>x.persona===personaId);
+      if(!r) return '<div class="field">não rankeada</div>';
+      return `
+        <div class="field"><b>Score composto:</b> ${r.score.toFixed(4)}</div>
+        <div class="field"><b>Conversas:</b> ${r.n_conversas}</div>
+        <div class="field"><b>Parceiros únicos:</b> ${r.n_parceiros_unicos}</div>
+        <div class="field"><b>PageRank:</b> ${r.pagerank.toFixed(4)}</div>
+        <div class="field"><b>Betweenness:</b> ${r.betweenness_centrality.toFixed(4)}</div>
+        <div class="field"><b>Eigenvector:</b> ${r.eigenvector_centrality.toFixed(4)}</div>`;
+    })()}
+
+    <h4>Comunidade</h4>
+    ${(()=>{
+      const cid = (comunidadesData?.comunidades||[]).find(c=>c.personas.includes(personaId));
+      if(!cid) return '<div class="field">não atribuída</div>';
+      const cor = COLORS[cid.id % COLORS.length];
+      return `<div class="field"><span class="tag" style="background:${cor};color:#000">Com ${cid.id}</span> n=${cid.tamanho}, dens=${cid.densidade_interna.toFixed(2)}</div>
+        <div class="field" style="font-size:11px">${cid.personas.map(p=>p===personaId?`<b>${escape(p)}</b>`:escape(p)).join(', ')}</div>`;
+    })()}
+
+    <h4>Conversar com ${escape(det.nome||personaId)}
+      <button class="chat-reset" onclick="chatReset('${escape(ag.id).replace(/'/g,'&apos;')}')">× limpar</button>
+    </h4>
+    <div class="chat-box">
+      <div class="chat-log" id="chat_log">${await renderChatLog(ag.id)}</div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chat_input" placeholder="Pergunte algo a ${escape(det.nome||personaId)}..." onkeydown="if(event.key==='Enter') chatEnviar('${escape(ag.id).replace(/'/g,'&apos;')}', '${escape(det.nome||personaId).replace(/'/g,'&apos;')}')">
+        <button class="chat-send" id="chat_send" onclick="chatEnviar('${escape(ag.id).replace(/'/g,'&apos;')}', '${escape(det.nome||personaId).replace(/'/g,'&apos;')}')">Enviar</button>
+      </div>
+    </div>
+
+    <h4>Conversas recentes entre NPCs (5)</h4>
+    ${convsTxt.length === 0 ? '<div class="empty">sem conversas no buffer</div>' :
+      convsTxt.map(c=>{
+        const turnos = (c.turnos||[]).slice(0,4).map(t=>
+          Array.isArray(t)&&t.length>=2 ? `<div style="font-size:11px;color:var(--txt2);margin:2px 0"><b style="color:var(--txt)">${escape(t[0])}:</b> ${escape(t[1].slice(0,160))}</div>` : ''
+        ).join('');
+        return `<div style="margin-bottom:10px;padding:8px;background:var(--surf2);border-radius:4px;border-left:2px solid var(--amber)">
+          <div style="font-size:10px;color:var(--amber);margin-bottom:4px">↔ ${escape(c.parceiro_nome||'?')} · ${escape(c.topico||'')}</div>
+          ${turnos}
+        </div>`;
+      }).join('')}
+  `;
+}
+
+async function renderChatLog(personaId){
+  const h = await fetchJSON(`/api/v1/vila/persona-chat/historico/${personaId}`);
+  if(!h || !h.turnos || h.turnos.length === 0)
+    return '<div class="empty" style="padding:10px">Nenhum chat ainda. Faça a primeira pergunta ↓</div>';
+  return h.turnos.map(t => `
+    <div class="chat-msg user">${escape(t.pergunta)}</div>
+    <div class="chat-msg persona">${escape(t.resposta)}</div>
+  `).join('');
+}
+
+async function chatEnviar(personaId, personaNome){
+  const input = document.getElementById('chat_input');
+  const btn = document.getElementById('chat_send');
+  const log = document.getElementById('chat_log');
+  const pergunta = input.value.trim();
+  if(!pergunta) return;
+  btn.disabled = true;
+  btn.textContent = '...';
+  input.value = '';
+  // Optimistic: show user message + loading
+  log.innerHTML += `<div class="chat-msg user">${escape(pergunta)}</div>
+    <div class="chat-msg persona" id="chat_pending"><em style="color:var(--txt3)">${escape(personaNome)} está pensando...</em></div>`;
+  log.scrollTop = log.scrollHeight;
+  try{
+    const r = await fetch('/api/v1/vila/persona-chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({persona_id: personaId, pergunta: pergunta}),
+    });
+    const d = await r.json();
+    const pending = document.getElementById('chat_pending');
+    if(pending) pending.remove();
+    if(d.resposta){
+      log.innerHTML += `<div class="chat-msg persona">${escape(d.resposta)}</div>`;
+    } else {
+      log.innerHTML += `<div class="chat-msg persona" style="color:var(--bad)">Erro: ${escape(d.erro||'sem resposta')}</div>`;
+    }
+    log.scrollTop = log.scrollHeight;
+  }catch(e){
+    const pending = document.getElementById('chat_pending');
+    if(pending) pending.innerHTML = `<span style="color:var(--bad)">Falha: ${escape(e.message)}</span>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar';
+    input.focus();
+  }
+}
+
+async function chatReset(personaId){
+  await fetch(`/api/v1/vila/persona-chat/historico/${personaId}`, {method: 'DELETE'});
+  document.getElementById('chat_log').innerHTML =
+    '<div class="empty" style="padding:10px">Histórico limpo. Nova conversa ↓</div>';
+}
+
+window.chatEnviar = chatEnviar;
+window.chatReset = chatReset;
+
+function fecharDrawer(){ document.getElementById('drawer').classList.remove('open'); }
+
+async function atualizarTudo(){
+  setStatus('atualizando...', '');
+  try{
+    await Promise.all([atualizarKPI(), atualizarConversas(), atualizarEstado()]);
+    await atualizarPersonas();
+    await atualizarComunidades();
+    await atualizarSuper();
+    setStatus('ok · ' + new Date().toLocaleTimeString(), 'ok');
+  }catch(e){
+    setStatus('erro: '+e.message, 'bad');
+    console.error(e);
+  }
+}
+
+function toggleAuto(){
+  if(document.getElementById('auto').checked){
+    autoTimer = setInterval(atualizarTudo, 30000);
+  } else {
+    clearInterval(autoTimer); autoTimer = null;
+  }
+}
+
+let sseSource = null;
+let sseDebounce = null;
+let sseLastStep = -1;
+function scheduleRefresh(){
+  if(sseDebounce) return;
+  sseDebounce = setTimeout(() => {
+    sseDebounce = null;
+    atualizarTudo();
+  }, 800);
+}
+
+function toggleSSE(){
+  if(document.getElementById('sse').checked){
+    try{
+      sseSource = new EventSource('/api/v1/vila/godseye-stream');
+      sseSource.addEventListener('step', e => {
+        try{ const d = JSON.parse(e.data); if(d.step !== sseLastStep){ sseLastStep = d.step; document.getElementById('k_step').textContent = d.step; scheduleRefresh(); } }catch(err){}
+      });
+      sseSource.addEventListener('conversa', e => scheduleRefresh());
+      sseSource.addEventListener('mule', e => {
+        try{ const d = JSON.parse(e.data); setStatus('🚨 MULE detectado: '+(d.tipo||'anomalia'), 'bad'); scheduleRefresh(); }catch(err){}
+      });
+      sseSource.addEventListener('keepalive', e => { /* noop */ });
+      sseSource.onerror = () => { setStatus('SSE desconectou; reabrindo...', 'bad'); if(sseSource){ sseSource.close(); sseSource = null; setTimeout(toggleSSE, 3000); } };
+      setStatus('SSE conectado', 'ok');
+    }catch(e){ console.error(e); }
+  } else {
+    if(sseSource){ sseSource.close(); sseSource = null; }
+  }
+}
+
+// ===== CAMPUS VIEW =====
+let currentView = 'graph';
+let estadoData = null;
+
+function setView(v){
+  currentView = v;
+  document.getElementById('graph').style.display = v === 'graph' ? 'block' : 'none';
+  document.getElementById('campus').style.display = v === 'campus' ? 'block' : 'none';
+  document.getElementById('overlay').innerHTML = v === 'graph'
+    ? '<div><b>Grafo de Conversas</b></div><div style="margin-top:4px">Nós = personas · Arestas = conversas · Cor = comunidade</div><div style="margin-top:4px;color:var(--txt3)">Click persona → drawer</div>'
+    : '<div><b>Mapa do Campus</b></div><div style="margin-top:4px">19 locais (círculos) · personas em cada um (dots coloridos por comunidade)</div><div style="margin-top:4px;color:var(--txt3)">Click persona → drawer</div>';
+  document.getElementById('view_graph_btn').style.background = v==='graph'?'var(--amber)':'transparent';
+  document.getElementById('view_graph_btn').style.color = v==='graph'?'#000':'var(--txt2)';
+  document.getElementById('view_campus_btn').style.background = v==='campus'?'var(--amber)':'transparent';
+  document.getElementById('view_campus_btn').style.color = v==='campus'?'#000':'var(--txt2)';
+  if(v === 'campus') desenharCampus();
+}
+
+async function atualizarEstado(){
+  estadoData = await fetchJSON('/api/v1/vila/estado');
+  if(currentView === 'campus') desenharCampus();
+}
+
+function desenharCampus(){
+  if(!estadoData) return;
+  const locais = estadoData.locais || [];
+  if(!locais.length) return;
+
+  // Persona → comunidade mapping
+  const persona2com = {};
+  (comunidadesData?.comunidades||[]).forEach(c=>{
+    c.personas.forEach(p => persona2com[p] = c.id);
+  });
+
+  const svg = d3.select('#campus');
+  svg.selectAll('*').remove();
+  const W = svg.node().clientWidth;
+  const H = svg.node().clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  const g = svg.append('g');
+  // Zoom
+  svg.call(d3.zoom().scaleExtent([0.5, 3]).on('zoom', e => g.attr('transform', e.transform)));
+
+  const pad = 50;
+  const toX = x => pad + x * (W - 2*pad);
+  const toY = y => pad + y * (H - 2*pad);
+
+  // Local circles
+  const loc = g.append('g').selectAll('g').data(locais).join('g')
+    .attr('transform', d => `translate(${toX(d.posicao_x||0.5)},${toY(d.posicao_y||0.5)})`);
+
+  loc.append('circle')
+    .attr('r', d => 16 + Math.min(30, (d.capacidade||20)*0.6))
+    .attr('fill', 'rgba(214,158,46,0.06)')
+    .attr('stroke', d => d.ocupacao > 0 ? 'var(--amber)' : 'rgba(100,116,139,0.3)')
+    .attr('stroke-width', 1.5)
+    .attr('stroke-dasharray', d => d.ocupacao > 0 ? '0' : '3 3');
+
+  loc.append('text')
+    .attr('text-anchor','middle').attr('y', d => -((16 + Math.min(30,(d.capacidade||20)*0.6)) + 6))
+    .attr('fill', 'var(--txt2)').attr('font-size', '10px').attr('font-family','Inter,sans-serif')
+    .attr('font-weight', 600)
+    .text(d => d.id);
+
+  loc.append('text')
+    .attr('text-anchor','middle').attr('y', d => (16 + Math.min(30,(d.capacidade||20)*0.6)) + 14)
+    .attr('fill', 'var(--txt3)').attr('font-size', '9px').attr('font-family','Inter,sans-serif')
+    .text(d => `${d.ocupacao}/${d.capacidade||'-'}`);
+
+  // Personas dentro do local (spiral layout)
+  locais.forEach(l => {
+    const ags = l.agentes || [];
+    if(!ags.length) return;
+    const cx = toX(l.posicao_x||0.5);
+    const cy = toY(l.posicao_y||0.5);
+    const radius = 16 + Math.min(30,(l.capacidade||20)*0.6);
+    ags.forEach((a, i) => {
+      const n = ags.length;
+      let px, py;
+      if(n === 1){ px = cx; py = cy; }
+      else {
+        const angle = (i / n) * 2 * Math.PI;
+        const r = radius * 0.55;
+        px = cx + Math.cos(angle) * r;
+        py = cy + Math.sin(angle) * r;
+      }
+      const com = persona2com[a.nome] ?? -1;
+      const cor = com >= 0 ? COLORS[com % COLORS.length] : '#64748b';
+      const ng = g.append('g')
+        .attr('transform', `translate(${px},${py})`)
+        .style('cursor', 'pointer')
+        .on('click', () => abrirDrawer(a.nome));
+      ng.append('circle').attr('r', 5).attr('fill', cor)
+        .attr('stroke', 'var(--bg)').attr('stroke-width', 1.2);
+      ng.append('title').text(`${a.nome} — ${a.acao||''}`);
+    });
+  });
+}
+
+// ===== BACKTEST MODAL (Onda 111) =====
+async function abrirBacktestModal(){
+  document.getElementById('bt_modal').style.display = 'flex';
+  // Load datasets
+  const ds = await fetchJSON('/api/v1/vila/backtest/datasets');
+  const sel = document.getElementById('bt_dataset');
+  if(ds && ds.datasets){
+    sel.innerHTML = '<option value="">Todos (' + ds.total + ')</option>' +
+      ds.datasets.map(d => `<option value="${escape(d.nome)}">${escape(d.nome)} (${d.n_eventos}ev)</option>`).join('');
+  }
+  // Load history
+  await carregarHistoricoBacktest();
+}
+
+function fecharBacktestModal(){
+  document.getElementById('bt_modal').style.display = 'none';
+}
+
+async function carregarHistoricoBacktest(){
+  const h = await fetchJSON('/api/v1/vila/backtest/historico?limite=10');
+  const div = document.getElementById('bt_historico');
+  if(!h || !h.registros || h.registros.length === 0){
+    div.innerHTML = '<div class="empty">sem backtests rodados</div>';
+    return;
+  }
+  div.innerHTML = '<table style="width:100%;font-size:11px;border-collapse:collapse"><thead><tr style="border-bottom:1px solid var(--border);color:var(--amber)"><th style="text-align:left;padding:4px">data</th><th>n_ev</th><th>acc</th><th>brier</th><th>skill</th><th>platt</th></tr></thead><tbody>' +
+    h.registros.slice(0,10).map(r => {
+      const skill = r.skill;
+      const skillColor = skill > 0 ? 'var(--ok)' : (skill < 0 ? 'var(--bad)' : 'var(--txt3)');
+      return `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:4px;color:var(--txt3)">${escape((r.criado_em||'').slice(5,16))}</td>
+        <td style="text-align:center">${r.n_eventos??'—'}</td>
+        <td style="text-align:center">${r.accuracy_global!=null?(r.accuracy_global*100).toFixed(0)+'%':'—'}</td>
+        <td style="text-align:center">${r.brier_vila!=null?r.brier_vila.toFixed(3):'—'}</td>
+        <td style="text-align:center;color:${skillColor}">${skill!=null?(skill>=0?'+':'')+skill.toFixed(2):'—'}</td>
+        <td style="text-align:center;color:var(--txt3);font-size:10px">${r.platt_a!=null?r.platt_a.toFixed(2)+'/'+r.platt_b.toFixed(2):'—'}</td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+}
+
+async function rodarBacktest(){
+  const btn = document.getElementById('bt_btn');
+  const stat = document.getElementById('bt_status');
+  btn.disabled = true;
+  btn.textContent = '...';
+  stat.textContent = 'rodando backtest, pode demorar 30s-3min...';
+  stat.style.color = 'var(--amber)';
+  try{
+    const body = {
+      dataset: document.getElementById('bt_dataset').value || null,
+      max_eventos: parseInt(document.getElementById('bt_max').value),
+      personas: document.getElementById('bt_personas').value.split(',').map(s=>s.trim()).filter(Boolean),
+      sleep_entre_eventos_s: 5,
+    };
+    const r = await fetch('/api/v1/vila/backtest/rodar', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    if(!r.ok){
+      stat.textContent = 'Erro: ' + (d.detail || r.status);
+      stat.style.color = 'var(--bad)';
+      return;
+    }
+    stat.textContent = 'Completo · ' + new Date().toLocaleTimeString();
+    stat.style.color = 'var(--ok)';
+    renderBacktestResult(d);
+    await carregarHistoricoBacktest();
+  }catch(e){
+    stat.textContent = 'Erro: ' + e.message;
+    stat.style.color = 'var(--bad)';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Rodar';
+  }
+}
+
+function renderBacktestResult(d){
+  const ag = d.agregado || {};
+  const cal = d.calibracao_platt || {};
+  const html = `
+    <div style="background:var(--surf2);padding:10px;border-radius:4px;border-left:3px solid var(--amber);margin-bottom:10px">
+      <div style="font-size:11px;color:var(--amber);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5pt">Agregado</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+        <div><b>${ag.n_eventos_total || '—'}</b> ev</div>
+        <div>acc <b>${ag.accuracy_global!=null ? (ag.accuracy_global*100).toFixed(1)+'%' : '—'}</b></div>
+        <div>Brier <b>${ag.brier_vila_macro_avg!=null ? ag.brier_vila_macro_avg.toFixed(3) : '—'}</b></div>
+        <div>prior <b>${ag.brier_prior_macro_avg!=null ? ag.brier_prior_macro_avg.toFixed(3) : '—'}</b></div>
+        <div>skill <b style="color:${(ag.skill_brier_vs_prior_macro||0)>=0 ? 'var(--ok)' : 'var(--bad)'}">${ag.skill_brier_vs_prior_macro!=null ? (ag.skill_brier_vs_prior_macro>=0?'+':'')+ag.skill_brier_vs_prior_macro.toFixed(3) : '—'}</b></div>
+      </div>
+      ${cal.platt_a != null ? `
+      <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);font-size:11px;color:var(--txt2)">
+        Platt: a=<b>${cal.platt_a.toFixed(3)}</b> b=<b>${cal.platt_b.toFixed(3)}</b> · ECE ${cal.ece_antes.toFixed(3)} → <b>${cal.ece_depois.toFixed(3)}</b>
+      </div>` : ''}
+    </div>
+    <div style="font-size:11px;color:var(--amber);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5pt">Por dataset</div>
+    <table style="width:100%;font-size:11px;border-collapse:collapse">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--txt3)">
+        <th style="text-align:left;padding:4px">dataset</th><th>n</th><th>acc</th><th>brier</th><th>skill</th>
+      </tr></thead>
+      <tbody>
+      ${(d.datasets||[]).map(ds => {
+        const sk = ds.skill_brier_vs_prior;
+        return `<tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:4px">${escape((ds.dataset||'').split('/').pop().replace('.csv',''))}</td>
+          <td style="text-align:center">${ds.n_eventos||'—'}</td>
+          <td style="text-align:center">${ds.accuracy_vila!=null?(ds.accuracy_vila*100).toFixed(0)+'%':'—'}</td>
+          <td style="text-align:center">${ds.brier_vila_avg!=null?ds.brier_vila_avg.toFixed(3):'—'}</td>
+          <td style="text-align:center;color:${(sk||0)>=0?'var(--ok)':'var(--bad)'}">${sk!=null?(sk>=0?'+':'')+sk.toFixed(2):'—'}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table>`;
+  document.getElementById('bt_result').innerHTML = html;
+  renderReliabilityDiagram();
+}
+
+async function renderReliabilityDiagram(){
+  const d = await fetchJSON('/api/v1/vila/backtest/reliability?n_bins=10');
+  const svg = d3.select('#bt_reliability');
+  svg.selectAll('*').remove();
+  if(!d || !d.bins || d.bins.length === 0){
+    svg.append('text').attr('x', '50%').attr('y', '50%')
+       .attr('text-anchor', 'middle').attr('fill', 'var(--txt3)')
+       .attr('font-size', '11px').text('Sem dados de backtest');
+    return;
+  }
+  const W = svg.node().clientWidth || 600;
+  const H = 240;
+  const pad = 30;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const xScale = v => pad + v * (W - 2*pad);
+  const yScale = v => H - pad - v * (H - 2*pad);
+
+  // Grid
+  const g = svg.append('g');
+  for(let i = 0; i <= 10; i++){
+    const v = i / 10;
+    g.append('line').attr('x1', xScale(v)).attr('x2', xScale(v))
+      .attr('y1', yScale(0)).attr('y2', yScale(1))
+      .attr('stroke', 'rgba(100,116,139,0.15)').attr('stroke-width', 0.5);
+    g.append('line').attr('y1', yScale(v)).attr('y2', yScale(v))
+      .attr('x1', xScale(0)).attr('x2', xScale(1))
+      .attr('stroke', 'rgba(100,116,139,0.15)').attr('stroke-width', 0.5);
+  }
+  // Perfect calibration diagonal
+  g.append('line').attr('x1', xScale(0)).attr('y1', yScale(0))
+    .attr('x2', xScale(1)).attr('y2', yScale(1))
+    .attr('stroke', 'rgba(214,158,46,0.4)').attr('stroke-width', 1)
+    .attr('stroke-dasharray', '4 3');
+  // Labels
+  g.append('text').attr('x', W/2).attr('y', H-4).attr('text-anchor','middle')
+    .attr('fill','var(--txt3)').attr('font-size','10px').text('Confidence (prob predita)');
+  g.append('text').attr('x', -H/2).attr('y', 10).attr('text-anchor','middle')
+    .attr('transform','rotate(-90)').attr('fill','var(--txt3)').attr('font-size','10px')
+    .text('Accuracy (freq real)');
+  // Y axis labels
+  for(let i = 0; i <= 5; i++){
+    const v = i / 5;
+    g.append('text').attr('x', pad - 4).attr('y', yScale(v) + 3).attr('text-anchor','end')
+      .attr('fill','var(--txt3)').attr('font-size','9px').text(v.toFixed(1));
+    g.append('text').attr('x', xScale(v)).attr('y', H - pad + 14).attr('text-anchor','middle')
+      .attr('fill','var(--txt3)').attr('font-size','9px').text(v.toFixed(1));
+  }
+
+  // Bins with data
+  const populated = d.bins.filter(b => b.n > 0);
+  // Line connecting bins
+  const line = d3.line()
+    .x(b => xScale(b.confidence || b.center))
+    .y(b => yScale(b.accuracy));
+  g.append('path').datum(populated)
+    .attr('d', line).attr('fill','none').attr('stroke','var(--amber)').attr('stroke-width', 2);
+  // Dots sized by n
+  const maxN = Math.max(...populated.map(b => b.n), 1);
+  g.selectAll('circle.bin').data(populated).join('circle').attr('class','bin')
+    .attr('cx', b => xScale(b.confidence || b.center))
+    .attr('cy', b => yScale(b.accuracy))
+    .attr('r', b => 3 + (b.n / maxN) * 5)
+    .attr('fill', b => Math.abs((b.confidence||b.center) - b.accuracy) > 0.1 ? 'var(--warn)' : 'var(--ok)')
+    .attr('stroke', '#0a0e1a').attr('stroke-width', 1)
+    .append('title').text(b => `bin ${b.center.toFixed(2)}: conf=${(b.confidence||b.center).toFixed(2)} acc=${b.accuracy.toFixed(2)} n=${b.n}`);
+
+  // Title
+  g.append('text').attr('x', pad).attr('y', 14).attr('fill','var(--amber)').attr('font-size','10px')
+    .text(`n=${d.n}, ${populated.length}/${d.n_bins} bins populados. Diagonal = calibração perfeita.`);
+}
+
+window.abrirBacktestModal = abrirBacktestModal;
+window.fecharBacktestModal = fecharBacktestModal;
+window.rodarBacktest = rodarBacktest;
+window.setView = setView;
+window.abrirDrawer = abrirDrawer;
+window.fecharDrawer = fecharDrawer;
+window.atualizarTudo = atualizarTudo;
+
+document.getElementById('auto').addEventListener('change', toggleAuto);
+document.getElementById('sse').addEventListener('change', toggleSSE);
+window.addEventListener('resize', () => desenharGrafo());
+
+// ===== TOUR (Onda 113) =====
+const TOUR_STEPS = [
+  {sel: '.brand', title: 'God\'s Eye · Bem-vindo', text: 'Dashboard unificado da Vila INTEIA. Simulação multi-agente com 144 personas lendárias, Markov psico-histórico + LLM narrativa.'},
+  {sel: '.col-l', title: 'Top influenciadores', text: 'Ranking de personas por centrality score (degree + betweenness + eigenvector + PageRank). Clique qualquer persona para abrir drawer.'},
+  {sel: '.col-c', title: 'Grafo de conversas', text: 'Força-direcionado D3. Nós = personas, arestas = conversas, cor = comunidade Louvain. Toggle ◈/▣ pra alternar graph ↔ campus map.'},
+  {sel: '.col-r', title: 'Conversas LLM-rich live', text: 'Feed filtrado de conversas geradas por LLM (não templates). Atualiza via SSE.'},
+  {sel: '.bottom', title: 'Forecast + Recomendação + Briefing', text: 'Markov forecast próximos N steps, sweep multi-counterfactual pra outcome desejado, briefing executivo Helena/Efesto.'},
+  {sel: '#calib_status', title: 'Platt calibração', text: 'Coefs a, b aplicados runtime em forecasts para reduzir over-confidence (Onda 97). Atualizado por backtest.'},
+  {sel: 'button[onclick="abrirBacktestModal()"]', title: 'Backtest real', text: 'Roda Vila contra eventos históricos (impeachment, crypto, Apple...). Mede Brier skill vs prior humano. Abre modal com reliability diagram.'},
+];
+let _tour_idx = 0;
+
+function iniciarTour(){
+  _tour_idx = 0;
+  renderTour();
+}
+
+function fecharTour(){
+  document.getElementById('tour_overlay')?.remove();
+  document.getElementById('tour_spot')?.remove();
+  document.getElementById('tour_box')?.remove();
+  try { localStorage.setItem('vila_tour_visto', '1'); } catch(e){}
+}
+
+function renderTour(){
+  // Remove previous
+  document.getElementById('tour_overlay')?.remove();
+  document.getElementById('tour_spot')?.remove();
+  document.getElementById('tour_box')?.remove();
+
+  if(_tour_idx >= TOUR_STEPS.length){ fecharTour(); return; }
+  const step = TOUR_STEPS[_tour_idx];
+  const target = document.querySelector(step.sel);
+  if(!target){ _tour_idx++; return renderTour(); }
+  const rect = target.getBoundingClientRect();
+
+  // Overlay dark
+  const ov = document.createElement('div');
+  ov.id = 'tour_overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;pointer-events:none;transition:opacity .2s';
+  document.body.appendChild(ov);
+
+  // Spotlight around target
+  const spot = document.createElement('div');
+  spot.id = 'tour_spot';
+  const pad = 8;
+  spot.style.cssText = `position:fixed;z-index:201;pointer-events:none;
+    top:${rect.top - pad}px;left:${rect.left - pad}px;
+    width:${rect.width + pad*2}px;height:${rect.height + pad*2}px;
+    border:2px solid var(--amber);border-radius:6px;
+    box-shadow:0 0 0 9999px rgba(0,0,0,0.65);transition:all .3s`;
+  document.body.appendChild(spot);
+
+  // Floating box below target
+  const box = document.createElement('div');
+  box.id = 'tour_box';
+  const boxTop = Math.min(rect.bottom + 16, window.innerHeight - 200);
+  const boxLeft = Math.min(Math.max(rect.left, 20), window.innerWidth - 340);
+  box.style.cssText = `position:fixed;z-index:202;
+    top:${boxTop}px;left:${boxLeft}px;width:320px;
+    background:var(--surf);border:1px solid var(--amber);border-radius:8px;
+    padding:14px;box-shadow:0 8px 24px rgba(0,0,0,0.5);
+    font-family:'Inter',sans-serif`;
+  box.innerHTML = `
+    <div style="font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:.5pt">
+      Passo ${_tour_idx+1}/${TOUR_STEPS.length}
+    </div>
+    <h3 style="color:var(--amber);font-size:14px;margin:4px 0 8px 0">${escape(step.title)}</h3>
+    <div style="font-size:12px;color:var(--txt2);line-height:1.5">${escape(step.text)}</div>
+    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+      <button onclick="fecharTour()" style="background:transparent;border:1px solid var(--border);color:var(--txt3);padding:6px 12px;border-radius:4px;font-size:11px;cursor:pointer">Pular</button>
+      <button onclick="tourVoltar()" ${_tour_idx === 0 ? 'disabled' : ''} style="background:transparent;border:1px solid var(--border);color:var(--txt2);padding:6px 12px;border-radius:4px;font-size:11px;cursor:pointer;${_tour_idx === 0 ? 'opacity:0.3' : ''}">← Voltar</button>
+      <button onclick="tourAvancar()" style="background:var(--amber);color:#000;border:none;padding:6px 14px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer">
+        ${_tour_idx === TOUR_STEPS.length - 1 ? 'Concluir' : 'Próximo →'}
+      </button>
+    </div>`;
+  document.body.appendChild(box);
+  target.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function tourAvancar(){ _tour_idx++; renderTour(); }
+function tourVoltar(){ if(_tour_idx > 0){ _tour_idx--; renderTour(); } }
+
+window.iniciarTour = iniciarTour;
+window.fecharTour = fecharTour;
+window.tourAvancar = tourAvancar;
+window.tourVoltar = tourVoltar;
+
+// Auto-start tour on first visit
+try {
+  if(!localStorage.getItem('vila_tour_visto')){
+    setTimeout(iniciarTour, 1500);
+  }
+} catch(e){}
+
+// Initial load + SSE
+atualizarTudo();
+toggleSSE();
+toggleAuto();
