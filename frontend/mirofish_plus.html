@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vila INTEIA — God's Eye (better than MiroFish)</title>
 <style>
+.u-pointer{cursor:pointer}
+.u-mono{font-family:var(--font-mono,monospace)}
+.u-tiny-mute-mp{font-size:11px;color:var(--txt3)}
 :root{
   --amber:#d69e2e; --amber-l:#f6e05e; --amber-d:#b7791f;
   --bg:#0a0e1a; --surf:#0f172a; --surf2:#1e293b; --surf3:#283548;
@@ -243,15 +246,15 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     </div>
     <div style="padding:16px">
       <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
-        <label style="font-size:11px;color:var(--txt3)">Dataset:
+        <label class="u-tiny-mute-mp">Dataset:
           <select id="bt_dataset" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;font:inherit;font-size:11px">
             <option value="">Todos</option>
           </select>
         </label>
-        <label style="font-size:11px;color:var(--txt3)">Max:
+        <label class="u-tiny-mute-mp">Max:
           <input id="bt_max" type="number" value="3" min="1" max="10" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;width:60px;font:inherit">
         </label>
-        <label style="font-size:11px;color:var(--txt3)">Personas:
+        <label class="u-tiny-mute-mp">Personas:
           <input id="bt_personas" type="text" value="CL001,CL002,CL007" style="background:var(--surf2);color:var(--txt);border:1px solid var(--border);padding:4px 8px;border-radius:4px;width:180px;font:inherit;font-size:11px">
         </label>
         <button onclick="rodarBacktest()" id="bt_btn" style="background:var(--amber);color:#000;border:none;padding:6px 14px;border-radius:4px;font-weight:600;cursor:pointer">Rodar</button>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
   <style>
+.u-help-text-ph{font-size: var(--text-sm); margin-bottom: var(--space-3);}
     .page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--space-5); display: grid; gap: var(--space-5); }
     .page-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
     .page-header h1 { font-size: var(--text-2xl); }
@@ -38,7 +39,7 @@
         <h2 class="panel__title">Previsão de trajetória</h2>
         <span class="badge badge--amber">Markov process</span>
       </div>
-      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+      <p class="u-muted u-help-text-ph">
         Equações de Seldon simuladas: a partir de estado inicial, computamos
         distribuição de probabilidade entre 8 estados sociais da Vila ao longo
         de N passos. Trajetória = πₜ @ M, onde M é matriz estocástica calibrada.
@@ -66,7 +67,7 @@
     <section class="two-col">
       <div class="panel" role="region" aria-label="Plano de Seldon">
         <div class="panel__header"><h2 class="panel__title">Plano de Seldon</h2></div>
-        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+        <p class="u-muted u-help-text-ph">
           Horizonte longo + identificação de "crises" (mudanças no estado mais provável).
         </p>
         <div class="control-row">
@@ -74,13 +75,13 @@
           <input id="horizonte" class="input" type="number" value="500" min="50" max="5000" style="width: 90px;">
           <button id="rodar-plano" class="btn">Gerar Plano</button>
         </div>
-        <div id="plano-meta" class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);"></div>
+        <div id="plano-meta" class="u-muted u-help-text-ph"></div>
         <ul id="crise-list" style="list-style: none; padding: 0; margin: 0;"></ul>
       </div>
 
       <div class="panel" role="region" aria-label="Detector de Mule">
         <div class="panel__header"><h2 class="panel__title">Detector de Mule</h2></div>
-        <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+        <p class="u-muted u-help-text-ph">
           Eventos de probabilidade anômala (outliers que quebram o Plano).
           Entre trajetória real (sequência de estados observados):
         </p>
@@ -94,7 +95,7 @@
 
     <section class="panel">
       <div class="panel__header"><h2 class="panel__title">Distribuição estacionária</h2></div>
-      <p class="u-muted" style="font-size: var(--text-sm); margin-bottom: var(--space-3);">
+      <p class="u-muted u-help-text-ph">
         π tal que π @ M = π. Equilíbrio de longuíssimo prazo da Vila.
       </p>
       <div id="estacionaria-resultado"></div>
