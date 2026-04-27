@@ -111,21 +111,21 @@ body{overflow:hidden;background:#0a0e1a;font-family:'Inter','Segoe UI',system-ui
     <a href="rede.html" class="back-link">Rede Social</a>
 </div>
 <!-- LEFT PANEL -->
-<div class="left-panel" id="leftPanel"></div>
-<div class="panel-toggle" id="panelToggle" onclick="togglePanel()">&#9664;</div>
+<aside class="left-panel" id="leftPanel" aria-label="Painel locais"></aside>
+<button class="panel-toggle" id="panelToggle" onclick="togglePanel()" aria-label="Alternar painel lateral">&#9664;</button>
 <!-- BOTTOM BAR -->
-<div class="bottom-bar" id="bottomBar">
+<section class="bottom-bar" id="bottomBar" aria-label="Barra de informação">
     <button class="close-bar" onclick="closeBottomBar()" aria-label="Fechar barra inferior">&times;</button>
     <div class="bar-content">
         <div class="building-info" id="buildingInfo"></div>
         <div class="agents-list" id="agentsAtBuilding"></div>
     </div>
-</div>
+</section>
 <!-- RIGHT AGENT PANEL -->
-<div class="agent-panel" id="agentPanel">
+<aside class="agent-panel" id="agentPanel" aria-label="Painel agente">
     <button class="ap-close" onclick="closeAgentPanel()" aria-label="Fechar painel agente">&times;</button>
     <div id="agentPanelContent"></div>
-</div>
+</aside>
 <!-- TOOLTIP -->
 <div class="tooltip3d" id="tooltip3d">
     <div class="tt-name" id="ttName"></div>
