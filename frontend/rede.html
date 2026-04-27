@@ -315,24 +315,24 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar" id="sidebar">
+<div class="app" role="application">
+<aside class="sidebar" id="sidebar" aria-label="Navegação principal">
 <div class="sb-logo">
-<div class="logo-box">IA</div>
+<div class="logo-box" aria-hidden="true">IA</div>
 <div><div class="logo-nm">INTE<span>IA</span></div><div class="logo-sub">Inteligencia Estrategica</div></div>
 </div>
-<nav class="sb-nav" id="sbNav">
-<div class="sb-item active" data-view="feed" onclick="switchView('feed')">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
+<nav class="sb-nav" id="sbNav" aria-label="Menu lateral">
+<div class="sb-item active" data-view="feed" onclick="switchView('feed')" role="button" tabindex="0" aria-label="Ir para Feed">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
 Feed
 </div>
-<div class="sb-item" data-view="consultores" onclick="switchView('consultores')">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+<div class="sb-item" data-view="consultores" onclick="switchView('consultores')" role="button" tabindex="0" aria-label="Ir para Consultores">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
 Consultores
-<span class="sb-badge" id="totalBadge">0</span>
+<span class="sb-badge" id="totalBadge" aria-label="Total de consultores">0</span>
 </div>
-<div class="sb-item" data-view="helena" onclick="switchView('helena')">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+<div class="sb-item" data-view="helena" onclick="switchView('helena')" role="button" tabindex="0" aria-label="Ir para Helena Strategos">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
 Helena Strategos
 </div>
 <div class="sb-sep"></div>
@@ -357,7 +357,7 @@ Helena Strategos
 <main class="center">
 <div class="topnav">
 <div class="topnav-tabs">
-<button class="tab active" data-view="feed" onclick="switchView('feed')">Rede Social</button>
+<button class="tab active" data-view="feed" aria-label="Aba Rede Social" onclick="switchView('feed')">Rede Social</button>
 <button class="tab" data-view="consultores" onclick="switchView('consultores')">Consultores</button>
 <button class="tab" data-view="helena" onclick="switchView('helena')">Helena Strategos</button>
 <a class="tab" href="/vila-inteia/cidade.html">Vila 3D</a>
@@ -453,7 +453,7 @@ Carregando dados de demonstracao. Para todos os 144 consultores, abra via servid
 </div>
 </div>
 </main>
-<aside class="right">
+<aside class="right" aria-label="Painel direito">
 <div class="right-section">
 <div class="right-title">Tendencias na Vila</div>
 <div id="trendingList">
