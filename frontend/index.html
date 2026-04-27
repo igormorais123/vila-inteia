@@ -726,7 +726,7 @@ function openPanel(locId){
   const panel=document.getElementById('rightPanel');
   const content=document.getElementById('panelContent');
 
-  let h=`<button class="panel-close" onclick="closePanel()">&times;</button>`;
+  let h=`<button class="panel-close" onclick="closePanel()" aria-label="Fechar painel">&times;</button>`;
   h+=`<div class="panel-header">`;
   h+=`<div class="panel-icon">${loc.icon}</div>`;
   h+=`<div class="panel-title">${loc.name}</div>`;
