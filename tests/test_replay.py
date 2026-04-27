@@ -19,6 +19,13 @@ def teste(nome, cond, det=""):
     else:    fail += 1; print(f"  FAIL {nome} {det}")
 
 
+def _tmppath():
+    f = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
+    f.close()
+    os.unlink(f.name)
+    return f.name
+
+
 def _popular_rastreador(n: int, estados: list[str]):
     RASTREADOR_GLOBAL.trajetoria.estados.clear()
     RASTREADOR_GLOBAL.trajetoria.steps.clear()
@@ -35,84 +42,97 @@ def _popular_rastreador(n: int, estados: list[str]):
 
 def t_exportar_retorna_bytes():
     _popular_rastreador(5, ["bootstrap", "expansao"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-        nbytes = exportar_run(f.name, vila_id="teste_a")
+    p = _tmppath()
+    try:
+        nbytes = exportar_run(p, vila_id="teste_a")
         teste("export retorna bytes > 0", nbytes > 0)
-        os.unlink(f.name)
+    finally:
+        if os.path.exists(p): os.unlink(p)
 
 
 def t_carregar_preserva_dados():
     _popular_rastreador(8, ["expansao", "equilibrio"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-        exportar_run(f.name, vila_id="teste_b")
-        run = carregar_run(f.name)
+    p = _tmppath()
+    try:
+        exportar_run(p, vila_id="teste_b")
+        run = carregar_run(p)
         teste("vila_id preservado", run.vila_id == "teste_b")
         teste("n_steps preservado", run.n_steps == 8)
         teste("estados preservados", len(run.estados) == 8)
-        os.unlink(f.name)
+    finally:
+        if os.path.exists(p): os.unlink(p)
 
 
 def t_comparar_runs_identicos():
     _popular_rastreador(10, ["expansao"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f1, \
-         tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f2:
-        exportar_run(f1.name, vila_id="a")
-        exportar_run(f2.name, vila_id="b")
-        r1 = carregar_run(f1.name)
-        r2 = carregar_run(f2.name)
+    p1, p2 = _tmppath(), _tmppath()
+    try:
+        exportar_run(p1, vila_id="a")
+        exportar_run(p2, vila_id="b")
+        r1 = carregar_run(p1)
+        r2 = carregar_run(p2)
         c = comparar_runs(r1, r2)
         teste("runs idênticos: KL ≈ 0", abs(c.kl_divergence) < 1e-6)
         teste("runs idênticos: TV ≈ 0", abs(c.total_variation) < 1e-6)
         teste("mesmo final", c.ambos_convergem_mesmo)
-        os.unlink(f1.name); os.unlink(f2.name)
+    finally:
+        for p in (p1, p2):
+            if os.path.exists(p): os.unlink(p)
 
 
 def t_comparar_runs_diferentes():
     _popular_rastreador(10, ["expansao"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f1:
-        exportar_run(f1.name, vila_id="a")
-        r1 = carregar_run(f1.name)
+    p1 = _tmppath()
+    p2 = _tmppath()
+    try:
+        exportar_run(p1, vila_id="a")
+        r1 = carregar_run(p1)
         _popular_rastreador(10, ["polarizacao"])
-        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f2:
-            exportar_run(f2.name, vila_id="b")
-            r2 = carregar_run(f2.name)
-            c = comparar_runs(r1, r2)
-            teste("runs diferentes: KL > 0", c.kl_divergence > 0)
-            teste("runs diferentes: TV ≈ 1", abs(c.total_variation - 1.0) < 0.01,
-                  f"TV={c.total_variation}")
-            teste("finais diferentes", not c.ambos_convergem_mesmo)
-            os.unlink(f1.name); os.unlink(f2.name)
+        exportar_run(p2, vila_id="b")
+        r2 = carregar_run(p2)
+        c = comparar_runs(r1, r2)
+        teste("runs diferentes: KL > 0", c.kl_divergence > 0)
+        teste("runs diferentes: TV ≈ 1", abs(c.total_variation - 1.0) < 0.01,
+              f"TV={c.total_variation}")
+        teste("finais diferentes", not c.ambos_convergem_mesmo)
+    finally:
+        for p in (p1, p2):
+            if os.path.exists(p): os.unlink(p)
 
 
 def t_replay_restaura_rastreador():
     _popular_rastreador(6, ["expansao"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-        exportar_run(f.name, vila_id="r1")
+    p = _tmppath()
+    try:
+        exportar_run(p, vila_id="r1")
         # Muda rastreador
         _popular_rastreador(3, ["polarizacao"])
         # Replay
-        run = carregar_run(f.name)
+        run = carregar_run(p)
         n = replay_no_rastreador(run)
         teste("replay retorna n_steps", n == 6)
         teste("rastreador tem 6 estados após replay",
               len(RASTREADOR_GLOBAL.trajetoria.estados) == 6)
         teste("estado após replay = expansao",
               RASTREADOR_GLOBAL.trajetoria.estados[0] == "expansao")
-        os.unlink(f.name)
+    finally:
+        if os.path.exists(p): os.unlink(p)
 
 
 def t_resumo_run():
     _popular_rastreador(5, ["bootstrap", "expansao"])
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-        exportar_run(f.name, vila_id="sum_test")
-        run = carregar_run(f.name)
+    p = _tmppath()
+    try:
+        exportar_run(p, vila_id="sum_test")
+        run = carregar_run(p)
         r = resumo_run(run)
         teste("resumo vila_id", r["vila_id"] == "sum_test")
         teste("resumo n_steps", r["n_steps"] == 5)
         teste("resumo distribuição preenchida",
               len(r["distribuicao"]) >= 1)
         teste("resumo estado_inicial", r["estado_inicial"] == "bootstrap")
-        os.unlink(f.name)
+    finally:
+        if os.path.exists(p): os.unlink(p)
 
 
 def main():

@@ -86,7 +86,7 @@ def t_manifest_tem_secoes_core():
     if not p.exists():
         teste("MANIFEST existe", False, "arquivo não encontrado")
         return
-    conteudo = p.read_text()
+    conteudo = p.read_text(encoding="utf-8")
     secoes = ["Ondas", "Módulos engine", "Endpoints API", "Frontend UI",
                "MCP Tools", "Datasets", "Testes", "Artigos", "CLI"]
     for s in secoes:
@@ -95,7 +95,7 @@ def t_manifest_tem_secoes_core():
 
 def t_manifest_menciona_32_ondas():
     p = Path("MANIFEST.md")
-    conteudo = p.read_text()
+    conteudo = p.read_text(encoding="utf-8")
     # Deve listar Ondas 5 até pelo menos 39
     teste("MANIFEST menciona Onda 5", "| 5 |" in conteudo)
     teste("MANIFEST menciona Onda 39", "| 39 |" in conteudo)
