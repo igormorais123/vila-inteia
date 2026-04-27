@@ -394,7 +394,7 @@ body{
   <!-- Status cards inline -->
   <div id="hubStatusCards" style="padding:8px 16px;margin-top:8px"></div>
 
-  <div class="sim-controls">
+  <div class="sim-controls" role="region" aria-label="Controles simulação">
     <div class="sim-controls-header">
       <span>Simulacao</span>
       <span class="sim-time" id="simTime">08:00</span>
@@ -444,11 +444,11 @@ body{
   <div class="map-container" id="mapContainer">
     <svg class="map-svg" id="mapSvg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa Vila INTEIA"></svg>
     <!-- Stats overlay -->
-    <div class="stats-overlay" id="statsOverlay"></div>
+    <div class="stats-overlay" id="statsOverlay" role="dialog" aria-label="Overlay estatísticas"></div>
   </div>
 
   <div class="bottom-bar">
-    <div class="bottom-header">
+    <div class="bottom-header" role="region" aria-label="Cabeçalho inferior">
       <span class="bottom-title">&#9889; Feed de Atividades</span>
       <span style="font-size:10px;color:var(--text-muted)" id="feedCount">0 eventos</span>
     </div>
