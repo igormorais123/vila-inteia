@@ -142,6 +142,10 @@ def modo_serve(args):
             from api.rotas_llm import router as llm_router
         except ImportError:
             llm_router = None
+        try:
+            from api.rotas_mirofish import router as mirofish_router
+        except ImportError:
+            mirofish_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         print("Instale as dependencias: pip install -r requirements.txt")
@@ -186,6 +190,8 @@ def modo_serve(args):
         app.include_router(metrics_router)
     if llm_router is not None:
         app.include_router(llm_router)
+    if mirofish_router is not None:
+        app.include_router(mirofish_router)
 
     # Servir frontend estatico
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
@@ -245,6 +251,80 @@ def modo_demo(args):
     print(f"\n📊 Stats: {sim.stats}")
 
 
+def modo_mirofish(args):
+    """Executa pipeline Mirofish-style: corpus → grafo → simulação → relatório.
+
+    Onda 197: wrapping Vila backtest em API-compatible Mirofish.
+    Produz JSON com {grafo, simulacao, relatorio}.
+    """
+    import json
+    from pathlib import Path
+    from engine.mirofish_style import pipeline_completo
+
+    banner()
+    print("MODO MIROFISH - pipeline corpus → grafo → sim → relatório\n")
+
+    persona_ids = [p.strip() for p in args.personas.split(",")]
+    sim = SimulacaoVila(nome="mirofish")
+    sim.inicializar(max_agentes=len(persona_ids) * 2)
+
+    # Garante que persona_ids requeridos estejam carregados (inicializar pode
+    # pegar outros aleatórios). Se faltou, recarrega do banco.
+    faltantes = [pid for pid in persona_ids if pid not in sim.personas]
+    if faltantes:
+        print(f"⚠  personas não carregadas por inicializar: {faltantes}")
+        print("   recarregando direto do banco...")
+        from engine.persona import Persona
+        with open(Path(__file__).parent / "data" / "banco-consultores-lendarios.json") as f:
+            banco = json.load(f)
+        for p in banco:
+            if p["id"] in faltantes:
+                sim.personas[p["id"]] = Persona(dados_consultor=p)
+
+    print(f"Personas panel: {persona_ids}")
+    print(f"Datasets glob:  data/backtest/{args.datasets}")
+    print()
+
+    out = pipeline_completo(
+        base_dir="data/backtest",
+        dataset_glob=args.datasets,
+        persona_ids=persona_ids,
+        sim=sim,
+        llm_fn=None,  # usa chamar_llm default (OmniRoute/Groq)
+    )
+
+    if "erro" in out:
+        print(f"❌ erro: {out['erro']}")
+        sys.exit(1)
+
+    res = out["simulacao"]["resultado"]
+    print(f"\n{'='*60}")
+    print("RELATÓRIO EXECUTIVO")
+    print(f"{'='*60}")
+    print(out["relatorio"]["conteudo"])
+    print(f"\n--- MÉTRICAS ---")
+    bv = res.get("brier_vila_avg")
+    bp = res.get("brier_prior_avg")
+    sk = res.get("skill_brier_vs_prior")
+    if bv is None:
+        print("  ⚠  LLM offline ou sem chave (GROQ_API_KEY/CLAUDE_API_KEY)")
+        print("     Configure provider ou injete llm_fn no pipeline_completo()")
+    else:
+        print(f"  acc: {100*res['acc_total']:.1f}%")
+        print(f"  brier vila:  {bv:.4f}")
+        print(f"  brier prior: {bp:.4f}" if bp is not None else "  brier prior: N/A")
+        print(f"  skill:       {(sk or 0)*100:+.1f}%")
+    print(f"\n--- INSIGHTS ---")
+    for ins in out["relatorio"]["insights"]:
+        print(f"  [{ins['tipo']}] {len(ins['items'])} items")
+
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
+        json.dump(out, f, indent=2, default=str)
+    print(f"\n✓ saída: {out_path}")
+
+
 def modo_live(args):
     """Vila INTEIA 24/7 — servidor + simulação contínua em background."""
     banner()
@@ -289,6 +369,10 @@ def modo_live(args):
             from api.rotas_llm import router as llm_router
         except ImportError:
             llm_router = None
+        try:
+            from api.rotas_mirofish import router as mirofish_router
+        except ImportError:
+            mirofish_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         sys.exit(1)
@@ -328,6 +412,8 @@ def modo_live(args):
         app.include_router(metrics_router)
     if llm_router is not None:
         app.include_router(llm_router)
+    if mirofish_router is not None:
+        app.include_router(mirofish_router)
 
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
     if os.path.exists(frontend_dir):
@@ -438,6 +524,18 @@ def main():
     # Comando: demo
     subparsers.add_parser("demo", help="Demo rápido com 10 agentes")
 
+    # Comando: mirofish (Onda 197)
+    mirofish_parser = subparsers.add_parser(
+        "mirofish",
+        help="Pipeline estilo Mirofish: corpus → grafo → simulação → relatório",
+    )
+    mirofish_parser.add_argument("--datasets", default="*.csv",
+                                 help="glob em data/backtest/ (default: *.csv)")
+    mirofish_parser.add_argument("--personas", default="CL001,CL002,CL007",
+                                 help="IDs panel (default: Musk/Jobs/Bezos)")
+    mirofish_parser.add_argument("--out", default="data/mirofish_output.json",
+                                 help="arquivo JSON saída")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -448,6 +546,8 @@ def main():
         modo_live(args)
     elif args.comando == "demo":
         modo_demo(args)
+    elif args.comando == "mirofish":
+        modo_mirofish(args)
     else:
         parser.print_help()
         print("\nExemplos:")
@@ -455,6 +555,7 @@ def main():
         print("  python -m vila_inteia.main run --steps 100 --topico 'eleições 2026'")
         print("  python -m vila_inteia.main serve --port 8100")
         print("  python -m vila_inteia.main live --intervalo 30 --topico 'IA no Brasil'")
+        print("  python -m vila_inteia.main mirofish --personas CL001,CL002,CL007")
 
 
 if __name__ == "__main__":

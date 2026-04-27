@@ -124,9 +124,59 @@ python main.py run --steps 100
 
 # Modo 24/7
 python main.py live --intervalo 30
+
+# Pipeline Mirofish-style: corpus → grafo → simulação → relatório (Onda 197)
+python main.py mirofish --personas CL001,CL002,CL007 --datasets "*.csv"
 ```
 
 Visite: **http://localhost:8100/docs**
+
+---
+
+## Pipeline Mirofish-Style (Onda 197)
+
+Vila expõe pipeline API-compatible com [Mirofish](https://github.com/666ghj/MiroFish): corpus → grafo → simulação multi-agente → relatório executivo. Diferencial Vila: arquétipos hardcoded, calibração Brier+Platt, backtest real em 100 events, insights emergentes (divergência personas).
+
+### CLI
+
+```bash
+# Roda 10 datasets × 100 events × 3 personas (Musk/Jobs/Bezos)
+GROQ_API_KEY=$KEY python main.py mirofish
+
+# Custom panel + filtro datasets
+python main.py mirofish \
+  --personas CL001,CL020,CL030 \
+  --datasets "btc*.csv" \
+  --out /tmp/btc_only.json
+```
+
+### REST API
+
+```bash
+# Subir API
+python main.py serve --port 8100
+
+# Listar datasets
+curl http://localhost:8100/api/v1/mirofish/datasets
+
+# Rodar pipeline (precisa simulação ativa)
+curl -X POST http://localhost:8100/api/v1/vila/iniciar
+curl -X POST http://localhost:8100/api/v1/mirofish/run \
+  -H 'Content-Type: application/json' \
+  -d '{"persona_ids": ["CL001","CL002","CL007"]}'
+
+# Diferencial Vila vs Mirofish
+curl http://localhost:8100/api/v1/mirofish/info
+```
+
+### Output
+
+Retorna `{grafo, simulacao, relatorio, pipeline_elapsed_s}`:
+- **Grafo**: 103 entidades (3 personas + 100 eventos), 400 relações
+- **Simulação**: status, métricas (acc, brier vila/prior, skill score)
+- **Relatório**: narrativa PT-BR + insights (divergência personas, consenso forte, vitórias confiantes, derrotas confiantes)
+
+Doc completa: [`.claude/skills/vila-mirofish/SKILL.md`](./.claude/skills/vila-mirofish/SKILL.md)
 
 ---
 

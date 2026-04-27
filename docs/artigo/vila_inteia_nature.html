@@ -202,6 +202,25 @@ bootstrap                 | ▏ 0.2%
 
 <p><em>Murphy decomposition and isotonic comparison.</em> The Brier score admits Murphy's decomposition BS = Reliability − Resolution + Uncertainty. Vila's raw predictions show high reliability error (poor calibration) but positive resolution (discriminates between outcomes). Isotonic regression (PAV algorithm) provides a non-parametric alternative to Platt; on this sample the two methods produce similar ECE reduction but Platt generalises more robustly with limited data (Wave 100). Bootstrap 95% CI on skill score (n_boot = 1000) gives [+0.12, +0.74].</p>
 
+<h3>AutoResearch loop (Waves 159–191)</h3>
+
+<p><em>Karpathy-style optimisation loop.</em> Inspired by Karpathy/autoresearch (March 2026), we built <code>engine/autoresearch_accuracy.py</code> with a 13-parameter PROPOSAL_SPACE (8 boolean flags, 4 ranges, 1 discrete choice) and a keep-or-revert loop that reads each iteration's brier score from <code>rodar_backtest_acc</code>. Trace persists as append-only JSONL for audit. The loop discovered <code>usar_debate=True</code> as a winner on impeachment (2 events, scout-17b) reducing brier 0.025 → 0.010 (−58.7%; Wave 173). Subsequent runs validated baseline performance (brier 0.065 / accuracy 97% over 6 events; Wave 190) with gpt-oss-120b.</p>
+
+<p><em>Circuit-breaker bug + fix (Wave 184).</em> Initial runs corrupted iteration metrics: when Groq TPD quota exhausted, the LLM client returned heuristic fallback predictions, generating fake brier=1.0 reverts. Fixed by detecting <code>n_eventos_with_prob_none / n_total &gt; 0.5</code> and returning <code>(None, 0)</code> as honest "LLM offline" signal; the loop then sleeps for the 125 s circuit-breaker cooldown and continues without polluting the trace. Validated empirically: 4 of 5 iterations correctly emit <code>erro=&quot;LLM offline&quot;</code> rather than spurious metric=1.0 (Wave 184b).</p>
+
+<p><em>Model rotation (Wave 191).</em> A single model's TPD (200–500 k tokens/day on free tier) is exhausted within 1–2 baseline runs of 6 events × 3 personas. Wave 191 introduces <code>MODEL_POOL_DEFAULT</code> (scout-17b, gpt-oss-120b, llama-3.3-70b, gpt-oss-20b, llama-3.1-8b) and rotates the active model per iteration via <code>os.environ["GROQ_MODEL_RAPIDO"]</code>, multiplying effective overnight throughput by ~5×.</p>
+
+<table>
+<thead><tr><th>Wave</th><th>Model</th><th>Events</th><th>Baseline brier</th><th>Best brier</th><th>Δ</th></tr></thead>
+<tbody>
+<tr><td>173</td><td>scout-17b</td><td>2</td><td>0.025</td><td><b>0.010</b></td><td><b>−58.7%</b></td></tr>
+<tr><td>184b</td><td>scout-17b</td><td>6</td><td>0.000 (acc 100%)</td><td>0.000</td><td>cap</td></tr>
+<tr><td>188</td><td>gpt-oss-120b</td><td>4</td><td>0.040</td><td>0.040</td><td>—</td></tr>
+<tr><td>190</td><td>gpt-oss-120b</td><td>6</td><td><b>0.065</b> (acc 97%)</td><td>0.065</td><td>—</td></tr>
+</tbody>
+</table>
+<p style="font-size: 7.5pt; color: #555; text-align: left;">Table 6 | AutoResearch real-LLM runs. Iters 1–N typically SKIPped due to quota exhaustion (Wave 184 fix prevents fake reverts).</p>
+
 <h2>Discussion</h2>
 
 <p>The most striking finding of the live LLM-driven run is the semantic coherence of the recovered communities (Table 2). The Buffett–Munger dyad emerges as a clique with edge density 1.0 from purely behavioural data—neither persona was hard-coded as the other's preferred dialogue partner. Likewise, the "aggressive strategy" cluster groups four canonical takeover artists (Trump, Ellison, Icahn, Murdoch) with two large-software CEOs (Benioff, Nadella). These structures recapitulate documented affinities in the public record without supervision; we read them as evidence that the persona archetype prompts (<code>engine/arquetipos.py</code>: <code>REGRAS_ESPECIAIS</code>) carry sufficient semantic signal to drive non-trivial graph structure.</p>

@@ -42,12 +42,16 @@ def main():
     parser.add_argument("--personas", default="CL001,CL002,CL007")
     parser.add_argument("--max-sem-melhoria", type=int, default=5)
     parser.add_argument("--no-groq", action="store_true", help="desabilita Groq (força fallback)")
+    parser.add_argument("--rotate-models", action="store_true",
+                        help="Onda 191: rotate Groq models per iter (evita TPD burn)")
+    parser.add_argument("--timeout", type=int, default=30,
+                        help="LLM timeout segundos (default 30s)")
     args = parser.parse_args()
 
     _load_env()
     if args.no_groq:
         os.environ["GROQ_API_KEY"] = ""
-    os.environ.setdefault("VILA_LLM_TIMEOUT_S", "15")
+    os.environ["VILA_LLM_TIMEOUT_S"] = str(args.timeout)
     os.environ["PYTHONUNBUFFERED"] = "1"
 
     from engine.persona import Persona
@@ -97,6 +101,12 @@ def main():
     print(f"[autoresearch] baseline: {json.dumps(baseline)}")
     print()
 
+    model_pool = None
+    if args.rotate_models:
+        from engine.autoresearch_accuracy import MODEL_POOL_DEFAULT
+        model_pool = MODEL_POOL_DEFAULT
+        print(f"[autoresearch] rotating models: {model_pool}")
+
     resultado = loop_autoresearch(
         baseline_config=baseline,
         datasets=dataset_paths,
@@ -107,6 +117,7 @@ def main():
         seed=args.seed,
         trace_path=args.trace,
         max_eventos_por_dataset=args.max_eventos,
+        model_pool=model_pool,
     )
 
     print("\n=== AutoResearch Resumo ===")
