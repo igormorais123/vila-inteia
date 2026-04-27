@@ -52,9 +52,9 @@
     <h1>Vila INTEIA — Super Intelligence</h1>
     <div class="sub">Onda 81 · Forecast Markov + Multi-CF Sweep + Briefing LLM unificado</div>
 
-    <div class="controls">
+    <section class="controls" aria-label="Controles forecast">
       <label>Horizonte:
-        <select id="horizonte">
+        <select id="horizonte" aria-label="Horizonte temporal">
           <option value="5">5 steps</option>
           <option value="10" selected>10 steps</option>
           <option value="20">20 steps</option>
@@ -62,7 +62,7 @@
         </select>
       </label>
       <label>Outcome:
-        <select id="outcome">
+        <select id="outcome" aria-label="Outcome desejado">
           <option value="equilibrio" selected>equilibrio</option>
           <option value="expansao">expansao</option>
           <option value="consenso_fragil">consenso_fragil</option>
@@ -71,11 +71,11 @@
           <option value="crise_economica">crise_economica</option>
         </select>
       </label>
-      <label><input type="checkbox" id="llm_on" checked> LLM narrativa</label>
-      <button onclick="atualizar()">Atualizar agora</button>
-      <label><input type="checkbox" id="auto" checked> auto-refresh 30s</label>
+      <label><input type="checkbox" id="llm_on" checked aria-label="Habilitar LLM narrativa"> LLM narrativa</label>
+      <button onclick="atualizar()" aria-label="Atualizar forecast agora">Atualizar agora</button>
+      <label><input type="checkbox" id="auto" checked aria-label="Auto-refresh 30 segundos"> auto-refresh 30s</label>
       <span id="status" class="status">—</span>
-    </div>
+    </section>
 
     <div class="grid">
       <div class="card">

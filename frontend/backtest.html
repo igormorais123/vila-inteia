@@ -32,16 +32,16 @@
         <h1 style="font-size: var(--text-2xl);">Backtest Comparativo</h1>
         <p class="u-muted" style="margin-top: var(--space-1);">Poder preditivo em 5 datasets históricos (Onda 27)</p>
       </div>
-      <nav class="u-hstack" style="gap: var(--space-4);">
-        <a href="/dashboard.html" class="u-muted">dashboard</a>
-        <a href="/" class="u-muted">← Vila</a>
+      <nav class="u-hstack" style="gap: var(--space-4);" aria-label="Navegação Vila">
+        <a href="/dashboard.html" class="u-muted" aria-label="Ir para dashboard">dashboard</a>
+        <a href="/" class="u-muted" aria-label="Voltar Vila">← Vila</a>
       </nav>
     </header>
 
     <div class="panel">
       <div class="panel__header">
         <h2 class="panel__title">Executar todos datasets</h2>
-        <button id="btn-rodar" class="btn btn--primary">Rodar backtest completo</button>
+        <button id="btn-rodar" class="btn btn--primary" aria-label="Rodar backtest completo">Rodar backtest completo</button>
       </div>
       <p class="u-muted" style="font-size: var(--text-sm);">
         Brier: 0 = perfeito · 0.25 = chute aleatório · 1 = maximamente errado.
