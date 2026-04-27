@@ -154,15 +154,15 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <div class="spacer"></div>
     <span id="calib_status" class="status" title="Calibração Platt Onda 97">cal: —</span>
     <span id="status" class="status">—</span>
-    <button class="btn-sec btn" onclick="iniciarTour()" title="Tour guiado">?</button>
-    <button class="btn-sec btn" onclick="abrirBacktestModal()">🎯 Backtest</button>
-    <a class="btn-sec btn" href="/api/v1/vila/snapshot" download style="text-decoration:none">⬇ Snapshot</a>
-    <button class="btn-sec btn" onclick="atualizarTudo()">↻ Refresh</button>
+    <button class="btn-sec btn" onclick="iniciarTour()" title="Tour guiado" aria-label="Iniciar tour guiado">?</button>
+    <button class="btn-sec btn" onclick="abrirBacktestModal()" aria-label="Abrir backtest modal">🎯 Backtest</button>
+    <a class="btn-sec btn" href="/api/v1/vila/snapshot" download style="text-decoration:none" aria-label="Download snapshot">⬇ Snapshot</a>
+    <button class="btn-sec btn" onclick="atualizarTudo()" aria-label="Atualizar tudo">↻ Refresh</button>
     <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
-      <input type="checkbox" id="sse" checked> SSE live
+      <input type="checkbox" id="sse" checked aria-label="Server-sent events live"> SSE live
     </label>
     <label style="font-size:11px;color:var(--txt3);display:flex;gap:4px;align-items:center;cursor:pointer">
-      <input type="checkbox" id="auto"> auto 30s
+      <input type="checkbox" id="auto" aria-label="Auto refresh 30 segundos"> auto 30s
     </label>
   </header>
 
@@ -178,8 +178,8 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
     <!-- CENTER: view toggle (D3 graph | Campus map) -->
     <section class="col-c">
       <div style="position:absolute;top:12px;right:12px;z-index:20;display:flex;gap:4px;background:rgba(15,23,42,0.85);padding:4px;border-radius:6px;border:1px solid var(--border)">
-        <button id="view_graph_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('graph')">◈ Grafo</button>
-        <button id="view_campus_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('campus')">▣ Campus</button>
+        <button id="view_graph_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('graph')" aria-label="Visualizar como grafo">◈ Grafo</button>
+        <button id="view_campus_btn" class="btn-sec btn" style="padding:4px 10px;font-size:11px" onclick="setView('campus')" aria-label="Visualizar como campus">▣ Campus</button>
       </div>
       <svg id="graph" class="view-graph"></svg>
       <svg id="campus" class="view-campus" style="display:none;width:100%;height:100%"></svg>
@@ -229,7 +229,7 @@ h3.section{font-size:11px;color:var(--amber);text-transform:uppercase;letter-spa
 <div class="drawer" id="drawer">
   <div class="drawer-h">
     <h2 id="dr_name">—</h2>
-    <button class="drawer-x" onclick="fecharDrawer()">×</button>
+    <button class="drawer-x" onclick="fecharDrawer()" aria-label="Fechar drawer">×</button>
   </div>
   <div class="drawer-body" id="dr_body">—</div>
 </div>
