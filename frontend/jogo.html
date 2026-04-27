@@ -482,14 +482,14 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 
       <!-- CONTROLES -->
       <div class="controls-bar">
-        <button class="ctrl-btn play-btn" id="btnPlay" onclick="togglePlay()">&#9654; Play</button>
+        <button class="ctrl-btn play-btn" id="btnPlay" onclick="togglePlay()" aria-label="Play/pause simulação">&#9654; Play</button>
         <div class="speed-group">
-          <button class="speed-btn active" data-speed="1" onclick="setSpeed(1,this)">1x</button>
-          <button class="speed-btn" data-speed="2" onclick="setSpeed(2,this)">2x</button>
-          <button class="speed-btn" data-speed="5" onclick="setSpeed(5,this)">5x</button>
+          <button class="speed-btn active" data-speed="1" onclick="setSpeed(1,this)" aria-label="Velocidade 1x">1x</button>
+          <button class="speed-btn" data-speed="2" onclick="setSpeed(2,this)" aria-label="Velocidade 2x">2x</button>
+          <button class="speed-btn" data-speed="5" onclick="setSpeed(5,this)" aria-label="Velocidade 5x">5x</button>
         </div>
-        <button class="ctrl-btn" onclick="exportTranscript()">Exportar</button>
-        <button class="ctrl-btn" onclick="resetSession()">Nova Sessão</button>
+        <button class="ctrl-btn" onclick="exportTranscript()" aria-label="Exportar transcript">Exportar</button>
+        <button class="ctrl-btn" onclick="resetSession()" aria-label="Resetar sessão">Nova Sessão</button>
         <div class="stats-group">
           <span class="stat-item stat-fase-container">Fase: <strong id="statFase" class="stat-fase fase-apresentacao">APRESENTAÇÃO</strong></span>
           <span class="stat-item" id="statVotos" style="display:none;color:#22c55e;font-weight:700">0S/0N/0A</span>
@@ -507,14 +507,14 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
         <input class="user-input" id="userInput" type="text" aria-label="Mensagem do usuário"
           placeholder="Proponha artigos, vote, debata regras da Vila INTEIA (economia, governança, direitos)..."
           onkeydown="if(event.key==='Enter')sendUserMessage()">
-        <button class="send-btn" onclick="sendUserMessage()">Enviar</button>
+        <button class="send-btn" onclick="sendUserMessage()" aria-label="Enviar mensagem">Enviar</button>
       </div>
     </div>
 
     <!-- PAINEL DIREITO (TABS 40%) -->
     <div class="panel-right">
       <div class="tabs-header">
-        <button class="tab-btn active" onclick="switchTab('constitution',this)">Constituição</button>
+        <button class="tab-btn active" onclick="switchTab('constitution',this)" aria-label="Aba Constituição">Constituição</button>
         <button class="tab-btn" onclick="switchTab('economy',this)">Regras Econômicas</button>
         <button class="tab-btn" onclick="switchTab('helena',this)">Helena</button>
         <button class="tab-btn" onclick="switchTab('desafio',this)" style="color:#22c55e">Desafio</button>

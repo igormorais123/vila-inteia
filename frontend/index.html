@@ -337,7 +337,7 @@ body{
 </style>
 </head>
 <body role="application" aria-label="Vila INTEIA Painel" role="application" aria-label="Vila INTEIA Painel" role="application" aria-label="Vila INTEIA Painel">
-<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Alternar sidebar" aria-label="Menu">&#9776;</button>
 
 <div class="app">
 <!-- ===== SIDEBAR ===== -->
@@ -401,18 +401,18 @@ body{
     </div>
     <div class="sim-controls-body">
       <div class="sim-btns">
-        <button class="sim-btn" id="btnPlay" onclick="togglePlay()" title="Space">&#9654; Play</button>
-        <button class="sim-btn" id="btnStep" onclick="doStep()" title="&#8594;">&#9654;&#124; Step</button>
+        <button class="sim-btn" id="btnPlay" onclick="togglePlay()" aria-label="Play/pause" title="Space">&#9654; Play</button>
+        <button class="sim-btn" id="btnStep" onclick="doStep()" aria-label="Próximo step" title="&#8594;">&#9654;&#124; Step</button>
       </div>
       <div class="topic-section">
         <textarea class="topic-input" id="topicInput" rows="2" placeholder="Injetar topico na Vila..."></textarea>
-        <button class="topic-send" onclick="injectTopic()">Injetar Topico</button>
+        <button class="topic-send" onclick="injectTopic()" aria-label="Injetar tópico">Injetar Topico</button>
       </div>
     </div>
   </div>
 
   <div class="sidebar-footer">
-    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
     <span class="sidebar-footer-text">Powered by INTEIA</span>
     <button class="collapse-btn" onclick="collapseSidebar()" aria-label="Recolher menu">&#171;</button>
   </div>
