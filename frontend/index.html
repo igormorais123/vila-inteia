@@ -411,15 +411,15 @@ body{
     </div>
   </div>
 
-  <div class="sidebar-footer">
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
+  <footer class="sidebar-footer" role="contentinfo">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">&#9790;</button>
     <span class="sidebar-footer-text">Powered by INTEIA</span>
     <button class="collapse-btn" onclick="collapseSidebar()" aria-label="Recolher menu">&#171;</button>
-  </div>
+  </footer>
 </aside>
 
 <!-- ===== MAIN ===== -->
-<div class="main-area">
+<div class="main-area" role="main" aria-label="Área principal Vila">
   <div class="search-bar" id="searchBar">
     <input class="search-input" id="searchInput" placeholder="Buscar agente..." aria-label="Buscar agente" oninput="filterAgents()">
     <select class="filter-select" id="filterCat" aria-label="Filtrar agentes por categoria" onchange="filterAgents()">
@@ -457,9 +457,9 @@ body{
 </div>
 
 <!-- ===== RIGHT PANEL ===== -->
-<div class="right-panel" id="rightPanel">
+<aside class="right-panel" id="rightPanel" aria-label="Painel direito">
   <div class="right-panel-inner" id="panelContent"></div>
-</div>
+</aside>
 </div>
 
 <!-- ===== AGENT POPUP ===== -->
