@@ -450,7 +450,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 <div class="app">
   <!-- TOPBAR -->
   <header class="topbar" role="banner">
-    <div class="topbar-left">
+    <div class="topbar-left" role="group" aria-label="Logo">
       <div class="logo-box">IA</div>
       <div class="topbar-title"><span>JOGO DA ASSEMBLEIA</span> Vila INTEIA</div>
     </div>
@@ -461,7 +461,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
       <a href="/vila-inteia/constituicao.html">Constituição</a>
       <a href="/vila-inteia/jogo.html" class="active">Jogo</a>
     </nav>
-    <div class="topbar-right">
+    <div class="topbar-right" role="group" aria-label="Ações topbar">
       <div class="currency-badge">
         <span class="coin-icon">&#926;</span>
         <span id="totalSupply">142.000</span>
@@ -481,7 +481,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
       <div class="assembly-feed" id="feed"></div>
 
       <!-- CONTROLES -->
-      <div class="controls-bar">
+      <div class="controls-bar" role="toolbar" aria-label="Controles playback">
         <button class="ctrl-btn play-btn" id="btnPlay" onclick="togglePlay()" aria-label="Play/pause simulação">&#9654; Play</button>
         <div class="speed-group">
           <button class="speed-btn active" data-speed="1" onclick="setSpeed(1,this)" aria-label="Velocidade 1x">1x</button>
@@ -490,7 +490,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
         </div>
         <button class="ctrl-btn" onclick="exportTranscript()" aria-label="Exportar transcript">Exportar</button>
         <button class="ctrl-btn" onclick="resetSession()" aria-label="Resetar sessão">Nova Sessão</button>
-        <div class="stats-group">
+        <div class="stats-group" role="region" aria-label="Estatísticas Vila">
           <span class="stat-item stat-fase-container">Fase: <strong id="statFase" class="stat-fase fase-apresentacao">APRESENTAÇÃO</strong></span>
           <span class="stat-item" id="statVotos" style="display:none;color:#22c55e;font-weight:700">0S/0N/0A</span>
           <span class="stat-item">Rodada: <strong id="statRound">0</strong></span>
