@@ -29,6 +29,8 @@ vila-inteia/data/
 !data/banco-consultores-lendarios.json
 !data/backtest/
 !data/backtest/**
+!data/n100/
+!data/n100/**
 data/colmeia_estado.json
 
 # Screenshots e assets temporarios
