@@ -1064,7 +1064,7 @@ function renderStats(){
 
   let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">`;
   h+=`<h2 style="font-size:18px;font-weight:700">\u{1F4CA} Dashboard de Estatisticas</h2>`;
-  h+=`<button onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
+  h+=`<button aria-label="Fechar overlay stats" onclick="document.getElementById('statsOverlay').classList.remove('visible')" style="background:none;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;padding:6px 12px;font-family:inherit;font-size:12px">Fechar</button>`;
   h+=`</div>`;
 
   // KPIs
@@ -1190,7 +1190,7 @@ async function showDesafioView(){
       h+=`<div style="text-align:center;padding:30px">`;
       h+=`<p style="color:var(--text-muted);margin-bottom:16px">Nenhum desafio ativo.</p>`;
       h+=`<textarea id="vilaDesafioInput" placeholder="Digite o tema do desafio..." style="width:100%;height:80px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary);padding:10px;border-radius:var(--radius-sm);font-size:13px;resize:vertical;font-family:inherit;margin-bottom:12px"></textarea>`;
-      h+=`<button onclick="iniciarDesafioMapa()" style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:12px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;font-weight:700">Iniciar Desafio</button>`;
+      h+=`<button aria-label="Iniciar desafio mapa" onclick="iniciarDesafioMapa()" style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:12px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;font-weight:700">Iniciar Desafio</button>`;
       h+=`</div>`;
     }else{
       const pct=Math.round((data.progresso_total||0)*100);

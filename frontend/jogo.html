@@ -449,7 +449,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 <body><a href="#root" class="sr-only" aria-label="Pular para conteúdo principal">Pular para conteúdo</a>
 <div class="app">
   <!-- TOPBAR -->
-  <div class="topbar">
+  <header class="topbar" role="banner">
     <div class="topbar-left">
       <div class="logo-box">IA</div>
       <div class="topbar-title"><span>JOGO DA ASSEMBLEIA</span> Vila INTEIA</div>
@@ -580,7 +580,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
             <div id="desafioHeader" style="margin-bottom:16px">
               <div style="text-align:center;padding:20px;color:var(--txm);font-size:12px;line-height:1.6">
                 Nenhum desafio ativo.<br>
-                <button onclick="listarDesafios()" style="margin-top:8px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:8px 16px;border-radius:var(--r-sm);cursor:pointer;font-size:12px;font-weight:600">Iniciar Desafio</button>
+                <button onclick="listarDesafios()" aria-label="Listar desafios disponíveis" style="margin-top:8px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:8px 16px;border-radius:var(--r-sm);cursor:pointer;font-size:12px;font-weight:600">Iniciar Desafio</button>
               </div>
             </div>
 
@@ -638,7 +638,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
                 <div style="font-weight:600;font-size:14px">Relatório Executivo</div>
                 <div style="font-size:11px;color:var(--txm)">Vila INTEIA — 151 consultores 24/7</div>
               </div>
-              <button onclick="carregarRelatorio()" style="margin-left:auto;background:var(--bg3);border:1px solid var(--brd);color:var(--tx2);padding:4px 10px;border-radius:var(--r-sm);cursor:pointer;font-size:11px">Atualizar</button>
+              <button onclick="carregarRelatorio()" aria-label="Atualizar relatório" style="margin-left:auto;background:var(--bg3);border:1px solid var(--brd);color:var(--tx2);padding:4px 10px;border-radius:var(--r-sm);cursor:pointer;font-size:11px">Atualizar</button>
             </div>
             <div id="relatorioLive" style="font-size:12px;color:var(--tx2);line-height:1.6">
               <div style="text-align:center;padding:20px;color:var(--txm)">Carregando relatório da Vila INTEIA...</div>
@@ -2771,7 +2771,7 @@ function listarDesafios() {
       </label>
       <div id="desafioDocPreview" style="display:none;margin-top:6px;padding:6px;background:var(--bg3);border-radius:var(--r-sm);font-size:10px;color:var(--txm);max-height:60px;overflow:hidden"></div>
     </div>
-    <button onclick="iniciarDesafioLivre()" style="margin-top:10px;width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:10px;border-radius:var(--r-sm);cursor:pointer;font-size:13px;font-weight:700">Iniciar Desafio</button>
+    <button onclick="iniciarDesafioLivre()" aria-label="Iniciar desafio livre" style="margin-top:10px;width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;color:#fff;padding:10px;border-radius:var(--r-sm);cursor:pointer;font-size:13px;font-weight:700">Iniciar Desafio</button>
   `;
 }
 
