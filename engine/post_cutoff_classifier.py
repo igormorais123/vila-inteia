@@ -48,7 +48,23 @@ KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
     # Prices — markets eficientes, 50/50 (sem alpha sem cache live)
     (["fecha acima", "fecha abaixo", "$", "k em "], 0.50, "price_threshold"),
     (["tariff", "tarifa", "imposed"], 0.55, "tariff_action"),
-    (["fed cut", "rate cut", "corte juros", "fomc"], 0.45, "fed_action"),
+    # Central bank actions — meeting realization usually true; rate cuts variable
+    (["fomc reunião realizada", "ecb realizada", "boe realizada", "boj realizada",
+      "fomc march", "fomc realizada", "central bank realizada"], 0.92, "central_bank_meeting"),
+    (["fed cut", "rate cut", "corte juros", "fomc", "cortou taxa", "cortou rate",
+      "cortou selic", "cortou lpr"], 0.50, "fed_action"),
+    # Geopolitics — base rate low for major escalation, high for ongoing tensions
+    (["invadiu", "invaded", "ceasefire", "cessar-fogo", "paris agreement",
+      "nato new member", "saudi-israel"], 0.25, "geopolitical_low"),
+    (["míssil", "missile", "cyber attack", "drone", "test"], 0.65, "geopolitical_routine"),
+    # Corporate M&A / financial action
+    (["aquisição", "acquired", "acquisition", "buyback", "stock buyback",
+      "dividendos", "dividend", "merger"], 0.55, "corporate_action"),
+    (["cisão", "spin-off", "demissões em massa", "layoffs", "ipo cancel"], 0.40, "corporate_negative"),
+    # Regulatory / legal
+    (["aprovou eu ai", "ai act", "enforcement"], 0.75, "regulatory_active"),
+    (["bloqueou", "blocked", "antitrust", "fined", "doj", "ftc",
+      "revogou", "withdrew", "withdraws", "restrições"], 0.40, "regulatory_action"),
     # Tech releases — slow/uncertain; Artemis II type long delays common
     (["lança", "release", "launch", "anuncia", "announce", "starship"], 0.45, "tech_release"),
     (["bitcoin", "btc", "ath", "k+"], 0.40, "price_target"),
@@ -64,25 +80,32 @@ KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
 # Q1 train (post_cutoff Q1 v1+v2 + price + brazil + sports + tech + elections + space)
 # n=100. Hard-coded sem peek into Q2 holdout.
 EB_TUNED_PRIORS: dict[str, float] = {
-    "scheduled_event": 0.983,
+    "war_conflict": 0.900,
     "sports_event_structure": 0.893,
-    "war_conflict": 0.880,
+    "scheduled_event": 0.829,
+    "geopolitical_routine": 0.825,
+    "regulatory_active": 0.812,
     "br_legislative": 0.765,
-    "default": 0.731,
-    "casualty_threshold": 0.700,
+    "casualty_threshold": 0.760,
+    "default": 0.694,
     "election": 0.650,
     "regime_change": 0.640,
-    "price_target": 0.550,
+    "fed_action": 0.591,
+    "crypto_product_launch": 0.590,
+    "corporate_action": 0.581,
     "tariff_action": 0.530,
-    "crypto_product_launch": 0.488,
-    "price_threshold": 0.485,
+    "price_threshold": 0.471,
+    "corporate_negative": 0.440,
     "tech_release": 0.423,
+    "regulatory_action": 0.400,
     "polling": 0.338,
-    "fed_action": 0.338,
     "negative_rank_claim": 0.262,
+    "geopolitical_low": 0.250,
     "extreme_quantity_claim": 0.225,
     "sports_specific_winner": 0.180,
     "br_reform_complex": 0.150,
+    "central_bank_meeting": 0.95,
+    "price_target": 0.40,
 }
 
 
