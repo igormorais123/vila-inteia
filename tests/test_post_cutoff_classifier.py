@@ -24,35 +24,43 @@ for kws, prior, label in KEYWORD_PRIORS:
     check(0 <= prior <= 1, f"{label} prior in [0,1] (got {prior})")
     check(isinstance(kws, list) and len(kws) > 0, f"{label} keywords list non-empty")
 
-print("\n[2] classify_and_predict — war/conflict")
-p, lbl = classify_and_predict("Israel attack Iran")
+print("\n[2] classify_and_predict — war/conflict (raw=0.80)")
+p, lbl = classify_and_predict("Israel attack Iran", apply_stretch=False)
 check(lbl == "war_conflict", f"war detected (got {lbl})")
-check(p == 0.80, f"high prior (got {p})")
+check(p == 0.80, f"raw prior (got {p})")
+# With stretch (Onda 260): 0.5 + 1.5*(0.8-0.5) = 0.95
+p_s, _ = classify_and_predict("Israel attack Iran")
+check(abs(p_s - 0.95) < 1e-9, f"stretched (got {p_s})")
 
-print("\n[3] tech release")
-p, lbl = classify_and_predict("Apple lança new product")
+print("\n[3] tech release (raw=0.45)")
+p, lbl = classify_and_predict("Apple lança new product", apply_stretch=False)
 check(lbl == "tech_release", f"tech release (got {lbl})")
-check(p == 0.45, f"moderate-low (got {p})")
+check(p == 0.45, f"raw prior (got {p})")
 
-print("\n[4] scheduled event")
-p, lbl = classify_and_predict("Olympics summit held in March")
+print("\n[4] scheduled event (raw=0.92)")
+p, lbl = classify_and_predict("Olympics summit held in March", apply_stretch=False)
 check(lbl == "scheduled_event", f"scheduled (got {lbl})")
-check(p == 0.92, f"very high (got {p})")
+check(p == 0.92, f"raw prior (got {p})")
+# With stretch: clipped to 1.0
+p_s, _ = classify_and_predict("Olympics summit held in March")
+check(p_s == 1.0, f"stretched clipped (got {p_s})")
 
-print("\n[5] price target / threshold")
-p, lbl = classify_and_predict("Bitcoin ATH hits k+")  # avoid $ trigger
+print("\n[5] price target / threshold (raw=0.40)")
+p, lbl = classify_and_predict("Bitcoin ATH hits k+", apply_stretch=False)
 check(lbl == "price_target", f"price target (got {lbl})")
-check(p == 0.40, f"low prior (got {p})")
+check(p == 0.40, f"raw prior (got {p})")
 
-# Threshold-style price events go to price_threshold
-p, lbl = classify_and_predict("AAPL fecha acima de $250")
+p, lbl = classify_and_predict("AAPL fecha acima de $250", apply_stretch=False)
 check(lbl == "price_threshold", f"price threshold (got {lbl})")
 check(p == 0.50, f"chance prior (got {p})")
 
-print("\n[6] default fallback")
-p, lbl = classify_and_predict("Generic event without keywords")
+print("\n[6] default fallback (raw=0.50)")
+p, lbl = classify_and_predict("Generic event without keywords", apply_stretch=False)
 check(lbl == "default", f"default (got {lbl})")
 check(p == 0.50, f"baseline prior (got {p})")
+# Stretch leaves 0.5 unchanged (midpoint)
+p_s, _ = classify_and_predict("Generic event without keywords")
+check(p_s == 0.50, f"stretch keeps midpoint (got {p_s})")
 
 print("\n[7] evaluate_classifier_on_events")
 events = [

@@ -59,17 +59,37 @@ KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
 ]
 
 
-def classify_and_predict(framing: str, contexto: str = "") -> tuple[float, str]:
+def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
+    """Onda 260: stretch confidence around midpoint (Hedge winner finding).
+
+    p_out = clip(midpoint + factor * (p - midpoint), [0, 1])
+    Hedge bench (Onda 259): factor=1.5 wins brier 0.179 vs base 0.20.
+
+    Categorias com prior calibrado (scheduled, war) ficam quase
+    inalteradas; categorias hedged (default 0.5, election 0.5) ganham
+    discrimination.
+    """
+    out = midpoint + factor * (p - midpoint)
+    return max(0.0, min(1.0, out))
+
+
+def classify_and_predict(framing: str, contexto: str = "",
+                         apply_stretch: bool = True) -> tuple[float, str]:
     """Classify via keywords + return prior.
 
     Tenta cada keyword set in order. First match wins.
     Default: 0.50.
+
+    apply_stretch: aplica confidence stretching (Hedge-discovered).
+    Set False pra raw priors.
     """
     text = (framing + " " + contexto).lower()
     for keywords, prior, label in KEYWORD_PRIORS:
         if any(kw in text for kw in keywords):
-            return prior, label
-    return 0.50, "default"
+            p = _stretch(prior) if apply_stretch else prior
+            return p, label
+    p = _stretch(0.50) if apply_stretch else 0.50
+    return p, "default"
 
 
 def evaluate_classifier_on_events(events: list) -> dict:
