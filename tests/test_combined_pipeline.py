@@ -51,14 +51,18 @@ expected = res["reliability"] + res["uncertainty"] - res["resolution"]
 check(abs(res["brier"] - expected) < 0.05, f"brier ≈ REL+UNC-RES ({res['brier']:.3f} vs {expected:.3f})")
 
 print("\n[4] combined_report end-to-end")
+from engine.forecast_result import ForecastResult
 res = combined_report(events, classify_and_predict)
-print(f"  n={res['n']} acc={res['base_acc']} brier={res['base_brier']}")
-print(f"  CI={res['bootstrap_brier_ci']}")
-print(f"  selective tau=0.3: cov={res['selective'][0.3]['coverage']:.2f} acc={res['selective'][0.3]['selective_acc']:.2%}")
-print(f"  conformal singleton acc={res['conformal']['singleton_acc']:.2%}")
-print(f"  murphy REL={res['murphy']['reliability']}")
-check(res["n"] == 30, f"n=30 (got {res['n']})")
-check("base_acc" in res and "selective" in res and "conformal" in res, "all components present")
+print(f"  n={res.n} acc={res.base_acc} brier={res.base_brier}")
+print(f"  CI={res.bootstrap_brier_ci}")
+print(f"  selective tau=0.3: cov={res.selective[0.3]['coverage']:.2f} acc={res.selective[0.3]['selective_acc']:.2%}")
+print(f"  conformal singleton acc={res.conformal['singleton_acc']:.2%}")
+print(f"  murphy REL={res.murphy['reliability']}")
+check(isinstance(res, ForecastResult), "returns ForecastResult dataclass")
+check(res.n == 30, f"n=30 (got {res.n})")
+check("base_acc" in res and "selective" in res and "conformal" in res, "dict-style backcompat")
+d = res.as_dict()
+check(d["n"] == res.n and d["base_acc"] == res.base_acc, "as_dict() round-trip")
 
 print("\n[5] Real holdout n=50")
 import csv
