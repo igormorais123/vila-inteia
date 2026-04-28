@@ -108,12 +108,27 @@ def model_tfidf(framing: str, contexto: str = "",
     return tfidf_predict(framing, contexto, idx, k=5, default=BASE_RATE)
 
 
+def model_llm(framing: str, contexto: str = "",
+              prior_field: Optional[float] = None) -> float:
+    """Opt-in LLM forecaster via Claude Code OAuth (claude CLI subprocess)."""
+    from engine.llm_forecaster import llm_predict
+    p = llm_predict(framing, contexto)
+    if p is None:
+        return BASE_RATE
+    return p
+
+
 MODELS = {
     "vila": model_vila,
     "base_rate": model_base_rate,
     "lindy": model_lindy,
     "market": model_market_implied,
     "tfidf": model_tfidf,
+}
+
+MODELS_WITH_LLM = {
+    **MODELS,
+    "llm": model_llm,
 }
 
 
