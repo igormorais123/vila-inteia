@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+labor_q1_01,2026-01-09,"NFP report dezembro 2025 divulgado em janeiro 2026 com payrolls > 150k",1,0.60,"NFP dec 2025 > 150k?"
+labor_q1_02,2026-02-06,"NFP janeiro 2026 divulgado — unemployment rate <= 4.0%",1,0.55,"Unemployment <= 4.0% jan 2026?"
+labor_q1_03,2026-03-06,"NFP fevereiro 2026 divulgado — payrolls > 200k",0,0.35,"NFP feb 2026 > 200k?"
+labor_q1_04,2026-01-31,"Average hourly earnings YoY > 4.0% no relatório janeiro 2026",0,0.40,"Wage growth YoY > 4.0% jan 2026?"
+labor_q1_05,2026-02-28,"JOLTS job openings > 8 milhões no relatório fevereiro 2026",0,0.45,"JOLTS > 8M openings feb 2026?"
+labor_q1_06,2026-03-31,"Big Tech (Meta/Google/Amazon/Microsoft) anunciou layoff > 5k Q1 2026",1,0.65,"Big Tech layoff > 5k Q1 2026?"
+labor_q1_07,2026-02-15,"Amazon anunciou layoff específico Q1 2026",1,0.55,"Amazon layoff Q1 2026?"
+labor_q1_08,2026-03-31,"UAW renovou contrato com Big Three automakers Q1 2026",0,0.20,"UAW Big Three contract Q1 2026?"
+labor_q1_09,2026-03-31,"Initial jobless claims semanais > 250k em alguma semana Q1 2026",1,0.70,"Jobless claims > 250k Q1 2026?"
+labor_q1_10,2026-03-31,"Labor force participation rate >= 62.7% em algum mês Q1 2026",1,0.55,"LFPR >= 62.7% Q1 2026?"
