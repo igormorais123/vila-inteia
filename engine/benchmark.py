@@ -154,13 +154,26 @@ def rodar_benchmark(
             "vila_hits": ds_hits, "vila_acc": ds_hits / len(res["eventos"]),
         })
 
-    # Compute final metrics
+    # Compute final metrics + Onda 229 rigorous validation
+    from engine.validation_rigorous import (
+        murphy_decomposition, bootstrap_ci, diebold_mariano,
+        roc_auc, reliability_diagram, knowledge_leak_warning,
+    )
+
     out = {"baselines": {}, "per_dataset": per_dataset, "n_total": baselines["vila"].n}
     for name, b in baselines.items():
+        preds = [p for p, _ in b.preds_real]
+        reals = [y for _, y in b.preds_real]
         out["baselines"][name] = {
             "n": b.n, "hits": b.hits, "acc": b.acc,
             "brier": b.brier, "nll": b.nll,
             "ece": expected_calibration_error(b.preds_real),
+            # Onda 229 — validação rigorosa
+            "murphy": murphy_decomposition(preds, reals),
+            "brier_ci_95": bootstrap_ci(preds, reals, "brier", n_resamples=500),
+            "acc_ci_95": bootstrap_ci(preds, reals, "acc", n_resamples=500),
+            "roc_auc": roc_auc(preds, reals),
+            "reliability_diagram": reliability_diagram(preds, reals),
         }
 
     # Skill scores (vs prior)
@@ -170,6 +183,23 @@ def rodar_benchmark(
             out["baselines"][name]["skill_vs_prior"] = (
                 1 - out["baselines"][name]["brier"] / prior_brier
             )
+
+    # Onda 229: DM test Vila vs cada baseline (paired)
+    vila_preds = [p for p, _ in baselines["vila"].preds_real]
+    vila_reals = [y for _, y in baselines["vila"].preds_real]
+    out["dm_tests_vila_vs"] = {}
+    for name in ["prior_humano", "chance", "majority", "random"]:
+        other_preds = [p for p, _ in baselines[name].preds_real]
+        out["dm_tests_vila_vs"][name] = diebold_mariano(
+            vila_preds, other_preds, vila_reals, loss="brier",
+        )
+
+    # Onda 229: knowledge-leak audit (Vila prevê eventos pré-cutoff = memorização)
+    event_dates = []
+    for dp in dataset_paths:
+        for ev in carregar_dataset(dp):
+            event_dates.append(ev.get("data", "1970-01-01"))
+    out["leak_audit"] = knowledge_leak_warning(event_dates, llm_cutoff="2026-01-01")
 
     return out
 
@@ -197,4 +227,44 @@ def formatar_relatorio(bench: dict) -> str:
     lines += ["", "## Per-Dataset Vila Accuracy", "", "| Dataset | N | Hits | Acc |", "|---|---|---|---|"]
     for d in bench["per_dataset"]:
         lines.append(f"| {d['dataset']} | {d['n']} | {d['vila_hits']} | {d['vila_acc']*100:.0f}% |")
+
+    # Onda 229: rigorous validation
+    if "leak_audit" in bench:
+        lines += ["", "## ⚠ Knowledge Leak Audit (Onda 229)"]
+        la = bench["leak_audit"]
+        lines.append(f"- **Pré-cutoff** ({la['cutoff']}): {la['n_pre_cutoff']} events")
+        lines.append(f"- **Pós-cutoff**: {la['n_post_cutoff']} events")
+        lines.append(f"- **Leak ratio**: {la['leak_ratio']*100:.1f}%")
+        if la["warning"]:
+            lines.append(f"")
+            lines.append(f"> {la['warning']}")
+
+    if "dm_tests_vila_vs" in bench:
+        lines += ["", "## Diebold-Mariano Tests (Vila vs Baselines)"]
+        lines.append("")
+        lines.append("| Comparison | DM Stat | p-value | Significant (p<0.05) |")
+        lines.append("|---|---|---|---|")
+        for name, dm in bench["dm_tests_vila_vs"].items():
+            sig = "✓" if dm["significant_5pct"] else "✗"
+            lines.append(f"| Vila vs {name} | {dm['dm_stat']:.3f} | {dm['p_value']:.4f} | {sig} |")
+
+    # Murphy decomposition + Bootstrap CI Vila
+    vila_b = bench["baselines"]["vila"]
+    lines += ["", "## Vila — Murphy Decomposition"]
+    m = vila_b["murphy"]
+    lines.append(f"- **Brier** = REL ({m['reliability']:.4f}) − RES ({m['resolution']:.4f}) + UNC ({m['uncertainty']:.4f}) = {m['brier']:.4f}")
+    lines.append(f"- **Reliability** baixo melhor (calibração)")
+    lines.append(f"- **Resolution** alto melhor (discriminação)")
+    lines.append(f"- **Uncertainty** = obs base rate × (1 - base rate)")
+
+    lines += ["", "## Vila — Bootstrap 95% CI (1000 resamples)"]
+    bci = vila_b["brier_ci_95"]
+    aci = vila_b["acc_ci_95"]
+    lines.append(f"- **Brier**: {bci['mean']:.4f} [{bci['lower']:.4f}, {bci['upper']:.4f}]")
+    lines.append(f"- **Accuracy**: {aci['mean']*100:.1f}% [{aci['lower']*100:.1f}%, {aci['upper']*100:.1f}%]")
+
+    lines += ["", "## Vila — ROC AUC"]
+    auc = vila_b["roc_auc"]
+    lines.append(f"- **AUC** = {auc['auc']:.4f} (n_pos={auc['n_pos']}, n_neg={auc['n_neg']})")
+
     return "\n".join(lines)

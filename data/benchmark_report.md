@@ -26,3 +26,32 @@
 | seed_eleicao_municipal_sp_2024 | 10 | 10 | 100% |
 | tiktok_viral_2024 | 10 | 10 | 100% |
 | twitter_musk_2022_2024 | 10 | 10 | 100% |
+
+## ⚠ Knowledge Leak Audit (Onda 229)
+- **Pré-cutoff** (2026-01-01): 100 events
+- **Pós-cutoff**: 0 events
+- **Leak ratio**: 100.0%
+
+> ⚠ KNOWLEDGE LEAK RISK: events ocorreram antes do LLM cutoff. Resultados refletem memorização, não forecasting. Para validação rigorosa, use eventos POST-cutoff (ForecastBench-style).
+
+## Diebold-Mariano Tests (Vila vs Baselines)
+
+| Comparison | DM Stat | p-value | Significant (p<0.05) |
+|---|---|---|---|
+| Vila vs prior_humano | -15.913 | 0.0000 | ✓ |
+| Vila vs chance | -114.184 | 0.0000 | ✓ |
+| Vila vs majority | -4.390 | 0.0000 | ✓ |
+| Vila vs random | -9.797 | 0.0000 | ✓ |
+
+## Vila — Murphy Decomposition
+- **Brier** = REL (0.0251) − RES (0.1600) + UNC (0.1600) = 0.0251
+- **Reliability** baixo melhor (calibração)
+- **Resolution** alto melhor (discriminação)
+- **Uncertainty** = obs base rate × (1 - base rate)
+
+## Vila — Bootstrap 95% CI (1000 resamples)
+- **Brier**: 0.0256 [0.0221, 0.0294]
+- **Accuracy**: 100.0% [100.0%, 100.0%]
+
+## Vila — ROC AUC
+- **AUC** = 1.0000 (n_pos=80, n_neg=20)
