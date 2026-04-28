@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+bond_q1_01,2026-03-31,"US 10Y Treasury yield fechou Q1 2026 acima de 4.5%",0,0.45,"10Y > 4.5% fim Q1 2026?"
+bond_q1_02,2026-03-31,"Curva 2Y/10Y permaneceu invertida fim Q1 2026",0,0.30,"2Y/10Y inverted fim Q1 2026?"
+bond_q1_03,2026-03-31,"Fed balance sheet caiu abaixo de $6.5T fim Q1 2026 (QT continued)",1,0.55,"Fed BS < $6.5T fim Q1 2026?"
+bond_q1_04,2026-03-31,"Fed retomou compra de MBS Q1 2026 (não-rollover)",0,0.10,"Fed MBS buying Q1 2026?"
+bond_q1_05,2026-03-31,"Italy 10Y BTP-Bund spread > 200bp em Q1 2026",0,0.25,"BTP-Bund > 200bp Q1 2026?"
+bond_q1_06,2026-03-31,"Japan 10Y JGB yield cruzou 1.5% Q1 2026",1,0.50,"JGB 10Y > 1.5% Q1 2026?"
+bond_q1_07,2026-03-31,"US 30Y Treasury yield fechou Q1 2026 acima de 4.75%",0,0.45,"30Y > 4.75% fim Q1 2026?"
+bond_q1_08,2026-03-31,"Brazil 10Y NTN-F yield fechou Q1 2026 abaixo de 13%",1,0.50,"NTN-F 10Y < 13% Q1 2026?"
+bond_q1_09,2026-03-31,"US Treasury auction failed (tail > 3bp) em Q1 2026",1,0.55,"Treasury auction tail Q1 2026?"
+bond_q1_10,2026-03-31,"Fed anunciou taper de QT Q1 2026 reuniões",1,0.60,"Fed tapered QT Q1 2026?"

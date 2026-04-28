@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+trade_q1_01,2026-03-31,"TikTok ban executive order final entrou em vigor Q1 2026",0,0.40,"TikTok ban effective Q1 2026?"
+trade_q1_02,2026-03-31,"Huawei lançou novo chip < 5nm reportado Q1 2026",1,0.55,"Huawei < 5nm chip Q1 2026?"
+trade_q1_03,2026-03-31,"US BIS expandiu lista de export controls semicondutores Q1 2026",1,0.70,"BIS expandiu chip export Q1 2026?"
+trade_q1_04,2026-03-31,"China imports US soybean Q1 2026 caíram > 20% YoY",1,0.55,"China soybean -20% YoY Q1 2026?"
+trade_q1_05,2026-03-31,"China BRI Belt & Road announced > 5 new major projects Q1 2026",1,0.60,"BRI > 5 projects Q1 2026?"
+trade_q1_06,2026-03-31,"Trump anunciou tarifa adicional > 10% China Q1 2026",1,0.65,"Trump > 10% tariff China Q1 2026?"
+trade_q1_07,2026-03-31,"China retaliação tarifária formal Q1 2026",1,0.60,"China retaliação Q1 2026?"
+trade_q1_08,2026-03-31,"Xi-Trump cúpula bilateral Q1 2026 realizada",0,0.20,"Xi-Trump summit Q1 2026?"
+trade_q1_09,2026-03-31,"NVIDIA reportou impacto export controls em Q1 2026 earnings",1,0.65,"NVDA export hit Q1 2026?"
+trade_q1_10,2026-03-31,"WTO julgou disputa US-China formalmente Q1 2026",0,0.25,"WTO disputa decided Q1 2026?"
