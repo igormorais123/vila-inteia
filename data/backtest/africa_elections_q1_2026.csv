@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+afr01,2026-02-22,"Senegal presidential election agendada para 2024 já passou — Diomaye Faye foi eleito mar 2024 — Q1 2026 sem nova eleição presidencial",0,0.05,"Senegal terá eleição presidencial em Q1 2026?"
+afr02,2026-03-31,"Nigeria reforma constitucional discutida no parlamento Q1 2026 sem aprovação — debate continua",0,0.20,"Nigeria aprovará reforma constitucional em Q1 2026?"
+afr03,2026-03-31,"Etiópia tensões com Eritreia sobre acesso ao mar Vermelho persistem Q1 2026 — sem guerra aberta declarada",0,0.15,"Etiópia entrará em guerra aberta com Eritreia em Q1 2026?"
+afr04,2026-03-31,"South Africa coalizão GNU (ANC+DA) sob pressão Q1 2026 — DA ameaça sair mas mantém aliança",1,0.65,"Coalizão GNU South Africa sobreviverá intacta até fim de Q1 2026?"
+afr05,2026-03-31,"Kenya budget FY26/27 apresentado Q2 — Q1 ainda sem proposta formal de orçamento ao parlamento",0,0.25,"Kenya apresentará budget FY26/27 ao parlamento em Q1 2026?"
+afr06,2026-03-31,"Ruto approval rating Kenya pesquisas Q1 2026 mostraram ~30% — abaixo de 40%",0,0.30,"Ruto approval > 40% em pesquisa Q1 2026?"
+afr07,2026-04-22,"Nigeria CBN reuniu MPC abril 2026 e cortou taxa em 50bp para 26.50%",1,0.45,"Nigeria CBN cortará juros em reunião de abril 2026?"
+afr08,2026-05-15,"Ethiopia inflação caiu para single-digit em abril/maio 2026 após reformas FX",1,0.35,"Etiópia inflação cairá abaixo de 10% até maio 2026?"
+afr09,2026-06-30,"South Africa GDP Q1 2026 reportado em maio mostrou crescimento 1.2% YoY — abaixo de 2%",0,0.40,"South Africa GDP > 2% YoY em Q1 2026?"
+afr10,2026-06-15,"Kenya Ruto enfrentou novos protestos Gen Z sobre custo de vida em maio/junho 2026",1,0.70,"Kenya verá protestos Gen Z significativos em Q2 2026?"

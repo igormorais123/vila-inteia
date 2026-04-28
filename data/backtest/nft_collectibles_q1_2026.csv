@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+nft01,2026-03-31,"OpenSea volume mensal Q1 2026 ficou abaixo de $50M — mercado NFT continua deprimido vs 2021 peak",0,0.25,"OpenSea volume mensal > $200M em algum mês de Q1 2026?"
+nft02,2026-03-31,"Bored Ape Yacht Club floor price Q1 2026 caiu para ~12 ETH — abaixo do peak histórico",0,0.20,"BAYC floor price > 30 ETH em algum momento de Q1 2026?"
+nft03,2026-03-31,"Pudgy Penguins manteve top NFT collection Q1 2026 com floor ~18 ETH e brand expansion (Walmart toys)",1,0.75,"Pudgy Penguins manterá top-3 NFT collection ranking em Q1 2026?"
+nft04,2026-03-31,"Pokémon TCG sales globais Q1 2026 superaram $1B — boom continua impulsionado por Pocket app",1,0.70,"Pokémon TCG sales > $1B em Q1 2026?"
+nft05,2026-03-31,"Christie's leiloou major NFT lot em Q1 2026 — venda de obra digital por >$5M",0,0.30,"Christie's leiloará NFT > $5M em Q1 2026?"
+nft06,2026-03-31,"Magic the Gathering Final Fantasy crossover set lançado Q1 2026 quebrou recordes de vendas Wizards",1,0.85,"MTG Final Fantasy set será best-selling MTG release de Q1 2026?"
+nft07,2026-04-30,"OpenSea token (SEA) airdrop ocorreu em Q2 2026 após anos de especulação",1,0.55,"OpenSea fará token airdrop (SEA) em Q2 2026?"
+nft08,2026-05-31,"Sotheby's leiloou Beeple ou similar artist por >$10M em Q2 2026",0,0.20,"Sotheby's leiloará obra digital de artista NFT por >$10M em Q2 2026?"
+nft09,2026-06-30,"Sports cards Fanatics IPO ocorreu em Q2 2026 — speculação de IPO desde 2024",0,0.25,"Fanatics fará IPO em Q2 2026?"
+nft10,2026-06-15,"Pokémon TCG Pocket app passou de 100M downloads cumulativos em Q2 2026",1,0.80,"Pokémon TCG Pocket > 100M downloads cumulativos até fim de Q2 2026?"

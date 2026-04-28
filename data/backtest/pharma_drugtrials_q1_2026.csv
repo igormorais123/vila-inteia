@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+ph01,2026-03-31,"Lilly Phase 3 GLP-1 oral orforglipron readout Q1 2026 mostrou eficácia mas abaixo de injetável",1,0.70,"Orforglipron Phase 3 readout Q1 2026 será reportado como sucesso primário?"
+ph02,2026-03-31,"Eisai/Biogen lecanemab subcutaneous Phase 3 Q1 2026 reportou resultado misto sem aprovação imediata",0,0.45,"Lecanemab subcutaneous obterá readout positivo em Q1 2026?"
+ph03,2026-03-31,"Moderna mRNA vaccine pipeline (CMV, flu) Q1 2026 — mRNA-1647 CMV reportou resultado misto",0,0.40,"Moderna mRNA-1647 CMV terá readout positivo em Q1 2026?"
+ph04,2026-03-31,"Oncology biotech IPOs Q1 2026 — apenas 2 IPOs de biotech oncológica ocorreram, abaixo da média",0,0.50,"Q1 2026 verá ≥4 IPOs de biotech oncológica?"
+ph05,2026-03-31,"FDA AdComs Q1 2026 — votação favorável em 7 de 10 paineis (taxa histórica)",1,0.65,"Maioria dos AdCom votes Q1 2026 será favorável (>50%)?"
+ph06,2026-04-30,"Eli Lilly Q1 2026 earnings reportou EPS beat mas revenue in-line — stock caiu",0,0.55,"Lilly Q1 2026 earnings beaterá tanto EPS quanto revenue?"
+ph07,2026-05-15,"Novo Nordisk semaglutide cardiovascular outcomes trial follow-up reportado em maio 2026",1,0.60,"Novo Nordisk reportará novo CV outcomes data em Q2 2026?"
+ph08,2026-05-31,"Vertex pain drug suzetrigine label expansion FDA decision em maio 2026 foi aprovada",1,0.55,"Suzetrigine receberá label expansion da FDA em Q2 2026?"
+ph09,2026-06-15,"BridgeBio HCM drug attruby (acoramidis) Q2 2026 sales reportados acima de $200M trimestrais",0,0.30,"Acoramidis sales Q2 2026 > $200M?"
+ph10,2026-06-30,"AstraZeneca/Daiichi datopotamab DESTINY trial readout Q2 2026 reportou OS benefit",1,0.50,"Datopotamab DESTINY readout Q2 2026 mostrará OS benefit estatisticamente significativo?"

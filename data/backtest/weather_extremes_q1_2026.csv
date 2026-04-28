@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+wx01,2026-03-31,"NOAA preliminary Atlantic hurricane forecast 2026 publicada abril prevê season acima da média (17+ named storms)",1,0.65,"NOAA preverá Atlantic hurricane season 2026 acima da média?"
+wx02,2026-03-31,"ENSO status Q1 2026 — NOAA declarou La Niña fraca em janeiro, neutralizando para neutral em março",0,0.40,"El Niño estará ativo (não neutro/Niña) ao fim de Q1 2026?"
+wx03,2026-03-31,"Atlantic SST anomaly Q1 2026 — manteve-se +0.8C acima da média mas abaixo do recorde 2024",1,0.75,"Atlantic SST anomaly > +0.5C ao longo de Q1 2026?"
+wx04,2026-02-15,"Saharan dust plume major atravessou Atlântico em fevereiro 2026 atingindo Caribe",1,0.55,"Plume major de poeira saariana atravessará o Atlântico em Q1 2026?"
+wx05,2026-03-31,"Asia winter monsoon 2025-26 finalizou normal — sem anomalias extremas reportadas",0,0.35,"Asia monsoon Q1 2026 terá anomalias extremas reportadas?"
+wx06,2026-03-31,"Australian bushfire season 2025-26 fechou Q1 abaixo da média — temporada amena",0,0.30,"Austrália terá temporada de fires acima da média em 2025-26?"
+wx07,2026-04-30,"Brasil região Sul enfrentou enchentes históricas em abril 2026 — mais de 50 mortos",1,0.40,"Brasil Sul terá enchentes com >20 mortes em abril/maio 2026?"
+wx08,2026-05-25,"Tornado outbreak major no US Midwest em maio 2026 com >100 tornados em 48h",1,0.55,"US Midwest terá tornado outbreak major (>100 tornados/48h) em maio 2026?"
+wx09,2026-06-30,"Heatwave Europa junho 2026 quebrou recordes em Espanha/França com >45C",1,0.50,"Europa terá heatwave com >45C em junho 2026?"
+wx10,2026-06-01,"NOAA atualizou Atlantic hurricane outlook em junho 2026 reduzindo número esperado de storms",0,0.30,"NOAA aumentará outlook de Atlantic hurricanes em update de junho 2026?"
