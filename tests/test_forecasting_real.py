@@ -57,7 +57,7 @@ check(res_s2["brier"] != res["brier"], "s2 different from baseline")
 print("\n[7] autoresearch_loop returns trace + best")
 loop = autoresearch_loop_post_cutoff(preds, reals)
 check("trace" in loop and "best" in loop, "trace + best presentes")
-check(len(loop["trace"]) == 6, "6 strategies por default")
+check(len(loop["trace"]) >= 6, f"6+ strategies por default (got {len(loop['trace'])})")
 check(loop["best"]["brier"] <= min(r["brier"] for r in loop["trace"]),
       "best tem menor brier")
 

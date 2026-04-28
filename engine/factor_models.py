@@ -54,6 +54,39 @@ def momentum_predictor(symbol: str, date_iso: str, lookback_days: int = 5) -> fl
     return 0.50
 
 
+def momentum_multi_window(symbol: str, date_iso: str,
+                          windows: tuple = (3, 5, 10, 20)) -> float:
+    """Onda 243: ensemble momentum over multiple lookback windows.
+
+    Average de 4 momentum signals (3d, 5d, 10d, 20d). Reduz noise + captura
+    diferentes timeframes (Asness 1994 — momentum across horizons).
+
+    Returns prob ∈ [0.40, 0.60].
+    """
+    preds = []
+    for w in windows:
+        preds.append(momentum_predictor(symbol, date_iso, lookback_days=w))
+    return sum(preds) / len(preds)
+
+
+def momentum_strong(symbol: str, date_iso: str, lookback_days: int = 5,
+                    threshold: float = 0.05) -> float:
+    """Onda 243: stronger threshold momentum.
+
+    Só sinal se return > 5% (vs 2% default). Mais conservativo,
+    menos signal noise.
+    """
+    series = get_price_series(symbol, date_iso, lookback_days + 2)
+    if len(series) < 2:
+        return 0.50
+    ret = (series[-1] - series[0]) / series[0] if series[0] != 0 else 0
+    if ret > threshold:
+        return 0.60
+    if ret < -threshold:
+        return 0.40
+    return 0.50
+
+
 def mean_reversion_predictor(symbol: str, date_iso: str, lookback_days: int = 5) -> float:
     """Pred prob up baseado em mean reversion (return NEGATIVO → bounce up).
 
@@ -128,6 +161,8 @@ def evaluate_strategy_on_events(events: list, strategy: str) -> dict:
     funcs: dict[str, Callable] = {
         "baseline": lambda s, d: 0.50,
         "momentum": momentum_predictor,
+        "momentum_multi": momentum_multi_window,
+        "momentum_strong": momentum_strong,
         "mean_reversion": mean_reversion_predictor,
         "rsi": rsi_predictor,
         "ensemble": ensemble_predictor,
