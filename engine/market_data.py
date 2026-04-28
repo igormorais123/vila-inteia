@@ -49,8 +49,18 @@ def _load_cache() -> dict:
 
 
 def _save_cache(cache: dict) -> None:
+    """Atomic write: load fresh + merge + tmp + rename.
+
+    Onda 240: previne race condition em bg processes concurrent.
+    """
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    CACHE_PATH.write_text(json.dumps(cache, indent=2))
+    # Re-load do disk + merge (não sobrescreve writes de outros processes)
+    fresh = _load_cache()
+    fresh.update(cache)
+    # Atomic write via tmp file
+    tmp = CACHE_PATH.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(fresh, indent=2, sort_keys=True))
+    tmp.replace(CACHE_PATH)
 
 
 def _yahoo_finance_http(symbol: str, date_iso: str) -> float | None:
