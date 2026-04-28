@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+energy_q1_01,2026-03-31,"Brent crude fechou acima de $80/barrel em Q1 2026 (algum dia)",1,0.55,"Brent > $80 Q1 2026?"
+energy_q1_02,2026-03-31,"Brent fechou acima de $100/barrel em Q1 2026",0,0.15,"Brent > $100 Q1 2026?"
+energy_q1_03,2026-03-31,"OPEC+ realizou reunião ministerial Q1 2026",1,0.85,"OPEC+ reunião Q1 2026?"
+energy_q1_04,2026-03-31,"OPEC+ anunciou novo corte de produção Q1 2026",0,0.40,"OPEC+ corte Q1 2026?"
+energy_q1_05,2026-03-31,"US shale produção atingiu novo recorde acima 13.5 mb/d Q1 2026",1,0.55,"US shale recorde Q1 2026?"
+energy_q1_06,2026-03-31,"Henry Hub natural gas fechou acima $4/MMBtu em Q1 2026",1,0.50,"Henry Hub > $4 Q1 2026?"
+energy_q1_07,2026-03-31,"Tesla vendeu mais de 500k EVs em Q1 2026 globalmente",0,0.45,"Tesla 500k EVs Q1 2026?"
+energy_q1_08,2026-03-31,"BYD ultrapassou Tesla em vendas globais EV Q1 2026",1,0.60,"BYD > Tesla Q1 2026?"
+energy_q1_09,2026-03-31,"WTI crude fechou abaixo de $60/barrel em algum dia Q1 2026",0,0.30,"WTI < $60 Q1 2026?"
+energy_q1_10,2026-03-31,"Solar capacidade global instalada superou 2 TW em Q1 2026",1,0.55,"Solar > 2 TW Q1 2026?"

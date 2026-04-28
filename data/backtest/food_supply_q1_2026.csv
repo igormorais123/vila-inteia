@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+food_q1_01,2026-01-12,"USDA WASDE Janeiro 2026 publicado — relatório supply/demand mensal",1,0.95,"USDA WASDE Jan 2026 publicado?"
+food_q1_02,2026-03-31,"USDA Prospective Plantings report Mar 31 2026 publicado",1,0.95,"USDA Plantings Mar 2026 publicado?"
+food_q1_03,2026-03-31,"Milho CBOT futures fechou acima de $5.00/bushel Q1 2026",0,0.45,"Milho > $5 Q1 2026?"
+food_q1_04,2026-03-31,"Trigo CBOT futures fechou acima de $7.00/bushel Q1 2026",0,0.30,"Trigo > $7 Q1 2026?"
+food_q1_05,2026-03-31,"Soja CBOT fechou acima de $11/bushel Q1 2026",1,0.55,"Soja > $11 Q1 2026?"
+food_q1_06,2026-03-31,"Argentina seca afetou soja safra 2025/26 — perda > 10%",1,0.50,"Argentina seca soja Q1 2026?"
+food_q1_07,2026-03-31,"Brasil safra soja 2025/26 quebrou recorde > 170 mt",1,0.55,"Brasil soja recorde Q1 2026?"
+food_q1_08,2026-02-28,"Fertilizante ureia preço subiu > 20% em Q1 2026",0,0.35,"Ureia +20% Q1 2026?"
+food_q1_09,2026-03-31,"China importação soja Q1 2026 > 20 mt",1,0.65,"China soja > 20mt Q1 2026?"
+food_q1_10,2026-03-31,"FAO Food Price Index subiu Q1 2026 vs Q4 2025",1,0.55,"FAO index subiu Q1 2026?"

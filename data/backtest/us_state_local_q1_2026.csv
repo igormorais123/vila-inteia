@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+uslocal_q1_01,2026-03-31,"SCOTUS emitiu decisão major sobre case de imigração Q1 2026",1,0.55,"SCOTUS imigração Q1 2026?"
+uslocal_q1_02,2026-03-31,"Pelo menos 10 estados US passaram budget fiscal 2027 Q1 2026",1,0.65,"10+ estados budget Q1 2026?"
+uslocal_q1_03,2026-03-31,"California governor anunciou state of emergency Q1 2026",1,0.70,"CA emergency Q1 2026?"
+uslocal_q1_04,2026-03-31,"Texas legislatura passou bill restritivo aborto Q1 2026",0,0.35,"TX aborto bill Q1 2026?"
+uslocal_q1_05,2026-03-31,"NYC mayor Eric Adams renunciou ou foi removido Q1 2026",0,0.20,"Adams renunciou Q1 2026?"
+uslocal_q1_06,2026-03-31,"Florida passou nova lei restritiva imigração Q1 2026",1,0.60,"FL imigração lei Q1 2026?"
+uslocal_q1_07,2026-03-31,"State supreme court declarou eleitoral map inconstitucional Q1 2026",1,0.50,"State map inconst Q1 2026?"
+uslocal_q1_08,2026-03-31,"Algum estado US passou ballot initiative cannabis Q1 2026",0,0.30,"Cannabis ballot Q1 2026?"
+uslocal_q1_09,2026-03-31,"Special election congressional realizada algum distrito Q1 2026",1,0.75,"Special election Q1 2026?"
+uslocal_q1_10,2026-03-31,"Major US city anunciou guarantee income/UBI program Q1 2026",0,0.30,"UBI city Q1 2026?"
