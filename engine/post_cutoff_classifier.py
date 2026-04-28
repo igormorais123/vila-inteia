@@ -24,7 +24,11 @@ from __future__ import annotations
 
 KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
     # (keywords, base_rate, category_label)
-    # Onda 253: tunado contra 110 events Q1+Q2 + scheduled-event boost.
+    # Onda 258: PIT inverted-U → reduce 0.50 fallback. Add extreme-claim detection.
+    # Extreme quantitative thresholds (1M units, 10x, atinge metas grandes) — empirically miss
+    (["1m units", "milhão", "milhões", "atingirá 1m", "ultrapassará", "10x", "20x"], 0.30, "extreme_quantity_claim"),
+    # Bottom-rank sports (Wales bottom, last place) — base rate ~ 1/N teams
+    (["bottom", "último lugar", "last place", "rebaixad"], 0.35, "negative_rank_claim"),
     # Specific winners (Super Bowl champion, F1 race winner) — antes de election keyword
     (["super bowl", "world cup champion", "kansas city", "verstappen", "f1 race winner"], 0.30, "sports_specific_winner"),
     # Sports tournament structure / participation — usually true once announced
