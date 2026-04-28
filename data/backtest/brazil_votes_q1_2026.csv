@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+br_vote01,2026-03-10,"Câmara Brasil aprovou urgência para 7 PLs em sessão plenária 10 mar 2026",1,0.55,"Câmara aprovará urgência de pelo menos 7 PLs em sessão de mar 2026?"
+br_vote02,2026-03-25,"PL 4638/23 (Dia Nacional da Mulher na Construção 25 mar) aprovado em Plenário",1,0.60,"PL 4638/23 será aprovado no Plenário Q1 2026?"
+br_vote03,2026-03-31,"PL 9600/18 (proibe divulgação imagens vítimas crimes) aprovado",1,0.55,"PL 9600/18 será aprovado em Plenário Q1 2026?"
+br_vote04,2026-04-15,"CCJ aprovou admissibilidade propostas que acabam com escala 6x1 abr 2026",1,0.45,"CCJ aprovará admissibilidade de propostas escala 6x1 Q2 2026?"
+br_vote05,2026-03-31,"Câmara aprovou urgência projeto que aumenta número de deputados",1,0.40,"Câmara aprovará urgência projeto aumento deputados Q1 2026?"
+br_vote06,2026-03-31,"Câmara aprovou urgência projeto anistia",1,0.50,"Câmara aprovará urgência anistia Q1 2026?"
+br_vote07,2026-03-31,"Reforma tributária complementar aprovada Senado Q1 2026",0,0.50,"Reforma tributária complementar passará Senado Q1 2026?"
+br_vote08,2026-03-31,"PEC fiscal corte gastos aprovada 1º turno Câmara",0,0.40,"PEC fiscal será aprovada 1º turno Câmara Q1 2026?"
+br_vote09,2026-03-31,"Tabela IR atualização aprovada via MP",0,0.55,"Atualização tabela IR será aprovada via MP Q1 2026?"
+br_vote10,2026-03-31,"Marco regulatório IA aprovado Senado",0,0.30,"Marco regulatório IA passará Senado Q1 2026?"

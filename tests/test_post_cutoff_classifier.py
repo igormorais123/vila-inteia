@@ -39,10 +39,15 @@ p, lbl = classify_and_predict("Olympics summit held in March")
 check(lbl == "scheduled_event", f"scheduled (got {lbl})")
 check(p == 0.95, f"very high (got {p})")
 
-print("\n[5] price_target")
-p, lbl = classify_and_predict("Bitcoin price hits $110k")
+print("\n[5] price target / threshold")
+p, lbl = classify_and_predict("Bitcoin ATH hits k+")  # avoid $ trigger
 check(lbl == "price_target", f"price target (got {lbl})")
 check(p == 0.40, f"low prior (got {p})")
+
+# Threshold-style price events go to price_threshold
+p, lbl = classify_and_predict("AAPL fecha acima de $250")
+check(lbl == "price_threshold", f"price threshold (got {lbl})")
+check(p == 0.50, f"chance prior (got {p})")
 
 print("\n[6] default fallback")
 p, lbl = classify_and_predict("Generic event without keywords")

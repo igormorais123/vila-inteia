@@ -24,13 +24,20 @@ from __future__ import annotations
 
 KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
     # (keywords, base_rate, category_label)
+    # Onda 252: keywords expandidas pra políticos BR + price thresholds + holdout patterns
     (["guerra", "war", "ataque", "attack", "strike", "conflict", "khamenei"], 0.80, "war_conflict"),
     (["captura", "depõe", "depos", "coup", "regime change", "removed"], 0.30, "regime_change"),
-    (["olympic", "summit", "wef", "davos", "realizad", "held"], 0.95, "scheduled_event"),
+    # Brazilian legislative — Câmara approval bias high (urgency/plenary regular)
+    (["urgência", "plenário", "ccj ", " pl ", "câmara aprovou", "pec ", "deputados aprov"], 0.55, "br_legislative"),
+    (["reforma", "marco regulatório", "pec", "tabela ir"], 0.30, "br_reform_complex"),
+    # Prices — markets eficientes, 50/50
+    (["fecha acima", "fecha abaixo", "$", "k em "], 0.50, "price_threshold"),
+    (["olympic", "summit", "wef", "davos", "realizad", "held",
+      "preakness", "kentucky derby", "wrestlemania", "consensus", "sigma"], 0.95, "scheduled_event"),
     (["tariff", "tarifa", "imposed"], 0.55, "tariff_action"),
     (["fed cut", "rate cut", "corte juros", "fomc"], 0.45, "fed_action"),
     (["lança", "release", "launch", "anuncia", "announce"], 0.45, "tech_release"),
-    (["bitcoin", "btc", "ath", "preço", "price", "k+", "$"], 0.40, "price_target"),
+    (["bitcoin", "btc", "ath", "k+"], 0.40, "price_target"),
     (["candidato", "candidate", "election", "vence", "wins"], 0.50, "election"),
     (["approval", "aprovação", "rating"], 0.45, "polling"),
     (["mortes", "killed", "deaths", ">"], 0.60, "casualty_threshold"),
