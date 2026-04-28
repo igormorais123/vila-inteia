@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+post11,2026-01-15,"US lança operação militar Venezuela, captura presidente Maduro — escalation extrema",1,0.10,"US lançará ação militar Venezuela e capturará Maduro Q1 2026?"
+post12,2026-02-28,"Israel + US atacam Irã, Khamenei morto — guerra regional escala",1,0.15,"Israel e US matarão Khamenei em ataque conjunto Q1 2026?"
+post13,2026-02-15,"Pakistan lança airstrikes Afeganistão — open conflict bilateral",1,0.30,"Pakistan e Afeganistão entrarão em conflito aberto Q1 2026?"
+post14,2026-02-01,"Trump confirma tarifa 10% sobre exports europeus — efetivo 1 fev",1,0.85,"Trump imporá nova tarifa sobre países europeus Q1 2026?"
+post15,2026-03-31,"India vence Final T20 World Cup 2026 vs New Zealand — terceiro título",1,0.40,"Índia vencerá final T20 World Cup 2026?"
+post16,2026-02-22,"Winter Olympics Milan-Cortina realizadas Feb 6-22 2026 sem cancelamento",1,0.99,"Winter Olympics Milan-Cortina serão realizadas Feb 2026?"
+post17,2026-01-19,"Indiana Hoosiers vence CFP National Championship 27-21 vs Miami — upset",1,0.20,"Indiana vencerá CFP National Championship 2026?"
+post18,2026-01-26,"Major winter storm + cold wave EUA mata 85 pessoas Jan 23-26",1,0.55,"Tempestade EUA matará > 50 pessoas Q1 2026?"
+post19,2026-01-23,"Davos WEF 56th realizado Jan 19-23 sem cancelamento",1,0.95,"Davos WEF realizado Jan 2026?"
+post20,2026-01-31,"Maduro deposto via US invasion Jan 2026 — regime change Venezuela",1,0.45,"Maduro será removido do poder Q1 2026?"

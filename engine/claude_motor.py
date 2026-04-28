@@ -78,6 +78,17 @@ MY_PREDS_BASE: dict[str, float] = {
     "post08": 0.85,  # Lula candidato — REAL: 1 ✓ (PT confirmou mar 2025)
     "post09": 0.10,  # VP2 anúncio Q1 — REAL: 0 ✓ (já era out 2025)
     "post10": 0.55,  # Solana ETF Q1 — REAL: 0 (aprovado out 2025)
+    # post_cutoff_q1_2026_v2 — mais 10 events Q1 2026 (Onda 231)
+    "post11": 0.10,  # US Venezuela invasion — REAL: 1 (US capturou Maduro!) MISS
+    "post12": 0.15,  # Israel/US Khamenei — REAL: 1 (Feb 28 attack) MISS
+    "post13": 0.30,  # Pak-Afg conflict — REAL: 1 MISS
+    "post14": 0.85,  # Trump tariff Europa — REAL: 1 ✓
+    "post15": 0.40,  # India T20 win — REAL: 1 MISS
+    "post16": 0.99,  # Olympics Milan — REAL: 1 ✓
+    "post17": 0.20,  # Indiana CFP — REAL: 1 MISS
+    "post18": 0.55,  # US winter storm — REAL: 1 ✓
+    "post19": 0.95,  # Davos WEF — REAL: 1 ✓
+    "post20": 0.45,  # Maduro removido — REAL: 1 MISS
 }
 
 # ============================================================================

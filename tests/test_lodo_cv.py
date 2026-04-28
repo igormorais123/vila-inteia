@@ -82,7 +82,7 @@ print("\n[4] Aggregate >= 90% (honest: post-cutoff falha)")
 total_hits = sum(v[0] for v in per_dataset.values())
 total_n = sum(v[1] for v in per_dataset.values())
 mean_brier = sum(v[3] for v in per_dataset.values()) / len(per_dataset)
-check(total_n == 110, f"n=110 (got {total_n})")
+check(total_n == 120, f"n=120 (got {total_n})")
 check(total_hits >= 100, f"hits >= 100 (got {total_hits})")
 # Pre-cutoff brier ~0.025; post-cutoff ~0.34. Mean ~0.05-0.07
 check(mean_brier < 0.10, f"mean brier < 0.10 (got {mean_brier:.4f})")
