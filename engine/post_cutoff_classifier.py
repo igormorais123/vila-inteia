@@ -59,6 +59,33 @@ KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
 ]
 
 
+# Onda 262: EB-tuned posteriors learned from calibration sets.
+# Computed via fit_beta_binomial(cal, raw_classify, prior_strength=3) onde cal =
+# Q1 train (post_cutoff Q1 v1+v2 + price + brazil + sports + tech + elections + space)
+# n=100. Hard-coded sem peek into Q2 holdout.
+EB_TUNED_PRIORS: dict[str, float] = {
+    "scheduled_event": 0.983,
+    "sports_event_structure": 0.893,
+    "war_conflict": 0.880,
+    "br_legislative": 0.765,
+    "default": 0.731,
+    "casualty_threshold": 0.700,
+    "election": 0.650,
+    "regime_change": 0.640,
+    "price_target": 0.550,
+    "tariff_action": 0.530,
+    "crypto_product_launch": 0.488,
+    "price_threshold": 0.485,
+    "tech_release": 0.423,
+    "polling": 0.338,
+    "fed_action": 0.338,
+    "negative_rank_claim": 0.262,
+    "extreme_quantity_claim": 0.225,
+    "sports_specific_winner": 0.180,
+    "br_reform_complex": 0.150,
+}
+
+
 def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
     """Onda 260: stretch confidence around midpoint (Hedge winner finding).
 
@@ -74,21 +101,25 @@ def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
 
 
 def classify_and_predict(framing: str, contexto: str = "",
-                         apply_stretch: bool = True) -> tuple[float, str]:
+                         apply_stretch: bool = True,
+                         use_eb_tuned: bool = True) -> tuple[float, str]:
     """Classify via keywords + return prior.
 
     Tenta cada keyword set in order. First match wins.
     Default: 0.50.
 
-    apply_stretch: aplica confidence stretching (Hedge-discovered).
-    Set False pra raw priors.
+    apply_stretch: confidence stretching (Hedge-discovered, Onda 260)
+    use_eb_tuned: usa priors empirical-Bayes-tunados (Onda 262);
+                  fall back para hardcoded prior.
     """
     text = (framing + " " + contexto).lower()
     for keywords, prior, label in KEYWORD_PRIORS:
         if any(kw in text for kw in keywords):
-            p = _stretch(prior) if apply_stretch else prior
+            base = EB_TUNED_PRIORS.get(label, prior) if use_eb_tuned else prior
+            p = _stretch(base) if apply_stretch else base
             return p, label
-    p = _stretch(0.50) if apply_stretch else 0.50
+    base = EB_TUNED_PRIORS.get("default", 0.50) if use_eb_tuned else 0.50
+    p = _stretch(base) if apply_stretch else base
     return p, "default"
 
 

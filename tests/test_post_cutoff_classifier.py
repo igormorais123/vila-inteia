@@ -25,42 +25,42 @@ for kws, prior, label in KEYWORD_PRIORS:
     check(isinstance(kws, list) and len(kws) > 0, f"{label} keywords list non-empty")
 
 print("\n[2] classify_and_predict — war/conflict (raw=0.80)")
-p, lbl = classify_and_predict("Israel attack Iran", apply_stretch=False)
+p, lbl = classify_and_predict("Israel attack Iran", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "war_conflict", f"war detected (got {lbl})")
 check(p == 0.80, f"raw prior (got {p})")
-# With stretch (Onda 260): 0.5 + 1.5*(0.8-0.5) = 0.95
+# EB-tuned prior 0.880 + stretch: 0.5 + 1.5*(0.88-0.5) = 1.07 clipped to 1.0
 p_s, _ = classify_and_predict("Israel attack Iran")
-check(abs(p_s - 0.95) < 1e-9, f"stretched (got {p_s})")
+check(p_s == 1.0, f"EB+stretch (got {p_s})")
 
 print("\n[3] tech release (raw=0.45)")
-p, lbl = classify_and_predict("Apple lança new product", apply_stretch=False)
+p, lbl = classify_and_predict("Apple lança new product", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "tech_release", f"tech release (got {lbl})")
 check(p == 0.45, f"raw prior (got {p})")
 
 print("\n[4] scheduled event (raw=0.92)")
-p, lbl = classify_and_predict("Olympics summit held in March", apply_stretch=False)
+p, lbl = classify_and_predict("Olympics summit held in March", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "scheduled_event", f"scheduled (got {lbl})")
 check(p == 0.92, f"raw prior (got {p})")
-# With stretch: clipped to 1.0
+# EB-tuned 0.983 + stretch clipped to 1.0
 p_s, _ = classify_and_predict("Olympics summit held in March")
-check(p_s == 1.0, f"stretched clipped (got {p_s})")
+check(p_s == 1.0, f"EB+stretch clipped (got {p_s})")
 
 print("\n[5] price target / threshold (raw=0.40)")
-p, lbl = classify_and_predict("Bitcoin ATH hits k+", apply_stretch=False)
+p, lbl = classify_and_predict("Bitcoin ATH hits k+", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "price_target", f"price target (got {lbl})")
 check(p == 0.40, f"raw prior (got {p})")
 
-p, lbl = classify_and_predict("AAPL fecha acima de $250", apply_stretch=False)
+p, lbl = classify_and_predict("AAPL fecha acima de $250", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "price_threshold", f"price threshold (got {lbl})")
 check(p == 0.50, f"chance prior (got {p})")
 
 print("\n[6] default fallback (raw=0.50)")
-p, lbl = classify_and_predict("Generic event without keywords", apply_stretch=False)
+p, lbl = classify_and_predict("Generic event without keywords", apply_stretch=False, use_eb_tuned=False)
 check(lbl == "default", f"default (got {lbl})")
 check(p == 0.50, f"baseline prior (got {p})")
-# Stretch leaves 0.5 unchanged (midpoint)
+# EB-tuned default = 0.731, stretch: 0.5 + 1.5*(0.731-0.5) = 0.847
 p_s, _ = classify_and_predict("Generic event without keywords")
-check(p_s == 0.50, f"stretch keeps midpoint (got {p_s})")
+check(0.84 < p_s < 0.86, f"EB+stretch (got {p_s})")
 
 print("\n[7] evaluate_classifier_on_events")
 events = [
