@@ -748,6 +748,52 @@ def modo_forecast_mega_bench(args):
     print(f"\n✓ markdown: {out_path}")
 
 
+def modo_forecast_vs_external(args):
+    """Bench Vila vs Manifold on matched events."""
+    import glob
+    from pathlib import Path
+    from engine.backtest_real import carregar_dataset
+    from engine.post_cutoff_classifier import classify_and_predict
+    from engine.external_apis import compare_to_manifold
+
+    banner()
+    print("MODO FORECAST-VS-EXTERNAL - Vila vs Manifold\n")
+
+    repo = Path(__file__).resolve().parent
+    pattern = args.pattern
+    files = sorted(glob.glob(str(repo / "data" / "backtest" / f"{pattern}.csv")))
+
+    all_events = []
+    for fp in files:
+        try:
+            all_events += carregar_dataset(fp)
+        except (KeyError, ValueError):
+            continue
+    print(f"Loaded {len(all_events)} events from {len(files)} datasets.")
+    print(f"Querying Manifold for top {args.max_events} (cached after first run).\n")
+
+    res = compare_to_manifold(all_events, classify_and_predict,
+                              max_events=args.max_events)
+    if res.get("n", 0) == 0:
+        print(f"No matches found. {res.get('error', '')}")
+        return
+
+    print(f"Matched n = {res['n']}")
+    print(f"Vila brier:     {res['brier_vila']:.4f}")
+    print(f"Manifold brier: {res['brier_manifold']:.4f}")
+    print(f"Delta (Vila - Manifold): {res['delta']:+.4f}")
+    print(f"Vila better: {res['vila_better']}")
+    print()
+    print("⚠️  CAVEAT: Manifold matches via fuzzy search; matched markets")
+    print("    may not be the SAME question as our holdout event. Verify URLs.")
+    print("    For event-by-event comparison, manually map slugs.")
+    print()
+    print(f"{'event':<60} {'Vila':>6} {'Manif':>6} {'y':>2}")
+    print("=" * 80)
+    for m in res["matched"]:
+        print(f"{m['framing'][:58]:<60} {m['p_vila']:>6.3f} {m['p_manifold']:>6.3f} {m['y']:>2}")
+
+
 def modo_benchmark(args):
     """Onda 228: Benchmark Vila vs 4 baselines (prior, chance, majority, random).
 
@@ -1071,6 +1117,16 @@ def main():
     mega_parser.add_argument("--out-md", default="data/mega_bench_report.md",
                              help="Markdown report path")
 
+    # forecast-vs-external: bench Vila vs Manifold market probabilities
+    ext_parser = subparsers.add_parser(
+        "forecast-vs-external",
+        help="Bench Vila brier vs Manifold market prob on matched events",
+    )
+    ext_parser.add_argument("--pattern", default="*holdout*",
+                            help="Glob for datasets (default: *holdout*)")
+    ext_parser.add_argument("--max-events", type=int, default=20,
+                            help="Max events to query (default: 20)")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -1093,6 +1149,8 @@ def main():
         modo_forecast_bench(args)
     elif args.comando == "forecast-mega-bench":
         modo_forecast_mega_bench(args)
+    elif args.comando == "forecast-vs-external":
+        modo_forecast_vs_external(args)
     else:
         parser.print_help()
         print("\nExemplos:")
