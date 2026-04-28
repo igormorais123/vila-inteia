@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+disaster_q1_01,2026-03-31,"Pelo menos um terremoto M7+ registrado globalmente em Q1 2026",1,0.85,"M7+ quake Q1 2026?"
+disaster_q1_02,2026-03-31,"Pelo menos um terremoto M8+ registrado globalmente em Q1 2026",0,0.20,"M8+ quake Q1 2026?"
+disaster_q1_03,2026-03-31,"Tsunami warning emitido pelo PTWC em Q1 2026",1,0.65,"PTWC tsunami warning Q1 2026?"
+disaster_q1_04,2026-03-31,"Vulcão entrou em erupção significativa Q1 2026 (VEI 3+)",1,0.55,"VEI 3+ erupção Q1 2026?"
+disaster_q1_05,2026-03-31,"Australia bushfires queimaram > 1M hectares Q1 2026",0,0.30,"Australia 1M ha Q1 2026?"
+disaster_q1_06,2026-03-31,"Brazil enchente região sul/sudeste Q1 2026 com > 50 mortes",1,0.55,"BR enchente 50+ mortes Q1?"
+disaster_q1_07,2026-03-31,"Ciclone categoria 4+ no Indian Ocean Q1 2026",1,0.60,"Cat4+ ciclone IO Q1 2026?"
+disaster_q1_08,2026-03-31,"Terremoto causou > 1000 mortes em algum evento Q1 2026",0,0.25,"Quake 1000+ mortes Q1?"
+disaster_q1_09,2026-03-31,"California wildfire major declarado emergência estadual Q1 2026",1,0.50,"CA wildfire emergency Q1?"
+disaster_q1_10,2026-03-31,"Japão registrou terremoto M6+ em Q1 2026",1,0.80,"Japão M6+ Q1 2026?"

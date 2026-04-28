@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+media_q1_01,2026-03-15,"Oscar 2026 (98th Academy Awards) realizada em março 2026",1,0.95,"Oscar 2026 realizada?"
+media_q1_02,2026-03-15,"Best Picture Oscar 2026 foi um filme não-Hollywood (internacional)",0,0.25,"Best Picture intl Q1 2026?"
+media_q1_03,2026-02-04,"Grammy Awards 2026 realizada Q1 2026",1,0.95,"Grammy 2026 realizado Q1?"
+media_q1_04,2026-02-04,"Taylor Swift ganhou Album of the Year Grammy 2026",0,0.25,"Taylor AOTY 2026?"
+media_q1_05,2026-03-31,"Filme Q1 2026 ultrapassou $500M box office global",1,0.65,"Box office $500M Q1 2026?"
+media_q1_06,2026-03-31,"Netflix anunciou subscriber count > 290M global em Q1 2026 earnings",1,0.55,"Netflix > 290M Q1 2026?"
+media_q1_07,2026-01-07,"Golden Globes 2026 realizada janeiro Q1",1,0.95,"Golden Globes Q1 2026?"
+media_q1_08,2026-03-31,"Disney+ ultrapassou 200M assinantes Q1 2026",0,0.25,"Disney+ 200M Q1 2026?"
+media_q1_09,2026-03-31,"Spotify atingiu 700M MAU em Q1 2026",1,0.55,"Spotify 700M Q1 2026?"
+media_q1_10,2026-03-31,"Filme Marvel/DC superhero estreou Q1 2026",1,0.60,"Marvel/DC estreia Q1 2026?"
