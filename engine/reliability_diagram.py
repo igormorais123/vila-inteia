@@ -7,8 +7,59 @@ Frontend renderiza como scatter/line pra diagnosticar calibração.
 
 from __future__ import annotations
 
+import math
 from typing import Iterable
 import numpy as np
+
+
+def _wilson_ci(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """Wilson score interval for binomial proportion."""
+    if n == 0:
+        return (0.0, 1.0)
+    p_hat = k / n
+    denom = 1.0 + z * z / n
+    center = (p_hat + z * z / (2 * n)) / denom
+    margin = (z * math.sqrt(p_hat * (1 - p_hat) / n + z * z / (4 * n * n))) / denom
+    lo = max(0.0, center - margin)
+    hi = min(1.0, center + margin)
+    return (lo, hi)
+
+
+def reliability_diagram(
+    preds: list[float],
+    reals: list[int],
+    n_bins: int = 10,
+) -> list[dict]:
+    """Bins preds; returns list of dicts per non-empty bin with Wilson 95% CI."""
+    n = len(reals)
+    if n == 0 or len(preds) != n or n_bins < 1:
+        return []
+
+    bins: list[list[tuple[float, int]]] = [[] for _ in range(n_bins)]
+    for p, y in zip(preds, reals):
+        idx = min(n_bins - 1, max(0, int(p * n_bins)))
+        bins[idx].append((p, int(y)))
+
+    out = []
+    for i, items in enumerate(bins):
+        if not items:
+            continue
+        ni = len(items)
+        mean_p = sum(p for p, _ in items) / ni
+        k = sum(y for _, y in items)
+        observed = k / ni
+        lo, hi = _wilson_ci(k, ni)
+        out.append({
+            "bin": i,
+            "bin_lo": i / n_bins,
+            "bin_hi": (i + 1) / n_bins,
+            "mean_p": mean_p,
+            "observed_rate": observed,
+            "n": ni,
+            "ci_lo": lo,
+            "ci_hi": hi,
+        })
+    return out
 
 
 def reliability(
