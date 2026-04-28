@@ -9,7 +9,6 @@ from engine import factor_models
 from engine.factor_models import (
     momentum_predictor, mean_reversion_predictor, rsi_predictor,
     rsi, ensemble_predictor, evaluate_strategy_on_events, _resolve_symbol,
-    momentum_multi_window, momentum_strong,
 )
 from engine.micro_events import MicroEvent
 
@@ -108,33 +107,7 @@ with patch.object(factor_models, "get_price_series") as mock_gp:
     check(res["hits"] == 2, f"momentum 2 hits (got {res['hits']})")
     check(res["acc"] == 1.0, "100% acc")
 
-print("\n[8a] momentum_multi_window — média de 4 windows")
-with patch.object(factor_models, "momentum_predictor") as mock_mom:
-    mock_mom.return_value = 0.55
-    p = momentum_multi_window("AAPL", "2026-01-30")
-    check(p == 0.55, f"all 0.55 → 0.55 (got {p})")
-
-with patch.object(factor_models, "momentum_predictor") as mock_mom:
-    mock_mom.side_effect = [0.55, 0.55, 0.45, 0.50]
-    p = momentum_multi_window("AAPL", "2026-01-30")
-    expected = (0.55 + 0.55 + 0.45 + 0.50) / 4
-    check(abs(p - expected) < 1e-9, f"avg of 4 (got {p:.4f})")
-
-print("\n[8b] momentum_strong — threshold 5%")
-with patch.object(factor_models, "get_price_series") as mock_gp:
-    mock_gp.return_value = [100, 108]  # 8% up
-    p = momentum_strong("AAPL", "2026-01-30")
-    check(p == 0.60, f"strong up → 0.60 (got {p})")
-
-    mock_gp.return_value = [100, 92]  # 8% down
-    p = momentum_strong("AAPL", "2026-01-30")
-    check(p == 0.40, f"strong down → 0.40 (got {p})")
-
-    mock_gp.return_value = [100, 103]  # 3% up (below 5%)
-    p = momentum_strong("AAPL", "2026-01-30")
-    check(p == 0.50, f"weak signal → 0.50 (got {p})")
-
-print("\n[9] Bad strategy raises")
+print("\n[8] Bad strategy raises")
 try:
     evaluate_strategy_on_events([], "unknown")
     check(False, "should raise")
