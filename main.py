@@ -325,6 +325,125 @@ def modo_mirofish(args):
     print(f"\n✓ saída: {out_path}")
 
 
+def modo_factor_bench(args):
+    """Onda 242: factor models real bench Q1 2026 events."""
+    from pathlib import Path
+    from engine.micro_events import gerar_500_micro_events_q1_2026
+    from engine.market_data import resolve_micro_events_market
+    from engine.factor_models import evaluate_strategy_on_events
+
+    banner()
+    print("MODO FACTOR-BENCH - Vila vs market factor models\n")
+    strategies = [s.strip() for s in args.strategies.split(",")]
+
+    events = gerar_500_micro_events_q1_2026()
+    market = [e for e in events if e.category in ("stock_price_up", "crypto_price_up")]
+    print(f"Resolving {len(market)} market events via Yahoo Finance...")
+    resolve_micro_events_market(market)
+    resolved = [e for e in market if e.real_outcome is not None]
+    print(f"Resolved: {len(resolved)}/{len(market)}\n")
+
+    lines = ["# Vila Factor Models Benchmark", "", f"**N**: {len(resolved)} events Q1 2026", "",
+             "| Strategy | Hits | Acc | Brier |", "|---|---|---|---|"]
+    print(f"{'strategy':18s} hits   acc      brier")
+    for s in strategies:
+        try:
+            r = evaluate_strategy_on_events(resolved, s)
+        except ValueError:
+            print(f"  {s:18s} unknown strategy")
+            continue
+        line = f"{s:18s} {r['hits']:>3d}/{r['n']:<3d} {r['acc']*100:>5.1f}%  {r['brier']:.4f}"
+        print(line)
+        lines.append(f"| {s} | {r['hits']}/{r['n']} | {r['acc']*100:.1f}% | {r['brier']:.4f} |")
+
+    out_path = Path(args.out_md)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines))
+    print(f"\n✓ markdown: {out_path}")
+
+
+def modo_factor_autoresearch(args):
+    """Onda 242: Karpathy autoresearch ensemble weights grid sobre factor models."""
+    import itertools
+    from pathlib import Path
+    from engine.micro_events import gerar_500_micro_events_q1_2026
+    from engine.market_data import resolve_micro_events_market
+    from engine.factor_models import (
+        momentum_predictor, mean_reversion_predictor, rsi_predictor, _resolve_symbol,
+    )
+
+    banner()
+    print("MODO FACTOR-AUTORESEARCH - Karpathy ensemble grid\n")
+    step = args.grid_step
+
+    events = gerar_500_micro_events_q1_2026()
+    market = [e for e in events if e.category in ("stock_price_up", "crypto_price_up")]
+    print(f"Resolving {len(market)} events...")
+    resolve_micro_events_market(market)
+    resolved = [e for e in market if e.real_outcome is not None]
+    print(f"Resolved: {len(resolved)}\n")
+
+    # Pre-compute strategy preds
+    print("Pre-computing strategy preds...")
+    preds = []
+    for e in resolved:
+        parts = e.event_id.split("_")
+        if len(parts) < 2:
+            continue
+        sym = _resolve_symbol(e.category, parts[1])
+        try:
+            pm = momentum_predictor(sym, e.date)
+            pmr = mean_reversion_predictor(sym, e.date)
+            pr = rsi_predictor(sym, e.date)
+            preds.append((pm, pmr, pr, e.real_outcome))
+        except Exception:
+            pass
+    print(f"Computed {len(preds)} preds\n")
+
+    # Grid search
+    weights_set = set()
+    n_steps = int(1 / step) + 1
+    for w1, w2, w3, w4 in itertools.product([i * step for i in range(n_steps)], repeat=4):
+        s = w1 + w2 + w3 + w4
+        if s == 0:
+            continue
+        weights_set.add((round(w1/s, 4), round(w2/s, 4), round(w3/s, 4), round(w4/s, 4)))
+    weights = sorted(weights_set)
+    print(f"Karpathy autoresearch: {len(weights)} weight combos")
+
+    best = (1.0, None, 0)
+    for w_mom, w_mr, w_rsi, w_bl in weights:
+        hits = 0; brier_sum = 0
+        for pm, pmr, pr, real in preds:
+            p = w_mom * pm + w_mr * pmr + w_rsi * pr + w_bl * 0.50
+            if (p >= 0.5) == bool(real):
+                hits += 1
+            brier_sum += (p - real) ** 2
+        avg_brier = brier_sum / len(preds)
+        if avg_brier < best[0]:
+            best = (avg_brier, (w_mom, w_mr, w_rsi, w_bl), hits)
+
+    w = best[1]
+    print(f"\n=== BEST ensemble ===")
+    print(f"  weights: mom={w[0]:.3f} mr={w[1]:.3f} rsi={w[2]:.3f} bl={w[3]:.3f}")
+    print(f"  acc: {best[2]}/{len(preds)} = {best[2]/len(preds)*100:.1f}%")
+    print(f"  brier: {best[0]:.4f}")
+
+    lines = [
+        "# Vila Factor Autoresearch — Karpathy Ensemble", "",
+        f"**N**: {len(preds)} events · **Combos**: {len(weights)}", "",
+        f"## Best Ensemble Weights",
+        f"- momentum: {w[0]:.3f}", f"- mean_reversion: {w[1]:.3f}",
+        f"- rsi: {w[2]:.3f}", f"- baseline: {w[3]:.3f}", "",
+        f"**Acc**: {best[2]}/{len(preds)} = {best[2]/len(preds)*100:.1f}%",
+        f"**Brier**: {best[0]:.4f}",
+    ]
+    out_path = Path(args.out_md)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines))
+    print(f"\n✓ markdown: {out_path}")
+
+
 def modo_benchmark(args):
     """Onda 228: Benchmark Vila vs 4 baselines (prior, chance, majority, random).
 
@@ -604,6 +723,26 @@ def main():
     bench_parser.add_argument("--out-json", default="data/benchmark.json",
                               help="JSON metrics")
 
+    # Comando: factor-bench (Onda 242) — real market factor models
+    factor_parser = subparsers.add_parser(
+        "factor-bench",
+        help="Factor models bench (momentum/mean_rev/rsi) vs baseline em market events Q1 2026",
+    )
+    factor_parser.add_argument("--strategies", default="baseline,momentum,mean_reversion,rsi",
+                               help="Strategies CSV (default: all)")
+    factor_parser.add_argument("--out-md", default="data/factor_bench.md",
+                               help="markdown report")
+
+    # Comando: factor-autoresearch (Onda 242) — Karpathy ensemble grid
+    autores_parser = subparsers.add_parser(
+        "factor-autoresearch",
+        help="Karpathy autoresearch ensemble weights grid sobre factor models",
+    )
+    autores_parser.add_argument("--grid-step", type=float, default=0.25,
+                                help="Step size grid (0.25 → 5^4 combos)")
+    autores_parser.add_argument("--out-md", default="data/factor_autoresearch.md",
+                                help="markdown report")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -618,6 +757,10 @@ def main():
         modo_mirofish(args)
     elif args.comando == "benchmark":
         modo_benchmark(args)
+    elif args.comando == "factor-bench":
+        modo_factor_bench(args)
+    elif args.comando == "factor-autoresearch":
+        modo_factor_autoresearch(args)
     else:
         parser.print_help()
         print("\nExemplos:")
@@ -627,6 +770,8 @@ def main():
         print("  python -m vila_inteia.main live --intervalo 30 --topico 'IA no Brasil'")
         print("  python -m vila_inteia.main mirofish --personas CL001,CL002,CL007")
         print("  python -m vila_inteia.main benchmark")
+        print("  python -m vila_inteia.main factor-bench")
+        print("  python -m vila_inteia.main factor-autoresearch --grid-step 0.25")
 
 
 if __name__ == "__main__":
