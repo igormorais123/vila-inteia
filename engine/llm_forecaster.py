@@ -28,6 +28,22 @@ Context: {contexto}
 
 P(yes) ="""
 
+LLM_PROMPT_HYBRID_TEMPLATE = """You are a forecasting expert. Given an event question and an analyst's pre-computed category prior, output ONLY a single floating-point probability between 0.05 and 0.95.
+
+Analyst pre-classification (use as anchor, deviate only with strong reason):
+- Category: {label}
+- Empirical-Bayes prior: {prior:.3f}
+
+Rules:
+- Anchor on the EB prior; deviate only if event has strong specific signal.
+- Output ONLY the number, no prefix or units.
+- Be calibrated, not overconfident.
+
+Event: {framing}
+Context: {contexto}
+
+P(yes) ="""
+
 
 _CACHE: dict[str, float] = {}
 
@@ -63,16 +79,28 @@ def _claude_cli_predict(prompt: str, timeout: int = 60) -> str | None:
 
 def llm_predict(framing: str, contexto: str = "",
                 provider: str = "auto",
-                model: str = "rapido", use_cache: bool = True) -> float | None:
+                model: str = "rapido", use_cache: bool = True,
+                vila_hint: tuple[str, float] | None = None) -> float | None:
     """Query LLM for forecast probability. None on failure.
 
     provider: 'auto' (claude_cli → ia_client fallback) | 'claude_cli' | 'ia_client'
+    vila_hint: optional (category_label, eb_prior) — enables hybrid prompt
+               that anchors LLM on Vila's pre-classification.
     """
-    key = (framing + "|" + contexto[:200])[:300]
+    cache_suffix = ""
+    if vila_hint is not None:
+        cache_suffix = f"|{vila_hint[0]}|{vila_hint[1]:.3f}"
+    key = (framing + "|" + contexto[:200] + cache_suffix)[:400]
     if use_cache and key in _CACHE:
         return _CACHE[key]
 
-    prompt = LLM_PROMPT_TEMPLATE.format(framing=framing, contexto=contexto[:500])
+    if vila_hint is not None:
+        prompt = LLM_PROMPT_HYBRID_TEMPLATE.format(
+            framing=framing, contexto=contexto[:500],
+            label=vila_hint[0], prior=vila_hint[1],
+        )
+    else:
+        prompt = LLM_PROMPT_TEMPLATE.format(framing=framing, contexto=contexto[:500])
 
     if provider in ("auto", "claude_cli"):
         text = _claude_cli_predict(prompt)
