@@ -26,7 +26,7 @@
         <h1>Coalizões &amp; Distribuição</h1>
         <p class="u-muted">Shapley value · Banzhaf power · core stability</p>
       </div>
-      <nav><a href="/" class="u-muted">← Vila</a></nav>
+      <nav aria-label="Navegação Vila"><a href="/" class="u-muted" aria-label="Voltar Vila">← Vila</a></nav>
     </header>
 
     <section class="panel">
@@ -41,14 +41,14 @@
       </p>
       <div class="control-row">
         <label>v({A,B}):</label>
-        <input id="vab" class="input" type="number" value="60" style="width: 80px;">
+        <input id="vab" class="input" type="number" value="60" style="width: 80px;" aria-label="Valor coalizão AB">
         <label>v({A,C}):</label>
-        <input id="vac" class="input" type="number" value="40" style="width: 80px;">
+        <input id="vac" class="input" type="number" value="40" style="width: 80px;" aria-label="Valor coalizão AC">
         <label>v({B,C}):</label>
-        <input id="vbc" class="input" type="number" value="30" style="width: 80px;">
+        <input id="vbc" class="input" type="number" value="30" style="width: 80px;" aria-label="Valor coalizão BC">
         <label>v({A,B,C}):</label>
-        <input id="vabc" class="input" type="number" value="100" style="width: 80px;">
-        <button id="rodar-shapley" class="btn btn--primary">Calcular</button>
+        <input id="vabc" class="input" type="number" value="100" style="width: 80px;" aria-label="Valor coalizão ABC">
+        <button id="rodar-shapley" class="btn btn--primary" aria-label="Calcular Shapley value">Calcular</button>
       </div>
       <div id="shapley-resultado"></div>
     </section>
@@ -64,9 +64,9 @@
         </p>
         <div class="control-row">
           <label>quorum p/ vitória:</label>
-          <input id="quorum" class="input" type="number" value="51" min="1" max="100" style="width: 80px;">
+          <input id="quorum" class="input" type="number" value="51" min="1" max="100" style="width: 80px;" aria-label="Quórum percentual">
           <span class="u-muted">%</span>
-          <button id="rodar-banzhaf" class="btn">Calcular</button>
+          <button id="rodar-banzhaf" class="btn" aria-label="Calcular Banzhaf power">Calcular</button>
         </div>
         <div id="banzhaf-resultado"></div>
       </div>
