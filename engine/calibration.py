@@ -139,6 +139,8 @@ def evaluate_calibration(
     params=None,
 ) -> dict:
     """Eval calibrated predictor."""
+    if method in ("platt", "isotonic") and params is None:
+        raise ValueError(f"params required for method={method!r}")
     n = 0
     hits = 0
     brier = 0.0

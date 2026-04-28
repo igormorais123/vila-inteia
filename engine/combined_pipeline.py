@@ -118,7 +118,8 @@ def murphy_decomposition(events: list, classify_fn: Callable, n_bins: int = 10) 
         pairs.append((p, int(y)))
 
     if not pairs:
-        return {"brier": 0, "rel": 0, "res": 0, "unc": 0}
+        return {"n": 0, "brier": 0, "reliability": 0, "resolution": 0,
+                "uncertainty": 0, "base_rate": 0}
 
     n = len(pairs)
     base_rate = sum(y for _, y in pairs) / n
@@ -154,20 +155,20 @@ def murphy_decomposition(events: list, classify_fn: Callable, n_bins: int = 10) 
 def combined_report(events: list, classify_fn: Callable = classify_and_predict) -> dict:
     """Run full diagnostic: brier+CI, selective, conformal, Murphy, time-series CV."""
 
-    # 1. Standard
-    hits = brier = 0.0
+    n = hits = 0
+    brier = 0.0
     for e in events:
         framing = e.get("outcome_framing") or e.get("framing", "")
         contexto = e.get("contexto", "")
         y = e.get("outcome_real")
         if y is None:
             continue
+        n += 1
         out = classify_fn(framing, contexto)
         p = out[0] if isinstance(out, tuple) else out
         if (p >= 0.5) == bool(y):
             hits += 1
         brier += (p - y) ** 2
-    n = len(events)
     base_acc = hits / n if n else 0
     base_brier = brier / n if n else 0
 

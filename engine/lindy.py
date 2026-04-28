@@ -23,6 +23,7 @@ Sem memorization: usa só year_started field (public info), não outcome data.
 
 from __future__ import annotations
 
+import re
 from typing import Optional
 
 
@@ -40,7 +41,6 @@ def lindy_probability(years_running: float, horizon_years: float = 1.0) -> float
 
 def parse_year_from_context(contexto: str) -> Optional[int]:
     """Extract first 4-digit year (1900-2030) from contexto string."""
-    import re
     matches = re.findall(r"\b(18\d{2}|19\d{2}|20[0-2]\d)\b", contexto)
     if not matches:
         return None

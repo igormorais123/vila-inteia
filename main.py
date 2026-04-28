@@ -446,9 +446,9 @@ def modo_factor_autoresearch(args):
 
 def modo_forecast_bench(args):
     """Onda 266: bench classifier post-cutoff datasets + selective + risk-coverage."""
-    import csv
     import glob
     from pathlib import Path
+    from engine.backtest_real import carregar_dataset
     from engine.post_cutoff_classifier import classify_and_predict
     from engine.selective_forecast import evaluate_selective, risk_coverage_curve
 
@@ -465,22 +465,16 @@ def modo_forecast_bench(args):
 
     for fp in files:
         name = Path(fp).stem
-        events = []
-        with open(fp) as f:
-            for r in csv.DictReader(f):
-                try:
-                    events.append({
-                        "outcome_framing": r.get("outcome_framing") or r.get("framing", ""),
-                        "contexto": r.get("contexto", ""),
-                        "outcome_real": int(r["outcome_real"]),
-                    })
-                except (ValueError, KeyError):
-                    continue
+        try:
+            events = carregar_dataset(fp)
+        except (KeyError, ValueError):
+            continue
         if not events:
             continue
         hits = brier = 0.0
         for e in events:
-            p, _ = classify_and_predict(e["outcome_framing"], e["contexto"])
+            framing = e.get("outcome_framing") or e["contexto"]
+            p, _ = classify_and_predict(framing, e["contexto"])
             if (p >= 0.5) == bool(e["outcome_real"]):
                 hits += 1
             brier += (p - e["outcome_real"]) ** 2
