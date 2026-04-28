@@ -19,11 +19,11 @@
   </style>
 </head>
 <body role="application" aria-label="Grafo Vila">
-  <main class="page">
-    <header class="header">
-      <div>
-        <h1 style="font-size: var(--text-2xl);">Grafo de Conhecimento</h1>
-        <p class="u-muted" style="margin-top: var(--space-1);">Onda 38 · entidades e relações extraídas de conversas</p>
+  <main class="page" aria-label="Página grafo conhecimento">
+    <header class="header" role="banner">
+      <div role="group" aria-label="Título página">
+        <h1 style="font-size: var(--text-2xl);" aria-label="Grafo de Conhecimento Vila">Grafo de Conhecimento</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);" aria-label="Subtítulo">Onda 38 · entidades e relações extraídas de conversas</p>
       </div>
       <nav class="u-hstack" style="gap: var(--space-4);">
         <a href="/cockpit.html" class="u-muted" aria-label="Ir para cockpit">cockpit</a>
@@ -31,8 +31,8 @@
       </nav>
     </header>
 
-    <div class="panel">
-      <div class="controls">
+    <div class="panel" role="region" aria-label="Controles grafo">
+      <div class="controls" role="toolbar" aria-label="Toolbar carregar">
         <label>limite nós:</label>
         <input id="limite" aria-label="Limite nodes grafo" class="input" type="number" value="100" min="10" max="500" style="width: 90px;">
         <button id="btn-carregar" class="btn btn--primary" aria-label="Carregar grafo">Carregar grafo</button>
@@ -41,11 +41,11 @@
       </div>
     </div>
 
-    <div class="panel" style="padding: 0;">
+    <div class="panel" style="padding: 0;" role="region" aria-label="Visualização grafo">
       <svg id="graph-svg" role="img" aria-label="Grafo Vila"></svg>
     </div>
 
-    <div class="panel">
+    <div class="panel" role="region" aria-label="Top nós por grau">
       <h2 class="panel__title">Top 10 nós por grau</h2>
       <div id="top-nodes"></div>
     </div>
