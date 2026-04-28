@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+trd_q1_01,2026-03-31,"Suez Canal daily transits > 50 em algum dia Q1 2026",1,0.55,"Suez transits > 50/day Q1 2026?"
+trd_q1_02,2026-03-31,"Houthi atacou navio comercial no Mar Vermelho Q1 2026",1,0.65,"Houthi Red Sea attack Q1 2026?"
+trd_q1_03,2026-03-31,"Panama Canal daily transits voltaram > 36/dia em algum momento Q1 2026",1,0.70,"Panama transits > 36/day Q1 2026?"
+trd_q1_04,2026-03-31,"Baltic Dry Index > 2000 em algum dia Q1 2026",0,0.45,"BDI > 2000 Q1 2026?"
+trd_q1_05,2026-03-31,"Baltic Dry Index < 1000 em algum dia Q1 2026",1,0.60,"BDI < 1000 Q1 2026?"
+trd_q1_06,2026-03-31,"Trump administração impôs tarifa adicional sobre China Q1 2026",1,0.75,"Trump new China tariff Q1 2026?"
+trd_q1_07,2026-03-31,"China retaliou com tarifas/medidas sobre US Q1 2026",1,0.70,"China retaliation Q1 2026?"
+trd_q1_08,2026-02-12,"Maersk Q4 2025 earnings divulgado fevereiro 2026 — beat estimates",1,0.50,"Maersk Q4 earnings beat?"
+trd_q1_09,2026-03-31,"US trade deficit mensal > $80B em algum mês Q1 2026",1,0.65,"US trade deficit > $80B Q1?"
+trd_q1_10,2026-03-31,"WTO ruling significativo contra US ou China Q1 2026",0,0.25,"WTO ruling major Q1 2026?"

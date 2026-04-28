@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+mfg_q1_01,2026-01-02,"ISM Manufacturing PMI dezembro 2025 divulgado janeiro 2026 > 50",0,0.40,"ISM PMI dec 2025 > 50?"
+mfg_q1_02,2026-02-02,"ISM Manufacturing PMI janeiro 2026 > 50 (expansão)",0,0.45,"ISM PMI jan 2026 > 50?"
+mfg_q1_03,2026-03-02,"S&P Global US Manufacturing PMI fevereiro 2026 > 50",1,0.50,"S&P PMI feb 2026 > 50?"
+mfg_q1_04,2026-01-30,"Caterpillar Q4 2025 earnings beat estimates janeiro 2026",1,0.60,"CAT Q4 earnings beat?"
+mfg_q1_05,2026-01-27,"GE Aerospace Q4 2025 earnings beat estimates",1,0.65,"GE Aero Q4 beat?"
+mfg_q1_06,2026-03-31,"TSMC capex guidance 2026 anunciado > $40B",1,0.70,"TSMC capex 2026 > $40B?"
+mfg_q1_07,2026-03-31,"Boeing entregou > 100 737 MAX em Q1 2026",1,0.55,"Boeing 737 MAX > 100 deliveries Q1?"
+mfg_q1_08,2026-03-31,"Boeing teve incidente de segurança 737 reportado Q1 2026",1,0.50,"Boeing 737 safety incident Q1 2026?"
+mfg_q1_09,2026-02-15,"China Caixin Manufacturing PMI > 50 em algum mês Q1 2026",1,0.55,"China Caixin PMI > 50 Q1 2026?"
+mfg_q1_10,2026-03-15,"US Industrial Production YoY positivo em algum mês Q1 2026",1,0.60,"US IP YoY positivo Q1 2026?"
