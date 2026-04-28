@@ -1,17 +1,6 @@
-"""
-Onda 254: Beta-Binomial Empirical Bayes prior tuning (Robbins 1956).
+"""Beta-Binomial Empirical Bayes per-category prior tuning (Robbins 1956).
 
-Auto-tune per-category priors from calibration data sem overfit:
-- Combina hardcoded prior (com força ~prior_strength) + empirical rate
-- Posterior = Beta(α + k, β + n - k) → mean = (α + k)/(α + β + n)
-- Como prior é hardcode (não memorizado), shrinkage protege contra n pequeno
-
-Vantagens vs hardcode puro:
-- Categorias com muita data → empirical domina (auto-correção)
-- Categorias com pouca data → prior domina (no overfit)
-- Smooth interpolation, não threshold abrupto
-
-Sem memorization: usa só agg statistics (k, n) por categoria, não eventos individuais.
+Posterior = Beta(alpha + k, beta + n - k) where alpha+beta = prior_strength.
 """
 
 from __future__ import annotations

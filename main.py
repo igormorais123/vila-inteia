@@ -445,21 +445,21 @@ def modo_factor_autoresearch(args):
 
 
 def modo_forecast_bench(args):
-    """Onda 266: bench classifier post-cutoff datasets + selective + risk-coverage."""
+    """Bench classifier post-cutoff datasets + selective + risk-coverage."""
     import glob
     from pathlib import Path
     from engine.backtest_real import carregar_dataset
     from engine.post_cutoff_classifier import classify_and_predict
-    from engine.selective_forecast import evaluate_selective, risk_coverage_curve
+    from engine.selective_forecast import selective_predict
 
     banner()
-    print("MODO FORECAST-BENCH - 13 datasets post-cutoff Q1+Q2 2026\n")
+    print("MODO FORECAST-BENCH - post-cutoff Q1+Q2 2026\n")
 
     repo = Path(__file__).resolve().parent
     pattern = getattr(args, "pattern", "*")
     files = sorted(glob.glob(str(repo / "data" / "backtest" / f"{pattern}.csv")))
 
-    all_events = []
+    triples: list[tuple[float, int]] = []
     print(f"{'dataset':<40} {'n':>4} {'acc':>6} {'brier':>7}")
     print("=" * 65)
 
@@ -475,27 +475,44 @@ def modo_forecast_bench(args):
         for e in events:
             framing = e.get("outcome_framing") or e["contexto"]
             p, _ = classify_and_predict(framing, e["contexto"])
-            if (p >= 0.5) == bool(e["outcome_real"]):
+            y = e["outcome_real"]
+            if (p >= 0.5) == bool(y):
                 hits += 1
-            brier += (p - e["outcome_real"]) ** 2
+            brier += (p - y) ** 2
+            triples.append((p, y))
         n = len(events)
         print(f"{name[:40]:<40} {n:>4} {hits/n:>6.1%} {brier/n:>7.4f}")
-        all_events.extend(events)
 
-    # Aggregate selective
     print("=" * 65)
-    res = evaluate_selective(all_events, classify_and_predict, tau=args.tau)
-    print(f"\nAGGREGATE n={res['n_total']}")
+    n_total = len(triples)
+    if not n_total:
+        print("\nNo events matched.")
+        return
+
+    def _selective(tau: float) -> dict:
+        kept = [(p, y) for p, y in triples if abs(p - 0.5) >= tau]
+        n_k = len(kept)
+        if not n_k:
+            return {"tau": tau, "coverage": 0.0, "acc": 0.0, "brier": 0.0,
+                    "abstained": n_total}
+        hits = sum(1 for p, y in kept if (p >= 0.5) == bool(y))
+        bri = sum((p - y) ** 2 for p, y in kept) / n_k
+        return {"tau": tau, "coverage": n_k / n_total, "acc": hits / n_k,
+                "brier": bri, "abstained": n_total - n_k}
+
+    res = _selective(args.tau)
+    print(f"\nAGGREGATE n={n_total}")
     print(f"  Coverage: {res['coverage']:.2%} (tau={res['tau']})")
-    print(f"  Selective acc: {res['selective_acc']:.2%}")
-    print(f"  Selective brier: {res['selective_brier']:.4f}")
-    print(f"  Abstained: {res['n_abstained']}")
+    print(f"  Selective acc: {res['acc']:.2%}")
+    print(f"  Selective brier: {res['brier']:.4f}")
+    print(f"  Abstained: {res['abstained']}")
 
     if args.show_curve:
         print("\nRisk-Coverage curve:")
         print(f"  {'tau':>5} {'cov':>6} {'acc':>6} {'brier':>7}")
-        for r in risk_coverage_curve(all_events, classify_and_predict):
-            print(f"  {r['tau']:>5.2f} {r['coverage']:>6.2%} {r['selective_acc']:>6.2%} {r['selective_brier']:>7.4f}")
+        for tau in (0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40):
+            r = _selective(tau)
+            print(f"  {r['tau']:>5.2f} {r['coverage']:>6.2%} {r['acc']:>6.2%} {r['brier']:>7.4f}")
 
 
 def modo_benchmark(args):

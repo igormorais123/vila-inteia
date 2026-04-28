@@ -1,20 +1,7 @@
-"""
-Onda 259: Hedge algorithm (Freund & Schapire 1997) — online expert combination.
+"""Hedge algorithm — online expert combination (Freund & Schapire 1997).
 
-Setting: K experts predict each round; observe outcome; pay loss; update.
-Goal: regret vs best expert in hindsight bounded by O(sqrt(T log K)).
-
-Update rule (multiplicative weights):
-  w_k(t+1) = w_k(t) * exp(-eta * loss_k(t))
-
-Prediction: p_t = sum_k (w_k(t) / sum_j w_j(t)) * p_k(t)
-
-Loss: |p_k - y| (linear) ou (p_k - y)² (quadratic / Brier).
-
-Aplicação: combine 5+ classifiers/predictors online sem hyperparam tuning;
-adapta automaticamente ao expert melhor.
-
-Sem memorization: usa só agg loss history, não eventos individuais.
+Multiplicative weights: w_k *= exp(-eta * loss_k).
+Regret O(sqrt(T log K)).
 """
 
 from __future__ import annotations

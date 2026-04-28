@@ -1,20 +1,7 @@
-"""
-Onda 257: PIT (Probability Integral Transform) histogram diagnostic.
+"""Randomized PIT histogram diagnostic (Czado et al. 2009).
 
-Dawid (1984) / Diebold-Gunther-Tay (1998): se p é prob bem calibrada,
-então rank statistics u_i = F(y_i; p_i) são uniformes [0,1].
-
-Para binary forecasts: usa "randomized PIT" (Czado et al. 2009):
-- Se y=1: u ~ Uniform[0, p]  (ou usa p como midpoint)
-- Se y=0: u ~ Uniform[1-p, 1]
-
-Histograma de u deve ser flat. Forma:
-- U-shape → underconfidence (extremos)
-- Inverted-U → overconfidence (centro)
-- Skew left → bias para baixo
-- Skew right → bias para alto
-
-Plus: chi-square uniformity test.
+Bin u = randomized_pit(p, y) into n_bins, test uniformity via chi-square.
+U-shape = underconfident, inverted-U = overconfident, skew = biased.
 """
 
 from __future__ import annotations

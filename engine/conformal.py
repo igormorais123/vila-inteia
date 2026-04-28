@@ -1,20 +1,7 @@
-"""
-Onda 253: Conformal Prediction (Vovk, Gammerman, Shafer 2005).
+"""Mondrian Conformal Prediction (Vovk, Gammerman, Shafer 2005).
 
-Distribution-free prediction intervals com cobertura garantida (1-alpha).
-Usa Mondrian conformal (per-category quantile) — capta heteroscedasticity
-das categorias do classificador (war 100% confiável, prices 50/50).
-
-Aplicação:
-- conformal_calibrate(events) → quantis empíricos α por categoria
-- conformal_interval(p, label, quants) → [lo, hi] cobertura ≥ 1-alpha
-- conformal_set(p, label, quants) → {0}, {1}, {0,1} (singleton = certeza, set = abstenção)
-
-Insight: categorias com baixo nonconformity histórico (war, scheduled) recebem
-intervalos estreitos → singleton predictions; categorias incertas (price) recebem
-intervalos largos → set {0,1} → abstenção honest.
-
-Sem memorization: quantil é estatística agregada, não memoriza outcomes individuais.
+Per-category empirical (1-alpha)-quantile of |p - y|.
+Singleton = confident, set = abstain.
 """
 
 from __future__ import annotations

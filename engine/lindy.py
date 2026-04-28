@@ -1,24 +1,7 @@
-"""
-Onda 256: Lindy Effect (Mandelbrot 1982; popularized by Taleb 2012).
+"""Lindy Effect duration prior (Mandelbrot 1982; Taleb 2012).
 
-Para entidades non-perishable (institutions, recurring events, technologies):
-expected remaining lifetime ∝ current age.
-
-Aplicação a forecasting de eventos:
-- Recurring scheduled events (Olympics, MWC, World Cup, summits) com história
-  longa têm probabilidade alta de recorrer
-- Eventos novos (recém-lançados) têm baixa Lindy probability
-
-Formal: P(survive next period | survived t periods) ≈ t / (t + period)
-       Equivalent: P(end in next period) ≈ period / (t + period)
-
-Para eventos: P(scheduled event ocorre Q1 2026 | running há N years) =
-              1 - (1 / (1 + N))   [period normalizado]
-
-Combina com classifier: para scheduled_event categoria, usa Lindy boost
-em vez do prior fixo 0.92, baseado em years_running do event.
-
-Sem memorization: usa só year_started field (public info), não outcome data.
+P(event recorre dentro de horizon | rodando ha t anos) = t / (t + horizon).
+Per-event year_started lookup table.
 """
 
 from __future__ import annotations

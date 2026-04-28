@@ -1,22 +1,7 @@
-"""
-Onda 261: Hosmer-Lemeshow goodness-of-fit test (1980).
+"""Hosmer-Lemeshow goodness-of-fit chi-square test (1980).
 
-Test formal de calibration: agrupa predictions em G=10 deciles por p,
-compara observed vs expected counts within each group.
-
-H_0: model is well-calibrated.
-HL statistic = sum_g [ (O_g - E_g)² / (E_g * (1 - E_g/n_g)) ]
-~ Chi²(G - 2) under H_0.
-
-Reject H_0 if p < alpha → model mis-calibrated.
-
-Vs PIT (Onda 257): PIT é visual/diagnostic, HL é formal hypothesis test
-com decision threshold.
-
-Vs Murphy (já existente): Murphy decomposes Brier into REL+UNC-RES
-(continuous components); HL is binary test (reject/no-reject).
-
-Sem memorization: usa só agg statistics.
+Group by decile of p, compare observed vs expected.
+HL = sum (O - E)^2 / (E * (1 - E/n_g)) ~ chi^2(G-2).
 """
 
 from __future__ import annotations
