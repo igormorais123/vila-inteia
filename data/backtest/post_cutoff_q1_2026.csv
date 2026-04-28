@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+post01,2026-02-08,"Super Bowl LX Levi's Stadium — Seahawks vs Patriots — Chiefs eliminados nos playoffs",0,0.30,"Kansas City Chiefs vencerá o Super Bowl LX em Feb 2026?"
+post02,2026-03-31,"Bitcoin caiu 78k→65k entre fev/mar 2026 após August 2025 ATH 123k — bear market Q1 2026",0,0.45,"Bitcoin atingirá $110k+ em qualquer dia Q1 2026?"
+post03,2026-03-31,"OpenAI lança GPT-5.5 apenas em abril 23 2026 — Q1 sem flagship release",0,0.55,"OpenAI lançará GPT-5+ ou Sora2 ou flagship similar em Q1 2026?"
+post04,2026-02-15,"Datafolha fev 2026: Lula 24% approval — pior nível desde 2003",0,0.50,"Lula approval > 40% em pesquisa Datafolha Q1 2026?"
+post05,2026-03-18,"FOMC 17-18 mar 2026 mantém juros 3.50-3.75% — sem corte",0,0.55,"Federal Reserve cortará juros no FOMC de março 2026?"
+post06,2026-03-31,"US-China deal mai 2025 reduziu tarifas pra 10%, extendido nov 2025 até nov 2026 — Q1 2026 sem >50% major",0,0.40,"Trump terá tarifas > 50% sobre alguma economia major em Q1 2026?"
+post07,2026-03-15,"Australian GP 2026 — Russell vence, Verstappen P6 — novo regulamento favoreceu Mercedes",0,0.55,"Verstappen vencerá a primeira corrida F1 da temporada 2026?"
+post08,2026-03-08,"PT confirmou Lula como candidato 2026 em mar 2025 — reafirmado durante 2025",1,0.85,"Lula será confirmado candidato 2026 pelo PT até Q1 2026?"
+post09,2026-03-31,"Apple Vision Pro 2 lançado out 15 2025 — não houve novo anúncio Q1 2026",0,0.20,"Apple anunciará Vision Pro 2 em Q1 2026?"
+post10,2026-03-31,"Solana spot ETFs aprovados out 2025 — não houve aprovação nova Q1 2026 (já era trading)",0,0.40,"SEC aprovará Solana spot ETF em Q1 2026?"

@@ -104,7 +104,7 @@ out = pipeline_completo(
 )
 check("grafo" in out and "simulacao" in out and "relatorio" in out,
       "out tem 3 sections")
-check(out["simulacao"]["steps_executados"] == 100 * 3, "100 events × 3 personas = 300 steps")
+check(out["simulacao"]["steps_executados"] == 110 * 3, "110 events × 3 personas = 330 steps (Onda 230 post-cutoff)")
 check(out["pipeline_elapsed_s"] > 0, "elapsed > 0")
 check("insights" in out["relatorio"], "relatorio tem insights")
 
