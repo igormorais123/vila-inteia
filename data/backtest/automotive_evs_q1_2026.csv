@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+auto_q1_01,2026-03-31,"Tesla Q1 2026 deliveries beat consensus estimate",0,0.40,"Tesla deliveries beat Q1 2026?"
+auto_q1_02,2026-03-31,"Tesla Q1 2026 deliveries > 500k vehicles",0,0.45,"Tesla deliveries > 500k Q1 2026?"
+auto_q1_03,2026-03-31,"Ford F-150 Lightning Q1 2026 sales cresceram QoQ",1,0.50,"F-150 Lightning QoQ growth Q1 2026?"
+auto_q1_04,2026-03-31,"BYD Q1 2026 NEV vendas > 1M unidades",1,0.55,"BYD NEV > 1M Q1 2026?"
+auto_q1_05,2026-03-31,"Rivian Q1 2026 deliveries > 15k vehicles",1,0.55,"Rivian > 15k Q1 2026?"
+auto_q1_06,2026-03-31,"Tesla Cybertruck Q1 2026 deliveries > 20k",0,0.35,"Cybertruck > 20k Q1 2026?"
+auto_q1_07,2026-03-31,"US public EV charging stations passed 250k milestone Q1 2026",1,0.55,"US EV chargers > 250k Q1 2026?"
+auto_q1_08,2026-03-31,"Waymo robotaxi expanded to new major US city Q1 2026",1,0.60,"Waymo new city Q1 2026?"
+auto_q1_09,2026-03-31,"Tesla FSD V13+ released to public fleet wide Q1 2026",1,0.65,"Tesla FSD V13+ wide Q1 2026?"
+auto_q1_10,2026-03-31,"Lucid Motors filed for bankruptcy or major distress event Q1 2026",0,0.15,"Lucid major distress Q1 2026?"

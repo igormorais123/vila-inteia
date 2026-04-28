@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+strm_q1_01,2026-03-31,"Netflix Q1 2026 earnings reportou subscriber growth (net adds positivo)",1,0.70,"Netflix net adds positivo Q1 2026?"
+strm_q1_02,2026-03-31,"Netflix global subscribers ultrapassaram 320M fim Q1 2026",1,0.60,"Netflix > 320M subs Q1 2026?"
+strm_q1_03,2026-03-31,"Disney+ subscribers (core) cresceram QoQ Q1 2026",1,0.55,"Disney+ core QoQ growth Q1 2026?"
+strm_q1_04,2026-03-31,"Warner Bros HBO/Max segment reportou operating profit Q1 2026",1,0.55,"WBD streaming op profit Q1 2026?"
+strm_q1_05,2026-03-31,"Major sport rights deal anunciado (NBA/NFL/Champions League) Q1 2026",1,0.65,"Major sport streaming deal Q1 2026?"
+strm_q1_06,2026-03-31,"Netflix ad-tier subscribers passaram 100M globally Q1 2026",1,0.55,"Netflix ad-tier > 100M Q1 2026?"
+strm_q1_07,2026-03-31,"Spotify Q1 2026 MAU > 700M",1,0.55,"Spotify MAU > 700M Q1 2026?"
+strm_q1_08,2026-03-31,"YouTube TV ultrapassou 10M subscribers Q1 2026",1,0.55,"YouTube TV > 10M Q1 2026?"
+strm_q1_09,2026-03-31,"Paramount+ shutdown ou major restructure announcement Q1 2026",0,0.25,"Paramount+ major restructure Q1 2026?"
+strm_q1_10,2026-03-31,"Apple TV+ reached profitability milestone disclosed Q1 2026",0,0.20,"Apple TV+ profitability disclosed Q1 2026?"

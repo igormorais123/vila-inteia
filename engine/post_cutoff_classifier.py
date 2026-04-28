@@ -113,29 +113,102 @@ _MISSING_EB = _KEYWORD_LABELS - set(EB_TUNED_PRIORS)
 assert not _MISSING_EB, f"EB_TUNED_PRIORS missing categories: {_MISSING_EB}"
 
 
+# Per-category Platt params, fit on Q1 2026 TRAIN ONLY via
+# fit_platt_per_category(q1_train, classify_and_predict, max_iter=500, lr=0.1, min_n=3).
+# Q4 v4 holdout was over-confident (REL=0.131); applies post EB+stretch.
+# Degenerate (1.0, 0.0) entries (insufficient n) are skipped at predict time.
+PLATT_PER_CATEGORY: dict[str, tuple[float, float]] = {
+    "br_legislative": (1.2356, 0.2625),
+    "br_reform_complex": (1.0000, -1.3860),
+    "casualty_threshold": (1.0005, 0.0005),
+    "corporate_action": (0.8661, -0.2155),
+    "corporate_negative": (1.0000, 0.0000),
+    "crypto_product_launch": (0.5081, -0.7746),
+    "default": (1.0054, 0.0068),
+    "election": (1.1013, 0.1398),
+    "extreme_quantity_claim": (1.0000, 0.0000),
+    "fed_action": (0.9157, -0.1325),
+    "geopolitical_low": (0.8900, -0.8804),
+    "geopolitical_routine": (1.3109, 0.3149),
+    "negative_rank_claim": (1.0000, 0.0000),
+    "polling": (0.9380, -0.2411),
+    "price_threshold": (0.8670, -0.2914),
+    "regime_change": (1.0000, 0.0000),
+    "regulatory_action": (0.7902, -0.5994),
+    "regulatory_active": (1.0000, 0.0000),
+    "scheduled_event": (1.0604, 0.0608),
+    "sports_event_structure": (1.3047, 0.3047),
+    "sports_specific_winner": (1.0000, 0.0000),
+    "tariff_action": (1.0000, 0.0000),
+    "tech_release": (0.8285, -0.4461),
+    "war_conflict": (1.3047, 0.3047),
+}
+
+
 def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
     """clip(midpoint + factor * (p - midpoint), [0, 1])."""
     out = midpoint + factor * (p - midpoint)
     return max(0.0, min(1.0, out))
 
 
+def _apply_platt_per_cat(p: float, label: str) -> float:
+    """Apply hardcoded per-cat Platt sigmoid; skip if degenerate (A=1, B=0)."""
+    from engine.calibration import platt_predict_per_category
+    AB = PLATT_PER_CATEGORY.get(label)
+    if AB is None or AB == (1.0, 0.0):
+        return p
+    return platt_predict_per_category(p, label, PLATT_PER_CATEGORY)
+
+
 def classify_and_predict(framing: str, contexto: str = "",
                          apply_stretch: bool = True,
-                         use_eb_tuned: bool = True) -> tuple[float, str]:
+                         use_eb_tuned: bool = True,
+                         apply_platt_per_cat: bool = False,
+                         apply_time_decay: bool = False,
+                         event_date: str | None = None,
+                         reference_date: str = "2026-04-28",
+                         half_life: int = 180,
+                         decay_prior: float = 0.5) -> tuple[float, str]:
     """First keyword-match wins; default 0.50.
 
     apply_stretch: applies _stretch(p) for confidence widening.
     use_eb_tuned: uses EB_TUNED_PRIORS posterior (else hardcoded prior).
+    apply_platt_per_cat: applies per-category Platt sigmoid AFTER EB+stretch
+        (Onda: shrinks Q4 v4 over-confidence). Skipped for degenerate fits.
+    apply_time_decay: shrinks p toward decay_prior using
+        engine.time_decay.apply_time_decay; needs event_date YYYY-MM-DD.
     """
     text = (framing + " " + contexto).lower()
+    matched_label: str | None = None
+    matched_p: float | None = None
     for keywords, prior, label in KEYWORD_PRIORS:
         if any(kw in text for kw in keywords):
             base = EB_TUNED_PRIORS.get(label, prior) if use_eb_tuned else prior
             p = _stretch(base) if apply_stretch else base
-            return p, label
-    base = EB_TUNED_PRIORS.get("default", 0.50) if use_eb_tuned else 0.50
-    p = _stretch(base) if apply_stretch else base
-    return p, "default"
+            if apply_platt_per_cat:
+                p = _apply_platt_per_cat(p, label)
+            matched_label = label
+            matched_p = p
+            break
+    if matched_label is None:
+        base = EB_TUNED_PRIORS.get("default", 0.50) if use_eb_tuned else 0.50
+        p = _stretch(base) if apply_stretch else base
+        if apply_platt_per_cat:
+            p = _apply_platt_per_cat(p, "default")
+        matched_label = "default"
+        matched_p = p
+
+    if apply_time_decay and event_date:
+        # Local import to avoid circular import on module load.
+        from engine.time_decay import (
+            apply_time_decay as _decay,
+            event_age_days,
+        )
+        age = event_age_days(event_date, reference_date=reference_date)
+        matched_p = _decay(matched_p, age,
+                           prior=decay_prior, half_life=half_life)
+
+    return matched_p, matched_label
 
 
 def evaluate_classifier_on_events(events: list) -> dict:

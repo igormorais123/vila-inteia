@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+ins_q1_01,2026-03-31,"Munich Re Q1 2026 earnings reported above consensus",1,0.50,"Munich Re beat Q1 2026?"
+ins_q1_02,2026-03-31,"AIG Q1 2026 reportou combined ratio abaixo de 95",1,0.55,"AIG combined ratio < 95 Q1 2026?"
+ins_q1_03,2026-03-31,"Cat bond market issuance Q1 2026 acima de $5B",1,0.50,"Cat bond issuance > $5B Q1 2026?"
+ins_q1_04,2026-03-31,"Major California insurer (State Farm/Allstate) anunciou retirada/non-renewal Q1 2026",1,0.55,"CA insurer retreat Q1 2026?"
+ins_q1_05,2026-03-31,"Florida property insurance premium average aumentou >15% YoY Q1 2026",1,0.60,"FL premium >15% YoY Q1 2026?"
+ins_q1_06,2026-03-31,"US health insurance premium aumento médio 2026 >7% (KFF survey)",1,0.65,"US health premium >7% 2026?"
+ins_q1_07,2026-03-31,"Pet insurance market US ultrapassou $5B em prêmios anualizado Q1 2026",1,0.55,"Pet insurance > $5B Q1 2026?"
+ins_q1_08,2026-03-31,"Lloyd's of London anunciou major underwriting loss Q1 2026 disclosure",0,0.25,"Lloyd's major loss Q1 2026?"
+ins_q1_09,2026-03-31,"Berkshire Hathaway insurance segment Q1 2026 reportou operating loss",0,0.20,"BRK insurance op loss Q1 2026?"
+ins_q1_10,2026-03-31,"Climate-related insured losses Q1 2026 globais > $20B (Swiss Re/Munich Re estimate)",1,0.55,"Climate insured > $20B Q1 2026?"

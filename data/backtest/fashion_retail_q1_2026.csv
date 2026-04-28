@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+fash_q1_01,2026-03-31,"LVMH Q1 2026 organic revenue beat consensus",0,0.45,"LVMH organic beat Q1 2026?"
+fash_q1_02,2026-03-31,"Hermes Q1 2026 organic revenue cresceu > 10% YoY",1,0.55,"Hermes >10% organic Q1 2026?"
+fash_q1_03,2026-03-31,"Shein IPO precificado em US/UK exchange Q1 2026",0,0.20,"Shein IPO precificado Q1 2026?"
+fash_q1_04,2026-03-31,"Nike revenue Q3 fiscal (~Q1 cal) cresceu YoY 2026",0,0.40,"Nike YoY revenue growth Q1 2026?"
+fash_q1_05,2026-03-31,"Adidas Q1 2026 reportou margin expansion YoY",1,0.55,"Adidas margin expansion Q1 2026?"
+fash_q1_06,2026-03-31,"Inditex (Zara) Q4 fiscal results (~Q1 cal) revenue beat",1,0.55,"Inditex revenue beat Q1 2026?"
+fash_q1_07,2026-03-31,"Stitch Fix Q1 2026 reportou positive net income",0,0.20,"Stitch Fix net positive Q1 2026?"
+fash_q1_08,2026-03-31,"Kering Q1 2026 (Gucci) reportou revenue decline YoY",1,0.55,"Kering revenue decline Q1 2026?"
+fash_q1_09,2026-03-31,"Lululemon Q4 fiscal earnings (Q1 cal) beat estimates",1,0.55,"Lululemon beat Q1 2026?"
+fash_q1_10,2026-03-31,"Temu/PDD US revenue Q1 2026 cresceu QoQ",1,0.65,"Temu US QoQ growth Q1 2026?"
