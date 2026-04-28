@@ -325,6 +325,62 @@ def modo_mirofish(args):
     print(f"\n✓ saída: {out_path}")
 
 
+def modo_benchmark(args):
+    """Onda 228: Benchmark Vila vs 4 baselines (prior, chance, majority, random).
+
+    Output: markdown report + JSON metrics estilo Mirofish public benchmarks.
+    """
+    import json
+    from pathlib import Path
+    from engine.benchmark import rodar_benchmark, formatar_relatorio
+    from engine.persona import Persona
+
+    banner()
+    print("MODO BENCHMARK - Vila vs baselines\n")
+
+    persona_ids = [p.strip() for p in args.personas.split(",")]
+    sim = SimulacaoVila(nome="benchmark")
+    sim.inicializar(max_agentes=len(persona_ids) * 2)
+
+    # Garante personas requeridas
+    faltantes = [pid for pid in persona_ids if pid not in sim.personas]
+    if faltantes:
+        with open(Path(__file__).parent / "data" / "banco-consultores-lendarios.json") as f:
+            banco = json.load(f)
+        for p in banco:
+            if p["id"] in faltantes:
+                sim.personas[p["id"]] = Persona(dados_consultor=p)
+
+    persona_nomes = {pid: sim.personas[pid].nome_exibicao for pid in persona_ids}
+
+    print(f"Personas: {persona_ids}")
+    print(f"Datasets: data/backtest/*.csv\n")
+
+    bench = rodar_benchmark(
+        sim=sim, persona_ids=persona_ids, persona_nomes=persona_nomes,
+        base_dir="data/backtest",
+    )
+
+    # Print report
+    report_md = formatar_relatorio(bench)
+    print(report_md)
+
+    # Save outputs
+    md_path = Path(args.out_md)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.write_text(report_md)
+
+    json_path = Path(args.out_json)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    # Strip preds_real lists from output (too big)
+    bench_clean = {**bench, "baselines": {k: {kk: vv for kk, vv in v.items()}
+                                          for k, v in bench["baselines"].items()}}
+    json_path.write_text(json.dumps(bench_clean, indent=2, default=str))
+
+    print(f"\n✓ markdown: {md_path}")
+    print(f"✓ json:     {json_path}")
+
+
 def modo_live(args):
     """Vila INTEIA 24/7 — servidor + simulação contínua em background."""
     banner()
@@ -536,6 +592,18 @@ def main():
     mirofish_parser.add_argument("--out", default="data/mirofish_output.json",
                                  help="arquivo JSON saída")
 
+    # Comando: benchmark (Onda 228) — estilo Mirofish public benchmarks
+    bench_parser = subparsers.add_parser(
+        "benchmark",
+        help="Vila vs baselines: prior humano, chance, majority, random",
+    )
+    bench_parser.add_argument("--personas", default="CL001,CL002,CL007",
+                              help="IDs panel (default: Musk/Jobs/Bezos)")
+    bench_parser.add_argument("--out-md", default="data/benchmark_report.md",
+                              help="markdown report")
+    bench_parser.add_argument("--out-json", default="data/benchmark.json",
+                              help="JSON metrics")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -548,6 +616,8 @@ def main():
         modo_demo(args)
     elif args.comando == "mirofish":
         modo_mirofish(args)
+    elif args.comando == "benchmark":
+        modo_benchmark(args)
     else:
         parser.print_help()
         print("\nExemplos:")
@@ -556,6 +626,7 @@ def main():
         print("  python -m vila_inteia.main serve --port 8100")
         print("  python -m vila_inteia.main live --intervalo 30 --topico 'IA no Brasil'")
         print("  python -m vila_inteia.main mirofish --personas CL001,CL002,CL007")
+        print("  python -m vila_inteia.main benchmark")
 
 
 if __name__ == "__main__":
