@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+clim01,2026-03-31,"Janeiro 2026 entrou no top-3 janeiros mais quentes registro NOAA",1,0.75,"Jan 2026 top-3 quente?"
+clim02,2026-03-31,"Arctic sea ice extent Q1 2026 ficou abaixo da média 1991-2020",1,0.85,"Arctic sea ice Q1 2026 abaixo média?"
+clim03,2026-03-31,"NOAA hurricane forecast 2026 emitido above-normal season",1,0.65,"NOAA above-normal hurricane forecast 2026?"
+clim04,2026-03-31,"Atlantic hurricane Cat-5 formado Q1 2026 (off-season)",0,0.05,"Cat-5 hurricane Q1 2026?"
+clim05,2026-03-31,"Carbon credit EU ETS price > €100/ton fim Q1 2026",0,0.30,"EU ETS > €100/ton Q1 2026?"
+clim06,2026-03-31,"IPCC AR7 working group novo relatório publicado Q1 2026",0,0.25,"IPCC AR7 relatório Q1 2026?"
+clim07,2026-03-31,"COP31 host country anunciado/confirmado Q1 2026",1,0.55,"COP31 host confirmado Q1 2026?"
+clim08,2026-03-31,"California declarou emergência seca/incêndio Q1 2026",1,0.50,"California emergência seca Q1 2026?"
+clim09,2026-03-31,"Atmospheric CO2 Mauna Loa > 425 ppm leitura Q1 2026",1,0.85,"CO2 Mauna Loa > 425 ppm Q1 2026?"
+clim10,2026-03-31,"Brazil Amazon desmatamento Q1 2026 caiu vs Q1 2025 oficial INPE",1,0.55,"Amazon deforestation Q1 caiu?"
