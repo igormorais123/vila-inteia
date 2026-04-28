@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+elec_q1_01,2026-02-15,"Bangladesh elections realizadas fev 2026 — confirmed",1,0.85,"Bangladesh elections realizadas Q1 2026?"
+elec_q1_02,2026-03-05,"Nepal legislative elections held 5 March 2026 — Rastriya Swatantra Party won landslide",1,0.85,"Nepal elections held mar 2026?"
+elec_q1_03,2026-03-05,"Rastriya Swatantra Party Balen Shah leads winning Nepal",1,0.40,"Rastriya Swatantra winning Nepal Q1 2026?"
+elec_q1_04,2026-02-01,"Costa Rica Laura Fernández Delgado elected presidente fev 1",1,0.50,"Costa Rica nova presidente eleita Q1 2026?"
+elec_q1_05,2026-01-15,"Uganda Museveni reeleito amid protests jan 15 2026",1,0.85,"Museveni reelegerá Uganda Q1 2026?"
+elec_q1_06,2026-03-31,"Morocco elections Q1 2026 confirmed",0,0.40,"Morocco elections Q1 2026?"
+elec_q1_07,2026-03-31,"Peru elections Q1 2026 confirmed",0,0.40,"Peru elections Q1 2026?"
+elec_q1_08,2026-01-15,"Uganda elections deaths protests",1,0.65,"Uganda elections terão violência reportada Q1 2026?"
+elec_q1_09,2026-03-05,"Nepal landslide Balen Shah party major win",1,0.50,"Nepal terá landslide vitoria Q1 2026?"
+elec_q1_10,2026-02-15,"Bangladesh democratic transition",1,0.65,"Bangladesh transição democrática Q1 2026?"

@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+space01,2026-03-31,"Artemis II window aberta fev 2026 — NASA Moon crewed",1,0.55,"NASA Artemis II window aberto Q1 2026?"
+space02,2026-03-31,"SpaceX Starship V3 órbita atingida Q1 2026",0,0.35,"SpaceX Starship V3 orbit Q1 2026?"
+space03,2026-03-31,"Falcon 9 200+ launches 2025 record continued 2026",1,0.85,"SpaceX > 50 Falcon launches Q1 2026?"
+space04,2026-03-31,"China Tiangong space station crew rotation Q1 2026",1,0.85,"China Tiangong crew rotation Q1 2026?"
+space05,2026-03-31,"James Webb new exoplanet atmospheric breakthrough Q1 2026",1,0.65,"JWST major exoplanet discovery Q1 2026?"
+space06,2026-03-31,"India ISRO Chandrayaan-4 mission launched Q1 2026",0,0.30,"India Chandrayaan-4 launch Q1 2026?"
+space07,2026-03-31,"Boeing Starliner crewed flight Q1 2026",0,0.20,"Boeing Starliner crewed flight Q1 2026?"
+space08,2026-03-31,"BlueOrigin New Glenn second flight successful",1,0.55,"BlueOrigin New Glenn voo bem-sucedido Q1 2026?"
+space09,2026-03-31,"Mars helicopter Ingenuity replacement deployment",0,0.20,"Mars new helicopter deployed Q1 2026?"
+space10,2026-03-31,"Asteroid Apophis trajectory updated 2029 close approach",1,0.65,"Apophis trajectory mais precisa Q1 2026?"

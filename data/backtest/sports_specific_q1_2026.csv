@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+sport01,2026-02-22,"Winter Olympics Milan-Cortina realizada 6-22 fev — sucesso operacional",1,0.95,"Winter Olympics Milan-Cortina serão realizados Q1 2026?"
+sport02,2026-02-22,"Olympics decentralizada model — sustentável reuse venues",1,0.65,"Olympics 2026 usarão modelo descentralizado sustentável?"
+sport03,2026-03-15,"Norway top medal table Olympics 2026",1,0.55,"Noruega liderará quadro de medalhas Olympics 2026?"
+sport04,2026-03-31,"FIFA World Cup 2026 preparation US-Canada-Mexico 48 teams",1,0.95,"FIFA World Cup 2026 será 48 teams 3 host countries?"
+sport05,2026-03-31,"NBA All-Star Game 2026 February LA",1,0.85,"NBA All-Star Game 2026 realizado fev?"
+sport06,2026-03-15,"India T20 World Cup 2026 final venceu",1,0.40,"India venceu T20 World Cup 2026 final?"
+sport07,2026-03-31,"Indianapolis 500 race May 2026 confirmed",1,0.95,"Indianapolis 500 realizado 2026?"
+sport08,2026-03-15,"6 Nations Rugby Championship Wales finished bottom",0,0.30,"Wales terminará bottom 6 Nations 2026?"
+sport09,2026-03-31,"Six Nations 2026 winner France",1,0.40,"France vence Six Nations 2026?"
+sport10,2026-02-22,"Olympics 2026 doping scandals reported",1,0.50,"Olympics 2026 terá escândalos doping reportados?"
