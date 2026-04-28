@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+q2_01,2026-04-12,"Masters 2026 Augusta — Rory McIlroy vence em abr 9-12",1,0.20,"Rory McIlroy vencerá o Masters 2026?"
+q2_02,2026-04-30,"WrestleMania 42 realizada em Las Vegas abril 2026",1,0.95,"WrestleMania 42 será realizada em Las Vegas em abril 2026?"
+q2_03,2026-04-29,"Bitcoin 2026 conf realizada Las Vegas abr 27-29",1,0.99,"Bitcoin 2026 conf será realizada em Las Vegas em abril 2026?"
+q2_04,2026-05-07,"Consensus Miami May 5-7 conference realizada",1,0.95,"Consensus Miami será realizado em maio 2026?"
+q2_05,2026-04-09,"SiGMA South America São Paulo abr 6-9 realizado 18500+ delegates",1,0.95,"SiGMA South America será realizado em São Paulo em abril 2026?"
+q2_06,2026-04-27,"Brazil B3 lançou 6 event contracts BTC abr 27 2026",1,0.40,"Brazil B3 lançará event contracts cripto em abril 2026?"
+q2_07,2026-04-19,"Senior PGA Stewart Cink vence Apr 16-19 The Concession Bradenton",1,0.30,"Stewart Cink vencerá o Senior PGA Championship 2026?"
+q2_08,2026-04-26,"Chevron Championship Memorial Park Houston — Nelly Korda vence",1,0.40,"Nelly Korda vencerá o Chevron Championship 2026?"
+q2_09,2026-05-02,"Kentucky Derby Churchill Downs realizada May 2 2026",1,0.99,"Kentucky Derby será realizado em maio 2026?"
+q2_10,2026-05-16,"Preakness Stakes Laurel Park MD realizada May 16 2026",1,0.99,"Preakness Stakes será realizado em maio 2026?"
