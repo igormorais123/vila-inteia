@@ -1061,6 +1061,16 @@ def main():
     fc_parser.add_argument("--per-event", action="store_true",
                            help="Print per-event diagnostic table after AGGREGATE")
 
+    # forecast-mega-bench: combined + per-cat Murphy + DM + HL + PIT + reliability
+    mega_parser = subparsers.add_parser(
+        "forecast-mega-bench",
+        help="Mega bench: combined_report + per-cat Murphy + DM + HL + PIT + reliability → markdown",
+    )
+    mega_parser.add_argument("--pattern", default="*",
+                             help="Glob pattern for dataset names (default: *)")
+    mega_parser.add_argument("--out-md", default="data/mega_bench_report.md",
+                             help="Markdown report path")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -1081,6 +1091,8 @@ def main():
         modo_factor_autoresearch(args)
     elif args.comando == "forecast-bench":
         modo_forecast_bench(args)
+    elif args.comando == "forecast-mega-bench":
+        modo_forecast_mega_bench(args)
     else:
         parser.print_help()
         print("\nExemplos:")
