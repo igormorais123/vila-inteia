@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+macro_q1_01,2026-01-29,"Fed Jan 28-29 FOMC realizado — Powell decisão",1,0.95,"FOMC reunião Jan 2026 realizada?"
+macro_q1_02,2026-01-29,"Fed cortou taxa Jan 2026 reunião — projeção mercado consensual",0,0.55,"Fed cortou rate Jan 2026?"
+macro_q1_03,2026-03-19,"FOMC March 18-19 realizada — projeção CPI",1,0.95,"FOMC março 2026 realizada?"
+macro_q1_04,2026-03-19,"Fed cortou taxa March 2026 reunião",1,0.50,"Fed cortou rate Mar 2026?"
+macro_q1_05,2026-01-29,"Powell pressionou inflation target 2% no FOMC Jan",1,0.70,"Powell mencionou 2% target Jan FOMC?"
+macro_q1_06,2026-03-30,"ECB cortou taxa March 2026 — Lagarde",1,0.55,"ECB cortou rate Mar 2026?"
+macro_q1_07,2026-02-15,"BCB Brasil cortou Selic Q1 2026",0,0.40,"BCB cortou Selic Q1 2026?"
+macro_q1_08,2026-03-31,"BoE Bank of England decisão Q1 2026 — taxa cortada",1,0.50,"BoE cortou rate Q1 2026?"
+macro_q1_09,2026-03-31,"Banco do Japão BOJ aumentou rate Q1 2026",0,0.30,"BOJ aumentou rate Q1 2026?"
+macro_q1_10,2026-02-15,"China PBoC Loan Prime Rate cortado em Q1 2026",1,0.55,"PBoC cortou LPR Q1 2026?"

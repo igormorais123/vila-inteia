@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+corp_q1_01,2026-03-31,"Microsoft anunciou aquisição empresa AI Q1 2026",1,0.50,"Microsoft fez aquisição AI Q1 2026?"
+corp_q1_02,2026-02-28,"Berkshire Hathaway AGM 2026 será realizada em maio",0,0.60,"Berkshire AGM Q1 2026?"
+corp_q1_03,2026-03-31,"Tesla anunciou cisão de divisão Cybertruck Q1 2026",0,0.30,"Tesla cisão Cybertruck Q1 2026?"
+corp_q1_04,2026-03-31,"Apple anunciou stock buyback Q1 2026",1,0.65,"Apple buyback Q1 2026?"
+corp_q1_05,2026-03-15,"NVIDIA passou Apple em market cap Q1 2026",1,0.55,"NVDA > AAPL market cap Q1 2026?"
+corp_q1_06,2026-03-31,"Walmart aquisição varejista regional Q1 2026",0,0.30,"Walmart aquisição Q1 2026?"
+corp_q1_07,2026-02-29,"Activision Blizzard absorvida operacionalmente Microsoft",1,0.85,"Activision integration Q1 2026?"
+corp_q1_08,2026-03-31,"Boeing anunciou demissões em massa Q1 2026",1,0.50,"Boeing layoffs Q1 2026?"
+corp_q1_09,2026-03-31,"Disney lançou novo IP Q1 2026 com receita > $100M",0,0.30,"Disney IP $100M Q1 2026?"
+corp_q1_10,2026-03-31,"Goldman Sachs aumentou dividendos Q1 2026",1,0.50,"Goldman dividend hike Q1 2026?"

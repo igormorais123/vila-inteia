@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+reg_q1_01,2026-03-31,"SEC aprovou Bitcoin spot ETF additional Q1 2026",1,0.55,"SEC aprovou novo BTC ETF Q1 2026?"
+reg_q1_02,2026-03-31,"EU AI Act entrou em força Q1 2026 — primeiro enforcement",1,0.85,"EU AI Act enforcement Q1 2026?"
+reg_q1_03,2026-03-31,"Trump administration revogou Chips Act Q1 2026",0,0.20,"Chips Act revoked Q1 2026?"
+reg_q1_04,2026-03-31,"FTC bloqueou major tech merger Q1 2026",0,0.30,"FTC blocked merger Q1 2026?"
+reg_q1_05,2026-03-31,"DOJ acusou Big Tech antitrust Q1 2026",1,0.50,"DOJ antitrust action Q1 2026?"
+reg_q1_06,2026-03-31,"OpenAI teve fine privacy regulator Q1 2026",1,0.40,"OpenAI fined Q1 2026?"
+reg_q1_07,2026-03-31,"Trump executive order corporate tax cut Q1 2026",1,0.55,"Trump corporate tax EO Q1 2026?"
+reg_q1_08,2026-03-31,"China impôs novas restrições TikTok Q1 2026",0,0.30,"China TikTok new rules Q1 2026?"
+reg_q1_09,2026-03-31,"India aprovou cripto regulation framework Q1 2026",0,0.25,"India crypto reg Q1 2026?"
+reg_q1_10,2026-03-31,"Meta perdeu antitrust case Europa Q1 2026",0,0.30,"Meta lost EU antitrust Q1 2026?"

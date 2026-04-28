@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+geo_q1_01,2026-03-31,"Russia-Ukraine cessar-fogo formal Q1 2026",0,0.30,"Russia-Ukraine ceasefire Q1 2026?"
+geo_q1_02,2026-03-31,"China invadiu Taiwan Q1 2026",0,0.10,"China invaded Taiwan Q1 2026?"
+geo_q1_03,2026-03-31,"North Korea testou míssil Q1 2026",1,0.85,"DPRK missile test Q1 2026?"
+geo_q1_04,2026-03-31,"Israel-Hamas final cessar-fogo formal Q1 2026",0,0.35,"Israel-Hamas final ceasefire Q1 2026?"
+geo_q1_05,2026-03-31,"NATO expansão country admitido Q1 2026",0,0.30,"NATO new member Q1 2026?"
+geo_q1_06,2026-03-31,"BRICS+ adicionou novo país Q1 2026",1,0.50,"BRICS+ new member Q1 2026?"
+geo_q1_07,2026-03-31,"Iran ataque cyber EUA Q1 2026 acknowledged",1,0.45,"Iran cyber attack US Q1 2026?"
+geo_q1_08,2026-03-31,"Trump retirou US do Paris Agreement Q1 2026",1,0.65,"US withdraws Paris Q1 2026?"
+geo_q1_09,2026-03-31,"Saudi Arabia normalizou relações Israel Q1 2026",0,0.35,"Saudi-Israel deal Q1 2026?"
+geo_q1_10,2026-03-31,"Mexico migration crisis intensified Q1 2026",1,0.65,"Mexico migration intensified Q1 2026?"
