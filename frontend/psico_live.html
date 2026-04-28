@@ -31,23 +31,23 @@
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="header">
-      <div>
-        <h1 style="font-size: var(--text-2xl);">Psico-História ao Vivo</h1>
-        <p class="u-muted" style="margin-top: var(--space-1);">
-          <span id="pulse-indicator" class="pulse"></span>
+  <main class="page" aria-label="Página psico-história ao vivo">
+    <header class="header" role="banner">
+      <div role="group" aria-label="Título página">
+        <h1 style="font-size: var(--text-2xl);" aria-label="Psico-História ao Vivo">Psico-História ao Vivo</h1>
+        <p class="u-muted" style="margin-top: var(--space-1);" aria-label="Status polling">
+          <span id="pulse-indicator" class="pulse" aria-hidden="true"></span>
           <span id="pulse-label">polling a cada 3s</span>
         </p>
       </div>
-      <nav class="u-hstack" style="gap: var(--space-4);">
+      <nav class="u-hstack" style="gap: var(--space-4);" aria-label="Navegação">
         <a href="/psicohistoria.html" class="u-muted" aria-label="Ir para teoria psico-história">teoria</a>
         <a href="/dashboard.html" class="u-muted" aria-label="Ir para dashboard">dashboard</a>
         <a href="/" class="u-muted" aria-label="Voltar Vila">← Vila</a>
       </nav>
     </header>
 
-    <div class="info">
+    <div class="info" role="note" aria-label="Descrição da página">
       Esta página mostra a trajetória <strong>real observada</strong> da simulação em execução,
       comparada contra o <strong>Plano de Seldon</strong> calculado analiticamente.
       Mules (anomalias) são detectados automaticamente a cada 20 steps.
