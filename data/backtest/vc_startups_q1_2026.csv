@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+vc_q1_01,2026-03-31,"OpenAI fechou nova rodada > $40B valuation Q1 2026",1,0.65,"OpenAI raise > $40B Q1 2026?"
+vc_q1_02,2026-03-31,"Anthropic fechou nova rodada Q1 2026 (qualquer tamanho)",1,0.60,"Anthropic raise Q1 2026?"
+vc_q1_03,2026-03-31,"Stripe IPO oficialmente protocolado S-1 Q1 2026",0,0.20,"Stripe S-1 filed Q1 2026?"
+vc_q1_04,2026-03-31,"Anduril fechou rodada > $2B Q1 2026",1,0.50,"Anduril > $2B Q1 2026?"
+vc_q1_05,2026-03-31,"Stripe valuation secondary > $90B Q1 2026",1,0.55,"Stripe > $90B Q1 2026?"
+vc_q1_06,2026-03-31,"xAI Musk fechou rodada > $10B Q1 2026",1,0.55,"xAI > $10B Q1 2026?"
+vc_q1_07,2026-03-31,"Mistral AI fechou rodada com valuation > $10B Q1 2026",0,0.30,"Mistral > $10B Q1 2026?"
+vc_q1_08,2026-03-31,"Major unicorn down round (>30% cut) Q1 2026 reportada",1,0.65,"Down round > 30% Q1 2026?"
+vc_q1_09,2026-03-31,"Klarna IPO precificada Q1 2026",0,0.20,"Klarna IPO precificada Q1 2026?"
+vc_q1_10,2026-03-31,"Perplexity fechou rodada > $14B valuation Q1 2026",1,0.50,"Perplexity > $14B Q1 2026?"
