@@ -444,6 +444,66 @@ def modo_factor_autoresearch(args):
     print(f"\n✓ markdown: {out_path}")
 
 
+def modo_forecast_bench(args):
+    """Onda 266: bench classifier post-cutoff datasets + selective + risk-coverage."""
+    import csv
+    import glob
+    from pathlib import Path
+    from engine.post_cutoff_classifier import classify_and_predict
+    from engine.selective_forecast import evaluate_selective, risk_coverage_curve
+
+    banner()
+    print("MODO FORECAST-BENCH - 13 datasets post-cutoff Q1+Q2 2026\n")
+
+    repo = Path(__file__).resolve().parent
+    pattern = getattr(args, "pattern", "*")
+    files = sorted(glob.glob(str(repo / "data" / "backtest" / f"{pattern}.csv")))
+
+    all_events = []
+    print(f"{'dataset':<40} {'n':>4} {'acc':>6} {'brier':>7}")
+    print("=" * 65)
+
+    for fp in files:
+        name = Path(fp).stem
+        events = []
+        with open(fp) as f:
+            for r in csv.DictReader(f):
+                try:
+                    events.append({
+                        "outcome_framing": r.get("outcome_framing") or r.get("framing", ""),
+                        "contexto": r.get("contexto", ""),
+                        "outcome_real": int(r["outcome_real"]),
+                    })
+                except (ValueError, KeyError):
+                    continue
+        if not events:
+            continue
+        hits = brier = 0.0
+        for e in events:
+            p, _ = classify_and_predict(e["outcome_framing"], e["contexto"])
+            if (p >= 0.5) == bool(e["outcome_real"]):
+                hits += 1
+            brier += (p - e["outcome_real"]) ** 2
+        n = len(events)
+        print(f"{name[:40]:<40} {n:>4} {hits/n:>6.1%} {brier/n:>7.4f}")
+        all_events.extend(events)
+
+    # Aggregate selective
+    print("=" * 65)
+    res = evaluate_selective(all_events, classify_and_predict, tau=args.tau)
+    print(f"\nAGGREGATE n={res['n_total']}")
+    print(f"  Coverage: {res['coverage']:.2%} (tau={res['tau']})")
+    print(f"  Selective acc: {res['selective_acc']:.2%}")
+    print(f"  Selective brier: {res['selective_brier']:.4f}")
+    print(f"  Abstained: {res['n_abstained']}")
+
+    if args.show_curve:
+        print("\nRisk-Coverage curve:")
+        print(f"  {'tau':>5} {'cov':>6} {'acc':>6} {'brier':>7}")
+        for r in risk_coverage_curve(all_events, classify_and_predict):
+            print(f"  {r['tau']:>5.2f} {r['coverage']:>6.2%} {r['selective_acc']:>6.2%} {r['selective_brier']:>7.4f}")
+
+
 def modo_benchmark(args):
     """Onda 228: Benchmark Vila vs 4 baselines (prior, chance, majority, random).
 
@@ -743,6 +803,18 @@ def main():
     autores_parser.add_argument("--out-md", default="data/factor_autoresearch.md",
                                 help="markdown report")
 
+    # Comando: forecast-bench (Onda 266) — bench classifier on all post-cutoff datasets
+    fc_parser = subparsers.add_parser(
+        "forecast-bench",
+        help="Bench classifier post-cutoff Q1+Q2 datasets — selective + risk-coverage curve",
+    )
+    fc_parser.add_argument("--tau", type=float, default=0.0,
+                           help="Selective threshold (0.0 = predict all, 0.30 = abstain |p-0.5|<0.30)")
+    fc_parser.add_argument("--show-curve", action="store_true",
+                           help="Print risk-coverage curve (multiple tau)")
+    fc_parser.add_argument("--pattern", default="*",
+                           help="Glob pattern for dataset names (default: *; ex: 'post_cutoff*' or '*q1_2026*')")
+
     args = parser.parse_args()
 
     if args.comando == "run":
@@ -761,6 +833,8 @@ def main():
         modo_factor_bench(args)
     elif args.comando == "factor-autoresearch":
         modo_factor_autoresearch(args)
+    elif args.comando == "forecast-bench":
+        modo_forecast_bench(args)
     else:
         parser.print_help()
         print("\nExemplos:")
