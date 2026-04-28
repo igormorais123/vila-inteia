@@ -77,8 +77,8 @@
       <span id="status" class="status">—</span>
     </section>
 
-    <div class="grid">
-      <div class="card">
+    <section class="grid" role="region" aria-label="Cards super intelligence">
+      <div class="card" role="article" aria-label="Estado atual e forecast">
         <h2>Estado atual + forecast</h2>
         <div class="kpi-row">
           <div><div class="kpi-label">Estado</div><div class="kpi" id="estado_atual">—</div></div>
@@ -88,9 +88,9 @@
         <div id="top_estados" style="margin-top:16px"></div>
         <div class="kpi-label" style="margin-top:12px">Entropia</div>
         <div id="entropia" style="font-size:13px;color:var(--text2)">—</div>
-      </div>
+      </article>
 
-      <div class="card">
+      <div class="card" role="article" aria-label="Recomendação Helena Efesto">
         <h2>Recomendação Helena/Efesto</h2>
         <div><span class="kpi-label">Outcome desejado</span></div>
         <div class="kpi" id="outcome_kpi">—</div>
@@ -98,25 +98,25 @@
         <div id="melhor" style="font-size:16px;color:var(--amber);margin-top:4px">—</div>
         <div class="kpi-label" style="margin-top:12px">Top-5 ranking</div>
         <div id="ranking" style="margin-top:4px"></div>
-      </div>
+      </article>
 
-      <div class="card full">
+      <article class="card full" aria-label="Briefing executivo">
         <h2>Briefing executivo (LLM)</h2>
         <div class="briefing" id="briefing">
           <span class="empty">Clique "Atualizar" para gerar briefing.</span>
         </div>
-      </div>
+      </article>
 
-      <div class="card full">
+      <article class="card full" aria-label="Evidências LLM-rich">
         <h2>Evidências LLM-rich</h2>
         <div id="evidencias"><span class="empty">—</span></div>
-      </div>
+      </article>
 
       <details class="full">
         <summary>Raw payload JSON (debug)</summary>
         <pre id="raw"></pre>
       </details>
-    </div>
+    </section>
   </div>
 
 <script>
