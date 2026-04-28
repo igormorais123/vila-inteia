@@ -37,7 +37,7 @@ check(p == 0.45, f"moderate-low (got {p})")
 print("\n[4] scheduled event")
 p, lbl = classify_and_predict("Olympics summit held in March")
 check(lbl == "scheduled_event", f"scheduled (got {lbl})")
-check(p == 0.95, f"very high (got {p})")
+check(p == 0.92, f"very high (got {p})")
 
 print("\n[5] price target / threshold")
 p, lbl = classify_and_predict("Bitcoin ATH hits k+")  # avoid $ trigger

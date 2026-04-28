@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+tech_q1_01,2026-03-05,"MWC Barcelona 20th edition realizado mar 2-5 — temas: AI infra/enterprise/inclusive",1,0.95,"MWC Barcelona 2026 realizado mar?"
+tech_q1_02,2026-02-15,"Artemis II launch window opens fev 2026 — NASA crewed Moon",1,0.55,"Artemis II window aberta Q1 2026?"
+tech_q1_03,2026-03-31,"Apple Vision Pro 2 já lançado out 2025 — não Q1 2026",0,0.30,"Apple anunciou novo Vision Q1 2026?"
+tech_q1_04,2026-03-31,"OpenAI GPT-5.5 lançado abril 2026 (Q2 não Q1)",0,0.55,"OpenAI lançou GPT-5.5 em Q1 2026?"
+tech_q1_05,2026-03-31,"Anthropic Claude 4.7 release",1,0.65,"Anthropic Claude 4.7 ou mais lançado Q1 2026?"
+tech_q1_06,2026-03-31,"Meta Llama 5 release Q1 2026",0,0.45,"Meta Llama 5 lançado Q1 2026?"
+tech_q1_07,2026-03-31,"Tesla Cybertruck 1M units sold milestone",0,0.20,"Tesla Cybertruck atingirá 1M units Q1 2026?"
+tech_q1_08,2026-02-15,"Google Gemini 3.0 release",1,0.50,"Google Gemini 3.0 ou superior lançado Q1 2026?"
+tech_q1_09,2026-03-31,"DeepSeek V4 release Q1 2026",1,0.55,"DeepSeek V4 lançado Q1 2026?"
+tech_q1_10,2026-02-15,"Microsoft Copilot enterprise expansion announcement",1,0.75,"MS Copilot enterprise expansão Q1 2026?"

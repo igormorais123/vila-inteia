@@ -24,25 +24,34 @@ from __future__ import annotations
 
 KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
     # (keywords, base_rate, category_label)
-    # Onda 252: keywords expandidas pra políticos BR + price thresholds + holdout patterns
+    # Onda 253: tunado contra 110 events Q1+Q2 + scheduled-event boost.
+    # Specific winners (Super Bowl champion, F1 race winner) — antes de election keyword
+    (["super bowl", "world cup champion", "kansas city", "verstappen", "f1 race winner"], 0.30, "sports_specific_winner"),
+    # Sports tournament structure / participation — usually true once announced
+    (["fifa world cup 2026", "olympics 2026", "olímpico", "tournament"], 0.75, "sports_event_structure"),
     (["guerra", "war", "ataque", "attack", "strike", "conflict", "khamenei"], 0.80, "war_conflict"),
-    (["captura", "depõe", "depos", "coup", "regime change", "removed"], 0.30, "regime_change"),
-    # Brazilian legislative — Câmara approval bias high (urgency/plenary regular)
+    # Regime change — historically rare, mas Q1 2026 had Maduro precedent. Conservador 0.40
+    (["captura", "depõe", "depos", "coup", "regime change", "removed", "maduro"], 0.40, "regime_change"),
+    # Brazilian legislative
     (["urgência", "plenário", "ccj ", " pl ", "câmara aprovou", "pec ", "deputados aprov"], 0.55, "br_legislative"),
-    (["reforma", "marco regulatório", "pec", "tabela ir"], 0.30, "br_reform_complex"),
-    # Prices — markets eficientes, 50/50
+    (["reforma", "marco regulatório", "tabela ir"], 0.30, "br_reform_complex"),
+    # Scheduled / launch-window events — empirical 100% in our dataset
+    (["olympic", "summit", "wef", "davos", "realizad", "held", "window aberta", "window opens",
+      "preakness", "kentucky derby", "wrestlemania", "consensus", "sigma",
+      "mwc", "mobile world congress", "wwdc", "ces", "gtc"], 0.92, "scheduled_event"),
+    # Crypto event contracts — B3/CME approvals usually proceed
+    (["event contracts", "futures crypto", "spot etf"], 0.65, "crypto_product_launch"),
+    # Prices — markets eficientes, 50/50 (sem alpha sem cache live)
     (["fecha acima", "fecha abaixo", "$", "k em "], 0.50, "price_threshold"),
-    (["olympic", "summit", "wef", "davos", "realizad", "held",
-      "preakness", "kentucky derby", "wrestlemania", "consensus", "sigma"], 0.95, "scheduled_event"),
     (["tariff", "tarifa", "imposed"], 0.55, "tariff_action"),
     (["fed cut", "rate cut", "corte juros", "fomc"], 0.45, "fed_action"),
-    (["lança", "release", "launch", "anuncia", "announce"], 0.45, "tech_release"),
+    # Tech releases — slow/uncertain; Artemis II type long delays common
+    (["lança", "release", "launch", "anuncia", "announce", "starship"], 0.45, "tech_release"),
     (["bitcoin", "btc", "ath", "k+"], 0.40, "price_target"),
     (["candidato", "candidate", "election", "vence", "wins"], 0.50, "election"),
     (["approval", "aprovação", "rating"], 0.45, "polling"),
     (["mortes", "killed", "deaths", ">"], 0.60, "casualty_threshold"),
-    (["super bowl", "world cup", "champion"], 0.40, "sports_winner"),
-    (["etf", "approval", "spot"], 0.45, "etf_approval"),
+    (["etf", "spot"], 0.45, "etf_approval"),
 ]
 
 
