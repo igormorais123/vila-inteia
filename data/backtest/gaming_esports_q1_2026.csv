@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+gam_q1_01,2026-03-31,"Fortnite major tournament Q1 2026 prize pool > $1M",1,0.70,"Fortnite tournament > $1M prize Q1 2026?"
+gam_q1_02,2026-03-31,"Sony anunciou PlayStation 6 oficial Q1 2026",0,0.10,"PS6 anunciado Q1 2026?"
+gam_q1_03,2026-03-31,"Microsoft Activision-Blizzard segment reportou growth YoY Q1 2026",1,0.60,"Activision growth YoY Q1 2026?"
+gam_q1_04,2026-03-31,"Steam concurrent users hit new all-time high > 40M Q1 2026",1,0.55,"Steam ATH > 40M Q1 2026?"
+gam_q1_05,2026-03-31,"Rockstar/Take-Two GTA 6 release date confirmado em 2026 (não delay)",0,0.45,"GTA 6 release 2026 confirmado Q1?"
+gam_q1_06,2026-03-31,"Roblox Q1 2026 reportou DAU > 100M",1,0.65,"Roblox DAU > 100M Q1 2026?"
+gam_q1_07,2026-03-31,"Nintendo Switch 2 vendeu > 20M units cumulativo fim Q1 2026",1,0.55,"Switch 2 > 20M units Q1 2026?"
+gam_q1_08,2026-03-31,"League of Legends MSI 2026 prize pool aumentou vs 2025",0,0.40,"MSI 2026 prize > 2025?"
+gam_q1_09,2026-03-31,"Major esports org (TSM/Cloud9/100T) shutdown ou layoffs grandes Q1 2026",1,0.50,"Major esports org distress Q1 2026?"
+gam_q1_10,2026-03-31,"Tencent gaming revenue Q1 2026 cresceu YoY",1,0.60,"Tencent gaming YoY growth Q1 2026?"

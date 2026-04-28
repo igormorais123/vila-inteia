@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+ai_q1_01,2026-03-31,"OpenAI lançou GPT-5.5 ou major successor Q1 2026",0,0.40,"GPT-5.5 lançado Q1 2026?"
+ai_q1_02,2026-03-31,"Anthropic lançou Claude 4.7 ou superior Q1 2026",1,0.65,"Claude 4.7+ lançado Q1 2026?"
+ai_q1_03,2026-03-31,"Google lançou Gemini 3 ou superior Q1 2026",1,0.55,"Gemini 3+ lançado Q1 2026?"
+ai_q1_04,2026-03-31,"DeepSeek lançou novo flagship model Q1 2026",1,0.60,"DeepSeek new flagship Q1 2026?"
+ai_q1_05,2026-03-31,"Meta lançou Llama 5 Q1 2026",0,0.30,"Llama 5 lançado Q1 2026?"
+ai_q1_06,2026-03-31,"Mistral lançou novo open-weight model Q1 2026",1,0.65,"Mistral new model Q1 2026?"
+ai_q1_07,2026-03-31,"Algum modelo aberto atingiu > 90% no GPQA Diamond Q1 2026",1,0.55,"Open model > 90% GPQA Q1 2026?"
+ai_q1_08,2026-03-31,"Algum modelo atingiu IMO gold medal level (>= 4/6 problems) Q1 2026",0,0.40,"AI IMO gold-level Q1 2026?"
+ai_q1_09,2026-03-31,"xAI Grok 4 ou superior lançado Q1 2026",1,0.55,"Grok 4+ lançado Q1 2026?"
+ai_q1_10,2026-03-31,"Algum modelo passou ARC-AGI-2 com > 50% Q1 2026",0,0.20,"ARC-AGI-2 > 50% Q1 2026?"

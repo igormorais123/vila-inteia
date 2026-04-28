@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+ship_q1_01,2026-03-31,"Maersk Q1 2026 earnings reported revenue beat consensus",1,0.45,"Maersk revenue beat Q1 2026?"
+ship_q1_02,2026-03-31,"Suez Canal traffic recovered to >80% pre-Houthi-crisis levels Q1 2026",0,0.40,"Suez traffic >80% pre-crisis Q1 2026?"
+ship_q1_03,2026-03-31,"Panama Canal daily transits restored to >36/day average Q1 2026",1,0.65,"Panama transits >36/day Q1 2026?"
+ship_q1_04,2026-03-31,"Baltic Dry Index closed Q1 2026 above 2000",0,0.45,"BDI > 2000 fim Q1 2026?"
+ship_q1_05,2026-03-31,"Major US port strike or work stoppage durante Q1 2026",0,0.20,"US port strike Q1 2026?"
+ship_q1_06,2026-03-31,"Drewry WCI container rate Shanghai-LA closed Q1 2026 acima de $3000/FEU",0,0.35,"WCI Shanghai-LA > $3000 Q1 2026?"
+ship_q1_07,2026-03-31,"Houthi Red Sea attacks on commercial shipping continued Q1 2026",1,0.75,"Houthi Red Sea attacks Q1 2026?"
+ship_q1_08,2026-03-31,"ZIM Integrated Shipping reported Q1 2026 net loss",0,0.50,"ZIM net loss Q1 2026?"
+ship_q1_09,2026-03-31,"Major container ship grounding/blockage incident Q1 2026 (>72h disruption)",0,0.15,"Container blockage incident Q1 2026?"
+ship_q1_10,2026-03-31,"China-US trade volume Q1 2026 cresceu YoY vs Q1 2025",1,0.55,"China-US trade YoY growth Q1 2026?"
