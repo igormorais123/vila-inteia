@@ -1,26 +1,15 @@
-"""
-Onda 265: AdaHedge (de Rooij, van Erven, Grünwald, Koolen 2014).
+"""AdaHedge — adaptive learning rate Hedge (de Rooij et al. 2014).
 
-Hedge requires tuning learning rate eta — wrong eta hurts regret bound.
-AdaHedge adapts eta automatically using mix loss vs algorithm loss.
-
-Key idea:
-  delta_t = mixloss_t - alg_loss_t  (>= 0 always)
-  eta_{t+1} = ln(K) / sum delta_t
-
-Mixloss = -log(sum_k w_k * exp(-L_k_t)) (full-information softmin)
-Alg loss = sum_k (w_k_t / sum_j w_j) * loss_k_t (linear combo)
-
-Regret bounded O(sqrt(L* log K)) onde L* = best expert cumulative loss.
-Adapts to "easy" instances (low L*) tightening regret.
-
-Sem memorization: agg loss state apenas.
+eta_{t+1} = ln(K) / sum(delta_t) where delta_t = alg_loss - mix_loss.
+Regret O(sqrt(L* log K)).
 """
 
 from __future__ import annotations
 
 import math
 from typing import Callable
+
+from engine._pred_utils import softmax_weights
 
 
 class AdaHedge:
@@ -32,6 +21,7 @@ class AdaHedge:
         self.cum_loss = {name: 0.0 for name in expert_names}
         self.delta_sum = 1e-9  # avoid div by 0
         self.t = 0
+        self._cache: dict | None = None
 
     def _eta(self) -> float:
         if self.delta_sum <= 1e-9 or self.k <= 1:
@@ -39,12 +29,12 @@ class AdaHedge:
         return math.log(self.k) / self.delta_sum
 
     def _weights(self) -> dict[str, float]:
+        if self._cache is not None:
+            return self._cache
         eta = self._eta()
         scores = {n: -eta * L for n, L in self.cum_loss.items()}
-        m = max(scores.values()) if scores else 0
-        exps = {n: math.exp(s - m) for n, s in scores.items()}
-        total = sum(exps.values())
-        return {n: e / total for n, e in exps.items()} if total else {n: 1.0/self.k for n in self.experts}
+        self._cache = softmax_weights(scores)
+        return self._cache
 
     def predict(self, expert_preds: dict[str, float]) -> float:
         w = self._weights()
@@ -78,6 +68,7 @@ class AdaHedge:
 
         for n, L in losses.items():
             self.cum_loss[n] += L
+        self._cache = None
 
 
 def evaluate_adahedge(

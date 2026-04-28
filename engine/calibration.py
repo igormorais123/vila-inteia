@@ -1,23 +1,15 @@
-"""
-Onda 255: Platt scaling + Isotonic regression — sigmoid/monotonic recalibration.
+"""Platt scaling (1999) + Isotonic regression PAV (Zadrozny & Elkan 2002).
 
-Platt (1999): fit sigmoid σ(A*p + B) on calibration set; corrige systematic
-bias (over/underconfidence) com 2 parâmetros.
-
-Isotonic (Zadrozny & Elkan 2002): fit monotonic non-decreasing g(p) via
-pool-adjacent-violators (PAV); mais flexível que Platt mas precisa n maior.
-
-Combina com EB: EB tunifies por categoria, Platt/Iso refinam globalmente.
-
-Sem memorization: ambos extraem agg statistics (Platt: 2 floats; Iso: knots).
-
-CRITICAL: refit quando muda prompt cognitivo (memory rule).
+Sigmoid sigma(A*p + B) and monotonic step function.
+Refit when classifier changes.
 """
 
 from __future__ import annotations
 
 import math
-from typing import Callable
+from typing import Callable, Literal
+
+CalibrationMethod = Literal["raw", "platt", "isotonic"]
 
 
 def _sigmoid(x: float) -> float:
@@ -135,7 +127,7 @@ def isotonic_predict(p: float, knots: list[tuple[float, float]]) -> float:
 def evaluate_calibration(
     test_events: list,
     classify_fn: Callable[[str, str], tuple[float, str]],
-    method: str = "platt",
+    method: CalibrationMethod = "platt",
     params=None,
 ) -> dict:
     """Eval calibrated predictor."""

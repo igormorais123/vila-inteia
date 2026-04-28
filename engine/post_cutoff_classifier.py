@@ -75,10 +75,7 @@ KEYWORD_PRIORS: list[tuple[list[str], float, str]] = [
 ]
 
 
-# Onda 262: EB-tuned posteriors learned from calibration sets.
-# Computed via fit_beta_binomial(cal, raw_classify, prior_strength=3) onde cal =
-# Q1 train (post_cutoff Q1 v1+v2 + price + brazil + sports + tech + elections + space)
-# n=100. Hard-coded sem peek into Q2 holdout.
+# Refit via fit_beta_binomial(cal, raw_classify, prior_strength=3) — never on holdout.
 EB_TUNED_PRIORS: dict[str, float] = {
     "war_conflict": 0.900,
     "sports_event_structure": 0.893,
@@ -106,19 +103,18 @@ EB_TUNED_PRIORS: dict[str, float] = {
     "br_reform_complex": 0.150,
     "central_bank_meeting": 0.95,
     "price_target": 0.40,
+    "etf_approval": 0.45,
 }
+
+# Sync guard: every keyword category must have an EB-tuned posterior.
+# Refit via fit_beta_binomial(cal, classify_fn, prior_strength=3) when adding categories.
+_KEYWORD_LABELS = {label for _, _, label in KEYWORD_PRIORS} | {"default"}
+_MISSING_EB = _KEYWORD_LABELS - set(EB_TUNED_PRIORS)
+assert not _MISSING_EB, f"EB_TUNED_PRIORS missing categories: {_MISSING_EB}"
 
 
 def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
-    """Onda 260: stretch confidence around midpoint (Hedge winner finding).
-
-    p_out = clip(midpoint + factor * (p - midpoint), [0, 1])
-    Hedge bench (Onda 259): factor=1.5 wins brier 0.179 vs base 0.20.
-
-    Categorias com prior calibrado (scheduled, war) ficam quase
-    inalteradas; categorias hedged (default 0.5, election 0.5) ganham
-    discrimination.
-    """
+    """clip(midpoint + factor * (p - midpoint), [0, 1])."""
     out = midpoint + factor * (p - midpoint)
     return max(0.0, min(1.0, out))
 
@@ -126,14 +122,10 @@ def _stretch(p: float, factor: float = 1.5, midpoint: float = 0.5) -> float:
 def classify_and_predict(framing: str, contexto: str = "",
                          apply_stretch: bool = True,
                          use_eb_tuned: bool = True) -> tuple[float, str]:
-    """Classify via keywords + return prior.
+    """First keyword-match wins; default 0.50.
 
-    Tenta cada keyword set in order. First match wins.
-    Default: 0.50.
-
-    apply_stretch: confidence stretching (Hedge-discovered, Onda 260)
-    use_eb_tuned: usa priors empirical-Bayes-tunados (Onda 262);
-                  fall back para hardcoded prior.
+    apply_stretch: applies _stretch(p) for confidence widening.
+    use_eb_tuned: uses EB_TUNED_PRIORS posterior (else hardcoded prior).
     """
     text = (framing + " " + contexto).lower()
     for keywords, prior, label in KEYWORD_PRIORS:

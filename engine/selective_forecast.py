@@ -1,20 +1,7 @@
-"""
-Onda 264: Selective forecasting com reject option (Chow 1970 / Geifman 2017).
+"""Selective forecasting com reject option (Chow 1970 / Geifman 2017).
 
-Decision: para cada event, decide se predizemos (singleton) ou abstemos (reject).
-Reject quando |p - 0.5| < tau (uncertainty muito alta).
-
-Métricas:
-- Coverage: fraction of events em que predizemos (vs abstemos)
-- Selective accuracy: acc só sobre eventos que predizemos
-- Selective brier: brier idem
-- Risk-coverage curve: trade-off ao variar tau
-
-Insight: ao abstain on uncertain events, gain selective accuracy
-sacrificing coverage. Útil para apostas reais (só apostar quando high conf).
-
-Combina com Conformal (Onda 253) — selective em vez de set-valued.
-Sem memorization: usa só threshold sobre raw p.
+Predict only when |p - 0.5| >= tau, abstain otherwise.
+Trade coverage for accuracy.
 """
 
 from __future__ import annotations

@@ -1,19 +1,4 @@
-"""
-Onda 267: Combined pipeline — wires todos theorems num único bench.
-
-Pipeline:
-  1. Classifier (EB+stretch) → raw p
-  2. Conformal calibration → confidence interval
-  3. Selective decision → predict if |p - 0.5| ≥ tau
-  4. AdaHedge ensemble múltiplos variants
-  5. Murphy decomposition diagnostic
-  6. Bootstrap CI
-
-Output: full results table + per-method comparison vs external benchmarks
-(superforecasters 0.081, Polymarket 0.047, Manifold 0.107).
-
-Time-series CV: split Q1 chronologically em K folds → honest CI sem peek.
-"""
+"""Combined diagnostic pipeline: Brier+CI, selective, conformal, Murphy, time-series CV."""
 
 from __future__ import annotations
 
@@ -21,173 +6,95 @@ import math
 import random
 from typing import Callable
 
+from engine._pred_utils import pairs_from_events, unpack_pred
+from engine.conformal import conformal_calibrate, evaluate_conformal
 from engine.post_cutoff_classifier import classify_and_predict
-from engine.conformal import conformal_calibrate, conformal_set, evaluate_conformal
 from engine.selective_forecast import evaluate_selective
-from engine.empirical_bayes import fit_beta_binomial
+from engine.validation_rigorous import (
+    bootstrap_ci as _bootstrap_ci,
+    murphy_decomposition as _murphy_core,
+)
 
 
 def bootstrap_brier_ci(
-    events: list, classify_fn: Callable, n_resamples: int = 1000, seed: int = 42
+    events: list, classify_fn: Callable, n_resamples: int = 1000, seed: int = 42,
 ) -> tuple[float, float, float]:
-    """Bootstrap 95% CI sobre brier."""
-    pairs = []
-    for e in events:
-        framing = e.get("outcome_framing") or e.get("framing", "")
-        contexto = e.get("contexto", "")
-        y = e.get("outcome_real")
-        if y is None:
-            continue
-        p = classify_fn(framing, contexto)
-        if isinstance(p, tuple):
-            p = p[0]
-        pairs.append((p, int(y)))
-
+    pairs = pairs_from_events(events, classify_fn)
     if not pairs:
         return 0.0, 0.0, 0.0
-
-    rng = random.Random(seed)
-    briers = []
-    for _ in range(n_resamples):
-        sample = [rng.choice(pairs) for _ in pairs]
-        b = sum((p - y) ** 2 for p, y in sample) / len(sample)
-        briers.append(b)
-    briers.sort()
-    point = sum(briers) / len(briers)
-    return point, briers[int(0.025 * n_resamples)], briers[int(0.975 * n_resamples)]
+    preds = [p for p, _ in pairs]
+    reals = [y for _, y in pairs]
+    res = _bootstrap_ci(preds, reals, metric="brier", n_resamples=n_resamples, seed=seed)
+    return res["mean"], res["lower"], res["upper"]
 
 
 def time_series_cv(
-    events: list, classify_fn: Callable, n_folds: int = 5
+    events: list, classify_fn: Callable, n_folds: int = 5,
 ) -> dict:
-    """Walk-forward CV: usa primeiros K splits pra train, último pra test.
-
-    Returns mean acc + brier + std across folds.
-    """
+    """Walk-forward CV: train on prefix, test on next fold."""
     n = len(events)
     if n < n_folds * 2:
         return {"error": "insufficient data", "n": n}
 
     fold_size = n // n_folds
-    accs = []
-    briers = []
+    accs: list[float] = []
+    briers: list[float] = []
     for fold in range(1, n_folds):
-        train = events[:fold * fold_size]
         test = events[fold * fold_size: (fold + 1) * fold_size]
-        if not train or not test:
+        if not test:
             continue
-        # Use train EB posterior, test on held-out
-        # For simplicity here: evaluate test direto (classifier já é EB-tunado globally)
-        hits = brier = 0.0
-        for e in test:
-            framing = e.get("outcome_framing") or e.get("framing", "")
-            contexto = e.get("contexto", "")
-            y = e.get("outcome_real")
-            if y is None:
-                continue
-            out = classify_fn(framing, contexto)
-            p = out[0] if isinstance(out, tuple) else out
-            if (p >= 0.5) == bool(y):
-                hits += 1
-            brier += (p - y) ** 2
-        if test:
-            accs.append(hits / len(test))
-            briers.append(brier / len(test))
+        pairs = pairs_from_events(test, classify_fn)
+        if not pairs:
+            continue
+        hits = sum(1 for p, y in pairs if (p >= 0.5) == bool(y))
+        brier = sum((p - y) ** 2 for p, y in pairs)
+        accs.append(hits / len(pairs))
+        briers.append(brier / len(pairs))
+
     if not accs:
         return {"error": "no folds"}
+    mean_a = sum(accs) / len(accs)
+    mean_b = sum(briers) / len(briers)
     return {
         "n_folds": len(accs),
-        "mean_acc": sum(accs) / len(accs),
-        "std_acc": math.sqrt(sum((a - sum(accs)/len(accs))**2 for a in accs) / len(accs)),
-        "mean_brier": sum(briers) / len(briers),
-        "std_brier": math.sqrt(sum((b - sum(briers)/len(briers))**2 for b in briers) / len(briers)),
+        "mean_acc": mean_a,
+        "std_acc": math.sqrt(sum((a - mean_a) ** 2 for a in accs) / len(accs)),
+        "mean_brier": mean_b,
+        "std_brier": math.sqrt(sum((b - mean_b) ** 2 for b in briers) / len(briers)),
     }
 
 
 def murphy_decomposition(events: list, classify_fn: Callable, n_bins: int = 10) -> dict:
-    """Brier = REL + UNC - RES decomposition."""
-    pairs = []
-    for e in events:
-        framing = e.get("outcome_framing") or e.get("framing", "")
-        contexto = e.get("contexto", "")
-        y = e.get("outcome_real")
-        if y is None:
-            continue
-        out = classify_fn(framing, contexto)
-        p = out[0] if isinstance(out, tuple) else out
-        pairs.append((p, int(y)))
-
-    if not pairs:
-        return {"n": 0, "brier": 0, "reliability": 0, "resolution": 0,
-                "uncertainty": 0, "base_rate": 0}
-
-    n = len(pairs)
-    base_rate = sum(y for _, y in pairs) / n
-    unc = base_rate * (1 - base_rate)
-    brier = sum((p - y) ** 2 for p, y in pairs) / n
-
-    # Bin predictions
-    bins: list[list[tuple[float, int]]] = [[] for _ in range(n_bins)]
-    for p, y in pairs:
-        idx = min(n_bins - 1, int(p * n_bins))
-        bins[idx].append((p, y))
-
-    rel = res = 0.0
-    for b in bins:
-        if not b:
-            continue
-        n_b = len(b)
-        avg_p = sum(p for p, _ in b) / n_b
-        avg_y = sum(y for _, y in b) / n_b
-        rel += n_b / n * (avg_p - avg_y) ** 2
-        res += n_b / n * (avg_y - base_rate) ** 2
-
-    return {
-        "n": n,
-        "brier": round(brier, 4),
-        "reliability": round(rel, 4),
-        "resolution": round(res, 4),
-        "uncertainty": round(unc, 4),
-        "base_rate": round(base_rate, 3),
-    }
+    """Brier = REL + UNC - RES (delegates to validation_rigorous)."""
+    pairs = pairs_from_events(events, classify_fn)
+    preds = [p for p, _ in pairs]
+    reals = [y for _, y in pairs]
+    out = _murphy_core(preds, reals, n_bins=n_bins)
+    base_rate = sum(reals) / len(reals) if reals else 0
+    out["base_rate"] = round(base_rate, 3)
+    out["brier"] = round(out["brier"], 4)
+    out["reliability"] = round(out["reliability"], 4)
+    out["resolution"] = round(out["resolution"], 4)
+    out["uncertainty"] = round(out["uncertainty"], 4)
+    return out
 
 
 def combined_report(events: list, classify_fn: Callable = classify_and_predict) -> dict:
-    """Run full diagnostic: brier+CI, selective, conformal, Murphy, time-series CV."""
-
-    n = hits = 0
-    brier = 0.0
-    for e in events:
-        framing = e.get("outcome_framing") or e.get("framing", "")
-        contexto = e.get("contexto", "")
-        y = e.get("outcome_real")
-        if y is None:
-            continue
-        n += 1
-        out = classify_fn(framing, contexto)
-        p = out[0] if isinstance(out, tuple) else out
-        if (p >= 0.5) == bool(y):
-            hits += 1
-        brier += (p - y) ** 2
+    pairs = pairs_from_events(events, classify_fn)
+    n = len(pairs)
+    hits = sum(1 for p, y in pairs if (p >= 0.5) == bool(y))
+    brier = sum((p - y) ** 2 for p, y in pairs)
     base_acc = hits / n if n else 0
     base_brier = brier / n if n else 0
 
-    # 2. Bootstrap CI
     pt, lo, hi = bootstrap_brier_ci(events, classify_fn)
 
-    # 3. Selective at multiple tau
-    selective = {}
-    for tau in [0.0, 0.15, 0.30, 0.40]:
-        selective[tau] = evaluate_selective(events, classify_fn, tau=tau)
+    selective = {tau: evaluate_selective(events, classify_fn, tau=tau)
+                 for tau in (0.0, 0.15, 0.30, 0.40)}
 
-    # 4. Conformal
     quants = conformal_calibrate(events, classify_fn, alpha=0.2)
     conformal = evaluate_conformal(events, classify_fn, quants, alpha=0.2)
-
-    # 5. Murphy
     murphy = murphy_decomposition(events, classify_fn)
-
-    # 6. Time-series CV
     cv = time_series_cv(events, classify_fn, n_folds=5)
 
     return {
