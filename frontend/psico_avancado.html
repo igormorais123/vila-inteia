@@ -35,10 +35,10 @@
         <p class="u-muted" style="margin-top: var(--space-1);">Ondas 13-16: calibração · HMM · recomendação · persistência</p>
       </div>
       <nav class="u-hstack" style="gap: var(--space-4);">
-        <a href="/psico_live.html" class="u-muted">ao vivo</a>
-        <a href="/psicohistoria.html" class="u-muted">teoria</a>
-        <a href="/dashboard.html" class="u-muted">dashboard</a>
-        <a href="/" class="u-muted">← Vila</a>
+        <a href="/psico_live.html" class="u-muted" aria-label="Ir para psico ao vivo">ao vivo</a>
+        <a href="/psicohistoria.html" class="u-muted" aria-label="Ir para teoria">teoria</a>
+        <a href="/dashboard.html" class="u-muted" aria-label="Ir para dashboard">dashboard</a>
+        <a href="/" class="u-muted" aria-label="Voltar Vila">← Vila</a>
       </nav>
     </header>
 
@@ -61,14 +61,14 @@
         </div>
         <div class="control-row">
           <label>método:</label>
-          <select id="calib-metodo" class="select" style="width: 140px;">
+          <select id="calib-metodo" class="select" style="width: 140px;" aria-label="Método calibração">
             <option value="laplace" selected>laplace</option>
             <option value="mle">mle</option>
             <option value="ewma">ewma</option>
           </select>
           <label>α:</label>
-          <input id="calib-alpha" class="input" type="number" value="0.1" step="0.05" min="0" max="1" style="width: 80px;">
-          <button id="btn-calibrar" class="btn btn--primary">Calibrar</button>
+          <input id="calib-alpha" class="input" type="number" value="0.1" step="0.05" min="0" max="1" style="width: 80px;" aria-label="Alpha calibração">
+          <button id="btn-calibrar" class="btn btn--primary" aria-label="Calibrar modelo">Calibrar</button>
         </div>
         <div id="calib-resultado" class="output-block">aguardando calibração...</div>
       </div>
@@ -79,10 +79,10 @@
         </div>
         <div class="control-row">
           <label>K:</label>
-          <input id="hmm-k" class="input u-narrow" type="number" value="4" min="2" max="16">
+          <input id="hmm-k" class="input u-narrow" type="number" value="4" min="2" max="16" aria-label="HMM K estados">
           <label>smoothing:</label>
-          <input id="hmm-smooth" class="input u-narrow" type="number" value="3" min="1" max="10">
-          <button id="btn-hmm" class="btn">Descobrir</button>
+          <input id="hmm-smooth" class="input u-narrow" type="number" value="3" min="1" max="10" aria-label="HMM smoothing">
+          <button id="btn-hmm" class="btn" aria-label="Descobrir estados latentes">Descobrir</button>
         </div>
         <div id="hmm-resultado" class="output-block">aguardando descoberta...</div>
       </div>
