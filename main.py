@@ -514,6 +514,239 @@ def modo_forecast_bench(args):
             r = _selective(tau)
             print(f"  {r['tau']:>5.2f} {r['coverage']:>6.2%} {r['acc']:>6.2%} {r['brier']:>7.4f}")
 
+    if getattr(args, "per_event", False):
+        from engine.conformal import conformal_calibrate
+        from engine.per_event_report import per_event_diagnostic, format_per_event_table
+
+        all_events: list = []
+        for fp in files:
+            try:
+                all_events += carregar_dataset(fp)
+            except (KeyError, ValueError):
+                continue
+        quants = conformal_calibrate(all_events, classify_and_predict, alpha=0.2)
+        rows = per_event_diagnostic(all_events, classify_and_predict, quants, tau=args.tau)
+        print("\nPer-event diagnostic:")
+        print(format_per_event_table(rows))
+
+
+def modo_forecast_mega_bench(args):
+    """Mega bench: combined_report + per-category Murphy + DM + HL + PIT + reliability."""
+    import glob
+    from pathlib import Path
+    from engine.backtest_real import carregar_dataset
+    from engine.combined_pipeline import combined_report, murphy_decomposition
+    from engine.post_cutoff_classifier import classify_and_predict
+    from engine.hosmer_lemeshow import hosmer_lemeshow
+    from engine.pit_diagnostic import pit_histogram
+    from engine.reliability_diagram import reliability_diagram
+    from engine._pred_utils import pairs_from_events
+
+    banner()
+    print("MODO FORECAST-MEGA-BENCH\n")
+
+    repo = Path(__file__).resolve().parent
+    pattern = getattr(args, "pattern", "*")
+    files = sorted(glob.glob(str(repo / "data" / "backtest" / f"{pattern}.csv")))
+
+    all_events: list = []
+    by_category: dict[str, list] = {}
+    for fp in files:
+        name = Path(fp).stem
+        try:
+            events = carregar_dataset(fp)
+        except (KeyError, ValueError):
+            continue
+        if not events:
+            continue
+        all_events += events
+        by_category[name] = events
+
+    n_total = len(all_events)
+    if n_total == 0:
+        print("No events matched.")
+        return
+
+    print(f"Loaded {n_total} events from {len(by_category)} datasets.")
+
+    print("\n[1/6] combined_report ...")
+    combined = combined_report(all_events, classify_and_predict)
+
+    print("[2/6] per-category Murphy ...")
+    per_cat: dict[str, dict] = {}
+    for cat, evs in by_category.items():
+        if len(evs) < 5:
+            continue
+        try:
+            per_cat[cat] = murphy_decomposition(evs, classify_and_predict, n_bins=5)
+        except (ValueError, ZeroDivisionError):
+            continue
+
+    print("[3/6] Diebold-Mariano vs baseline (prior=base rate) ...")
+    dm_result: dict | None = None
+    try:
+        from engine.diebold_mariano import diebold_mariano
+        pairs = pairs_from_events(all_events, classify_and_predict)
+        if pairs:
+            preds_a = [p for p, _ in pairs]
+            reals = [y for _, y in pairs]
+            base_rate = sum(reals) / len(reals)
+            preds_b = [base_rate] * len(reals)
+            dm_result = diebold_mariano(preds_a, preds_b, reals, loss="brier")
+    except ImportError:
+        dm_result = None
+
+    print("[4/6] Hosmer-Lemeshow GoF ...")
+    hl = hosmer_lemeshow(all_events, classify_and_predict, n_groups=10)
+
+    print("[5/6] PIT histogram ...")
+    pit = pit_histogram(all_events, classify_and_predict, n_bins=10, seed=42)
+
+    print("[6/6] Reliability diagram ...")
+    pairs = pairs_from_events(all_events, classify_and_predict)
+    rel = reliability_diagram([p for p, _ in pairs], [y for _, y in pairs], n_bins=10)
+
+    # Markdown output
+    lines: list[str] = []
+    lines.append("# Forecast Mega Bench")
+    lines.append("")
+    lines.append(f"- Datasets: {len(by_category)}")
+    lines.append(f"- Total events: {n_total}")
+    lines.append("")
+
+    lines.append("## 1. Combined Report")
+    lines.append("")
+    lines.append(f"- n: {combined.n}")
+    lines.append(f"- base_acc: {combined.base_acc}")
+    lines.append(f"- base_brier: {combined.base_brier}")
+    lo, hi = combined.bootstrap_brier_ci
+    lines.append(f"- bootstrap_brier_ci (95%): [{lo}, {hi}]")
+    lines.append("")
+    lines.append("### Selective forecasting")
+    lines.append("")
+    lines.append("| tau | coverage | selective_acc | abstained |")
+    lines.append("|---|---|---|---|")
+    for tau, sel in sorted(combined.selective.items()):
+        cov = sel.get("coverage", 0.0)
+        sa = sel.get("selective_acc", 0.0)
+        ab = sel.get("n_abstained", sel.get("abstained", 0))
+        lines.append(f"| {tau:.2f} | {cov:.2%} | {sa:.2%} | {ab} |")
+    lines.append("")
+    lines.append("### Conformal")
+    lines.append("")
+    c = combined.conformal
+    lines.append(f"- coverage: {c.get('coverage', 0):.2%} (target {c.get('target_coverage', 0):.2%})")
+    lines.append(f"- mean_width: {c.get('mean_width', 0):.3f}")
+    lines.append(f"- singleton_acc: {c.get('singleton_acc', 0):.2%}")
+    lines.append(f"- abstain_rate: {c.get('abstain_rate', 0):.2%}")
+    lines.append("")
+    lines.append("### Murphy decomposition (global)")
+    lines.append("")
+    m = combined.murphy
+    lines.append(f"- brier: {m.get('brier')}")
+    lines.append(f"- reliability (REL): {m.get('reliability')}")
+    lines.append(f"- resolution (RES): {m.get('resolution')}")
+    lines.append(f"- uncertainty (UNC): {m.get('uncertainty')}")
+    lines.append(f"- base_rate: {m.get('base_rate')}")
+    lines.append("")
+    lines.append("### Time-series CV")
+    lines.append("")
+    cv = combined.time_series_cv
+    if "error" in cv:
+        lines.append(f"- (skipped) {cv['error']}")
+    else:
+        lines.append(f"- folds: {cv.get('n_folds')}")
+        lines.append(f"- mean_acc: {cv.get('mean_acc', 0):.2%} ± {cv.get('std_acc', 0):.2%}")
+        lines.append(f"- mean_brier: {cv.get('mean_brier', 0):.4f} ± {cv.get('std_brier', 0):.4f}")
+    lines.append("")
+
+    lines.append("## 2. Per-Category Murphy")
+    lines.append("")
+    if per_cat:
+        lines.append("| dataset | n | brier | REL | RES | UNC |")
+        lines.append("|---|---|---|---|---|---|")
+        for cat in sorted(per_cat.keys()):
+            x = per_cat[cat]
+            n_cat = len(by_category[cat])
+            lines.append(f"| {cat} | {n_cat} | {x.get('brier')} | "
+                         f"{x.get('reliability')} | {x.get('resolution')} | "
+                         f"{x.get('uncertainty')} |")
+    else:
+        lines.append("(no category had ≥5 events)")
+    lines.append("")
+
+    lines.append("## 3. Diebold-Mariano vs base-rate baseline")
+    lines.append("")
+    if dm_result is None:
+        lines.append("(skipped — engine/diebold_mariano.py not available)")
+    elif "erro" in dm_result:
+        lines.append(f"(error: {dm_result['erro']})")
+    else:
+        lines.append(f"- loss: {dm_result.get('loss')}")
+        lines.append(f"- n: {dm_result.get('n')}")
+        lines.append(f"- dm_stat: {dm_result.get('dm_stat'):.3f}")
+        lines.append(f"- p_value: {dm_result.get('p_value'):.4f}")
+        lines.append(f"- mean_diff (Vila - baseline): {dm_result.get('mean_diff'):.4f}")
+        lines.append(f"- reject_h0 (alpha=0.05): {dm_result.get('reject_h0')}")
+        if dm_result.get('mean_diff', 0) < 0:
+            lines.append("- interpretation: Vila < baseline brier (better)")
+        else:
+            lines.append("- interpretation: baseline ≤ Vila brier")
+    lines.append("")
+
+    lines.append("## 4. Hosmer-Lemeshow GoF")
+    lines.append("")
+    lines.append(f"- n: {hl.get('n')}")
+    lines.append(f"- chi_square: {hl.get('chi_square')}")
+    lines.append(f"- df: {hl.get('df')}")
+    lines.append(f"- p_value (approx): {hl.get('p_value_approx')}")
+    lines.append(f"- reject_h0 (alpha=0.05): {hl.get('reject_h0')}")
+    if hl.get("groups"):
+        lines.append("")
+        lines.append("| g | n | mean_p | obs_rate | component |")
+        lines.append("|---|---|---|---|---|")
+        for g in hl["groups"]:
+            lines.append(f"| {g['g']} | {g['n']} | {g['mean_p']} | "
+                         f"{g['obs_rate']} | {g['component']} |")
+    lines.append("")
+
+    lines.append("## 5. PIT Histogram")
+    lines.append("")
+    lines.append(f"- n: {pit.get('n')}")
+    lines.append(f"- chi_square: {pit.get('chi_square'):.2f}")
+    lines.append(f"- slope: {pit.get('slope', 0):.3f}")
+    lines.append(f"- u_score: {pit.get('u_score', 0):.3f}")
+    lines.append(f"- diagnosis: {pit.get('diagnosis')}")
+    counts = pit.get("counts", [])
+    if counts:
+        lines.append("")
+        lines.append("| bin | count |")
+        lines.append("|---|---|")
+        n_bins = pit.get("n_bins", len(counts))
+        for i, c in enumerate(counts):
+            lo_b = i / n_bins
+            hi_b = (i + 1) / n_bins
+            lines.append(f"| [{lo_b:.1f}, {hi_b:.1f}) | {c} |")
+    lines.append("")
+
+    lines.append("## 6. Reliability Diagram")
+    lines.append("")
+    if rel:
+        lines.append("| bin | mean_p | observed_rate | n | ci_lo | ci_hi |")
+        lines.append("|---|---|---|---|---|---|")
+        for b in rel:
+            lines.append(f"| [{b['bin_lo']:.1f}, {b['bin_hi']:.1f}) | "
+                         f"{b['mean_p']:.3f} | {b['observed_rate']:.3f} | "
+                         f"{b['n']} | {b['ci_lo']:.3f} | {b['ci_hi']:.3f} |")
+    else:
+        lines.append("(no bins)")
+    lines.append("")
+
+    out_path = Path(args.out_md)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines))
+    print(f"\n✓ markdown: {out_path}")
+
 
 def modo_benchmark(args):
     """Onda 228: Benchmark Vila vs 4 baselines (prior, chance, majority, random).
@@ -825,6 +1058,8 @@ def main():
                            help="Print risk-coverage curve (multiple tau)")
     fc_parser.add_argument("--pattern", default="*",
                            help="Glob pattern for dataset names (default: *; ex: 'post_cutoff*' or '*q1_2026*')")
+    fc_parser.add_argument("--per-event", action="store_true",
+                           help="Print per-event diagnostic table after AGGREGATE")
 
     args = parser.parse_args()
 

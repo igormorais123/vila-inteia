@@ -8,6 +8,7 @@ from typing import Callable
 
 from engine._pred_utils import pairs_from_events, unpack_pred
 from engine.conformal import conformal_calibrate, evaluate_conformal
+from engine.forecast_result import ForecastResult
 from engine.post_cutoff_classifier import classify_and_predict
 from engine.selective_forecast import evaluate_selective
 from engine.validation_rigorous import (
@@ -79,7 +80,9 @@ def murphy_decomposition(events: list, classify_fn: Callable, n_bins: int = 10) 
     return out
 
 
-def combined_report(events: list, classify_fn: Callable = classify_and_predict) -> dict:
+def combined_report(
+    events: list, classify_fn: Callable = classify_and_predict,
+) -> ForecastResult:
     pairs = pairs_from_events(events, classify_fn)
     n = len(pairs)
     hits = sum(1 for p, y in pairs if (p >= 0.5) == bool(y))
@@ -97,13 +100,13 @@ def combined_report(events: list, classify_fn: Callable = classify_and_predict) 
     murphy = murphy_decomposition(events, classify_fn)
     cv = time_series_cv(events, classify_fn, n_folds=5)
 
-    return {
-        "n": n,
-        "base_acc": round(base_acc, 3),
-        "base_brier": round(base_brier, 4),
-        "bootstrap_brier_ci": (round(lo, 4), round(hi, 4)),
-        "selective": selective,
-        "conformal": conformal,
-        "murphy": murphy,
-        "time_series_cv": cv,
-    }
+    return ForecastResult(
+        n=n,
+        base_acc=round(base_acc, 3),
+        base_brier=round(base_brier, 4),
+        bootstrap_brier_ci=(round(lo, 4), round(hi, 4)),
+        selective=selective,
+        conformal=conformal,
+        murphy=murphy,
+        time_series_cv=cv,
+    )
