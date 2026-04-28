@@ -1,0 +1,112 @@
+{
+  "baselines": {
+    "vila": {
+      "n": 100,
+      "hits": 100,
+      "acc": 1.0,
+      "brier": 0.02559015759999999,
+      "nll": 0.16392222806233156,
+      "ece": 0.14916799999999988,
+      "skill_vs_prior": 0.8241419665191458
+    },
+    "prior_humano": {
+      "n": 100,
+      "hits": 93,
+      "acc": 0.93,
+      "brier": 0.14551600000000003,
+      "nll": 0.4690429446520143,
+      "ece": 0.281,
+      "skill_vs_prior": 0.0
+    },
+    "chance": {
+      "n": 100,
+      "hits": 80,
+      "acc": 0.8,
+      "brier": 0.25,
+      "nll": 0.6931471805599458,
+      "ece": 0.30000000000000004,
+      "skill_vs_prior": -0.7180241348030454
+    },
+    "majority": {
+      "n": 100,
+      "hits": 80,
+      "acc": 0.8,
+      "brier": 0.2,
+      "nll": 4.144653173845662,
+      "ece": 0.19999999999999996,
+      "skill_vs_prior": -0.37441930784243627
+    },
+    "random": {
+      "n": 100,
+      "hits": 56,
+      "acc": 0.56,
+      "brier": 0.339817925922277,
+      "nll": 1.0615756748992913,
+      "ece": 0.3806244979907872,
+      "skill_vs_prior": -1.3352615926927411
+    }
+  },
+  "per_dataset": [
+    {
+      "dataset": "americanas_crise_2023",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "crypto_bitcoin_2024",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "eleicao_presidencial_br_2022",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "impeachment_dilma_2016",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "lancamento_apple_vpro_2024",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "lava_jato_2014_2018",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "pix_adoption_2020",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "seed_eleicao_municipal_sp_2024",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "tiktok_viral_2024",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    },
+    {
+      "dataset": "twitter_musk_2022_2024",
+      "n": 10,
+      "vila_hits": 10,
+      "vila_acc": 1.0
+    }
+  ],
+  "n_total": 100
+}
