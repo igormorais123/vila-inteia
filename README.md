@@ -6,6 +6,8 @@
 
 **35+ ondas implementadas** (5 a 39). Ver [`MANIFEST.md`](./MANIFEST.md) para tabela consolidada.
 
+**Forecasting honesto**: 52 teoremas estatísticos clássicos (Brier decomp, Platt/iso, EB priors, conformal, Kelly) testados em 46 datasets / 600 eventos. Ver [`docs/HONEST_FORECASTING_ARTICLE.md`](./docs/HONEST_FORECASTING_ARTICLE.md).
+
 ## Quickstart (3 passos)
 
 ```bash
@@ -33,6 +35,33 @@ python scripts/vila_cli.py --url http://localhost:8100 stats
 python scripts/vila_cli.py --url http://localhost:8100 recomendacao
 python scripts/vila_cli.py --url http://localhost:8100 backtest --dataset tiktok_viral_2024
 ```
+
+## Forecasting Honesto
+
+Pipeline de forecasting probabilístico (Brier, Murphy, Platt/iso, EB, conformal,
+Kelly) testado em **46 datasets / 600 eventos**.
+
+```bash
+# Bench em um dataset
+python main.py forecast-bench --dataset post_cutoff_q1_2027_holdout_v5
+
+# Mega-bench em todos os holdouts (combined + per-cat Murphy + DM + HL + PIT + reliability)
+python main.py forecast-mega-bench --pattern "*holdout*" --out-md data/final_mega_bench_report.md
+```
+
+**Resultados holdout (140 eventos)**:
+
+| Forecaster | Brier |
+|---|---:|
+| Polymarket | 0.047 |
+| Superforecasters | 0.081 |
+| GPT-4.5 cold | 0.101 |
+| Manifold | 0.107 |
+| **Vila INTEIA** | **0.227** |
+| Base-rate | 0.241 |
+
+Vila bate base-rate (DM Δ=-0.014). 52 teoremas em `engine/*.py`. Detalhes em
+[`docs/HONEST_FORECASTING_ARTICLE.md`](./docs/HONEST_FORECASTING_ARTICLE.md).
 
 ## Benchmark (atual)
 

@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+mus01,2026-03-31,"Taylor Swift não anunciou novo álbum em Q1 2026 — última release foi TTPD em abril 2024",0,0.30,"Taylor Swift anunciará novo álbum em Q1 2026?"
+mus02,2026-02-04,"Spotify Q4 2025 earnings reportadas fev 4 2026 — premium subs beat (~265M)",1,0.70,"Spotify Q4 2025 earnings beaterá premium subscriber estimates?"
+mus03,2026-03-31,"Universal Music Group e TikTok renovaram acordo de licenciamento em Q1 2026 após disputa pública",1,0.65,"UMG e TikTok renovarão deal em Q1 2026?"
+mus04,2026-02-01,"Grammy 2026 Awards — Best Album foi vencido por novo artista, não Taylor Swift",0,0.35,"Taylor Swift vencerá Album of the Year no Grammy 2026?"
+mus05,2026-03-31,"BTS comeback completo (todos 7 membros) anunciado para spring 2026 após retornos militares",1,0.80,"BTS terá comeback completo de 7 membros em Q1 2026?"
+mus06,2026-02-22,"Live Nation Q4 2025 earnings reportadas fev 22 2026 — beat em revenue mas EPS abaixo",0,0.50,"Live Nation Q4 2025 beaterá tanto EPS quanto revenue estimates?"
+mus07,2026-04-30,"Coachella 2026 Weekend 1+2 abril 10-19 realizado com headliners Travis Scott, SZA, Post Malone",1,0.99,"Coachella 2026 será realizado em abril 2026?"
+mus08,2026-05-15,"Eurovision 2026 final realizada em Vienna em maio 2026 — vencedor escolhido",1,0.95,"Eurovision 2026 final será realizada em maio 2026?"
+mus09,2026-06-30,"Spotify lançou tier de áudio em alta fidelidade (HiFi) em Q2 2026 após anos de delay",0,0.25,"Spotify lançará HiFi tier em Q2 2026?"
+mus10,2026-06-15,"Drake e Kendrick Lamar não tiveram nova feud pública em Q2 2026",0,0.20,"Drake/Kendrick terão nova feud pública em Q2 2026?"
