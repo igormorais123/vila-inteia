@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+pol01,2026-03-31,"UK PM Starmer approval rating < 35% fim Q1 2026 (YouGov)",1,0.65,"Starmer approval < 35% Q1 2026?"
+pol02,2026-03-31,"UK Labour cabinet reshuffle ocorreu Q1 2026",1,0.45,"UK Labour reshuffle Q1 2026?"
+pol03,2026-03-31,"UK Reform UK > 25% em poll média Q1 2026",1,0.65,"Reform > 25% poll Q1 2026?"
+pol04,2026-03-31,"India Modi BJP rally major event público Q1 2026",1,0.95,"Modi BJP rally Q1 2026?"
+pol05,2026-03-31,"India state election (Bengala/Kerala/Tamil Nadu) ocorreu/agendada Q1 2026",1,0.80,"India state election agendada/ocorrida Q1 2026?"
+pol06,2026-03-31,"India parliament aprovou bill controverso Q1 2026 (CAA-tipo ou similar)",1,0.55,"India parliament bill controverso Q1 2026?"
+pol07,2026-03-31,"Argentina Milei reform vote (lei base/omnibus) aprovado Q1 2026",1,0.50,"Milei reform aprovada Q1 2026?"
+pol08,2026-03-31,"Argentina inflação mensal < 2% em algum mês Q1 2026",1,0.60,"Argentina inflação < 2% mensal Q1 2026?"
+pol09,2026-03-31,"Argentina Milei aprovação > 50% poll Q1 2026",0,0.40,"Milei approval > 50% Q1 2026?"
+pol10,2026-03-31,"UK Conservative party leadership change anunciado Q1 2026",0,0.20,"Tory leadership change Q1 2026?"

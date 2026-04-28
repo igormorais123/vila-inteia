@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+bio01,2026-03-31,"FDA aprovou novo medicamento (NME) Q1 2026 — taxa normal ~10/quarter",1,0.95,"FDA aprovou NME Q1 2026?"
+bio02,2026-03-31,"Moderna anunciou pipeline update earnings Q1 2026",1,0.90,"Moderna pipeline update Q1 2026?"
+bio03,2026-03-31,"Pfizer Q1 2026 earnings reported revenue > guidance",0,0.45,"Pfizer revenue beat Q1 2026?"
+bio04,2026-03-31,"GLP-1 (Wegovy/Zepbound) global sales > $15B Q1 2026 anualizado",1,0.60,"GLP-1 sales > $15B Q1 2026?"
+bio05,2026-03-31,"UnitedHealth (UNH) Q1 2026 earnings beat estimates",0,0.40,"UNH earnings beat Q1 2026?"
+bio06,2026-03-31,"Lilly Donanemab Alzheimer expandiu indicação ou novo data Q1 2026",1,0.50,"Lilly Donanemab data Q1 2026?"
+bio07,2026-03-31,"Gene therapy Casgevy/Lyfgenia tratou > 100 pacientes acumulado Q1 2026",1,0.60,"Casgevy >100 patients cumulative Q1 2026?"
+bio08,2026-03-31,"Major bird flu (H5N1) human-to-human transmission confirmada Q1 2026",0,0.10,"H5N1 human-to-human Q1 2026?"
+bio09,2026-03-31,"Novo Nordisk capitalização > $400B Q1 2026",0,0.20,"Novo Nordisk > $400B Q1 2026?"
+bio10,2026-03-31,"FDA emitiu major safety warning/recall Q1 2026",1,0.75,"FDA safety warning Q1 2026?"

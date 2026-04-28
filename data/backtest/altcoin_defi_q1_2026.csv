@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+alt01,2026-03-31,"Solana TVL > $10B em fim Q1 2026",1,0.55,"Solana TVL > $10B Q1 2026?"
+alt02,2026-03-31,"Ethereum staking ratio > 30% supply Q1 2026",1,0.60,"ETH staking > 30% Q1 2026?"
+alt03,2026-03-31,"DeFi exploit > $100M reportado Q1 2026",1,0.70,"DeFi exploit > $100M Q1 2026?"
+alt04,2026-03-31,"Major Layer 2 (Base/Arbitrum/Optimism) novo upgrade lançado Q1 2026",1,0.80,"L2 major upgrade Q1 2026?"
+alt05,2026-03-31,"Tron daily transactions > 8M média Q1 2026",1,0.65,"Tron > 8M tx/day Q1 2026?"
+alt06,2026-03-31,"Cardano Hydra mainnet major upgrade entregue Q1 2026",0,0.30,"Cardano Hydra major Q1 2026?"
+alt07,2026-03-31,"MakerDAO/Sky DAI supply > $5B Q1 2026",1,0.55,"DAI supply > $5B Q1 2026?"
+alt08,2026-03-31,"Spot Solana ETF aprovado SEC Q1 2026",0,0.30,"SEC SOL spot ETF Q1 2026?"
+alt09,2026-03-31,"Total stablecoin supply > $200B Q1 2026",1,0.70,"Stablecoin supply > $200B Q1 2026?"
+alt10,2026-03-31,"Major centralized exchange falência/colapso Q1 2026 (FTX-style)",0,0.10,"CEX colapso Q1 2026?"

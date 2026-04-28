@@ -1,0 +1,11 @@
+evento_id,data,contexto,outcome_real,probabilidade_prior,outcome_framing
+sci01,2026-03-31,"CERN LHC publicou paper relevante sobre física Higgs/BSM Q1 2026",1,0.75,"CERN paper relevante publicado Q1 2026?"
+sci02,2026-03-31,"JWST anunciou detecção biosignature confirmada exoplaneta Q1 2026",0,0.15,"JWST biosignature confirmada Q1 2026?"
+sci03,2026-03-31,"Antarctic ice shelf major collapse event reportado Q1 2026 verão sul",1,0.55,"Antarctic ice shelf collapse Q1 2026?"
+sci04,2026-03-31,"Fusion startup atingiu Q>1 commercial milestone Q1 2026",0,0.20,"Fusion Q>1 commercial Q1 2026?"
+sci05,2026-03-31,"mRNA cancer vaccine fase 3 resultado positivo divulgado Q1 2026",0,0.30,"mRNA cancer vaccine fase 3 sucesso Q1 2026?"
+sci06,2026-03-31,"Quantum computer atingiu 1000+ logical qubits Q1 2026",0,0.20,"1000+ logical qubits Q1 2026?"
+sci07,2026-03-31,"Nature/Science publicaram >100 papers Q1 2026 (rate normal)",1,0.95,"Nature/Science publicaram >100 papers Q1 2026?"
+sci08,2026-03-31,"NASA Perseverance rover continuou operação Mars Q1 2026",1,0.90,"Perseverance ativo Q1 2026?"
+sci09,2026-03-31,"CRISPR-baseado terapia FDA approval novo Q1 2026",1,0.45,"CRISPR therapy FDA approval Q1 2026?"
+sci10,2026-03-31,"Alzheimer biomarker test sangue major validation Q1 2026",1,0.55,"Alzheimer blood biomarker validation Q1 2026?"
