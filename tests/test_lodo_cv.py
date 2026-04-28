@@ -66,20 +66,32 @@ for held_out_path in dataset_paths:
     brier = sum(briers) / n
     per_dataset[held_out_name] = (hits, n, acc, brier)
 
-print("\n[2] Cada dataset hit 100% individualmente")
-for name, (hits, n, acc, brier) in per_dataset.items():
+print("\n[2] Pre-cutoff datasets: 100% acc")
+# Onda 230: post-cutoff dataset honestly fails (forecasting genuine)
+PRE_CUTOFF = [n for n in per_dataset if "post_cutoff" not in n]
+for name in PRE_CUTOFF:
+    hits, n, acc, brier = per_dataset[name]
     check(acc == 1.0, f"{name}: {hits}/{n} = {acc*100:.0f}%")
 
-print("\n[3] Brier de cada dataset < 0.10 (bem calibrado)")
-for name, (hits, n, acc, brier) in per_dataset.items():
+print("\n[3] Brier pre-cutoff < 0.10 (bem calibrado)")
+for name in PRE_CUTOFF:
+    hits, n, acc, brier = per_dataset[name]
     check(brier < 0.10, f"{name}: brier={brier:.4f}")
 
-print("\n[4] Aggregate 100% em 100 events")
+print("\n[4] Aggregate >= 90% (honest: post-cutoff falha)")
 total_hits = sum(v[0] for v in per_dataset.values())
 total_n = sum(v[1] for v in per_dataset.values())
 mean_brier = sum(v[3] for v in per_dataset.values()) / len(per_dataset)
-check(total_hits == 100 and total_n == 100, f"100/100 (got {total_hits}/{total_n})")
-check(mean_brier < 0.05, f"mean brier < 0.05 (got {mean_brier:.4f})")
+check(total_n == 120, f"n=120 (got {total_n})")
+check(total_hits >= 100, f"hits >= 100 (got {total_hits})")
+# Pre-cutoff brier ~0.025; post-cutoff ~0.34. Mean ~0.05-0.07
+check(mean_brier < 0.10, f"mean brier < 0.10 (got {mean_brier:.4f})")
+
+print("\n[5] Honest disclosure: post-cutoff dataset pior (forecasting genuíno)")
+if "post_cutoff_q1_2026" in per_dataset:
+    h, n, acc, brier = per_dataset["post_cutoff_q1_2026"]
+    check(acc < 0.5, f"post-cutoff acc < 50% — honest: {acc*100:.0f}% (forecasting ≠ memorization)")
+    check(brier > 0.20, f"post-cutoff brier > 0.20 — pior que chance")
 
 print(f"\n{ok} ok, {fail} fail")
 sys.exit(0 if fail == 0 else 1)

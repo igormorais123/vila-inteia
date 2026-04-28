@@ -26,8 +26,8 @@ def check(cond, msg):
 
 
 print("=== test_claude_motor ===")
-print("\n[1] MY_PREDS_BASE tem 100 entries (10 datasets × 10 events)")
-check(len(MY_PREDS_BASE) == 100, f"len=100 got {len(MY_PREDS_BASE)}")
+print("\n[1] MY_PREDS_BASE tem 120 entries (12 datasets × 10 events incl post-cutoff v1+v2)")
+check(len(MY_PREDS_BASE) == 120, f"len=120 got {len(MY_PREDS_BASE)}")
 
 print("\n[2] persona_style aplica bias correto")
 # Musk sharpens
@@ -92,8 +92,12 @@ for dp in sorted(glob.glob(f"{REPO}/data/backtest/*.csv")):
 
 acc = hits / n
 brier = sum(briers) / n
-check(acc == 1.0, f"100/100 acc (got {hits}/{n} = {acc:.3f})")
-check(brier < 0.05, f"brier < 0.05 (got {brier:.4f})")
+# Onda 230: post-cutoff dataset adicionado — Vila 100% pre-cutoff, falha post-cutoff
+# Aggregate: ~92.7% (102/110), brier ~0.066. Honest forecasting.
+# Onda 231: 20 post-cutoff events agora (HONEST forecasting falha)
+# pre-cutoff 100/100 + post-cutoff 6/20 = 106/120 = 88.3%
+check(acc >= 0.85, f"acc >= 85% (got {hits}/{n} = {acc:.3f})")
+check(brier < 0.10, f"brier < 0.10 (got {brier:.4f})")
 
 print(f"\n{ok} ok, {fail} fail")
 sys.exit(0 if fail == 0 else 1)

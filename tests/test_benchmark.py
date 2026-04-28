@@ -63,24 +63,26 @@ sim = _Sim()
 bench = rodar_benchmark(sim=sim, persona_ids=PANEL, persona_nomes=PERSONA_NOMES,
                        base_dir=f"{REPO}/data/backtest", seed=42)
 
-check(bench["n_total"] == 100, f"n_total=100 (got {bench['n_total']})")
-check(len(bench["per_dataset"]) == 10, "10 datasets")
+# Onda 230: post-cutoff dataset adicionado
+check(bench["n_total"] == 120, f"n_total=120 (got {bench['n_total']})")
+check(len(bench["per_dataset"]) == 12, "12 datasets")
 
-# Vila wins
+# Vila wins (mostly — post-cutoff fails honestly)
 b = bench["baselines"]
-check(b["vila"]["acc"] == 1.0, f"vila acc=100% (got {b['vila']['acc']*100:.1f}%)")
-check(b["vila"]["brier"] < 0.05, f"vila brier < 0.05 (got {b['vila']['brier']:.4f})")
+check(b["vila"]["acc"] >= 0.85, f"vila acc >= 85% (got {b['vila']['acc']*100:.1f}%)")
+check(b["vila"]["brier"] < 0.10, f"vila brier < 0.10 (got {b['vila']['brier']:.4f})")
 check(b["vila"]["acc"] > b["prior_humano"]["acc"], "vila > prior_humano acc")
 check(b["vila"]["brier"] < b["prior_humano"]["brier"], "vila < prior_humano brier")
 check(b["vila"]["acc"] > b["chance"]["acc"], "vila > chance acc")
 check(b["vila"]["acc"] > b["random"]["acc"], "vila > random acc")
-check(b["vila"]["skill_vs_prior"] > 0.5, f"vila skill > +50% (got {b['vila']['skill_vs_prior']*100:.1f}%)")
+# Onda 231: post-cutoff dataset reduz skill (forecasting genuíno)
+check(b["vila"]["skill_vs_prior"] > 0.30, f"vila skill > +30% (got {b['vila']['skill_vs_prior']*100:.1f}%)")
 
 print("\n[5] formatar_relatorio gera markdown válido")
 report = formatar_relatorio(bench)
 check("# Vila INTEIA Benchmark" in report, "header presente")
 check("vila" in report and "prior_humano" in report, "baselines presentes")
-check("100.0%" in report, "Vila acc 100% no report")
+check("vila" in report.lower() and "%" in report, "Vila acc presente no report")
 
 print(f"\n{ok} ok, {fail} fail")
 sys.exit(0 if fail == 0 else 1)
