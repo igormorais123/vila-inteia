@@ -9,10 +9,31 @@ This module is OPT-IN via apply_llm=True flag. Deterministic Vila pipeline
 
 from __future__ import annotations
 
+import json
 import re
 import shutil
 import subprocess
+from pathlib import Path
 from typing import Callable
+
+_CACHE_DIR = Path(__file__).resolve().parent.parent / "data" / "llm_cache"
+_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+_DISK_CACHE_FILE = _CACHE_DIR / "llm_predict.json"
+
+
+def _load_disk_cache() -> dict[str, float]:
+    if _DISK_CACHE_FILE.exists():
+        try:
+            return json.loads(_DISK_CACHE_FILE.read_text())
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+
+def _save_disk_cache(cache: dict[str, float]) -> None:
+    tmp = _DISK_CACHE_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(cache))
+    tmp.replace(_DISK_CACHE_FILE)
 
 LLM_PROMPT_TEMPLATE = """You are a forecasting expert. Given an event question, output ONLY a single floating-point probability between 0.05 and 0.95 representing P(yes outcome).
 
@@ -45,7 +66,7 @@ Context: {contexto}
 P(yes) ="""
 
 
-_CACHE: dict[str, float] = {}
+_CACHE: dict[str, float] = _load_disk_cache()
 
 
 def _parse_prob(text: str) -> float | None:
@@ -107,6 +128,7 @@ def llm_predict(framing: str, contexto: str = "",
         p = _parse_prob(text or "")
         if p is not None:
             _CACHE[key] = p
+            _save_disk_cache(_CACHE)
             return p
         if provider == "claude_cli":
             return None
@@ -125,6 +147,7 @@ def llm_predict(framing: str, contexto: str = "",
         p = _parse_prob(response or "")
         if p is not None:
             _CACHE[key] = p
+            _save_disk_cache(_CACHE)
             return p
     return None
 

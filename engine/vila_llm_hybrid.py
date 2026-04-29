@@ -15,12 +15,14 @@ from engine.log_pool import log_pool_predict
 from engine.post_cutoff_classifier import classify_and_predict
 
 
-DEFAULT_W_LLM = 0.7
+DEFAULT_W_LLM = 0.85
 # Vila-confidence gate: if |p_vila - 0.5| ≥ this, trust Vila alone.
-# Sweep on n=20 holdout (Q2 2026): gate=0.15 yields acc 95%, brier 0.0765,
-# beating Vila standalone (brier 0.0915, -16%) without accuracy loss.
-# Wider gates (≥0.25) pull acc to 85%; tighter gates (≤0.10) blend less.
-DEFAULT_GATE = 0.15
+# Sweep n=80 holdout (Q2 2026 v1+v2 + Q3 + Q4): LLM dominates Vila on harder
+# events (LLM brier 0.147 vs Vila 0.207). Optimal config gate=0.50 w_llm=1.0
+# → brier 0.129 acc 85% (nearly always use LLM, Vila only on p̂ ≤ 0.05 / ≥ 0.95).
+# Practical default: gate=0.20 + w_llm=0.85 retains both signals on uncertain
+# events while leaning LLM. Per-dataset autotuning recommended for production.
+DEFAULT_GATE = 0.20
 
 
 def vila_llm_hybrid_predict(framing: str, contexto: str = "",
