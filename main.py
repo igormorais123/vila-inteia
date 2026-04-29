@@ -358,7 +358,7 @@ def modo_factor_bench(args):
 
     out_path = Path(args.out_md)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text("\n".join(lines))
+    out_path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\n✓ markdown: {out_path}")
 
 
@@ -440,7 +440,7 @@ def modo_factor_autoresearch(args):
     ]
     out_path = Path(args.out_md)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text("\n".join(lines))
+    out_path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\n✓ markdown: {out_path}")
 
 
@@ -541,6 +541,7 @@ def modo_forecast_mega_bench(args):
     from engine.pit_diagnostic import pit_histogram
     from engine.reliability_diagram import reliability_diagram
     from engine._pred_utils import pairs_from_events
+    from engine.helena_report import helena_report, render_markdown as helena_render
 
     banner()
     print("MODO FORECAST-MEGA-BENCH\n")
@@ -613,6 +614,16 @@ def modo_forecast_mega_bench(args):
     lines.append(f"- Datasets: {len(by_category)}")
     lines.append(f"- Total events: {n_total}")
     lines.append("")
+
+    # Helena 8-block executive summary (importado da skill helena, ver
+    # engine/helena_report.py). Status / Achado / Mecanismo / Red Team /
+    # Cenarios / Recomendacao / Calibracao / Curiosidade.
+    if not getattr(args, "no_helena", False):
+        helena = helena_report(combined, dataset_name=f"mega-bench ({len(by_category)} datasets)")
+        lines.append("## 0. Helena Executive Summary")
+        lines.append("")
+        lines.append(helena_render(helena))
+        lines.append("")
 
     lines.append("## 1. Combined Report")
     lines.append("")
@@ -744,7 +755,7 @@ def modo_forecast_mega_bench(args):
 
     out_path = Path(args.out_md)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text("\n".join(lines))
+    out_path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\n✓ markdown: {out_path}")
 
 
@@ -1116,6 +1127,8 @@ def main():
                              help="Glob pattern for dataset names (default: *)")
     mega_parser.add_argument("--out-md", default="data/mega_bench_report.md",
                              help="Markdown report path")
+    mega_parser.add_argument("--no-helena", action="store_true",
+                             help="Disable Helena 8-block executive summary at top of report")
 
     # forecast-vs-external: bench Vila vs Manifold market probabilities
     ext_parser = subparsers.add_parser(
