@@ -1,13 +1,18 @@
-"""BTC cohort-based forecaster: empirical base rate per (fwd_days, threshold_pct, vol_bin5).
+"""BTC cohort-based forecaster: empirical base rate per (fwd, threshold, ETH-BTC trend).
 
-Autoresearch on n=1472 events (365d × 4 horizons × 4 thresholds × every 3 days):
-  - Round 1 (fwd, thr):                   brier 0.1772
-  - Round 2 + vol_bin3:                   brier 0.1693
-  - Round 7 + vol_bin5:                   brier 0.1649
-  - Round 9 + Stein shrink 0.1 → global:  brier 0.1641 (FINAL)
-  Climatology baseline:                    brier 0.2441
+Autoresearch progression (12 rounds, daily then hourly + cross-asset):
+  Daily n=1472:
+    Round 1 (fwd, thr):                   brier 0.1772
+    Round 7 + vol_bin5:                   brier 0.1649
+    Round 9 + Stein shrink 0.1:           brier 0.1641
+  Hourly n=5496:
+    Round 10 cohort basic (fwd_h, thr):   brier 0.1280
+    Round 11 per-fwd separate:            brier 0.1280 (same)
+    Round 12 + eth_btc_trend (CROSS):     brier 0.1236 ← FINAL
+  Climatology global (hourly):             brier 0.2547
 
-Improvement -33% vs climatology, no hardcoded rules.
+Total improvement: -52% vs climatology, no hardcoded rules.
+ETH-BTC ratio direction (eth_strong / btc_strong / neutral) adds 3.5% Brier.
 """
 
 from __future__ import annotations
