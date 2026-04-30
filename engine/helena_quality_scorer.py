@@ -32,15 +32,20 @@ WEASEL_WORDS = ("talvez", "pode ser que", "possivelmente", "quem sabe",
 def _check_dados(report: dict) -> tuple[int, str]:
     ev = report.get("evidencia", {})
     n = ev.get("n_eventos", 0)
-    has_murphy = bool(ev.get("murphy"))
+    murphy = ev.get("murphy") or {}
     has_ci = bool(ev.get("bootstrap_ci95"))
-    if n >= 20 and has_murphy and has_ci:
-        return 1, f"OK (n={n}, murphy+CI presentes)"
+    # Murphy decomp completo exige reliability + resolution + uncertainty.
+    # Antes aceitava bool(murphy) — dict parcial passava.
+    murphy_keys_required = {"reliability", "resolution", "uncertainty"}
+    has_full_murphy = isinstance(murphy, dict) and murphy_keys_required.issubset(murphy.keys())
+    if n >= 20 and has_full_murphy and has_ci:
+        return 1, f"OK (n={n}, murphy completo+CI presentes)"
     parts = []
     if n < 20:
         parts.append(f"n={n} insuficiente")
-    if not has_murphy:
-        parts.append("sem Murphy decomp")
+    if not has_full_murphy:
+        missing = murphy_keys_required - set(murphy.keys() if isinstance(murphy, dict) else [])
+        parts.append(f"Murphy incompleto (falta: {sorted(missing)})" if missing else "sem Murphy decomp")
     if not has_ci:
         parts.append("sem bootstrap CI")
     return 0, "; ".join(parts)
@@ -71,21 +76,36 @@ def _check_acionabilidade(report: dict) -> tuple[int, str]:
     if not rec:
         return 0, "recomendação vazia"
     for verb in ACTION_VERBS:
-        if verb in rec:
-            return 1, f"OK (verbo='{verb}')"
+        # Word-boundary: 'promover' não pode passar dentro de 'compromover' nem
+        # disparar para substring acidental. \b cobre Unicode em re padrão py3.
+        match = re.search(rf"\b{re.escape(verb)}\b", rec)
+        if not match:
+            continue
+        # Detectar negação imediata: "não promover", "sem validar", "evitar X"
+        # invertem a polaridade da ação. Olhamos os ~25 chars antes do verbo.
+        prefix = rec[max(0, match.start() - 25): match.start()]
+        if re.search(r"\b(não|nao|sem|evitar|jamais|nunca)\b\s*\S*\s*$", prefix):
+            return 0, f"verbo '{verb}' negado em '...{prefix.strip()} {verb}...'"
+        return 1, f"OK (verbo='{verb}')"
     return 0, f"sem verbo de ação ({rec[:40]}...)"
 
 
 def _check_profundidade(report: dict) -> tuple[int, str]:
     mec = report.get("mecanismo", "")
+    mec_low = mec.lower()
     cen = report.get("cenarios", {})
-    has_murphy_terms = all(t in mec.lower() for t in ("reliability", "resolution"))
+    # Doc da skill promete "Murphy decomp citado" — passamos a exigir o
+    # literal "murphy" no mecanismo, não só os componentes da decomp.
+    has_murphy_citation = "murphy" in mec_low
+    has_murphy_terms = all(t in mec_low for t in ("reliability", "resolution"))
     has_3_scenarios = set(cen.keys()) == {"otimista", "base", "pessimista"}
-    if has_murphy_terms and has_3_scenarios:
-        return 1, "OK (Murphy + 3 cenários)"
+    if has_murphy_citation and has_murphy_terms and has_3_scenarios:
+        return 1, "OK (Murphy citado + decomp + 3 cenários)"
     parts = []
+    if not has_murphy_citation:
+        parts.append("mecanismo não cita Murphy")
     if not has_murphy_terms:
-        parts.append("mecanismo raso")
+        parts.append("sem reliability+resolution")
     if not has_3_scenarios:
         parts.append("cenários incompletos")
     return 0, "; ".join(parts)
