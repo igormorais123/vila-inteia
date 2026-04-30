@@ -541,8 +541,6 @@ def modo_forecast_mega_bench(args):
     from engine.pit_diagnostic import pit_histogram
     from engine.reliability_diagram import reliability_diagram
     from engine._pred_utils import pairs_from_events
-    from engine.helena_report import helena_report, render_markdown as helena_render
-    from engine.helena_quality_scorer import score_helena_report, render_scorecard
 
     banner()
     print("MODO FORECAST-MEGA-BENCH\n")
@@ -620,13 +618,16 @@ def modo_forecast_mega_bench(args):
     # engine/helena_report.py). Status / Achado / Mecanismo / Red Team /
     # Cenarios / Recomendacao / Calibracao / Curiosidade.
     if not getattr(args, "no_helena", False):
+        # Imports tardios: --no-helena precisa isolar de verdade. Se um dia
+        # algum desses módulos quebrar, forecast-mega-bench segue de pé.
+        from engine.helena_report import helena_report, render_markdown as helena_render
+        from engine.helena_quality_scorer import score_helena_report, render_scorecard
+
         helena = helena_report(combined, dataset_name=f"mega-bench ({len(by_category)} datasets)")
         lines.append("## 0. Helena Executive Summary")
         lines.append("")
         lines.append(helena_render(helena))
         lines.append("")
-        # 6-dim quality scorecard (engine/helena_quality_scorer.py) — gate
-        # de regressao em CI: queda no score sinaliza degradacao do report.
         scored = score_helena_report(helena)
         lines.append(render_scorecard(scored))
         lines.append("")

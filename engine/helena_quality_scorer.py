@@ -32,15 +32,37 @@ WEASEL_WORDS = ("talvez", "pode ser que", "possivelmente", "quem sabe",
 def _check_dados(report: dict) -> tuple[int, str]:
     ev = report.get("evidencia", {})
     n = ev.get("n_eventos", 0)
-    has_murphy = bool(ev.get("murphy"))
+    murphy = ev.get("murphy") or {}
     has_ci = bool(ev.get("bootstrap_ci95"))
-    if n >= 20 and has_murphy and has_ci:
-        return 1, f"OK (n={n}, murphy+CI presentes)"
+    # Murphy decomp completo exige reliability + resolution + uncertainty
+    # com VALORES numéricos finitos (não None, não string vazia, não NaN).
+    # Antes aceitava bool(murphy) — dict parcial passava. Depois exigia só
+    # presença das chaves — Murphy com None/inválido passava (Codex 2026-04-30).
+    murphy_keys_required = {"reliability", "resolution", "uncertainty"}
+    is_dict = isinstance(murphy, dict)
+    present_keys = set(murphy.keys()) if is_dict else set()
+    missing = murphy_keys_required - present_keys
+
+    def _is_finite_number(v) -> bool:
+        if isinstance(v, bool) or not isinstance(v, (int, float)):
+            return False
+        return v == v and v != float("inf") and v != float("-inf")
+
+    invalid_values = [k for k in murphy_keys_required & present_keys
+                      if not _is_finite_number(murphy.get(k))]
+    has_full_murphy = is_dict and not missing and not invalid_values
+    if n >= 20 and has_full_murphy and has_ci:
+        return 1, f"OK (n={n}, murphy completo+CI presentes)"
     parts = []
     if n < 20:
         parts.append(f"n={n} insuficiente")
-    if not has_murphy:
-        parts.append("sem Murphy decomp")
+    if not has_full_murphy:
+        if missing:
+            parts.append(f"Murphy incompleto (falta: {sorted(missing)})")
+        elif invalid_values:
+            parts.append(f"Murphy com valor inválido em: {sorted(invalid_values)}")
+        else:
+            parts.append("sem Murphy decomp")
     if not has_ci:
         parts.append("sem bootstrap CI")
     return 0, "; ".join(parts)
@@ -70,22 +92,42 @@ def _check_acionabilidade(report: dict) -> tuple[int, str]:
     rec = report.get("recomendacao", "").lower()
     if not rec:
         return 0, "recomendação vazia"
+    # Coleta TODAS as ocorrências de verbos da lista. Não para no primeiro:
+    # "não promover; recalibrar e validar" é recomendação boa — rejeita
+    # promoção e propõe ação alternativa. Fix do octo-review (Codex 2026-04-30).
+    found_negated: list[str] = []
+    found_clean: list[str] = []
+    neg_re = re.compile(r"\b(não|nao|sem|evitar|jamais|nunca)\b\s*\S*\s*$")
     for verb in ACTION_VERBS:
-        if verb in rec:
-            return 1, f"OK (verbo='{verb}')"
+        for match in re.finditer(rf"\b{re.escape(verb)}\b", rec):
+            prefix = rec[max(0, match.start() - 25): match.start()]
+            if neg_re.search(prefix):
+                found_negated.append(verb)
+            else:
+                found_clean.append(verb)
+    if found_clean:
+        return 1, f"OK (verbo='{found_clean[0]}')"
+    if found_negated:
+        return 0, f"todos verbos encontrados negados: {sorted(set(found_negated))}"
     return 0, f"sem verbo de ação ({rec[:40]}...)"
 
 
 def _check_profundidade(report: dict) -> tuple[int, str]:
     mec = report.get("mecanismo", "")
+    mec_low = mec.lower()
     cen = report.get("cenarios", {})
-    has_murphy_terms = all(t in mec.lower() for t in ("reliability", "resolution"))
+    # Doc da skill promete "Murphy decomp citado" — passamos a exigir o
+    # literal "murphy" no mecanismo, não só os componentes da decomp.
+    has_murphy_citation = "murphy" in mec_low
+    has_murphy_terms = all(t in mec_low for t in ("reliability", "resolution"))
     has_3_scenarios = set(cen.keys()) == {"otimista", "base", "pessimista"}
-    if has_murphy_terms and has_3_scenarios:
-        return 1, "OK (Murphy + 3 cenários)"
+    if has_murphy_citation and has_murphy_terms and has_3_scenarios:
+        return 1, "OK (Murphy citado + decomp + 3 cenários)"
     parts = []
+    if not has_murphy_citation:
+        parts.append("mecanismo não cita Murphy")
     if not has_murphy_terms:
-        parts.append("mecanismo raso")
+        parts.append("sem reliability+resolution")
     if not has_3_scenarios:
         parts.append("cenários incompletos")
     return 0, "; ".join(parts)
