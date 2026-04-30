@@ -22,6 +22,20 @@ def _as_dict(result: ForecastResult | dict) -> dict:
     return result
 
 
+def _selective_coverage(d: dict, threshold: float) -> Any:
+    """Lookup robusto para selective.coverage — chave pode ser float ou string
+    (JSON roundtrip converte float keys em str). Tenta ambas as formas."""
+    sel = d.get("selective", {}) or {}
+    candidates = (threshold, str(threshold), f"{threshold:.1f}", f"{threshold:.2f}")
+    for k in candidates:
+        if k in sel:
+            v = sel[k]
+            if isinstance(v, dict):
+                return v.get("coverage", "n/a")
+            return v
+    return "n/a"
+
+
 def _confidence_label(n: int, ci_width: float, reliability: float) -> tuple[str, str]:
     """alta / média / baixa + justificativa one-liner."""
     if n < 20:
@@ -148,8 +162,8 @@ def helena_report(result: ForecastResult | dict, *, dataset_name: str = "n/a") -
         "recomendacao": _recommendation(conf_label, brier, baseline, murphy, n),
         "calibracao_confianca": {"label": conf_label, "justificativa": conf_why},
         "curiosidade_residual": (
-            f"Selective coverage @0.30: {d.get('selective', {}).get(0.30, {}).get('coverage', 'n/a')}, "
-            f"conformal width: {d.get('conformal', {}).get('coverage', 'n/a')}"
+            f"Selective coverage @0.30: {_selective_coverage(d, 0.30)}, "
+            f"conformal width: {d.get('conformal', {}).get('mean_width', 'n/a')}"
         ),
     }
 
