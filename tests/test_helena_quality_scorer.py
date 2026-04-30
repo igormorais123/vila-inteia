@@ -177,6 +177,46 @@ def test_curiosidade_uses_conformal_mean_width():
     assert "conformal width: 0.8" not in r["curiosidade_residual"]
 
 
+# ----- segunda rodada de gaps (Codex 2nd-pass review) -----
+
+
+def test_acionabilidade_passes_when_negation_followed_by_clean_verb():
+    """Falso negativo do hardening: 'não promover; recalibrar e validar' é
+    recomendação BOA (rejeita promoção, propõe ação). Não deve falhar."""
+    r = helena_report(_make_result())
+    r["recomendacao"] = "não promover para produção; recalibrar e validar em holdout maior"
+    s = score_helena_report(r)
+    assert s["breakdown"]["acionabilidade"]["passed"]
+
+
+def test_acionabilidade_fails_when_all_verbs_negated():
+    """Inverso: se TODOS os verbos estão negados, deve falhar de fato."""
+    r = helena_report(_make_result())
+    r["recomendacao"] = "não promover, sem recalibrar, evitar validar"
+    s = score_helena_report(r)
+    assert not s["breakdown"]["acionabilidade"]["passed"]
+    assert "todos verbos" in s["breakdown"]["acionabilidade"]["justificativa"]
+
+
+def test_dados_fails_with_murphy_none_values():
+    """Murphy com chaves presentes mas valores None/inválidos não passa."""
+    r = helena_report(_make_result())
+    r["evidencia"]["murphy"] = {"reliability": None, "resolution": None,
+                                 "uncertainty": None}
+    s = score_helena_report(r)
+    assert not s["breakdown"]["dados_antes_opiniao"]["passed"]
+    assert "valor inválido" in s["breakdown"]["dados_antes_opiniao"]["justificativa"]
+
+
+def test_dados_fails_with_murphy_string_values():
+    """Murphy com strings em vez de números não passa."""
+    r = helena_report(_make_result())
+    r["evidencia"]["murphy"] = {"reliability": "0.01", "resolution": "0.06",
+                                 "uncertainty": "0.25"}
+    s = score_helena_report(r)
+    assert not s["breakdown"]["dados_antes_opiniao"]["passed"]
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in list(globals().items()) if k.startswith("test_")]
