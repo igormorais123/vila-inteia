@@ -101,6 +101,16 @@ def predict_routed(framing: str, contexto: str = "") -> tuple[float, Route]:
     return p, r
 
 
+def routed_classify_and_predict(framing: str, contexto: str = "") -> tuple[float, str]:
+    """Adapter compatível com a interface (prob, label) do
+    `engine.post_cutoff_classifier.classify_and_predict`. Permite plugar o
+    router como classifier_fn dentro do `forecast-mega-bench`, etc.
+
+    Retorna (prob, label) onde label = nome do route ('vila' | 'llm' | 'hybrid').
+    """
+    return predict_routed(framing, contexto)
+
+
 def route_stats(events: list) -> dict:
     """Conta distribuição de routes em uma lista de eventos."""
     counts = {"vila": 0, "llm": 0, "hybrid": 0}

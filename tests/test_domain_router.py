@@ -77,6 +77,16 @@ def test_case_insensitive():
     assert route("BTC PRICE acima de 80k?") == "vila"
 
 
+def test_routed_classify_and_predict_interface():
+    """Adapter (Onda 289) drop-in para classify_and_predict:
+    aceita (framing, contexto), retorna (prob: float, label: str)."""
+    from engine.domain_router import routed_classify_and_predict
+    p, lbl = routed_classify_and_predict("BTC price acima de 80k?", "")
+    assert isinstance(p, float)
+    assert 0.0 <= p <= 1.0
+    assert lbl == "vila"
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in list(globals().items()) if k.startswith("test_")]
