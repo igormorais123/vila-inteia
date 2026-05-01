@@ -1,0 +1,74 @@
+[
+  {
+    "n": 10,
+    "vila": {
+      "acc": 0.1,
+      "brier": 0.41644622499999995
+    },
+    "llm": {
+      "acc": 0.7,
+      "brier": 0.16641
+    },
+    "hybrid": {
+      "acc": 0.7,
+      "brier": 0.1729472358573256,
+      "w_llm": 0.85
+    },
+    "dataset": "crypto_bitcoin_2024",
+    "elapsed_sec": 216.1
+  },
+  {
+    "n": 10,
+    "vila": {
+      "acc": 0.3,
+      "brier": 0.5285709250000001
+    },
+    "llm": {
+      "acc": 0.3,
+      "brier": 0.44598000000000004
+    },
+    "hybrid": {
+      "acc": 0.2,
+      "brier": 0.46653016821212534,
+      "w_llm": 0.85
+    },
+    "dataset": "lancamento_apple_vpro_2024",
+    "elapsed_sec": 210.8
+  },
+  {
+    "n": 10,
+    "vila": {
+      "acc": 0.6,
+      "brier": 0.35783087500000005
+    },
+    "llm": {
+      "acc": 0.8,
+      "brier": 0.15045
+    },
+    "hybrid": {
+      "acc": 0.8,
+      "brier": 0.216457833122365,
+      "w_llm": 0.85
+    },
+    "dataset": "impeachment_dilma_2016",
+    "elapsed_sec": 217.1
+  },
+  {
+    "n": 10,
+    "vila": {
+      "acc": 0.7,
+      "brier": 0.28741027499999994
+    },
+    "llm": {
+      "acc": 1.0,
+      "brier": 0.04408
+    },
+    "hybrid": {
+      "acc": 1.0,
+      "brier": 0.044777072307726984,
+      "w_llm": 0.85
+    },
+    "dataset": "geopolitics_q1_2026",
+    "elapsed_sec": 211.7
+  }
+]
