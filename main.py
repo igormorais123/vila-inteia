@@ -536,7 +536,7 @@ def modo_forecast_mega_bench(args):
     from pathlib import Path
     from engine.backtest_real import carregar_dataset
     from engine.combined_pipeline import combined_report, murphy_decomposition
-    from engine.post_cutoff_classifier import classify_and_predict
+    from engine.post_cutoff_classifier import classify_and_predict as _vila_classify
     from engine.hosmer_lemeshow import hosmer_lemeshow
     from engine.pit_diagnostic import pit_histogram
     from engine.reliability_diagram import reliability_diagram
@@ -544,6 +544,15 @@ def modo_forecast_mega_bench(args):
 
     banner()
     print("MODO FORECAST-MEGA-BENCH\n")
+
+    # Onda 289: --routed plug do domain_router como classifier_fn.
+    # Default fica Vila pura (rapido). --routed liga LLM em ~24% dos eventos.
+    if getattr(args, "routed", False):
+        from engine.domain_router import routed_classify_and_predict, route_stats
+        classify_and_predict = routed_classify_and_predict
+        print("ROUTED MODE: usando engine.domain_router (Vila/LLM/Hybrid per event)\n")
+    else:
+        classify_and_predict = _vila_classify
 
     repo = Path(__file__).resolve().parent
     pattern = getattr(args, "pattern", "*")
@@ -568,6 +577,12 @@ def modo_forecast_mega_bench(args):
         return
 
     print(f"Loaded {n_total} events from {len(by_category)} datasets.")
+
+    if getattr(args, "routed", False):
+        rs = route_stats(all_events)
+        print(f"  route distribution: vila={rs['pct']['vila']:.1%} "
+              f"llm={rs['pct']['llm']:.1%} hybrid={rs['pct']['hybrid']:.1%}  "
+              f"({rs['llm']} LLM-routed events ≈ {rs['llm']*25}s LLM call time)")
 
     print("\n[1/6] combined_report ...")
     combined = combined_report(all_events, classify_and_predict)
@@ -1136,6 +1151,10 @@ def main():
                              help="Markdown report path")
     mega_parser.add_argument("--no-helena", action="store_true",
                              help="Disable Helena 8-block executive summary at top of report")
+    mega_parser.add_argument("--routed", action="store_true",
+                             help="Use domain_router (Vila/LLM/Hybrid per event) "
+                                  "instead of pure Vila classifier. SLOW: invokes "
+                                  "LLM on ~24%% of events.")
 
     # forecast-vs-external: bench Vila vs Manifold market probabilities
     ext_parser = subparsers.add_parser(
