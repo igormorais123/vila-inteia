@@ -3,6 +3,53 @@
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/).
 Projeto segue [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] — pós onda 289
+
+Trabalho consolidado pós-v1.0.0 ainda não etiquetado. Quando cortado, vira `1.1.0` (escala+ensemble) ou já direto `1.3.0` (forecasting honesto + hybrid). Detalhes por bloco em [`MANIFEST.md`](MANIFEST.md).
+
+### Saneamento — 2026-05-05
+- Fechamento de 24 PRs órfãos (ondas 115–191 e 281–282), descontinuados
+- Adição de [`INDEX.md`](INDEX.md) (índice mestre) e [`MAP.md`](MAP.md) (mapa estrutural)
+- MANIFEST estendido com blocos 40–100, 101–200, 201–289
+- `.gitignore` atualizado (`.claude-octopus/`, `.planning/`, `generated-images/`)
+- Triagem documentada em `TRIAGEM_PRS_2026-05-05.md`
+
+### Bloco 40–100 — Escala + Validação
+- Docker, Prometheus `/metrics`, E2E Playwright, auth X-API-Key + rate-limit
+- OmniRoute LLM tier gating, cache, budget, Groq provider
+- `/super-intelligence`, `/persona-chat`, `/panel-chat`, `/snapshot`, PDF export
+- `render.yaml` produção, `/livez` `/readyz` K8s probes, backtest_worker daemon
+- Reliability diagram SVG, cross-validation holdout, webhook Discord/Slack
+- Datasets crypto/twitter, BSS decomposition, mobile-responsive God's Eye
+
+### Bloco 101–200 — Ensemble + AutoResearch
+- Few-shot, weighted ensemble por skill, CoT, multi-step debate
+- Bayesian prior blend (Vila + base rate), self-consistency (Wang 2022)
+- Adversarial prompt + LLM-as-judge, rejection-aware CoT, outcome_framing
+- Auto-select panel per-dataset, prob anchoring/clip, persona skill per categoria
+- Isotonic runtime, auto Platt vs isotonic, recency-weighted base_rate
+- Conformal prediction intervals, multi-model ensemble (median)
+- AutoResearch Vila (Karpathy loop), simulated annealing, meta-autoresearch
+- Pipeline Mirofish-style (corpus → grafo → simulação)
+
+### Bloco 201–289 — Forecasting Honesto + Hybrid
+- A11y boost massivo (combined > 0.90 a partir da onda 210), semantic landmarks
+- `claude_motor` 100/100 acc, brier 0.0256, LODO CV 100% per dataset
+- Validação SOTA 2026 contra 4 baselines, large-scale 197 events
+- Factor models (MOMENTUM, Bollinger, Ichimoku, Stochastic, MACD) + autoresearch 11 strategies
+- Post-cutoff classifier 30% → 75% acc, stacking ensemble brier 0.229
+- Hold-out Q2 2026 com 90% acc, conformal + 40 events new categories
+- Empirical Bayes priors per cat, Platt+Isotonic methods, Lindy duration prior
+- PIT histogram diagnostic, Hedge/AdaHedge online, Hosmer-Lemeshow goodness-of-fit
+- Selective forecasting reject option, forecast-bench CLI, mega-bench
+- Theorems + datasets via parallel agents (ondas 270–278), 8 datasets ampliados
+- Manifold integration (mercado real), LLM forecaster via Claude Code OAuth
+- Vila+LLM hybrid (log-pool), LLM-as-coordinator autoresearch
+- BTC cohort EB (Stein shrinkage), ETH cross-asset
+- Diebold-Mariano test formal p<0.01: LLM bate Vila em geopolítica/históricos (-58 a -85% Brier)
+- Vila bate climatology em BTC (-10%); roteador autoroute por domínio
+- `forecast-mega-bench --routed` (onda 289)
+
 ## [1.0.0] — 2026-04-20
 
 ### Milestone

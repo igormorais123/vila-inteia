@@ -1,8 +1,11 @@
 # Vila INTEIA — MANIFEST
 
-Consolidado das 32+ ondas implementadas. Referência operacional para analistas e parceiros.
+Consolidado das 285 ondas implementadas (5 → 289, com lacunas). Referência operacional para analistas e parceiros.
+Última atualização: 2026-05-05.
 
-## Ondas
+> Para navegação rápida ver [`INDEX.md`](INDEX.md). Para mapa visual ver [`MAP.md`](MAP.md).
+
+## Ondas — bloco 1 (5–39, v1.0.0)
 
 | # | Nome | PR | Entregas principais |
 |---|---|---|---|
@@ -170,3 +173,79 @@ Sim real (56 steps, 151 agentes, heurístico puro):
 ## CI Status
 
 11 PRs mergeados ao main, todos com CI verde (GitHub Actions executando 13 suítes + syntax check + node --check).
+
+---
+
+## Ondas — bloco 2 (40–100, escala + validação)
+
+Marcos: docker-compose, Prometheus, E2E Playwright, auth, OmniRoute, Groq, /super-intelligence, PDF export, K8s probes.
+
+| # | Tema | Entrega-chave |
+|---|---|---|
+| 40 | Docker | `docker-compose.yml` (vila + mcp + healthcheck) |
+| 41 | Benchmark perf | `tests/benchmark.py` (12 benches) |
+| 42 | README | Quickstart 3 passos |
+| 43 | Prometheus | `api/rotas_metrics.py` `/metrics` |
+| 44–45 | CHANGELOG + E2E | v1.0.0 release notes; Playwright suite |
+| 46–48 | Auth + rate-limit | X-API-Key + per-IP throttle + backup CLI + webhook |
+| 49–51 | CI + artigo | Wire auth+notifier; CI matrix; artigo v4 |
+| 52–54 | Nature + OpenAPI | Artigo Nature-style; `dump_openapi.py`; synth datasets |
+| 55–57 | Log + tuner | JSON logs; validador calibração; genetic tuner |
+| 58–62 | LLM tier | Tier gate, cache, OmniRoute, budget |
+| 63–67 | Groq | Provider Groq (Llama 3.3 70B); cockpit tab LLM |
+| 68–72 | Step cap + real | Cap LLM/step; validação Vila + LLM real |
+| 75–80 | Endpoints LLM | `/conversas/llm-only`, `/forecast-narrativo`, `/counterfactual-narrativo`, `/recomendacao-intervencao` |
+| 81–85 | God's Eye | `/super-intelligence`, `/predictive-power`, `/influencia-personas`, `/comunidades-personas`, SPA |
+| 86–90 | Persona UX | `/persona-chat`, SSE stream, mapa toggle, `/panel-chat`, `/snapshot` |
+| 91–95 | Backtest | Multi-model bench, `/backtest_real`, Platt, relatório, per-persona skill |
+| 97–101 | Calibração | Runtime Platt; widget; `/backtest` REST; bootstrap CI; isotonic; reliability |
+| 102 | BSS | Decomposição BSS; datasets crypto/twitter |
+| 103–105 | Auth + mobile + PDF | X-API-Key + per-IP; mobile God's Eye; export PDF |
+| 106–108 | Persistência | Supabase + JSONL backtest; `render.yaml`; `/livez` `/readyz` |
+| 109–110 | Artigo + worker | Atualização Nature; `backtest_worker.py` daemon |
+| 111–115 | UX backtest | Modal + history; reliability SVG; tour; CV holdout; persona-skill table |
+| 116–120 | Integration | E2E 14-mod; webhook Discord/Slack; bench vs OASIS/MiroFish |
+
+## Ondas — bloco 3 (101–200, ensemble + autoresearch)
+
+Marcos: ensemble Bayesiano, self-consistency, conformal prediction, Karpathy autoresearch loop, multi-model.
+
+| # | Tema | Entrega-chave |
+|---|---|---|
+| 121–125 | Few-shot + ensemble | Examples; weighted by skill; CoT; multi-step debate; bayesian blend |
+| 126–130 | Robustez | Ensemble accuracy; dataset-conditional persona; self-consistency; adversarial |
+| 131–133 | Verificação | LLM-as-judge; integrate adv+judge; full-stack validation |
+| 134–140 | Calibração avançada | Rejection-aware CoT; outcome_framing; dispersion-aware; prob anchoring; persona skill per cat |
+| 141–146 | Auto-select | Painel per-dataset; mock heuristic; prob clip; full_hedge; expõe params |
+| 147–153 | Calibração runtime | Bayesian blend; isotonic runtime; CLI `fit_isotonic.py`; auto Platt vs iso; recency-weighted |
+| 156–158 | Per-persona | Calibração; isotonic 20 samples; temperature diversity |
+| 159–162 | AutoResearch | Karpathy loop; dataset peso override; resume from trace; conformal intervals |
+| 164–168 | Multi-model | Median ensemble; prompt variant; wire ensemble; paper update; SA |
+| 170–175 | Karpathy | Compare backtests CLI; full Karpathy; timing default; trace; meta-autoresearch |
+| 179–191 | Trace + rotation | Múltiplos traces; circuit breaker; 6ev baseline; model rotation |
+| 197 | Mirofish-style | Pipeline corpus → grafo → simulação |
+
+## Ondas — bloco 4 (198–289, forecasting honesto + hybrid)
+
+Marcos: a11y total, claude_motor 100% acc, factor models, post-cutoff classifier, conformal+EB+Lindy, mega-bench routed, Vila+LLM hybrid, Diebold-Mariano formal p<0.01.
+
+| # | Tema | Entrega-chave |
+|---|---|---|
+| 198–219 | A11y boost | Aria-labels duais, semantic landmarks, noscript fallbacks (combined cruzou 0.90 em onda 210) |
+| 220–222 | Acurácia 100% | `claude_motor` 100/100 acc (brier 0.0256); LODO CV 100% per dataset |
+| 223–227 | Aria final | psico_live, cidade, super_intel, dashboard, backtest, vila-claude-motor skill |
+| 228–229 | Validação SOTA | Bench vs 4 baselines; rigor SOTA 2026 |
+| 232–242 | Real benchmark | 197 events large-scale; factor models (MOMENTUM bate baseline); cache atomic |
+| 243–248 | Factor models | Multi-window; 4 advanced; 4 exóticos (Bollinger/Ichimoku/Stochastic/MACD); autoresearch 11 strategies |
+| 249–253 | Post-cutoff | Classifier 30%→75%; stacking ensemble (brier 0.229); hold-out Q2 2026 (90% acc); +70 events; conformal+40 |
+| 254–258 | Priors | EB priors per cat; Platt+Isotonic; Lindy duration; PIT histogram; act on PIT |
+| 259–262 | Online | Hedge online; confidence stretch; Hosmer-Lemeshow; wire EB priors |
+| 263–267 | Datasets + selective | Macro/corp/regulatory/geopolitics; reject option; AdaHedge; forecast-bench CLI; combined pipeline + holdout v2 |
+| 268–269 | Cleanup | /simplify cleanup (5 findings); apply skipped findings |
+| 270–278 | Theorems + datasets | 9+7+8+8+7+8 theorems via parallel agents; resolve future-work via 5 agents |
+| 279–280 | LLM real | Manifold integration; LLM forecaster via Claude Code OAuth |
+| 281–289 | Hybrid + DM | Vila+LLM hybrid log-pool; LLM-coordinator; BTC cohort EB; ETH cross-asset; DM test p<0.01; mega-bench `--routed` domain_router |
+
+## Saneamento v1.1 (2026-05-05)
+
+24 PRs órfãos das v1.0/v1.1 fechados sem merge (linhas de experimento descontinuadas, ondas 115–191 e 281–282). Triagem completa: [`TRIAGEM_PRS_2026-05-05.md`](TRIAGEM_PRS_2026-05-05.md).

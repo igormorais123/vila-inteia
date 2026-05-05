@@ -47,9 +47,12 @@ data/colmeia_estado.json
 # Autoresearch traces locais (não versionar — local experimental data)
 data/autoresearch_*.jsonl
 .claude/settings.local.json
+.claude-octopus/
 .gstack/
+.planning/
 resultado_10_materias.json
 .pytest_cache/
+generated-images/
 
 # PDFs gerados (artigos) — ficam em ~/Downloads, não versionados
 docs/artigo/*.pdf
