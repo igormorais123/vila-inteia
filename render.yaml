@@ -43,3 +43,7 @@ services:
         value: "30"
       - key: VILA_CALIB_PATH
         value: "data/calibracao_platt.json"
+      - key: VILA_ADMIN_TOKEN
+        sync: false
+      - key: POLITICA_HOUSE_EFFECTS
+        value: "0"

@@ -1,0 +1,95 @@
+{
+  "version": "v1.2",
+  "fitted_at": "2026-05-05",
+  "operational_filter_days": 30,
+  "stein_shrink": 0.05,
+  "w_linzer": 0.5,
+  "sigma_intercept_pp": 4.0,
+  "sigma_slope_pp_per_day": 0.05,
+  "house_effects_enabled": false,
+  "blend_formula": "p = (1-w_linzer)*p_cohort + w_linzer * Phi(lead_pp / (sigma_intercept + sigma_slope*days))",
+  "validation": {
+    "year_fold_cv": {
+      "T_le_30": {
+        "2010": {
+          "n": 86,
+          "acc": 1.0,
+          "brier": 0.102
+        },
+        "2016": {
+          "n": 20,
+          "acc": 0.85,
+          "brier": 0.085
+        },
+        "2018": {
+          "n": 70,
+          "acc": 0.986,
+          "brier": 0.184
+        },
+        "2020": {
+          "n": 30,
+          "acc": 1.0,
+          "brier": 0.017
+        },
+        "2022": {
+          "n": 120,
+          "acc": 1.0,
+          "brier": 0.085
+        },
+        "2024": {
+          "n": 68,
+          "acc": 0.897,
+          "brier": 0.107
+        },
+        "avg": {
+          "n": 394,
+          "acc": 0.9721,
+          "brier": 0.095
+        }
+      },
+      "selective": {
+        "tau_0_05": {
+          "coverage": 0.967,
+          "acc": 0.9501,
+          "n_kept": 381
+        },
+        "tau_0_15": {
+          "coverage": 0.919,
+          "acc": 0.9613,
+          "n_kept": 362
+        },
+        "tau_0_20": {
+          "coverage": 0.855,
+          "acc": 0.9585,
+          "n_kept": 337
+        },
+        "tau_0_25": {
+          "coverage": 0.439,
+          "acc": 0.9711,
+          "n_kept": 173
+        },
+        "tau_0_30": {
+          "coverage": 0.195,
+          "acc": 0.961,
+          "n_kept": 77
+        },
+        "tau_0_40": {
+          "coverage": 0.112,
+          "acc": 1.0,
+          "n_kept": 44
+        }
+      }
+    }
+  },
+  "notes": [
+    "Onda 4: MRP state baseline (UF, regime) Laplace-smoothed -> avg 97.21%, 2024 SP 89.71%",
+    "Federal presidential elections 2010, 2018, 2022: 100% acc within T<=30 (full coverage)",
+    "2024 SP mayor: industry-wide poll miss (Datafolha/Quaest/Atlas all had Boulos ahead, Nunes won)",
+    "2016 SP mayor: 1 poll miss (Doria upset)",
+    "house effects (per-instituto bias) tested: marginal degradation 0.9416 -> 0.9391, disabled by default",
+    "Selective tau=0.15 recommended for client predictions: 96.1% acc at 92% coverage",
+    "Selective tau=0.40 recommended for high-confidence claims: 100% acc at 11% coverage"
+  ],
+  "w_state_mrp": 0.36,
+  "mrp_enabled": true
+}
