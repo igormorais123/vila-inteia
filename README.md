@@ -4,6 +4,11 @@
 
 [![CI](https://github.com/igormorais123/vila-inteia/actions/workflows/tests.yml/badge.svg)](https://github.com/igormorais123/vila-inteia/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Acc](https://img.shields.io/badge/year--fold%20acc-97.21%25-f5a524)](docs/ONBOARDING_POLITICAL.md)
+[![2024 SP](https://img.shields.io/badge/2024%20SP%20fold-89.7%25-22c55e)](docs/ONBOARDING_POLITICAL.md)
+[![Eventos](https://img.shields.io/badge/eventos-394-blue)](data/backtest/)
+
+**Quick links:** [Demo 60s](#demo-em-60-segundos) · [Try API now](#try-api-now-sem-instalar) · [Screenshots](#screenshots-frontend-nextjs) · [Pricing](#pricing-multi-tenant) · [Roteiro pitch](#roteiro-sugerido-pra-demo-10-min) · [FAQ](#faq)
 
 ---
 
@@ -38,6 +43,34 @@ Pra Next.js (visual mais polido):
 cd frontend-next && npm install
 VILA_API_BASE=http://localhost:8100 npm run dev
 # http://localhost:3001
+```
+
+### Try API now (sem instalar)
+
+Após `python main.py serve --port 8100`, em outro terminal:
+
+```bash
+# Health
+curl http://localhost:8100/api/v1/politica/health
+# {"status":"ok","n_train_events":50,"horizon_days":152,...}
+
+# Top 5 candidatos presidência (Bolsonaro filtrado TSE)
+curl http://localhost:8100/api/v1/politica/predictions/presidente | jq '.candidates[] | {nome, partido, p_winner}'
+# [
+#   {"nome":"Luiz Inácio Lula da Silva", "partido":"PT", "p_winner":0.266},
+#   {"nome":"Tarcísio de Freitas", "partido":"REP", "p_winner":0.217},
+#   {"nome":"Ratinho Júnior", "partido":"PSD", "p_winner":0.175},
+#   ...
+# ]
+
+# Custom predict: governador, +8pp lead, 45 dias, incumbente, regime direita
+curl -X POST http://localhost:8100/api/v1/politica/predict \
+  -H "Content-Type: application/json" \
+  -d '{"cargo":"governador","poll_lead_pp":8,"days_to_election":45,"incumbente":1,"regime":"right"}' | jq
+# {"p_cohort":0.78, "p_linzer":0.86, "p_blend":0.83, ...}
+
+# Backtest year-fold + selective curve
+curl http://localhost:8100/api/v1/politica/backtest | jq '.selective_sweep'
 ```
 
 ### Screenshots (frontend Next.js)
@@ -133,6 +166,52 @@ python scripts/predict_2026.py           # gera data/predictions_2026.json
 - [`docs/ONBOARDING_POLITICAL.md`](./docs/ONBOARDING_POLITICAL.md) - arquitetura completa + roadmap Ondas 5-10
 - [`docs/CLIENT_ONBOARDING.md`](./docs/CLIENT_ONBOARDING.md) - quickstart cliente
 - [`docs/DEPLOY_POLITICAL.md`](./docs/DEPLOY_POLITICAL.md) - Render + Vercel deploy
+
+---
+
+## Pricing multi-tenant
+
+| Tier | Req/min | Req/dia | Endpoints | Suporte | Custom training | Preço sugerido |
+|------|--------:|--------:|-----------|---------|-----------------|---------------:|
+| **Free** | 30 | 500 | leitura snapshot | best-effort | não | grátis |
+| **Pro** | 300 | 50.000 | + custom predict | email 24h | não | R$ 2-5k/mês |
+| **Enterprise** | ilimitado | ilimitado | + admin keys + SLA | dedicado | sim (white-label, on-prem) | sob contrato |
+
+Casos de uso típicos por tier:
+- **Free**: jornalismo, pesquisa acadêmica, dashboards públicos
+- **Pro**: campanhas, agências, hedge funds menores, consultorias
+- **Enterprise**: bancos, hedge funds grandes, partidos, mercados de previsão
+
+Emitir chave: `POST /api/v1/politica/admin/keys/issue` com `X-Admin-Token`.
+Revogar: `POST /api/v1/politica/admin/keys/revoke?api_key=...`.
+
+---
+
+## FAQ
+
+**Q: O modelo erra tossups como o de 2024 SP?**
+A: Sim, mas menos. Nesse caso específico recuperamos de 73.5% → 89.7% acc com MRP state baseline. Outros modelos (Linzer puro, Polymarket pré-eleição) erraram esse caso sem corrigir.
+
+**Q: Qual a diferença vs Polymarket / mercados de previsão?**
+A: Polymarket reflete consenso de apostadores em tempo real. Vila INTEIA é modelo estatístico independente. Vantagem: cobertura de UFs sem mercado líquido (governadores small estados, senado), e priors estáveis quando mercados estão thin.
+
+**Q: Posso usar dados próprios?**
+A: Tier Enterprise. Pipeline aceita CSVs custom no formato `(evento_id, data, contexto, outcome_real, probabilidade_prior, outcome_framing)`. Cohort retreina automaticamente.
+
+**Q: White-label?**
+A: Tier Enterprise. Frontend Next.js é parametrizável via `VILA_API_BASE` env var; basta deploy separado em Vercel/CloudFlare com seu domínio.
+
+**Q: On-prem deploy?**
+A: Tier Enterprise. Stack roda em qualquer infra com Python 3.11+ e Postgres (Supabase opcional). `Dockerfile` + `docker-compose.yml` inclusos.
+
+**Q: O modelo é auditável?**
+A: Sim. Hyperparams em `data/political_best_config.json` (versionado). Year-fold CV é determinístico. Pipeline em `engine/political_cohort.py` ~250 linhas, sem LLM no caminho de predição (apenas PC-CRD + Linzer + MRP analíticos).
+
+**Q: Quanto custa para rodar (infra)?**
+A: Render Starter ($7/mês) + Vercel Hobby (grátis) suficiente até ~10k req/dia. Supabase free tier para snapshots. Total <$10/mês para Pro tier.
+
+**Q: Como atualizar predições?**
+A: `python scripts/predict_2026.py` regenera `data/predictions_2026.json`. Em prod, cron a cada 24h ou quando novos polls chegarem. Render suporta cron jobs nativo.
 
 ---
 
