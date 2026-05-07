@@ -1,0 +1,649 @@
+evento_id,data,contexto,uf,ano,turno,vencedor,partido,incumbente,poll_lead_pp,outcome_real,probabilidade_prior,outcome_framing
+pres2022_2022-10-02_Results_lula,2022-10-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,5.2,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-10-02_Results_bolso,2022-10-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-5.2,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-10-02_Results_lula,2022-10-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,5.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-10-02_Results_bolso,2022-10-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-5.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-10-01_Datafolha_lula,2022-10-01,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,14.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-10-01_Datafolha_bolso,2022-10-01,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-14.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-10-01_IPEC_lula,2022-10-01,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-10-01_IPEC_bolso,2022-10-01,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-30_Abrapel/Ipespe_lula,2022-09-30,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-30_Abrapel/Ipespe_bolso,2022-09-30,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-30_Atlas_lula,2022-09-30,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.1,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-30_Atlas_bolso,2022-09-30,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.1,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-30_CNT/MDA_lula,2022-09-30,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.9,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-30_CNT/MDA_bolso,2022-09-30,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.9,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-29_Datafolha_lula,2022-09-29,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,14.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-29_Datafolha_bolso,2022-09-29,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-14.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-28_Atlas_lula,2022-09-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.4,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-28_Atlas_bolso,2022-09-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.4,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-28_Exame/Ideia_lula,2022-09-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-28_Exame/Ideia_bolso,2022-09-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-27_Genial/Quaest_lula,2022-09-27,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-27_Genial/Quaest_bolso,2022-09-27,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-26_Atlas_lula,2022-09-26,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.3,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-26_Atlas_bolso,2022-09-26,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.3,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-26_Ipec_lula,2022-09-26,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,17.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-26_Ipec_bolso,2022-09-26,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-17.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-25_BTGPactual/FSB_lula,2022-09-25,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-25_BTGPactual/FSB_bolso,2022-09-25,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-23_Abrapel/Ipespe_lula,2022-09-23,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,11.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-23_Abrapel/Ipespe_bolso,2022-09-23,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-11.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-22_Datafolha_lula,2022-09-22,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,14.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-22_Datafolha_bolso,2022-09-22,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-14.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-21_XP/Ipespe_lula,2022-09-21,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,11.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-21_XP/Ipespe_bolso,2022-09-21,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-11.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-20_PoderData_lula,2022-09-20,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-20_PoderData_bolso,2022-09-20,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-20_Genial/Quaest_lula,2022-09-20,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-20_Genial/Quaest_bolso,2022-09-20,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-20_Arko/Atlas_lula,2022-09-20,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.8,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-20_Arko/Atlas_bolso,2022-09-20,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.8,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-18_Ipec_lula,2022-09-18,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,16.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-18_Ipec_bolso,2022-09-18,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-16.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-18_BTG/FSB_lula,2022-09-18,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-18_BTG/FSB_bolso,2022-09-18,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-16_Abrapel/Ipespe_lula,2022-09-16,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-16_Abrapel/Ipespe_bolso,2022-09-16,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-15_Datafolha_lula,2022-09-15,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-15_Datafolha_bolso,2022-09-15,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-13_PoderData_lula,2022-09-13,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,6.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-13_PoderData_bolso,2022-09-13,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-6.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-13_Genial/Quaest_lula,2022-09-13,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-13_Genial/Quaest_bolso,2022-09-13,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-11_Globo/Ipec_lula,2022-09-11,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,15.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-11_Globo/Ipec_bolso,2022-09-11,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-15.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-11_BTG/FSB_lula,2022-09-11,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,6.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-11_BTG/FSB_bolso,2022-09-11,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-6.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-09_Datafolha_lula,2022-09-09,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,11.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-09_Datafolha_bolso,2022-09-09,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-11.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-09_Abrapel/Ipespe_lula,2022-09-09,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-09_Abrapel/Ipespe_bolso,2022-09-09,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-04_BTG/FSB_lula,2022-09-04,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-04_BTG/FSB_bolso,2022-09-04,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-04_Globo/Ipec_lula,2022-09-04,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-04_Globo/Ipec_bolso,2022-09-04,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-04_Genial/Quaest_lula,2022-09-04,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-04_Genial/Quaest_bolso,2022-09-04,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-01_Abrapel/Ipespe_lula,2022-09-01,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-01_Abrapel/Ipespe_bolso,2022-09-01,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-09-01_Datafolha_lula,2022-09-01,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-09-01_Datafolha_bolso,2022-09-01,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-30_PoderData_lula,2022-08-30,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-30_PoderData_bolso,2022-08-30,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-30_ParanáPesquisas_lula,2022-08-30,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,4.2,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-30_ParanáPesquisas_bolso,2022-08-30,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-4.2,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-29_XP/Ipespe_lula,2022-08-29,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-29_XP/Ipespe_bolso,2022-08-29,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-28_BTG/FSB_lula,2022-08-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-28_BTG/FSB_bolso,2022-08-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-28_Ipec_lula,2022-08-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-28_Ipec_bolso,2022-08-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-28_Quaest_lula,2022-08-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-28_Quaest_bolso,2022-08-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-28_CNT/MDA_lula,2022-08-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.2,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-28_CNT/MDA_bolso,2022-08-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.2,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-25_Atlas_lula,2022-08-25,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.4,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-25_Atlas_bolso,2022-08-25,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.4,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-24_Exame/Ideia_lula,2022-08-24,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-24_Exame/Ideia_bolso,2022-08-24,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-23_ParanáPesquisas_lula,2022-08-23,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,4.7,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-23_ParanáPesquisas_bolso,2022-08-23,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-4.7,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-21_BTG/FSB_lula,2022-08-21,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-21_BTG/FSB_bolso,2022-08-21,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-18_Datafolha_lula,2022-08-18,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,15.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-18_Datafolha_bolso,2022-08-18,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-15.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-16_PoderData_lula,2022-08-16,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-16_PoderData_bolso,2022-08-16,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-14_IPEC_lula,2022-08-14,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-14_IPEC_bolso,2022-08-14,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-14_FSBComunicação_lula,2022-08-14,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,11.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-14_FSBComunicação_bolso,2022-08-14,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-11.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-14_Quaest/Genial_lula,2022-08-14,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-14_Quaest/Genial_bolso,2022-08-14,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-07_FSBComunicação_lula,2022-08-07,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,7.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-07_FSBComunicação_bolso,2022-08-07,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-7.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-02_PoderData_lula,2022-08-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-02_PoderData_bolso,2022-08-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-08-01_ParanáPesquisas_lula,2022-08-01,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,5.5,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-08-01_ParanáPesquisas_bolso,2022-08-01,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-5.5,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-31_Quaest/Genial_lula,2022-07-31,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,12.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-31_Quaest/Genial_bolso,2022-07-31,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-12.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-28_Datafolha_lula,2022-07-28,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,18.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-28_Datafolha_bolso,2022-07-28,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-18.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-24_BTG/FSB_lula,2022-07-24,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,13.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-24_BTG/FSB_bolso,2022-07-24,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-13.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-22_XP/Ipespe_lula,2022-07-22,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-22_XP/Ipespe_bolso,2022-07-22,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-20_Exame/Ideia_lula,2022-07-20,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,11.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-20_Exame/Ideia_bolso,2022-07-20,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-11.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-19_PoderData_lula,2022-07-19,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,6.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-19_PoderData_bolso,2022-07-19,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-6.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-10_BTG/FSB_lula,2022-07-10,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,9.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-10_BTG/FSB_bolso,2022-07-10,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-9.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-10_BTG/FSB_lula,2022-07-10,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,10.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-10_BTG/FSB_bolso,2022-07-10,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-10.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-05_PoderData_lula,2022-07-05,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,8.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-05_PoderData_bolso,2022-07-05,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-8.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_lula,2022-07-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,14.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_bolso,2022-07-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-14.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_lula,2022-07-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,14.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_bolso,2022-07-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-14.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_lula,2022-07-02,Lula vencerá presidencial 2022?,BR,2022,1,Luiz Inacio Lula,PT,0,16.0,1,0.55,Lula vencerá presidencial 2022?
+pres2022_2022-07-02_Quaest/Genial_bolso,2022-07-02,Bolsonaro vencerá presidencial 2022?,BR,2022,1,Jair Bolsonaro,PL,1,-16.0,0,0.45,Bolsonaro vencerá presidencial 2022?
+pres2018_2018-10-05_InstitutoVeritáArchived2018-10-07attheWaybackMachine_bolso,2018-10-05,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,22.7,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-05_InstitutoVeritáArchived2018-10-07attheWaybackMachine_haddad,2018-10-05,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-22.7,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-05_CNT/MDA_bolso,2018-10-05,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,12.7,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-05_CNT/MDA_haddad,2018-10-05,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-12.7,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_DataPoder360_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,5.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_DataPoder360_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-5.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_Datafolha_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,14.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_Datafolha_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-14.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_XP/Ipespe_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,14.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_XP/Ipespe_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-14.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_Datafolha_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,13.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_Datafolha_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-13.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_RealTimeBigData_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,10.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_RealTimeBigData_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-10.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-04_ParanáPesquisas/CrusoéArchived2018-10-06attheWaybackMachine_bolso,2018-10-04,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,13.1,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-04_ParanáPesquisas/CrusoéArchived2018-10-06attheWaybackMachine_haddad,2018-10-04,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-13.1,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-02_Ibope_bolso,2018-10-02,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,14.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-02_Ibope_haddad,2018-10-02,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-14.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-10-02_Ibope_bolso,2018-10-02,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,9.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-10-02_Ibope_haddad,2018-10-02,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-9.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-30_Datafolha_bolso,2018-09-30,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,11.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-30_Datafolha_haddad,2018-09-30,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-11.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-30_Ibope_bolso,2018-09-30,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,10.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-30_Ibope_haddad,2018-09-30,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-10.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-30_FSBPesquisa_bolso,2018-09-30,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,7.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-30_FSBPesquisa_haddad,2018-09-30,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-7.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-28_CNT/MDAArchived2018-09-30attheWaybackMachine_bolso,2018-09-28,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,3.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-28_CNT/MDAArchived2018-09-30attheWaybackMachine_haddad,2018-09-28,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-3.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-28_Datafolha_bolso,2018-09-28,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,6.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-28_Datafolha_haddad,2018-09-28,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-6.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-26_XP/Ipespe_bolso,2018-09-26,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,7.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-26_XP/Ipespe_haddad,2018-09-26,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-7.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-25_ParanáPesquisas/Crusoé_bolso,2018-09-25,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,11.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-25_ParanáPesquisas/Crusoé_haddad,2018-09-25,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-11.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-24_Ibope_bolso,2018-09-24,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,6.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-24_Ibope_haddad,2018-09-24,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-6.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-24_IstoÉ/Sensus_bolso,2018-09-24,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,6.1,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-24_IstoÉ/Sensus_haddad,2018-09-24,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-6.1,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-23_FSBPesquisa_bolso,2018-09-23,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,10.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-23_FSBPesquisa_haddad,2018-09-23,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-10.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-23_Ibope_bolso,2018-09-23,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,6.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-23_Ibope_haddad,2018-09-23,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-6.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-20_DataPoder360_bolso,2018-09-20,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,4.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-20_DataPoder360_haddad,2018-09-20,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-4.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-19_Datafolha_bolso,2018-09-19,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,12.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-19_Datafolha_haddad,2018-09-19,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-12.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-19_GenialInvestimentos/BrasilisArchived2018-09-21attheWaybackMachine_bolso,2018-09-19,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,13.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-19_GenialInvestimentos/BrasilisArchived2018-09-21attheWaybackMachine_haddad,2018-09-19,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-13.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-19_XP/Ipespe_bolso,2018-09-19,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,12.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-19_XP/Ipespe_haddad,2018-09-19,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-12.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-18_Ibope_bolso,2018-09-18,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,9.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-18_Ibope_haddad,2018-09-18,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-9.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-16_FSBPesquisa_bolso,2018-09-16,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,17.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-16_FSBPesquisa_haddad,2018-09-16,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-17.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-15_CNT/MDA_bolso,2018-09-15,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,10.6,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-15_CNT/MDA_haddad,2018-09-15,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-10.6,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-14_Datafolha_bolso,2018-09-14,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,13.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-14_Datafolha_haddad,2018-09-14,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-13.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-12_XP/Ipespe_bolso,2018-09-12,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,16.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-12_XP/Ipespe_haddad,2018-09-12,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-16.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-11_ParanáPesquisas/Crusoé_bolso,2018-09-11,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,18.3,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-11_ParanáPesquisas/Crusoé_haddad,2018-09-11,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-18.3,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-10_Datafolha_bolso,2018-09-10,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,15.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-10_Datafolha_haddad,2018-09-10,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-15.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-10_Ibope_bolso,2018-09-10,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,18.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-10_Ibope_haddad,2018-09-10,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-18.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-09_FSBPesquisa_bolso,2018-09-09,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,22.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-09_FSBPesquisa_haddad,2018-09-09,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-22.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-09_RealTimeBigData_bolso,2018-09-09,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,18.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-09_RealTimeBigData_haddad,2018-09-09,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-18.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-05_XP/Ipespe_bolso,2018-09-05,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,15.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-05_XP/Ipespe_haddad,2018-09-05,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-15.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-03_Ibope_bolso,2018-09-03,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,16.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-03_Ibope_haddad,2018-09-03,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-16.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2018_2018-09-02_FSBPesquisa_bolso,2018-09-02,Bolsonaro vencerá presidencial 2018?,BR,2018,1,Jair Bolsonaro,PSL,0,20.0,1,0.55,Bolsonaro vencerá presidencial 2018?
+pres2018_2018-09-02_FSBPesquisa_haddad,2018-09-02,Haddad vencerá presidencial 2018?,BR,2018,1,Fernando Haddad,PT,0,-20.0,0,0.45,Haddad vencerá presidencial 2018?
+pres2010_2010-10-03_2010election_w,2010-10-03,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,14.3,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-10-03_2010election_l,2010-10-03,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-14.3,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-10-02_VoxPopuli_w,2010-10-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,21.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-10-02_VoxPopuli_l,2010-10-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-21.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-10-02_Ibope_w,2010-10-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,18.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-10-02_Ibope_l,2010-10-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-18.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-10-02_Datafolha_w,2010-10-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,18.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-10-02_Datafolha_l,2010-10-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-18.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-10-01_VoxPopuli_w,2010-10-01,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,21.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-10-01_VoxPopuli_l,2010-10-01,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-21.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-30_VoxPopuli_w,2010-09-30,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,23.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-30_VoxPopuli_l,2010-09-30,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-23.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-29_VoxPopuli_w,2010-09-29,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,23.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-29_VoxPopuli_l,2010-09-29,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-23.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-29_Datafolha_w,2010-09-29,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,19.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-29_Datafolha_l,2010-09-29,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-19.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-28_VoxPopuli_w,2010-09-28,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,24.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-28_VoxPopuli_l,2010-09-28,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-24.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-27_Datafolha_w,2010-09-27,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,18.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-27_Datafolha_l,2010-09-27,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-18.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-27_VoxPopuli_w,2010-09-27,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,25.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-27_VoxPopuli_l,2010-09-27,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-25.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-28_CNTSensus_w,2010-09-28,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,21.9,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-28_CNTSensus_l,2010-09-28,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-21.9,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-26_VoxPopuli_w,2010-09-26,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,25.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-26_VoxPopuli_l,2010-09-26,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-25.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-26_Ibope_w,2010-09-26,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,23.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-26_Ibope_l,2010-09-26,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-23.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-25_VoxPopuli_w,2010-09-25,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,27.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-25_VoxPopuli_l,2010-09-25,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-27.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-24_VoxPopuli_w,2010-09-24,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,26.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-24_VoxPopuli_l,2010-09-24,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-26.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-23_VoxPopuli_w,2010-09-23,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,27.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-23_VoxPopuli_l,2010-09-23,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-27.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-22_VoxPopuli_w,2010-09-22,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,27.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-22_VoxPopuli_l,2010-09-22,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-27.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-23_Ibope_w,2010-09-23,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,22.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-23_Ibope_l,2010-09-23,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-22.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-22_Datafolha_w,2010-09-22,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,21.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-22_Datafolha_l,2010-09-22,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-21.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-21_VoxPopuli_w,2010-09-21,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,27.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-21_VoxPopuli_l,2010-09-21,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-27.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-20_VoxPopuli_w,2010-09-20,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,30.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-20_VoxPopuli_l,2010-09-20,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-30.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-19_VoxPopuli_w,2010-09-19,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,29.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-19_VoxPopuli_l,2010-09-19,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-29.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-18_VoxPopuli_w,2010-09-18,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,27.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-18_VoxPopuli_l,2010-09-18,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-27.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-17_VoxPopuli_w,2010-09-17,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,28.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-17_VoxPopuli_l,2010-09-17,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-28.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-16_VoxPopuli_w,2010-09-16,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,28.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-16_VoxPopuli_l,2010-09-16,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-28.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-15_VoxPopuli_w,2010-09-15,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,30.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-15_VoxPopuli_l,2010-09-15,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-30.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-17_Ibope_w,2010-09-17,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,26.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-17_Ibope_l,2010-09-17,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-26.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-14_VoxPopuli_w,2010-09-14,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,31.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-14_VoxPopuli_l,2010-09-14,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-31.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-15_Datafolha_w,2010-09-15,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,24.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-15_Datafolha_l,2010-09-15,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-24.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-13_VoxPopuli_w,2010-09-13,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,32.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-13_VoxPopuli_l,2010-09-13,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-32.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-12_VoxPopuli_w,2010-09-12,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,30.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-12_VoxPopuli_l,2010-09-12,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-30.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-12_CNTSensus_w,2010-09-12,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,24.1,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-12_CNTSensus_l,2010-09-12,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-24.1,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-10_VoxPopuli_w,2010-09-10,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,31.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-10_VoxPopuli_l,2010-09-10,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-31.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-09_VoxPopuli_w,2010-09-09,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,32.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-09_VoxPopuli_l,2010-09-09,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-32.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-09_Datafolha_w,2010-09-09,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,23.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-09_Datafolha_l,2010-09-09,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-23.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-08_VoxPopuli_w,2010-09-08,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,33.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-08_VoxPopuli_l,2010-09-08,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-33.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-07_VoxPopuli_w,2010-09-07,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,35.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-07_VoxPopuli_l,2010-09-07,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-35.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-06_VoxPopuli_w,2010-09-06,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,33.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-06_VoxPopuli_l,2010-09-06,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-33.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-05_VoxPopuli_w,2010-09-05,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,29.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-05_VoxPopuli_l,2010-09-05,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-29.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-04_VoxPopuli_w,2010-09-04,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,29.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-04_VoxPopuli_l,2010-09-04,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-29.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-03_VoxPopuli_w,2010-09-03,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,28.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-03_VoxPopuli_l,2010-09-03,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-28.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-03_Datafolha_w,2010-09-03,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,22.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-03_Datafolha_l,2010-09-03,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-22.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-02_VoxPopuli_w,2010-09-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,26.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-02_VoxPopuli_l,2010-09-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-26.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-01_VoxPopuli_w,2010-09-01,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,26.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-01_VoxPopuli_l,2010-09-01,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-26.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-09-02_Ibope_w,2010-09-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,24.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-09-02_Ibope_l,2010-09-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-24.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-26_Ibope_w,2010-08-26,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,24.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-26_Ibope_l,2010-08-26,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-24.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-24_Datafolha_w,2010-08-24,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,20.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-24_Datafolha_l,2010-08-24,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-20.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-22_CNTSensus_w,2010-08-22,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,17.9,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-22_CNTSensus_l,2010-08-22,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-17.9,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-20_Datafolha_w,2010-08-20,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,17.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-20_Datafolha_l,2010-08-20,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-17.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-15_Ibope_w,2010-08-15,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,11.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-15_Ibope_l,2010-08-15,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-11.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-12_DatafolhaArchived201_w,2010-08-12,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,8.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-12_DatafolhaArchived201_l,2010-08-12,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-8.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-10_VoxPopuli_w,2010-08-10,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,16.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-10_VoxPopuli_l,2010-08-10,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-16.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-05_Ibope_w,2010-08-05,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,5.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-05_Ibope_l,2010-08-05,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-5.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-02_CNTSensus_w,2010-08-02,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,10.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-02_CNTSensus_l,2010-08-02,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-10.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-07-29_Ibope_w,2010-07-29,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,5.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-07-29_Ibope_l,2010-07-29,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-5.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-07-23_Datafolha_w,2010-07-23,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-1.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-07-23_Datafolha_l,2010-07-23,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,1.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-08-20_VoxPopuli_w,2010-08-20,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,8.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-08-20_VoxPopuli_l,2010-08-20,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-8.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-07-01_Datafolha_w,2010-07-01,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-1.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-07-01_Datafolha_l,2010-07-01,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,1.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-06-30_Ibope_w,2010-06-30,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,0.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-06-30_Ibope_l,2010-06-30,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,0.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-06-26_VoxPopuli_w,2010-06-26,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,5.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-06-26_VoxPopuli_l,2010-06-26,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-5.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-06-21_CNIIbopeArchived2012_w,2010-06-21,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,5.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-06-21_CNIIbopeArchived2012_l,2010-06-21,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-5.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-06-03_Ibope_w,2010-06-03,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,0.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-06-03_Ibope_l,2010-06-03,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,0.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-05-21_Datafolha_w,2010-05-21,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,0.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-05-21_Datafolha_l,2010-05-21,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,0.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-05-14_CNTSensus_w,2010-05-14,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,2.5,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-05-14_CNTSensus_l,2010-05-14,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-2.5,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-05-13_VoxPopuli_w,2010-05-13,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,3.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-05-13_VoxPopuli_l,2010-05-13,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,-3.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-04-16_Datafolha_w,2010-04-16,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-10.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-04-16_Datafolha_l,2010-04-16,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,10.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-04-16_Ibope_w,2010-04-16,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-7.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-04-16_Ibope_l,2010-04-16,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,7.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-04-09_CNTSensus_w,2010-04-09,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-0.3,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-04-09_CNTSensus_l,2010-04-09,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,0.3,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-03-31_VoxPopuliArchived201_w,2010-03-31,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-3.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-03-31_VoxPopuliArchived201_l,2010-03-31,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,3.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-03-26_Datafolha_w,2010-03-26,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-9.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-03-26_Datafolha_l,2010-03-26,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,9.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-03-10_Ibope_w,2010-03-10,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-5.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-03-10_Ibope_l,2010-03-10,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,5.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-02-25_Datafolha_w,2010-02-25,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-4.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-02-25_Datafolha_l,2010-02-25,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,4.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-02-09_Ibope_w,2010-02-09,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-11.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-02-09_Ibope_l,2010-02-09,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,11.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-01-29_CNTSensus_w,2010-01-29,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-5.4,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-01-29_CNTSensus_l,2010-01-29,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,5.4,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2010-01-17_VoxPopuli_w,2010-01-17,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-7.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2010-01-17_VoxPopuli_l,2010-01-17,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,7.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2009-12-18_Datafolha_w,2009-12-18,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-14.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2009-12-18_Datafolha_l,2009-12-18,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,14.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2009-11-30_Ibope_w,2009-11-30,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-21.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2009-11-30_Ibope_l,2009-11-30,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,21.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2009-11-23_CNTSensus_w,2009-11-23,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-10.1,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2009-11-23_CNTSensus_l,2009-11-23,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,10.1,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2009-11-11_VoxPopuli_w,2009-11-11,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-17.0,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2009-11-11_VoxPopuli_l,2009-11-11,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,17.0,0,0.45,Serra vencerá presidencial 2010?
+pres2010_2009-09-08_CNTSensus_w,2009-09-08,Dilma Rousseff vencerá presidencial 2010?,BR,2010,1,Dilma Rousseff,PT,0,-20.5,1,0.55,Dilma Rousseff vencerá presidencial 2010?
+pres2010_2009-09-08_CNTSensus_l,2009-09-08,Serra vencerá presidencial 2010?,BR,2010,1,Serra,PSDB,0,20.5,0,0.45,Serra vencerá presidencial 2010?
+pressp_mayor_2024_2024-10-06_Results_w,2024-10-06,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.41,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-06_Results_l,2024-10-06,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-0.41,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-06_Results_w,2024-10-06,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.37,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-06_Results_l,2024-10-06,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-0.37,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-05_Quaest_w,2024-10-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-05_Quaest_l,2024-10-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-05_Datafolha_w,2024-10-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-05_Datafolha_l,2024-10-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-04_AtlasIntel_w,2024-10-04,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-11.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-04_AtlasIntel_l,2024-10-04,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,11.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-03_RealTimeBigData_w,2024-10-03,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-03_RealTimeBigData_l,2024-10-03,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-03_Datafolha_w,2024-10-03,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-03_Datafolha_l,2024-10-03,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-02_InstitutoVerit_w,2024-10-02,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-5.8,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-02_InstitutoVerit_l,2024-10-02,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,5.8,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_RealTimeBigData_w,2024-10-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_RealTimeBigData_l,2024-10-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_Futura100Cidades_w,2024-10-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,6.8,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_Futura100Cidades_l,2024-10-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-6.8,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_VoxBrasil_w,2024-10-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_VoxBrasil_l,2024-10-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_Ideia_w,2024-10-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-10-01_Ideia_l,2024-10-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-30_ParanPesquisas_w,2024-09-30,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-30_ParanPesquisas_l,2024-09-30,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-29_Quaest_w,2024-09-29,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-29_Quaest_l,2024-09-29,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-29_AtlasIntel_w,2024-09-29,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-6.5,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-29_AtlasIntel_l,2024-09-29,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,6.5,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-28_RealTimeBigData_w,2024-09-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-28_RealTimeBigData_l,2024-09-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_Datafolha_w,2024-09-26,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_Datafolha_l,2024-09-26,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_ParanPesquisas_w,2024-09-26,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_ParanPesquisas_l,2024-09-26,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_InstitutoVerit_w,2024-09-26,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-3.2,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-26_InstitutoVerit_l,2024-09-26,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,3.2,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-23_Quaest_w,2024-09-23,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-23_Quaest_l,2024-09-23,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-22_AtlasIntel_w,2024-09-22,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-7.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-22_AtlasIntel_l,2024-09-22,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,7.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-21_RealTimeBigData_w,2024-09-21,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-21_RealTimeBigData_l,2024-09-21,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-19_ParanPesquisas_w,2024-09-19,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-19_ParanPesquisas_l,2024-09-19,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-18_Futura100Cidades_w,2024-09-18,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.5,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-18_Futura100Cidades_l,2024-09-18,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.5,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-19_Datafolha_w,2024-09-19,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-19_Datafolha_l,2024-09-19,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-17_Quaest_w,2024-09-17,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-17_Quaest_l,2024-09-17,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-16_Vox_w,2024-09-16,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.7,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-16_Vox_l,2024-09-16,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.7,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-15_InstitutoVerit_w,2024-09-15,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-7.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-15_InstitutoVerit_l,2024-09-15,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,7.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-14_RealTimeBigData_w,2024-09-14,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-14_RealTimeBigData_l,2024-09-14,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-12_Datafolha_w,2024-09-12,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-12_Datafolha_l,2024-09-12,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-12_ParanPesquisas_w,2024-09-12,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-12_ParanPesquisas_l,2024-09-12,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-0.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-11_Futura100Cidades_w,2024-09-11,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-11_Futura100Cidades_l,2024-09-11,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-10_Quaest_w,2024-09-10,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-10_Quaest_l,2024-09-10,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-10_AtlasIntel_w,2024-09-10,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-7.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-10_AtlasIntel_l,2024-09-10,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,7.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-05_Datafolha_w,2024-09-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-05_Datafolha_l,2024-09-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-05_ParanPesquisas_w,2024-09-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-0.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-05_ParanPesquisas_l,2024-09-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,0.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-04_Futura100Cidades_w,2024-09-04,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.3,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-04_Futura100Cidades_l,2024-09-04,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.3,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-02_RealTimeBigData_w,2024-09-02,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-09-02_RealTimeBigData_l,2024-09-02,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,0.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-27_Quaest_w,2024-08-27,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-27_Quaest_l,2024-08-27,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-26_Gerp_w,2024-08-26,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-26_Gerp_l,2024-08-26,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-26_InstitutoVerit_w,2024-08-26,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-7.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-26_InstitutoVerit_l,2024-08-26,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,7.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-24_Futura100Cidades_w,2024-08-24,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-5.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-24_Futura100Cidades_l,2024-08-24,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,5.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-22_FESPSP_w,2024-08-22,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.5,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-22_FESPSP_l,2024-08-22,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.5,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-22_ParanPesquisas_w,2024-08-22,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.2,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-22_ParanPesquisas_l,2024-08-22,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.2,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-21_Datafolha_w,2024-08-21,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-4.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-21_Datafolha_l,2024-08-21,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,4.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-20_AtlasIntel_w,2024-08-20,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-6.7,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-20_AtlasIntel_l,2024-08-20,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,6.7,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-08_Datafolha_w,2024-08-08,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-08_Datafolha_l,2024-08-08,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-07_ParanPesquisas_w,2024-08-07,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-07_ParanPesquisas_l,2024-08-07,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-07_AtlasIntel_w,2024-08-07,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-7.8,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-07_AtlasIntel_l,2024-08-07,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,7.8,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_w,2024-08-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,6.8,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_l,2024-08-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-6.8,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_w,2024-08-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,7.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_l,2024-08-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-7.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_w,2024-08-05,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,6.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-08-05_Futura100Cidades_l,2024-08-05,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-6.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_w,2024-07-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_l,2024-07-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_w,2024-07-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_l,2024-07-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_w,2024-07-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_l,2024-07-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_w,2024-07-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_l,2024-07-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_w,2024-07-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,9.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-28_Quaest_l,2024-07-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-9.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-18_FESPSP_w,2024-07-18,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-4.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-18_FESPSP_l,2024-07-18,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,4.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_w,2024-07-17,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.2,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_l,2024-07-17,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.2,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_w,2024-07-17,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_l,2024-07-17,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_w,2024-07-17,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-17_ParanPesquisas_l,2024-07-17,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-04_Datafolha_w,2024-07-04,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-04_Datafolha_l,2024-07-04,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-04_Datafolha_w,2024-07-04,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-07-04_Datafolha_l,2024-07-04,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-28_RealTimeBigData_w,2024-06-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-28_RealTimeBigData_l,2024-06-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-28_RealTimeBigData_w,2024-06-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-28_RealTimeBigData_l,2024-06-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,0.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-3.8,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,3.8,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-0.2,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,0.2,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.5,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.5,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Futura100Cidades_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-0.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_w,2024-06-25,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,5.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-25_Quaest_l,2024-06-25,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-5.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-24_ParanPesquisas_w,2024-06-24,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.6,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-24_ParanPesquisas_l,2024-06-24,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.6,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-24_ParanPesquisas_w,2024-06-24,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-24_ParanPesquisas_l,2024-06-24,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-19_InstitutoVerit_w,2024-06-19,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-12.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-19_InstitutoVerit_l,2024-06-19,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,12.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-17_InstitutoGerp_w,2024-06-17,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-17_InstitutoGerp_l,2024-06-17,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-11_AtlasCNN_w,2024-06-11,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-12.3,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-11_AtlasCNN_l,2024-06-11,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,12.3,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-11_AtlasCNN_w,2024-06-11,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-5.1,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-06-11_AtlasCNN_l,2024-06-11,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,5.1,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_Datafolha_w,2024-05-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_Datafolha_l,2024-05-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_Datafolha_w,2024-05-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,2.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_Datafolha_l,2024-05-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-2.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_w,2024-05-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_l,2024-05-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_w,2024-05-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,4.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_l,2024-05-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-4.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_w,2024-05-28,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,6.2,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-28_ParanPesquisas_l,2024-05-28,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-6.2,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-27_AtlasCNN_w,2024-05-27,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-16.7,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-27_AtlasCNN_l,2024-05-27,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,16.7,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-27_AtlasCNN_w,2024-05-27,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-4.6,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-27_AtlasCNN_l,2024-05-27,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,4.6,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-07_Futura100Cidades_w,2024-05-07,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-07_Futura100Cidades_l,2024-05-07,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-07_Futura100Cidades_w,2024-05-07,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-07_Futura100Cidades_l,2024-05-07,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-0.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-01_ParanPesquisas_w,2024-05-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.6,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-01_ParanPesquisas_l,2024-05-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.6,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-01_ParanPesquisas_w,2024-05-01,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,5.4,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-05-01_ParanPesquisas_l,2024-05-01,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-5.4,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-22_AtlasIntel_w,2024-04-22,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-22_AtlasIntel_l,2024-04-22,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_w,2024-04-13,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,9.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_l,2024-04-13,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-9.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_w,2024-04-13,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,10.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_l,2024-04-13,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-10.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_w,2024-04-13,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,9.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-04-13_InstitutoBadra_l,2024-04-13,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-9.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-18_ParanPesquisas_w,2024-03-18,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.9,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-18_ParanPesquisas_l,2024-03-18,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.9,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-18_ParanPesquisas_w,2024-03-18,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,3.7,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-18_ParanPesquisas_l,2024-03-18,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-3.7,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_w,2024-03-08,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_l,2024-03-08,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_w,2024-03-08,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_l,2024-03-08,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_w,2024-03-08,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,0.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-08_Datafolha_l,2024-03-08,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,0.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-02_RealTimeBigData_w,2024-03-02,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-5.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-03-02_RealTimeBigData_l,2024-03-02,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,5.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-02-19_ParanPesquisas_w,2024-02-19,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,-1.0,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-02-19_ParanPesquisas_l,2024-02-19,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-02-19_ParanPesquisas_w,2024-02-19,Ricardo Nunes vencerá sp_mayor_2024?,SP,2024,1,Ricardo Nunes,MDB,0,1.3,1,0.55,Ricardo Nunes vencerá sp_mayor_2024?
+pressp_mayor_2024_2024-02-19_ParanPesquisas_l,2024-02-19,Boulos vencerá sp_mayor_2024?,SP,2024,1,Boulos,PSOL,0,-1.3,0,0.45,Boulos vencerá sp_mayor_2024?
+pressp_mayor_2020_2020-11-15_2020Election_w,2020-11-15,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,22.35,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-15_2020Election_l,2020-11-15,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-22.35,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-15_Ibopeexitpoll_w,2020-11-15,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,22.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-15_Ibopeexitpoll_l,2020-11-15,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-22.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-14_Ibope_w,2020-11-14,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,22.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-14_Ibope_l,2020-11-14,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-22.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-14_Datafolha_w,2020-11-14,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,22.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-14_Datafolha_l,2020-11-14,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-22.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-13_RealTimeBigDataCNNBr_w,2020-11-13,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,18.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-13_RealTimeBigDataCNNBr_l,2020-11-13,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-18.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-12_ParanPesquisas_w,2020-11-12,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,17.9,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-12_ParanPesquisas_l,2020-11-12,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-17.9,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-10_Datafolha_w,2020-11-10,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,18.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-10_Datafolha_l,2020-11-10,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-18.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-09_Ibope_w,2020-11-09,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,20.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-09_Ibope_l,2020-11-09,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-20.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-04_Datafolha_w,2020-11-04,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,12.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-04_Datafolha_l,2020-11-04,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-12.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-03_XPIpespe_w,2020-11-03,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,7.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-03_XPIpespe_l,2020-11-03,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-7.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-01_ParanPesquisas_w,2020-11-01,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,6.1,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-11-01_ParanPesquisas_l,2020-11-01,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-6.1,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-30_Ibope_w,2020-10-30,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,6.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-30_Ibope_l,2020-10-30,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-6.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-27_XPIpespe_w,2020-10-27,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,5.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-27_XPIpespe_l,2020-10-27,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-5.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-21_Datafolha_w,2020-10-21,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,3.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-21_Datafolha_l,2020-10-21,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-3.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-17_RealTimeBigData_w,2020-10-17,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,-1.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-17_RealTimeBigData_l,2020-10-17,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,1.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-15_Ibope_w,2020-10-15,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,-3.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-15_Ibope_l,2020-10-15,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,3.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-06_Datafolha_w,2020-10-06,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,-6.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-06_Datafolha_l,2020-10-06,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,6.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-01_Ibope_w,2020-10-01,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,-5.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-10-01_Ibope_l,2020-10-01,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,5.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-09-22_ExameIdeia_w,2020-09-22,Bruno Covas vencerá sp_mayor_2020?,SP,2020,1,Bruno Covas,PSDB,0,1.0,1,0.55,Bruno Covas vencerá sp_mayor_2020?
+pressp_mayor_2020_2020-09-22_ExameIdeia_l,2020-09-22,Boulos vencerá sp_mayor_2020?,SP,2020,1,Boulos,PSOL,0,-1.0,0,0.45,Boulos vencerá sp_mayor_2020?
+pressp_mayor_2016_2016-10-02_2016election_w,2016-10-02,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,39.65,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-10-02_2016election_l,2016-10-02,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-39.65,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-10-01_Ibope_w,2016-10-01,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,10.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-10-01_Ibope_l,2016-10-01,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-10.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-10-01_Datafolha_w,2016-10-01,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,24.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-10-01_Datafolha_l,2016-10-01,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-24.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-28_Ibope_w,2016-09-28,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,6.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-28_Ibope_l,2016-09-28,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-6.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-26_Datafolha_w,2016-09-26,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,8.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-26_Datafolha_l,2016-09-26,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-8.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-26_Ibope_w,2016-09-26,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,4.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-26_Ibope_l,2016-09-26,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-4.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-21_Datafolha_w,2016-09-21,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,3.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-21_Datafolha_l,2016-09-21,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,-3.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-20_ParanPesquisas_w,2016-09-20,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-6.5,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-20_ParanPesquisas_l,2016-09-20,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,6.5,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-13_Ibope_w,2016-09-13,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-13.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-13_Ibope_l,2016-09-13,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,13.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-08_Datafolha_w,2016-09-08,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-10.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-08_Datafolha_l,2016-09-08,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,10.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-01_ParanPesquisas_w,2016-09-01,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-18.4,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-09-01_ParanPesquisas_l,2016-09-01,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,18.4,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-08-24_Datafolha_w,2016-08-24,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-26.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-08-24_Datafolha_l,2016-08-24,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,26.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-08-22_Ibope_w,2016-08-22,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-24.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-08-22_Ibope_l,2016-08-22,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,24.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-07-27_Ibope_w,2016-07-27,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-22.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-07-27_Ibope_l,2016-07-27,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,22.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-07-13_Datafolha_w,2016-07-13,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-19.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-07-13_Datafolha_l,2016-07-13,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,19.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-06-19_Datafolha_w,2016-06-19,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-20.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2016-06-19_Datafolha_l,2016-06-19,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,20.0,0,0.45,Haddad vencerá sp_mayor_2016?
+pressp_mayor_2016_2015-10-29_Datafolha_w,2015-10-29,Joao Doria vencerá sp_mayor_2016?,SP,2016,1,Joao Doria,PSDB,0,-31.0,1,0.55,Joao Doria vencerá sp_mayor_2016?
+pressp_mayor_2016_2015-10-29_Datafolha_l,2015-10-29,Haddad vencerá sp_mayor_2016?,SP,2016,1,Haddad,PT,0,31.0,0,0.45,Haddad vencerá sp_mayor_2016?

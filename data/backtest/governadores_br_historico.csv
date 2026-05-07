@@ -1,0 +1,109 @@
+evento_id,data,contexto,uf,ano,turno,vencedor,partido,incumbente,poll_lead_pp,outcome_real,probabilidade_prior,outcome_framing
+g2018_AC,2018-09-04,Cameli vencerá Governo do AC?,AC,2018,1,Gladson Cameli,PP,0,12,1,0.65,Cameli vencerá Governo do AC?
+g2018_AL,2018-09-04,Renan Filho será reeleito governador de AL?,AL,2018,1,Renan Filho,MDB,1,22,1,0.85,Renan Filho será reeleito governador de AL?
+g2018_AM,2018-09-04,Wilson Lima vencerá AM no 2º turno?,AM,2018,2,Wilson Lima,PSC,0,4,1,0.55,Wilson Lima vencerá AM no 2º turno?
+g2018_AP,2018-09-04,Waldez Góes vencerá governador AP?,AP,2018,1,Waldez Goes,PDT,0,10,1,0.60,Waldez Góes vencerá governador AP?
+g2018_BA,2018-09-04,Rui Costa será reeleito BA?,BA,2018,1,Rui Costa,PT,1,18,1,0.85,Rui Costa será reeleito BA?
+g2018_CE,2018-09-04,Camilo será reeleito CE?,CE,2018,1,Camilo Santana,PT,1,28,1,0.92,Camilo será reeleito CE?
+g2018_DF,2018-09-04,Ibaneis vencerá DF?,DF,2018,2,Ibaneis Rocha,MDB,0,3,1,0.55,Ibaneis vencerá DF?
+g2018_ES,2018-09-04,Casagrande vencerá ES?,ES,2018,1,Renato Casagrande,PSB,0,15,1,0.70,Casagrande vencerá ES?
+g2018_GO,2018-09-04,Caiado vencerá GO?,GO,2018,2,Ronaldo Caiado,DEM,0,9,1,0.65,Caiado vencerá GO?
+g2018_MA,2018-09-04,Flávio Dino será reeleito MA?,MA,2018,1,Flavio Dino,PCdoB,1,30,1,0.92,Flávio Dino será reeleito MA?
+g2018_MG,2018-09-04,Zema vencerá MG?,MG,2018,2,Romeu Zema,NOVO,0,2,1,0.50,Zema vencerá MG?
+g2018_MS,2018-09-04,Azambuja será reeleito MS?,MS,2018,2,Reinaldo Azambuja,PSDB,1,5,1,0.60,Azambuja será reeleito MS?
+g2018_MT,2018-09-04,Mauro Mendes vencerá MT?,MT,2018,2,Mauro Mendes,DEM,0,7,1,0.62,Mauro Mendes vencerá MT?
+g2018_PA,2018-09-04,Helder vencerá PA?,PA,2018,1,Helder Barbalho,MDB,0,16,1,0.70,Helder vencerá PA?
+g2018_PB,2018-09-04,João Azevedo vencerá PB?,PB,2018,1,Joao Azevedo,PSB,0,11,1,0.65,João Azevedo vencerá PB?
+g2018_PE,2018-09-04,Paulo Câmara será reeleito PE?,PE,2018,2,Paulo Camara,PSB,1,4,1,0.60,Paulo Câmara será reeleito PE?
+g2018_PI,2018-09-04,Wellington Dias será reeleito PI?,PI,2018,1,Wellington Dias,PT,1,19,1,0.78,Wellington Dias será reeleito PI?
+g2018_PR,2018-09-04,Ratinho Jr vencerá PR?,PR,2018,1,Ratinho Junior,PSD,0,25,1,0.85,Ratinho Jr vencerá PR?
+g2018_RJ,2018-09-04,Witzel vencerá RJ?,RJ,2018,2,Wilson Witzel,PSC,0,8,1,0.60,Witzel vencerá RJ?
+g2018_RN,2018-09-04,Fátima Bezerra vencerá RN?,RN,2018,2,Fatima Bezerra,PT,0,3,1,0.55,Fátima Bezerra vencerá RN?
+g2018_RO,2018-09-04,Marcos Rocha vencerá RO?,RO,2018,2,Marcos Rocha,PSL,0,2,1,0.50,Marcos Rocha vencerá RO?
+g2018_RR,2018-09-04,Denarium vencerá RR?,RR,2018,2,Antonio Denarium,PSL,0,3,1,0.55,Denarium vencerá RR?
+g2018_RS,2018-09-04,Eduardo Leite vencerá RS?,RS,2018,2,Eduardo Leite,PSDB,0,6,1,0.60,Eduardo Leite vencerá RS?
+g2018_SC,2018-09-04,Carlos Moisés vencerá SC?,SC,2018,2,Carlos Moises,PSL,0,4,1,0.55,Carlos Moisés vencerá SC?
+g2018_SE,2018-09-04,Belivaldo vencerá SE?,SE,2018,1,Belivaldo Chagas,PSD,0,11,1,0.65,Belivaldo vencerá SE?
+g2018_SP,2018-09-04,Doria vencerá SP?,SP,2018,2,Joao Doria,PSDB,0,3,1,0.55,Doria vencerá SP?
+g2018_TO,2018-09-04,Mauro Carlesse será reeleito TO?,TO,2018,2,Mauro Carlesse,PHS,1,5,1,0.60,Mauro Carlesse será reeleito TO?
+gloss_2018_AC,2018-09-04,Bittar vencerá governo AC?,AC,2018,1,Marcio Bittar,UNIAO,0,-12,0,0.35,Bittar vencerá governo AC?
+gloss_2018_AL,2018-09-04,Quintella derrotará Renan Filho AL?,AL,2018,1,Maurício Quintella,PR,0,-22,0,0.15,Quintella derrotará Renan Filho AL?
+gloss_2018_AM,2018-09-04,Amazonino será reeleito AM?,AM,2018,2,Amazonino Mendes,PDT,1,-4,0,0.45,Amazonino será reeleito AM?
+gloss_2018_AP,2018-09-04,Alcolumbre vencerá AP?,AP,2018,1,Davi Alcolumbre,DEM,0,-10,0,0.40,Alcolumbre vencerá AP?
+gloss_2018_BA,2018-09-04,Zé Ronaldo derrotará Rui Costa BA?,BA,2018,1,Zé Ronaldo,DEM,0,-18,0,0.15,Zé Ronaldo derrotará Rui Costa BA?
+gloss_2018_CE,2018-09-04,Theophilo vencerá CE?,CE,2018,1,General Theophilo,PSDB,0,-28,0,0.08,Theophilo vencerá CE?
+gloss_2018_DF,2018-09-04,Rollemberg será reeleito DF?,DF,2018,2,Rodrigo Rollemberg,PSB,1,-3,0,0.45,Rollemberg será reeleito DF?
+gloss_2018_ES,2018-09-04,Manato vencerá ES?,ES,2018,1,Carlos Manato,PSL,0,-15,0,0.30,Manato vencerá ES?
+gloss_2018_GO,2018-09-04,Vilela vencerá GO?,GO,2018,2,Daniel Vilela,MDB,0,-9,0,0.35,Vilela vencerá GO?
+gloss_2018_MA,2018-09-04,Rocha derrotará Flávio Dino MA?,MA,2018,1,Roberto Rocha,PSDB,0,-30,0,0.08,Rocha derrotará Flávio Dino MA?
+gloss_2018_MG,2018-09-04,Anastasia vencerá MG?,MG,2018,2,Antonio Anastasia,PSDB,0,-2,0,0.50,Anastasia vencerá MG?
+gloss_2018_MS,2018-09-04,Mochi vencerá MS?,MS,2018,2,Junior Mochi,MDB,0,-5,0,0.40,Mochi vencerá MS?
+gloss_2018_MT,2018-09-04,Fagundes vencerá MT?,MT,2018,2,Wellington Fagundes,PR,0,-7,0,0.38,Fagundes vencerá MT?
+gloss_2018_PA,2018-09-04,Miranda vencerá PA?,PA,2018,1,Marcio Miranda,DEM,0,-16,0,0.30,Miranda vencerá PA?
+gloss_2018_PB,2018-09-04,Cartaxo vencerá PB?,PB,2018,1,Lucélio Cartaxo,PV,0,-11,0,0.35,Cartaxo vencerá PB?
+gloss_2018_PE,2018-09-04,Armando vencerá PE?,PE,2018,2,Armando Monteiro,PTB,0,-4,0,0.40,Armando vencerá PE?
+gloss_2018_PI,2018-09-04,Luciano vencerá PI?,PI,2018,1,Luciano Nunes,PSDB,0,-19,0,0.22,Luciano vencerá PI?
+gloss_2018_PR,2018-09-04,Cida será reeleita PR?,PR,2018,1,Cida Borghetti,PROGRES,1,-25,0,0.15,Cida será reeleita PR?
+gloss_2018_RJ,2018-09-04,Paes vencerá RJ?,RJ,2018,2,Eduardo Paes,DEM,0,-8,0,0.40,Paes vencerá RJ?
+gloss_2018_RN,2018-09-04,Carlos Eduardo vencerá RN?,RN,2018,2,Carlos Eduardo Alves,PDT,0,-3,0,0.45,Carlos Eduardo vencerá RN?
+gloss_2018_RO,2018-09-04,Expedito vencerá RO?,RO,2018,2,Expedito Junior,PSDB,0,-2,0,0.50,Expedito vencerá RO?
+gloss_2018_RR,2018-09-04,Anchieta vencerá RR?,RR,2018,2,Anchieta Junior,PSDB,0,-3,0,0.45,Anchieta vencerá RR?
+gloss_2018_RS,2018-09-04,Sartori será reeleito RS?,RS,2018,2,Jose Ivo Sartori,MDB,1,-6,0,0.40,Sartori será reeleito RS?
+gloss_2018_SC,2018-09-04,Merisio vencerá SC?,SC,2018,2,Gelson Merisio,PSD,0,-4,0,0.45,Merisio vencerá SC?
+gloss_2018_SE,2018-09-04,Eduardo Amorim vencerá SE?,SE,2018,1,Eduardo Amorim,PSC,0,-11,0,0.35,Eduardo Amorim vencerá SE?
+gloss_2018_SP,2018-09-04,França vencerá SP?,SP,2018,2,Marcio Franca,PSB,1,-3,0,0.45,França vencerá SP?
+gloss_2018_TO,2018-09-04,Vitor Hugo vencerá TO?,TO,2018,2,Mauro Vitor Hugo,PR,0,-5,0,0.40,Vitor Hugo vencerá TO?
+g2022_AC,2022-09-04,Cameli será reeleito AC?,AC,2022,1,Gladson Cameli,PP,1,30,1,0.92,Cameli será reeleito AC?
+g2022_AL,2022-09-04,Paulo Dantas vencerá AL?,AL,2022,1,Paulo Dantas,MDB,1,8,1,0.62,Paulo Dantas vencerá AL?
+g2022_AM,2022-09-04,Wilson Lima será reeleito AM?,AM,2022,2,Wilson Lima,UNIAO,1,5,1,0.60,Wilson Lima será reeleito AM?
+g2022_AP,2022-09-04,Clécio vencerá AP?,AP,2022,2,Clecio Luis,SOLID,0,3,1,0.55,Clécio vencerá AP?
+g2022_BA,2022-09-04,Jerônimo vencerá BA?,BA,2022,2,Jeronimo Rodrigues,PT,0,9,1,0.65,Jerônimo vencerá BA?
+g2022_CE,2022-09-04,Elmano vencerá CE?,CE,2022,2,Elmano de Freitas,PT,0,7,1,0.60,Elmano vencerá CE?
+g2022_DF,2022-09-04,Ibaneis será reeleito DF?,DF,2022,1,Ibaneis Rocha,MDB,1,28,1,0.90,Ibaneis será reeleito DF?
+g2022_ES,2022-09-04,Casagrande será reeleito ES?,ES,2022,1,Renato Casagrande,PSB,1,22,1,0.85,Casagrande será reeleito ES?
+g2022_GO,2022-09-04,Caiado será reeleito GO?,GO,2022,1,Ronaldo Caiado,UNIAO,1,40,1,0.95,Caiado será reeleito GO?
+g2022_MA,2022-09-04,Brandão será reeleito MA?,MA,2022,2,Carlos Brandao,PSB,1,4,1,0.55,Brandão será reeleito MA?
+g2022_MG,2022-09-04,Zema será reeleito MG?,MG,2022,1,Romeu Zema,NOVO,1,32,1,0.95,Zema será reeleito MG?
+g2022_MS,2022-09-04,Riedel vencerá MS?,MS,2022,2,Eduardo Riedel,PSDB,0,5,1,0.58,Riedel vencerá MS?
+g2022_MT,2022-09-04,Mauro Mendes será reeleito MT?,MT,2022,1,Mauro Mendes,UNIAO,1,38,1,0.95,Mauro Mendes será reeleito MT?
+g2022_PA,2022-09-04,Helder será reeleito PA?,PA,2022,1,Helder Barbalho,MDB,1,42,1,0.95,Helder será reeleito PA?
+g2022_PB,2022-09-04,Azevedo será reeleito PB?,PB,2022,2,Joao Azevedo,PSB,1,4,1,0.55,Azevedo será reeleito PB?
+g2022_PE,2022-09-04,Raquel vencerá PE?,PE,2022,2,Raquel Lyra,PSDB,0,6,1,0.60,Raquel vencerá PE?
+g2022_PI,2022-09-04,Rafael Fonteles vencerá PI?,PI,2022,2,Rafael Fonteles,PT,0,7,1,0.62,Rafael Fonteles vencerá PI?
+g2022_PR,2022-09-04,Ratinho será reeleito PR?,PR,2022,1,Ratinho Junior,PSD,1,45,1,0.97,Ratinho será reeleito PR?
+g2022_RJ,2022-09-04,Cláudio Castro será reeleito RJ?,RJ,2022,1,Claudio Castro,PL,1,15,1,0.72,Cláudio Castro será reeleito RJ?
+g2022_RN,2022-09-04,Fátima será reeleita RN?,RN,2022,2,Fatima Bezerra,PT,1,5,1,0.58,Fátima será reeleita RN?
+g2022_RO,2022-09-04,Marcos Rocha será reeleito RO?,RO,2022,1,Marcos Rocha,UNIAO,1,18,1,0.75,Marcos Rocha será reeleito RO?
+g2022_RR,2022-09-04,Denarium será reeleito RR?,RR,2022,1,Antonio Denarium,PP,1,20,1,0.78,Denarium será reeleito RR?
+g2022_RS,2022-09-04,Leite será reeleito RS?,RS,2022,2,Eduardo Leite,PSDB,1,3,1,0.55,Leite será reeleito RS?
+g2022_SC,2022-09-04,Jorginho vencerá SC?,SC,2022,2,Jorginho Mello,PL,0,6,1,0.60,Jorginho vencerá SC?
+g2022_SE,2022-09-04,Mitidieri vencerá SE?,SE,2022,1,Fabio Mitidieri,PSD,0,12,1,0.68,Mitidieri vencerá SE?
+g2022_SP,2022-09-04,Tarcísio vencerá SP?,SP,2022,2,Tarcisio de Freitas,REP,0,5,1,0.58,Tarcísio vencerá SP?
+g2022_TO,2022-09-04,Wanderlei vencerá TO?,TO,2022,1,Wanderlei Barbosa,REP,0,14,1,0.70,Wanderlei vencerá TO?
+gloss_2022_AC,2022-09-04,Viana derrotará Cameli AC?,AC,2022,1,Jorge Viana,PT,0,-30,0,0.08,Viana derrotará Cameli AC?
+gloss_2022_AL,2022-09-04,Cunha vencerá AL?,AL,2022,1,Rodrigo Cunha,UNIAO,0,-8,0,0.38,Cunha vencerá AL?
+gloss_2022_AM,2022-09-04,Braga vencerá AM?,AM,2022,2,Eduardo Braga,MDB,0,-5,0,0.40,Braga vencerá AM?
+gloss_2022_AP,2022-09-04,Furlan vencerá AP?,AP,2022,2,Antonio Furlan,MDB,0,-3,0,0.45,Furlan vencerá AP?
+gloss_2022_BA,2022-09-04,ACM Neto vencerá BA?,BA,2022,2,Aclm Neto,UNIAO,0,-9,0,0.35,ACM Neto vencerá BA?
+gloss_2022_CE,2022-09-04,Roberto Cláudio vencerá CE?,CE,2022,2,Roberto Claudio,PDT,0,-7,0,0.40,Roberto Cláudio vencerá CE?
+gloss_2022_DF,2022-09-04,Grass vencerá DF?,DF,2022,1,Leandro Grass,PV,0,-28,0,0.10,Grass vencerá DF?
+gloss_2022_ES,2022-09-04,Manato derrotará Casagrande ES?,ES,2022,1,Carlos Manato,PL,0,-22,0,0.15,Manato derrotará Casagrande ES?
+gloss_2022_GO,2022-09-04,Marconi derrotará Caiado GO?,GO,2022,1,Marconi Perillo,PSDB,0,-40,0,0.05,Marconi derrotará Caiado GO?
+gloss_2022_MA,2022-09-04,Lahesio vencerá MA?,MA,2022,2,Lahesio Bonfim,PSC,0,-4,0,0.45,Lahesio vencerá MA?
+gloss_2022_MG,2022-09-04,Kalil derrotará Zema MG?,MG,2022,1,Alexandre Kalil,PSD,0,-32,0,0.05,Kalil derrotará Zema MG?
+gloss_2022_MS,2022-09-04,Puccinelli vencerá MS?,MS,2022,2,Andre Puccinelli,MDB,0,-5,0,0.42,Puccinelli vencerá MS?
+gloss_2022_MT,2022-09-04,Fávaro derrotará Mauro Mendes MT?,MT,2022,1,Carlos Favaro,PSD,0,-38,0,0.05,Fávaro derrotará Mauro Mendes MT?
+gloss_2022_PA,2022-09-04,Marinho derrotará Helder PA?,PA,2022,1,Zequinha Marinho,PL,0,-42,0,0.05,Marinho derrotará Helder PA?
+gloss_2022_PB,2022-09-04,Pedro Cunha vencerá PB?,PB,2022,2,Pedro Cunha Lima,PSDB,0,-4,0,0.45,Pedro Cunha vencerá PB?
+gloss_2022_PE,2022-09-04,Marília vencerá PE?,PE,2022,2,Marilia Arraes,SOLID,0,-6,0,0.40,Marília vencerá PE?
+gloss_2022_PI,2022-09-04,Sylvio vencerá PI?,PI,2022,2,Sylvio Mendes,UNIAO,0,-7,0,0.38,Sylvio vencerá PI?
+gloss_2022_PR,2022-09-04,Requião derrotará Ratinho PR?,PR,2022,1,Roberto Requiao,PT,0,-45,0,0.03,Requião derrotará Ratinho PR?
+gloss_2022_RJ,2022-09-04,Freixo derrotará Castro RJ?,RJ,2022,1,Marcelo Freixo,PSB,0,-15,0,0.28,Freixo derrotará Castro RJ?
+gloss_2022_RN,2022-09-04,Marinho vencerá RN?,RN,2022,2,Rogerio Marinho,PL,0,-5,0,0.42,Marinho vencerá RN?
+gloss_2022_RO,2022-09-04,Rogério vencerá RO?,RO,2022,1,Marcos Rogerio,PL,0,-18,0,0.25,Rogério vencerá RO?
+gloss_2022_RR,2022-09-04,Surita vencerá RR?,RR,2022,1,Teresa Surita,MDB,0,-20,0,0.22,Surita vencerá RR?
+gloss_2022_RS,2022-09-04,Onyx vencerá RS?,RS,2022,2,Onyx Lorenzoni,PL,0,-3,0,0.45,Onyx vencerá RS?
+gloss_2022_SC,2022-09-04,Décio vencerá SC?,SC,2022,2,Decio Lima,PT,0,-6,0,0.40,Décio vencerá SC?
+gloss_2022_SE,2022-09-04,Rogério vencerá SE?,SE,2022,1,Rogerio Carvalho,PT,0,-12,0,0.32,Rogério vencerá SE?
+gloss_2022_SP,2022-09-04,Haddad vencerá SP?,SP,2022,2,Fernando Haddad,PT,0,-5,0,0.42,Haddad vencerá SP?
+gloss_2022_TO,2022-09-04,Mourão vencerá TO?,TO,2022,1,Paulo Mourao,PT,0,-14,0,0.30,Mourão vencerá TO?

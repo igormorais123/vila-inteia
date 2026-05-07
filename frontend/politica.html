@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vila INTEIA — Predição Política BR 2026</title>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .page { max-width: 1280px; margin: 0 auto; padding: var(--space-5); display: grid; gap: var(--space-4); }
+    .header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    @media (max-width: 1100px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+    .card { padding: var(--space-4); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+    .card h3 { margin: 0 0 var(--space-3) 0; font-size: var(--text-md); color: var(--amber); letter-spacing: 0.04em; text-transform: uppercase; }
+    .stat { display:flex; justify-content:space-between; align-items:baseline; padding: 4px 0; border-bottom: 1px dashed var(--border-subtle); font-family: var(--font-mono); font-size: 13px; }
+    .stat:last-child { border-bottom: none; }
+    .stat .lbl { color: var(--text-muted); }
+    .stat .val { font-weight: var(--weight-semi); color: var(--text-primary); }
+    .stat .pct { color: var(--amber); font-weight: var(--weight-bold); }
+
+    table.cand { width:100%; border-collapse: collapse; font-size: 13px; font-family: var(--font-mono); }
+    table.cand th, table.cand td { padding: 6px 8px; border-bottom: 1px solid var(--border-subtle); text-align:left; }
+    table.cand th { color: var(--text-muted); font-weight: var(--weight-semi); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+    table.cand tr:hover { background: var(--bg-surface-2); }
+    table.cand .num { text-align: right; }
+    .bar { display: inline-block; height: 8px; background: var(--amber); border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+    .bar-bg { display: inline-block; width: 80px; height: 8px; background: var(--bg-surface-2); border-radius: 2px; vertical-align: middle; }
+    .bar-fill { display: block; height: 100%; background: var(--amber); border-radius: 2px; }
+
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: var(--weight-semi); text-transform: uppercase; letter-spacing: 0.04em; }
+    .pill.left  { background: rgba(220,80,80,0.18); color:#ff8080; }
+    .pill.right { background: rgba(80,140,220,0.18); color:#80a8ff; }
+    .pill.center{ background: rgba(180,180,180,0.18); color:#cccccc; }
+    .pill.pop_left { background: rgba(220,80,160,0.18); color:#ff80b8; }
+    .pill.pop_right{ background: rgba(80,200,220,0.18); color:#80d4ff; }
+    .pill.incum { background: rgba(214,158,46,0.18); color: var(--amber); margin-left: 6px; }
+
+    .tabs { display:flex; gap: var(--space-2); border-bottom: 1px solid var(--border-subtle); }
+    .tab { padding: 8px 16px; cursor:pointer; color: var(--text-muted); font-size: 14px; border-bottom: 2px solid transparent; user-select: none; }
+    .tab.active { color: var(--amber); border-bottom-color: var(--amber); font-weight: var(--weight-semi); }
+    .tab-content { display:none; padding-top: var(--space-3); }
+    .tab-content.active { display:block; }
+
+    .uf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-3); }
+    .uf-card { padding: var(--space-3); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); }
+    .uf-card h4 { margin: 0 0 8px 0; font-size: 14px; color: var(--amber); }
+    .uf-card .row { display:flex; justify-content:space-between; padding: 3px 0; font-size: 12px; font-family: var(--font-mono); }
+    .uf-card .row .name { color: var(--text-primary); }
+    .uf-card .row .pwin { color: var(--amber); font-weight: var(--weight-bold); }
+
+    .footer { margin-top: var(--space-5); padding-top: var(--space-3); border-top: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 12px; text-align: center; }
+    .footer code { background: var(--bg-surface-2); padding: 2px 6px; border-radius: 3px; }
+    .loading { color: var(--text-muted); font-style: italic; padding: var(--space-3); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div>
+        <h1 style="margin:0">🗳️ Predição Política BR 2026</h1>
+        <p style="margin: 4px 0 0 0; color: var(--text-muted); font-size: 13px;">
+          Vila INTEIA · Forecasting Lab · PC-CRD cohort + Linzer ensemble
+        </p>
+      </div>
+      <div style="text-align:right; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted)">
+        <div id="snapshot-date">carregando...</div>
+        <div id="horizon-days"></div>
+      </div>
+    </header>
+
+    <section class="grid-4">
+      <div class="card">
+        <h3>📊 Backtest</h3>
+        <div class="stat"><span class="lbl">eventos</span><span class="val" id="bt-n">—</span></div>
+        <div class="stat"><span class="lbl">acc T≤30</span><span class="pct" id="bt-acc">—</span></div>
+        <div class="stat"><span class="lbl">brier</span><span class="val" id="bt-brier">—</span></div>
+      </div>
+      <div class="card">
+        <h3>⚙️ Modelo</h3>
+        <div class="stat"><span class="lbl">w_linzer</span><span class="val" id="cfg-wlin">—</span></div>
+        <div class="stat"><span class="lbl">σ intercept</span><span class="val" id="cfg-sint">—</span></div>
+        <div class="stat"><span class="lbl">σ slope</span><span class="val" id="cfg-sslo">—</span></div>
+      </div>
+      <div class="card">
+        <h3>🗓️ Calendário</h3>
+        <div class="stat"><span class="lbl">1º turno</span><span class="val">2026-10-04</span></div>
+        <div class="stat"><span class="lbl">2º turno</span><span class="val">2026-10-25</span></div>
+        <div class="stat"><span class="lbl">cargos</span><span class="val" id="cargo-count">—</span></div>
+      </div>
+      <div class="card">
+        <h3>🔥 Top Federal</h3>
+        <div id="top-pres" class="loading">carregando…</div>
+      </div>
+    </section>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('presidente')">Presidencial</div>
+      <div class="tab" onclick="showTab('governador')">Governadores</div>
+      <div class="tab" onclick="showTab('senador')">Senado</div>
+      <div class="tab" onclick="showTab('predict')">Custom Predict</div>
+    </div>
+
+    <section id="tab-presidente" class="tab-content active">
+      <div class="card">
+        <h3>Presidente — 1º turno</h3>
+        <table class="cand">
+          <thead><tr>
+            <th>#</th><th>Candidato</th><th>Partido</th><th>Regime</th>
+            <th class="num">Lead pp</th><th class="num">P(coh)</th><th class="num">P(lnz)</th>
+            <th class="num">P(blend)</th><th class="num">P(vencer)</th>
+          </tr></thead>
+          <tbody id="pres-body"><tr><td colspan="9" class="loading">carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="tab-governador" class="tab-content">
+      <div class="uf-grid" id="gov-grid"><div class="loading">carregando…</div></div>
+    </section>
+
+    <section id="tab-senador" class="tab-content">
+      <div class="card">
+        <h3>Senado — sample</h3>
+        <table class="cand">
+          <thead><tr>
+            <th>Candidato</th><th>UF</th><th>Partido</th><th>Regime</th>
+            <th class="num">Lead pp</th><th class="num">P(blend)</th>
+          </tr></thead>
+          <tbody id="sen-body"><tr><td colspan="6" class="loading">carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="tab-predict" class="tab-content">
+      <div class="card">
+        <h3>Predição Custom</h3>
+        <form id="predict-form" style="display:grid; gap: 8px; max-width: 480px;">
+          <label>Cargo:
+            <select name="cargo" required>
+              <option value="presidente">presidente</option>
+              <option value="governador">governador</option>
+              <option value="senador">senador</option>
+              <option value="legislativo">legislativo</option>
+              <option value="prefeito">prefeito</option>
+            </select>
+          </label>
+          <label>Lead em pp (vs frontrunner): <input type="number" name="poll_lead_pp" step="0.1" value="5" required></label>
+          <label>Dias até eleição: <input type="number" name="days_to_election" min="0" value="60" required></label>
+          <label>Incumbente: <select name="incumbente"><option value="0">não</option><option value="1">sim</option></select></label>
+          <label>Regime:
+            <select name="regime">
+              <option value="left">left</option><option value="right">right</option>
+              <option value="center">center</option><option value="pop_left">pop_left</option>
+              <option value="pop_right">pop_right</option>
+            </select>
+          </label>
+          <button type="submit" style="background: var(--amber); color:#000; border:0; padding: 8px 16px; border-radius: 4px; font-weight: var(--weight-semi); cursor:pointer;">Prever</button>
+        </form>
+        <pre id="predict-result" style="margin-top: 16px; padding: 12px; background: var(--bg-surface-2); border-radius: 4px; font-family: var(--font-mono); font-size: 12px; overflow-x: auto;"></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Endpoint: <code>/api/v1/politica/predict</code> · Schema: <code>migrations/005</code> · Best config: <code>data/political_best_config.json</code>
+    </footer>
+  </div>
+
+<script>
+const API = "/api/v1/politica";
+
+async function loadAll() {
+  try {
+    const [health, elec, pres, gov, sen, bt] = await Promise.all([
+      fetch(`${API}/health`).then(r => r.json()),
+      fetch(`${API}/elections`).then(r => r.json()),
+      fetch(`${API}/predictions/presidente`).then(r => r.json()),
+      fetch(`${API}/predictions/governador`).then(r => r.json()),
+      fetch(`${API}/predictions/senador`).then(r => r.json()),
+      fetch(`${API}/backtest`).then(r => r.json()).catch(()=>null),
+    ]);
+    renderHeader(pres);
+    renderStats(bt, health);
+    renderCalendar(elec);
+    renderTopPres(pres);
+    renderPresTable(pres);
+    renderGovGrid(gov);
+    renderSenTable(sen);
+  } catch (e) {
+    console.error(e);
+    document.querySelectorAll('.loading').forEach(el => el.textContent = `erro: ${e.message}`);
+  }
+}
+
+function renderHeader(pres) {
+  document.getElementById('snapshot-date').textContent = `snapshot: ${pres.predicted_at}`;
+  document.getElementById('horizon-days').textContent = `${pres.horizon_days} dias até 1º turno`;
+}
+
+function renderStats(bt, health) {
+  if (bt && bt.full_fit_in_sample) {
+    document.getElementById('bt-n').textContent = bt.n_events_total ?? '—';
+    document.getElementById('bt-acc').textContent = `${(bt.full_fit_in_sample.acc*100).toFixed(1)}%`;
+    document.getElementById('bt-brier').textContent = bt.full_fit_in_sample.brier?.toFixed(4) ?? '—';
+  }
+  document.getElementById('cfg-wlin').textContent = '0.50';
+  document.getElementById('cfg-sint').textContent = '5.0 pp';
+  document.getElementById('cfg-sslo').textContent = '0.01';
+}
+
+function renderCalendar(elec) {
+  document.getElementById('cargo-count').textContent = elec.cargos_supported.length;
+}
+
+function renderTopPres(pres) {
+  const top3 = pres.candidates.slice(0, 3);
+  const html = top3.map(c => `
+    <div class="stat">
+      <span class="lbl">${c.nome.split(' ').slice(-2).join(' ')}</span>
+      <span class="pct">${(c.p_winner*100).toFixed(1)}%</span>
+    </div>`).join('');
+  document.getElementById('top-pres').innerHTML = html;
+}
+
+function regimePill(r) { return `<span class="pill ${r}">${r}</span>`; }
+function bar(p) { return `<span class="bar-bg"><span class="bar-fill" style="width:${(p*100).toFixed(0)}%"></span></span>`; }
+
+function renderPresTable(pres) {
+  const rows = pres.candidates.map((c, i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td>${c.nome}</td>
+      <td>${c.partido}</td>
+      <td>${regimePill(c.regime)}${c.incumbente ? '<span class="pill incum">incum</span>' : ''}</td>
+      <td class="num">${c.poll_lead_pp.toFixed(1)}</td>
+      <td class="num">${(c.p_cohort*100).toFixed(1)}%</td>
+      <td class="num">${(c.p_linzer*100).toFixed(1)}%</td>
+      <td class="num">${(c.p_raw*100).toFixed(1)}%</td>
+      <td class="num"><strong>${(c.p_winner*100).toFixed(1)}%</strong> ${bar(c.p_winner)}</td>
+    </tr>`).join('');
+  document.getElementById('pres-body').innerHTML = rows;
+}
+
+function renderGovGrid(gov) {
+  const ufs = Object.keys(gov.by_uf).sort();
+  const html = ufs.map(uf => {
+    const cands = gov.by_uf[uf].slice().sort((a,b) => b.p_winner - a.p_winner);
+    return `<div class="uf-card">
+      <h4>${uf}</h4>
+      ${cands.map(c => `
+        <div class="row">
+          <span class="name">${c.nome}<br><span style="color:var(--text-muted); font-size:10px;">${c.partido}</span></span>
+          <span class="pwin">${(c.p_winner*100).toFixed(0)}%</span>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('gov-grid').innerHTML = html;
+}
+
+function renderSenTable(sen) {
+  const rows = sen.candidates.map(c => `
+    <tr>
+      <td>${c.nome}</td>
+      <td>${c.uf}</td>
+      <td>${c.partido}</td>
+      <td>${regimePill(c.regime)}${c.incumbente ? '<span class="pill incum">incum</span>' : ''}</td>
+      <td class="num">${c.poll_lead_pp.toFixed(1)}</td>
+      <td class="num"><strong>${(c.p_raw*100).toFixed(1)}%</strong></td>
+    </tr>`).join('');
+  document.getElementById('sen-body').innerHTML = rows;
+}
+
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+document.getElementById('predict-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const body = {
+    cargo: fd.get('cargo'),
+    poll_lead_pp: parseFloat(fd.get('poll_lead_pp')),
+    days_to_election: parseInt(fd.get('days_to_election')),
+    incumbente: parseInt(fd.get('incumbente')),
+    regime: fd.get('regime'),
+  };
+  const res = await fetch(`${API}/predict`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  document.getElementById('predict-result').textContent = JSON.stringify(data, null, 2);
+});
+
+loadAll();
+</script>
+</body>
+</html>

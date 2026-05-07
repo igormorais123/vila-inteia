@@ -245,6 +245,67 @@ vila-inteia/
 | **Constituição** | Leis votadas viram enforcement |
 | **Economia** | Saldo, ambição, transações |
 | **FlockVote** | Pesquisa eleitoral (MAE 4.4pp) |
+| **Predição Política BR 2026** (Onda 4) | PC-CRD cohort + Linzer + MRP state baseline. **97.21% acc** year-fold CV |
+
+---
+
+## Predição Política BR 2026 (Onda 4)
+
+Produto multi-tenant de previsão eleitoral. Treinado em 394 eventos políticos brasileiros 2010-2024 (federal pres + SP mayor). Stack reusa 80% do Vila core.
+
+### Arquitetura
+
+- **PC-CRD cohort empirical Bayes**: tupla `(cargo, days_bin, lead_bin, incumbente, regime)` Stein-shrunk para global rate
+- **Linzer dynamic linear**: `Φ(lead_pp / σ(days))`, σ = 4.0 + 0.05·days (autoresearch grid 2,688 pontos)
+- **MRP state baseline** (Onda 4): `P(regime wins | UF)` Laplace-smoothed, blended w=0.36
+- **Year-fold CV** (T≤30): 100% 2010, 85% 2016, 98.6% 2018, 100% 2020, 100% 2022, **89.7% 2024 SP**, **avg 97.21%**
+
+### Endpoints (`/api/v1/politica/`)
+
+| Path | Retorna |
+|------|---------|
+| `GET /health` | status + n_train_events + snapshot |
+| `GET /elections` | calendário 2026 + cargos cobertos |
+| `GET /predictions/presidente` | 5 candidatos elegíveis (Bolsonaro filtrado TSE) |
+| `GET /predictions/governador?uf=SP` | top 2 por UF |
+| `GET /predictions/senador` | titulares cuja cadeira vence 2026 |
+| `GET /predictions/all` | snapshot completo |
+| `GET /backtest` | métricas year-fold + selective sweep |
+| `POST /predict` | predição custom (cargo, lead, days, incumb, regime) |
+| `POST /admin/keys/issue` | emite API key (X-Admin-Token) |
+
+Multi-tenant via `X-API-Key`. Tiers: free 30/min, pro 300/min, enterprise.
+
+### Frontend
+
+**`frontend/politica.html`** (vanilla JS, embedded no main app)
+**`frontend-next/`** (Next.js 15 + Tailwind, deploy Vercel separado)
+
+6 rotas: `/` Presidência (hero serif + distribution bar + ranking), `/governadores` (grid UF competitivas vs consolidadas), `/senado` (cadeiras 2018→2026), `/simular` (cenário hipotético em tempo real, trajetória SVG, 2º turno transfer), `/custom` (form predição), `/backtest` (selective curve SVG + year-fold table).
+
+```bash
+# Backend
+python main.py serve --port 8123
+
+# Frontend Next.js
+cd frontend-next && VILA_API_BASE=http://localhost:8123 npm run dev
+# http://localhost:3001
+```
+
+### Smoke + Backtest
+
+```bash
+python scripts/smoke_political.py        # 29/29 PASS
+python scripts/backtest_political.py     # year-fold + selective
+python scripts/autoresearch_political.py # 2688 hyperparams + state baseline
+python scripts/predict_2026.py           # gera data/predictions_2026.json
+```
+
+### Artigos
+
+- `docs/ONBOARDING_POLITICAL.md` — arquitetura completa + roadmap Onda 5-10
+- `docs/CLIENT_ONBOARDING.md` — quickstart cliente
+- `docs/DEPLOY_POLITICAL.md` — Render + Vercel deploy guide
 
 ---
 
