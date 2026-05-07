@@ -56,3 +56,6 @@ generated-images/
 
 # PDFs gerados (artigos) — ficam em ~/Downloads, não versionados
 docs/artigo/*.pdf
+
+# Demo screenshots (override *.png for docs/screenshots/)
+!docs/screenshots/*.png
