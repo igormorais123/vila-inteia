@@ -1,12 +1,18 @@
-# Vila INTEIA — Simulação Multiagente Lendária
+# Vila INTEIA
 
-> Motor de simulação onde 151 agentes sintéticos coexistem, debatem, evoluem uma constituição própria e geram conteúdo publicável em jornais reais.
+> Motor multiagente lendário + plataforma de forecasting honesto + produto multi-tenant de predição política BR 2026.
 
-**Stack**: Python 3.11+ · FastAPI · Supabase · OmniRoute (LLM) · Three.js (3D) · NumPy · SciPy · NetworkX · NashPy
+**Stack**: Python 3.11+ · FastAPI · Supabase · OmniRoute (LLM) · Next.js 15 · Three.js · NumPy · SciPy · NetworkX · NashPy
 
-**35+ ondas implementadas** (5 a 39). Ver [`MANIFEST.md`](./MANIFEST.md) para tabela consolidada.
+## O que tem aqui
 
-**Forecasting honesto**: 52 teoremas estatísticos clássicos (Brier decomp, Platt/iso, EB priors, conformal, Kelly) testados em 46 datasets / 600 eventos. Ver [`docs/HONEST_FORECASTING_ARTICLE.md`](./docs/HONEST_FORECASTING_ARTICLE.md).
+| Eixo | Status | Headline |
+|------|--------|----------|
+| **Simulação Vila** | 35+ ondas (5–39) | 151 consultores lendários, constituição executável, jornal real |
+| **Forecasting honesto** | 52 teoremas | 46 datasets, 600 eventos, Brier/Platt/iso/EB/conformal/Kelly |
+| **Predição Política BR 2026** | Onda 4 | **97.21% acc** year-fold CV, **89.71% 2024 SP** (MRP state baseline) |
+
+Ver [`MANIFEST.md`](./MANIFEST.md) (ondas), [`docs/HONEST_FORECASTING_ARTICLE.md`](./docs/HONEST_FORECASTING_ARTICLE.md) (forecasting), seção abaixo (política).
 
 ## Quickstart (3 passos)
 
