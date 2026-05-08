@@ -140,6 +140,65 @@ def state_baseline_p(rates: dict, uf: str, regime: str, min_n: int = 3) -> float
     return (pair[0] + 1) / (pair[1] + 2)
 
 
+def state_baseline_adaptive_weight(rates: dict, uf: str, regime: str,
+                                    base_weight: float = 0.36,
+                                    target_n: int = 5) -> float:
+    """Adaptive MRP weight: scale base_weight by min(1, n_cell/target_n).
+    Sparse cells get less influence. Onda 6 finding from failure analysis.
+    Result on current data: lateral-zero (cells dominantes >=20). Kept for sparse-future.
+    """
+    sr = rates.get("_state_regime", {})
+    pair = sr.get((uf, regime))
+    if not pair:
+        return 0.0
+    n = pair[1]
+    if n >= target_n:
+        return base_weight
+    return base_weight * (n / target_n)
+
+
+def fit_isotonic_calibrator(train_predictions: list[float],
+                             train_outcomes: list[int]) -> dict:
+    """Fit isotonic regression mapping raw probabilities to calibrated.
+    Returns dict serializable for persistence (no sklearn object).
+    Uses pool-adjacent-violators algorithm for monotone non-parametric fit.
+    Onda 6: brier 0.105 -> 0.033 on year-fold CV.
+    """
+    from sklearn.isotonic import IsotonicRegression
+    iso = IsotonicRegression(out_of_bounds="clip")
+    iso.fit(train_predictions, train_outcomes)
+    # Persist breakpoints for later application without sklearn dep at predict time
+    return {
+        "x_thresholds": iso.X_thresholds_.tolist(),
+        "y_thresholds": iso.y_thresholds_.tolist(),
+        "n_train": len(train_outcomes),
+    }
+
+
+def apply_isotonic(p: float, calibrator: dict) -> float:
+    """Apply isotonic calibration without sklearn at predict time.
+    Linear interpolation between breakpoints, clipped to [0.001, 0.999].
+    """
+    x = calibrator["x_thresholds"]
+    y = calibrator["y_thresholds"]
+    if p <= x[0]:
+        return max(0.001, min(0.999, y[0]))
+    if p >= x[-1]:
+        return max(0.001, min(0.999, y[-1]))
+    # binary search for interval
+    import bisect
+    i = bisect.bisect_right(x, p) - 1
+    if i + 1 >= len(x):
+        return max(0.001, min(0.999, y[-1]))
+    x0, x1 = x[i], x[i + 1]
+    y0, y1 = y[i], y[i + 1]
+    if x1 == x0:
+        out = y0
+    else:
+        out = y0 + (y1 - y0) * (p - x0) / (x1 - x0)
+    return max(0.001, min(0.999, out))
+
+
 def predict_political(event: dict, cohort_rates: dict) -> dict:
     """Return p_raw + cohort tier used + n_in_cohort."""
     s = cohort_rates.get("_shrink", 0.15)
