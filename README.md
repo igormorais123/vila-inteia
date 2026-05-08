@@ -26,16 +26,30 @@ Pra demo, **foque no produto 1** (mais vendável, números mais fortes, frontend
 
 ---
 
-## Demo em 60 segundos
+## Quickstart (3 passos)
 
 ```bash
+# 1. Clone + install
 git clone https://github.com/igormorais123/vila-inteia.git
 cd vila-inteia
 pip install -r requirements.txt
+
+# 2. Subir API
 python main.py serve --port 8100
+
+# 3. Abrir dashboard
+# http://localhost:8100/politica.html (frontend político)
+# http://localhost:8100/cockpit.html  (cockpit Vila simulação)
 ```
 
-Abra **http://localhost:8100/politica.html** - dashboard pronto.
+CLI alternativa via `scripts/vila_cli.py`:
+```bash
+python scripts/vila_cli.py --url http://localhost:8100 stats
+```
+
+## Demo em 60 segundos
+
+Após Quickstart, abra **http://localhost:8100/politica.html** - dashboard pronto.
 
 Pra Next.js (visual mais polido):
 

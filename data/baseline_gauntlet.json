@@ -1,0 +1,401 @@
+{
+  "config": {
+    "seed": 42,
+    "stein_shrink": 0.05,
+    "stein_shrink_tuned": 0.4,
+    "w_linzer_vila": 0.5,
+    "w_linzer_tuned": 0.7,
+    "sigma_int": 4.0,
+    "sigma_slope": 0.05,
+    "sigma_int_tuned": 3.0,
+    "sigma_slope_tuned": 0.01,
+    "w_state_mrp": 0.36,
+    "tau_highconf": 0.4,
+    "days_filter": 30,
+    "house_effects": false
+  },
+  "years": [
+    2010,
+    2016,
+    2018,
+    2020,
+    2022,
+    2024
+  ],
+  "n_per_year": {
+    "2010": 86,
+    "2016": 20,
+    "2018": 70,
+    "2020": 30,
+    "2022": 120,
+    "2024": 68
+  },
+  "models": {
+    "M1_linzer": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.0,
+          "acc": 1.0,
+          "log_loss": 0.0,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 1.0
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.2889,
+          "acc": 0.7,
+          "log_loss": 1.2195,
+          "selective_tau040_acc": 0.625,
+          "selective_tau040_coverage": 0.8
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.0047,
+          "acc": 1.0,
+          "log_loss": 0.0376,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.8857
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.0305,
+          "acc": 0.9333,
+          "log_loss": 0.1092,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.7333
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.0088,
+          "acc": 1.0,
+          "log_loss": 0.0602,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.7833
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.3158,
+          "acc": 0.6471,
+          "log_loss": 1.035,
+          "selective_tau040_acc": 0.1429,
+          "selective_tau040_coverage": 0.2059
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.075,
+        "acc": 0.9188,
+        "log_loss": 0.2739,
+        "selective_tau040_acc": 0.9388,
+        "selective_tau040_coverage": 0.7462,
+        "selective_tau040_n": 294
+      }
+    },
+    "M2_cohort": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.2401,
+          "acc": 0.5,
+          "log_loss": 0.6634,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0581
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.038,
+          "acc": 0.95,
+          "log_loss": 0.1254,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.85
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.2375,
+          "acc": 0.5,
+          "log_loss": 0.656,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0714
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.1252,
+          "acc": 0.8,
+          "log_loss": 0.3591,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.5
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.2405,
+          "acc": 0.5,
+          "log_loss": 0.6643,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0583
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.118,
+          "acc": 0.7941,
+          "log_loss": 0.4174,
+          "selective_tau040_acc": 0.9091,
+          "selective_tau040_coverage": 0.8088
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.1997,
+        "acc": 0.5964,
+        "log_loss": 0.5694,
+        "selective_tau040_acc": 0.9519,
+        "selective_tau040_coverage": 0.264,
+        "selective_tau040_n": 104
+      }
+    },
+    "M3_naive": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.0074,
+          "acc": 1.0,
+          "log_loss": 0.0836,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.7907
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.2229,
+          "acc": 0.7,
+          "log_loss": 0.6252,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.2
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.0686,
+          "acc": 1.0,
+          "log_loss": 0.2913,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0571
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.0751,
+          "acc": 0.9333,
+          "log_loss": 0.2877,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.2667
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.0756,
+          "acc": 1.0,
+          "log_loss": 0.3027,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.1333
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.2649,
+          "acc": 0.6471,
+          "log_loss": 0.7271,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.0996,
+        "acc": 0.9188,
+        "log_loss": 0.3413,
+        "selective_tau040_acc": 1.0,
+        "selective_tau040_coverage": 0.2538,
+        "selective_tau040_n": 100
+      }
+    },
+    "M4_vila_baseline": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.06,
+          "acc": 1.0,
+          "log_loss": 0.2742,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0581
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.1212,
+          "acc": 0.85,
+          "log_loss": 0.3408,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.55
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.0687,
+          "acc": 1.0,
+          "log_loss": 0.295,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0714
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.0546,
+          "acc": 0.9333,
+          "log_loss": 0.2114,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.4333
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.0759,
+          "acc": 1.0,
+          "log_loss": 0.3131,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0583
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.1749,
+          "acc": 0.7353,
+          "log_loss": 0.5196,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0441
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.0889,
+        "acc": 0.9416,
+        "log_loss": 0.3307,
+        "selective_tau040_acc": 1.0,
+        "selective_tau040_coverage": 0.1117,
+        "selective_tau040_n": 44
+      }
+    },
+    "M5_vila_mrp": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.1439,
+          "acc": 1.0,
+          "log_loss": 0.4722,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.0517,
+          "acc": 1.0,
+          "log_loss": 0.1847,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.7
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.2444,
+          "acc": 0.4714,
+          "log_loss": 0.6811,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.0241,
+          "acc": 1.0,
+          "log_loss": 0.1336,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.4333
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.1377,
+          "acc": 0.725,
+          "log_loss": 0.4523,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.0775,
+          "acc": 0.9265,
+          "log_loss": 0.2873,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.1324
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.1346,
+        "acc": 0.8096,
+        "log_loss": 0.431,
+        "selective_tau040_acc": 1.0,
+        "selective_tau040_coverage": 0.0914,
+        "selective_tau040_n": 36
+      }
+    },
+    "M5b_vila_mrp_tuned": {
+      "per_year": {
+        "2010": {
+          "n": 86,
+          "brier": 0.1015,
+          "acc": 1.0,
+          "log_loss": 0.3795,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2016": {
+          "n": 20,
+          "brier": 0.0846,
+          "acc": 0.85,
+          "log_loss": 0.267,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.6
+        },
+        "2018": {
+          "n": 70,
+          "brier": 0.1843,
+          "acc": 0.9857,
+          "log_loss": 0.5601,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2020": {
+          "n": 30,
+          "brier": 0.0171,
+          "acc": 1.0,
+          "log_loss": 0.1131,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.4333
+        },
+        "2022": {
+          "n": 120,
+          "brier": 0.0848,
+          "acc": 1.0,
+          "log_loss": 0.3235,
+          "selective_tau040_acc": null,
+          "selective_tau040_coverage": 0.0
+        },
+        "2024": {
+          "n": 68,
+          "brier": 0.1073,
+          "acc": 0.8971,
+          "log_loss": 0.3629,
+          "selective_tau040_acc": 1.0,
+          "selective_tau040_coverage": 0.0882
+        }
+      },
+      "pooled": {
+        "n": 394,
+        "brier": 0.1048,
+        "acc": 0.9721,
+        "log_loss": 0.3657,
+        "selective_tau040_acc": 1.0,
+        "selective_tau040_coverage": 0.0787,
+        "selective_tau040_n": 31
+      }
+    }
+  }
+}

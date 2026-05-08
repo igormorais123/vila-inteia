@@ -1,0 +1,983 @@
+{
+  "_fetch": {
+    "us_2016": {
+      "n_input_rows": 4695,
+      "n_state_date_pairs": 1565,
+      "n_csv_rows": 3130,
+      "skipped_no_truth": 0,
+      "source": "FiveThirtyEight pres_pollaverages_1968-2016 (GitHub)",
+      "status": "ok"
+    },
+    "us_2020": {
+      "n_input_rows": 6120,
+      "n_state_date_pairs": 1530,
+      "n_csv_rows": 3060,
+      "skipped_no_truth": 0,
+      "source": "FiveThirtyEight 2020 averages (Wayback Machine snapshot)",
+      "status": "ok"
+    },
+    "uk_2019": {
+      "n_polls_used": 96,
+      "n_csv_rows": 192,
+      "regions_covered": [
+        "EAS",
+        "EMD",
+        "LDN",
+        "NEE",
+        "NIR",
+        "NWE",
+        "SCT",
+        "SEE",
+        "SWE",
+        "WLS",
+        "WMD",
+        "YHB"
+      ],
+      "source": "Wikipedia: Opinion polling for the 2019 UK general election (regional sub-sections)",
+      "status": "ok"
+    }
+  },
+  "us_2016": {
+    "in_sample": {
+      "no_mrp": {
+        "acc": 0.8993610223642172,
+        "brier": 0.06423153624560755,
+        "n": 3130
+      },
+      "mrp_w36": {
+        "acc": 0.9488817891373802,
+        "brier": 0.028355534307630104,
+        "n": 3130
+      }
+    },
+    "loso": {
+      "no_mrp": {
+        "acc": 0.8811501597444089,
+        "brier": 0.07309085219301514,
+        "n": 3130
+      },
+      "mrp_w36": {
+        "acc": 0.8811501597444089,
+        "brier": 0.07309085219301514,
+        "n": 3130
+      },
+      "per_state": {
+        "AK": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0065,
+          "mrp_brier": 0.0065
+        },
+        "AL": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "AR": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "AZ": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.1118,
+          "mrp_brier": 0.1118
+        },
+        "CA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "CO": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.1061,
+          "mrp_brier": 0.1061
+        },
+        "CT": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "DC": {
+          "n": 30,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "DE": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "FL": {
+          "n": 62,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.3068,
+          "mrp_brier": 0.3068
+        },
+        "GA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0235,
+          "mrp_brier": 0.0235
+        },
+        "HI": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0449,
+          "mrp_brier": 0.0449
+        },
+        "ID": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IL": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IN": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.002,
+          "mrp_brier": 0.002
+        },
+        "KS": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0011,
+          "mrp_brier": 0.0011
+        },
+        "KY": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "LA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "MA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "MD": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "ME": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0433,
+          "mrp_brier": 0.0433
+        },
+        "MI": {
+          "n": 62,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.6685,
+          "mrp_brier": 0.6685
+        },
+        "MN": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0439,
+          "mrp_brier": 0.0439
+        },
+        "MO": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0037,
+          "mrp_brier": 0.0037
+        },
+        "MS": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0013,
+          "mrp_brier": 0.0013
+        },
+        "MT": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NC": {
+          "n": 62,
+          "no_mrp_acc": 0.0323,
+          "mrp_acc": 0.0323,
+          "no_mrp_brier": 0.2994,
+          "mrp_brier": 0.2994
+        },
+        "ND": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NE": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NH": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0853,
+          "mrp_brier": 0.0853
+        },
+        "NJ": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "NM": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0296,
+          "mrp_brier": 0.0296
+        },
+        "NV": {
+          "n": 62,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.3552,
+          "mrp_brier": 0.3552
+        },
+        "NY": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "OH": {
+          "n": 62,
+          "no_mrp_acc": 0.9677,
+          "mrp_acc": 0.9677,
+          "no_mrp_brier": 0.1282,
+          "mrp_brier": 0.1282
+        },
+        "OK": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "OR": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0155,
+          "mrp_brier": 0.0155
+        },
+        "PA": {
+          "n": 62,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.6438,
+          "mrp_brier": 0.6438
+        },
+        "RI": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "SC": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0051,
+          "mrp_brier": 0.0051
+        },
+        "SD": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "TN": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "TX": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0093,
+          "mrp_brier": 0.0093
+        },
+        "UT": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0045,
+          "mrp_brier": 0.0045
+        },
+        "VA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0392,
+          "mrp_brier": 0.0392
+        },
+        "VT": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "WA": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "WI": {
+          "n": 62,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.7066,
+          "mrp_brier": 0.7066
+        },
+        "WV": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "WY": {
+          "n": 62,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        }
+      }
+    },
+    "n_states": 51,
+    "n_events": 3130,
+    "data_path": "data/backtest/us_2016_president.csv"
+  },
+  "us_2020": {
+    "in_sample": {
+      "no_mrp": {
+        "acc": 0.9411764705882353,
+        "brier": 0.028919689054328738,
+        "n": 3060
+      },
+      "mrp_w36": {
+        "acc": 1.0,
+        "brier": 0.013107535554241701,
+        "n": 3060
+      }
+    },
+    "loso": {
+      "no_mrp": {
+        "acc": 0.9313725490196079,
+        "brier": 0.03427446522821843,
+        "n": 3060
+      },
+      "mrp_w36": {
+        "acc": 0.9313725490196079,
+        "brier": 0.03427446522821843,
+        "n": 3060
+      },
+      "per_state": {
+        "AK": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0067,
+          "mrp_brier": 0.0067
+        },
+        "AL": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "AR": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "AZ": {
+          "n": 60,
+          "no_mrp_acc": 0.9333,
+          "mrp_acc": 0.9333,
+          "no_mrp_brier": 0.2298,
+          "mrp_brier": 0.2298
+        },
+        "CA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "CO": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "CT": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "DC": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "DE": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "FL": {
+          "n": 60,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.3878,
+          "mrp_brier": 0.3878
+        },
+        "GA": {
+          "n": 60,
+          "no_mrp_acc": 0.1,
+          "mrp_acc": 0.1,
+          "no_mrp_brier": 0.3289,
+          "mrp_brier": 0.3289
+        },
+        "HI": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IA": {
+          "n": 60,
+          "no_mrp_acc": 0.4667,
+          "mrp_acc": 0.4667,
+          "no_mrp_brier": 0.2236,
+          "mrp_brier": 0.2236
+        },
+        "ID": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IL": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "IN": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0004,
+          "mrp_brier": 0.0004
+        },
+        "KS": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.002,
+          "mrp_brier": 0.002
+        },
+        "KY": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "LA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "MA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "MD": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "ME": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "MI": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0015,
+          "mrp_brier": 0.0015
+        },
+        "MN": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0009,
+          "mrp_brier": 0.0009
+        },
+        "MO": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0039,
+          "mrp_brier": 0.0039
+        },
+        "MS": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "MT": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0022,
+          "mrp_brier": 0.0022
+        },
+        "NC": {
+          "n": 60,
+          "no_mrp_acc": 0.0,
+          "mrp_acc": 0.0,
+          "no_mrp_brier": 0.362,
+          "mrp_brier": 0.362
+        },
+        "ND": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NE": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0017,
+          "mrp_brier": 0.0017
+        },
+        "NH": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0004,
+          "mrp_brier": 0.0004
+        },
+        "NJ": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NM": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "NV": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0068,
+          "mrp_brier": 0.0068
+        },
+        "NY": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "OH": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.1185,
+          "mrp_brier": 0.1185
+        },
+        "OK": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "OR": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "PA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.011,
+          "mrp_brier": 0.011
+        },
+        "RI": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "SC": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0034,
+          "mrp_brier": 0.0034
+        },
+        "SD": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "TN": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "TX": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.049,
+          "mrp_brier": 0.049
+        },
+        "UT": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0003,
+          "mrp_brier": 0.0003
+        },
+        "VA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "VT": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "WA": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "WI": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0021,
+          "mrp_brier": 0.0021
+        },
+        "WV": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        },
+        "WY": {
+          "n": 60,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0002,
+          "mrp_brier": 0.0002
+        }
+      }
+    },
+    "n_states": 51,
+    "n_events": 3060,
+    "data_path": "data/backtest/us_2020_president.csv"
+  },
+  "uk_2019": {
+    "in_sample": {
+      "no_mrp": {
+        "acc": 0.5572916666666666,
+        "brier": 0.23165234573472424,
+        "n": 192
+      },
+      "mrp_w36": {
+        "acc": 0.890625,
+        "brier": 0.11294615446896218,
+        "n": 192
+      }
+    },
+    "loso": {
+      "no_mrp": {
+        "acc": 0.4791666666666667,
+        "brier": 0.36038575979329096,
+        "n": 192
+      },
+      "mrp_w36": {
+        "acc": 0.4791666666666667,
+        "brier": 0.36038575979329096,
+        "n": 192
+      },
+      "per_state": {
+        "EAS": {
+          "n": 14,
+          "no_mrp_acc": 0.8571,
+          "mrp_acc": 0.8571,
+          "no_mrp_brier": 0.1552,
+          "mrp_brier": 0.1552
+        },
+        "EMD": {
+          "n": 8,
+          "no_mrp_acc": 0.875,
+          "mrp_acc": 0.875,
+          "no_mrp_brier": 0.131,
+          "mrp_brier": 0.131
+        },
+        "LDN": {
+          "n": 64,
+          "no_mrp_acc": 0.125,
+          "mrp_acc": 0.125,
+          "no_mrp_brier": 0.6476,
+          "mrp_brier": 0.6476
+        },
+        "NEE": {
+          "n": 14,
+          "no_mrp_acc": 0.4286,
+          "mrp_acc": 0.4286,
+          "no_mrp_brier": 0.2944,
+          "mrp_brier": 0.2944
+        },
+        "NIR": {
+          "n": 4,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.1126,
+          "mrp_brier": 0.1126
+        },
+        "NWE": {
+          "n": 12,
+          "no_mrp_acc": 0.3333,
+          "mrp_acc": 0.3333,
+          "no_mrp_brier": 0.3286,
+          "mrp_brier": 0.3286
+        },
+        "SCT": {
+          "n": 14,
+          "no_mrp_acc": 1.0,
+          "mrp_acc": 1.0,
+          "no_mrp_brier": 0.0319,
+          "mrp_brier": 0.0319
+        },
+        "SEE": {
+          "n": 22,
+          "no_mrp_acc": 0.6818,
+          "mrp_acc": 0.6818,
+          "no_mrp_brier": 0.2697,
+          "mrp_brier": 0.2697
+        },
+        "SWE": {
+          "n": 8,
+          "no_mrp_acc": 0.75,
+          "mrp_acc": 0.75,
+          "no_mrp_brier": 0.1595,
+          "mrp_brier": 0.1595
+        },
+        "WLS": {
+          "n": 12,
+          "no_mrp_acc": 0.5,
+          "mrp_acc": 0.5,
+          "no_mrp_brier": 0.2572,
+          "mrp_brier": 0.2572
+        },
+        "WMD": {
+          "n": 10,
+          "no_mrp_acc": 0.4,
+          "mrp_acc": 0.4,
+          "no_mrp_brier": 0.2792,
+          "mrp_brier": 0.2792
+        },
+        "YHB": {
+          "n": 10,
+          "no_mrp_acc": 0.6,
+          "mrp_acc": 0.6,
+          "no_mrp_brier": 0.2481,
+          "mrp_brier": 0.2481
+        }
+      }
+    },
+    "n_states": 12,
+    "n_events": 192,
+    "data_path": "data/backtest/uk_2019_general.csv"
+  },
+  "us_year_fold_cross_cycle": {
+    "train_us_2016_test_us_2020": {
+      "n_train": 3130,
+      "n_test": 3060,
+      "no_mrp": {
+        "acc": 0.9464052287581699,
+        "brier": 0.062655518023346,
+        "n": 3060
+      },
+      "mrp_w36": {
+        "acc": 0.9303921568627451,
+        "brier": 0.05435484072683892,
+        "n": 3060
+      },
+      "delta_acc_mrp_minus_baseline": -0.01601307189542478
+    },
+    "train_us_2020_test_us_2016": {
+      "n_train": 3060,
+      "n_test": 3130,
+      "no_mrp": {
+        "acc": 0.8875399361022365,
+        "brier": 0.09844250276542148,
+        "n": 3130
+      },
+      "mrp_w36": {
+        "acc": 0.9143769968051119,
+        "brier": 0.0822383384630006,
+        "n": 3130
+      },
+      "delta_acc_mrp_minus_baseline": 0.026837060702875393
+    }
+  },
+  "avg_non_br": {
+    "acc_unweighted": 0.7638964584768945,
+    "acc_weighted": 0.8931369476653087,
+    "brier_unweighted": 0.15591702573817484,
+    "brier_weighted": 0.06312257863409552,
+    "n_total": 6382
+  },
+  "br_2024_for_comparison": {
+    "br_avg_acc_year_fold_cv": 0.9721,
+    "br_avg_brier_year_fold_cv": 0.1048,
+    "br_per_year_acc": {
+      "2010": 1.0,
+      "2016": 0.85,
+      "2018": 0.9857,
+      "2020": 1.0,
+      "2022": 1.0,
+      "2024": 0.8971
+    },
+    "source": "data/political_autoresearch_results.json (best config)"
+  }
+}

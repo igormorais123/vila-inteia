@@ -1,11 +1,11 @@
 {
-  "version": "v1.2",
-  "fitted_at": "2026-05-05",
+  "version": "v1.3",
+  "fitted_at": "2026-05-07",
   "operational_filter_days": 30,
-  "stein_shrink": 0.05,
-  "w_linzer": 0.5,
-  "sigma_intercept_pp": 4.0,
-  "sigma_slope_pp_per_day": 0.05,
+  "stein_shrink": 0.4,
+  "w_linzer": 0.7,
+  "sigma_intercept_pp": 3.0,
+  "sigma_slope_pp_per_day": 0.01,
   "house_effects_enabled": false,
   "blend_formula": "p = (1-w_linzer)*p_cohort + w_linzer * Phi(lead_pp / (sigma_intercept + sigma_slope*days))",
   "validation": {
@@ -82,6 +82,7 @@
     }
   },
   "notes": [
+    "v1.3 fix: hyperparams alinhados com autoresearch best (97.21% MRP). Anteriormente shrink=0.05/wlin=0.5 era pre-MRP baseline",
     "Onda 4: MRP state baseline (UF, regime) Laplace-smoothed -> avg 97.21%, 2024 SP 89.71%",
     "Federal presidential elections 2010, 2018, 2022: 100% acc within T<=30 (full coverage)",
     "2024 SP mayor: industry-wide poll miss (Datafolha/Quaest/Atlas all had Boulos ahead, Nunes won)",
