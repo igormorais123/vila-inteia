@@ -1,0 +1,130 @@
+{
+  "model": "BART",
+  "backend": "pymc_bart",
+  "backend_note": "pymc-bart available",
+  "honest_proxy": false,
+  "seed": 42,
+  "features": [
+    "poll_lead_pp",
+    "days_to",
+    "incumbente",
+    "regime_left",
+    "regime_center",
+    "regime_right",
+    "uf_AC",
+    "uf_AL",
+    "uf_AM",
+    "uf_AP",
+    "uf_BA",
+    "uf_BR",
+    "uf_CE",
+    "uf_DF",
+    "uf_ES",
+    "uf_GO",
+    "uf_MA",
+    "uf_MG",
+    "uf_MS",
+    "uf_MT",
+    "uf_PA",
+    "uf_PB",
+    "uf_PE",
+    "uf_PI",
+    "uf_PR",
+    "uf_RJ",
+    "uf_RN",
+    "uf_RO",
+    "uf_RR",
+    "uf_RS",
+    "uf_SC",
+    "uf_SE",
+    "uf_SP",
+    "uf_TO"
+  ],
+  "n_features": 34,
+  "n_params_estimate": 400,
+  "bart_config": {
+    "draws": 150,
+    "tune": 150,
+    "n_trees": 50
+  },
+  "years": [
+    2010,
+    2016,
+    2018,
+    2020,
+    2022,
+    2024
+  ],
+  "n_per_cycle": {
+    "2010": 86,
+    "2016": 20,
+    "2018": 70,
+    "2020": 30,
+    "2022": 120,
+    "2024": 68
+  },
+  "per_cycle": {
+    "2010": {
+      "n": 86,
+      "brier": 0.029281008748026995,
+      "acc": 1.0,
+      "log_loss": 0.1578611127466531,
+      "fit_time_s": 30.45,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    },
+    "2016": {
+      "n": 20,
+      "brier": 0.21462749137070616,
+      "acc": 0.7,
+      "log_loss": 0.6164973873190023,
+      "fit_time_s": 23.553,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    },
+    "2018": {
+      "n": 70,
+      "brier": 0.0032837413608886594,
+      "acc": 1.0,
+      "log_loss": 0.049464702320291584,
+      "fit_time_s": 21.524,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    },
+    "2020": {
+      "n": 30,
+      "brier": 0.014153850983978209,
+      "acc": 0.9666666666666667,
+      "log_loss": 0.06311846390576833,
+      "fit_time_s": 22.607,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    },
+    "2022": {
+      "n": 120,
+      "brier": 0.12881461507830191,
+      "acc": 0.8333333333333334,
+      "log_loss": 0.4024669079479474,
+      "fit_time_s": 17.017,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    },
+    "2024": {
+      "n": 68,
+      "brier": 0.30493828733235884,
+      "acc": 0.5294117647058824,
+      "log_loss": 0.9139361911430197,
+      "fit_time_s": 24.849,
+      "predict_time_ms_per_event": 0.0,
+      "backend": "pymc_bart"
+    }
+  },
+  "summary": {
+    "n": 394,
+    "brier_avg": 0.110809,
+    "acc_avg": 0.850254,
+    "log_loss_avg": 0.359659,
+    "fit_time_s_total": 139.999,
+    "predict_time_ms_per_event_avg": 0.0
+  }
+}
