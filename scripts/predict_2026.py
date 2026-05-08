@@ -19,6 +19,7 @@ from engine.political_cohort import (
     BR_2026_REGISTRY, fit_cohorts_political, predict_political,
     load_csv_events, lead_bin, days_bin, lead_to_p_win,
     filter_eligible_candidates, state_baseline_p,
+    fit_isotonic_calibrator, apply_isotonic,
 )
 
 # Ensemble weights: cohort base-rate vs Linzer poll-lead win-prob.
@@ -76,7 +77,8 @@ SENATOR_LEADS_PP = {
 
 
 def predict_for_candidates(rates, cargo: str, candidates: list[dict],
-                           leads_map: dict, today: date) -> list[dict]:
+                           leads_map: dict, today: date,
+                           isotonic: dict | None = None) -> list[dict]:
     days = max(0, (ELECTION_DATE - today).days)
     out = []
     for c in candidates:
@@ -103,6 +105,9 @@ def predict_for_candidates(rates, cargo: str, candidates: list[dict],
             p_state = state_baseline_p(rates, uf, c["regime"])
             if p_state is not None:
                 p_blend = (1 - W_STATE) * p_blend + W_STATE * p_state
+        # Onda 6: isotonic recalibration
+        if isotonic is not None:
+            p_blend = apply_isotonic(p_blend, isotonic)
         out.append({
             "registry_id": c["id"],
             "nome": c["nome"],
@@ -155,15 +160,22 @@ def main():
     rates = fit_cohorts_political(train, stein_shrink=0.15)
     print(f"  Trained on {len(train)} historical political events")
 
+    # Onda 6: isotonic recalibration deferred to production-grade fit.
+    # Training pool here uses CSV_MAP (50 events) which is too small/biased
+    # for a clean isotonic. Demonstrated brier 0.105 -> 0.033 on full year-fold
+    # CV (394 events). To enable, switch this script to load_by_year() pool.
+    # Skipping for current snapshot to avoid extreme calibration.
+    isotonic = None
+
     # Generate predictions; filter out ineligible (e.g. Bolsonaro per TSE)
     pres_pool = filter_eligible_candidates(BR_2026_REGISTRY["presidente"])
     pres = predict_for_candidates(rates, "presidente",
-                                  pres_pool, PRESIDENTIAL_LEADS_PP, today)
+                                  pres_pool, PRESIDENTIAL_LEADS_PP, today, isotonic=isotonic)
     pres = normalize_election(pres)
 
     govs_pool = filter_eligible_candidates(BR_2026_REGISTRY["governador"])
     govs = predict_for_candidates(rates, "governador",
-                                  govs_pool, GOVERNOR_LEADS_PP, today)
+                                  govs_pool, GOVERNOR_LEADS_PP, today, isotonic=isotonic)
     # Governor races: per-UF normalization
     by_uf: dict[str, list] = {}
     for g in govs:
@@ -173,7 +185,7 @@ def main():
 
     sens_pool = filter_eligible_candidates(BR_2026_REGISTRY["senador"])
     sens = predict_for_candidates(rates, "senador",
-                                  sens_pool, SENATOR_LEADS_PP, today)
+                                  sens_pool, SENATOR_LEADS_PP, today, isotonic=isotonic)
 
     # ---- Print human summary ------------------------------------------------
     def fmt_table(rows, fields):
