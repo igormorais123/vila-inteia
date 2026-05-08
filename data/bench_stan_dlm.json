@@ -1,0 +1,65 @@
+{
+  "model": "Pure-Python Kalman DLM (Linzer 2013 equivalent)",
+  "honest_note": "cmdstanpy install requires Stan toolchain. Pure-Python equivalent: random walk vote share + observation noise. MLE grid (sigma_walk, sigma_obs).",
+  "config": {
+    "seed": 42
+  },
+  "per_year": {
+    "2010": {
+      "n": 86,
+      "brier": 0.00010000000000000013,
+      "acc": 1.0,
+      "log_loss": 0.010050335853501452,
+      "sigma_walk": 0.01,
+      "sigma_obs": 0.02
+    },
+    "2016": {
+      "n": 20,
+      "brier": 0.29410000000000003,
+      "acc": 0.7,
+      "log_loss": 1.3885862908938782,
+      "sigma_walk": 0.005,
+      "sigma_obs": 0.02
+    },
+    "2018": {
+      "n": 70,
+      "brier": 0.00010000000000000018,
+      "acc": 1.0,
+      "log_loss": 0.01005033585350145,
+      "sigma_walk": 0.01,
+      "sigma_obs": 0.02
+    },
+    "2020": {
+      "n": 30,
+      "brier": 0.06543333333333333,
+      "acc": 0.9333333333333333,
+      "log_loss": 0.3163916591958074,
+      "sigma_walk": 0.01,
+      "sigma_obs": 0.02
+    },
+    "2022": {
+      "n": 120,
+      "brier": 0.024913263507690988,
+      "acc": 1.0,
+      "log_loss": 0.10457371025349535,
+      "sigma_walk": 0.01,
+      "sigma_obs": 0.02
+    },
+    "2024": {
+      "n": 68,
+      "brier": 0.2960887708675436,
+      "acc": 0.35294117647058826,
+      "log_loss": 0.7871767967459462,
+      "sigma_walk": 0.01,
+      "sigma_obs": 0.02
+    }
+  },
+  "avg": {
+    "acc": 0.868020304568528,
+    "brier": 0.07864017269014184,
+    "log_loss": 0.266264455319903,
+    "n": 394,
+    "fit_time_s": 0.05517380000310368,
+    "predict_time_ms_per_event": 0.06706044670291302
+  }
+}
