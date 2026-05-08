@@ -1,7 +1,7 @@
 {
-  "predicted_at": "2026-05-05",
+  "predicted_at": "2026-05-08",
   "election_date": "2026-10-04",
-  "horizon_days": 152,
+  "horizon_days": 149,
   "n_train_events": 50,
   "model": "political_cohort_v1.1",
   "disclaimer": "Snapshot 2026-05 \u2014 todas as candidaturas marcadas 'speculation' ainda nao foram registradas formalmente. Bolsonaro filtrado (inelegivel TSE ate 2030). Senado lista titulares cuja cadeira vence em 2026 (eleitos 2018), nao candidatos confirmados. Probabilidades sao priors baseados em regime+incumbencia+pesquisas agregadas, nao previsoes determinadas. Recalibragem mensal.",
@@ -18,11 +18,11 @@
       "poll_lead_pp": 0.0,
       "p_cohort": 0.882,
       "p_linzer": 0.5,
-      "p_raw": 0.7222,
+      "p_raw": 0.6733,
       "tier": "cargo",
       "n_cohort": 10,
-      "horizon_days": 152,
-      "p_winner": 0.2479
+      "horizon_days": 149,
+      "p_winner": 0.2963
     },
     {
       "registry_id": "tarcisio_2026",
@@ -35,12 +35,12 @@
       "status_note": "Poss\u00edvel candidato; alternativa = reelei\u00e7\u00e3o SP",
       "poll_lead_pp": -8.0,
       "p_cohort": 0.882,
-      "p_linzer": 0.2452,
-      "p_raw": 0.6307,
+      "p_linzer": 0.0374,
+      "p_raw": 0.4561,
       "tier": "cargo",
       "n_cohort": 10,
-      "horizon_days": 152,
-      "p_winner": 0.2165
+      "horizon_days": 149,
+      "p_winner": 0.2007
     },
     {
       "registry_id": "ratinho_2026",
@@ -53,12 +53,12 @@
       "status_note": "Articula\u00e7\u00e3o para presid\u00eancia; cen\u00e1rio fluido",
       "poll_lead_pp": -22.0,
       "p_cohort": 0.882,
-      "p_linzer": 0.0289,
-      "p_raw": 0.5615,
+      "p_linzer": 0.0,
+      "p_raw": 0.4393,
       "tier": "cargo",
       "n_cohort": 10,
-      "horizon_days": 152,
-      "p_winner": 0.1927
+      "horizon_days": 149,
+      "p_winner": 0.1933
     },
     {
       "registry_id": "zema_2026",
@@ -71,12 +71,12 @@
       "status_note": "Articula\u00e7\u00e3o 2026; sem registro formal",
       "poll_lead_pp": -25.0,
       "p_cohort": 0.882,
-      "p_linzer": 0.0156,
-      "p_raw": 0.5572,
+      "p_linzer": 0.0,
+      "p_raw": 0.4393,
       "tier": "cargo",
       "n_cohort": 10,
-      "horizon_days": 152,
-      "p_winner": 0.1912
+      "horizon_days": 149,
+      "p_winner": 0.1933
     },
     {
       "registry_id": "boulos_2026",
@@ -89,15 +89,35 @@
       "status_note": "Cen\u00e1rio 2026 fluido; alternativa = SP gov ou def federal",
       "poll_lead_pp": -33.0,
       "p_cohort": 0.882,
-      "p_linzer": 0.0022,
-      "p_raw": 0.4421,
+      "p_linzer": 0.0,
+      "p_raw": 0.2646,
       "tier": "cargo",
       "n_cohort": 10,
-      "horizon_days": 152,
-      "p_winner": 0.1517
+      "horizon_days": 149,
+      "p_winner": 0.1164
     }
   ],
   "governador_by_uf": {
+    "MG": [
+      {
+        "registry_id": "mg_2026_zema",
+        "nome": "Romeu Zema",
+        "partido": "NOVO",
+        "uf": "MG",
+        "incumbente": 1,
+        "regime": "right",
+        "status": "speculation",
+        "status_note": "Pode disputar presid\u00eancia; reelei\u00e7\u00e3o alternativa",
+        "poll_lead_pp": 18,
+        "p_cohort": 0.78,
+        "p_linzer": 1.0,
+        "p_raw": 0.934,
+        "tier": "global",
+        "n_cohort": 0,
+        "horizon_days": 149,
+        "p_winner": 1.0
+      }
+    ],
     "PR": [
       {
         "registry_id": "pr_2026_ratinho",
@@ -110,11 +130,11 @@
         "status_note": "Pode disputar presid\u00eancia; reelei\u00e7\u00e3o alternativa",
         "poll_lead_pp": 30,
         "p_cohort": 0.78,
-        "p_linzer": 0.9951,
-        "p_raw": 0.8876,
+        "p_linzer": 1.0,
+        "p_raw": 0.934,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -130,31 +150,11 @@
         "status_note": "Pode disputar presid\u00eancia; reelei\u00e7\u00e3o vedada (2 mandatos)",
         "poll_lead_pp": 20,
         "p_cohort": 0.78,
-        "p_linzer": 0.9577,
-        "p_raw": 0.8688,
+        "p_linzer": 1.0,
+        "p_raw": 0.934,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
-        "p_winner": 1.0
-      }
-    ],
-    "MG": [
-      {
-        "registry_id": "mg_2026_zema",
-        "nome": "Romeu Zema",
-        "partido": "NOVO",
-        "uf": "MG",
-        "incumbente": 1,
-        "regime": "right",
-        "status": "speculation",
-        "status_note": "Pode disputar presid\u00eancia; reelei\u00e7\u00e3o alternativa",
-        "poll_lead_pp": 18,
-        "p_cohort": 0.78,
-        "p_linzer": 0.9396,
-        "p_raw": 0.8598,
-        "tier": "global",
-        "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -170,12 +170,12 @@
         "status_note": "Reelei\u00e7\u00e3o vs presid\u00eancia; decis\u00e3o pendente",
         "poll_lead_pp": 14,
         "p_cohort": 0.78,
-        "p_linzer": 0.8863,
-        "p_raw": 0.8331,
+        "p_linzer": 0.9991,
+        "p_raw": 0.9334,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
-        "p_winner": 0.6509
+        "horizon_days": 149,
+        "p_winner": 0.7991
       },
       {
         "registry_id": "sp_2026_haddad",
@@ -188,12 +188,12 @@
         "status_note": "Pr\u00e9-candidato natural; ministro atual",
         "poll_lead_pp": -14,
         "p_cohort": 0.78,
-        "p_linzer": 0.1137,
-        "p_raw": 0.4469,
+        "p_linzer": 0.0009,
+        "p_raw": 0.2346,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
-        "p_winner": 0.3491
+        "horizon_days": 149,
+        "p_winner": 0.2009
       }
     ],
     "BA": [
@@ -208,11 +208,11 @@
         "status_note": "Reelei\u00e7\u00e3o esperada, base PT consolidada",
         "poll_lead_pp": 12,
         "p_cohort": 0.78,
-        "p_linzer": 0.8495,
-        "p_raw": 0.8148,
+        "p_linzer": 0.9962,
+        "p_raw": 0.9314,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -228,11 +228,11 @@
         "status_note": "Reelei\u00e7\u00e3o prov\u00e1vel, oposi\u00e7\u00e3o fragmentada",
         "poll_lead_pp": 9,
         "p_cohort": 0.78,
-        "p_linzer": 0.7811,
-        "p_raw": 0.7805,
+        "p_linzer": 0.9775,
+        "p_raw": 0.9182,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -248,11 +248,11 @@
         "status_note": "Reelei\u00e7\u00e3o esperada",
         "poll_lead_pp": 8,
         "p_cohort": 0.78,
-        "p_linzer": 0.7548,
-        "p_raw": 0.7674,
+        "p_linzer": 0.9626,
+        "p_raw": 0.9078,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -268,11 +268,11 @@
         "status_note": "Reelei\u00e7\u00e3o esperada, sem oposi\u00e7\u00e3o definida",
         "poll_lead_pp": 6,
         "p_cohort": 0.78,
-        "p_linzer": 0.6975,
-        "p_raw": 0.7388,
+        "p_linzer": 0.9093,
+        "p_raw": 0.8705,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ],
@@ -288,11 +288,11 @@
         "status_note": "Reelei\u00e7\u00e3o com tens\u00e3o interna",
         "poll_lead_pp": 4,
         "p_cohort": 0.78,
-        "p_linzer": 0.6349,
-        "p_raw": 0.7074,
+        "p_linzer": 0.8135,
+        "p_raw": 0.8035,
         "tier": "global",
         "n_cohort": 0,
-        "horizon_days": 152,
+        "horizon_days": 149,
         "p_winner": 1.0
       }
     ]
@@ -310,10 +310,10 @@
       "poll_lead_pp": 0,
       "p_cohort": 0.78,
       "p_linzer": 0.5,
-      "p_raw": 0.64,
+      "p_raw": 0.584,
       "tier": "global",
       "n_cohort": 0,
-      "horizon_days": 152
+      "horizon_days": 149
     },
     {
       "registry_id": "rj_sen_2018_arolde",
@@ -327,10 +327,10 @@
       "poll_lead_pp": 0,
       "p_cohort": 0.78,
       "p_linzer": 0.5,
-      "p_raw": 0.64,
+      "p_raw": 0.584,
       "tier": "global",
       "n_cohort": 0,
-      "horizon_days": 152
+      "horizon_days": 149
     },
     {
       "registry_id": "mg_sen_2018_anastasia",
@@ -344,10 +344,10 @@
       "poll_lead_pp": 0,
       "p_cohort": 0.78,
       "p_linzer": 0.5,
-      "p_raw": 0.64,
+      "p_raw": 0.584,
       "tier": "global",
       "n_cohort": 0,
-      "horizon_days": 152
+      "horizon_days": 149
     },
     {
       "registry_id": "rs_sen_2018_paim",
@@ -361,10 +361,10 @@
       "poll_lead_pp": 0,
       "p_cohort": 0.78,
       "p_linzer": 0.5,
-      "p_raw": 0.64,
+      "p_raw": 0.584,
       "tier": "global",
       "n_cohort": 0,
-      "horizon_days": 152
+      "horizon_days": 149
     }
   ]
 }

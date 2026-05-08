@@ -1,0 +1,647 @@
+{
+  "config": {
+    "shrink": 0.4,
+    "w_linzer": 0.7,
+    "sigma_int": 3.0,
+    "sigma_slope": 0.01,
+    "w_state": 0.36,
+    "use_house_effects": false
+  },
+  "summary": {
+    "n_total": 394,
+    "acc_with_mrp": 0.9721,
+    "acc_no_mrp": 0.9188,
+    "n_misses_with_mrp": 11,
+    "per_year_acc": {
+      "2010": {
+        "n": 86,
+        "acc": 1.0
+      },
+      "2016": {
+        "n": 20,
+        "acc": 0.85
+      },
+      "2018": {
+        "n": 70,
+        "acc": 0.9857142857142858
+      },
+      "2020": {
+        "n": 30,
+        "acc": 1.0
+      },
+      "2022": {
+        "n": 120,
+        "acc": 1.0
+      },
+      "2024": {
+        "n": 68,
+        "acc": 0.8970588235294118
+      }
+    },
+    "mrp_impact": {
+      "mrp_unchanged_hit": 361,
+      "mrp_recovered": 22,
+      "mrp_unchanged": 10,
+      "mrp_introduced": 1
+    }
+  },
+  "misses": [
+    {
+      "evento_id": "pressp_mayor_2016_2016-09-13_Ibope_w",
+      "cycle": 2016,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -13.0,
+      "days_to": 19,
+      "outcome": 1,
+      "p_cohort": 0.5132,
+      "p_linzer": 0.0,
+      "p_no_mrp": 0.154,
+      "p_state_baseline": 0.9804,
+      "p_predicted": 0.4515,
+      "tier": "cargo_days",
+      "n_cohort": 34,
+      "state_cell_n": 49,
+      "state_cell_wins": 49,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2016,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2016_2016-09-13_Ibope_l",
+      "cycle": 2016,
+      "uf": "SP",
+      "regime": "left",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": 13.0,
+      "days_to": 19,
+      "outcome": 0,
+      "p_cohort": 0.5132,
+      "p_linzer": 1.0,
+      "p_no_mrp": 0.8539,
+      "p_state_baseline": 0.0192,
+      "p_predicted": 0.5534,
+      "tier": "cargo_days",
+      "n_cohort": 34,
+      "state_cell_n": 50,
+      "state_cell_wins": 0,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2016,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2016_2016-09-08_Datafolha_w",
+      "cycle": 2016,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -10.0,
+      "days_to": 24,
+      "outcome": 1,
+      "p_cohort": 0.5132,
+      "p_linzer": 0.001,
+      "p_no_mrp": 0.1547,
+      "p_state_baseline": 0.9804,
+      "p_predicted": 0.4519,
+      "tier": "cargo_days",
+      "n_cohort": 34,
+      "state_cell_n": 49,
+      "state_cell_wins": 49,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2016,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pres2018_2018-09-28_CNT/MDAArchived2018-09-30attheWaybackMachine_haddad",
+      "cycle": 2018,
+      "uf": "BR",
+      "regime": "left",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "presidente",
+      "poll_lead_pp": -3.0,
+      "days_to": 9,
+      "outcome": 0,
+      "p_cohort": 0.515,
+      "p_linzer": 0.1658,
+      "p_no_mrp": 0.2706,
+      "p_state_baseline": 0.9765,
+      "p_predicted": 0.5247,
+      "tier": "cargo_days",
+      "n_cohort": 34,
+      "state_cell_n": 83,
+      "state_cell_wins": 82,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 1,
+      "test_year": 2018,
+      "category": "realignment",
+      "mrp_impact": "mrp_introduced"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-10-05_Datafolha_w",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -3.0,
+      "days_to": 1,
+      "outcome": 1,
+      "p_cohort": 0.2149,
+      "p_linzer": 0.1595,
+      "p_no_mrp": 0.1761,
+      "p_state_baseline": 0.963,
+      "p_predicted": 0.4594,
+      "tier": "full",
+      "n_cohort": 5,
+      "state_cell_n": 25,
+      "state_cell_wins": 25,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-10-04_AtlasIntel_w",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -11.1,
+      "days_to": 2,
+      "outcome": 1,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.0001,
+      "p_no_mrp": 0.1546,
+      "p_state_baseline": 0.963,
+      "p_predicted": 0.4456,
+      "tier": "cargo_days",
+      "n_cohort": 38,
+      "state_cell_n": 25,
+      "state_cell_wins": 25,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-10-04_AtlasIntel_l",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "left",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": 11.1,
+      "days_to": 2,
+      "outcome": 0,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.9999,
+      "p_no_mrp": 0.8544,
+      "p_state_baseline": 0.0357,
+      "p_predicted": 0.5597,
+      "tier": "cargo_days",
+      "n_cohort": 38,
+      "state_cell_n": 26,
+      "state_cell_wins": 0,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-10-02_InstitutoVerit_l",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "left",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": 5.8,
+      "days_to": 4,
+      "outcome": 0,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.9718,
+      "p_no_mrp": 0.8347,
+      "p_state_baseline": 0.0357,
+      "p_predicted": 0.5471,
+      "tier": "cargo_days",
+      "n_cohort": 38,
+      "state_cell_n": 26,
+      "state_cell_wins": 0,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-09-29_AtlasIntel_l",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "left",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": 6.5,
+      "days_to": 7,
+      "outcome": 0,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.9829,
+      "p_no_mrp": 0.8425,
+      "p_state_baseline": 0.0357,
+      "p_predicted": 0.552,
+      "tier": "cargo_days",
+      "n_cohort": 38,
+      "state_cell_n": 26,
+      "state_cell_wins": 0,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-09-15_InstitutoVerit_w",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -7.9,
+      "days_to": 21,
+      "outcome": 1,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.0069,
+      "p_no_mrp": 0.1593,
+      "p_state_baseline": 0.963,
+      "p_predicted": 0.4486,
+      "tier": "cargo_days",
+      "n_cohort": 12,
+      "state_cell_n": 25,
+      "state_cell_wins": 25,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    },
+    {
+      "evento_id": "pressp_mayor_2024_2024-09-10_AtlasIntel_w",
+      "cycle": 2024,
+      "uf": "SP",
+      "regime": "center",
+      "partido": "",
+      "incumbente": 0,
+      "cargo": "prefeito",
+      "poll_lead_pp": -7.9,
+      "days_to": 26,
+      "outcome": 1,
+      "p_cohort": 0.5149,
+      "p_linzer": 0.0077,
+      "p_no_mrp": 0.1599,
+      "p_state_baseline": 0.963,
+      "p_predicted": 0.449,
+      "tier": "cargo_days",
+      "n_cohort": 12,
+      "state_cell_n": 25,
+      "state_cell_wins": 25,
+      "hit_with_mrp": 0,
+      "hit_no_mrp": 0,
+      "test_year": 2024,
+      "category": "industry_bias",
+      "mrp_impact": "mrp_unchanged"
+    }
+  ],
+  "category_counts": {
+    "industry_bias": 10,
+    "realignment": 1
+  },
+  "severity_matrix": {
+    "BR|left": {
+      "n_events": 111,
+      "n_misses_with_mrp": 1,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 75
+    },
+    "BR|center": {
+      "n_events": 43,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 37
+    },
+    "SP|center": {
+      "n_events": 59,
+      "n_misses_with_mrp": 6,
+      "n_misses_no_mrp": 16,
+      "min_state_cell_n": 25
+    },
+    "SP|left": {
+      "n_events": 60,
+      "n_misses_with_mrp": 4,
+      "n_misses_no_mrp": 16,
+      "min_state_cell_n": 26
+    },
+    "BR|right": {
+      "n_events": 68,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 39
+    },
+    "AC|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AL|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AM|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AP|center": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "BA|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "CE|left": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "DF|center": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "ES|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "GO|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "MA|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "MG|right": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "MS|center": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "MT|right": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PA|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PB|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PE|center": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PI|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PR|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RJ|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RN|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RO|right": {
+      "n_events": 2,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RR|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RS|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "SC|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "SE|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "SP|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "TO|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AC|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AL|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "AM|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "BA|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "ES|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "GO|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "MA|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PA|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PB|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PI|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "PR|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RJ|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RN|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RR|center": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "RS|right": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "SC|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "SE|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    },
+    "TO|left": {
+      "n_events": 1,
+      "n_misses_with_mrp": 0,
+      "n_misses_no_mrp": 0,
+      "min_state_cell_n": 0
+    }
+  },
+  "adaptive_rule": {
+    "formula": "w_state(uf,regime) = 0.36 * min(1, state_cell_n / 5)",
+    "rationale": "When (UF, regime) cell has fewer than 5 historical events the MRP baseline is unreliable and may inject contradictory prior (see realignment cluster). Attenuate proportionally.",
+    "sparse_threshold": 5
+  }
+}
