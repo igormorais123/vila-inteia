@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import sys
+import argparse
 from datetime import date
 from pathlib import Path
 
@@ -146,8 +147,26 @@ CSV_MAP = {
 }
 
 
-def main():
-    today = date.today()
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Generate BR 2026 political prediction snapshot.",
+    )
+    parser.add_argument(
+        "--out",
+        default=str(ROOT / "data" / "predictions_2026.json"),
+        help="Arquivo JSON de saida.",
+    )
+    parser.add_argument(
+        "--today",
+        default=None,
+        help="Data base YYYY-MM-DD. Default: data atual.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None):
+    args = parse_args(argv)
+    today = date.fromisoformat(args.today) if args.today else date.today()
     print(f"Predicting BR 2026 elections (today={today}, election={ELECTION_DATE})")
 
     # Train on everything available
@@ -242,7 +261,9 @@ def main():
         "governador_by_uf": by_uf,
         "senador": sens,
     }
-    out_path = ROOT / "data" / "predictions_2026.json"
+    out_path = Path(args.out)
+    if not out_path.is_absolute():
+        out_path = ROOT / out_path
     with open(out_path, "w") as f:
         json.dump(snap, f, indent=2, default=str)
     print(f"\nSaved -> {out_path}")

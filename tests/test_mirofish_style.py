@@ -30,7 +30,7 @@ def check(cond, msg):
 
 
 def _load_sim():
-    banco = json.load(open(f"{REPO}/data/banco-consultores-lendarios.json"))
+    banco = json.load(open(f"{REPO}/data/banco-consultores-lendarios.json", encoding="utf-8"))
     personas = {p["id"]: Persona(dados_consultor=p) for p in banco if p["id"] in PANEL}
     class _S:
         def __init__(self): self.personas = personas
@@ -98,13 +98,16 @@ check(rel.metricas == simulacao.resultado, "metricas == sim.resultado")
 
 print("\n[6] pipeline_completo end-to-end")
 resetar_historico()
+all_paths = sorted(glob.glob(f"{REPO}/data/backtest/*.csv"))
+expected_events = sum(len(carregar_dataset(f)) for f in all_paths)
 out = pipeline_completo(
     base_dir=f"{REPO}/data/backtest", dataset_glob="*.csv",
     persona_ids=PANEL, sim=sim, llm_fn=_make_llm_fn(),
 )
 check("grafo" in out and "simulacao" in out and "relatorio" in out,
       "out tem 3 sections")
-check(out["simulacao"]["steps_executados"] == 120 * 3, "120 events × 3 personas = 360 steps (Onda 231 post-cutoff v1+v2)")
+check(out["simulacao"]["steps_executados"] == expected_events * len(PANEL),
+      f"{expected_events} events × {len(PANEL)} personas = {expected_events * len(PANEL)} steps")
 check(out["pipeline_elapsed_s"] > 0, "elapsed > 0")
 check("insights" in out["relatorio"], "relatorio tem insights")
 

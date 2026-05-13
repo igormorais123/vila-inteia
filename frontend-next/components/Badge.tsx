@@ -1,5 +1,3 @@
-import { clsx } from "clsx";
-
 const PARTY_COLORS: Record<string, string> = {
   PT: "#cc1f1a", PSOL: "#ec1c24", PCdoB: "#cc1f1a", PSB: "#fbbf24",
   PDT: "#dc2626", REDE: "#16a34a",

@@ -26,7 +26,7 @@ function regimeAffinity(from: string, to: string): number {
 }
 
 export default function SecondRound({
-  candidates, winners,
+  candidates,
 }: {
   candidates: (SimCandidate & { pWinner: number })[];
   winners: number[];

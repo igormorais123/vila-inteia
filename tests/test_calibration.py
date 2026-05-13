@@ -2,7 +2,8 @@
 import sys, csv
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
 from engine.calibration import (
     fit_platt, platt_predict,
@@ -68,12 +69,11 @@ p_high = isotonic_predict(0.9, knots)
 check(p_low <= p_high, f"order preserved ({p_low:.2f} ≤ {p_high:.2f})")
 
 print("\n[3] evaluate_calibration end-to-end")
-sys.path.insert(0, "/home/pedroafonso/vila-inteia")
 from engine.post_cutoff_classifier import classify_and_predict
 
 def load_csv(fp):
     out = []
-    with open(fp) as f:
+    with open(fp, encoding="utf-8") as f:
         for r in csv.DictReader(f):
             try:
                 out.append({
@@ -93,8 +93,8 @@ cal_files = [
 ]
 cal = []
 for f in cal_files:
-    cal += load_csv(f"/home/pedroafonso/vila-inteia/data/backtest/{f}")
-test = load_csv("/home/pedroafonso/vila-inteia/data/backtest/post_cutoff_q2_2026_holdout.csv")
+    cal += load_csv(ROOT / "data" / "backtest" / f)
+test = load_csv(ROOT / "data" / "backtest" / "post_cutoff_q2_2026_holdout.csv")
 
 # Baseline
 res_base = evaluate_calibration(test, classify_and_predict, method="raw", params=None)

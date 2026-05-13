@@ -28,6 +28,7 @@ import os
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
+from pathlib import Path
 from typing import Optional, Any
 
 logger = logging.getLogger("vila-inteia.oficinas")
@@ -37,6 +38,10 @@ logger = logging.getLogger("vila-inteia.oficinas")
 # WORKSPACE — Diretório de entregas reais
 # ============================================================
 
+class WorkspacePathError(ValueError):
+    """Caminho fora do workspace ou nome de arquivo inseguro."""
+
+
 class Workspace:
     """
     Diretório de trabalho de um desafio.
@@ -44,14 +49,43 @@ class Workspace:
     """
 
     def __init__(self, base_dir: str = "data/entregas"):
-        self.base_dir = base_dir
-        os.makedirs(base_dir, exist_ok=True)
+        self.base_path = Path(base_dir).resolve()
+        self.base_dir = str(self.base_path)
+        self.base_path.mkdir(parents=True, exist_ok=True)
         self._index: list[dict] = []
 
-    def _dir_desafio(self, desafio_id: str) -> str:
-        d = os.path.join(self.base_dir, desafio_id)
-        os.makedirs(d, exist_ok=True)
+    @staticmethod
+    def _validar_segmento(valor: str, campo: str) -> str:
+        """Aceita apenas um segmento de caminho, nunca paths compostos."""
+        valor = str(valor or "").strip()
+        if (
+            not valor
+            or valor in {".", ".."}
+            or "/" in valor
+            or "\\" in valor
+            or ":" in valor
+            or Path(valor).is_absolute()
+        ):
+            raise WorkspacePathError(f"{campo} inseguro: {valor!r}")
+        return valor
+
+    def _garantir_dentro_base(self, caminho: Path) -> Path:
+        resolvido = caminho.resolve()
+        if resolvido != self.base_path and self.base_path not in resolvido.parents:
+            raise WorkspacePathError(f"caminho fora do workspace: {caminho}")
+        return resolvido
+
+    def _dir_desafio(self, desafio_id: str, criar: bool = True) -> Path:
+        desafio = self._validar_segmento(desafio_id, "desafio_id")
+        d = self._garantir_dentro_base(self.base_path / desafio)
+        if criar:
+            d.mkdir(parents=True, exist_ok=True)
         return d
+
+    def _arquivo_desafio(self, desafio_id: str, nome_arquivo: str, criar_dir: bool = True) -> Path:
+        nome = self._validar_segmento(nome_arquivo, "nome_arquivo")
+        pasta = self._dir_desafio(desafio_id, criar=criar_dir)
+        return self._garantir_dentro_base(pasta / nome)
 
     def escrever(
         self,
@@ -64,14 +98,14 @@ class Workspace:
     ) -> dict:
         """Agente escreve um arquivo real no workspace."""
         pasta = self._dir_desafio(desafio_id)
-        caminho = os.path.join(pasta, nome_arquivo)
+        caminho = self._arquivo_desafio(desafio_id, nome_arquivo)
 
         with open(caminho, "w", encoding="utf-8") as f:
             f.write(conteudo)
 
         meta = {
             "arquivo": nome_arquivo,
-            "caminho": caminho,
+            "caminho": str(caminho),
             "agente_id": agente_id,
             "agente_nome": agente_nome,
             "tipo": tipo,
@@ -81,7 +115,7 @@ class Workspace:
         self._index.append(meta)
 
         # Salvar índice
-        idx_path = os.path.join(pasta, "_index.json")
+        idx_path = pasta / "_index.json"
         with open(idx_path, "w", encoding="utf-8") as f:
             json.dump(self._index, f, ensure_ascii=False, indent=2)
 
@@ -90,7 +124,7 @@ class Workspace:
 
     def ler(self, desafio_id: str, nome_arquivo: str) -> str:
         """Agente lê arquivo do workspace."""
-        caminho = os.path.join(self._dir_desafio(desafio_id), nome_arquivo)
+        caminho = self._arquivo_desafio(desafio_id, nome_arquivo, criar_dir=False)
         if not os.path.exists(caminho):
             return ""
         with open(caminho, "r", encoding="utf-8") as f:
@@ -98,8 +132,8 @@ class Workspace:
 
     def listar(self, desafio_id: str) -> list[dict]:
         """Lista todos os arquivos do workspace."""
-        pasta = self._dir_desafio(desafio_id)
-        idx_path = os.path.join(pasta, "_index.json")
+        pasta = self._dir_desafio(desafio_id, criar=False)
+        idx_path = pasta / "_index.json"
         if os.path.exists(idx_path):
             with open(idx_path, "r", encoding="utf-8") as f:
                 return json.load(f)

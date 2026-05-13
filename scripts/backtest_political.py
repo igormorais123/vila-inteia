@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import sys
+import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -32,7 +33,20 @@ CSV_MAP = {
     "legislativo_2026": "data/backtest/brazil_votes_q1_2026.csv",
 }
 
-def main():
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run political cohort leave-one-dataset-out backtest.",
+    )
+    parser.add_argument(
+        "--out",
+        default=str(ROOT / "data" / "political_backtest_results.json"),
+        help="Arquivo JSON de saida.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None):
+    args = parse_args(argv)
     all_events: list[dict] = []
     by_dataset: dict[str, list] = {}
     for cargo_label, rel in CSV_MAP.items():
@@ -122,7 +136,9 @@ def main():
         "walk_forward_presidencial_2022": walk,
         "predictions": full_eval["preds"][:],
     }
-    out_path = ROOT / "data" / "political_backtest_results.json"
+    out_path = Path(args.out)
+    if not out_path.is_absolute():
+        out_path = ROOT / out_path
     out_path.parent.mkdir(exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(out, f, indent=2, default=str)

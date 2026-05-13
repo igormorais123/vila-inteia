@@ -1358,7 +1358,7 @@ async def votar_desafio(req: VotoRequest):
 # ============================================================
 
 @router.post("/ferramentas/python")
-async def executar_python_sandbox(req: PythonRequest):
+async def executar_python_sandbox(req: PythonRequest, _=Depends(auth_e_rate)):
     """Executa Python no sandbox de um agente."""
     sim = obter_simulacao()
     persona = sim.personas.get(req.agente_id)
@@ -1439,44 +1439,59 @@ async def detalhe_oficina(local_id: str):
 
 
 @router.get("/workspace")
-async def workspace_listar():
+async def workspace_listar(_=Depends(auth_e_rate)):
     """Lista artefatos produzidos no workspace do desafio ativo."""
     sim = obter_simulacao()
     desafio_id = sim.desafio.id if sim.desafio.ativo else ""
     if not desafio_id:
         return {"total_arquivos": 0, "arquivos": []}
-    return sim.workspace.to_dict(desafio_id)
+    try:
+        return sim.workspace.to_dict(desafio_id)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
 
 
 @router.get("/workspace/{desafio_id}")
-async def workspace_desafio(desafio_id: str):
+async def workspace_desafio(desafio_id: str, _=Depends(auth_e_rate)):
     """Lista artefatos de um desafio específico."""
     sim = obter_simulacao()
-    return sim.workspace.to_dict(desafio_id)
+    try:
+        return sim.workspace.to_dict(desafio_id)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
 
 
 @router.get("/workspace/{desafio_id}/avaliar")
-async def workspace_avaliar(desafio_id: str):
+async def workspace_avaliar(desafio_id: str, _=Depends(auth_e_rate)):
     """Helena avalia as entregas do workspace."""
     from engine.helena_ceo import avaliar_workspace
     sim = obter_simulacao()
-    return avaliar_workspace(sim.workspace, desafio_id)
+    try:
+        return avaliar_workspace(sim.workspace, desafio_id)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
 
 
 @router.get("/workspace/{desafio_id}/compilar")
-async def workspace_compilar(desafio_id: str):
+async def workspace_compilar(desafio_id: str, _=Depends(auth_e_rate)):
     """Compila todas as entregas em documento único."""
     from fastapi.responses import PlainTextResponse
     sim = obter_simulacao()
-    compilado = sim.workspace.compilar(desafio_id)
+    try:
+        compilado = sim.workspace.compilar(desafio_id)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
     return PlainTextResponse(compilado, media_type="text/markdown")
 
 
 @router.get("/workspace/{desafio_id}/arquivo/{nome_arquivo:path}")
-async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str):
+async def workspace_ler_arquivo(desafio_id: str, nome_arquivo: str, _=Depends(auth_e_rate)):
     """Lê conteúdo de um artefato."""
     sim = obter_simulacao()
-    conteudo = sim.workspace.ler(desafio_id, nome_arquivo)
+    try:
+        conteudo = sim.workspace.ler(desafio_id, nome_arquivo)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
     if not conteudo:
         raise HTTPException(404, f"Arquivo '{nome_arquivo}' não encontrado")
     return {"arquivo": nome_arquivo, "conteudo": conteudo}
@@ -1497,7 +1512,7 @@ class PublicarMiranteRequest(BaseModel):
 
 
 @router.post("/mirante/publicar")
-async def publicar_mirante(req: PublicarMiranteRequest):
+async def publicar_mirante(req: PublicarMiranteRequest, _=Depends(auth_e_rate)):
     """Publica artigo no Mirante News (mirantenews.com.br)."""
     from engine.publicar_mirante import ArtigoMirante, publicar_no_mirante
 
@@ -1518,6 +1533,7 @@ async def publicar_workspace_mirante(
     titulo: str = Query(...),
     agente_id: str = Query(...),
     auto_push: bool = Query(False),
+    _=Depends(auth_e_rate),
 ):
     """Compila artefatos de um agente no workspace e publica no Mirante."""
     from engine.publicar_mirante import criar_artigo_de_workspace, publicar_no_mirante

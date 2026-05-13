@@ -100,8 +100,6 @@ export default async function Governadores() {
 
 function CompetitiveUF({ uf, cands }: { uf: string; cands: any[] }) {
   const sorted = [...cands].sort((a, b) => (b.p_winner ?? 0) - (a.p_winner ?? 0));
-  const [top, ...rest] = sorted;
-  const topColor = REGIME_COLOR[top.regime || "center"];
 
   return (
     <div className="rounded-xl p-5"

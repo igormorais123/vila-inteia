@@ -18,6 +18,7 @@ Columns:
 Seed=42 (where applicable).
 """
 from __future__ import annotations
+import argparse
 import json
 from pathlib import Path
 
@@ -252,7 +253,25 @@ def render_md(rows):
     return "\n".join(out)
 
 
-def main():
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Consolidate benchmark JSON files into a Markdown table.",
+    )
+    parser.add_argument(
+        "--out",
+        default=str(DOCS / "BENCHMARKS.md"),
+        help="Arquivo Markdown de saida.",
+    )
+    parser.add_argument(
+        "--no-backup",
+        action="store_true",
+        help="Nao criar arquivo .bak quando a saida ja existe.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None):
+    args = parse_args(argv)
     DOCS.mkdir(parents=True, exist_ok=True)
     rows = []
     rows.extend(collect_baseline_gauntlet())
@@ -263,8 +282,11 @@ def main():
 
     md = render_md(rows)
 
-    out_path = DOCS / "BENCHMARKS.md"
-    if out_path.exists():
+    out_path = Path(args.out)
+    if not out_path.is_absolute():
+        out_path = ROOT / out_path
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if out_path.exists() and not args.no_backup:
         bak = out_path.with_suffix(".md.bak")
         try:
             bak.write_text(out_path.read_text())
