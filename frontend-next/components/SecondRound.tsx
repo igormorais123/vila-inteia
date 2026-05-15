@@ -69,7 +69,7 @@ export default function SecondRound({
           2º turno simulado
         </span>
         <span className="text-[11px]" style={{ color: "var(--ink-4)" }}>
-          transferência por afinidade de regime
+          votos dos eliminados seguem proximidade política
         </span>
       </div>
 
@@ -122,7 +122,7 @@ export default function SecondRound({
 
       <div className="text-[12px]" style={{ color: "var(--ink-3)" }}>
         <strong style={{ color: "var(--gold)" }}>{winner.nome}</strong> vence por{" "}
-        <span className="mono">{margin.toFixed(1)}pp</span>. Eliminados:{" "}
+        <span className="mono">{margin.toFixed(1)} pontos</span>. Fora do 2º turno:{" "}
         {eliminated.map((e) => e.nome.split(" ")[0]).join(", ") || "nenhum"}.
       </div>
     </div>

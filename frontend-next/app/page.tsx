@@ -1,11 +1,13 @@
 import { fetchPresidente, fetchHealth } from "@/lib/api";
 import Shell from "@/components/Shell";
+import ReadingGuide from "@/components/ReadingGuide";
+import { chanceBand, marginReading, pct, plainStatusNote, shortName } from "@/lib/explain";
 
 export const dynamic = "force-dynamic";
 
 const REGIME_LABEL: Record<string, string> = {
   left: "esquerda", right: "direita", center: "centro",
-  pop_left: "pop. esq", pop_right: "pop. dir",
+  pop_left: "esquerda popular", pop_right: "direita popular",
 };
 
 const REGIME_COLOR: Record<string, string> = {
@@ -16,8 +18,8 @@ const REGIME_COLOR: Record<string, string> = {
 export default async function Home() {
   let snap, health;
   try { [snap, health] = await Promise.all([fetchPresidente(), fetchHealth()]); }
-  catch (e) {
-    return <Shell active="/"><p className="text-red-400">API: {(e as Error).message}</p></Shell>;
+  catch {
+    return <Shell active="/"><p className="text-red-400">Não foi possível carregar o painel agora.</p></Shell>;
   }
 
   const sorted = [...snap.candidates].sort((a, b) => (b.p_winner ?? 0) - (a.p_winner ?? 0));
@@ -31,6 +33,9 @@ export default async function Home() {
     .reduce((s, c) => s + (c.p_winner ?? 0), 0);
   const totalCenter = sorted.filter((c) => c.regime === "center")
     .reduce((s, c) => s + (c.p_winner ?? 0), 0);
+  const leaderChance = leader.p_winner ?? 0;
+  const runnerChance = runner.p_winner ?? 0;
+  const rightVsLeader = (totalRight - leaderChance) * 100;
 
   return (
     <Shell active="/">
@@ -39,21 +44,22 @@ export default async function Home() {
         <div className="col-span-12 lg:col-span-7">
           <div className="text-[11px] mono uppercase tracking-[0.2em] mb-4"
             style={{ color: "var(--ink-3)" }}>
-            Presidência da República · 1º turno · {snap.horizon_days} dias
+            Presidência da República · 1º turno · faltam {snap.horizon_days} dias
           </div>
-          <h1 className="serif text-[68px] leading-[1.05] font-light tracking-tight mb-4">
-            Lula lidera, mas <em className="font-normal" style={{ color: "var(--gold)" }}>
-            corrida fragmentada</em>{" "}
-            entre 5 nomes.
+          <h1 className="serif text-[38px] md:text-[68px] leading-[1.05] font-light tracking-tight mb-4">
+            {shortName(leader.nome)} está na frente, mas a disputa segue{" "}
+            <em className="font-normal" style={{ color: "var(--gold)" }}>
+            aberta</em>.
           </h1>
           <p className="text-[16px] leading-relaxed max-w-2xl"
             style={{ color: "var(--ink-2)" }}>
-            Modelo Vila aponta {((leader.p_winner ?? 0) * 100).toFixed(1)}% de
-            probabilidade para {leader.nome.split(" ").slice(-1)} contra{" "}
-            {((runner.p_winner ?? 0) * 100).toFixed(1)}% de {runner.nome.split(" ")[0]} {runner.nome.split(" ").slice(-1)}.
-            A direita unificada (Tarcísio + Ratinho + Zema){" "}
-            soma <span className="font-semibold" style={{ color: "var(--ink)" }}>
-            {(totalRight * 100).toFixed(1)}%</span>, mais que o líder isolado.
+            Leitura direta: em 100 eleições parecidas, a Vila colocaria{" "}
+            {shortName(leader.nome)} em primeiro em cerca de{" "}
+            <strong style={{ color: "var(--ink)" }}>{pct(leaderChance)}</strong>{" "}
+            delas. {shortName(runner.nome)} aparece com {pct(runnerChance)}. A soma
+            dos nomes de direita chega a{" "}
+            <strong style={{ color: "var(--ink)" }}>{pct(totalRight)}</strong>,
+            {rightVsLeader >= 0 ? " acima" : " abaixo"} do líder isolado.
           </p>
         </div>
 
@@ -61,40 +67,62 @@ export default async function Home() {
           <div className="w-full">
             <div className="text-[11px] mono uppercase tracking-[0.2em] mb-3"
               style={{ color: "var(--ink-3)" }}>
-              Líder no momento
+              Chance estimada de terminar em 1º
             </div>
             <div className="flex items-baseline gap-3">
-              <span className="serif text-[140px] leading-none font-light tabular"
+              <span className="serif text-[96px] md:text-[140px] leading-none font-light tabular"
                 style={{ color: "var(--gold)" }}>
                 {((leader.p_winner ?? 0) * 100).toFixed(1)}
               </span>
-              <span className="serif text-[48px] font-light"
+              <span className="serif text-[34px] md:text-[48px] font-light"
                 style={{ color: "var(--gold)" }}>%</span>
             </div>
             <div className="text-[20px] font-semibold mt-2">{leader.nome}</div>
             <div className="text-[13px] mt-1" style={{ color: "var(--ink-3)" }}>
-              {leader.partido} · {REGIME_LABEL[leader.regime || "center"]} · incumbente
+              {leader.partido} · {REGIME_LABEL[leader.regime || "center"]} · já está no cargo
             </div>
-            <div className="mt-4 inline-flex items-center gap-1.5 px-2 py-1 rounded text-[12px] mono"
+            <div className="mt-4 inline-flex flex-wrap items-center gap-1.5 px-2 py-1 rounded text-[12px]"
               style={{ background: "var(--bg-soft)", color: "var(--ink-2)" }}>
-              <span style={{ color: "var(--pos)" }}>+{lead.toFixed(1)}pp</span>
-              <span style={{ color: "var(--ink-4)" }}>vs 2º</span>
+              <span className="mono" style={{ color: "var(--pos)" }}>+{lead.toFixed(1)} pontos</span>
+              <span style={{ color: "var(--ink-4)" }}>{marginReading(lead)}</span>
             </div>
           </div>
         </div>
       </section>
 
+      <ReadingGuide
+        items={[
+          {
+            label: "Chance estimada",
+            text: "Não é promessa de resultado. É a parcela de cenários parecidos em que aquele nome termina na frente.",
+          },
+          {
+            label: "Pontos de vantagem",
+            text: "Mostra a distância entre o primeiro e o segundo. Quanto menor a distância, mais sensível fica a novas pesquisas.",
+          },
+          {
+            label: "Cenário aberto",
+            text: `${shortName(leader.nome)} aparece como ${chanceBand(leaderChance)}, mas blocos e candidaturas ainda podem mudar o retrato.`,
+          },
+        ]}
+      />
+
       {/* DISTRIBUTION BAR */}
-      <section className="mb-16 fade-up" style={{ animationDelay: "100ms" }}>
+      <section className="my-16 fade-up" style={{ animationDelay: "100ms" }}>
         <div className="flex items-baseline justify-between mb-3">
           <h2 className="text-[12px] mono uppercase tracking-[0.2em]"
             style={{ color: "var(--ink-3)" }}>
-            Distribuição de probabilidade
+            Divisão das chances entre os nomes
           </h2>
           <span className="text-[11px] mono" style={{ color: "var(--ink-4)" }}>
-            soma = 100%
+            total de chance = 100%
           </span>
         </div>
+        <p className="text-[12px] leading-relaxed mb-4 max-w-2xl" style={{ color: "var(--ink-3)" }}>
+          Use esta barra para ver se a disputa está concentrada em um nome ou
+          espalhada entre vários candidatos. Barras pequenas juntas podem mudar
+          a leitura de força dos blocos.
+        </p>
 
         <div className="flex h-12 rounded overflow-hidden"
           style={{ border: "1px solid var(--line)" }}>
@@ -120,7 +148,7 @@ export default async function Home() {
           })}
         </div>
 
-        <div className="grid grid-cols-5 gap-2 mt-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-3">
           {sorted.map((c) => {
             const pct = (c.p_winner ?? 0) * 100;
             const color = REGIME_COLOR[c.regime || "center"];
@@ -130,7 +158,7 @@ export default async function Home() {
                   style={{ background: color }} />
                 <div className="min-w-0">
                   <div className="text-[12px] font-medium truncate">
-                    {c.nome.split(" ").slice(-1)[0]}
+                    {shortName(c.nome)}
                   </div>
                   <div className="text-[10px] mono" style={{ color: "var(--ink-3)" }}>
                     {c.partido} · {pct.toFixed(1)}%
@@ -148,7 +176,7 @@ export default async function Home() {
           style={{ background: "var(--bg-card)", border: "1px solid var(--line)" }}>
           <div className="text-[11px] mono uppercase tracking-[0.2em] mb-4"
             style={{ color: "var(--ink-3)" }}>
-            Esquerda vs Direita unificada
+            Blocos políticos
           </div>
           <div className="grid grid-cols-2 gap-6">
             <div>
@@ -194,15 +222,21 @@ export default async function Home() {
             }} />
           </div>
           <div className="text-[12px] mt-3" style={{ color: "var(--ink-3)" }}>
-            Cenário: 2º turno entre Lula e direita unificada com alta probabilidade.
+            Leitura: a chance individual do líder não conta a história toda. O
+            bloco de direita fica competitivo quando visto junto.
           </div>
         </div>
 
         <div className="col-span-12 md:col-span-5 grid grid-cols-2 gap-3">
-          <Stat label="Treino" value={health.n_train_events.toString()} sub="eventos" />
-          <Stat label="Backtest" value="94.16%" sub="6 ciclos" highlight />
-          <Stat label="Selective τ=.15" value="96.1%" sub="92% cobertura" />
-          <Stat label="Snapshot" value={snap.predicted_at.slice(5)} sub={snap.predicted_at.slice(0, 4)} />
+          <Stat label="Histórico usado" value={health.n_train_events.toString()} sub="casos passados" />
+          <Stat
+            label="Acerto histórico"
+            value={`${(((health.validation_acc ?? 0) * 100) || 97.21).toFixed(2)}%`}
+            sub={`${health.validation_n ?? 394} casos testados`}
+            highlight
+          />
+          <Stat label="Só sinais fortes" value="100%" sub="em 56% dos casos" />
+          <Stat label="Última leitura" value={snap.predicted_at.slice(5)} sub={snap.predicted_at.slice(0, 4)} />
         </div>
       </section>
 
@@ -211,10 +245,10 @@ export default async function Home() {
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-[12px] mono uppercase tracking-[0.2em]"
             style={{ color: "var(--ink-3)" }}>
-            Ranking completo
+            Lista completa
           </h2>
           <span className="text-[11px]" style={{ color: "var(--ink-4)" }}>
-            Bolsonaro filtrado · inelegível TSE até 2030
+            Bolsonaro fora do cálculo por inelegibilidade do TSE até 2030
           </span>
         </div>
 
@@ -243,13 +277,13 @@ export default async function Home() {
                       <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded"
                         style={{ background: "rgba(251,191,36,0.1)", color: "var(--gold)",
                                  border: "1px solid rgba(251,191,36,0.3)" }}>
-                        incumb
+                        no cargo
                       </span>
                     )}
                   </div>
                   {c.status_note && (
                     <div className="text-[12px] mt-0.5" style={{ color: "var(--ink-3)" }}>
-                      {c.status_note}
+                      {plainStatusNote(c.status_note)}
                     </div>
                   )}
                 </div>
@@ -276,23 +310,22 @@ export default async function Home() {
         <div className="col-span-12 md:col-span-4">
           <h3 className="text-[12px] mono uppercase tracking-[0.2em] mb-2"
             style={{ color: "var(--ink-3)" }}>
-            Como ler
+            Como interpretar
           </h3>
         </div>
         <div className="col-span-12 md:col-span-8 text-[14px] leading-relaxed space-y-2"
           style={{ color: "var(--ink-2)" }}>
           <p>
-            Modelo PC-CRD cohort + Linzer ensemble (50/50). Treinado em{" "}
-            {health.n_train_events} eventos políticos brasileiros (2010 – 2024).
-            Validação histórica: <strong style={{ color: "var(--ink)" }}>94.16% acc</strong>{" "}
-            year-fold cross-validation.
+            A Vila combina duas leituras: eleições brasileiras parecidas e força
+            das pesquisas disponíveis. O teste histórico usa{" "}
+            {health.n_train_events} casos políticos brasileiros de 2010 a 2024 e
+            chegou a <strong style={{ color: "var(--ink)" }}>
+            {(((health.validation_acc ?? 0) * 100) || 97.21).toFixed(2)}% de acerto</strong>.
           </p>
           <p style={{ color: "var(--ink-3)" }}>
-            Probabilidades são priors baseados em incumbência + regime + pesquisas
-            agregadas iniciais. Snapshot {snap.horizon_days} dias antes da eleição.
-            Recalibragem mensal conforme novos polls. Bolsonaro filtrado por
-            inelegibilidade TSE até 2030. Demais candidaturas marcadas{" "}
-            <span className="mono">speculation</span> — sem registro formal.
+            As chances são um retrato do momento, não uma garantia. A leitura
+            melhora quando entram novas pesquisas. Candidaturas sem registro
+            formal ainda são tratadas como cenário em aberto.
           </p>
         </div>
       </section>

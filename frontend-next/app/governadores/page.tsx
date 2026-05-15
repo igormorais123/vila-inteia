@@ -1,5 +1,6 @@
 import { fetchGovernadorAll } from "@/lib/api";
 import Shell from "@/components/Shell";
+import ReadingGuide from "@/components/ReadingGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -17,8 +18,8 @@ const REGIME_COLOR: Record<string, string> = {
 export default async function Governadores() {
   let data;
   try { data = await fetchGovernadorAll(); }
-  catch (e) {
-    return <Shell active="/governadores"><p className="text-red-400">{(e as Error).message}</p></Shell>;
+  catch {
+    return <Shell active="/governadores"><p className="text-red-400">Não foi possível carregar os estados agora.</p></Shell>;
   }
 
   const ufs = Object.keys(data.by_uf).sort();
@@ -30,27 +31,48 @@ export default async function Governadores() {
 
   return (
     <Shell active="/governadores">
-      <header className="mb-12 fade-up">
+      <header className="mb-8 fade-up">
         <div className="text-[11px] mono uppercase tracking-[0.2em] mb-3"
           style={{ color: "var(--ink-3)" }}>
           Estaduais 2026 · {ufs.length} estados
         </div>
-        <h1 className="serif text-[56px] leading-[1.05] font-light tracking-tight">
-          Incumbentes em vantagem em <em className="font-normal" style={{ color: "var(--gold)" }}>
+        <h1 className="serif text-[40px] md:text-[56px] leading-[1.05] font-light tracking-tight">
+          Quem já governa aparece em vantagem em <em className="font-normal" style={{ color: "var(--gold)" }}>
           {ufs.length - competitive.length} dos {ufs.length}</em> estados mapeados.
         </h1>
         <p className="text-[15px] mt-4 max-w-2xl" style={{ color: "var(--ink-2)" }}>
-          {competitive.length} corrida{competitive.length === 1 ? "" : "s"} competitiva{competitive.length === 1 ? "" : "s"} com oposição mapeada.
-          Estados sem oposição definida no registry mostram incumbente em 100%
-          — reflete ausência de candidato cadastrado, não certeza factual.
+          {competitive.length} corrida{competitive.length === 1 ? "" : "s"} com adversário
+          relevante mapeado. Estados sem oposição definida podem aparecer com
+          100% para o titular; isso quer dizer falta de candidato cadastrado, não
+          certeza de vitória.
         </p>
       </header>
+
+      <div className="mb-12 fade-up" style={{ animationDelay: "75ms" }}>
+        <ReadingGuide
+          title="Como ler os estados"
+          items={[
+            {
+              label: "O que mede",
+              text: "A chance de cada nome terminar em primeiro dentro do estado.",
+            },
+            {
+              label: "Quando aparece 100%",
+              text: "Pode significar falta de adversário cadastrado, não vitória garantida.",
+            },
+            {
+              label: "Como usar",
+              text: "Priorize estados em disputa aberta para acompanhar novas pesquisas.",
+            },
+          ]}
+        />
+      </div>
 
       {competitive.length > 0 && (
         <section className="mb-16 fade-up" style={{ animationDelay: "100ms" }}>
           <h2 className="text-[12px] mono uppercase tracking-[0.2em] mb-4"
             style={{ color: "var(--ink-3)" }}>
-            Corridas competitivas
+            Estados em disputa aberta
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {competitive.map((uf) => (
@@ -64,7 +86,7 @@ export default async function Governadores() {
         <section className="fade-up" style={{ animationDelay: "200ms" }}>
           <h2 className="text-[12px] mono uppercase tracking-[0.2em] mb-4"
             style={{ color: "var(--ink-3)" }}>
-            Reeleições esperadas
+            Estados sem adversário forte cadastrado
           </h2>
           <div className="rounded-xl overflow-hidden"
             style={{ background: "var(--bg-card)", border: "1px solid var(--line)" }}>
@@ -149,7 +171,7 @@ function CompetitiveUF({ uf, cands }: { uf: string; cands: any[] }) {
               <div className="flex-1 min-w-0">
                 <div className="text-[13px] font-medium truncate">{c.nome}</div>
                 <div className="text-[10px] mono" style={{ color: "var(--ink-4)" }}>
-                  {c.partido} · {c.incumbente ? "incumbente" : "desafiante"}
+                  {c.partido} · {c.incumbente ? "governador atual" : "oposição"}
                 </div>
               </div>
               <span className="mono text-[15px] tabular font-semibold w-14 text-right"

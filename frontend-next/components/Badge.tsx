@@ -8,7 +8,7 @@ const PARTY_COLORS: Record<string, string> = {
 
 const REGIME_LABEL: Record<string, string> = {
   left: "esquerda", right: "direita", center: "centro",
-  pop_left: "pop. esquerda", pop_right: "pop. direita",
+  pop_left: "esquerda popular", pop_right: "direita popular",
 };
 
 export function PartyBadge({ partido }: { partido: string }) {
@@ -73,7 +73,7 @@ export function IncumbBadge({ incumb }: { incumb?: number }) {
       <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono uppercase tracking-wide"
         style={{ background: "rgba(245,165,36,0.1)", color: "var(--amber)",
                  border: "1px solid rgba(245,165,36,0.25)" }}>
-        incumb.
+        no cargo
       </span>
     );
   }

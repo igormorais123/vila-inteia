@@ -1,5 +1,6 @@
 import { PartyBadge, RegimeBadge, IncumbBadge } from "./Badge";
 import type { Candidate } from "@/lib/api";
+import { plainStatusNote } from "@/lib/explain";
 
 interface Props {
   candidate: Candidate;
@@ -43,7 +44,7 @@ export default function CandidateRow({
         </div>
         {showStatus && c.status_note && (
           <p className="text-[11px] mt-1" style={{ color: "var(--text-muted)" }}>
-            {c.status_note}
+            {plainStatusNote(c.status_note)}
           </p>
         )}
       </div>
