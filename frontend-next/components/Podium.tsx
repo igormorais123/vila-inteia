@@ -1,6 +1,14 @@
 import { PartyBadge } from "./Badge";
 import type { Candidate } from "@/lib/api";
 
+const CAMPO_LABEL: Record<string, string> = {
+  left: "esquerda",
+  right: "direita",
+  center: "centro",
+  pop_left: "esquerda popular",
+  pop_right: "direita popular",
+};
+
 export default function Podium({ candidates }: { candidates: Candidate[] }) {
   if (candidates.length < 3) return null;
   const [first, second, third] = candidates;
@@ -40,7 +48,7 @@ export default function Podium({ candidates }: { candidates: Candidate[] }) {
             {p.toFixed(1)}<span className="text-[18px] opacity-60">%</span>
           </div>
           <div className="text-[11px] mt-1" style={{ color: "var(--text-muted)" }}>
-            P(vencer) · {c.regime}
+            chance de vencer · {CAMPO_LABEL[c.regime || "center"] || "campo não informado"}
           </div>
         </div>
       </div>

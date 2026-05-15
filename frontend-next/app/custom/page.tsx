@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
+import { Calculator } from "lucide-react";
 import Shell from "@/components/Shell";
+import ReadingGuide from "@/components/ReadingGuide";
 import { postPredict, type PredictResponse } from "@/lib/api";
+import { chanceBand } from "@/lib/explain";
 
 export default function Custom() {
   const [cargo, setCargo] = useState("governador");
@@ -22,32 +25,54 @@ export default function Custom() {
         incumbente: incumb, regime,
       }, apiKey || undefined);
       setResult(r);
-    } catch (e) {
-      setErr((e as Error).message);
+    } catch {
+      setErr("Não foi possível calcular agora. Verifique os campos e tente novamente.");
     } finally { setLoading(false); }
   }
 
   return (
     <Shell active="/custom">
-      <header className="mb-10 fade-up">
+      <header className="mb-8 fade-up">
         <div className="text-[11px] mono uppercase tracking-[0.2em] mb-3"
           style={{ color: "var(--ink-3)" }}>
-          Cenário customizado
+          Cenário simples
         </div>
-        <h1 className="serif text-[48px] leading-[1.05] font-light tracking-tight">
-          Calcule P(vitória) para qualquer combinação.
+        <h1 className="serif text-[34px] md:text-[48px] leading-[1.05] font-light tracking-tight">
+          Calcule a chance de vitória sem linguagem técnica.
         </h1>
+        <p className="text-[15px] mt-4 max-w-2xl" style={{ color: "var(--ink-2)" }}>
+          Informe cargo, vantagem nas pesquisas, tempo até a eleição e campo
+          político. A resposta mostra uma chance final e de onde ela veio.
+        </p>
       </header>
 
-      <div className="grid grid-cols-12 gap-8 fade-up" style={{ animationDelay: "100ms" }}>
+      <ReadingGuide
+        title="Como preencher"
+        items={[
+          {
+            label: "Cargo e campo",
+            text: "Dizem que tipo de eleição será comparada com casos anteriores.",
+          },
+          {
+            label: "Vantagem na pesquisa",
+            text: "Pontos acima de zero indicam liderança; pontos abaixo indicam desvantagem.",
+          },
+          {
+            label: "Tempo até a eleição",
+            text: "Quanto mais longe da urna, maior a incerteza e mais cautelosa fica a leitura.",
+          },
+        ]}
+      />
+
+      <div className="grid grid-cols-12 gap-8 fade-up mt-8" style={{ animationDelay: "100ms" }}>
         <div className="col-span-12 md:col-span-7 space-y-6">
           <Section title="Cargo">
-            <div className="grid grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
               {[
-                { v: "presidente", l: "Pres" },
-                { v: "governador", l: "Gov" },
+                { v: "presidente", l: "Presidente" },
+                { v: "governador", l: "Governador" },
                 { v: "senador", l: "Senador" },
-                { v: "legislativo", l: "Legisl" },
+                { v: "legislativo", l: "Legislativo" },
                 { v: "prefeito", l: "Prefeito" },
               ].map((o) => (
                 <button key={o.v} onClick={() => setCargo(o.v)}
@@ -63,8 +88,8 @@ export default function Custom() {
             </div>
           </Section>
 
-          <Section title={`Vantagem nas pesquisas: ${lead > 0 ? "+" : ""}${lead}pp`}
-            sub="negativo = atrás do líder">
+          <Section title={`Vantagem nas pesquisas: ${lead > 0 ? "+" : ""}${lead} pontos`}
+            sub="negativo quer dizer que está atrás">
             <input type="range" min={-30} max={30} step={0.5} value={lead}
               onChange={(e) => setLead(parseFloat(e.target.value))}
               className="w-full" style={{ accentColor: "var(--gold)" }} />
@@ -74,7 +99,7 @@ export default function Custom() {
             </div>
           </Section>
 
-          <Section title={`Dias até eleição: ${days}`}
+          <Section title={`Dias até a eleição: ${days}`}
             sub={days <= 30 ? "campanha avançada" : days <= 90 ? "fase intermediária" : "longo prazo"}>
             <input type="range" min={0} max={365} step={1} value={days}
               onChange={(e) => setDays(parseInt(e.target.value))}
@@ -82,7 +107,7 @@ export default function Custom() {
           </Section>
 
           <div className="grid grid-cols-2 gap-3">
-            <Section title="Incumbente">
+            <Section title="Já está no cargo?">
               <div className="grid grid-cols-2 gap-1.5">
                 {[{ v: 0, l: "Não" }, { v: 1, l: "Sim" }].map((o) => (
                   <button key={o.v} onClick={() => setIncumb(o.v)}
@@ -97,7 +122,7 @@ export default function Custom() {
                 ))}
               </div>
             </Section>
-            <Section title="Regime">
+            <Section title="Campo político">
               <select value={regime} onChange={(e) => setRegime(e.target.value)}
                 className="w-full py-2 px-3 rounded text-[13px] mono"
                 style={{ background: "var(--bg-card)", color: "var(--ink)",
@@ -105,13 +130,13 @@ export default function Custom() {
                 <option value="left">Esquerda</option>
                 <option value="center">Centro</option>
                 <option value="right">Direita</option>
-                <option value="pop_left">Pop. esquerda</option>
-                <option value="pop_right">Pop. direita</option>
+                <option value="pop_left">Esquerda popular</option>
+                <option value="pop_right">Direita popular</option>
               </select>
             </Section>
           </div>
 
-          <Section title="X-API-Key (opcional)" sub="cliente pro/enterprise">
+          <Section title="Chave do cliente (opcional)" sub="contas profissionais">
             <input type="text" value={apiKey} onChange={(e) => setApiKey(e.target.value)}
               placeholder="vila_pol_..."
               className="w-full py-2 px-3 rounded text-[13px] mono"
@@ -120,13 +145,14 @@ export default function Custom() {
           </Section>
 
           <button onClick={submit} disabled={loading}
-            className="w-full py-3 rounded-lg font-semibold text-[14px] transition-all disabled:opacity-50"
+            className="w-full py-3 rounded-lg font-semibold text-[14px] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             style={{
               background: "linear-gradient(180deg, var(--gold), #d97706)",
               color: "#000",
               boxShadow: "0 4px 24px rgba(251,191,36,0.2)",
             }}>
-            {loading ? "Calculando…" : "Calcular probabilidade"}
+            <Calculator size={16} />
+            {loading ? "Calculando…" : "Calcular chance"}
           </button>
         </div>
 
@@ -138,7 +164,7 @@ export default function Custom() {
                 <div className="serif text-[140px] leading-none font-light tabular"
                   style={{ color: "var(--bg-soft)" }}>?</div>
                 <p className="text-[13px] mt-4" style={{ color: "var(--ink-4)" }}>
-                  Configure parâmetros e clique calcular
+                  Resultado aparecerá aqui
                 </p>
               </div>
             )}
@@ -153,7 +179,7 @@ export default function Custom() {
               <div>
                 <div className="text-[10px] mono uppercase tracking-[0.2em] mb-3"
                   style={{ color: "var(--ink-3)" }}>
-                  Probabilidade ensemble
+                  Chance final
                 </div>
                 <div className="serif text-[100px] leading-none font-light tabular"
                   style={{ color: "var(--gold)" }}>
@@ -161,23 +187,19 @@ export default function Custom() {
                   <span className="text-[40px] opacity-60">%</span>
                 </div>
                 <div className="text-[13px] mt-3" style={{ color: "var(--ink-2)" }}>
-                  {result.p_blend > 0.7 ? "Forte favorito"
-                    : result.p_blend > 0.55 ? "Favorito leve"
-                    : result.p_blend > 0.45 ? "Tossup"
-                    : result.p_blend > 0.3 ? "Underdog"
-                    : "Underdog forte"}
+                  {chanceBand(result.p_blend)}
                 </div>
 
                 <div className="mt-8 pt-6 grid grid-cols-2 gap-4"
                   style={{ borderTop: "1px solid var(--line)" }}>
-                  <Comp label="Cohort" v={result.p_cohort} />
-                  <Comp label="Linzer" v={result.p_linzer} />
+                  <Comp label="Histórico parecido" v={result.p_cohort} />
+                  <Comp label="Força da pesquisa" v={result.p_linzer} />
                 </div>
 
                 <div className="mt-6 grid grid-cols-3 gap-3 text-[11px] mono">
-                  <KV k="tier" v={result.cohort_tier} />
-                  <KV k="n cohort" v={result.cohort_n.toString()} />
-                  <KV k="horizon" v={`${result.horizon_days}d`} />
+                  <KV k="cargo" v={cargo} />
+                  <KV k="casos parecidos" v={result.cohort_n.toString()} />
+                  <KV k="dias até eleição" v={`${result.horizon_days}`} />
                 </div>
               </div>
             )}
@@ -191,7 +213,7 @@ export default function Custom() {
 function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-2">
+      <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
         <span className="text-[11px] mono uppercase tracking-[0.15em]"
           style={{ color: "var(--ink-3)" }}>{title}</span>
         {sub && <span className="text-[10px]" style={{ color: "var(--ink-4)" }}>{sub}</span>}

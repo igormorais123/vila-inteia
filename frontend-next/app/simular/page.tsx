@@ -1,9 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { Plus, Share2, Trash2 } from "lucide-react";
 import Shell from "@/components/Shell";
+import ReadingGuide from "@/components/ReadingGuide";
 import Trajectory from "@/components/Trajectory";
 import SecondRound from "@/components/SecondRound";
 import { predictBlend, normalize, type SimCandidate } from "@/lib/predict";
+import { chanceBand } from "@/lib/explain";
 
 const REGIME_COLOR: Record<string, string> = {
   left: "var(--left)", right: "var(--right)", center: "var(--center)",
@@ -12,7 +15,7 @@ const REGIME_COLOR: Record<string, string> = {
 
 const REGIME_LABEL: Record<string, string> = {
   left: "esquerda", right: "direita", center: "centro",
-  pop_left: "pop. esq", pop_right: "pop. dir",
+  pop_left: "esquerda popular", pop_right: "direita popular",
 };
 
 const PRESETS = {
@@ -60,7 +63,7 @@ export default function Simular() {
   const [days, setDays] = useState(152);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
 
-  // Read URL state on mount
+  // Lê o cenário compartilhado quando a tela abre.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const s = params.get("s");
@@ -77,7 +80,7 @@ export default function Simular() {
     const s = encodeState(candidates, days);
     const url = `${window.location.origin}/simular?s=${s}`;
     navigator.clipboard.writeText(url);
-    setShareMsg("URL copiada");
+    setShareMsg("link copiado");
     setTimeout(() => setShareMsg(null), 2000);
   }
 
@@ -120,41 +123,58 @@ export default function Simular() {
 
   return (
     <Shell active="/simular">
-      <header className="mb-10 max-w-3xl">
+      <header className="mb-8 max-w-3xl">
         <div className="text-[11px] mono uppercase tracking-[0.2em] mb-3"
           style={{ color: "var(--ink-3)" }}>
-          Simulador · cenários hipotéticos
+          Simulador · cenários possíveis
         </div>
-        <h1 className="serif text-[52px] leading-[1.05] font-light tracking-tight">
-          Simule <em className="font-normal" style={{ color: "var(--gold)" }}>qualquer corrida</em>{" "}
-          em tempo real.
+        <h1 className="serif text-[40px] md:text-[52px] leading-[1.05] font-light tracking-tight">
+          Monte uma disputa e veja quem ganha força.
         </h1>
         <p className="text-[15px] mt-4" style={{ color: "var(--ink-2)" }}>
-          Adicione, remova e ajuste candidatos. Mexa nos leads e dias até a
-          eleição. Modelo recalcula instantaneamente. Compare cenários
-          hipotéticos contra o snapshot oficial.
+          A leitura usa linguagem de operação: vantagem nas pesquisas, dias até
+          a eleição, campo político e chance de terminar em primeiro.
         </p>
       </header>
 
-      <div className="flex items-center gap-2 mb-8 flex-wrap">
+      <ReadingGuide
+        title="Como usar"
+        items={[
+          {
+            label: "O que esta tela faz",
+            text: "Ela transforma uma disputa hipotética em chances de terminar em primeiro.",
+          },
+          {
+            label: "O que você altera",
+            text: "Mude candidatos, campo político, vantagem nas pesquisas e dias até a eleição.",
+          },
+          {
+            label: "Como interpretar",
+            text: "Se a chance muda muito com pequenos ajustes, o cenário ainda está instável.",
+          },
+        ]}
+      />
+
+      <div className="flex items-center gap-2 my-8 flex-wrap">
         <span className="text-[11px] mono uppercase tracking-wider mr-2"
-          style={{ color: "var(--ink-3)" }}>Preset:</span>
+          style={{ color: "var(--ink-3)" }}>Começar por:</span>
         <PresetBtn onClick={() => loadPreset("presidencia_2026")}>Presidência 2026</PresetBtn>
-        <PresetBtn onClick={() => loadPreset("sp_governador_2026")}>SP Gov 2026</PresetBtn>
+        <PresetBtn onClick={() => loadPreset("sp_governador_2026")}>Governo SP 2026</PresetBtn>
         <PresetBtn onClick={() => loadPreset("vazio")}>Vazio</PresetBtn>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="w-full sm:w-auto sm:ml-auto flex items-center justify-start sm:justify-end gap-2">
           {shareMsg && (
             <span className="text-[11px] mono" style={{ color: "var(--gold)" }}>
               ✓ {shareMsg}
             </span>
           )}
           <button onClick={copyShare}
-            className="px-3 py-1.5 rounded text-[12px] mono font-medium transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded text-[12px] font-medium transition-colors flex items-center gap-1.5"
             style={{
               background: "var(--bg-card)", color: "var(--ink-2)",
               border: "1px solid var(--line-strong)",
             }}>
-            ↗ compartilhar URL
+            <Share2 size={14} />
+            compartilhar
           </button>
         </div>
       </div>
@@ -164,10 +184,15 @@ export default function Simular() {
         <div className="col-span-12 md:col-span-7 rounded-xl p-6"
           style={{ background: "var(--bg-card)", border: "1px solid var(--line)" }}>
           <div className="flex items-baseline justify-between mb-4">
-            <span className="text-[11px] mono uppercase tracking-[0.2em]"
-              style={{ color: "var(--ink-3)" }}>
-              Distribuição simulada
-            </span>
+            <div>
+              <span className="text-[11px] mono uppercase tracking-[0.2em]"
+                style={{ color: "var(--ink-3)" }}>
+                Divisão das chances simuladas
+              </span>
+              <p className="text-[12px] mt-2 max-w-md" style={{ color: "var(--ink-3)" }}>
+                A barra mostra quanto cada candidatura ocupa do cenário total.
+              </p>
+            </div>
             <span className="text-[11px] mono" style={{ color: "var(--ink-4)" }}>
               {candidates.length} candidatos · {days} dias
             </span>
@@ -206,23 +231,26 @@ export default function Simular() {
           style={{ background: "var(--bg-card)", border: "1px solid var(--line)" }}>
           <div className="text-[11px] mono uppercase tracking-[0.2em] mb-3"
             style={{ color: "var(--ink-3)" }}>
-            Líder simulado
+            Líder do cenário
           </div>
           <div>
-            <div className="serif text-[88px] leading-none font-light tabular"
+            <div className="serif text-[72px] md:text-[88px] leading-none font-light tabular"
               style={{ color: "var(--gold)" }}>
               {(leader.pWinner * 100).toFixed(1)}<span className="text-[36px] opacity-60">%</span>
             </div>
             <div className="text-[18px] font-semibold mt-3">{leader.nome}</div>
             <div className="text-[12px] mt-1 mono" style={{ color: "var(--ink-3)" }}>
               {leader.partido} · {REGIME_LABEL[leader.regime]} ·{" "}
-              {leader.incumbente ? "incumbente" : "desafiante"}
+              {leader.incumbente ? "já está no cargo" : "oposição"}
+            </div>
+            <div className="text-[12px] mt-3" style={{ color: "var(--ink-3)" }}>
+              Leitura: {chanceBand(leader.pWinner)} neste desenho.
             </div>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 pt-4"
             style={{ borderTop: "1px solid var(--line)" }}>
-            <Mini label="P cohort" v={leader.pCohort} />
-            <Mini label="P linzer" v={leader.pLinzer} />
+            <Mini label="Histórico parecido" v={leader.pCohort} />
+            <Mini label="Força da pesquisa" v={leader.pLinzer} />
           </div>
         </div>
       </section>
@@ -233,11 +261,11 @@ export default function Simular() {
         <div className="flex items-baseline justify-between mb-3">
           <span className="text-[11px] mono uppercase tracking-[0.2em]"
             style={{ color: "var(--ink-3)" }}>
-            Dias até eleição: <span className="text-[14px] tabular ml-2"
+            Dias até a eleição: <span className="text-[14px] tabular ml-2"
               style={{ color: "var(--gold)" }}>{days}</span>
           </span>
           <span className="text-[11px]" style={{ color: "var(--ink-4)" }}>
-            menor = mais próximo da urna · σ ↓
+            quanto mais perto da urna, menor a incerteza
           </span>
         </div>
         <input type="range" min={0} max={365} value={days}
@@ -254,10 +282,10 @@ export default function Simular() {
         <div className="flex items-baseline justify-between mb-3">
           <h2 className="text-[12px] mono uppercase tracking-[0.2em]"
             style={{ color: "var(--ink-3)" }}>
-            Trajetória ao longo do tempo
+            Como a chance muda até a eleição
           </h2>
           <span className="text-[11px]" style={{ color: "var(--ink-4)" }}>
-            σ encolhe conforme se aproxima da urna · model fica mais confiante
+            a confiança aumenta quando a data se aproxima
           </span>
         </div>
         <div className="rounded-xl p-6"
@@ -281,22 +309,24 @@ export default function Simular() {
             Candidatos · {candidates.length}
           </h2>
           <button onClick={add}
-            className="px-3 py-1.5 rounded text-[12px] mono font-medium transition"
+            className="px-3 py-1.5 rounded text-[12px] font-medium transition flex items-center gap-1.5"
             style={{ background: "var(--gold)", color: "#000" }}>
-            + adicionar
+            <Plus size={14} />
+            adicionar
           </button>
         </div>
 
-        <div className="rounded-xl overflow-hidden"
+        <div className="rounded-xl overflow-x-auto"
           style={{ background: "var(--bg-card)", border: "1px solid var(--line)" }}>
+          <div className="min-w-[760px]">
           <div className="grid grid-cols-12 gap-3 px-5 py-3 text-[10px] mono uppercase tracking-[0.15em]"
             style={{ borderBottom: "1px solid var(--line)", color: "var(--ink-4)" }}>
             <div className="col-span-3">Nome</div>
             <div className="col-span-1">Partido</div>
-            <div className="col-span-2">Regime</div>
-            <div className="col-span-1 text-center">Incumb</div>
-            <div className="col-span-3">Lead (pp)</div>
-            <div className="col-span-1 text-right">P</div>
+            <div className="col-span-2">Campo</div>
+            <div className="col-span-1 text-center">No cargo</div>
+            <div className="col-span-3">Vantagem na pesquisa</div>
+            <div className="col-span-1 text-right">Chance</div>
             <div className="col-span-1 text-right"></div>
           </div>
           {predictions.map((c) => {
@@ -330,8 +360,8 @@ export default function Simular() {
                     <option value="left">esquerda</option>
                     <option value="center">centro</option>
                     <option value="right">direita</option>
-                    <option value="pop_left">pop. esq</option>
-                    <option value="pop_right">pop. dir</option>
+                    <option value="pop_left">esquerda popular</option>
+                    <option value="pop_right">direita popular</option>
                   </select>
                 </div>
                 <div className="col-span-1 flex justify-center">
@@ -365,23 +395,24 @@ export default function Simular() {
                 </div>
                 <div className="col-span-1 text-right">
                   <button onClick={() => remove(c.id)}
-                    className="w-7 h-7 rounded transition-colors text-[14px]"
+                    className="w-7 h-7 rounded transition-colors inline-flex items-center justify-center"
                     style={{ color: "var(--ink-4)", border: "1px solid var(--line)" }}
                     title="remover">
-                    ×
+                    <Trash2 size={14} />
                   </button>
                 </div>
               </div>
             );
           })}
+          </div>
         </div>
       </section>
 
       <p className="text-[12px]" style={{ color: "var(--ink-3)" }}>
-        Modelo client-side: cohort ≈ global rate + heurísticas (incumbência, regime),
-        Linzer Φ(lead/σ(days)) com σ = 4 + 0.05·days. Simulador rápido sem
-        roundtrip. Para predições oficiais precisas use{" "}
-        <a href="/" className="underline" style={{ color: "var(--gold)" }}>snapshot da home</a>.
+        Este simulador é uma leitura rápida no navegador. Ele combina histórico
+        de eleições parecidas com a força da pesquisa informada. Para previsões
+        oficiais, use o{" "}
+        <a href="/" className="underline" style={{ color: "var(--gold)" }}>painel principal</a>.
       </p>
     </Shell>
   );

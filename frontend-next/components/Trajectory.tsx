@@ -1,5 +1,6 @@
 "use client";
 import { predictBlend, normalize, type SimCandidate } from "@/lib/predict";
+import { shortName } from "@/lib/explain";
 
 const REGIME_COLOR: Record<string, string> = {
   left: "#ef4444", right: "#3b82f6", center: "#94a3b8",
@@ -30,7 +31,7 @@ export default function Trajectory({
     });
   });
 
-  const W = 1100, H = 280, P = { l: 56, r: 100, t: 24, b: 40 };
+  const W = 1100, H = 280, P = { l: 56, r: 140, t: 24, b: 40 };
   const xMin = 0, xMax = 365;
   // y range adapts to actual values
   const allY = Object.values(trajectories).flatMap((arr) => arr.map((p) => p.y));
@@ -46,6 +47,20 @@ export default function Trajectory({
     const pa = trajectories[a.id].find((p) => Math.abs(p.x - currentDays) < 4)?.y ?? 0;
     const pb = trajectories[b.id].find((p) => Math.abs(p.x - currentDays) < 4)?.y ?? 0;
     return pa - pb;
+  });
+
+  const labelRows = ordered
+    .map((c) => {
+      const last = trajectories[c.id][trajectories[c.id].length - 1];
+      return { id: c.id, y: ys_(last.y) };
+    })
+    .sort((a, b) => a.y - b.y);
+  const labelY = new Map<string, number>();
+  let previousY = P.t - 18;
+  labelRows.forEach((row) => {
+    const y = Math.min(H - 18, Math.max(row.y, previousY + 18));
+    labelY.set(row.id, y);
+    previousY = y;
   });
 
   return (
@@ -86,7 +101,7 @@ export default function Trajectory({
         {/* axis labels */}
         <text x={P.l + (W - P.l - P.r) / 2} y={H - 4} textAnchor="middle"
           fontSize="11" fontFamily="JetBrains Mono" fill="var(--ink-3)">
-          ← longe ·  dias até eleição  · perto →
+          longe da eleição · dias até a urna · perto da eleição
         </text>
 
         {/* lines */}
@@ -102,10 +117,10 @@ export default function Trajectory({
                 strokeLinejoin="round" strokeLinecap="round" />
               {/* end label */}
               <circle cx={xs_(last.x)} cy={ys_(last.y)} r="3" fill={color} />
-              <text x={xs_(last.x) + 8} y={ys_(last.y) + 4}
+              <text x={xs_(last.x) + 8} y={(labelY.get(c.id) ?? ys_(last.y)) + 4}
                 fontSize="11" fontFamily="JetBrains Mono" fill={color}
                 style={{ fontWeight: 500 }}>
-                {c.nome.split(" ")[0]} · {(last.y * 100).toFixed(0)}%
+                {shortName(c.nome)} · {(last.y * 100).toFixed(0)}%
               </text>
             </g>
           );
