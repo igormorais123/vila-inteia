@@ -1,28 +1,22 @@
 """
-Onda 220: Claude motor para Vila — predictions baseline + persona styling.
+Painel determinístico local para backtests sem rede.
 
-Implementa llm_fn injetável que substitui chamada Groq/OmniRoute por
-predições calibradas hard-coded (knowledge cutoff jan 2026) + persona
-styling (Musk sharpen, Jobs anti-hype, Bezos anchor).
+Este módulo não chama Claude, Groq ou OmniRoute. Ele existe para rodar testes
+offline com um estimador simples baseado em prior, contexto e framing do
+evento. O comportamento padrão não consulta `evento_id` nem `outcome_real`;
+isso evita transformar backtest em lookup de gabarito.
 
-Validado: 100% accuracy em 8/10 datasets reais (impeachment, lava jato,
-PIX, eleição BR, twitter musk, americanas, crypto BTC, tiktok). Synthetic
-datasets (vpro/sp_mun) requerem anti-context handling — predições foram
-ajustadas para refletir o pattern dos framings.
-
-Uso:
-    from engine.claude_motor import claude_llm_fn, MY_PREDS_BASE
-    res = rodar_backtest(..., llm_fn=claude_llm_fn)
+`MY_PREDS_BASE` permanece apenas como tabela legada para reprodução de artefatos
+antigos. Quem precisar dela deve habilitar `allow_event_id_lookup=True`
+explicitamente em `make_claude_llm_fn`.
 """
 
 from __future__ import annotations
 
-import re
 from typing import Any
 
 # ============================================================================
-# Predictions base (knowledge cutoff jan 2026)
-# Onda 220: ajustes anti-context pra dataset synthetic vpro
+# Tabela legada. Nao e usada por padrao.
 # ============================================================================
 MY_PREDS_BASE: dict[str, float] = {
     # americanas_crise_2023
@@ -91,6 +85,64 @@ MY_PREDS_BASE: dict[str, float] = {
     "post20": 0.45,  # Maduro removido — REAL: 1 MISS
 }
 
+
+_POSITIVE_CUES = {
+    "aprov", "vence", "venceu", "vencer", "lider", "confirma", "confirmou",
+    "realiz", "lança", "lanc", "cresce", "cresceu", "adot", "passou",
+    "majority", "win", "held", "launch", "beat", "cut", "admitiu",
+}
+
+_NEGATIVE_CUES = {
+    "não", "nao", "sem", "abaixo", "falha", "fracass", "rejei", "queda",
+    "crise", "bloque", "perde", "perdeu", "cancel", "no ", "not ",
+    "below", "miss", "failed", "delay", "delayed",
+}
+
+_UNCERTAINTY_CUES = {
+    "rumor", "poderá", "pode", "possível", "possivel", "incerto",
+    "tossup", "apertad", "mista", "misto",
+}
+
+
+def _clip(p: float, lo: float = 0.05, hi: float = 0.95) -> float:
+    return max(lo, min(hi, p))
+
+
+def _prior_from_event(ev: dict[str, Any] | None) -> float:
+    if not ev:
+        return 0.5
+    for key in ("probabilidade_prior", "prob_prior", "prior"):
+        try:
+            return _clip(float(ev[key]))
+        except (KeyError, TypeError, ValueError):
+            continue
+    return 0.5
+
+
+def _score_from_text(prior: float, contexto: str, framing: str) -> float:
+    """Estimador textual ground-truth-blind para uso offline."""
+    text = f"{contexto} {framing}".lower()
+    pos = sum(1 for cue in _POSITIVE_CUES if cue in text)
+    neg = sum(1 for cue in _NEGATIVE_CUES if cue in text)
+    unc = sum(1 for cue in _UNCERTAINTY_CUES if cue in text)
+
+    p = prior + 0.06 * min(pos, 3) - 0.06 * min(neg, 3)
+    if unc:
+        p = 0.5 + 0.75 * (p - 0.5)
+    return _clip(p)
+
+
+def estimate_event_probability(ev: dict[str, Any] | None, prompt_text: str = "") -> float:
+    """Predicao local sem consultar id, outcome ou tabela de resultados."""
+    prior = _prior_from_event(ev)
+    if ev:
+        contexto = (ev or {}).get("contexto", "")
+        framing = (ev or {}).get("outcome_framing", "") or ""
+    else:
+        contexto = prompt_text
+        framing = prompt_text
+    return _score_from_text(prior, contexto, framing)
+
 # ============================================================================
 # Persona styling — Musk sharpen, Jobs anti-hype, Bezos anchor
 # ============================================================================
@@ -117,14 +169,20 @@ def persona_style(base: float, persona_id: str,
 # ============================================================================
 # llm_fn — injetável em consultar_panel/rodar_backtest
 # ============================================================================
-def make_claude_llm_fn(contexto_to_ev: dict, persona_nomes: dict[str, str],
-                       preds: dict[str, float] | None = None):
-    """Factory pra llm_fn ligado a um sim ativo.
+def make_claude_llm_fn(
+    contexto_to_ev: dict,
+    persona_nomes: dict[str, str],
+    preds: dict[str, float] | None = None,
+    *,
+    allow_event_id_lookup: bool = False,
+):
+    """Factory para llm_fn offline ligado a um sim ativo.
 
     Args:
         contexto_to_ev: mapa de contexto[:35] → evento dict
         persona_nomes: mapa de persona_id → nome_exibicao
-        preds: opcional — override MY_PREDS_BASE
+        preds: tabela legada opcional, usada somente com allow_event_id_lookup.
+        allow_event_id_lookup: liga modo legado baseado em evento_id.
     """
     preds_use = preds if preds is not None else MY_PREDS_BASE
 
@@ -152,7 +210,10 @@ def make_claude_llm_fn(contexto_to_ev: dict, persona_nomes: dict[str, str],
                 break
         if pid is None:
             pid = "CL002"
-        base = preds_use.get(ev["evento_id"], 0.5)
+        if allow_event_id_lookup:
+            base = preds_use.get(ev.get("evento_id"), estimate_event_probability(ev, user_content))
+        else:
+            base = estimate_event_probability(ev, user_content)
         p = persona_style(base, pid)
         pct = int(round(p * 100))
         return f"Análise: {ev['evento_id']}. PROBABILIDADE FINAL: {pct}%"

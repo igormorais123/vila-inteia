@@ -118,9 +118,18 @@ def test_config_singleton():
 # 2. TESTES DE CAMPUS
 # ============================================================
 
-@registrar_teste("Campus: 19 locais definidos")
+@registrar_teste("Campus: locais base presentes")
 def test_campus_locais():
-    assert_eq(len(LOCAIS), 19, f"Esperava 19 locais, tem {len(LOCAIS)}")
+    locais_base = {
+        "agora", "torre_estrategia", "biblioteca", "cafe_filosofos",
+        "arena_debates", "jardim_visionarios", "tribunal", "laboratorio",
+        "galeria", "sala_guerra", "auditorio", "atelie", "observatorio",
+        "residencias_norte", "residencias_sul", "residencias_leste",
+        "residencias_oeste", "refeitorio", "terraco",
+    }
+    assert_true(len(LOCAIS) >= len(locais_base), f"Esperava campus expandido, tem {len(LOCAIS)}")
+    faltando = sorted(locais_base - set(LOCAIS))
+    assert_true(not faltando, f"Locais base ausentes: {faltando}")
 
 
 @registrar_teste("Campus: tipos de locais")

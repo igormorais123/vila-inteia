@@ -1,0 +1,1310 @@
+{
+  "generated_at": "2026-05-14T01:36:04",
+  "backtest": {
+    "meta": {
+      "files": 63,
+      "released_rows": 7679,
+      "skipped_future_rows": 169,
+      "skipped_missing_outcome_rows": 0,
+      "as_of": "2026-05-14"
+    },
+    "dataset_hotspots": [
+      {
+        "dataset": "post_cutoff_q1_2026_v2",
+        "n": 10,
+        "outcome_rate": 1.0,
+        "prior_acc": 0.4,
+        "prior_brier": 0.35526,
+        "prior_mean": 0.49400000000000005,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "uk_2019_general",
+        "n": 192,
+        "outcome_rate": 0.5,
+        "prior_acc": 0.5364583333333334,
+        "prior_brier": 0.29553027083333333,
+        "prior_mean": 0.4999895833333334,
+        "mean_abs_lead": 15.363541666666668
+      },
+      {
+        "dataset": "price_predictions_q1_2026",
+        "n": 30,
+        "outcome_rate": 0.5,
+        "prior_acc": 0.5,
+        "prior_brier": 0.25,
+        "prior_mean": 0.5,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "seed_eleicao_municipal_sp_2024",
+        "n": 10,
+        "outcome_rate": 0.5,
+        "prior_acc": 0.7,
+        "prior_brier": 0.24967999999999999,
+        "prior_mean": 0.45999999999999996,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "brazil_votes_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.6,
+        "prior_acc": 0.6,
+        "prior_brier": 0.22800000000000004,
+        "prior_mean": 0.48,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "post_cutoff_q2_2026_holdout",
+        "n": 9,
+        "outcome_rate": 1.0,
+        "prior_acc": 0.5555555555555556,
+        "prior_brier": 0.20641111111111113,
+        "prior_mean": 0.6811111111111111,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "eleicoes_br_real_polls",
+        "n": 648,
+        "outcome_rate": 0.5,
+        "prior_acc": 1.0,
+        "prior_brier": 0.20249999999999999,
+        "prior_mean": 0.5,
+        "mean_abs_lead": 10.735432098765433
+      },
+      {
+        "dataset": "pharma_drugtrials_q1_2026",
+        "n": 6,
+        "outcome_rate": 0.3333333333333333,
+        "prior_acc": 0.6666666666666666,
+        "prior_brier": 0.1879166666666667,
+        "prior_mean": 0.5416666666666666,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "post_cutoff_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.1,
+        "prior_acc": 0.6,
+        "prior_brier": 0.18325000000000002,
+        "prior_mean": 0.475,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "manufacturing_industrial_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.8,
+        "prior_acc": 1.0,
+        "prior_brier": 0.18,
+        "prior_mean": 0.55,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "corporate_ma_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.6,
+        "prior_acc": 0.9,
+        "prior_brier": 0.17275000000000001,
+        "prior_mean": 0.505,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "insurance_reinsurance_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.8,
+        "prior_acc": 1.0,
+        "prior_brier": 0.16949999999999998,
+        "prior_mean": 0.49000000000000005,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "automotive_evs_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.6,
+        "prior_acc": 1.0,
+        "prior_brier": 0.16475,
+        "prior_mean": 0.475,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "bond_treasury_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.5,
+        "prior_acc": 1.0,
+        "prior_brier": 0.16325,
+        "prior_mean": 0.425,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "tiktok_viral_2024",
+        "n": 10,
+        "outcome_rate": 0.7,
+        "prior_acc": 0.9,
+        "prior_brier": 0.16309,
+        "prior_mean": 0.587,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "eleicao_presidencial_br_2022",
+        "n": 10,
+        "outcome_rate": 0.9,
+        "prior_acc": 0.9,
+        "prior_brier": 0.16125,
+        "prior_mean": 0.605,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "weather_extremes_q1_2026",
+        "n": 7,
+        "outcome_rate": 0.5714285714285714,
+        "prior_acc": 0.8571428571428571,
+        "prior_brier": 0.15999999999999998,
+        "prior_mean": 0.4857142857142857,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "fashion_retail_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.6,
+        "prior_acc": 1.0,
+        "prior_brier": 0.15775,
+        "prior_mean": 0.465,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "lancamento_apple_vpro_2024",
+        "n": 10,
+        "outcome_rate": 0.3,
+        "prior_acc": 0.9,
+        "prior_brier": 0.15725,
+        "prior_mean": 0.395,
+        "mean_abs_lead": null
+      },
+      {
+        "dataset": "fx_currency_q1_2026",
+        "n": 10,
+        "outcome_rate": 0.4,
+        "prior_acc": 1.0,
+        "prior_brier": 0.1565,
+        "prior_mean": 0.4,
+        "mean_abs_lead": null
+      }
+    ],
+    "year_rollup": [
+      {
+        "ano": 2010.0,
+        "n": 162,
+        "outcome_rate": 0.5,
+        "prior_acc": 1.0,
+        "prior_brier": 0.20249999999999999,
+        "mean_abs_lead": 18.333333333333332
+      },
+      {
+        "ano": 2014.0,
+        "n": 2,
+        "outcome_rate": 1.0,
+        "prior_acc": 1.0,
+        "prior_brier": 0.0425,
+        "mean_abs_lead": null
+      },
+      {
+        "ano": 2015.0,
+        "n": 3,
+        "outcome_rate": 1.0,
+        "prior_acc": 1.0,
+        "prior_brier": 0.13833333333333334,
+        "mean_abs_lead": null
+      },
+      {
+        "ano": 2016.0,
+        "n": 3174,
+        "outcome_rate": 0.5012602394454947,
+        "prior_acc": 0.8837429111531191,
+        "prior_brier": 0.1424218897290485,
+        "mean_abs_lead": 13.572566371681415
+      },
+      {
+        "ano": 2017.0,
+        "n": 2,
+        "outcome_rate": 1.0,
+        "prior_acc": 1.0,
+        "prior_brier": 0.1,
+        "mean_abs_lead": null
+      },
+      {
+        "ano": 2018.0,
+        "n": 133,
+        "outcome_rate": 0.5112781954887218,
+        "prior_acc": 0.9849624060150376,
+        "prior_brier": 0.17228345864661654,
+        "mean_abs_lead": 11.453846153846154
+      },
+      {
+        "ano": 2019.0,
+        "n": 192,
+        "outcome_rate": 0.5,
+        "prior_acc": 0.5364583333333334,
+        "prior_brier": 0.29553027083333333,
+        "mean_abs_lead": 15.363541666666668
+      },
+      {
+        "ano": 2020.0,
+        "n": 3102,
+        "outcome_rate": 0.5006447453255964,
+        "prior_acc": 0.9384268214055448,
+        "prior_brier": 0.11714482656350743,
+        "mean_abs_lead": 16.60067785668173
+      },
+      {
+        "ano": 2021.0,
+        "n": 3,
+        "outcome_rate": 1.0,
+        "prior_acc": 1.0,
+        "prior_brier": 0.19166666666666665,
+        "mean_abs_lead": null
+      },
+      {
+        "ano": 2022.0,
+        "n": 199,
+        "outcome_rate": 0.5276381909547738,
+        "prior_acc": 1.0,
+        "prior_brier": 0.17117587939698492,
+        "mean_abs_lead": 11.878494623655914
+      },
+      {
+        "ano": 2023.0,
+        "n": 15,
+        "outcome_rate": 0.8666666666666667,
+        "prior_acc": 0.9333333333333333,
+        "prior_brier": 0.13376000000000002,
+        "mean_abs_lead": null
+      },
+      {
+        "ano": 2024.0,
+        "n": 251,
+        "outcome_rate": 0.5258964143426295,
+        "prior_acc": 0.9800796812749004,
+        "prior_brier": 0.19667410358565734,
+        "mean_abs_lead": 3.496893203883495
+      },
+      {
+        "ano": 2026.0,
+        "n": 440,
+        "outcome_rate": 0.634090909090909,
+        "prior_acc": 0.8863636363636364,
+        "prior_brier": 0.15512022727272726,
+        "mean_abs_lead": null
+      }
+    ]
+  },
+  "quant": {
+    "correlations": {
+      "method": "spearman",
+      "columns": [
+        "outcome_real",
+        "probabilidade_prior",
+        "poll_lead_pp",
+        "abs_poll_lead_pp",
+        "incumbente",
+        "prior_brier",
+        "prior_correct",
+        "prior_confidence",
+        "context_len"
+      ],
+      "matrix": {
+        "outcome_real": {
+          "outcome_real": 1.0,
+          "probabilidade_prior": 0.796614917002979,
+          "poll_lead_pp": 0.7841055834400489,
+          "abs_poll_lead_pp": 0.0,
+          "incumbente": -0.042213106838011535,
+          "prior_brier": 0.0023924994756806648,
+          "prior_correct": 0.012380913653717969,
+          "prior_confidence": -0.0014056339494515604,
+          "context_len": -0.005395836096186508
+        },
+        "probabilidade_prior": {
+          "outcome_real": 0.796614917002979,
+          "probabilidade_prior": 1.0,
+          "poll_lead_pp": 0.9749827682235829,
+          "abs_poll_lead_pp": -9.00868598631175e-09,
+          "incumbente": -0.07752989960321216,
+          "prior_brier": -0.01969290040402026,
+          "prior_correct": 0.013569468953159258,
+          "prior_confidence": 0.014785311198596808,
+          "context_len": 0.0002889316436552412
+        },
+        "poll_lead_pp": {
+          "outcome_real": 0.7841055834400489,
+          "probabilidade_prior": 0.9749827682235829,
+          "poll_lead_pp": 1.0,
+          "abs_poll_lead_pp": 0.0,
+          "incumbente": -0.08824008826053802,
+          "prior_brier": -0.003755908947695289,
+          "prior_correct": 0.00012985833147477057,
+          "prior_confidence": 0.003692080127138476,
+          "context_len": 0.0016946199573425825
+        },
+        "abs_poll_lead_pp": {
+          "outcome_real": 0.0,
+          "probabilidade_prior": -9.00868598631175e-09,
+          "poll_lead_pp": 0.0,
+          "abs_poll_lead_pp": 1.0,
+          "incumbente": 0.07697917126053509,
+          "prior_brier": -0.8273179755209752,
+          "prior_correct": 0.3299061771211922,
+          "prior_confidence": 0.9226650901043976,
+          "context_len": -0.01861020567301843
+        },
+        "incumbente": {
+          "outcome_real": -0.042213106838011535,
+          "probabilidade_prior": -0.07752989960321216,
+          "poll_lead_pp": -0.08824008826053802,
+          "abs_poll_lead_pp": 0.07697917126053509,
+          "incumbente": 1.0,
+          "prior_brier": -0.09116258825040635,
+          "prior_correct": 0.023872191858580662,
+          "prior_confidence": 0.09729021210225708,
+          "context_len": -0.32824352297653364
+        },
+        "prior_brier": {
+          "outcome_real": 0.0023924994756806648,
+          "probabilidade_prior": -0.01969290040402026,
+          "poll_lead_pp": -0.003755908947695289,
+          "abs_poll_lead_pp": -0.8273179755209752,
+          "incumbente": -0.09116258825040635,
+          "prior_brier": 1.0,
+          "prior_correct": -0.4988776984592876,
+          "prior_confidence": -0.8936125550648696,
+          "context_len": -0.10555439241060399
+        },
+        "prior_correct": {
+          "outcome_real": 0.012380913653717969,
+          "probabilidade_prior": 0.013569468953159258,
+          "poll_lead_pp": 0.00012985833147477057,
+          "abs_poll_lead_pp": 0.3299061771211922,
+          "incumbente": 0.023872191858580662,
+          "prior_brier": -0.4988776984592876,
+          "prior_correct": 1.0,
+          "prior_confidence": 0.31166003919200863,
+          "context_len": -0.05960772754512995
+        },
+        "prior_confidence": {
+          "outcome_real": -0.0014056339494515604,
+          "probabilidade_prior": 0.014785311198596808,
+          "poll_lead_pp": 0.003692080127138476,
+          "abs_poll_lead_pp": 0.9226650901043976,
+          "incumbente": 0.09729021210225708,
+          "prior_brier": -0.8936125550648696,
+          "prior_correct": 0.31166003919200863,
+          "prior_confidence": 1.0,
+          "context_len": 0.117140059623965
+        },
+        "context_len": {
+          "outcome_real": -0.005395836096186508,
+          "probabilidade_prior": 0.0002889316436552412,
+          "poll_lead_pp": 0.0016946199573425825,
+          "abs_poll_lead_pp": -0.01861020567301843,
+          "incumbente": -0.32824352297653364,
+          "prior_brier": -0.10555439241060399,
+          "prior_correct": -0.05960772754512995,
+          "prior_confidence": 0.117140059623965,
+          "context_len": 1.0
+        }
+      },
+      "pairs": [
+        {
+          "x": "probabilidade_prior",
+          "y": "poll_lead_pp",
+          "n": 7138,
+          "r": 0.9749827682235829,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "abs_poll_lead_pp",
+          "y": "prior_confidence",
+          "n": 7138,
+          "r": 0.9226650901043977,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "prior_brier",
+          "y": "prior_confidence",
+          "n": 7679,
+          "r": -0.8936125550648696,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "abs_poll_lead_pp",
+          "y": "prior_brier",
+          "n": 7138,
+          "r": -0.8273179755209753,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "outcome_real",
+          "y": "probabilidade_prior",
+          "n": 7679,
+          "r": 0.7966149170029789,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "outcome_real",
+          "y": "poll_lead_pp",
+          "n": 7138,
+          "r": 0.7841055834400489,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "prior_brier",
+          "y": "prior_correct",
+          "n": 7679,
+          "r": -0.4988776984592876,
+          "p": 0.0,
+          "q_bh": 0.0
+        },
+        {
+          "x": "abs_poll_lead_pp",
+          "y": "prior_correct",
+          "n": 7138,
+          "r": 0.3299061771211922,
+          "p": 7.971173644741014e-181,
+          "q_bh": 3.1884694578964056e-180
+        },
+        {
+          "x": "incumbente",
+          "y": "context_len",
+          "n": 7679,
+          "r": -0.32824352297653353,
+          "p": 2.4938990491049622e-192,
+          "q_bh": 1.122254572097233e-191
+        },
+        {
+          "x": "prior_correct",
+          "y": "prior_confidence",
+          "n": 7679,
+          "r": 0.3116600391920086,
+          "p": 1.345509366765067e-172,
+          "q_bh": 4.843833720354242e-172
+        },
+        {
+          "x": "prior_confidence",
+          "y": "context_len",
+          "n": 7679,
+          "r": 0.11714005962396498,
+          "p": 7.136552567562889e-25,
+          "q_bh": 2.335599022111491e-24
+        },
+        {
+          "x": "prior_brier",
+          "y": "context_len",
+          "n": 7679,
+          "r": -0.10555439241060399,
+          "p": 1.7907002868119735e-20,
+          "q_bh": 5.3721008604359206e-20
+        },
+        {
+          "x": "incumbente",
+          "y": "prior_confidence",
+          "n": 7679,
+          "r": 0.09729021210225708,
+          "p": 1.2918410796316533e-17,
+          "q_bh": 3.577406066672271e-17
+        },
+        {
+          "x": "incumbente",
+          "y": "prior_brier",
+          "n": 7679,
+          "r": -0.09116258825040635,
+          "p": 1.2050167251832112e-15,
+          "q_bh": 3.0986144361854e-15
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "incumbente",
+          "n": 7138,
+          "r": -0.08824008826053803,
+          "p": 8.118931472792412e-14,
+          "q_bh": 1.948543553470179e-13
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "incumbente",
+          "n": 7679,
+          "r": -0.07752989960321216,
+          "p": 1.024108408972677e-11,
+          "q_bh": 2.3042439201885233e-11
+        },
+        {
+          "x": "abs_poll_lead_pp",
+          "y": "incumbente",
+          "n": 7138,
+          "r": 0.0769791712605351,
+          "p": 7.403810401871498e-11,
+          "q_bh": 1.567865732161023e-10
+        },
+        {
+          "x": "prior_correct",
+          "y": "context_len",
+          "n": 7679,
+          "r": -0.059607727545129933,
+          "p": 1.7208037616476655e-07,
+          "q_bh": 3.441607523295331e-07
+        },
+        {
+          "x": "outcome_real",
+          "y": "incumbente",
+          "n": 7679,
+          "r": -0.042213106838011535,
+          "p": 0.0002154486845689001,
+          "q_bh": 0.0004082185602358107
+        },
+        {
+          "x": "incumbente",
+          "y": "prior_correct",
+          "n": 7679,
+          "r": 0.023872191858580666,
+          "p": 0.036449662984177525,
+          "q_bh": 0.06560939337151954
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "prior_brier",
+          "n": 7679,
+          "r": -0.01969290040402026,
+          "p": 0.08442419691157048,
+          "q_bh": 0.14472719470554937
+        },
+        {
+          "x": "abs_poll_lead_pp",
+          "y": "context_len",
+          "n": 7138,
+          "r": -0.018610205673018434,
+          "p": 0.11590988621444737,
+          "q_bh": 0.18967072289636844
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "prior_confidence",
+          "n": 7679,
+          "r": 0.014785311198596806,
+          "p": 0.1951494288840135,
+          "q_bh": 0.30545127999236893
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "prior_correct",
+          "n": 7679,
+          "r": 0.013569468953159258,
+          "p": 0.2344583932340967,
+          "q_bh": 0.35168758985114507
+        },
+        {
+          "x": "outcome_real",
+          "y": "prior_correct",
+          "n": 7679,
+          "r": 0.012380913653717969,
+          "p": 0.278008818082025,
+          "q_bh": 0.400332698038116
+        },
+        {
+          "x": "outcome_real",
+          "y": "context_len",
+          "n": 7679,
+          "r": -0.005395836096186507,
+          "p": 0.6363822290760849,
+          "q_bh": 0.881144624874579
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "prior_brier",
+          "n": 7138,
+          "r": -0.0037559089476952895,
+          "p": 0.7510388584851356,
+          "q_bh": 0.97088555348019
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "prior_confidence",
+          "n": 7138,
+          "r": 0.0036920801271384763,
+          "p": 0.7551332082623701,
+          "q_bh": 0.97088555348019
+        },
+        {
+          "x": "outcome_real",
+          "y": "prior_brier",
+          "n": 7679,
+          "r": 0.0023924994756806648,
+          "p": 0.8339637473856376,
+          "q_bh": 1.0
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "context_len",
+          "n": 7138,
+          "r": 0.0016946199573425822,
+          "p": 0.8861734139676826,
+          "q_bh": 1.0
+        },
+        {
+          "x": "outcome_real",
+          "y": "prior_confidence",
+          "n": 7679,
+          "r": -0.0014056339494515602,
+          "p": 0.9019839028602287,
+          "q_bh": 1.0
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "context_len",
+          "n": 7679,
+          "r": 0.0002889316436552412,
+          "p": 0.9798037646790617,
+          "q_bh": 1.0
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "prior_correct",
+          "n": 7138,
+          "r": 0.00012985833147477054,
+          "p": 0.9912478776954168,
+          "q_bh": 1.0
+        },
+        {
+          "x": "probabilidade_prior",
+          "y": "abs_poll_lead_pp",
+          "n": 7138,
+          "r": -9.008685986311748e-09,
+          "p": 0.9999993928252309,
+          "q_bh": 1.0
+        },
+        {
+          "x": "outcome_real",
+          "y": "abs_poll_lead_pp",
+          "n": 7138,
+          "r": 0.0,
+          "p": 1.0,
+          "q_bh": 1.0
+        },
+        {
+          "x": "poll_lead_pp",
+          "y": "abs_poll_lead_pp",
+          "n": 7138,
+          "r": 0.0,
+          "p": 1.0,
+          "q_bh": 1.0
+        }
+      ]
+    },
+    "glm_outcome": {
+      "engine": "statsmodels_glm_binomial",
+      "formula": "outcome_real ~ probabilidade_prior + poll_lead_pp + incumbente",
+      "n": 7138,
+      "coefficients": [
+        {
+          "term": "Intercept",
+          "estimate": -9.433746858991169,
+          "odds_ratio": 7.997896790910283e-05,
+          "std_error": 0.4388370113306915,
+          "z": -21.497154103718575,
+          "p": 1.6553260076670274e-102,
+          "ci_low": -10.29385159628252,
+          "ci_high": -8.573642121699818
+        },
+        {
+          "term": "probabilidade_prior",
+          "estimate": 18.72804658781807,
+          "odds_ratio": 135983836.5605922,
+          "std_error": 0.8718054265273175,
+          "z": 21.481911006700116,
+          "p": 2.2985334517605014e-102,
+          "ci_low": 17.019339350297948,
+          "ci_high": 20.436753825338194
+        },
+        {
+          "term": "poll_lead_pp",
+          "estimate": 0.03657238898505626,
+          "odds_ratio": 1.037249386730492,
+          "std_error": 0.008303546075873846,
+          "z": 4.404430185715261,
+          "p": 1.0606228992217356e-05,
+          "ci_low": 0.02029773773237463,
+          "ci_high": 0.0528470402377379
+        },
+        {
+          "term": "incumbente",
+          "estimate": 0.3391619239302962,
+          "odds_ratio": 1.4037706308685207,
+          "std_error": 0.10384400568356811,
+          "z": 3.266071273904681,
+          "p": 0.0010905079809035681,
+          "ci_low": 0.13563141278013005,
+          "ci_high": 0.5426924350804624
+        }
+      ],
+      "metrics": {
+        "aic": 3713.7357831739296,
+        "bic": 3741.22853479013,
+        "deviance": 3705.7357831739296,
+        "accuracy_0_5": 0.9099187447464275
+      }
+    },
+    "lm_prior_brier": {
+      "engine": "statsmodels_ols",
+      "formula": "prior_brier ~ prior_confidence + abs_poll_lead_pp + incumbente + context_len",
+      "n": 7138,
+      "coefficients": [
+        {
+          "term": "Intercept",
+          "estimate": 0.28880240727956047,
+          "std_error": 0.006167660619800757,
+          "t": 46.82527542977714,
+          "p": 0.0,
+          "ci_low": 0.27671196303207257,
+          "ci_high": 0.30089285152704837
+        },
+        {
+          "term": "prior_confidence",
+          "estimate": -0.23958133536338339,
+          "std_error": 0.026582535007616422,
+          "t": -9.012734688198044,
+          "p": 2.5425972538947048e-19,
+          "ci_low": -0.2916909888087548,
+          "ci_high": -0.18747168191801195
+        },
+        {
+          "term": "abs_poll_lead_pp",
+          "estimate": -0.0006204235404364726,
+          "std_error": 0.00032920157586177173,
+          "t": -1.884631137661935,
+          "p": 0.059520277592256136,
+          "ci_low": -0.0012657562758927397,
+          "ci_high": 2.490919501979441e-05
+        },
+        {
+          "term": "incumbente",
+          "estimate": -0.011449703364470223,
+          "std_error": 0.002342159078432753,
+          "t": -4.888525066423648,
+          "p": 1.0381440866073992e-06,
+          "ci_low": -0.01604102988227945,
+          "ci_high": -0.0068583768466609985
+        },
+        {
+          "term": "context_len",
+          "estimate": -0.0016040145340303828,
+          "std_error": 0.00010070213486585816,
+          "t": -15.928307142316648,
+          "p": 3.716783318174162e-56,
+          "ci_low": -0.0018014205883275143,
+          "ci_high": -0.0014066084797332513
+        }
+      ],
+      "metrics": {
+        "r_squared": 0.2629407526441918,
+        "adj_r_squared": 0.2625274290791527,
+        "aic": -15234.528636722338,
+        "bic": -15200.162697202088,
+        "f_pvalue": 0.0,
+        "rmse": 0.08317722795277588
+      }
+    },
+    "partial_prior_vs_outcome_controlling_lead": {
+      "n": 7138,
+      "r": 0.7997030367856296,
+      "p": null
+    },
+    "chisq_lead_sign_vs_outcome": {
+      "test": "pearson_chi_square",
+      "row": "lead_sign",
+      "col": "outcome_real",
+      "chi2": 4390.557135484917,
+      "p": 0.0,
+      "dof": 3,
+      "observed": {
+        "0": {
+          "missing": 181,
+          "negative": 3170,
+          "positive": 392,
+          "zero": 7
+        },
+        "1": {
+          "missing": 360,
+          "negative": 392,
+          "positive": 3170,
+          "zero": 7
+        }
+      },
+      "expected": {
+        "0": {
+          "missing": 264.1945565828884,
+          "negative": 1739.484307852585,
+          "positive": 1739.484307852585,
+          "zero": 6.836827711941659
+        },
+        "1": {
+          "missing": 276.8054434171116,
+          "negative": 1822.515692147415,
+          "positive": 1822.515692147415,
+          "zero": 7.163172288058341
+        }
+      }
+    },
+    "anova_prior_brier_by_dataset_top12": {
+      "test": "one_way_anova",
+      "y": "prior_brier",
+      "group": "dataset",
+      "k": 12,
+      "n": 7228,
+      "f": 106.15291172117509,
+      "p": 2.6442190251406427e-225,
+      "means": {
+        "ai_models_releases_q1_2026": 0.14625,
+        "automotive_evs_q1_2026": 0.16475,
+        "biotech_health_q1_2026": 0.10575000000000001,
+        "bond_treasury_q1_2026": 0.16325,
+        "brazil_votes_q1_2026": 0.22800000000000004,
+        "eleicoes_br_real_polls": 0.20249999999999999,
+        "fx_currency_q1_2026": 0.1565,
+        "governadores_br_historico": 0.11926111111111111,
+        "price_predictions_q1_2026": 0.25,
+        "uk_2019_general": 0.29553027083333333,
+        "us_2016_president": 0.14181216549520767,
+        "us_2020_president": 0.11612279477124184
+      }
+    }
+  },
+  "political": {
+    "baseline": {
+      "brier": 0.07222088476400502,
+      "acc": 0.9187817258883249,
+      "n": 394
+    },
+    "mrp": {
+      "brier": 0.10460315000176926,
+      "acc": 0.9720812182741116,
+      "n": 394
+    },
+    "lift_vs_baseline": {
+      "acc": 0.053299492385786795,
+      "brier": 0.03238226523776423,
+      "log_loss": 0.0875302727468581,
+      "auc": 0.026372748589244766,
+      "mcc": 0.10661114922676795,
+      "ece": 0.1446646591747528,
+      "balanced_accuracy": 0.053299492385786795
+    },
+    "decision_edge": {
+      "net_hits": 21,
+      "mcnemar_p": 1.915276011580531e-05,
+      "dm_p_brier": 8.618738271959359e-07
+    },
+    "evolution_gate": {
+      "promoted": true,
+      "checks": {
+        "acc_not_worse": true,
+        "mcc_not_worse": true,
+        "auc_not_worse": true,
+        "brier_not_materially_worse": true,
+        "composite_better": true
+      },
+      "reason": "candidate passes all gates"
+    },
+    "best_config": {
+      "stein_shrink": 0.4,
+      "w_linzer": 0.7,
+      "sigma_intercept_pp": 3.0,
+      "sigma_slope_pp_per_day": 0.005,
+      "w_state_mrp": 0.36
+    },
+    "best_metrics": {
+      "n": 394,
+      "acc": 0.9720812182741116,
+      "brier": 0.10460315000176926,
+      "log_loss": 0.3648875233694442,
+      "auc": 0.9916256538431807,
+      "mcc": 0.9441746010034177,
+      "ece": 0.26103414903415945
+    },
+    "per_year": [
+      {
+        "n": 86,
+        "acc": 1.0,
+        "brier": 0.10149056997794323,
+        "log_loss": 0.3794617489674264,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.31340943757685913,
+        "brier_skill_vs_climatology": 0.5940377200882271,
+        "year": "2010"
+      },
+      {
+        "n": 20,
+        "acc": 0.85,
+        "brier": 0.08459464065209199,
+        "log_loss": 0.2668254238354683,
+        "auc": 0.93,
+        "mcc": 0.7035264706814485,
+        "ece": 0.05366577259519574,
+        "brier_skill_vs_climatology": 0.661621437391632,
+        "year": "2016"
+      },
+      {
+        "n": 70,
+        "acc": 0.9857142857142858,
+        "brier": 0.18401003768636331,
+        "log_loss": 0.5595760175698754,
+        "auc": 1.0,
+        "mcc": 0.97182531580755,
+        "ece": 0.412411058726411,
+        "brier_skill_vs_climatology": 0.26395984925454674,
+        "year": "2018"
+      },
+      {
+        "n": 30,
+        "acc": 1.0,
+        "brier": 0.017028528380941273,
+        "log_loss": 0.11258681315705817,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.10202183587055327,
+        "brier_skill_vs_climatology": 0.9318858864762349,
+        "year": "2020"
+      },
+      {
+        "n": 120,
+        "acc": 1.0,
+        "brier": 0.08429553597922558,
+        "log_loss": 0.3219808075665124,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.2646777396386798,
+        "brier_skill_vs_climatology": 0.6628178560830977,
+        "year": "2022"
+      },
+      {
+        "n": 68,
+        "acc": 0.8970588235294118,
+        "brier": 0.10715494797899103,
+        "log_loss": 0.3619094527510067,
+        "auc": 0.9532871972318339,
+        "mcc": 0.7944613465542747,
+        "ece": 0.16905924481989126,
+        "brier_skill_vs_climatology": 0.5713802080840359,
+        "year": "2024"
+      }
+    ],
+    "worst_brier_years": [
+      {
+        "n": 70,
+        "acc": 0.9857142857142858,
+        "brier": 0.18401003768636331,
+        "log_loss": 0.5595760175698754,
+        "auc": 1.0,
+        "mcc": 0.97182531580755,
+        "ece": 0.412411058726411,
+        "brier_skill_vs_climatology": 0.26395984925454674,
+        "year": "2018"
+      },
+      {
+        "n": 68,
+        "acc": 0.8970588235294118,
+        "brier": 0.10715494797899103,
+        "log_loss": 0.3619094527510067,
+        "auc": 0.9532871972318339,
+        "mcc": 0.7944613465542747,
+        "ece": 0.16905924481989126,
+        "brier_skill_vs_climatology": 0.5713802080840359,
+        "year": "2024"
+      },
+      {
+        "n": 86,
+        "acc": 1.0,
+        "brier": 0.10149056997794323,
+        "log_loss": 0.3794617489674264,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.31340943757685913,
+        "brier_skill_vs_climatology": 0.5940377200882271,
+        "year": "2010"
+      }
+    ],
+    "worst_ece_years": [
+      {
+        "n": 70,
+        "acc": 0.9857142857142858,
+        "brier": 0.18401003768636331,
+        "log_loss": 0.5595760175698754,
+        "auc": 1.0,
+        "mcc": 0.97182531580755,
+        "ece": 0.412411058726411,
+        "brier_skill_vs_climatology": 0.26395984925454674,
+        "year": "2018"
+      },
+      {
+        "n": 86,
+        "acc": 1.0,
+        "brier": 0.10149056997794323,
+        "log_loss": 0.3794617489674264,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.31340943757685913,
+        "brier_skill_vs_climatology": 0.5940377200882271,
+        "year": "2010"
+      },
+      {
+        "n": 120,
+        "acc": 1.0,
+        "brier": 0.08429553597922558,
+        "log_loss": 0.3219808075665124,
+        "auc": 1.0,
+        "mcc": 1.0,
+        "ece": 0.2646777396386798,
+        "brier_skill_vs_climatology": 0.6628178560830977,
+        "year": "2022"
+      }
+    ]
+  },
+  "gauntlet": {
+    "summary": {
+      "total": {
+        "pass": 174,
+        "fail": 0,
+        "timeout": 0,
+        "total": 174
+      },
+      "by_area": {
+        "core": {
+          "pass": 58,
+          "fail": 0,
+          "timeout": 0,
+          "total": 58
+        },
+        "forecasting": {
+          "pass": 26,
+          "fail": 0,
+          "timeout": 0,
+          "total": 26
+        },
+        "frontend": {
+          "pass": 2,
+          "fail": 0,
+          "timeout": 0,
+          "total": 2
+        },
+        "game_theory": {
+          "pass": 12,
+          "fail": 0,
+          "timeout": 0,
+          "total": 12
+        },
+        "infra": {
+          "pass": 11,
+          "fail": 0,
+          "timeout": 0,
+          "total": 11
+        },
+        "politica": {
+          "pass": 4,
+          "fail": 0,
+          "timeout": 0,
+          "total": 4
+        },
+        "psicohistoria": {
+          "pass": 5,
+          "fail": 0,
+          "timeout": 0,
+          "total": 5
+        },
+        "quant": {
+          "pass": 30,
+          "fail": 0,
+          "timeout": 0,
+          "total": 30
+        },
+        "system": {
+          "pass": 1,
+          "fail": 0,
+          "timeout": 0,
+          "total": 1
+        },
+        "vila_sim": {
+          "pass": 25,
+          "fail": 0,
+          "timeout": 0,
+          "total": 25
+        }
+      }
+    },
+    "seconds": 134.176,
+    "by_area_time": {
+      "core": {
+        "tests": 58,
+        "seconds": 113.772,
+        "max_seconds": 50.901,
+        "avg_seconds": 1.962
+      },
+      "forecasting": {
+        "tests": 26,
+        "seconds": 104.533,
+        "max_seconds": 91.465,
+        "avg_seconds": 4.021
+      },
+      "frontend": {
+        "tests": 2,
+        "seconds": 34.069,
+        "max_seconds": 26.107,
+        "avg_seconds": 17.035
+      },
+      "game_theory": {
+        "tests": 12,
+        "seconds": 7.355,
+        "max_seconds": 4.277,
+        "avg_seconds": 0.613
+      },
+      "infra": {
+        "tests": 11,
+        "seconds": 23.963,
+        "max_seconds": 7.447,
+        "avg_seconds": 2.178
+      },
+      "politica": {
+        "tests": 4,
+        "seconds": 1.46,
+        "max_seconds": 0.936,
+        "avg_seconds": 0.365
+      },
+      "psicohistoria": {
+        "tests": 5,
+        "seconds": 3.473,
+        "max_seconds": 1.097,
+        "avg_seconds": 0.695
+      },
+      "quant": {
+        "tests": 30,
+        "seconds": 31.47,
+        "max_seconds": 9.518,
+        "avg_seconds": 1.049
+      },
+      "system": {
+        "tests": 1,
+        "seconds": 0.507,
+        "max_seconds": 0.507,
+        "avg_seconds": 0.507
+      },
+      "vila_sim": {
+        "tests": 25,
+        "seconds": 64.619,
+        "max_seconds": 21.321,
+        "avg_seconds": 2.585
+      }
+    },
+    "slow_tests": [
+      {
+        "name": "test_llm_forecaster.py",
+        "area": "forecasting",
+        "seconds": 91.465,
+        "status": "pass"
+      },
+      {
+        "name": "test_benchmark.py",
+        "area": "core",
+        "seconds": 50.901,
+        "status": "pass"
+      },
+      {
+        "name": "test_hybrid_autotune.py",
+        "area": "core",
+        "seconds": 32.908,
+        "status": "pass"
+      },
+      {
+        "name": "npm_build",
+        "area": "frontend",
+        "seconds": 26.107,
+        "status": "pass"
+      },
+      {
+        "name": "test_bateria.py",
+        "area": "vila_sim",
+        "seconds": 21.321,
+        "status": "pass"
+      },
+      {
+        "name": "test_ondas_28_30.py",
+        "area": "vila_sim",
+        "seconds": 10.848,
+        "status": "pass"
+      },
+      {
+        "name": "test_practical_quant_vila.py",
+        "area": "quant",
+        "seconds": 9.518,
+        "status": "pass"
+      },
+      {
+        "name": "test_quant_analysis.py",
+        "area": "quant",
+        "seconds": 8.36,
+        "status": "pass"
+      },
+      {
+        "name": "npm_lint",
+        "area": "frontend",
+        "seconds": 7.962,
+        "status": "pass"
+      },
+      {
+        "name": "test_groq_provider.py",
+        "area": "infra",
+        "seconds": 7.447,
+        "status": "pass"
+      },
+      {
+        "name": "test_webhook_alerts.py",
+        "area": "infra",
+        "seconds": 6.524,
+        "status": "pass"
+      },
+      {
+        "name": "test_gemini_provider.py",
+        "area": "infra",
+        "seconds": 5.522,
+        "status": "pass"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "area": "politica",
+      "action": "Use MRP as classifier edge and add a calibrated probability layer before exposing raw probabilities.",
+      "evidence": "MRP acc 0.9721 > baseline 0.9188, but Brier 0.1046 > baseline 0.0722."
+    },
+    {
+      "priority": 2,
+      "area": "calibracao",
+      "action": "Open a year-fold calibration task focused on the highest-ECE cycle.",
+      "evidence": "Year 2018 ECE=0.4124, Brier=0.1840, n=70."
+    },
+    {
+      "priority": 3,
+      "area": "dados",
+      "action": "Review the worst dataset by prior Brier and add it to the next focused validation batch.",
+      "evidence": "post_cutoff_q1_2026_v2 prior_brier=0.3553, n=10."
+    },
+    {
+      "priority": 4,
+      "area": "testes",
+      "action": "Keep the slowest test in a performance watchlist and split it if it grows further.",
+      "evidence": "test_llm_forecaster.py took 91.465s."
+    }
+  ]
+}

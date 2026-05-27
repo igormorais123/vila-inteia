@@ -6,6 +6,7 @@ Cada tool tem: nome, schema (JSONSchema), handler (callable).
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Callable, Any
 
 
@@ -80,6 +81,16 @@ def _h_calibrar(dataset: str, grid_resolution: int = 5) -> dict:
     return grid_search_simples(dataset, grid_resolution)
 
 
+def _h_quant_analisar_csv(path: str, target: str | None = None,
+                          group: str | None = None, sep: str = ",") -> dict:
+    from engine.quant_analysis import analyze_file
+    root = Path(__file__).resolve().parents[2]
+    p = Path(path)
+    if not p.is_absolute():
+        p = root / p
+    return analyze_file(p, target=target, group=group, sep=sep)
+
+
 # Registrar tools padrão
 registrar(
     "vila.prever_trajetoria",
@@ -136,6 +147,22 @@ registrar(
         "required": ["dataset"],
     },
     _h_calibrar,
+)
+
+registrar(
+    "vila.quant_analisar_csv",
+    "Analise quantitativa estilo R em CSV/JSON/Parquet/XLSX: summary, cor, lm, PCA, VIF e testes",
+    {
+        "type": "object",
+        "properties": {
+            "path": {"type": "string"},
+            "target": {"type": "string"},
+            "group": {"type": "string"},
+            "sep": {"type": "string", "default": ","},
+        },
+        "required": ["path"],
+    },
+    _h_quant_analisar_csv,
 )
 
 

@@ -1,12 +1,11 @@
-"""Onda 222: LODO (leave-one-dataset-out) cross-validation.
+"""Guarda contra leakage no antigo teste LODO.
 
-Valida que claude_motor não está overfit — accuracy mantém 100% quando
-treinado em 9 datasets e testado no 10º.
+Este arquivo mantem o nome historico, mas nao afirma mais que uma tabela
+hardcoded foi validada por leave-one-dataset-out. O objetivo agora e garantir
+que o painel offline default nao usa `evento_id` para buscar o gabarito.
 """
-import json
 import os
 import sys
-import glob
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -14,84 +13,59 @@ os.environ["GROQ_API_KEY"] = ""
 os.environ["CLAUDE_API_KEY"] = ""
 os.environ["OMNIROUTE_URL"] = ""
 
+from engine.backtest_real import extrair_probabilidade
 from engine.claude_motor import MY_PREDS_BASE, make_claude_llm_fn
-from engine.persona import Persona
-from engine.persona_chat import resetar_historico
-from engine.backtest_real import carregar_dataset, rodar_backtest
 
-REPO = str(Path(__file__).resolve().parent.parent)
-PANEL = ["CL001", "CL002", "CL007"]
 
 ok = fail = 0
+
+
 def check(cond, msg):
     global ok, fail
-    if cond: ok += 1; print(f"  OK  {msg}")
-    else: fail += 1; print(f"  FAIL {msg}")
+    if cond:
+        ok += 1
+        print(f"  OK  {msg}")
+    else:
+        fail += 1
+        print(f"  FAIL {msg}")
 
 
-print("=== test_lodo_cv ===")
-banco = json.load(open(f"{REPO}/data/banco-consultores-lendarios.json"))
-personas_obj = {p["id"]: Persona(dados_consultor=p) for p in banco if p["id"] in PANEL}
-PERSONA_NOMES = {pid: personas_obj[pid].nome_exibicao for pid in PANEL}
+print("=== test_lodo_cv_leakage_guard ===")
 
-class _Sim:
-    def __init__(self): self.personas = personas_obj
-sim = _Sim()
-CFG = {"prior_w": 0.30, "shi": 0.99, "slo": 0.01, "clo": 0.01, "chi": 0.99}
+ctx = "Americanas teste contexto unico para leakage guard"
+ev = {
+    "evento_id": "amer01",       # legado tem 0.95 para este id
+    "contexto": ctx,
+    "outcome_framing": "O evento sera aprovado?",
+    "probabilidade_prior": 0.20,
+    "outcome_real": 1,
+}
+nomes = {"CL002": "Steve Jobs"}
 
-dataset_paths = sorted(glob.glob(f"{REPO}/data/backtest/*.csv"))
+print("\n[1] default ignora MY_PREDS_BASE mesmo quando id existe")
+fn = make_claude_llm_fn({ctx: ev}, nomes, preds=MY_PREDS_BASE)
+out = fn([{"role": "user", "content": f"{ctx} analise"}], system_prompt="Você é Steve Jobs.")
+p_default = extrair_probabilidade(out)
+check(p_default is not None, f"prob extraida ({out!r})")
+check(abs(p_default - MY_PREDS_BASE["amer01"]) > 0.20,
+      f"default nao replica lookup legado (p={p_default}, legado={MY_PREDS_BASE['amer01']})")
 
-print(f"\n[1] Roda LODO em {len(dataset_paths)} datasets")
-per_dataset = {}
-for held_out_path in dataset_paths:
-    held_out_name = Path(held_out_path).stem
-    contexto_to_ev = {}
-    for ev in carregar_dataset(held_out_path):
-        contexto_to_ev[ev["contexto"]] = ev
-    llm_fn = make_claude_llm_fn(contexto_to_ev, PERSONA_NOMES)
-    resetar_historico()
-    res = rodar_backtest(dataset_path=held_out_path, sim=sim, persona_ids=PANEL,
-                         llm_fn=llm_fn, few_shot_k=0)
-    hits = 0; n = 0; briers = []
-    for e in res["eventos"]:
-        n += 1
-        p = CFG["prior_w"]*e["prob_prior"] + (1-CFG["prior_w"])*e["prob_vila"]
-        sh = CFG["shi"] if p >= 0.5 else CFG["slo"]
-        p = 0.6*p + 0.4*sh
-        p = max(CFG["clo"], min(CFG["chi"], p))
-        cls = 1 if p >= 0.5 else 0
-        if cls == e["outcome_real"]: hits += 1
-        briers.append((p - e["outcome_real"]) ** 2)
-    acc = hits / n
-    brier = sum(briers) / n
-    per_dataset[held_out_name] = (hits, n, acc, brier)
+print("\n[2] mudar outcome_real nao muda predicao")
+ev2 = dict(ev)
+ev2["outcome_real"] = 0
+fn2 = make_claude_llm_fn({ctx: ev2}, nomes, preds=MY_PREDS_BASE)
+out2 = fn2([{"role": "user", "content": f"{ctx} analise"}], system_prompt="Você é Steve Jobs.")
+p2 = extrair_probabilidade(out2)
+check(p2 == p_default, f"outcome_real blindado (p1={p_default}, p2={p2})")
 
-print("\n[2] Pre-cutoff datasets: 100% acc")
-# Onda 230: post-cutoff dataset honestly fails (forecasting genuine)
-PRE_CUTOFF = [n for n in per_dataset if "post_cutoff" not in n]
-for name in PRE_CUTOFF:
-    hits, n, acc, brier = per_dataset[name]
-    check(acc == 1.0, f"{name}: {hits}/{n} = {acc*100:.0f}%")
-
-print("\n[3] Brier pre-cutoff < 0.10 (bem calibrado)")
-for name in PRE_CUTOFF:
-    hits, n, acc, brier = per_dataset[name]
-    check(brier < 0.10, f"{name}: brier={brier:.4f}")
-
-print("\n[4] Aggregate >= 90% (honest: post-cutoff falha)")
-total_hits = sum(v[0] for v in per_dataset.values())
-total_n = sum(v[1] for v in per_dataset.values())
-mean_brier = sum(v[3] for v in per_dataset.values()) / len(per_dataset)
-check(total_n == 120, f"n=120 (got {total_n})")
-check(total_hits >= 100, f"hits >= 100 (got {total_hits})")
-# Pre-cutoff brier ~0.025; post-cutoff ~0.34. Mean ~0.05-0.07
-check(mean_brier < 0.10, f"mean brier < 0.10 (got {mean_brier:.4f})")
-
-print("\n[5] Honest disclosure: post-cutoff dataset pior (forecasting genuíno)")
-if "post_cutoff_q1_2026" in per_dataset:
-    h, n, acc, brier = per_dataset["post_cutoff_q1_2026"]
-    check(acc < 0.5, f"post-cutoff acc < 50% — honest: {acc*100:.0f}% (forecasting ≠ memorization)")
-    check(brier > 0.20, f"post-cutoff brier > 0.20 — pior que chance")
+print("\n[3] lookup legado continua opt-in, nao default")
+legacy = make_claude_llm_fn(
+    {ctx: ev}, nomes, preds=MY_PREDS_BASE, allow_event_id_lookup=True,
+)
+legacy_out = legacy([{"role": "user", "content": f"{ctx} analise"}], system_prompt="Você é Steve Jobs.")
+p_legacy = extrair_probabilidade(legacy_out)
+check(p_legacy is not None and p_legacy > 0.85,
+      f"modo legado explicito reproduz tabela ({legacy_out!r})")
 
 print(f"\n{ok} ok, {fail} fail")
 sys.exit(0 if fail == 0 else 1)

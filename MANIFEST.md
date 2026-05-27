@@ -227,12 +227,12 @@ Marcos: ensemble Bayesiano, self-consistency, conformal prediction, Karpathy aut
 
 ## Ondas — bloco 4 (198–289, forecasting honesto + hybrid)
 
-Marcos: a11y total, claude_motor 100% acc, factor models, post-cutoff classifier, conformal+EB+Lindy, mega-bench routed, Vila+LLM hybrid, Diebold-Mariano formal p<0.01.
+Marcos: a11y total, claude_motor saneado sem lookup de gabarito por padrão, factor models, post-cutoff classifier, conformal+EB+Lindy, mega-bench routed, Vila+LLM hybrid, Diebold-Mariano formal p<0.01.
 
 | # | Tema | Entrega-chave |
 |---|---|---|
 | 198–219 | A11y boost | Aria-labels duais, semantic landmarks, noscript fallbacks (combined cruzou 0.90 em onda 210) |
-| 220–222 | Acurácia 100% | `claude_motor` 100/100 acc (brier 0.0256); LODO CV 100% per dataset |
+| 220–222 | Painel offline | `claude_motor` convertido para estimador ground-truth-blind; teste LODO antigo virou guarda anti-leakage |
 | 223–227 | Aria final | psico_live, cidade, super_intel, dashboard, backtest, vila-claude-motor skill |
 | 228–229 | Validação SOTA | Bench vs 4 baselines; rigor SOTA 2026 |
 | 232–242 | Real benchmark | 197 events large-scale; factor models (MOMENTUM bate baseline); cache atomic |

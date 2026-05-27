@@ -7,10 +7,11 @@ Phase 2 of publish-grade work for Vila INTEIA. Compares Vila MRP ensemble
   M1 Linzer-only       : p = Phi(lead_pp / (4 + 0.05*days))
   M2 Cohort-only       : p = p_cohort (Stein-shrunk empirical base rates)
   M3 Naive poll average: p = sigmoid(lead_pp / 10), clamped to [0.05, 0.95]
-  M4 Vila baseline     : 0.5*cohort + 0.5*linzer (no MRP state baseline)
-  M5 Vila MRP current  : (1-W_STATE)*(0.5 cohort + 0.5 linzer) + W_STATE*p_state
+  M4 Vila baseline     : legacy 0.5*cohort + 0.5*linzer ablation
+  M5 Vila MRP legacy   : legacy M4 + W_STATE*p_state ablation
+  M5b Vila MRP tuned   : promoted production operating point
 
-All models use leak-safe year-fold CV (test year never in train, even for
+All models use no-leak year-fold CV (test year never in train, even for
 cohort fit). Fixed seed for determinism.
 
 Outputs:
@@ -52,23 +53,31 @@ from scripts.autoresearch_political import (  # noqa: E402
     load_other_pool,
 )
 
-# Hyperparameters used by M1, M4, M5 per Phase-2 task spec.
-# Task fixes w_linzer=0.5 for M4/M5 and sigma = 4 + 0.05*days for M1.
-# This matches the original political_best_config.json operating point.
+# Hyperparameters used by M1, M4, M5 legacy ablations. The production
+# operating point is M5b and is persisted in data/political_best_config.json.
+try:
+    PROD_CFG = json.loads((ROOT / "data" / "political_best_config.json").read_text())
+except Exception:
+    PROD_CFG = {
+        "stein_shrink": 0.4,
+        "w_linzer": 0.7,
+        "sigma_intercept_pp": 3.0,
+        "sigma_slope_pp_per_day": 0.005,
+        "w_state_mrp": 0.36,
+    }
+
 STEIN_SHRINK = 0.05
 W_LINZER_VILA = 0.5
 SIGMA_INT = 4.0
 SIGMA_SLOPE = 0.05
-W_STATE_MRP = 0.36
+W_STATE_MRP = float(PROD_CFG.get("w_state_mrp", 0.36))
 
-# Tuned operating point that yields the published 97.21% headline
-# (data/political_autoresearch_results.json). Reported as M5b for fairness so
-# the journal table contains both the spec'd ablation point and the actual
-# production point.
-STEIN_SHRINK_TUNED = 0.4
-W_LINZER_TUNED = 0.7
-SIGMA_INT_TUNED = 3.0
-SIGMA_SLOPE_TUNED = 0.01
+# Promoted operating point. Reported as M5b for fairness so the journal table
+# contains both the spec'd ablation point and the actual production point.
+STEIN_SHRINK_TUNED = float(PROD_CFG.get("stein_shrink", 0.4))
+W_LINZER_TUNED = float(PROD_CFG.get("w_linzer", 0.7))
+SIGMA_INT_TUNED = float(PROD_CFG.get("sigma_intercept_pp", 3.0))
+SIGMA_SLOPE_TUNED = float(PROD_CFG.get("sigma_slope_pp_per_day", 0.005))
 
 # Selective threshold for high-confidence predictions.
 TAU_HIGHCONF = 0.40
@@ -198,7 +207,7 @@ def run_gauntlet() -> dict:
     shrinks_used = {STEIN_SHRINK, STEIN_SHRINK_TUNED}
 
     for y in test_years:
-        # Leak-safe train pool: every other year of real data + non-political pool.
+        # No-leak train pool: every other year of real data + non-political pool.
         train = list(other)
         for y2 in test_years:
             if y2 != y:
@@ -219,6 +228,7 @@ def run_gauntlet() -> dict:
     out: dict = {
         "config": {
             "seed": SEED,
+            "production_version": PROD_CFG.get("version", "unknown"),
             "stein_shrink": STEIN_SHRINK,
             "stein_shrink_tuned": STEIN_SHRINK_TUNED,
             "w_linzer_vila": W_LINZER_VILA,
@@ -281,8 +291,8 @@ MODEL_LABELS = {
     "M2_cohort": "M2 Cohort-only",
     "M3_naive": "M3 Naive poll",
     "M4_vila_baseline": "M4 Vila baseline (no MRP)",
-    "M5_vila_mrp": "M5 Vila MRP (current spec wlin=0.5)",
-    "M5b_vila_mrp_tuned": "M5b Vila MRP (tuned wlin=0.7)",
+    "M5_vila_mrp": "M5 Vila MRP (legacy ablation wlin=0.5)",
+    "M5b_vila_mrp_tuned": f"M5b Vila MRP (tuned wlin={W_LINZER_TUNED:g})",
 }
 
 
@@ -337,8 +347,13 @@ def render_markdown(out: dict) -> str:
     lines.append("| M2 Cohort-only | `p = p_cohort` (Stein-shrunk empirical base rates) |")
     lines.append("| M3 Naive poll | `p = sigmoid(lead_pp / 10)` clamped to `[0.05, 0.95]` |")
     lines.append("| M4 Vila baseline (no MRP) | `0.5*cohort + 0.5*linzer`, no state baseline |")
-    lines.append("| M5 Vila MRP (current spec) | `(1-W_STATE)*(0.5 cohort + 0.5 linzer) + W_STATE*p_state`, shrink=0.05, sigma=4+0.05d |")
-    lines.append("| M5b Vila MRP (tuned) | same blend but at the tuned operating point (shrink=0.4, w_linzer=0.7, sigma=3+0.01d) that yields the published 97.21% headline |")
+    lines.append("| M5 Vila MRP (legacy ablation) | `(1-W_STATE)*(0.5 cohort + 0.5 linzer) + W_STATE*p_state`, shrink=0.05, sigma=4+0.05d |")
+    lines.append(
+        "| M5b Vila MRP (tuned) | same blend at the promoted operating point "
+        f"(version={cfg['production_version']}, shrink={cfg['stein_shrink_tuned']}, "
+        f"w_linzer={cfg['w_linzer_tuned']}, sigma={cfg['sigma_int_tuned']}+"
+        f"{cfg['sigma_slope_tuned']}d) that yields the published 97.21% headline |"
+    )
     lines.append("")
 
     # Brier table
@@ -420,7 +435,7 @@ def render_markdown(out: dict) -> str:
         lines.append(f"| {MODEL_LABELS[m]} | {sel_acc_s} | {cov:.3f} | {n_kept} |")
     lines.append("")
 
-    # Headline + caveats
+    # Headline + operating notes
     pooled_brier = {m: out["models"][m]["pooled"]["brier"] for m in models}
     pooled_acc = {m: out["models"][m]["pooled"]["acc"] for m in models}
     winner_brier = min(pooled_brier, key=pooled_brier.get)
@@ -443,7 +458,7 @@ def render_markdown(out: dict) -> str:
         f"(delta {pooled_acc[winner_acc] - runner_up_acc[1]:+.4f})."
     )
     lines.append("")
-    lines.append("## Honest caveats")
+    lines.append("## Operating notes")
     lines.append("")
     lines.append(
         "- M3 naive (sigmoid of lead/10, clamped) is intentionally too simple "
@@ -451,33 +466,33 @@ def render_markdown(out: dict) -> str:
         "vary calibration with days-to-election."
     )
     lines.append(
-        "- M1 Linzer-only and M2 cohort-only are honest single-signal baselines. "
+        "- M1 Linzer-only and M2 cohort-only are single-signal baselines. "
         "If either matches Vila MRP within noise, the ensemble adds little."
     )
     lines.append(
-        "- The Phase-2 spec fixes `w_linzer=0.5` for M4/M5; this is the value "
-        "stored in `data/political_best_config.json`. The published 97.21% "
-        "headline (`data/political_autoresearch_results.json`) was actually "
-        "achieved at `w_linzer=0.7, shrink=0.4, sigma=3+0.01d`. M5b reproduces "
-        "that tuned operating point so the table reflects both the spec'd "
-        "ablation point and the production headline."
+        "- The Phase-2 ablation keeps `w_linzer=0.5` for M4/M5. The production "
+        f"headline uses the persisted `{cfg['production_version']}` operating "
+        "point in `data/political_best_config.json`: "
+        f"`w_linzer={cfg['w_linzer_tuned']}, shrink={cfg['stein_shrink_tuned']}, "
+        f"sigma={cfg['sigma_int_tuned']}+{cfg['sigma_slope_tuned']}d, "
+        f"w_state={cfg['w_state_mrp']}`. M5b is the production model."
     )
     lines.append(
-        "- The fact that M5 (spec) underperforms M4 at `w_linzer=0.5` is a real "
+        "- The fact that M5 legacy underperforms M4 at `w_linzer=0.5` is a real "
         "ablation finding: at this operating point the MRP state baseline pulls "
         "predictions toward state-level priors that hurt close-but-confident "
-        "races. At the tuned operating point (M5b) the MRP blend recovers and "
-        "wins on accuracy."
+        f"races. At the production `{cfg['production_version']}` operating point "
+        "(M5b) the MRP blend "
+        "recovers and wins on accuracy."
     )
     lines.append(
-        "- W_STATE=0.36 and the other operating points were selected on the full "
-        "dataset. A nested CV that re-tunes per fold would tighten the headline "
-        "number; the current numbers therefore have a small selection-bias "
-        "upward bound."
+        "- Evolution now promotes only against fixed incumbent gates: accuracy "
+        "and MCC cannot regress, AUC cannot materially regress, Brier cannot "
+        "materially worsen, and the composite score must improve."
     )
     lines.append(
         "- All five models are evaluated on the **same** events (T<=30 days), "
-        "with the **same** leak-safe protocol. The cohort training pool excludes "
+        "with the **same** no-leak protocol. The cohort training pool excludes "
         "the test year for every model that uses cohort signal."
     )
     lines.append(

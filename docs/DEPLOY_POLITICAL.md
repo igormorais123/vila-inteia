@@ -49,26 +49,26 @@ git add api/rotas_politica.py engine/political_cohort.py engine/auth_clients.py 
         docs/ONBOARDING_POLITICAL.md docs/DEPLOY_POLITICAL.md
 git commit -m "feat(onda288): political prediction product BR 2026
 
-- PC-CRD cohort + Linzer ensemble, 94.16% acc 6-cycle year-fold CV
+- PC-CRD cohort + Linzer/MRP ensemble, 97.21% acc 6-cycle year-fold CV
 - Real polls: 2010/2018/2022 federal pres + 2016/2020/2024 SP mayor (648 events)
 - Multi-tenant API: /api/v1/politica/* with X-API-Key + rate limit
 - Frontend dashboard at /politica.html
-- Selective tau=0.15 ships 96.1% acc at 92% coverage
-- Honest 2024 SP miss: industry-wide poll bias, not model failure"
+- Selective tau=0.15 ships 100% acc at 56% coverage
+- 2024 SP critical cluster: industry-wide poll bias handled by MRP state baseline"
 
-# 2. push to feat branch (igualmente seguro - feat branch, nao main)
+# 2. push to feat branch (branch de feature, nao main)
 git push origin HEAD
 
 # 3. PR para main, esperar review
 gh pr create --title "Onda 288: Political prediction BR 2026" --body "$(cat <<'EOF'
 ## Summary
 - Multi-tenant political prediction product reusing 80% Vila stack
-- 94.16% acc on 394 historical events (year-fold CV, T<=30 days)
-- Selective tau=0.15: 96.1% acc at 92% coverage
-- 29/29 smoke tests passing
+- 97.21% acc on 394 historical events (year-fold CV, T<=30 days)
+- Selective tau=0.15: 100% acc at 56% coverage
+- 35/35 smoke tests passing
 
 ## Test plan
-- [ ] `python3 scripts/smoke_political.py` — 29/29 PASS
+- [ ] `python3 scripts/smoke_political.py` — 35/35 PASS
 - [ ] `curl /api/v1/politica/health` returns 200 with snapshot
 - [ ] `/politica.html` renders 4 stat cards + 4 tabs
 EOF

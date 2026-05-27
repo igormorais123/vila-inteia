@@ -18,6 +18,8 @@ venv/
 .idea/
 *.swp
 *.swo
+.agents/
+tmp/
 
 # OS
 .DS_Store

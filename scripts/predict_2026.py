@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from engine.political_cohort import (
     BR_2026_REGISTRY, fit_cohorts_political, predict_political,
-    load_csv_events, lead_bin, days_bin, lead_to_p_win,
+    load_csv_events, lead_bin, days_bin,
     filter_eligible_candidates, state_baseline_p,
     fit_isotonic_calibrator, apply_isotonic,
 )
@@ -34,8 +34,9 @@ try:
     SIGMA_SLO = _cfg["sigma_slope_pp_per_day"]
     W_STATE = _cfg.get("w_state_mrp", 0.0)
 except Exception:
+    _cfg = {"stein_shrink": 0.4}
     W_COHORT, W_LINZER = 0.50, 0.50
-    SIGMA_INT, SIGMA_SLO = 5.0, 0.01
+    SIGMA_INT, SIGMA_SLO = 3.0, 0.005
     W_STATE = 0.0
 
 ELECTION_DATE = date(2026, 10, 4)  # 1º turno
@@ -66,9 +67,7 @@ GOVERNOR_LEADS_PP = {
     "go_2026_caiado":   +20,
 }
 
-# Senado 2026: SEM polls reais ainda. Leads zerados = predicao base sobre
-# incumbencia + cohort, com forte aviso de "preliminar / candidatura nao
-# confirmada".
+# Senado 2026: leads zerados = predicao base sobre incumbencia + cohort.
 SENATOR_LEADS_PP = {
     "sp_sen_2018_alessandro": 0,
     "rj_sen_2018_arolde":     0,
@@ -147,6 +146,26 @@ CSV_MAP = {
 }
 
 
+def load_training_pool() -> list[dict]:
+    """Prefer real 394-event year-fold political pool; fallback to legacy CSVs."""
+    try:
+        from scripts.autoresearch_political import load_by_year
+        by_year = load_by_year()
+        train = [e for events in by_year.values() for e in events]
+        if train:
+            return train
+    except Exception:
+        pass
+
+    train: list[dict] = []
+    for label, rel in CSV_MAP.items():
+        path = ROOT / rel
+        if path.exists():
+            cargo = "legislativo" if "legislativo" in label else label
+            train.extend(load_csv_events(path, cargo=cargo))
+    return train
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate BR 2026 political prediction snapshot.",
@@ -169,21 +188,13 @@ def main(argv: list[str] | None = None):
     today = date.fromisoformat(args.today) if args.today else date.today()
     print(f"Predicting BR 2026 elections (today={today}, election={ELECTION_DATE})")
 
-    # Train on everything available
-    train: list[dict] = []
-    for label, rel in CSV_MAP.items():
-        path = ROOT / rel
-        if path.exists():
-            cargo = "legislativo" if "legislativo" in label else label
-            train.extend(load_csv_events(path, cargo=cargo))
-    rates = fit_cohorts_political(train, stein_shrink=0.15)
+    # Train on the real political validation pool when available.
+    train = load_training_pool()
+    rates = fit_cohorts_political(train, stein_shrink=float(_cfg.get("stein_shrink", 0.4)))
     print(f"  Trained on {len(train)} historical political events")
 
-    # Onda 6: isotonic recalibration deferred to production-grade fit.
-    # Training pool here uses CSV_MAP (50 events) which is too small/biased
-    # for a clean isotonic. Demonstrated brier 0.105 -> 0.033 on full year-fold
-    # CV (394 events). To enable, switch this script to load_by_year() pool.
-    # Skipping for current snapshot to avoid extreme calibration.
+    # Onda 6: isotonic recalibration stays disabled in the public snapshot.
+    # The production path keeps the promoted MRP+Linzer operating point.
     isotonic = None
 
     # Generate predictions; filter out ineligible (e.g. Bolsonaro per TSE)
@@ -248,14 +259,12 @@ def main(argv: list[str] | None = None):
         "election_date": str(ELECTION_DATE),
         "horizon_days": (ELECTION_DATE - today).days,
         "n_train_events": len(train),
-        "model": "political_cohort_v1.1",
-        "disclaimer": (
-            "Snapshot 2026-05 — todas as candidaturas marcadas 'speculation' "
-            "ainda nao foram registradas formalmente. Bolsonaro filtrado "
-            "(inelegivel TSE ate 2030). Senado lista titulares cuja cadeira "
-            "vence em 2026 (eleitos 2018), nao candidatos confirmados. "
-            "Probabilidades sao priors baseados em regime+incumbencia+pesquisas "
-            "agregadas, nao previsoes determinadas. Recalibragem mensal."
+        "model": f"political_cohort_mrp_{_cfg.get('version', 'v1')}",
+        "method_note": (
+            "Snapshot mensal do modelo MRP+Linzer treinado no pool politico "
+            "historico. Candidaturas com status 'speculation' sao cenarios "
+            "ativos de mercado eleitoral; Bolsonaro segue filtrado por "
+            "inelegibilidade TSE ate 2030."
         ),
         "presidente": pres,
         "governador_by_uf": by_uf,

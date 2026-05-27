@@ -2,10 +2,11 @@
 """Phase 1 - publish-grade statistical rigor for Vila MRP political prediction.
 
 Bootstrap CIs (1000 resamples), Diebold-Mariano test (squared loss),
-McNemar paired-accuracy test, Murphy decomposition (10 bins).
+McNemar paired-accuracy test, Murphy decomposition (10 bins), and a compact
+indicator panel for product/API consumption.
 
-Config read from data/political_best_config.json (stein=0.4, w_lin=0.7,
-sint=3.0, sslo=0.01, w_state_mrp=0.36) reproducing autoresearch best.
+Config is read from data/political_best_config.json so the panel follows the
+promoted production operating point.
 """
 from __future__ import annotations
 import json
@@ -23,6 +24,9 @@ from engine.political_cohort import (
 from scripts.autoresearch_political import (
     load_by_year, load_other_pool, lead_to_p_win_param,
 )
+from engine.matthews_corr import matthews_corr
+from engine.validation_rigorous import roc_auc
+from engine.wilson_ci import wilson_ci
 
 CFG = json.load(open(ROOT / "data" / "political_best_config.json"))
 SHRINK = CFG["stein_shrink"]
@@ -65,6 +69,100 @@ def brier(preds):
 
 def acc(preds):
     return float(np.mean([(p >= 0.5) == bool(y) for p, y in preds]))
+
+
+def log_loss(preds):
+    vals = []
+    for p, y in preds:
+        ep = max(1e-9, min(1 - 1e-9, p))
+        vals.append(-(y * math.log(ep) + (1 - y) * math.log(1 - ep)))
+    return float(np.mean(vals)) if vals else 0.0
+
+
+def ece(preds, k=10):
+    if not preds:
+        return {"ece": 0.0, "mce": 0.0, "n_bins": k}
+    arr = np.array(preds)
+    p_, y_ = arr[:, 0], arr[:, 1]
+    n = len(p_)
+    edges = np.linspace(0, 1, k + 1)
+    total = 0.0
+    max_gap = 0.0
+    for i in range(k):
+        if i < k - 1:
+            mask = (p_ >= edges[i]) & (p_ < edges[i + 1])
+        else:
+            mask = (p_ >= edges[i]) & (p_ <= edges[i + 1])
+        nk = int(mask.sum())
+        if nk == 0:
+            continue
+        gap = abs(float(np.mean(p_[mask])) - float(np.mean(y_[mask])))
+        total += (nk / n) * gap
+        max_gap = max(max_gap, gap)
+    return {"ece": float(total), "mce": float(max_gap), "n_bins": k}
+
+
+def confusion_rates(preds):
+    probs = [p for p, _ in preds]
+    reals = [int(y) for _, y in preds]
+    mcc = matthews_corr(probs, reals)
+    tp, fp, fn, tn = mcc["tp"], mcc["fp"], mcc["fn"], mcc["tn"]
+    sensitivity = tp / (tp + fn) if (tp + fn) else 0.0
+    specificity = tn / (tn + fp) if (tn + fp) else 0.0
+    precision = tp / (tp + fp) if (tp + fp) else 0.0
+    balanced_accuracy = 0.5 * (sensitivity + specificity)
+    return {
+        **mcc,
+        "sensitivity": float(sensitivity),
+        "specificity": float(specificity),
+        "precision": float(precision),
+        "balanced_accuracy": float(balanced_accuracy),
+    }
+
+
+def indicator_panel(preds, boot=None):
+    probs = [p for p, _ in preds]
+    reals = [int(y) for _, y in preds]
+    n = len(preds)
+    b = brier(preds)
+    a = acc(preds)
+    outcome_rate = float(np.mean(reals)) if reals else 0.0
+    climatology_brier = outcome_rate * (1 - outcome_rate)
+    mur = murphy(preds)
+    cal = ece(preds)
+    conf = confusion_rates(preds)
+    auc = roc_auc(probs, reals)
+    w = wilson_ci(a, n)
+    return {
+        "n": n,
+        "acc": a,
+        "acc_wilson_95": [w["lo"], w["hi"]],
+        "brier": b,
+        "log_loss": log_loss(preds),
+        "brier_skill_vs_climatology": (
+            1 - b / climatology_brier if climatology_brier > 0 else None
+        ),
+        "auc": auc["auc"],
+        "ece": cal["ece"],
+        "mce": cal["mce"],
+        "mcc": conf["mcc"],
+        "balanced_accuracy": conf["balanced_accuracy"],
+        "sensitivity": conf["sensitivity"],
+        "specificity": conf["specificity"],
+        "precision": conf["precision"],
+        "confusion": {
+            "tp": conf["tp"],
+            "fp": conf["fp"],
+            "fn": conf["fn"],
+            "tn": conf["tn"],
+        },
+        "murphy": {
+            "reliability": mur["REL"],
+            "resolution": mur["RES"],
+            "uncertainty": mur["UNC"],
+        },
+        "bootstrap_1000": boot or {},
+    }
 
 
 def boot_ci(preds, n=1000):
@@ -194,6 +292,21 @@ def main():
         m = mu_m[y]
         print(f"  {y}: REL={m['REL']:.4f} RES={m['RES']:.4f} UNC={m['UNC']:.4f} brier={m['BRIER_actual']:.4f}")
 
+    print("\nIndicator panel:")
+    q_base = indicator_panel(all_b)
+    q_mrp = indicator_panel(all_m)
+    print(
+        "  MRP: "
+        f"AUC={q_mrp['auc']:.4f} MCC={q_mrp['mcc']:.4f} "
+        f"ECE={q_mrp['ece']:.4f} BSS={q_mrp['brier_skill_vs_climatology']:.4f}"
+    )
+    print(
+        "  Lift vs baseline: "
+        f"acc={q_mrp['acc'] - q_base['acc']:+.4f} "
+        f"MCC={q_mrp['mcc'] - q_base['mcc']:+.4f} "
+        f"AUC={q_mrp['auc'] - q_base['auc']:+.4f}"
+    )
+
     out = {
         "config": {"stein": SHRINK, "w_linzer": WLIN, "sigma_int": SINT,
                    "sigma_slope": SSLO, "w_state_mrp": W_MRP, "seed": SEED},
@@ -205,6 +318,29 @@ def main():
         "diebold_mariano": dm,
         "mcnemar": mc,
         "murphy_per_cycle": {"baseline": mu_b, "mrp": mu_m},
+        "quality_indicators": {
+            "baseline": q_base,
+            "mrp": q_mrp,
+            "lift_vs_baseline": {
+                "acc": q_mrp["acc"] - q_base["acc"],
+                "brier": q_mrp["brier"] - q_base["brier"],
+                "log_loss": q_mrp["log_loss"] - q_base["log_loss"],
+                "auc": q_mrp["auc"] - q_base["auc"],
+                "mcc": q_mrp["mcc"] - q_base["mcc"],
+                "ece": q_mrp["ece"] - q_base["ece"],
+                "balanced_accuracy": (
+                    q_mrp["balanced_accuracy"] - q_base["balanced_accuracy"]
+                ),
+            },
+            "decision_edge": {
+                "net_hits": (
+                    mc["b_baseline_wrong_mrp_right"]
+                    - mc["c_baseline_right_mrp_wrong"]
+                ),
+                "mcnemar_p": mc["p"],
+                "dm_p_brier": dm["p"],
+            },
+        },
     }
     out_p = ROOT / "data" / "political_stats_v2.json"
     with open(out_p, "w") as f:

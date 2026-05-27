@@ -265,7 +265,7 @@ Resumo. Detalhamento em [`MANIFEST.md`](MANIFEST.md) e [`CHANGELOG.md`](CHANGELO
                                  ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │  Ondas 201–289  (v1.3 — Forecasting Honesto + Hybrid)               │
-│  A11y boost, claude_motor 100/100, LODO CV, factor models           │
+│  A11y boost, claude_motor sem lookup padrão, factor models          │
 │  (MOMENTUM, Bollinger, Ichimoku), post-cutoff classifier 75%,       │
 │  stacking ensemble, hold-out Q2 2026 (90% acc), conformal,          │
 │  Empirical Bayes, Lindy, PIT, Hosmer-Lemeshow, Hedge/AdaHedge,      │

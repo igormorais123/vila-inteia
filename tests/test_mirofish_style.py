@@ -64,10 +64,13 @@ sim = _load_sim()
 paths = sorted(glob.glob(f"{REPO}/data/backtest/*.csv"))[:2]  # 2 datasets só
 nomes = {pid: sim.personas[pid].nome_exibicao for pid in PANEL}
 grafo = construir_grafo(paths, PANEL, nomes)
-# 2 datasets × 10 eventos = 20, + 3 personas = 23 entidades
-check(grafo.total_entidades == 23, f"grafo entidades=23 got {grafo.total_entidades}")
-# 20 eventos × 3 personas + 20 event-dataset = 80
-check(grafo.total_relacoes == 80, f"grafo relacoes=80 got {grafo.total_relacoes}")
+expected_events = sum(len(carregar_dataset(f)) for f in paths)
+expected_entidades = expected_events + len(PANEL)
+expected_relacoes = expected_events * len(PANEL) + expected_events
+check(grafo.total_entidades == expected_entidades,
+      f"grafo entidades={expected_entidades} got {grafo.total_entidades}")
+check(grafo.total_relacoes == expected_relacoes,
+      f"grafo relacoes={expected_relacoes} got {grafo.total_relacoes}")
 check(len(grafo.datasets) == 2, "grafo.datasets len=2")
 check(grafo.personas[0]["nome"] == "Elon Musk", "persona[0] nome Musk")
 
@@ -77,8 +80,9 @@ simulacao, per_event, per_dataset = rodar_simulacao(
     grafo, paths, PANEL, sim, llm_fn=_make_llm_fn()
 )
 check(simulacao.status == "concluida", "sim status=concluida")
-check(simulacao.steps_executados == 20 * 3, "steps = 60")
-check(len(per_event) == 20, "per_event len=20")
+check(simulacao.steps_executados == expected_events * len(PANEL),
+      f"steps = {expected_events * len(PANEL)}")
+check(len(per_event) == expected_events, f"per_event len={expected_events}")
 check(len(per_dataset) == 2, "per_dataset len=2")
 check(simulacao.resultado["brier_vila_avg"] is not None, "brier_vila_avg != None")
 

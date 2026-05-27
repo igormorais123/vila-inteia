@@ -113,7 +113,7 @@ SHA above. Conceptual flow:
    primary H1 evaluation.
 6. **Selective tau gating** (optional, reported separately): predictions
    with `|p_winner - 0.5| >= tau` are flagged "high-confidence". Validated
-   tau values: `0.15` (96.1% acc, 92% coverage), `0.40` (100% acc, 11%
+   tau values: `0.15` (100% acc, 56% coverage), `0.40` (100% acc, 7.9%
    coverage).
 
 House effects (per-pollster bias) were tested and disabled by default

@@ -10,7 +10,7 @@ Pipeline per country:
          presidential_poll_averages_2020.csv).
        - Wikipedia 2019 UK general-election polling page (regional sub-pages).
   2. Filter T <= 30 days from election (matches BR pipeline DAYS_FILTER).
-  3. Year-fold leak-safe CV: for each country/cycle, fit (uf, regime) baseline
+  3. Year-fold no-leak CV: for each country/cycle, fit (uf, regime) baseline
      on past cycles available locally, then evaluate w_state in {0, 0.36}.
   4. Save metrics per country to data/cross_country_results.json.
 
@@ -555,7 +555,7 @@ def evaluate_country(events: list[dict], country: str) -> dict:
     after splitting via leave-one-state-out is impractical (too few states per
     regime). Here we fit on ALL events of that country (in-sample), then
     additionally evaluate a leave-one-state-out (LOSO) baseline to provide a
-    leak-safe number. Both numbers are reported."""
+    no-leak number. Both numbers are reported."""
     out = {}
     if not events:
         return {"n": 0, "note": "no events"}
@@ -661,7 +661,7 @@ def main():
 
     results: dict = {"_fetch": fetch_status}
 
-    # 2a. LOSO per country (one-cycle data, leak-safe across STATES)
+    # 2a. LOSO per country (one-cycle data, no test state in train)
     country_events = {}
     for label, csv_path, country in (
         ("us_2016", out_2016, "US"),

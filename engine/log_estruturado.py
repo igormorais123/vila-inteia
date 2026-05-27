@@ -63,6 +63,16 @@ class StructuredFormatter(logging.Formatter):
         return json.dumps(data, ensure_ascii=False)
 
 
+def _replace_handlers(logger: logging.Logger, handler: logging.Handler) -> None:
+    for old in list(logger.handlers):
+        logger.removeHandler(old)
+        try:
+            old.close()
+        except Exception:
+            pass
+    logger.addHandler(handler)
+
+
 def configurar(level: str = "INFO",
                extra_defaults: dict | None = None,
                stream=None) -> logging.Logger:
@@ -77,8 +87,7 @@ def configurar(level: str = "INFO",
     handler = logging.StreamHandler(stream)
     handler.setFormatter(StructuredFormatter(extra_defaults or {}))
     root = logging.getLogger()
-    root.handlers.clear()
-    root.addHandler(handler)
+    _replace_handlers(root, handler)
     root.setLevel(getattr(logging, level.upper(), logging.INFO))
     return root
 
@@ -90,8 +99,7 @@ def configurar_arquivo(arquivo: str, level: str = "INFO",
     handler = logging.FileHandler(arquivo, encoding="utf-8")
     handler.setFormatter(StructuredFormatter(extra_defaults or {}))
     root = logging.getLogger()
-    root.handlers.clear()
-    root.addHandler(handler)
+    _replace_handlers(root, handler)
     root.setLevel(getattr(logging, level.upper(), logging.INFO))
     return root
 

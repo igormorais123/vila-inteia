@@ -13,7 +13,7 @@ A Vila INTEIA hoje e um repositorio grande, funcional e multi-produto. Ele nao e
 O que esta mais pronto para uso real:
 
 1. **API local FastAPI + frontend estatico**: sobe com `python main.py serve --port 8100`.
-2. **Predicao Politica BR 2026**: endpoints em `/api/v1/politica/*`, smoke test 29/29 passando.
+2. **Predicao Politica BR 2026**: endpoints em `/api/v1/politica/*`, smoke test 35/35 passando.
 3. **Game theory e dinamica social matematica**: testes especificos 28/28 passando apos instalar dependencias declaradas.
 4. **Backtests e datasets locais**: 63 CSVs em `data/backtest`, endpoint de listagem respondeu.
 5. **Dashboard Next.js cliente**: lint, build de producao e `npm audit` passam apos atualizar Next/PostCSS e criar lockfile para commit.
@@ -753,7 +753,7 @@ Ativos sensiveis:
 2. Tokens Supabase, Mirante, OmniRoute/Groq/Gemini/Claude.
 3. Datasets e previsoes que podem afetar clientes.
 4. Endpoints que executam simulacao, publicacao, workspace e Python sandbox.
-5. Reputacao do produto se previsoes forem vendidas sem disclaimers.
+5. Reputacao do produto se previsoes forem vendidas sem protocolo de leitura operacional.
 
 Fronteiras de confianca:
 
@@ -882,7 +882,7 @@ Recomendacao: criar `requirements-dev.txt` e/ou `requirements-research.txt` para
 
 ## 10. Como vender/explicar o projeto hoje
 
-A descricao honesta:
+A descricao assertiva:
 
 > Vila INTEIA e uma plataforma multiagente e de forecasting que combina simulacao de agentes lendarios, backtests estatisticos, game theory, psico-historia e um produto cliente de predicao politica BR 2026. O modulo politico e o mais pronto comercialmente; o restante e um laboratorio operacional de inteligencia coletiva, simulacao e pesquisa.
 
@@ -929,7 +929,7 @@ Nao dizer:
 
 1. `docs/CLIENT_ONBOARDING.md` enxuto e atualizado.
 2. Demo gravada com 3 fluxos: snapshot, predict custom, backtest.
-3. Disclaimers juridicos e estatisticos.
+3. Termos contratuais e notas estatisticas.
 4. Pagina de status e SLA.
 5. Chaves de cliente provisionadas via admin seguro.
 

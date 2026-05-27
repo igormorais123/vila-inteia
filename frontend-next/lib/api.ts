@@ -22,7 +22,7 @@ export interface Snapshot {
   election_date: string;
   horizon_days: number;
   candidates: Candidate[];
-  disclaimer?: string;
+  method_note?: string;
 }
 
 export interface PredictResponse {
@@ -34,10 +34,73 @@ export interface PredictResponse {
   horizon_days: number;
 }
 
+export interface QualityIndicator {
+  n: number;
+  acc: number;
+  acc_wilson_95?: [number, number];
+  brier: number;
+  log_loss: number;
+  brier_skill_vs_climatology?: number | null;
+  auc?: number;
+  ece?: number;
+  mce?: number;
+  mcc?: number;
+  balanced_accuracy?: number;
+  sensitivity?: number;
+  specificity?: number;
+  precision?: number;
+  confusion?: { tp: number; fp: number; fn: number; tn: number };
+}
+
 export interface BacktestResponse {
-  selective_sweep?: { tau: number; coverage: number; acc: number | null; n_kept: number }[];
-  walk_forward_2022?: any;
-  cross_csv_loo?: any;
+  protocol?: string;
+  source?: string;
+  model_id?: string;
+  summary?: { n: number; acc: number; brier: number; log_loss?: number };
+  cycles?: { year: number; n: number; acc: number; brier: number; type: string }[];
+  selective_sweep?: { tau: number; coverage: number; acc: number | null; n_kept: number; brier?: number }[];
+  quality_indicators?: {
+    baseline?: QualityIndicator;
+    mrp?: QualityIndicator;
+    lift_vs_baseline?: Record<string, number>;
+    decision_edge?: { net_hits?: number; mcnemar_p?: number; dm_p_brier?: number };
+  };
+  statistical_tests?: {
+    diebold_mariano?: Record<string, number | string>;
+    mcnemar?: Record<string, number | string>;
+  };
+}
+
+export interface EvolutionMetrics {
+  n?: number;
+  acc?: number;
+  brier?: number;
+  log_loss?: number;
+  auc?: number;
+  mcc?: number;
+  ece?: number;
+  score?: number;
+  config?: Record<string, number>;
+}
+
+export interface EvolutionResponse {
+  generated_at?: string;
+  protocol?: string;
+  methods?: string[];
+  population_size?: number;
+  generations?: number;
+  seed?: number;
+  active?: boolean;
+  applied_at?: string;
+  current_version?: string;
+  gate?: {
+    promoted?: boolean;
+    reason?: string;
+    checks?: Record<string, boolean>;
+  };
+  incumbent?: EvolutionMetrics;
+  best?: EvolutionMetrics;
+  leaderboard?: EvolutionMetrics[];
 }
 
 async function get<T>(path: string, apiKey?: string): Promise<T> {
@@ -52,9 +115,24 @@ async function get<T>(path: string, apiKey?: string): Promise<T> {
 export const fetchPresidente = (k?: string) => get<Snapshot>("/predictions/presidente", k);
 export const fetchSenador = (k?: string) => get<{ candidates: Candidate[] }>("/predictions/senador", k);
 export const fetchAll = (k?: string) => get<any>("/predictions/all", k);
-export const fetchHealth = () => get<{ status: string; n_train_events: number; horizon_days: number; snapshot_predicted_at: string }>("/health");
+export const fetchHealth = () => get<{
+  status: string;
+  n_train_events: number;
+  horizon_days: number;
+  snapshot_predicted_at: string;
+  validation_model?: string;
+  validation_n?: number;
+  validation_acc?: number;
+  validation_brier?: number;
+  validation_auc?: number;
+  validation_mcc?: number;
+  evolution_active?: boolean;
+  evolution_promoted?: boolean;
+  evolution_best_score?: number;
+}>("/health");
 export const fetchElections = () => get<{ election_date: string; cargos_supported: string[]; ufs_covered: string[] }>("/elections");
 export const fetchBacktest = () => get<BacktestResponse>("/backtest");
+export const fetchEvolution = () => get<EvolutionResponse>("/evolution");
 export const fetchGovernadorByUf = (uf: string, k?: string) => get<{ uf: string; candidates: Candidate[] }>(`/predictions/governador?uf=${uf}`, k);
 export const fetchGovernadorAll = (k?: string) => get<{ by_uf: Record<string, Candidate[]> }>("/predictions/governador", k);
 

@@ -48,6 +48,18 @@ def diebold_mariano(
     var_d = sum((x - mean_d) ** 2 for x in d) / (n - 1) if n > 1 else 0.0
 
     if var_d <= 0:
+        if abs(mean_d) > 1e-15:
+            dm_stat = math.copysign(1e12, mean_d)
+            return {
+                "dm_stat": dm_stat,
+                "p_value": 0.0,
+                "reject_h0": True,
+                "n": n,
+                "mean_diff": mean_d,
+                "var_diff": var_d,
+                "loss": loss,
+                "degenerate_constant_diff": True,
+            }
         return {
             "dm_stat": 0.0,
             "p_value": 1.0,

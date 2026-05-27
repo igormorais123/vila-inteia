@@ -76,19 +76,24 @@ def t_configurar_stream():
 
 def t_configurar_arquivo():
     with tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False) as f:
-        root = configurar_arquivo(f.name, level="INFO")
+        path = f.name
+    try:
+        root = configurar_arquivo(path, level="INFO")
         root.info("test file")
-        # Flush
         for h in root.handlers:
             h.flush()
-        conteudo = Path(f.name).read_text()
+        conteudo = Path(path).read_text()
         teste("arquivo recebe logs", len(conteudo) > 0)
         linhas = [l for l in conteudo.split("\n") if l.strip()]
         teste("1 linha JSONL", len(linhas) == 1)
         if linhas:
             json.loads(linhas[0])
             teste("JSON válido no arquivo", True)
-        os.unlink(f.name)
+    finally:
+        for h in list(logging.getLogger().handlers):
+            h.close()
+            logging.getLogger().removeHandler(h)
+        os.unlink(path)
 
 
 # Onda 56

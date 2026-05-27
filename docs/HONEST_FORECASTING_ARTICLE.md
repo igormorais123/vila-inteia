@@ -11,7 +11,7 @@ contaminar train/test, sem otimizar pra dataset que vou reportar. O alvo de
 referência é o ceiling humano de superforecasters Tetlock (~0.081) e Polymarket
 liquidez profunda (~0.047) — não pra bater Polymarket, mas pra mostrar que
 ferramentas estatísticas básicas, aplicadas com disciplina, chegam **perto** do
-ceiling humano em forecasting honesto.
+ceiling humano em forecasting calibrado.
 
 ## 2. Architecture
 

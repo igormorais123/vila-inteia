@@ -150,6 +150,10 @@ def modo_serve(args):
             from api.rotas_politica import router as politica_router
         except ImportError:
             politica_router = None
+        try:
+            from api.rotas_quant import router as quant_router
+        except ImportError:
+            quant_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         print("Instale as dependencias: pip install -r requirements.txt")
@@ -198,6 +202,8 @@ def modo_serve(args):
         app.include_router(mirofish_router)
     if politica_router is not None:
         app.include_router(politica_router)
+    if quant_router is not None:
+        app.include_router(quant_router)
 
     # Servir frontend estatico
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
@@ -823,7 +829,7 @@ def modo_forecast_vs_external(args):
     print(f"Delta (Vila - Manifold): {res['delta']:+.4f}")
     print(f"Vila better: {res['vila_better']}")
     print()
-    print("⚠️  CAVEAT: Manifold matches via fuzzy search; matched markets")
+    print("NOTA TECNICA: Manifold matches via fuzzy search; matched markets")
     print("    may not be the SAME question as our holdout event. Verify URLs.")
     print("    For event-by-event comparison, manually map slugs.")
     print()
@@ -941,6 +947,10 @@ def modo_live(args):
             from api.rotas_politica import router as politica_router
         except ImportError:
             politica_router = None
+        try:
+            from api.rotas_quant import router as quant_router
+        except ImportError:
+            quant_router = None
     except ImportError as e:
         print(f"Erro: {e}")
         sys.exit(1)
@@ -984,6 +994,8 @@ def modo_live(args):
         app.include_router(mirofish_router)
     if politica_router is not None:
         app.include_router(politica_router)
+    if quant_router is not None:
+        app.include_router(quant_router)
 
     frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
     if os.path.exists(frontend_dir):

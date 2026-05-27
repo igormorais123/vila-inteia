@@ -44,10 +44,11 @@ p = autotune_predict("Olympics summit held in March 2026", "scheduled",
                      {"gate": 0.5, "w_llm": 0.85})
 check(0 < p < 1, f"valid prob (got {p:.3f})")
 
-print("\n[6] autotune_predict with high gate trusts Vila")
+print("\n[6] autotune_predict with moderate gate trusts confident Vila")
 p = autotune_predict("Olympics summit held in March 2026", "scheduled",
-                     {"gate": 0.5, "w_llm": 0.85})
-# Vila gives ~0.99 → confident → returns Vila
+                     {"gate": 0.3, "w_llm": 0.85})
+# Vila gives high confidence for scheduled events; gate=0.3 returns Vila
+# before any optional LLM call, keeping this test deterministic.
 check(p > 0.9, f"confident scheduled → high (got {p:.3f})")
 
 print(f"\n{ok} ok, {fail} fail")

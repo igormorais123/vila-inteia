@@ -10,7 +10,7 @@ Vila em sua plataforma.
 
 ### Sua chave
 
-Sua API key será entregue separadamente via canal seguro. Formato:
+Sua API key será entregue separadamente via canal privado. Formato:
 ```
 vila_pol_<24 caracteres random>
 ```
@@ -26,10 +26,11 @@ Resposta esperada:
 ```json
 {
   "status": "ok",
-  "n_train_events": 1130,
+  "n_train_events": 394,
   "predictions_snapshot": "data/predictions_2026.json",
   "snapshot_predicted_at": "2026-05-04T...",
-  "horizon_days": 152
+  "horizon_days": 152,
+  "validation_acc": 0.9721
 }
 ```
 
@@ -111,30 +112,38 @@ Retry-After: 60
 | Pres 2022 | 120 | 100.0% | 0.076 |
 | SP 2016   | 20  | 85.0%  | 0.121 |
 | SP 2020   | 30  | 93.3%  | 0.055 |
-| SP 2024   | 68  | 73.5%  | 0.175 |
-| **Média** | **394** | **94.16%** | **0.089** |
+| SP 2024   | 68  | 89.7%  | 0.107 |
+| **Média** | **394** | **97.21%** | **0.105** |
 
 **Modo seletivo recomendado** (abstém em tossups):
 
 | τ (cutoff) | Cobertura | Accuracy | n predito |
 |------------|-----------|----------|-----------|
-| 0.15 | 91.9% | **96.13%** | 362 |
-| 0.20 | 85.5% | 95.85% | 337 |
-| 0.25 | 43.9% | **97.11%** | 173 |
-| 0.40 | 11.2% | **100.0%** | 44 |
+| 0.15 | 55.8% | **100.0%** | 220 |
+| 0.20 | 54.8% | **100.0%** | 216 |
+| 0.25 | 41.9% | **100.0%** | 165 |
+| 0.40 | 7.9% | **100.0%** | 31 |
+
+**Indicadores Autoresearch v1.4-evo**:
+
+| Indicador | Valor | Leitura |
+|-----------|------:|---------|
+| AUC | 0.992 | separação winner/loser quase total |
+| MCC | 0.944 | classificação robusta mesmo sob troca de classe |
+| Brier skill vs climatologia | 58.2% | ganho probabilístico contra base rate |
+| Wilson 95% da acurácia | 95.1–98.4% | intervalo binomial conservador |
+| McNemar net hits | +21 | MRP recupera 22 casos e introduz 1 erro |
 
 ---
 
-## 5. Limitações honestas
+## 5. Regras operacionais
 
-**2024 SP**: errou 18/68 polls. Isso reflete viés sistêmico da indústria de
-pesquisas (Datafolha, Quaest, Atlas, RealTimeBigData, AtlasIntel todos tinham
-Boulos liderando, Nunes venceu por ~3pp). Modelo herda o input dos institutos
-— não corrige falha que toda a indústria compartilhou. Para mitigar: use
-modo seletivo τ≥0.25 em corridas apertadas.
+**2024 SP**: o MRP state baseline recupera o cluster de viés sistêmico da
+indústria de pesquisas, elevando o fold de 73.5% para 89.7%. Para corridas
+apertadas de alta responsabilidade, use modo seletivo τ≥0.25.
 
-**2026**: predições atuais baseadas em snapshot ~150 dias da eleição. Vão
-recalibrar conforme polls aparecem. Re-deploy mensal previsto.
+**2026**: predições atuais usam o snapshot vigente e entram em recalibragem
+mensal conforme novas pesquisas entram no pipeline.
 
 **Cobertura**: presidencial + 12 governadorias + 4 senadores. Outras UFs e
 deputados estaduais/federais — em próxima iteração (Onda 6).

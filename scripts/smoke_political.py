@@ -5,6 +5,7 @@ Runs without the API server (uses TestClient) so it works in CI.
 """
 from __future__ import annotations
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,6 +42,8 @@ check("health 200", r.status_code == 200)
 h = r.json()
 check("health has snapshot",   h.get("snapshot_predicted_at") is not None)
 check("health n_train > 0",    (h.get("n_train_events") or 0) > 0)
+check("health has rigor",      h.get("validation_auc") is not None)
+check("health has evolution",  h.get("evolution_best_score") is not None)
 
 # 2. elections
 r = c.get("/api/v1/politica/elections")
@@ -86,8 +89,16 @@ r = c.get("/api/v1/politica/backtest")
 check("backtest 200",           r.status_code == 200)
 bt = r.json()
 check("backtest has selective", "selective_sweep" in bt)
+check("backtest has indicators", "quality_indicators" in bt and "mrp" in bt["quality_indicators"])
 
-# 8. predict edge: heavy underdog
+# 8. evolution
+r = c.get("/api/v1/politica/evolution")
+check("evolution 200",          r.status_code == 200)
+ev = r.json()
+check("evolution has methods",  bool(ev.get("methods")))
+check("evolution gate promoted", ev.get("gate", {}).get("promoted") is True)
+
+# 9. predict edge: heavy underdog
 r = c.post("/api/v1/politica/predict", json={
     "cargo": "presidente", "poll_lead_pp": -25, "days_to_election": 7,
     "incumbente": 0, "regime": "left",
@@ -95,20 +106,24 @@ r = c.post("/api/v1/politica/predict", json={
 data = r.json()
 check("underdog low p_blend",   data["p_blend"] < 0.20, f"got {data['p_blend']}")
 
-# 9. auth: anonymous still works under free tier
+# 10. auth: anonymous still works under free tier
 r = c.post("/api/v1/politica/predict", json={
     "cargo": "presidente", "poll_lead_pp": 0, "days_to_election": 30,
     "incumbente": 0, "regime": "center",
 })
 check("anon predict ok",        r.status_code == 200)
 
-# 10. admin endpoints require token
+# 11. admin endpoints require token
 r = c.post("/api/v1/politica/admin/keys/issue", json={"name": "x", "tier": "free"})
 check("admin no token = 403",   r.status_code == 403)
 
-# 11. admin issue with token
+# 12. admin issue with token
 import os as _os
 _os.environ["VILA_ADMIN_TOKEN"] = "test_token_123"
+import engine.auth_clients as _auth_clients
+_tmp_clients = tempfile.TemporaryDirectory()
+_auth_clients.CLIENTS_PATH = Path(_tmp_clients.name) / "clients.json"
+_auth_clients._REGISTRY = None
 # reload module to pick up env
 import importlib, api.rotas_politica as _rp
 importlib.reload(_rp)
@@ -122,20 +137,21 @@ check("admin issue ok",         r.status_code == 200)
 issued = r.json().get("api_key", "")
 check("issued key prefix",      issued.startswith("vila_pol_"))
 
-# 12. /me endpoint
+# 13. /me endpoint
 r = c2.get("/api/v1/politica/me", headers={"X-API-Key": issued})
 check("me ok",                  r.status_code == 200 and r.json()["tier"] == "pro")
 
-# 13. invalid key = 401
+# 14. invalid key = 401
 r = c2.get("/api/v1/politica/me", headers={"X-API-Key": "vila_pol_invalid"})
 check("invalid key = 401",      r.status_code == 401)
 
-# 14. revoke
+# 15. revoke
 r = c2.post(f"/api/v1/politica/admin/keys/revoke?api_key={issued}",
             headers={"X-Admin-Token": "test_token_123"})
 check("revoke ok",              r.status_code == 200)
 r = c2.get("/api/v1/politica/me", headers={"X-API-Key": issued})
 check("revoked = 401",          r.status_code == 401)
+_tmp_clients.cleanup()
 
 print(f"\n== {passed} passed, {failed} failed ==")
 sys.exit(0 if failed == 0 else 1)

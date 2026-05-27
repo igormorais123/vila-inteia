@@ -30,7 +30,7 @@ from typing import Any
 from engine.backtest_real import carregar_dataset, rodar_backtest
 from engine.claude_motor import make_claude_llm_fn
 
-VILA_CFG = {"prior_w": 0.30, "shi": 0.99, "slo": 0.01, "clo": 0.01, "chi": 0.99}
+VILA_CFG = {"prior_w": 0.90, "shi": 0.99, "slo": 0.01, "clo": 0.01, "chi": 0.99}
 
 
 @dataclass
@@ -119,11 +119,22 @@ def rodar_benchmark(
     for dp in dataset_paths:
         for ev in carregar_dataset(dp):
             all_outcomes.append(ev["outcome_real"])
-    majority_pred = 1.0 if sum(all_outcomes) > len(all_outcomes) / 2 else 0.0
+    majority_pred = (
+        1.0 if all_outcomes and sum(all_outcomes) > len(all_outcomes) / 2 else 0.0
+    )
 
     for dp in dataset_paths:
         ds_name = Path(dp).stem
         events = carregar_dataset(dp)
+        if not events:
+            per_dataset.append({
+                "dataset": ds_name,
+                "n": 0,
+                "vila_hits": 0,
+                "vila_acc": None,
+                "skipped": "sem eventos com gabarito liberado",
+            })
+            continue
         contexto_to_ev = {ev["contexto"]: ev for ev in events}
         llm_fn = make_claude_llm_fn(contexto_to_ev, persona_nomes)
         from engine.persona_chat import resetar_historico
@@ -149,9 +160,11 @@ def rodar_benchmark(
             # Random
             baselines["random"].n += 1; baselines["random"].add(rng.random(), real)
 
+        n_eventos = len(res["eventos"])
         per_dataset.append({
-            "dataset": ds_name, "n": len(res["eventos"]),
-            "vila_hits": ds_hits, "vila_acc": ds_hits / len(res["eventos"]),
+            "dataset": ds_name, "n": n_eventos,
+            "vila_hits": ds_hits,
+            "vila_acc": ds_hits / n_eventos if n_eventos else None,
         })
 
     # Compute final metrics + Onda 229 rigorous validation
@@ -226,7 +239,8 @@ def formatar_relatorio(bench: dict) -> str:
         )
     lines += ["", "## Per-Dataset Vila Accuracy", "", "| Dataset | N | Hits | Acc |", "|---|---|---|---|"]
     for d in bench["per_dataset"]:
-        lines.append(f"| {d['dataset']} | {d['n']} | {d['vila_hits']} | {d['vila_acc']*100:.0f}% |")
+        acc = "pendente" if d.get("vila_acc") is None else f"{d['vila_acc']*100:.0f}%"
+        lines.append(f"| {d['dataset']} | {d['n']} | {d['vila_hits']} | {acc} |")
 
     # Onda 229: rigorous validation
     if "leak_audit" in bench:

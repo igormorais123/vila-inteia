@@ -1022,7 +1022,23 @@ _reg(Oficina(
                 "correlação, regressão. Código Python executável."
             ),
             tipo="codigo", custo_coins=10,
-            modulos_sandbox=["math", "statistics", "random", "json", "csv"],
+            modulos_sandbox=[
+                "math", "statistics", "random", "json", "csv",
+                "numpy", "pandas", "scipy", "statsmodels", "sklearn",
+            ],
+            tipo_artefato="py",
+        ),
+        Ferramenta(
+            id="analise_quant_rstyle", nome="Análise Quantitativa R-style",
+            descricao=(
+                "summary, cor, partial cor, lm, glm binomial, t-test, "
+                "chi-quadrado, ANOVA, PCA, VIF e relatórios tabulares."
+            ),
+            tipo="codigo", custo_coins=12,
+            modulos_sandbox=[
+                "math", "statistics", "json", "csv", "numpy", "pandas",
+                "scipy", "statsmodels", "sklearn", "pingouin",
+            ],
             tipo_artefato="py",
         ),
         Ferramenta(

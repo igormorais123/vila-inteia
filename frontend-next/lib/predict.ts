@@ -1,11 +1,11 @@
-// Client-side replica of cohort + Linzer ensemble.
+// Client-side replica of the calibrated cohort + Linzer ensemble.
 // Mirrors engine/political_cohort.py + scripts/predict_2026.py.
 // Lets simulator run instantly without per-candidate API roundtrip.
 
-export const W_LINZER = 0.5;
-export const W_COHORT = 0.5;
-export const SIGMA_INT = 4.0;
-export const SIGMA_SLOPE = 0.05;
+export const W_LINZER = 0.7;
+export const W_COHORT = 0.3;
+export const SIGMA_INT = 3.0;
+export const SIGMA_SLOPE = 0.005;
 
 // erf approximation (Abramowitz & Stegun 7.1.26)
 function erf(x: number): number {
@@ -28,11 +28,10 @@ export function leadToPLinzer(leadPp: number, daysToElection: number): number {
   return 0.5 * (1.0 + erf(z / Math.sqrt(2.0)));
 }
 
-// Approximation of cohort prior — falls back to global rate ~0.78 with
-// Stein shrinkage to 0.5 for unknown cohorts. Real model has full table,
-// but for simulator UX this approximation is fine.
+// Approximation of cohort prior. The API uses the full cohort table; this
+// client-side version keeps the simulator instant while matching v1.4-evo weights.
 const GLOBAL_RATE = 0.78;
-const SHRINK = 0.05;
+const SHRINK = 0.4;
 
 export function pCohortApprox(incumbente: number, regime: string, leadPp: number): number {
   // crude proxy: global rate * incumbency boost * regime adjust

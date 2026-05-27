@@ -1,6 +1,7 @@
 {
   "config": {
     "seed": 42,
+    "production_version": "v1.4-evo",
     "stein_shrink": 0.05,
     "stein_shrink_tuned": 0.4,
     "w_linzer_vila": 0.5,
@@ -8,7 +9,7 @@
     "sigma_int": 4.0,
     "sigma_slope": 0.05,
     "sigma_int_tuned": 3.0,
-    "sigma_slope_tuned": 0.01,
+    "sigma_slope_tuned": 0.005,
     "w_state_mrp": 0.36,
     "tau_highconf": 0.4,
     "days_filter": 30,
@@ -350,48 +351,48 @@
           "n": 20,
           "brier": 0.0846,
           "acc": 0.85,
-          "log_loss": 0.267,
+          "log_loss": 0.2668,
           "selective_tau040_acc": 1.0,
           "selective_tau040_coverage": 0.6
         },
         "2018": {
           "n": 70,
-          "brier": 0.1843,
+          "brier": 0.184,
           "acc": 0.9857,
-          "log_loss": 0.5601,
+          "log_loss": 0.5596,
           "selective_tau040_acc": null,
           "selective_tau040_coverage": 0.0
         },
         "2020": {
           "n": 30,
-          "brier": 0.0171,
+          "brier": 0.017,
           "acc": 1.0,
-          "log_loss": 0.1131,
+          "log_loss": 0.1126,
           "selective_tau040_acc": 1.0,
           "selective_tau040_coverage": 0.4333
         },
         "2022": {
           "n": 120,
-          "brier": 0.0848,
+          "brier": 0.0843,
           "acc": 1.0,
-          "log_loss": 0.3235,
+          "log_loss": 0.322,
           "selective_tau040_acc": null,
           "selective_tau040_coverage": 0.0
         },
         "2024": {
           "n": 68,
-          "brier": 0.1073,
+          "brier": 0.1072,
           "acc": 0.8971,
-          "log_loss": 0.3629,
+          "log_loss": 0.3619,
           "selective_tau040_acc": 1.0,
           "selective_tau040_coverage": 0.0882
         }
       },
       "pooled": {
         "n": 394,
-        "brier": 0.1048,
+        "brier": 0.1046,
         "acc": 0.9721,
-        "log_loss": 0.3657,
+        "log_loss": 0.3649,
         "selective_tau040_acc": 1.0,
         "selective_tau040_coverage": 0.0787,
         "selective_tau040_n": 31

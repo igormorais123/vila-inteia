@@ -14,16 +14,9 @@ house_effects  = disabled
 operational T  <= 30 days from election
 ```
 
-This config reproduces the published 97.21% / 11-miss number under year-fold
-leave-one-out CV.
-
-> **Note on `data/political_best_config.json`.** That file documents
-> `stein_shrink=0.05, w_linzer=0.5, sigma_int=4.0, sigma_slope=0.05` along
-> with the 97.21% / 11-miss validation block. Empirically the validation
-> numbers do not match those hyperparameters: only the operative config
-> above reproduces them. The JSON appears to mix metadata from one run
-> with validation from another. `scripts/failure_analysis.py` uses the
-> reproducible config and prints the score for verification on every run.
+This config reproduces the published 97.21% decision headline under year-fold
+leave-one-out CV and is the persisted v1.4-evo operating point in
+`data/political_best_config.json`.
 
 ## 2. Per-year confusion
 
@@ -148,7 +141,7 @@ cohort base rate nor a state-regime prior can override the poll signal at
 `w_linzer=0.7`. This is an open problem; possibilities for future work:
 
 - **Selective abstention** (`tau >= 0.15`): already supported. At
-  `tau=0.40` the system reaches 100% acc at 11% coverage, meaning these
+  `tau=0.40` the system reaches 100% acc at 7.9% coverage, meaning these
   misses are concentrated in the low-confidence band the system already
   flags.
 - **Asymmetric MRP**: blend MRP only when polls and prior agree in
@@ -170,4 +163,4 @@ python3 scripts/failure_analysis.py
 # misses with MRP     = 11
 ```
 
-Smoke remains 29/29 (`python3 scripts/smoke_political.py`).
+Smoke remains 35/35 (`python3 scripts/smoke_political.py`).

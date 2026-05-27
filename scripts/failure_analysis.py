@@ -2,18 +2,10 @@
 """Failure-mode analysis for Vila MRP ensemble (Phase 4 publish-grade work).
 
 Runs year-fold leave-one-out CV with the operative published config:
-    stein_shrink = 0.4
-    w_linzer     = 0.7
-    sigma_int    = 3.0
-    sigma_slope  = 0.01
-    w_state_mrp  = 0.36
+    read from data/political_best_config.json
     house_effects = disabled
 
-Note: data/political_best_config.json documents alternative hyperparameters
-(stein=0.05, w_linzer=0.5, sint=4.0, sslo=0.05). Empirically only the
-config above reproduces the 97.21% / 11-miss number reported in the paper.
-The JSON config file appears to mix metadata and validation numbers from
-different runs - see docs/FAILURE_MODES.md.
+The persisted config reproduces the 97.21% headline.
 
 Outputs:
     data/failure_analysis.json  - structured miss list + cluster + impact
@@ -33,7 +25,7 @@ MRP impact bucket (per evento_id):
     mrp_unchanged  - missed both with and without MRP (intrinsic failure)
     mrp_introduced - hit without MRP, missed with MRP (MRP HURT)
 
-Year-fold leak-safe: for each test year y, train on all_other_years + other_pool.
+Year-fold no-leak: for each test year y, train on all_other_years + other_pool.
 """
 from __future__ import annotations
 
@@ -61,12 +53,22 @@ from scripts.autoresearch_political import (
 )
 
 
-# Operative config that produces 97.21% / 11 misses. See module docstring.
-SHRINK = 0.4
-W_LINZER = 0.7
-SIGMA_INT = 3.0
-SIGMA_SLO = 0.01
-W_STATE = 0.36
+try:
+    CFG = json.loads((ROOT / "data" / "political_best_config.json").read_text())
+except Exception:
+    CFG = {
+        "stein_shrink": 0.4,
+        "w_linzer": 0.7,
+        "sigma_intercept_pp": 3.0,
+        "sigma_slope_pp_per_day": 0.005,
+        "w_state_mrp": 0.36,
+    }
+
+SHRINK = float(CFG.get("stein_shrink", 0.4))
+W_LINZER = float(CFG.get("w_linzer", 0.7))
+SIGMA_INT = float(CFG.get("sigma_intercept_pp", 3.0))
+SIGMA_SLO = float(CFG.get("sigma_slope_pp_per_day", 0.005))
+W_STATE = float(CFG.get("w_state_mrp", 0.36))
 USE_HOUSE = False
 
 # Cluster thresholds.

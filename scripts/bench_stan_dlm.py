@@ -127,7 +127,7 @@ def main():
             # poll lead is positive in this race. Each test row represents
             # one candidate's perspective: if their own poll_lead_pp >= 0
             # they ARE that "leading" candidate; if < 0 they're the runner-up
-            # so flip. Using sign(poll_lead_pp) keeps this leak-safe (no
+            # so flip. Using sign(poll_lead_pp) keeps outcome out of the input (no
             # outcome lookup).
             p_win_winner = predict_p_win(obs, sw, so, 0)
             lead = float(e.get("poll_lead_pp", 0.0))

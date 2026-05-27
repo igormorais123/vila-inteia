@@ -13,7 +13,9 @@ from __future__ import annotations
 
 import csv
 import logging
+import os
 import re
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -24,14 +26,36 @@ PANEL_ESTRATEGICO_DEFAULT = ["CL001", "CL002", "CL007", "CL022"]
 # CL001 Musk, CL002 Jobs, CL007 Buffett, CL022 Gates (checar JSON real)
 
 
-def carregar_dataset(path: str | Path) -> list[dict]:
+def _linha_tem_gabarito_futuro(row: dict) -> bool:
+    if os.environ.get("VILA_ALLOW_FUTURE_OUTCOMES") == "1":
+        return False
+    raw_outcome = row.get("outcome_real")
+    if raw_outcome in (None, ""):
+        return False
+    try:
+        event_date = date.fromisoformat((row.get("data") or "")[:10])
+    except ValueError:
+        return False
+    return event_date > date.today()
+
+
+def carregar_dataset(path: str | Path, *, allow_future_outcomes: bool = False) -> list[dict]:
     """Lê CSV de backtest. Retorna lista de eventos dict.
     Onda 135: aceita coluna opcional 'outcome_framing' para explicitar
-    pergunta (desambiguar contextos onde evento textual ≠ outcome_real)."""
+    pergunta (desambiguar contextos onde evento textual ≠ outcome_real).
+
+    Por padrao, linhas com `data` futura e `outcome_real` preenchido sao
+    ignoradas. Elas podem existir como fila de previsao, mas nao entram como
+    gabarito de backtest antes da data do evento.
+    """
     out = []
+    future_skipped = 0
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if not allow_future_outcomes and _linha_tem_gabarito_futuro(row):
+                future_skipped += 1
+                continue
             out.append({
                 "evento_id": row["evento_id"],
                 "data": row["data"],
@@ -40,6 +64,8 @@ def carregar_dataset(path: str | Path) -> list[dict]:
                 "probabilidade_prior": float(row["probabilidade_prior"]),
                 "outcome_framing": row.get("outcome_framing") or None,
             })
+    if future_skipped:
+        logger.warning("Ignorando %s outcomes futuros em %s", future_skipped, path)
     return out
 
 

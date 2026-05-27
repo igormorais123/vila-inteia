@@ -10,6 +10,8 @@ from engine.diebold_mariano import diebold_mariano
 from engine.post_cutoff_classifier import classify_and_predict
 from engine._pred_utils import pairs_from_events
 
+REPO = Path(__file__).resolve().parent.parent
+
 ok = fail = 0
 def check(cond, msg):
     global ok, fail
@@ -65,7 +67,7 @@ check(abs(r1["p_value"] - r2["p_value"]) < 1e-9, "two-sided p invariant on swap"
 print("\n[6] Real bench: stretch=True vs stretch=False on holdout v1+v2")
 def load_csv(fp):
     out = []
-    with open(fp) as f:
+    with open(fp, encoding="utf-8") as f:
         for r in csv.DictReader(f):
             try:
                 out.append({
@@ -78,8 +80,8 @@ def load_csv(fp):
     return out
 
 events = (
-    load_csv("/home/pedroafonso/vila-inteia/data/backtest/post_cutoff_q2_2026_holdout.csv")
-    + load_csv("/home/pedroafonso/vila-inteia/data/backtest/post_cutoff_q2_2026_holdout_v2.csv")
+    load_csv(REPO / "data/backtest/post_cutoff_q2_2026_holdout.csv")
+    + load_csv(REPO / "data/backtest/post_cutoff_q2_2026_holdout_v2.csv")
 )
 
 def clf_stretch(framing, contexto=""):

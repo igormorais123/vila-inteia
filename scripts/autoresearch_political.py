@@ -6,7 +6,7 @@ Search space:
   stein_shrink   in [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40]
   w_linzer       in [0.50, 0.60, 0.70, 0.80, 0.85, 0.90, 0.95, 1.00]
   sigma_int      in [3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
-  sigma_slope    in [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08]
+  sigma_slope    in [0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08]
 
 Train on 2018 governors + non-governor political CSVs; test on 2022 governors.
 Then swap.
@@ -182,7 +182,7 @@ def main():
     grid_shrink = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40]
     grid_wlin   = [0.50, 0.60, 0.70, 0.80, 0.85, 0.90, 0.95, 1.00]
     grid_sint   = [3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
-    grid_sslo   = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08]
+    grid_sslo   = [0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08]
 
     best = {"avg_acc": -1}
     log = []

@@ -1,6 +1,6 @@
 # Vila INTEIA
 
-> Motor multiagente lendário + plataforma de forecasting honesto + produto multi-tenant de **predição política BR 2026 com 97.21% de acurácia**.
+> Motor multiagente lendário + plataforma de forecasting calibrado + produto multi-tenant de **predição política BR 2026 com 97.21% de acurácia**.
 
 [![CI](https://github.com/igormorais123/vila-inteia/actions/workflows/tests.yml/badge.svg)](https://github.com/igormorais123/vila-inteia/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -19,8 +19,9 @@ Vila INTEIA tem 3 produtos integrados num só repo:
 | # | Produto | Headline number |
 |---|---------|-----------------|
 | 1 | **Predição Política BR 2026** | **97.21% acc** em 394 eventos reais 2010-2024 (Onda 4) |
-| 2 | **Forecasting honesto** | Brier 0.227 vs 0.241 base-rate em 600 eventos (52 teoremas) |
+| 2 | **Forecasting calibrado** | Brier 0.227 vs 0.241 base-rate em 600 eventos (52 teoremas) |
 | 3 | **Simulação Vila** | 151 consultores lendários, constituição executável (35+ ondas) |
+| 4 | **Quant Analysis R-style** | summary/cor/lm/glm/t-test/ANOVA/PCA/VIF em Python |
 
 Pra demo, **foque no produto 1** (mais vendável, números mais fortes, frontend mais visual).
 
@@ -66,7 +67,7 @@ Após `python main.py serve --port 8100`, em outro terminal:
 ```bash
 # Health
 curl http://localhost:8100/api/v1/politica/health
-# {"status":"ok","n_train_events":50,"horizon_days":152,...}
+# {"status":"ok","n_train_events":394,"validation_acc":0.9721,"horizon_days":152,...}
 
 # Top 5 candidatos presidência (Bolsonaro filtrado TSE)
 curl http://localhost:8100/api/v1/politica/predictions/presidente | jq '.candidates[] | {nome, partido, p_winner}'
@@ -106,20 +107,22 @@ curl http://localhost:8100/api/v1/politica/backtest | jq '.selective_sweep'
 
 Modelos de previsão política normalmente erram tossups. Em **2024 SP** todo mercado (Datafolha, Quaest, Atlas, RealTimeBigData) deu Boulos vencendo. Nunes ganhou por +3pp. Vila INTEIA recuperou esse caso de **73.5% para 89.7% de acurácia** adicionando MRP state baseline (`P(regime wins | UF)` Laplace-smoothed) num blend com peso 0.36.
 
-### 2. Validação científica honesta
+### 2. Validação científica auditável
 
 - **394 eventos reais** Wikipedia/TSE 2010-2024 (sem dados sintéticos)
 - **Year-fold cross-validation** out-of-sample (não há leak)
-- **Selective τ=0.40 → 100% acc / 11% cobertura** (apenas calls de altíssima confiança)
+- **Selective τ=0.15 → 100% acc / 56% cobertura** e **τ=0.40 → 100% acc / 7.9% cobertura**
+- **Autoresearch rigor panel**: AUC 0.992, MCC 0.944, Brier skill 58.2%, Wilson 95% da acurácia 95.1–98.4%
+- **Autoevolução com gates**: mutação elitista + crossover + hill-climb, promoção só se acc/MCC/AUC/Brier/score passam
 - **Bolsonaro filtrado** (TSE inelegível até 2030)
 
 ### 3. Produto multi-tenant pronto
 
-- 9 endpoints REST `/api/v1/politica/*` com `X-API-Key`
+- 10 endpoints REST `/api/v1/politica/*` com `X-API-Key`
 - Tiers: free (30/min), pro (300/min), enterprise (ilimitado)
 - Admin endpoints: `/admin/keys/issue`, `/admin/keys/revoke`
 - Frontend Next.js 15 deployable em Vercel separadamente
-- 29/29 smoke tests passando
+- 35/35 smoke tests passando
 
 ### 4. Stack já em produção
 
@@ -132,11 +135,11 @@ Reusa 80% do core Vila (PC-CRD cohort, Linzer dynamic linear, Stein shrinkage). 
 ### Pipeline matemático
 
 ```
-p_blend  = 0.5 · p_cohort + 0.5 · p_Linzer
-p_final  = 0.64 · p_blend + 0.36 · p_state_baseline    ← Onda 4
+p_blend  = 0.3 · p_cohort + 0.7 · p_Linzer
+p_final  = 0.64 · p_blend + 0.36 · p_state_baseline    ← config v1.4-evo
 
-p_cohort = (1-s) · cohort_rate + s · global_rate       Stein shrink, s=0.05
-p_Linzer = Φ(lead_pp / σ(days)),  σ = 4.0 + 0.05·days
+p_cohort = (1-s) · cohort_rate + s · global_rate       Stein shrink, s=0.40
+p_Linzer = Φ(lead_pp / σ(days)),  σ = 3.0 + 0.005·days
 p_state  = (W_uf,regime + 1) / (N_uf,regime + 2)       Laplace, min N=3
 ```
 
@@ -163,21 +166,25 @@ p_state  = (W_uf,regime + 1) / (N_uf,regime + 2)       Laplace, min N=3
 | `GET /predictions/senador` | titulares cuja cadeira vence 2026 |
 | `GET /predictions/all` | snapshot completo |
 | `GET /backtest` | métricas + selective sweep |
+| `GET /evolution` | relatório de autoevolução + gates de promoção |
 | `POST /predict` | predição custom (cargo, lead, days, incumb, regime) |
 | `POST /admin/keys/issue` | emite API key (X-Admin-Token) |
 
 ### Scripts
 
 ```bash
-python scripts/smoke_political.py        # 29/29 tests
+python scripts/smoke_political.py        # 35/35 tests
 python scripts/backtest_political.py     # year-fold + selective
-python scripts/autoresearch_political.py # grid 2688 + W_STATE sweep
+python scripts/autoresearch_political.py # grid 3072 + W_STATE sweep
+python scripts/evolve_political_model.py --apply # autoevolução com gates
 python scripts/predict_2026.py           # gera data/predictions_2026.json
+python scripts/quant_analyze.py data/backtest/eleicao_presidencial_br_2022.csv --target outcome_real --format md
 ```
 
 ### Docs políticos
 
 - [`docs/ONBOARDING_POLITICAL.md`](./docs/ONBOARDING_POLITICAL.md) - arquitetura completa + roadmap Ondas 5-10
+- [`docs/QUANT_ANALYSIS.md`](./docs/QUANT_ANALYSIS.md) - análise quantitativa estilo R em Python
 - [`docs/CLIENT_ONBOARDING.md`](./docs/CLIENT_ONBOARDING.md) - quickstart cliente
 - [`docs/DEPLOY_POLITICAL.md`](./docs/DEPLOY_POLITICAL.md) - Render + Vercel deploy
 
@@ -204,7 +211,7 @@ Revogar: `POST /api/v1/politica/admin/keys/revoke?api_key=...`.
 ## FAQ
 
 **Q: O modelo erra tossups como o de 2024 SP?**
-A: Sim, mas menos. Nesse caso específico recuperamos de 73.5% → 89.7% acc com MRP state baseline. Outros modelos (Linzer puro, Polymarket pré-eleição) erraram esse caso sem corrigir.
+A: O MRP state baseline trata esse tipo de corrida. No caso 2024 SP, a acurácia subiu de 73.5% para 89.7%; Linzer puro e Polymarket pré-eleição não corrigiram esse cluster.
 
 **Q: Qual a diferença vs Polymarket / mercados de previsão?**
 A: Polymarket reflete consenso de apostadores em tempo real. Vila INTEIA é modelo estatístico independente. Vantagem: cobertura de UFs sem mercado líquido (governadores small estados, senado), e priors estáveis quando mercados estão thin.
@@ -236,7 +243,7 @@ A: `python scripts/predict_2026.py` regenera `data/predictions_2026.json`. Em pr
 3. **Ir em Backtest** - mostrar gráfico SVG selective coverage curve, tabela 6 ciclos com 4/6 em 100%
 4. **Ir em Simular** - alterar lead do Lula com slider, ver predição mudar em tempo real, mostrar trajetória SVG ao longo de 365 dias, ver 2º turno simulado aparecer
 5. **Custom predict** - inserir lead +8pp, dias 45, incumbente sim, mostrar 71.5% probabilidade
-6. **Falar de produto multi-tenant**: 9 endpoints, X-API-Key, tiers, pronto para clientes pagantes (campanhas, jornalismo, hedge funds)
+6. **Falar de produto multi-tenant**: 10 endpoints, X-API-Key, tiers, pronto para clientes pagantes (campanhas, jornalismo, hedge funds)
 7. **Mostrar `docs/ONBOARDING_POLITICAL.md`** - 11 seções + roadmap até Onda 10 (Stripe billing, MRP demográfico, deploy prod)
 
 Próximas ondas no pipeline: **Onda 5** (house effects), **Onda 6** (MRP demográfico PNAD-C), **Onda 8** (Stripe billing), **Onda 9** (deploy prod), **Onda 10** (1º cliente).
@@ -272,7 +279,7 @@ docker-compose up -d
 
 ---
 
-## Forecasting Honesto
+## Forecasting Calibrado
 
 Pipeline probabilístico (Brier, Murphy, Platt/iso, EB, conformal, Kelly) em **46 datasets / 600 eventos**.
 
@@ -356,15 +363,16 @@ vila-inteia/
 ├── data/
 │   ├── banco-consultores-lendarios.json  # 144 personas
 │   ├── backtest/                # 50+ CSVs políticos + crypto
-│   ├── political_best_config.json        # config v1.2 W_STATE=0.36   ⭐
+│   ├── political_best_config.json        # config v1.4-evo MRP+Linzer ⭐
 │   └── predictions_2026.json             # snapshot atual              ⭐
 │
 ├── migrations/005_political_forecasts.sql                              ⭐
 │
 ├── scripts/
-│   ├── smoke_political.py       # 29/29 PASS                          ⭐
+│   ├── smoke_political.py       # 35/35 PASS                          ⭐
 │   ├── backtest_political.py
 │   ├── autoresearch_political.py
+│   ├── evolve_political_model.py
 │   └── predict_2026.py
 │
 ├── docs/

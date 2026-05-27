@@ -86,8 +86,8 @@ All figures live under `docs/artigo/figures/` (create if absent).
 > model ensembles a Stein-shrunk cohort prior over `(cargo, days_bin,
 > lead_bin, incumbente, regime)`, a Linzer (2013) state-space win-prob
 > from polling leads, and a Laplace-smoothed (UF, regime) MRP state
-> baseline. Selective gating at tau=0.40 yields 100% accuracy at 11%
-> coverage; tau=0.15 yields 96.1% at 92% coverage. We pre-register
+> baseline. Selective gating at tau=0.40 yields 100% accuracy at 7.9%
+> coverage; tau=0.15 yields 100% at 56% coverage. We pre-register
 > 2026 BR predictions (frozen 2026-05-07, SHA-256 verified) prior to
 > the October 4, 2026 election, with a public commitment to publish the
 > outcome evaluation regardless of result.

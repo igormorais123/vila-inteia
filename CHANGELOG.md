@@ -34,7 +34,7 @@ Trabalho consolidado pós-v1.0.0 ainda não etiquetado. Quando cortado, vira `1.
 
 ### Bloco 201–289 — Forecasting Honesto + Hybrid
 - A11y boost massivo (combined > 0.90 a partir da onda 210), semantic landmarks
-- `claude_motor` 100/100 acc, brier 0.0256, LODO CV 100% per dataset
+- `claude_motor` saneado: lookup hardcoded virou modo legado explícito; painel offline padrão fica blindado a `evento_id`/`outcome_real`
 - Validação SOTA 2026 contra 4 baselines, large-scale 197 events
 - Factor models (MOMENTUM, Bollinger, Ichimoku, Stochastic, MACD) + autoresearch 11 strategies
 - Post-cutoff classifier 30% → 75% acc, stacking ensemble brier 0.229

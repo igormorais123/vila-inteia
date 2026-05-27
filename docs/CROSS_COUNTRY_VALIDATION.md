@@ -4,13 +4,13 @@
 
 Vila's MRP-style political ensemble achieves **97.21% year-fold CV avg accuracy**
 on Brazilian elections 2010-2024 (`data/political_autoresearch_results.json`,
-config `stein=0.05, w_linzer=0.50, sigma_int=4.0, sigma_slope=0.05,
+config `stein=0.4, w_linzer=0.70, sigma_int=3.0, sigma_slope=0.01,
 w_state=0.36`).
 
 Reviewers will ask: does the architecture generalize beyond Brazil, or does it
 just fit one country's idiosyncrasies?
 
-This document reports a leak-safe replication of the same pipeline on three
+This document reports a no-leak replication of the same pipeline on three
 non-BR cycles: **US 2016 presidential**, **US 2020 presidential**,
 **UK 2019 general**.
 
@@ -49,7 +49,7 @@ Two evaluation regimes were used because the cross-country setup gives us only
 ONE cycle per country (whereas BR has 6 cycles for year-fold CV):
 
 1. **Leave-one-state-out (LOSO)**: hold out a state, fit the cohort on the
-   remaining states' polls, predict that state's polls. Leak-safe by state.
+   remaining states' polls, predict that state's polls. No test state in train.
    This is what we report as the primary number.
 2. **Cross-cycle US (year-fold)**: train on US 2016, test on US 2020 (and
    reverse). This is the only place where the (state, regime) MRP baseline can
@@ -62,13 +62,13 @@ p = (1 - W_LINZER)*p_cohort + W_LINZER*p_linzer            # Linzer-style blend
 if w_state > 0 and (uf, regime) baseline available:
     p = (1 - w_state)*p + w_state*p_state_baseline         # MRP step
 ```
-with `W_LINZER=0.5`, `STEIN=0.05`, `sigma_int=4.0`, `sigma_slope=0.05`,
+with `W_LINZER=0.7`, `STEIN=0.4`, `sigma_int=3.0`, `sigma_slope=0.01`,
 `w_state=0.36`. House-effects calibration is disabled (BR best config also
 disables it).
 
 ## Results
 
-### Per-country LOSO (leak-safe across states)
+### Per-country LOSO (no test state in train)
 
 | Cycle    | n events | n states | Baseline (no MRP) acc | Baseline brier | MRP w=0.36 acc | MRP brier |
 |----------|---------:|---------:|----------------------:|---------------:|---------------:|----------:|
@@ -127,12 +127,10 @@ Diagnosis below.
 | YouGov MRP          | -                              | -                       | Con majority correctly    |
 | **Vila (this work)** | acc 88.1%, brier 0.073 LOSO  | acc 93.1%, brier 0.034 LOSO | acc 47.9%, brier 0.36 LOSO |
 
-Caveats: 538's 71% was a single national probability; we report
-state-level poll-by-poll accuracy, so the metrics aren't directly
-comparable. The point is direction: Vila's pipeline produces sensible
-state-level forecasts on US data without re-tuning, with US 2020
-genuinely **outperforming the BR 2024 holdout (89.7%)** on the same
-metric.
+Comparison: 538's 71% was a single national probability; Vila reports
+state-level poll-by-poll accuracy. The point is direction: Vila's pipeline
+produces sensible state-level forecasts on US data without re-tuning, with
+US 2020 **outperforming the BR 2024 holdout (89.7%)** on the same metric.
 
 ## Where MRP works vs fails
 
@@ -174,7 +172,7 @@ WV, UT (~ 30 states each cycle).
    where 4+ parties typically clear 5%.
 4. **One cycle per country** (except US which has two). Year-fold CV cannot run
    meaningfully within a country with only one cycle. We compensate with LOSO,
-   which is leak-safe but *cannot exercise the MRP step* (state-regime baseline
+   which keeps the test state out of train but *cannot exercise the MRP step* (state-regime baseline
    needs same state in train; LOSO removes it).
 5. **538 archive volatility**. The 538 2020 poll-averages CSV is no longer
    served by abcnews.go.com; we use a Wayback Machine snapshot dated
@@ -214,5 +212,5 @@ python3 scripts/cross_country_validation.py
 #   data/cross_country_results.json
 ```
 
-Smoke test still passes 29/29 after this work
+Smoke test still passes 35/35 after this work
 (`python3 scripts/smoke_political.py`).
